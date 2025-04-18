@@ -1,0 +1,150 @@
+{% macro dialog(
+    id,
+    trigger=None,
+    title=None,
+    description=None,
+    footer=None,
+    main_attrs={},
+    trigger_attrs={},
+    content_attrs={},
+    content_header_attrs={},
+    content_body_attrs={},
+    content_footer_attrs={},
+    open=false,
+    close_button=true,
+    close_on_overlay_click=true
+  )
+%}
+{% if registerComponent('dialog') %}
+<script>
+  document.addEventListener('alpine:init', () => {
+    Alpine.data('dialog', (initialOpen = false, initialCloseOnOverlayClick = true) => ({
+      id: null,
+      open: false,
+      closeOnOverlayClick: true,
+
+      init() {
+        this.id = this.$el.id;
+        this.open = initialOpen;
+        this.closeOnOverlayClick = initialCloseOnOverlayClick;
+      },
+
+      show() {
+        if (!this.open) {
+          this.open = true;
+          this.$nextTick(() => this.$el.dispatchEvent(new CustomEvent('dialog:opened', { bubbles: true })));
+        }
+      },
+
+      hide() {
+        if (this.open) {
+          this.open = false;
+          this.$el.dispatchEvent(new CustomEvent('dialog:closed', { bubbles: true }));
+        }
+      },
+
+      handleControl(event) {
+        const detail = event.detail;
+        if (detail && detail.targetId === this.id) {
+          const action = detail.action || 'toggle';
+          if (action === 'open') this.show();
+          else if (action === 'close') this.hide();
+        }
+      },
+
+      $main: {
+        '@dialog:control.window'(e) { 
+          this.handleControl(e)
+        },
+      },
+
+      $trigger: {
+        '@click'() { this.show() },
+        ':aria-expanded'() { return this.open }
+      },
+
+      $content: {
+        ':inert'() { return !this.open },
+        '@click'(e) { e.target === this.$el && this.closeOnOverlayClick && this.hide() },
+        '@keydown.escape.window'() { this.open && this.hide() },
+        'x-cloak': ''
+      }
+    }));
+  });
+</script>
+{% endif %}
+<div
+  id="{{ id }}"
+  x-data="dialog({{ 'true' if open else 'false' }}, {{ 'true' if close_on_overlay_click else 'false' }})"
+  x-bind="$main"
+  class="dialog"
+  {% for key, value in main_attrs %}
+    {{ key }}="{{ value }}"
+  {% endfor %}
+>
+  {% if trigger %}
+  <button
+    {% if id %}aria-controls="{{ id }}-dialog"{% endif %}
+    aria-expanded="false"
+    aria-controls="{{ id }}-dialog"
+    x-bind="$trigger"
+    {% for key, value in trigger_attrs %}
+      {{ key }}="{{ value }}"
+    {% endfor %}
+  >
+    {{ trigger }} 
+  </button>
+  {% endif %}
+  <div
+    role="dialog"
+    id="{{ id }}-dialog"
+    aria-modal="true"
+    aria-labelledby="{{ id }}-title"
+    inert
+    x-bind="$content"
+  >
+    <article
+      {% for key, value in content_attrs %}
+        {{ key }}="{{ value }}"
+      {% endfor %}
+    >
+      {% if title or description %}
+        <header
+          {% for key, value in content_header_attrs %}
+            {{ key }}="{{ value }}"
+          {% endfor %}
+        >
+          <h2 id="{{ id }}-title">{{ title | safe }}</h2>
+          <p>{{ description | safe }}</p>
+        </header>
+      {% endif %}
+      {% if caller %}
+        <section
+          {% for key, value in content_body_attrs %}
+            {{ key }}="{{ value }}"
+          {% endfor %}
+        >
+          {{ caller() }}
+        </section>
+      {% endif %}
+      {% if footer %}
+        <footer
+          {% for key, value in content_footer_attrs %}
+            {{ key }}="{{ value }}"
+          {% endfor %}
+        >
+          {{ footer | safe }}
+        </footer>
+      {% endif %}
+      {% if close_button %}
+        <button
+          @click="hide()"
+          aria-label="Close dialog"
+        >
+          {% lucide "x" %}
+        </button>
+      {% endif %}
+    </article>
+  </div>
+</div>
+{% endmacro %}

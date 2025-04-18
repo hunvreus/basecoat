@@ -1,0 +1,145 @@
+{% macro select(
+    id=None,
+    main_attrs=None,
+    trigger_attrs=None,
+    menu_attrs=None,
+    value=None,
+    input_name=None
+  )
+%}
+{% if registerComponent('select') %}
+<script>
+  document.addEventListener('alpine:init', () => {
+    Alpine.data('select', (initialValue = null) => ({
+      open: false,
+      focusedIndex: -1,
+      options: [],
+      selectedLabel: initialValue,
+      selectedValue: initialValue,
+
+      init() {
+        this.$nextTick(() => {
+          const listboxElement = this.$el.querySelector('[role="listbox"]');
+          this.options = Array.from(listboxElement.querySelectorAll('[role=option]'));
+          
+          this.selectOptionByValue(initialValue);
+        });
+      },
+      
+      $trigger: {
+        '@click'() { this.handleClick() },
+        '@keydown.down.prevent'() { this.open && this.nextOption() },
+        ':aria-expanded'() { return this.open },
+        ':aria-pressed'() { return this.open }
+      },
+      
+      $listbox: {
+        '@click'(e) { this.handleOptionClick(e) },
+        '@keydown.escape.window'() { this.handleEscape() },
+        '@keydown.down.prevent'() { this.nextOption() },
+        '@keydown.up.prevent'() { this.prevOption() },
+        '@keydown.home.prevent'() { this.focusOption(0) },
+        '@keydown.end.prevent'() { this.focusOption(this.options.length - 1) },
+        ':aria-hidden'() { return !this.open },
+        'x-cloak': ''
+      },
+
+      selectOption(option) {
+        if (option && !option.disabled) {
+          this.options.forEach(opt => {
+            opt.setAttribute('aria-selected', opt === option);
+          });
+          this.selectedLabel = option.innerHTML;
+          this.selectedValue = option.getAttribute('data-value');
+          option.blur();
+          this.open = false;
+        } else if (this.options.length > 0) {
+          this.selectOption(this.options[0]);
+        }
+      },
+
+      selectOptionByValue(value) {
+        console.log(value);
+        const option = this.options.find(opt => opt.getAttribute('data-value') === value);
+        this.selectOption(option);
+      },
+      
+      focusOption(index) {
+        if (index >= 0 && index < this.options.length) {
+          this.focusedIndex = index;
+          this.options[index].focus();
+        }
+      },
+      
+      nextOption() {
+        this.focusOption((this.focusedIndex + 1) % this.options.length);
+      },
+      
+      prevOption() {
+        this.focusOption(this.focusedIndex <= 0 ? this.options.length - 1 : this.focusedIndex - 1);
+      },
+      
+      handleClick() {
+        this.open = !this.open;
+        this.$nextTick(() => {
+          if(this.open && this.options.length) this.focusOption(0);
+        });
+      },
+      
+      handleEscape() {
+        if (this.open) this.open = false;
+      },
+      
+      handleOptionClick(event) {
+        const option = event.target.closest('[role=option]');
+        this.selectOption(option);
+      },
+    }));
+  });
+</script>
+{% endif %}
+
+<div
+  class="dropdown {% if main_attrs %}{{ main_attrs.pop('class', '') }}{% endif %}"
+  x-data="select('{{ value if value else '' }}')"
+  @click.away="open = false"
+  {% if id %}id="{{ id }}"{% endif %}
+  {% for key, value in main_attrs %}
+    {{ key }}="{{ value }}"
+  {% endfor %}
+>
+  <button
+    type="button"
+    aria-haspopup="menu"
+    aria-expanded="false"
+    x-bind="$trigger"
+    class="btn-outline justify-between font-normal"
+    {% if id %}
+    id="{{ id }}-trigger"
+    aria-controls="{{ id }}-menu"
+    {% endif %}
+    {% for key, value in trigger_attrs %}
+      {{ key }}="{{ value }}"
+    {% endfor %}
+  >
+    <span x-html="selectedLabel" class="flex items-center gap-x-2"></span>
+    <span class="text-muted-foreground opacity-50">{% lucide "chevron-down" %}</span>
+  </button>
+  <div
+    class="min-w-full w-fit"
+    role="listbox"
+    aria-orientation="vertical"
+    aria-hidden="true"
+    x-bind="$listbox"
+    {% if id %}id="{{ id }}-menu"{% endif %}
+    {% for key, value in menu_attrs %}
+      {{ key }}="{{ value }}"
+    {% endfor %}
+  >
+    {{ caller() }}
+  </div>
+  {% if input_name %}
+  <input type="hidden" name="{{ input_name }}" x-model="selectedValue">
+  {% endif %}
+</div>
+{% endmacro %}

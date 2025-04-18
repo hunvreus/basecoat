@@ -1,0 +1,98 @@
+<section id="button" class="w-full rounded-lg border">
+  <header class="border-b px-4 py-3">
+    <h2 class="text-sm font-medium">Button</h2>
+  </header>
+  <div class="p-4">
+    <div class="flex flex-col gap-6">
+      <div class="flex flex-wrap items-center gap-2 md:flex-row">
+        <button class="btn-primary">Primary</button>
+        <button class="btn-outline">Outline</button>
+        <button class="btn-ghost">Ghost</button>
+        <button class="btn-destructive">
+          {% lucide "send" %}
+          Danger
+        </button>
+        <button class="btn-secondary">Secondary</button>
+        <button class="btn-link">Link</button>
+        <button class="btn-outline">
+          {% lucide "send" %}
+          Send
+        </button>
+        <button class="btn-outline">
+          Learn more
+          {% lucide "arrow-right" %}
+        </button>
+        <button class="btn-outline" disabled>
+          {% lucide "loader", { "class": "animate-spin" } %}
+          Loading
+        </button>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-2 md:flex-row">
+        <button class="btn-sm-primary">Primary</button>
+        <button class="btn-sm-outline">Outline</button>
+        <button class="btn-sm-ghost">Ghost</button>
+        <button class="btn-sm-destructive">Danger</button>
+        <button class="btn-sm-secondary">Secondary</button>
+        <button class="btn-sm-link">Link</button>
+        <button class="btn-sm-outline">
+          {% lucide "send" %}
+          Send
+        </button>
+        <button class="btn-sm-outline">
+          Learn more
+          {% lucide "arrow-right" %}
+        </button>
+        <button class="btn-sm-outline" disabled>
+          {% lucide "loader", { "class": "animate-spin" } %}
+          Loading
+        </button>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-2 md:flex-row">
+        <button class="btn-lg-primary">Primary</button>
+        <button class="btn-lg-outline">Outline</button>
+        <button class="btn-lg-ghost">Ghost</button>
+        <button class="btn-lg-destructive">
+          {% lucide "send" %}
+          Danger
+        </button>
+        <button class="btn-lg-secondary">Secondary</button>
+        <button class="btn-lg-link">Link</button>
+        <button class="btn-lg-outline">
+          {% lucide "send" %}
+          Send
+        </button>
+        <button class="btn-lg-outline">
+          Learn more
+          {% lucide "arrow-right" %}
+        </button>
+        <button class="btn-lg-outline" disabled>
+          {% lucide "loader", { "class": "animate-spin" } %}
+          Loading
+        </button>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-2 md:flex-row">
+        <button class="btn-icon-primary">
+          {% lucide "download" %}
+        </button>
+        <button class="btn-icon-secondary">
+          {% lucide "upload" %}
+        </button>
+        <button class="btn-icon-outline">
+          {% lucide "arrow-right" %}
+        </button>
+        <button class="btn-icon-ghost">
+          {% lucide "ellipsis" %}
+        </button>
+        <button class="btn-icon-destructive">
+          {% lucide "trash-2" %}
+        </button>
+        <button class="btn-icon-outline" disabled>
+          {% lucide "loader", { "class": "animate-spin" } %}
+        </button>
+      </div>
+    </div>
+  </div>
+</section>

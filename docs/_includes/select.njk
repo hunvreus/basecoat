@@ -1,0 +1,31 @@
+<section id="select" class="w-full rounded-lg border">
+  <header class="border-b px-4 py-3">
+    <h2 class="text-sm font-medium">Select</h2>
+  </header>
+  <div class="p-4">
+    <div class="flex flex-wrap items-center gap-4">
+      <select class="select">
+        <option>Orange</option>
+        <option>Apple</option>
+        <option>Strawberry</option>
+      </select>
+
+      {% call select(
+        value="banana",
+        input_name="demo-food-select"
+      ) %}
+      <div role="group" aria-labelledby="fruit-options-label">
+        <span id="fruit-options-label" role="heading">Fruits</span>
+        <button type="button" role="option" data-value="orange">🍊 Orange</button>
+        <button type="button" role="option" data-value="apple">🍎 Apple</button>
+        <button type="button" role="option" data-value="banana">🍌 Banana</button>
+      </div>
+      <div role="group" aria-labelledby="vegetable-options-label">
+        <span id="vegetable-options-label" role="heading">Vegetables</span>
+        <button type="button" role="option" data-value="carrot">🥕 Carrot</button>
+        <button type="button" role="option" data-value="potato">🥔 Potato</button>
+        <button type="button" role="option" data-value="broccoli">🥦 Broccoli</button>
+      </div>
+      {% endcall %}
+  </div>
+</section>

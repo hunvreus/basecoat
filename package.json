@@ -1,0 +1,20 @@
+{
+  "type": "module",
+  "scripts": {
+    "css:dev": "tailwindcss -i ./dist/basecoat.tailwind.css -o ./dist/basecoat.css --watch",
+    "css:build": "tailwindcss -i ./dist/basecoat.tailwind.css -o ./dist/basecoat.css --minify",
+    "eleventy:serve": "eleventy --serve",
+    "dev": "concurrently \"npm:css:dev\" \"npm:eleventy:serve\"",
+    "build": "npm run css:build & eleventy"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.0.0",
+    "@grimlink/eleventy-plugin-lucide-icons": "^2.1.4",
+    "@tailwindcss/cli": "^4.1.3",
+    "concurrently": "^9.1.2",
+    "tailwindcss": "^4.1.3"
+  },
+  "dependencies": {
+    "tw-animate-css": "^1.2.5"
+  }
+}

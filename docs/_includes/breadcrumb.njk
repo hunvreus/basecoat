@@ -1,0 +1,35 @@
+<section id="breadcrumb" class="w-full rounded-lg border">
+  <header class="border-b px-4 py-3">
+    <h2 class="text-sm font-medium">Breadcrumb</h2>
+  </header>
+  <div class="p-4">
+    <ol class="text-muted-foreground flex flex-wrap items-center gap-1.5 text-sm break-words sm:gap-2.5">
+      <li class="inline-flex items-center gap-1.5">
+        <a href="#" class="hover:text-foreground transition-colors">Home</a>
+      </li>
+      <li>{% lucide "chevron-right", { "class": "size-3.5" } %}</li>
+      <li class="inline-flex items-center gap-1.5">
+        {% set trigger %}
+          {% lucide "ellipsis" %}
+        {% endset %}
+        {% call dropdown(
+          id="dropdown-menu",
+          trigger=trigger,
+          trigger_attrs={"class": "flex size-9 items-center justify-center h-4 w-4"}
+        ) %}
+          <button type="button" role="menuitem">Documentation</button>
+          <button type="button" role="menuitem">Themes</button>
+          <button type="button" role="menuitem">GitHub</button>
+        {% endcall %}
+      </li>
+      <li>{% lucide "chevron-right", { "class": "size-3.5" } %}</li>
+      <li class="inline-flex items-center gap-1.5">
+        <a href="#" class="hover:text-foreground transition-colors">Components</a>
+      </li>
+      <li>{% lucide "chevron-right", { "class": "size-3.5" } %}</li>
+      <li class="inline-flex items-center gap-1.5">
+        <span class="text-foreground font-normal">Breadcrumb</span>
+      </li>
+    </ol>
+  </div>
+</section>

@@ -1,0 +1,30 @@
+<section id="radio-group" class="w-full rounded-lg border">
+  <header class="border-b px-4 py-3">
+    <h2 class="text-sm font-medium">Radio Group</h2>
+  </header>
+  <div class="p-4">
+    <div class="flex flex-col gap-y-6">
+      <fieldset class="grid gap-3">
+        <label class="label"><input type="radio" name="radio-demo" value="yes" class="input">Yes</label>
+        <label class="label"><input type="radio" name="radio-demo" value="no" class="input">No</label>
+        <label class="label"><input type="radio" name="radio-demo" value="maybe" class="input">Maybe</label>
+      </fieldset>
+      <fieldset class="grid gap-3 max-w-sm">
+        <label class="label gap-3 items-start hover:bg-accent/50 rounded-lg border p-4 has-[input[type='radio']:checked]:border-green-600 has-[input[type='radio']:checked]:bg-green-50 dark:has-[input[type='radio']:checked]:border-green-900 dark:has-[input[type='radio']:checked]:bg-green-950">
+          <input type="radio" name="radio-demo" value="no" class="input checked:border-green-600">
+          <div class="grid gap-1 font-normal">
+            <h2 class="font-medium">Starter Plan</h2>
+            <p class="text-muted-foreground leading-snug">Perfect for small businesses getting started with our platform</p>
+          </div>
+        </label>
+        <label class="label gap-3 items-start hover:bg-accent/50 rounded-lg border p-4 has-[input[type='radio']:checked]:border-green-600 has-[input[type='radio']:checked]:bg-green-50 dark:has-[input[type='radio']:checked]:border-green-900 dark:has-[input[type='radio']:checked]:bg-green-950">
+          <input type="radio" name="radio-demo" value="no" class="input checked:border-green-600">
+          <div class="grid gap-1 font-normal">
+            <h2 class="font-medium">Pro Plan</h2>
+            <p class="text-muted-foreground leading-snug">Advanced features for growing businesses with higher demands</p>
+          </div>
+        </label>
+      </fieldset>
+    </div>
+  </div>
+</section>

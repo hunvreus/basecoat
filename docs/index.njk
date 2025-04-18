@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html class="dark"><head>
+  <!-- Theme -->
+  <script>
+  function isDark() {
+    return localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+  }
+
+  if (isDark()) {
+    document.documentElement.classList.add('dark');
+  }
+
+  document.addEventListener('alpine:init', () => {
+    Alpine.store('theme', {
+      isDark: isDark(),
+      set(value) {
+        this.isDark = value;
+        localStorage.setItem('theme', value ? 'dark' : 'light');
+      },
+      toggle() {
+        this.isDark = document.documentElement.classList.toggle('dark');
+        localStorage.setItem('theme', this.isDark ? 'dark' : 'light');
+      }
+    });
+  });
+  </script>
+
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Language" content="en">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Title & Description -->
+  <title>Basecoat</title>
+  <meta name="title" content="Basecoat">
+  <meta name="description" content="Minimal CSS UI kit for vanilla HTML.">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+
+  <!-- CSS -->
+  <link rel="preconnect" href="https://rsms.me/">
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+  <link rel="stylesheet" href="/assets/styles.css">
+
+  <!-- JS -->
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body>
+{% from "./_components/dialog.njk" import dialog %}
+{% from "./_components/dropdown.njk" import dropdown %}
+{% from "./_components/select.njk" import select %}
+<header class="bg-background sticky inset-x-0 top-0 isolate z-10 flex shrink-0 items-center gap-2 border-b">
+  <div class="flex h-14 w-full items-center gap-2 px-4">
+    <span class="mr-auto">Basecoat</span>
+    <select class="select h-8">
+      <option value="light">Default</option>
+      <option value="light">Other</option>
+    </select>
+    <button
+      x-data
+      @click="$store.theme.toggle()" 
+      aria-label="Toggle theme"
+      data-tooltip="Toggle theme"
+      data-side="bottom"
+      data-align="end"
+      type="button" 
+      class="btn-icon-outline size-8"
+      aria-label="Toggle theme"
+    >
+    <span x-show="$store.theme.isDark">
+      {% lucide "sun" %}
+    </span>
+    <span x-show="!$store.theme.isDark">
+      {% lucide "moon" %}
+    </span>
+  </button>
+  </div>
+</header>
+
+  <div class="@container grid flex-1 gap-4 p-4">
+    {% include "./_includes/accordion.njk" %}
+    {% include "./_includes/alert.njk" %}
+    {% include "./_includes/alert-dialog.njk" %}
+    {% include "./_includes/badge.njk" %}
+    {% include "./_includes/breadcrumb.njk" %}
+    {% include "./_includes/button.njk" %}
+    {% include "./_includes/checkbox.njk" %}
+    {% include "./_includes/dialog.njk" %}
+    {% include "./_includes/dropdown.njk" %}
+    {% include "./_includes/form.njk" %}
+    {% include "./_includes/input.njk" %}
+    {% include "./_includes/label.njk" %}
+    {% include "./_includes/pagination.njk" %}
+    {% include "./_includes/radio-group.njk" %}
+    {% include "./_includes/select.njk" %}
+    {% include "./_includes/slider.njk" %}
+    {% include "./_includes/switch.njk" %}
+    {% include "./_includes/table.njk" %}
+    {% include "./_includes/textarea.njk" %}
+    {% include "./_includes/tooltip.njk" %}  
+  </div>
+</body>
+</html>
