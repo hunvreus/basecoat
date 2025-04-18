@@ -1,4 +1,4 @@
-<section id="accordion" class="w-full rounded-lg border">
+<section id="accordion" class="w-full rounded-lg border scroll-mt-16">
   <header class="border-b px-4 py-3">
     <h2 class="text-sm font-medium">Accordion</h2>
   </header>
@@ -19,30 +19,30 @@
         "
       >
         <details class="group border-b last:border-b-0">
-          <summary class="w-full">
-            <h2 class="focus-visible:border-ring focus-visible:ring-ring/50 flex flex-1 items-start justify-between gap-4 rounded-md py-4 text-left text-sm font-medium transition-all outline-none hover:underline focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50">
+          <summary class="w-full focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] transition-all outline-none rounded-md">
+            <h2 class="flex flex-1 items-start justify-between gap-4 py-4 text-left text-sm font-medium hover:underline ">
               Is it accessible?
               {% lucide "chevron-down", { "class": "text-muted-foreground pointer-events-none size-4 shrink-0 translate-y-0.5 transition-transform duration-200 group-open:rotate-180" } %}
             </h2>
           </summary>
-          <section>
+          <section class="pb-4">
             <p class="text-sm">Yes. It adheres to the WAI-ARIA design pattern.</p>
           </section>
         </details>
         <details class="group border-b last:border-b-0">
-          <summary class="w-full">
-            <h2 class="focus-visible:border-ring focus-visible:ring-ring/50 flex flex-1 items-start justify-between gap-4 rounded-md py-4 text-left text-sm font-medium transition-all outline-none hover:underline focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50">
+          <summary class="w-full focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] transition-all outline-none rounded-md">
+            <h2 class="flex flex-1 items-start justify-between gap-4 py-4 text-left text-sm font-medium hover:underline ">
               Is it styled?
               {% lucide "chevron-down", { "class": "text-muted-foreground pointer-events-none size-4 shrink-0 translate-y-0.5 transition-transform duration-200 group-open:rotate-180" } %}
             </h2>
           </summary>
-          <section>
+          <section class="pb-4">
             <p class="text-sm">Yes. It comes with default styles that matches the other components' aesthetic.</p>
           </section>
         </details>
         <details class="group border-b last:border-b-0">
-          <summary class="w-full">
-            <h2 class="focus-visible:border-ring focus-visible:ring-ring/50 flex flex-1 items-start justify-between gap-4 rounded-md py-4 text-left text-sm font-medium transition-all outline-none hover:underline focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50">
+          <summary class="w-full focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] transition-all outline-none rounded-md">
+            <h2 class="flex flex-1 items-start justify-between gap-4 py-4 text-left text-sm font-medium hover:underline ">
               Is it animated?
               {% lucide "chevron-down", { "class": "text-muted-foreground pointer-events-none size-4 shrink-0 translate-y-0.5 transition-transform duration-200 group-open:rotate-180" } %}
             </h2>
@@ -52,21 +52,34 @@
           </section>
         </details>
       </section>
-      <section>
+      <section
+        x-init
+        @click="
+          const clickedSummary = $event.target.closest('summary');
+          if (!clickedSummary) return;
+          const clickedDetails = clickedSummary.closest('details');
+          if (!clickedDetails) return;
+          $el.querySelectorAll('details').forEach(detailsEl => {
+            if (detailsEl !== clickedDetails) {
+              detailsEl.removeAttribute('open');
+            }
+          });
+        "
+      >
         <details class="group border-b last:border-b-0">
-          <summary class="w-full">
-            <h2 class="focus-visible:border-ring focus-visible:ring-ring/50 flex flex-1 items-start justify-between gap-4 rounded-md py-4 text-left text-sm font-medium transition-all outline-none hover:underline focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50">
+          <summary class="w-full focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] transition-all outline-none rounded-md">
+            <h2 class="flex flex-1 items-start justify-between gap-4 py-4 text-left text-sm font-medium hover:underline ">
               What are the key considerations when implementing a comprehensive enterprise-level authentication system?
               {% lucide "chevron-down", { "class": "text-muted-foreground pointer-events-none size-4 shrink-0 translate-y-0.5 transition-transform duration-200 group-open:rotate-180" } %}
             </h2>
           </summary>
-          <section>
+          <section class="pb-4">
             <p class="text-sm">Implementing a robust enterprise authentication system requires careful consideration of multiple factors. This includes secure password hashing and storage, multi-factor authentication (MFA) implementation, session management, OAuth2 and SSO integration, regular security audits, rate limiting to prevent brute force attacks, and maintaining detailed audit logs. Additionally, you'll need to consider scalability, performance impact, and compliance with relevant data protection regulations such as GDPR or HIPAA.</p>
           </section>
         </details>
         <details class="group">
-          <summary class="w-full">
-            <h2 class="focus-visible:border-ring focus-visible:ring-ring/50 flex flex-1 items-start justify-between gap-4 rounded-md py-4 text-left text-sm font-medium transition-all outline-none hover:underline focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50">
+          <summary class="w-full focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] transition-all outline-none rounded-md">
+            <h2 class="flex flex-1 items-start justify-between gap-4 py-4 text-left text-sm font-medium hover:underline ">
               How does modern distributed system architecture handle eventual consistency and data synchronization across multiple regions?
               {% lucide "chevron-down", { "class": "text-muted-foreground pointer-events-none size-4 shrink-0 translate-y-0.5 transition-transform duration-200 group-open:rotate-180" } %}
             </h2>

@@ -1,4 +1,4 @@
-<section id="alert" class="w-full rounded-lg border">
+<section id="alert" class="w-full rounded-lg border scroll-mt-16">
   <header class="border-b px-4 py-3">
     <h2 class="text-sm font-medium">Alert</h2>
   </header>
@@ -57,6 +57,21 @@
             <li>Verify billing address</li>
           </ul>
         </section>
+      </div>
+
+      {# <div class="alert">
+        {% lucide "circle-check" %}
+        <h2>Something went wrong!</h2>
+        <section>Your session has expired. Please log in again.</section>
+        <button type="button" class="btn-sm-outline">
+          Undo
+        </button>
+      </div> #}
+
+      <div class="alert border-amber-50 bg-amber-50 text-amber-900 dark:border-amber-950 dark:bg-amber-950 dark:text-amber-100">
+        {% lucide "circle-check" %}
+        <h2>Plot Twist: This Alert is Actually Amber!</h2>
+        <section>This one has custom colors for light and dark mode.</section>
       </div>
     </div>
   </div>

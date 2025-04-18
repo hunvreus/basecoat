@@ -50,55 +50,83 @@
 {% from "./_components/dialog.njk" import dialog %}
 {% from "./_components/dropdown.njk" import dropdown %}
 {% from "./_components/select.njk" import select %}
-<header class="bg-background sticky inset-x-0 top-0 isolate z-10 flex shrink-0 items-center gap-2 border-b">
-  <div class="flex h-14 w-full items-center gap-2 px-4">
-    <span class="mr-auto">Basecoat</span>
-    <select class="select h-8">
-      <option value="light">Default</option>
-      <option value="light">Other</option>
-    </select>
-    <button
-      x-data
-      @click="$store.theme.toggle()" 
-      aria-label="Toggle theme"
-      data-tooltip="Toggle theme"
-      data-side="bottom"
-      data-align="end"
-      type="button" 
-      class="btn-icon-outline size-8"
-      aria-label="Toggle theme"
-    >
-    <span x-show="$store.theme.isDark">
-      {% lucide "sun" %}
-    </span>
-    <span x-show="!$store.theme.isDark">
-      {% lucide "moon" %}
-    </span>
-  </button>
-  </div>
-</header>
 
-  <div class="@container grid flex-1 gap-4 p-4">
-    {% include "./_includes/accordion.njk" %}
-    {% include "./_includes/alert.njk" %}
-    {% include "./_includes/alert-dialog.njk" %}
-    {% include "./_includes/badge.njk" %}
-    {% include "./_includes/breadcrumb.njk" %}
-    {% include "./_includes/button.njk" %}
-    {% include "./_includes/checkbox.njk" %}
-    {% include "./_includes/dialog.njk" %}
-    {% include "./_includes/dropdown.njk" %}
-    {% include "./_includes/form.njk" %}
-    {% include "./_includes/input.njk" %}
-    {% include "./_includes/label.njk" %}
-    {% include "./_includes/pagination.njk" %}
-    {% include "./_includes/radio-group.njk" %}
-    {% include "./_includes/select.njk" %}
-    {% include "./_includes/slider.njk" %}
-    {% include "./_includes/switch.njk" %}
-    {% include "./_includes/table.njk" %}
-    {% include "./_includes/textarea.njk" %}
-    {% include "./_includes/tooltip.njk" %}  
+<div
+  class="fixed inset-y-0 left-0 z-50 h-svh border-r bg-sidebar text-sidebar-foreground flex flex-col w-[var(--sidebar-width)] transition-transform ease-in-out peer aria-[hidden=true]:-translate-x-full"
+  aria-hidden="false"
+  :aria-hidden="open ? 'false' : 'true'"
+  @dialog:sidebar.window="toggle()"
+  x-data="{
+    open: true,
+    toggle() { this.open = !this.open }
+  }"
+>
+  {% include "./_includes/sidebar.njk" %}
+</div>
+
+<main class="relative ml-(--sidebar-width) peer-aria-hidden:ml-0 transition-[margin-left] ease-in-out">
+  <header class="bg-background sticky inset-x-0 top-0 isolate z-10 flex shrink-0 items-center gap-2 border-b">
+    <div class="flex h-14 w-full items-center gap-2 px-4">
+      <button
+        type="button"
+        aria-label="Hide sidebar"
+        data-tooltip="Hide sidebar"
+        :data-tooltip="sidebarOpen ? 'Hide sidebar' : 'Show sidebar'"
+        data-side="bottom"
+        data-align="start"
+        class="btn-icon-ghost size-8 mr-auto"
+        x-init
+        x-data="{ sidebarOpen: true }"
+        @click="
+          sidebarOpen = !sidebarOpen;
+          $dispatch('dialog:sidebar', { action: 'toggle' });
+        "
+      >
+        <span x-show="sidebarOpen">{% lucide "panel-left-close" %}</span>
+        <span x-show="!sidebarOpen">{% lucide "panel-left-open" %}</span>
+      </button>
+      <select class="select h-8">
+        <option value="light">Default</option>
+        <option value="light">Other</option>
+      </select>
+      <button
+        type="button"
+        aria-label="Toggle theme"
+        data-tooltip="Toggle theme"
+        data-side="bottom"
+        data-align="end"
+        class="btn-icon-outline size-8"
+        x-init
+        @click="$store.theme.toggle()" 
+      >
+        <span x-show="$store.theme.isDark">{% lucide "sun" %}</span>
+        <span x-show="!$store.theme.isDark">{% lucide "moon" %}</span>
+      </button>
+    </div>
+  </header>
+
+  <div class="grid gap-4 p-4">
+    {% include "./_includes/components/accordion.njk" %}
+    {% include "./_includes/components/alert.njk" %}
+    {% include "./_includes/components/alert-dialog.njk" %}
+    {% include "./_includes/components/badge.njk" %}
+    {% include "./_includes/components/breadcrumb.njk" %}
+    {% include "./_includes/components/button.njk" %}
+    {% include "./_includes/components/checkbox.njk" %}
+    {% include "./_includes/components/dialog.njk" %}
+    {% include "./_includes/components/dropdown.njk" %}
+    {% include "./_includes/components/form.njk" %}
+    {% include "./_includes/components/input.njk" %}
+    {% include "./_includes/components/label.njk" %}
+    {% include "./_includes/components/pagination.njk" %}
+    {% include "./_includes/components/radio-group.njk" %}
+    {% include "./_includes/components/select.njk" %}
+    {# {% include "./_includes/components/slider.njk" %} #}
+    {% include "./_includes/components/switch.njk" %}
+    {% include "./_includes/components/table.njk" %}
+    {% include "./_includes/components/textarea.njk" %}
+    {% include "./_includes/components/tooltip.njk" %}  
   </div>
+</main>
 </body>
 </html>

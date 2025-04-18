@@ -1,4 +1,4 @@
-<section id="dialog" class="w-full rounded-lg border">
+<section id="dialog" class="w-full rounded-lg border scroll-mt-16">
   <header class="border-b px-4 py-3">
     <h2 class="text-sm font-medium">Dialog</h2>
   </header>
@@ -20,12 +20,12 @@
       ) %}
       <form class="form grid gap-4">
         <div class="grid gap-3">
-          <label>Name</label>
-          <input type="text" value="Pedro Duarte"/>
+          <label for="demo-dialog-edit-profile-name">Name</label>
+          <input type="text" value="Pedro Duarte" id="demo-dialog-edit-profile-name" />
         </div>
         <div class="grid gap-3">
-          <label>Username</label>
-          <input type="email" value="@peduarte"/>
+          <label for="demo-dialog-edit-profile-username">Username</label>
+          <input type="text" value="@peduarte" id="demo-dialog-edit-profile-username" />
         </div>
       </form>
       {% endcall %}
@@ -58,11 +58,11 @@
       </div>
       {% endcall %}
 
-      <button x-init @click="
-        console.log('clicked');
-        $dispatch('dialog:control', { targetId: 'dialog-example', action: 'open' })
-      "
-        type="button" class="btn-outline"
+      <button
+        x-init
+        @click="$dispatch('dialog:control', { targetId: 'dialog-example', action: 'open' })"
+        type="button"
+        class="btn-outline"
       >
         Trigger dialog:control
       </button>
