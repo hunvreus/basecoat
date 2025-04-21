@@ -1,0 +1,150 @@
+<section id="dropdown-menu" class="w-full rounded-lg border scroll-mt-16">
+  <header class="border-b px-4 py-3">
+    <h2 class="text-sm font-medium">Dropdown Menu</h2>
+  </header>
+  <div class="p-4">
+    <div class="flex flex-wrap items-start gap-4">
+      {% call popover(
+        id="dropdown-menu",
+        trigger="Open Menu",
+        trigger_attrs={"class": "btn-outline"},
+        content_attrs={"class": "min-w-56"}
+      ) %}
+        <nav role="menu">
+          <div role="group" aria-labelledby="account-options">
+            <span id="account-options" role="heading">Account Options</span>
+            <button type="button" role="menuitem">
+              Profile
+              <span class="text-muted-foreground ml-auto text-xs tracking-widest">⇧⌘P</span>
+            </button>
+            <button type="button" role="menuitem">
+              Billing
+              <span class="text-muted-foreground ml-auto text-xs tracking-widest">⌘B</span>
+            </button>
+            <button type="button" role="menuitem">
+              Settings
+              <span class="text-muted-foreground ml-auto text-xs tracking-widest">⌘S</span>
+            </button>
+            <button type="button" role="menuitem">
+              Keyboard shortcuts
+              <span class="text-muted-foreground ml-auto text-xs tracking-widest">⌘K</span>
+            </button>
+          </div>
+          <hr role="separator">
+          <button type="button" role="menuitem">GitHub</button>
+          <button type="button" role="menuitem">Support</button>
+          <button type="button" role="menuitem" disabled>API</button>
+          <hr role="separator">
+          <button type="button" role="menuitem">
+            Logout
+            <span class="text-muted-foreground ml-auto text-xs tracking-widest">⇧⌘P</span>
+          </button>
+        </nav>
+      {% endcall %}
+
+      {% set profile_menu %}
+        <nav role="menu">
+          <div class="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
+            <img alt="@hunvreus" src="https://github.com/hunvreus.png" class="size-8 shrink-0 rounded-full" alt="Ronan Berder"/>
+            <div class="grid flex-1 text-left text-sm leading-tight">
+              <span class="truncate font-medium">hunvreus</span>
+              <span class="text-muted-foreground truncate text-xs">hunvreus@example.com</span>
+            </div>
+          </div>
+          <hr role="separator">
+          <button type="button" role="menuitem">
+            {% lucide "star" %}
+            Upgrade to Pro
+          </button>
+          <hr role="separator">
+          <button type="button" role="menuitem">
+            {% lucide "user" %}
+            Account
+          </button>
+          <button type="button" role="menuitem">
+            {% lucide "credit-card" %}
+            Billing
+          </button>
+          <button type="button" role="menuitem">
+            {% lucide "bell" %}
+            Notifications
+          </button>
+          <hr role="separator">
+          <div role="group" aria-labelledby="theme-options">
+            <span id="theme-options" role="heading">Theme</span>
+            <button type="button" role="menuitem">
+              {% lucide "check", { "class": "text-foreground" } %}
+              Light
+            </button>
+            <button type="button" role="menuitem" >
+              {% lucide "check", { "class": "text-transparent" } %}
+              Dark
+            </button>
+            <button type="button" role="menuitem">
+              {% lucide "check", { "class": "text-transparent" } %}
+              System
+            </button>
+          </div>
+          <hr role="separator">
+          <button type="button" role="menuitem">
+            {% lucide "log-out" %}
+            Signout
+          </button>
+        </nav>
+      {% endset %}
+
+      {% set trigger %}
+        <img alt="@hunvreus" src="https://github.com/hunvreus.png" class="size-8 shrink-0 rounded-full" alt="Ronan Berder"/>
+        <div class="grid flex-1 text-left text-sm leading-tight">
+          <span class="truncate font-medium">hunvreus</span>
+          <span class="text-muted-foreground truncate text-xs">hunvreus@example.com</span>
+        </div>
+        {% lucide "chevrons-up-down", { "class": "text-muted-foreground ml-auto" } %}
+      {% endset %}
+      {% call popover(
+        id="dropdown-checkboxes",
+        trigger=trigger,
+        trigger_attrs={"class": "btn-outline h-12 justify-start px-2 md:max-w-[200px]"}
+      ) %}
+        {{ profile_menu | safe }}
+      {% endcall %}
+
+      {% set trigger %}
+        <img alt="@hunvreus" src="https://github.com/hunvreus.png" class="size-8 shrink-0 rounded-full" alt="Ronan Berder"/>
+      {% endset %}
+      {% call popover(
+        id="dropdown-checkboxes",
+        trigger=trigger,
+        trigger_attrs={"class": "btn-icon-ghost rounded-full size-8"}
+      ) %}
+        {{ profile_menu | safe }}
+      {% endcall %}
+
+      {% set trigger %}
+        {% lucide "ellipsis" %}
+      {% endset %}
+      {% call popover(
+        id="dropdown-checkboxes",
+        trigger=trigger,
+        trigger_attrs={"class": "btn-icon-ghost"},
+        content_attrs={"class": "min-w-32"}
+      ) %}
+        <nav role="menu">
+          <button type="button" role="menuitem">
+            {% lucide "pencil" %}
+            Edit
+          </button>
+          <button type="button" role="menuitem">
+            {% lucide "share" %}
+            Share
+          </button>
+          <hr role="separator">
+          <button type="button" role="menuitem" class="text-destructive hover:bg-destructive/10 dark:hover:bg-destructive/20 focus:bg-destructive/10 dark:focus:bg-destructive/20 focus:text-destructive [&_svg]:!text-destructive">
+            {% lucide "trash-2" %}
+            Delete
+          </button>
+        </nav>
+      {% endcall %}
+    </div>
+  </div>
+</section>

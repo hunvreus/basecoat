@@ -9,11 +9,11 @@
     </div>
     {% lucide "chevrons-up-down", { "class": "ml-auto" } %}
   {% endset %}
-  {% call dropdown(
-    id="dropdown-checkboxes",
+  {% call popover(
+    id="demo-sidebar-dropdown-org",
     trigger=trigger,
     trigger_attrs={"class": "btn-ghost p-2 h-12 w-full justify-start"},
-    menu_attrs={"data-side": "right"}
+    content_attrs={"data-side": "right"}
   ) %}
     Something
   {% endcall %}
@@ -26,7 +26,7 @@
     </form>
   </div>
 </header>
-<section class="flex flex-1 flex-col gap-2 overflow-y-auto">
+<section class="flex flex-1 flex-col gap-2 overflow-y-auto scrollbar">
   <nav aria-label="Pages navigation" class="flex flex-col p-2">
     <h2 class="text-sidebar-foreground/70 flex h-8 items-center px-2 text-xs font-medium">Pages</h2>
     <ul class="flex flex-col gap-1">
@@ -63,126 +63,44 @@
   <nav aria-label="Components navigation" class="flex flex-col p-2">
     <h2 class="text-sidebar-foreground/70 flex h-8 items-center px-2 text-xs font-medium">Components</h2>
     <ul class="flex flex-col gap-1">
-      <li>
-        <a
-          href="#accordion"
-          class="h-8 flex items-center gap-2 rounded-md p-2 text-left text-sm outline-hidden ring-sidebar-ring transition-[width,height,padding] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0"
-        >Accordion</a>
-      </li>
-      <li>
-        <a
-          href="#alert"
-          class="h-8 flex items-center gap-2 rounded-md p-2 text-left text-sm outline-hidden ring-sidebar-ring transition-[width,height,padding] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0"
-        >Alert</a>
-      </li>
-      <li>
-        <a
-          href="#alert-dialog"
-          class="h-8 flex items-center gap-2 rounded-md p-2 text-left text-sm outline-hidden ring-sidebar-ring transition-[width,height,padding] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0"
-        >Alert Dialog</a>
-      </li>
-      <li>
-        <a
-          href="#badge"
-          class="h-8 flex items-center gap-2 rounded-md p-2 text-left text-sm outline-hidden ring-sidebar-ring transition-[width,height,padding] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0"
-        >Badge</a>
-      </li>
-      <li>
-        <a
-          href="#breadcrumb"
-          class="h-8 flex items-center gap-2 rounded-md p-2 text-left text-sm outline-hidden ring-sidebar-ring transition-[width,height,padding] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0"
-        >Breadcrumb</a>
-      </li>
-      <li>
-        <a
-          href="#button"
-          class="h-8 flex items-center gap-2 rounded-md p-2 text-left text-sm outline-hidden ring-sidebar-ring transition-[width,height,padding] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0"
-        >Button</a>
-      </li>
-      <li>
-        <a
-          href="#checkbox"
-          class="h-8 flex items-center gap-2 rounded-md p-2 text-left text-sm outline-hidden ring-sidebar-ring transition-[width,height,padding] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0"
-        >Checkbox</a>
-      </li>
-      <li>
-        <a
-          href="#dialog"
-          class="h-8 flex items-center gap-2 rounded-md p-2 text-left text-sm outline-hidden ring-sidebar-ring transition-[width,height,padding] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0"
-        >Dialog</a>
-      </li>
-      <li>
-        <a
-          href="#dropdown"
-          class="h-8 flex items-center gap-2 rounded-md p-2 text-left text-sm outline-hidden ring-sidebar-ring transition-[width,height,padding] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0"
-        >Dropdown</a>
-      </li>
-      <li>
-        <a
-          href="#form"
-          class="h-8 flex items-center gap-2 rounded-md p-2 text-left text-sm outline-hidden ring-sidebar-ring transition-[width,height,padding] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0"
-        >Form</a>
-      </li>
-      <li>
-        <a
-          href="#input"
-          class="h-8 flex items-center gap-2 rounded-md p-2 text-left text-sm outline-hidden ring-sidebar-ring transition-[width,height,padding] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0"
-        >Input</a>
-      </li>
-      <li>
-        <a
-          href="#label"
-          class="h-8 flex items-center gap-2 rounded-md p-2 text-left text-sm outline-hidden ring-sidebar-ring transition-[width,height,padding] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0"
-        >Label</a>
-      </li>
-      <li>
-        <a
-          href="#pagination"
-          class="h-8 flex items-center gap-2 rounded-md p-2 text-left text-sm outline-hidden ring-sidebar-ring transition-[width,height,padding] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0"
-        >Pagination</a>
-      </li>
-      <li>
-        <a
-          href="#radio-group"
-          class="h-8 flex items-center gap-2 rounded-md p-2 text-left text-sm outline-hidden ring-sidebar-ring transition-[width,height,padding] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0"
-        >Radio Group</a>
-      </li>
-      <li>
-        <a
-          href="#select"
-          class="h-8 flex items-center gap-2 rounded-md p-2 text-left text-sm outline-hidden ring-sidebar-ring transition-[width,height,padding] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0"
-        >Select</a>
-      </li>
-      <li>
-        <a
-          href="#slider"
-          class="h-8 flex items-center gap-2 rounded-md p-2 text-left text-sm outline-hidden ring-sidebar-ring transition-[width,height,padding] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0"
-        >Slider</a>
-      </li>
-      <li>
-        <a
-          href="#switch"
-          class="h-8 flex items-center gap-2 rounded-md p-2 text-left text-sm outline-hidden ring-sidebar-ring transition-[width,height,padding] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0"
-        >Switch</a>
-      </li>
-      <li>
-        <a
-          href="#table"
-          class="h-8 flex items-center gap-2 rounded-md p-2 text-left text-sm outline-hidden ring-sidebar-ring transition-[width,height,padding] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0"
-        >Table</a>
-      </li>
-      <li>
-        <a
-          href="#textarea"
-          class="h-8 flex items-center gap-2 rounded-md p-2 text-left text-sm outline-hidden ring-sidebar-ring transition-[width,height,padding] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0"
-        >Textarea</a>
-      </li>
-      <li>
-        <a
-          href="#tooltip"
-          class="h-8 flex items-center gap-2 rounded-md p-2 text-left text-sm outline-hidden ring-sidebar-ring transition-[width,height,padding] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0"
-        >Tooltip</a>
-      </li>
+      {% set components = [
+        { "id": "accordion", "name": "Accordion" },
+        { "id": "alert", "name": "Alert" },
+        { "id": "alert-dialog", "name": "Alert Dialog" },
+        { "id": "avatar", "name": "Avatar" },
+        { "id": "badge", "name": "Badge" },
+        { "id": "breadcrumb", "name": "Breadcrumb" },
+        { "id": "button", "name": "Button" },
+        { "id": "card", "name": "Card" },
+        { "id": "checkbox", "name": "Checkbox" },
+        { "id": "combobox", "name": "Combobox" },
+        { "id": "dialog", "name": "Dialog" },
+        { "id": "dropdown-menu", "name": "Dropdown Menu" },
+        { "id": "form", "name": "Form" },
+        { "id": "input", "name": "Input" },
+        { "id": "label", "name": "Label" },
+        { "id": "pagination", "name": "Pagination" },
+        { "id": "popover", "name": "Popover" },
+        { "id": "radio-group", "name": "Radio Group" },
+        { "id": "select", "name": "Select" },
+        { "id": "skeleton", "name": "Skeleton" },
+        { "id": "slider", "name": "Slider" },
+        { "id": "switch", "name": "Switch" },
+        { "id": "table", "name": "Table" },
+        { "id": "tabs", "name": "Tabs" },
+        { "id": "textarea", "name": "Textarea" },
+        { "id": "tooltip", "name": "Tooltip" }
+      ] %}
+      {% for component in components %}
+        <li>
+          <a
+            href="#{{ component.id }}"
+            class="h-8 flex items-center gap-2 rounded-md p-2 text-left text-sm outline-hidden ring-sidebar-ring transition-[width,height,padding] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0"
+          >
+            {{ component.name }}
+          </a>
+        </li>
+      {% endfor %}
     </ul>
   </nav>
 </section>
@@ -191,49 +109,51 @@
     <div class="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
       <img src="https://avatar.vercel.sh/ronan_berder" class="size-8 shrink-0 rounded-full" alt="Ronan Berder"/>
       <div class="grid flex-1 text-left text-sm leading-tight">
-        <span class="truncate font-semibold">hunvreus</span>
+        <span class="truncate font-medium">hunvreus</span>
         <span class="text-muted-foreground truncate text-xs">hunvreus@example.com</span>
       </div>
     </div>
     <hr role="separator">
-    <button type="button" role="menuitem">
-      {% lucide "star" %}
-      Upgrade to Pro
-    </button>
-    <hr role="separator">
-    <button type="button" role="menuitem">
-      {% lucide "user" %}
-      Account
-    </button>
-    <button type="button" role="menuitem">
-      {% lucide "credit-card" %}
-      Billing
-    </button>
-    <button type="button" role="menuitem">
-      {% lucide "bell" %}
-      Notifications
-    </button>
-    <hr role="separator">
-    <button type="button" role="menuitem">
-      {% lucide "log-out" %}
-      Signout
-    </button>
+    <nav role="menu">
+      <button type="button" role="menuitem">
+        {% lucide "star" %}
+        Upgrade to Pro
+      </button>
+      <hr role="separator">
+      <button type="button" role="menuitem">
+        {% lucide "user" %}
+        Account
+      </button>
+      <button type="button" role="menuitem">
+        {% lucide "credit-card" %}
+        Billing
+      </button>
+      <button type="button" role="menuitem">
+        {% lucide "bell" %}
+        Notifications
+      </button>
+      <hr role="separator">
+      <button type="button" role="menuitem">
+        {% lucide "log-out" %}
+        Signout
+      </button>
+    </nav>
   {% endset %}
 
   {% set trigger %}
     <img src="https://avatar.vercel.sh/ronan_berder" class="size-8 shrink-0 rounded-full" alt="Ronan Berder"/>
     <div class="grid flex-1 text-left text-sm leading-tight">
-      <span class="truncate font-semibold">hunvreus</span>
+      <span class="truncate font-medium">hunvreus</span>
       <span class="text-muted-foreground truncate text-xs">hunvreus@example.com</span>
     </div>
     {% lucide "chevrons-up-down", { "class": "text-muted-foreground ml-auto" } %}
   {% endset %}
 
-  {% call dropdown(
-    id="dropdown-checkboxes",
+  {% call popover(
+    id="demo-sidebar-dropdown-account",
     trigger=trigger,
     trigger_attrs={"class": "btn-ghost h-12 justify-start p-2 w-full"},
-    menu_attrs={"class": "min-w-56", "data-side": "right", "data-align": "end"}
+    content_attrs={"class": "min-w-56", "data-side": "right", "data-align": "end"}
   ) %}
     {{ profile_menu | safe }}
   {% endcall %}

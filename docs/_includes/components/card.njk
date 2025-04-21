@@ -1,0 +1,144 @@
+<section id="card" class="w-full rounded-lg border scroll-mt-16">
+  <header class="border-b px-4 py-3">
+    <h2 class="text-sm font-medium">Card</h2>
+  </header>
+  <div class="p-4">
+    <div class="flex flex-col items-start gap-4">
+      <div class="card w-full max-w-sm">
+        <header>
+          <h2>Login to your account</h2>
+          <p>Enter your details below to login to your account</p>
+        </header>
+        <section>
+          <form class="form grid gap-6">
+            <div class="grid gap-2">
+              <label for="demo-card-form-email">Email</label>
+              <input type="email" id="demo-card-form-email">
+            </div>
+            <div class="grid gap-2">
+              <div class="flex items-center gap-2">
+                <label for="demo-card-form-password">Password</label>
+                <a href="#" class="ml-auto inline-block text-sm underline-offset-4 hover:underline">Forgot your password?</a>
+              </div>
+              <input type="password" id="demo-card-form-password">
+            </div>
+          </form>
+        </section>
+        <footer class="flex flex-col items-center gap-2">
+          <button type="button" class="btn w-full">Login</button>
+          <button type="button" class="btn-outline w-full">Login with Google</button>
+          <p class="mt-4 text-center text-sm">Don't have an account? <a href="#" class="underline-offset-4 hover:underline">Sign up</a></p>
+        </footer>
+      </div>
+
+      <div class="card">
+        <header>
+          <h2>Meeting Notes</h2>
+          <p>Transcript from the meeting with the client.</p>
+        </header>
+        <section class="text-sm">
+          <p>Client requested dashboard redesign with focus on mobile responsiveness.</p>
+          <ol class="mt-4 flex list-decimal flex-col gap-2 pl-6">
+            <li>New analytics widgets for daily/weekly metrics</li>
+            <li>Simplified navigation menu</li>
+            <li>Dark mode support</li>
+            <li>Timeline: 6 weeks</li>
+            <li>Follow-up meeting scheduled for next Tuesday</li>
+          </ol>
+        </section>
+        <footer class="flex items-center">
+          <div class="flex -space-x-2 [&_img]:ring-background [&_img]:ring-2 [&_img]:grayscale [&_img]:size-8 [&_img]:shrink-0 [&_img]:object-cover [&_img]:rounded-full">
+            <img alt="@hunvreus" src="https://github.com/hunvreus.png">
+            <img alt="@shadcn" src="https://github.com/shadcn.png">
+            <img alt="@adamwathan" src="https://github.com/adamwathan.png">
+          </div>
+        </footer>
+      </div>
+
+      <div class="card">
+        <header>
+          <h2>Is this an image?</h2>
+          <p>This is a card with an image.</p>
+        </header>
+        <section class="px-0">
+          <img
+            alt="Photo by Drew Beamer"
+            loading="lazy"
+            width="500"
+            height="500"
+            class="aspect-video object-cover" style="color:transparent"
+            srcset="
+              https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80&w=640&q=75 1x,
+              https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80&w=1080&q=75 2x
+            "
+            src="https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80&w=1080&q=75"
+          />
+        </section>
+        <footer class="flex items-center gap-2">
+          <span class="badge-outline">
+            {% lucide "bed" %}
+            1
+          </span>
+          <span class="badge-outline">
+            {% lucide "bath" %}
+            2
+          </span>
+          <span class="badge-outline">
+            {% lucide "land-plot" %}
+            350m²
+          </span>
+          <span class="ml-auto font-medium tabular-nums">
+            $135,000
+          </span>
+        </footer>
+      </div>
+
+      <div class="flex w-full flex-wrap items-start gap-8 md:*:[.card]:basis-1/4">
+        <div class="card">
+          <section>Content Only</section>
+        </div>
+
+        <div class="card">
+          <header>
+            <h2>Header Only</h2>
+            <p>This is a card with a header and a description.</p>
+          </header>
+        </div>
+
+        <div class="card">
+          <header>
+            <h2>Header and Content</h2>
+            <p>This is a card with a header and a content.</p>
+          </header>
+          <section>Content only.</section>
+        </div>
+
+        <div class="card">
+          <footer>Footer Only</footer>
+        </div>
+
+        <div class="card">
+          <header>
+            <h2>Header + Footer</h2>
+            <p>This is a card with a header and a footer.</p>
+          </header>
+          <footer>Footer</footer>
+        </div>
+
+        <div class="card">
+          <section>Content</section>
+          <footer>Footer</footer>
+        </div>
+
+        <div class="card">
+          <header>
+            <h2>Header + Content + Footer</h2>
+            <p>This is a card with a header, content and footer.</p>
+          </header>
+          <section>Content</section>
+          <footer>Footer</footer>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

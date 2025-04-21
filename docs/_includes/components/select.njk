@@ -5,26 +5,51 @@
   <div class="p-4">
     <div class="flex flex-wrap items-center gap-4">
       <select class="select">
-        <option>Orange</option>
-        <option>Apple</option>
-        <option>Strawberry</option>
+        <optgroup label="Colors">
+          <option>Fuchsia</option>
+          <option selected>Cyan</option>
+          <option>Amber</option>
+        </optgroup>
+        <optgroup label="Gradients">
+          <option>Fuchsia to Cyan</option>
+          <option>Cyan to Amber</option>
+          <option>Amber to Fuchsia</option>
+        </optgroup>
       </select>
 
       {% call select(
-        value="banana",
-        input_name="demo-food-select"
+        selected="cyan"
       ) %}
+      
       <div role="group" aria-labelledby="fruit-options-label">
-        <span id="fruit-options-label" role="heading">Fruits</span>
-        <button type="button" role="option" data-value="orange">🍊 Orange</button>
-        <button type="button" role="option" data-value="apple">🍎 Apple</button>
-        <button type="button" role="option" data-value="banana">🍌 Banana</button>
+        <span id="fruit-options-label" role="heading">Colors</span>
+        <div type="button" role="option" data-value="fuchsia">
+          <span class="rounded-full size-4 bg-fuchsia-500"></span>
+          Fuchsia
+        </div>
+        <div type="button" role="option" data-value="cyan">
+          <span class="rounded-full size-4 bg-cyan-500"></span>
+          Cyan
+        </div>
+        <div type="button" role="option" data-value="amber">
+          <span class="rounded-full size-4 bg-amber-500"></span>
+          Amber
+        </div>
       </div>
       <div role="group" aria-labelledby="vegetable-options-label">
-        <span id="vegetable-options-label" role="heading">Vegetables</span>
-        <button type="button" role="option" data-value="carrot">🥕 Carrot</button>
-        <button type="button" role="option" data-value="potato">🥔 Potato</button>
-        <button type="button" role="option" data-value="broccoli">🥦 Broccoli</button>
+        <span id="vegetable-options-label" role="heading">Gradients</span>
+        <div type="button" role="option" data-value="fuchsia-to-cyan">
+          <span class="rounded-full size-4 bg-linear-to-bl from-fuchsia-500 to-cyan-500"></span>
+          Amber to Cyan
+        </div>
+        <div type="button" role="option" data-value="cyan-to-amber">
+          <span class="rounded-full size-4 bg-linear-to-bl from-cyan-500 to-amber-500"></span>
+          Cyan to Amber
+        </div>
+        <div type="button" role="option" data-value="amber-to-fuchsia">
+          <span class="rounded-full size-4 bg-linear-to-bl from-amber-500 to-fuchsia-500"></span>
+          Amber to Fuchsia
+        </div>
       </div>
       {% endcall %}
   </div>

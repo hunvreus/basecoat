@@ -1,15 +1,12 @@
-{% macro dropdown(
-    id=None,
-    trigger=None,
-    main_attrs=None,
-    trigger_attrs=None,
-    menu_attrs=None
-  )
-%}
-{% if registerComponent('dropdown') %}
+{% macro toast(
+  id='toasts',
+  messages=None,
+  main_attrs=None
+) %}
+{% if registerComponent('toast') %}
 <script>
   document.addEventListener('alpine:init', () => {
-    Alpine.data('dropdown', () => ({
+    Alpine.data('toast', () => ({
       open: false,
       focusedIndex: -1,
       menuItems: [],
@@ -78,44 +75,81 @@
 {% endif %}
 
 <div
-  class="dropdown {% if main_attrs %}{{ main_attrs.pop('class', '') }}{% endif %}"
-  x-data="dropdown"
-  @click.away="open = false"
-  {% if id %}id="{{ id }}"{% endif %}
+  id="{{ id }}"
+  class="toasts"
+  x-data="toast"
   {% for key, value in main_attrs %}
     {{ key }}="{{ value }}"
   {% endfor %}
 >
-  {% if trigger %}
-  <button
-    type="button"
-    aria-haspopup="menu"
-    aria-expanded="false"
-    aria-pressed="false"
-    x-bind="$trigger"
-    {% if id %}
-    id="{{ id }}-trigger"
-    aria-controls="{{ id }}-menu"
-    {% endif %}
-    {% for key, value in trigger_attrs %}
-      {{ key }}="{{ value }}"
-    {% endfor %}
-  >
-    {{ trigger | safe }}
-  </button>
-  {% endif %}
-  <nav
-    role="menu"
-    aria-orientation="vertical"
+{% for category, message in toasts %}
+  <div
+    x-data="{
+      active: true,
+      init() {
+        if ('{{ category }}' !== 'error') setTimeout(() => this.active = false, 3000)
+      }
+    }"
+    role="{{ 'alert' if category == 'error' else 'status' }}"
+    aria-atomic="true"
     aria-hidden="true"
-    x-bind="$menu"
-    {% if id %}id="{{ id }}-menu"{% endif %}
-    {% for key, value in menu_attrs %}
-      {{ key }}="{{ value }}"
-    {% endfor %}
+    :aria-hidden="!active"
+    :inert="!active"
   >
-    {{ caller() }}
-  </nav>
+    <button
+      x-on:click="active = !active"
+      aria-label="{{ _('Dismiss') }}"
+    >
+      {% include "icons/x.svg" %}
+    </button>
+    <section class="w-full text-left flex-1">
+      {% if message is string %}
+        <p class="font-medium w-full text-left flex-1">{{ message }}</p>
+      {% else %}
+        <h4 class="font-medium mb-1">{{ message.title }}</h4>
+        <p class="text-muted-foreground">{{ message.description }}</p>
+        {% if message.action %}
+          <a
+            href="{{ message.action.url }}"
+            class="btn-outline h-8 px-2.5 mt-4"
+          >{{ message.action.label }}</a>
+        {% endif %}
+      {% endif %}
+    </section>
+    {% if category in ('error', 'success') %}
+      {% if category == 'error' %}
+        <div class="text-danger py-0.5">
+          {% include "icons/circle-x.svg" %}
+        </div>
+      {% elif category == 'success' %}
+        <div class="text-success py-0.5">
+          {% include "icons/circle-check.svg" %}
+        </div>
+      {% endif %}
+    {% endif %}
+  </div>
+{% endfor %}
 </div>
 {% endmacro %}
 
+
+
+{% macro toasts(
+  id=None,
+  messages=None,
+  flash=True
+) %}
+{% if flash %}
+  {% set toasts = (messages or []) + get_flashed_messages(with_categories=true) %}
+{% else %}
+  {% set toasts = messages or [] %}
+{% endif %}
+<div
+  class="toasts"
+  id="{{ id or 'toasts' }}"
+  {}
+  
+>
+
+</div>
+{% endmacro %}

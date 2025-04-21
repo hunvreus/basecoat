@@ -48,14 +48,14 @@
 </head>
 <body>
 {% from "./_components/dialog.njk" import dialog %}
-{% from "./_components/dropdown.njk" import dropdown %}
+{% from "./_components/popover.njk" import popover %}
 {% from "./_components/select.njk" import select %}
 
 <div
   class="fixed inset-y-0 left-0 z-50 h-svh border-r bg-sidebar text-sidebar-foreground flex flex-col w-[var(--sidebar-width)] transition-transform ease-in-out peer aria-[hidden=true]:-translate-x-full"
   aria-hidden="false"
   :aria-hidden="open ? 'false' : 'true'"
-  @dialog:sidebar.window="toggle()"
+  @sidebar:toggle.window="toggle()"
   x-data="{
     open: true,
     toggle() { this.open = !this.open }
@@ -79,13 +79,12 @@
         x-data="{ sidebarOpen: true }"
         @click="
           sidebarOpen = !sidebarOpen;
-          $dispatch('dialog:sidebar', { action: 'toggle' });
+          $dispatch('sidebar:toggle');
         "
       >
-        <span x-show="sidebarOpen">{% lucide "panel-left-close" %}</span>
-        <span x-show="!sidebarOpen">{% lucide "panel-left-open" %}</span>
+        {% lucide "panel-left" %}
       </button>
-      <select class="select h-8">
+      <select class="select h-8 leading-none">
         <option value="light">Default</option>
         <option value="light">Other</option>
       </select>
@@ -109,21 +108,27 @@
     {% include "./_includes/components/accordion.njk" %}
     {% include "./_includes/components/alert.njk" %}
     {% include "./_includes/components/alert-dialog.njk" %}
+    {% include "./_includes/components/avatar.njk" %}
     {% include "./_includes/components/badge.njk" %}
     {% include "./_includes/components/breadcrumb.njk" %}
     {% include "./_includes/components/button.njk" %}
+    {% include "./_includes/components/card.njk" %}
     {% include "./_includes/components/checkbox.njk" %}
+    {% include "./_includes/components/combobox.njk" %}
     {% include "./_includes/components/dialog.njk" %}
-    {% include "./_includes/components/dropdown.njk" %}
+    {% include "./_includes/components/dropdown-menu.njk" %}
     {% include "./_includes/components/form.njk" %}
     {% include "./_includes/components/input.njk" %}
     {% include "./_includes/components/label.njk" %}
     {% include "./_includes/components/pagination.njk" %}
+    {% include "./_includes/components/popover.njk" %}
     {% include "./_includes/components/radio-group.njk" %}
     {% include "./_includes/components/select.njk" %}
-    {# {% include "./_includes/components/slider.njk" %} #}
+    {% include "./_includes/components/skeleton.njk" %}
+    {% include "./_includes/components/slider.njk" %}
     {% include "./_includes/components/switch.njk" %}
     {% include "./_includes/components/table.njk" %}
+    {% include "./_includes/components/tabs.njk" %}
     {% include "./_includes/components/textarea.njk" %}
     {% include "./_includes/components/tooltip.njk" %}  
   </div>

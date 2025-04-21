@@ -12,14 +12,16 @@
         {% set trigger %}
           {% lucide "ellipsis" %}
         {% endset %}
-        {% call dropdown(
-          id="dropdown-menu",
+        {% call popover(
+          id="demo-breadcrumb-menu",
           trigger=trigger,
-          trigger_attrs={"class": "flex size-9 items-center justify-center h-4 w-4"}
+          trigger_attrs={"class": "flex size-9 items-center justify-center h-4 w-4 hover:text-foreground cursor-pointer"}
         ) %}
-          <button type="button" role="menuitem">Documentation</button>
-          <button type="button" role="menuitem">Themes</button>
-          <button type="button" role="menuitem">GitHub</button>
+          <nav role="menu">
+            <button type="button" role="menuitem">Documentation</button>
+            <button type="button" role="menuitem">Themes</button>
+            <button type="button" role="menuitem">GitHub</button>
+          </nav>
         {% endcall %}
       </li>
       <li>{% lucide "chevron-right", { "class": "size-3.5" } %}</li>

@@ -1,20 +1,19 @@
 {% macro dialog(
-    id,
-    trigger=None,
-    title=None,
-    description=None,
-    footer=None,
-    main_attrs={},
-    trigger_attrs={},
-    content_attrs={},
-    content_header_attrs={},
-    content_body_attrs={},
-    content_footer_attrs={},
-    open=false,
-    close_button=true,
-    close_on_overlay_click=true
-  )
-%}
+  id,
+  trigger=None,
+  title=None,
+  description=None,
+  footer=None,
+  main_attrs={},
+  trigger_attrs={},
+  content_attrs={},
+  content_header_attrs={},
+  content_body_attrs={},
+  content_footer_attrs={},
+  open=false,
+  close_button=true,
+  close_on_overlay_click=true
+) %}
 {% if registerComponent('dialog') %}
 <script>
   document.addEventListener('alpine:init', () => {

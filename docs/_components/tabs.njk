@@ -1,15 +1,14 @@
-{% macro dropdown(
-    id=None,
-    trigger=None,
+{% macro tabs(
+    tabs,
     main_attrs=None,
     trigger_attrs=None,
-    menu_attrs=None
+    content_attrs=None
   )
 %}
-{% if registerComponent('dropdown') %}
+{% if registerComponent('toast') %}
 <script>
   document.addEventListener('alpine:init', () => {
-    Alpine.data('dropdown', () => ({
+    Alpine.data('toast', () => ({
       open: false,
       focusedIndex: -1,
       menuItems: [],
@@ -78,8 +77,8 @@
 {% endif %}
 
 <div
-  class="dropdown {% if main_attrs %}{{ main_attrs.pop('class', '') }}{% endif %}"
-  x-data="dropdown"
+  class="toast {% if main_attrs %}{{ main_attrs.pop('class', '') }}{% endif %}"
+  x-data="toast"
   @click.away="open = false"
   {% if id %}id="{{ id }}"{% endif %}
   {% for key, value in main_attrs %}
