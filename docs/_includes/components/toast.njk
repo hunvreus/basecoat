@@ -1,23 +1,134 @@
-<section id="toast" class="w-full rounded-lg border scroll-mt-16">
-  <header class="border-b px-4 py-3">
-    <h2 class="text-sm font-medium">Toast</h2>
-  </header>
-  <div class="p-4">
-    <div class="flex flex-wrap items-center gap-2">
-    <div class="flex flex-wrap items-center gap-2">
-      <button class="btn-outline" hx-trigger="click" hx-get="/partials/toast/success" hx-target="#toast-htmx">
-        Success
-      </button>
-      <button class="btn-outline" hx-trigger="click" hx-get="/partials/toast/error" hx-target="#toast-htmx">
-        Error
-      </button>
-      <button class="btn-outline" hx-trigger="click" hx-get="/partials/toast/info" hx-target="#toast-htmx">
-        Info
-      </button>
-      <button class="btn-outline" hx-trigger="click" hx-get="/partials/toast/warning" hx-target="#toast-htmx">
-        Warning
-      </button>
-      <div id="toast-htmx"></div>
+{% macro toaster(
+  id="toaster",
+  toasts=[],
+  main_attrs=None,
+  is_fragment=false
+) %}
+{% if not is_fragment and registerComponent('toast') %}
+<script>
+  document.addEventListener('alpine:init', () => {
+    Alpine.store('toaster', { isPaused: false });
+    Alpine.data('toast', (category = []) => ({
+      open: false,
+      timeoutDuration: null,
+      timeoutId: null,
+
+      init() {
+        this.timeoutDuration =  category === 'error' ? 5000 : 3000;
+        this.timeoutId = setTimeout(() => { this.close() }, this.timeoutDuration);
+        this.open = true;
+        this.$watch('$store.toaster.isPaused', (isPaused) => {
+          if (!this.open) return;
+          if (isPaused) {
+            this.pauseTimeout();
+          } else {
+            this.resumeTimeout();
+          }
+        });
+      },
+      pauseTimeout() {
+        clearTimeout(this.timeoutId);
+        this.timeoutId = null;
+      },
+      resumeTimeout(index) {
+        if (this.open && this.timeoutId === null) {
+          this.timeoutId = setTimeout(() => { this.close() }, this.timeoutDuration);
+        }
+      },
+      close() {
+        this.pauseTimeout();
+        this.open = false;
+        this.$el.blur();
+      },
+
+      $toast: {
+        ['@mouseenter']() { this.$store.toaster.isPaused = true },
+        ['@mouseleave']() { this.$store.toaster.isPaused = false },
+        ['@keydown.escape.window']() { this.close() },
+      },
+    }));
+  });
+</script>
+{% endif %}
+
+{% set iconMapping = {
+  'error': 'circle-x',
+  'success': 'circle-check',
+  'info': 'info',
+  'warning': 'circle-alert'
+} %}
+
+<div
+  id="{{ id }}"
+  class="toaster"
+  {% for key, value in main_attrs %}
+    {{ key }}="{{ value }}"
+  {% endfor %}
+  {% if is_fragment %}hx-swap-oob="beforeend"{% endif %}
+>
+{% for toast in toasts %}
+  <div
+    class="toast"
+    role="{{ 'alert' if toast.category == 'error' else 'status' }}"
+    aria-atomic="true"
+    aria-hidden="false"
+    :aria-hidden="!open"
+    {% if toast.category %}data-category="{{ toast.category }}"{% endif %}
+    x-data="toast('{{ toast.category }}')"
+    x-bind="$toast"
+  >
+    <div class="toast-content">
+      <div class="flex items-center justify-between gap-x-3 p-4">
+        {% if toast.category in ["error", "success", "info", "warning"] %}
+          {% lucide iconMapping[toast.category], class="size-4 shrink-0" %}
+        {% endif %}
+        <section class="flex-1 flex flex-col gap-0.5 items-start">
+          {% if toast.message is string %}
+            <h2 class="font-medium">{{ toast.message }}</h2>
+          {% elif toast.message is mapping %}
+            {% if toast.message.title %}
+              <h2 class="font-medium">{{ toast.message.title }}</h2>
+            {% endif %}
+            {% if toast.message.description %}
+              <p class="text-muted-foreground">{{ toast.message.description }}</p>
+            {% endif %}
+          {% endif %}
+        </section>
+        {% if toast.message.action or toast.message.cancel %}
+          <footer class="flex flex-col gap-1 self-start">
+            {% if toast.message.action %}
+              {% if toast.message.action.click %}
+                <button
+                  type="button"
+                  class="btn h-6 text-xs px-2.5 rounded-sm"
+                  @click="{{ toast.message.action.click }}"
+                >{{ toast.message.action.label }}</button>
+              {% elif toast.message.action.url %}
+                <a
+                  href="{{ toast.message.action.url }}"
+                  class="btn h-6 text-xs px-2.5 rounded-sm"
+                >{{ toast.message.action.label }}</a>
+              {% endif %}
+            {% endif %}
+            {% if toast.message.cancel %}
+              {% if toast.message.cancel.click %}
+                <button
+                  type="button"
+                  class="btn-outline h-6 text-xs px-2.5 rounded-sm"
+                  @click="{{ toast.message.cancel.click }}"
+                >{{ toast.message.cancel.label }}</button>
+              {% elif toast.message.cancel.url %}
+                <a
+                  href="{{ toast.message.cancel.url }}"
+                  class="btn-outline h-6 text-xs px-2.5 rounded-sm"
+                >{{ toast.message.cancel.label }}</a>
+              {% endif %}
+            {% endif %}
+          </footer>
+        {% endif %}
+      </div>
     </div>
   </div>
-</section>
+{% endfor %}
+</div>
+{% endmacro %}

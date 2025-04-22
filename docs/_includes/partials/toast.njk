@@ -1,0 +1,23 @@
+<section id="toast" class="w-full rounded-lg border scroll-mt-16">
+  <header class="border-b px-4 py-3">
+    <h2 class="text-sm font-medium">Toast</h2>
+  </header>
+  <div class="p-4">
+    <div class="flex flex-wrap items-center gap-2">
+    <div class="flex flex-wrap items-center gap-2">
+      <button class="btn-outline" hx-trigger="click" hx-get="/partials/toast/success" hx-target="#toast-htmx">
+        Success
+      </button>
+      <button class="btn-outline" hx-trigger="click" hx-get="/partials/toast/error" hx-target="#toast-htmx">
+        Error
+      </button>
+      <button class="btn-outline" hx-trigger="click" hx-get="/partials/toast/info" hx-target="#toast-htmx">
+        Info
+      </button>
+      <button class="btn-outline" hx-trigger="click" hx-get="/partials/toast/warning" hx-target="#toast-htmx">
+        Warning
+      </button>
+      <div id="toast-htmx"></div>
+    </div>
+  </div>
+</section>

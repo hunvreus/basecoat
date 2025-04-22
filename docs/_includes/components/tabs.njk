@@ -1,167 +1,120 @@
+{% macro tabs(
+    tabs,
+    main_attrs=None,
+    trigger_attrs=None,
+    content_attrs=None
+  )
+%}
+{% if registerComponent('toast') %}
 <script>
   document.addEventListener('alpine:init', () => {
-    Alpine.data('tabs', () => ({
-      activeTabIndex: 0,
-      tabs: [],
-      panels: [],
+    Alpine.data('toast', () => ({
+      open: false,
+      focusedIndex: -1,
+      menuItems: [],
 
       init() {
         this.$nextTick(() => {
-          this.tabs = Array.from(this.$el.querySelectorAll('[role=tab]:not([disabled])'));
-          this.panels = Array.from(this.$el.querySelectorAll('[role=tabpanel]'));
-
-          if (this.tabs.length > 0) {
-            this.selectTab(this.tabs[0], false);
-          }
+          const menuElement = this.$el.querySelector('[role="menu"]');
+          this.menuItems = Array.from(menuElement.querySelectorAll('[role=menuitem]'));
         });
       },
-      nextTab() {
-        if (this.tabs.length === 0) return;
-        let newIndex = (this.activeTabIndex + 1) % this.tabs.length;
-        this.selectTab(this.tabs[newIndex]);
+      
+      $trigger: {
+        '@click'() { this.handleClick() },
+        '@keydown.down.prevent'() { this.open && this.nextItem() },
+        ':aria-expanded'() { return this.open },
+        ':aria-pressed'() { return this.open }
       },
-      prevTab() {
-        if (this.tabs.length === 0) return;
-        let newIndex = (this.activeTabIndex - 1 + this.tabs.length) % this.tabs.length;
-        this.selectTab(this.tabs[newIndex]);
+      
+      $menu: {
+        '@click'(e) { this.handleMenuItemClick(e) },
+        '@keydown.escape.window'() { this.handleEscape() },
+        '@keydown.down.prevent'() { this.nextItem() },
+        '@keydown.up.prevent'() { this.prevItem() },
+        '@keydown.home.prevent'() { this.focusItem(0) },
+        '@keydown.end.prevent'() { this.focusItem(this.menuItems.length - 1) },
+        ':aria-hidden'() { return !this.open },
+        'x-cloak': ''
       },
-      selectTab(tab, focus = true) {
-        if (!tab || this.tabs.length === 0) return;
-
-        this.tabs.forEach((t, index) => {
-          const isSelected = t === tab;
-          t.setAttribute('aria-selected', isSelected);
-          t.setAttribute('tabindex', isSelected ? '0' : '-1');
-          if (isSelected) {
-            this.activeTabIndex = index;
-            this.activeTab = t;
-            if (focus) {
-              t.focus();
-            }
-          }
+      
+      focusItem(index) {
+        if (index >= 0 && index < this.menuItems.length) {
+          this.focusedIndex = index;
+          this.menuItems[index].focus();
+        }
+      },
+      
+      nextItem() {
+        this.focusItem((this.focusedIndex + 1) % this.menuItems.length);
+      },
+      
+      prevItem() {
+        this.focusItem(this.focusedIndex <= 0 ? this.menuItems.length - 1 : this.focusedIndex - 1);
+      },
+      
+      handleClick() {
+        this.open = !this.open;
+        this.$nextTick(() => {
+          if(this.open && this.menuItems.length) this.focusItem(0);
         });
-
-        const panelId = tab.getAttribute('aria-controls');
-        if (!panelId) return;
-
-        this.panels.forEach(panel => {
-            panel.hidden = (panel.getAttribute('id') !== panelId);
-        });
       },
-
-      $tablist: {
-        ['@click'](event) {
-            const clickedTab = event.target.closest('[role=tab]');
-            if (clickedTab) {
-                this.selectTab(clickedTab);
-            }
-        },
-        ['@keydown.arrow-right.prevent']() { this.nextTab() },
-        ['@keydown.arrow-left.prevent']() { this.prevTab() },
+      
+      handleEscape() {
+        if (this.open) this.open = false;
+      },
+      
+      handleMenuItemClick(event) {
+        const menuItem = event.target.closest('[role=menuitem]');
+        if (menuItem && !menuItem.disabled) {
+          menuItem.blur();
+          this.open = false;
+        }
       },
     }));
   });
 </script>
+{% endif %}
 
-<section id="tabs" class="w-full rounded-lg border scroll-mt-16">
-  <header class="border-b px-4 py-3">
-    <h2 class="text-sm font-medium">Tabs</h2>
-  </header>
-  <div class="p-4">
-    <div class="flex flex-col gap-6">
-      <div class="tabs flex flex-col gap-2 max-w-[300px]" x-data="tabs">
-        <div role="tablist" aria-orientation="horizontal" aria-label="Feature Sections" class="w-full" x-bind="$tablist">
-          <button role="tab" id="demo-tab-account" aria-controls="demo-panel-account" aria-selected="true" tabindex="0">
-            Account
-          </button>
-          <button role="tab" id="demo-tab-password" aria-controls="demo-panel-password" aria-selected="false" tabindex="-1">
-            Password
-          </button>
-        </div>
+<div
+  class="toast {% if main_attrs %}{{ main_attrs.pop('class', '') }}{% endif %}"
+  x-data="toast"
+  @click.away="open = false"
+  {% if id %}id="{{ id }}"{% endif %}
+  {% for key, value in main_attrs %}
+    {{ key }}="{{ value }}"
+  {% endfor %}
+>
+  {% if trigger %}
+  <button
+    type="button"
+    aria-haspopup="menu"
+    aria-expanded="false"
+    aria-pressed="false"
+    x-bind="$trigger"
+    {% if id %}
+    id="{{ id }}-trigger"
+    aria-controls="{{ id }}-menu"
+    {% endif %}
+    {% for key, value in trigger_attrs %}
+      {{ key }}="{{ value }}"
+    {% endfor %}
+  >
+    {{ trigger | safe }}
+  </button>
+  {% endif %}
+  <nav
+    role="menu"
+    aria-orientation="vertical"
+    aria-hidden="true"
+    x-bind="$menu"
+    {% if id %}id="{{ id }}-menu"{% endif %}
+    {% for key, value in menu_attrs %}
+      {{ key }}="{{ value }}"
+    {% endfor %}
+  >
+    {{ caller() }}
+  </nav>
+</div>
+{% endmacro %}
 
-        <div role="tabpanel" id="demo-panel-account"  aria-labelledby="demo-tab-account" tabindex="-1">
-          <div class="card">
-            <header>
-              <h2>Account</h2>
-              <p>Make changes to your account here. Click save when you're done.</p>
-            </header>
-            <section>
-              <form class="form grid gap-6">
-                <div class="grid gap-3">
-                  <label for="demo-tabs-account-name">Name</label>
-                  <input type="text" id="demo-tabs-account-name" value="Pedro Duarte" />
-                </div>
-                <div class="grid gap-3">
-                  <label for="demo-tabs-account-username">Username</label>
-                  <input type="text" id="demo-tabs-account-username" value="@peduarte" />
-                </div>
-              </form>
-            </section>
-            <footer>
-              <button type="button" class="btn">Save changes</button>
-            </footer>
-          </div>
-        </div>
-
-        <div role="tabpanel" id="demo-panel-password"  aria-labelledby="demo-tab-password" tabindex="-1" hidden>
-          <div class="card">
-            <header>
-              <h2>Password</h2>
-              <p>Change your password here. After saving, you'll be logged out.</p>
-            </header>
-            <section>
-              <form class="form grid gap-6">
-                <div class="grid gap-3">
-                  <label for="demo-tabs-password-current">Current password</label>
-                  <input type="password" id="demo-tabs-password-current" />
-                </div>
-                <div class="grid gap-3">
-                  <label for="demo-tabs-password-new">New password</label>
-                  <input type="password" id="demo-tabs-password-new"/>
-                </div>
-              </form>
-            </section>
-            <footer>
-              <button type="button" class="btn">Save Password</button>
-            </footer>
-          </div>
-        </div>
-      </div>
-
-      <div class="tabs" x-data="tabs">
-        <div role="tablist" aria-orientation="horizontal" aria-label="Feature Sections" x-bind="$tablist">
-          <button role="tab" aria-selected="true" tabindex="0">
-            Home
-          </button>
-          <button role="tab" aria-selected="false" tabindex="-1">
-            Settings
-          </button>
-        </div>
-      </div>
-
-      <div class="tabs" x-data="tabs">
-        <div role="tablist" aria-orientation="horizontal" aria-label="Feature Sections" x-bind="$tablist">
-          <button role="tab" aria-selected="true" tabindex="0">
-            Home
-          </button>
-          <button role="tab" aria-selected="false" tabindex="-1" disabled>
-            Disabled
-          </button>
-        </div>
-      </div>
-
-      <div class="tabs" x-data="tabs">
-        <div role="tablist" aria-orientation="horizontal" aria-label="Feature Sections" x-bind="$tablist">
-          <button role="tab" aria-selected="true" tabindex="0">
-            {% lucide 'app-window' %}
-            Preview
-          </button>
-          <button role="tab" aria-selected="false" tabindex="-1">
-            {% lucide 'code' %}
-            Code
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>

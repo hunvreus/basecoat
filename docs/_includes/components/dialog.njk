@@ -1,71 +1,149 @@
-<section id="dialog" class="w-full rounded-lg border scroll-mt-16">
-  <header class="border-b px-4 py-3">
-    <h2 class="text-sm font-medium">Dialog</h2>
-  </header>
-  <div class="p-4">
-    <div class="flex flex-wrap items-center gap-4">
-      {% set footer %}
-        <button class="btn-outline" @click="open = false">Cancel</button>
-        <button class="btn" @click="open = false">Save changes</button>
-      {% endset %}
-      {% call dialog(
-        id="demo-dialog-edit-profile",
-        title="Edit profile",
-        description="Make changes to your profile here. Click save when you're done.",
-        main_attrs={"x-ref": "myDialog"},
-        trigger="Edit Profile",
-        trigger_attrs={"class": "btn-outline"},
-        content_attrs={"class": "w-full sm:max-w-[425px] max-h-[612px]"},
-        footer=footer
-      ) %}
-      <form class="form grid gap-4">
-        <div class="grid gap-3">
-          <label for="demo-dialog-edit-profile-name">Name</label>
-          <input type="text" value="Pedro Duarte" id="demo-dialog-edit-profile-name" />
-        </div>
-        <div class="grid gap-3">
-          <label for="demo-dialog-edit-profile-username">Username</label>
-          <input type="text" value="@peduarte" id="demo-dialog-edit-profile-username" />
-        </div>
-      </form>
-      {% endcall %}
-      
-      {% set footer %}
-        <button class="btn-outline" @click="open = false">Close</button>
-      {% endset %}
-      {% call dialog(
-        id="dialog-example",
-        title="Scrollable Content",
-        description="This is a dialog with scrollable content.",
-        main_attrs={"x-ref": "myDialog"},
-        trigger="Scrollable Content",
-        trigger_attrs={"class": "btn-outline"},
-        content_attrs={"class": "w-full sm:max-w-[425px] max-h-[612px]"},
-        content_body_attrs={"class": "overflow-y-auto scrollbar"},
-        footer=footer
-      ) %}
-      <div class="space-y-4 text-sm">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-      </div>
-      {% endcall %}
+{% macro dialog(
+  id,
+  trigger=None,
+  title=None,
+  description=None,
+  footer=None,
+  main_attrs={},
+  trigger_attrs={},
+  content_attrs={},
+  content_header_attrs={},
+  content_body_attrs={},
+  content_footer_attrs={},
+  open=false,
+  close_button=true,
+  close_on_overlay_click=true
+) %}
+{% if registerComponent('dialog') %}
+<script>
+  document.addEventListener('alpine:init', () => {
+    Alpine.data('dialog', (initialOpen = false, initialCloseOnOverlayClick = true) => ({
+      id: null,
+      open: false,
+      closeOnOverlayClick: true,
 
-      <button
-        x-init
-        @click="$dispatch('dialog:control', { targetId: 'dialog-example', action: 'open' })"
-        type="button"
-        class="btn-outline"
-      >
-        Trigger dialog:control
-      </button>
-    </div>
+      init() {
+        this.id = this.$el.id;
+        this.open = initialOpen;
+        this.closeOnOverlayClick = initialCloseOnOverlayClick;
+      },
+
+      show() {
+        if (!this.open) {
+          this.open = true;
+          this.$nextTick(() => this.$el.dispatchEvent(new CustomEvent('dialog:opened', { bubbles: true })));
+        }
+      },
+
+      hide() {
+        if (this.open) {
+          this.open = false;
+          this.$el.dispatchEvent(new CustomEvent('dialog:closed', { bubbles: true }));
+        }
+      },
+
+      handleControl(event) {
+        const detail = event.detail;
+        if (detail && detail.targetId === this.id) {
+          const action = detail.action || 'toggle';
+          if (action === 'open') this.show();
+          else if (action === 'close') this.hide();
+        }
+      },
+
+      $main: {
+        '@dialog:control.window'(e) { 
+          this.handleControl(e)
+        },
+      },
+
+      $trigger: {
+        '@click'() { this.show() },
+        ':aria-expanded'() { return this.open }
+      },
+
+      $content: {
+        ':inert'() { return !this.open },
+        '@click'(e) { e.target === this.$el && this.closeOnOverlayClick && this.hide() },
+        '@keydown.escape.window'() { this.open && this.hide() },
+        'x-cloak': ''
+      }
+    }));
+  });
+</script>
+{% endif %}
+<div
+  id="{{ id }}"
+  x-data="dialog({{ 'true' if open else 'false' }}, {{ 'true' if close_on_overlay_click else 'false' }})"
+  x-bind="$main"
+  class="dialog"
+  {% for key, value in main_attrs %}
+    {{ key }}="{{ value }}"
+  {% endfor %}
+>
+  {% if trigger %}
+  <button
+    {% if id %}aria-controls="{{ id }}-dialog"{% endif %}
+    aria-expanded="false"
+    aria-controls="{{ id }}-dialog"
+    x-bind="$trigger"
+    {% for key, value in trigger_attrs %}
+      {{ key }}="{{ value }}"
+    {% endfor %}
+  >
+    {{ trigger }} 
+  </button>
+  {% endif %}
+  <div
+    role="dialog"
+    id="{{ id }}-dialog"
+    aria-modal="true"
+    aria-labelledby="{{ id }}-title"
+    inert
+    x-bind="$content"
+  >
+    <article
+      {% for key, value in content_attrs %}
+        {{ key }}="{{ value }}"
+      {% endfor %}
+    >
+      {% if title or description %}
+        <header
+          {% for key, value in content_header_attrs %}
+            {{ key }}="{{ value }}"
+          {% endfor %}
+        >
+          <h2 id="{{ id }}-title">{{ title | safe }}</h2>
+          <p>{{ description | safe }}</p>
+        </header>
+      {% endif %}
+      {% if caller %}
+        <section
+          {% for key, value in content_body_attrs %}
+            {{ key }}="{{ value }}"
+          {% endfor %}
+        >
+          {{ caller() }}
+        </section>
+      {% endif %}
+      {% if footer %}
+        <footer
+          {% for key, value in content_footer_attrs %}
+            {{ key }}="{{ value }}"
+          {% endfor %}
+        >
+          {{ footer | safe }}
+        </footer>
+      {% endif %}
+      {% if close_button %}
+        <button
+          @click="hide()"
+          aria-label="Close dialog"
+        >
+          {% lucide "x" %}
+        </button>
+      {% endif %}
+    </article>
   </div>
-</section>
+</div>
+{% endmacro %}

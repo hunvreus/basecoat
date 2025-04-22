@@ -13,8 +13,5 @@
     "@tailwindcss/cli": "^4.1.3",
     "concurrently": "^9.1.2",
     "tailwindcss": "^4.1.3"
-  },
-  "dependencies": {
-    "tw-animate-css": "^1.2.5"
   }
 }

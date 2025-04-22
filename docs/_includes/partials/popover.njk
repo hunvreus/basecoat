@@ -1,0 +1,38 @@
+<section id="popover" class="w-full rounded-lg border scroll-mt-16">
+  <header class="border-b px-4 py-3">
+    <h2 class="text-sm font-medium">Popover</h2>
+  </header>
+  <div class="p-4">
+    {% call popover(
+      id="demo-popover",
+      trigger="Open popover",
+      trigger_attrs={"class": "btn-outline"},
+      content_attrs={"class": "w-80 p-4"}
+    ) %}
+      <div class="grid gap-4">
+        <header class="grid gap-1.5">
+          <h4 class="leading-none font-medium">Dimensions</h4>
+          <p class="text-muted-foreground text-sm">Set the dimensions for the layer.</p>
+        </header>
+        <form class="form grid gap-2">
+          <div class="grid grid-cols-3 items-center gap-4">
+            <label for="demo-popover-width">Width</label>
+            <input type="text" id="demo-popover-width" value="100%" class="col-span-2 h-8"/>
+          </div>
+          <div class="grid grid-cols-3 items-center gap-4">
+            <label for="demo-popover-max-width">Max. width</label>
+            <input type="text" id="demo-popover-max-width" value="300px" class="col-span-2 h-8"/>
+          </div>
+          <div class="grid grid-cols-3 items-center gap-4">
+            <label for="demo-popover-height">Height</label>
+            <input type="text" id="demo-popover-height" value="25px" class="col-span-2 h-8"/>
+          </div>
+          <div class="grid grid-cols-3 items-center gap-4">
+            <label for="demo-popover-max-height">Max. height</label>
+            <input type="text" id="demo-popover-max-height" value="none" class="col-span-2 h-8"/>
+          </div>
+        </form>
+      </div>
+    {% endcall %}
+  </div>
+</section>
