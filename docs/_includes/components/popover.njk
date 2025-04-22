@@ -75,7 +75,7 @@
       
       $content: {
         '@click'(e) { this.handleNavItemClick(e) },
-        '@keydown.escape.window'() { this.handleEscape() },
+        '@keydown.escape.prevent'() { this.handleEscape() },
         '@keydown.down.prevent'() { this.nextNavItem() },
         '@keydown.up.prevent'() { this.prevNavItem() },
         '@keydown.home.prevent'() { this.focusNavItem(0) },
@@ -123,7 +123,7 @@
       {{ key }}="{{ value }}"
     {% endfor %}
   >
-    {{ caller() }}
+    {% if caller %}{{ caller() }}{% endif %}
   </div>
 </div>
 {% endmacro %}

@@ -118,7 +118,7 @@
 
       $trigger: {
         '@click'() { this.open = !this.open; this.focusOnSelectedOption(); },
-        '@keydown.escape.window'() {
+        '@keydown.escape.prevent'() {
           this.open = false;
           this.$refs.trigger.focus();
         },
@@ -156,7 +156,7 @@
   x-data="select('{{ name }}', '{{ selected }}')"
   @click.away="open = false"
   {% if id %}id="{{ id }}"{% endif %}
-  {% for key, value in trigger_attrs %}
+  {% for key, value in main_attrs %}
     {% if key != 'class' %}{{ key }}="{{ value }}"{% endif %}
   {% endfor %}
 >
@@ -214,7 +214,7 @@
         {{ key }}="{{ value }}"
       {% endfor %}
     >
-      {{ caller() }}
+      {% if caller %}{{ caller() }}{% endif %}
     </div>
   </div>
   {% if name %}

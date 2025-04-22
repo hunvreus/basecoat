@@ -29,7 +29,7 @@
       
       $menu: {
         '@click'(e) { this.handleMenuItemClick(e) },
-        '@keydown.escape.window'() { this.handleEscape() },
+        '@keydown.escape.prevent'() { this.handleEscape() },
         '@keydown.down.prevent'() { this.nextItem() },
         '@keydown.up.prevent'() { this.prevItem() },
         '@keydown.home.prevent'() { this.focusItem(0) },
@@ -113,7 +113,7 @@
       {{ key }}="{{ value }}"
     {% endfor %}
   >
-    {{ caller() }}
+    {% if caller %}{{ caller() }}{% endif %}
   </nav>
 </div>
 {% endmacro %}

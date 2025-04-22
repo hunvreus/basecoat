@@ -44,7 +44,7 @@
       $toast: {
         ['@mouseenter']() { this.$store.toaster.isPaused = true },
         ['@mouseleave']() { this.$store.toaster.isPaused = false },
-        ['@keydown.escape.window']() { this.close() },
+        ['@keydown.escape.prevent']() { this.close() },
       },
     }));
   });

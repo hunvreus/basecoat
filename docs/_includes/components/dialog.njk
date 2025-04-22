@@ -65,7 +65,7 @@
       $content: {
         ':inert'() { return !this.open },
         '@click'(e) { e.target === this.$el && this.closeOnOverlayClick && this.hide() },
-        '@keydown.escape.window'() { this.open && this.hide() },
+        '@keydown.escape.prevent'() { this.open && this.hide() },
         'x-cloak': ''
       }
     }));
@@ -123,7 +123,7 @@
             {{ key }}="{{ value }}"
           {% endfor %}
         >
-          {{ caller() }}
+          {% if caller %}{{ caller() }}{% endif %}
         </section>
       {% endif %}
       {% if footer %}
