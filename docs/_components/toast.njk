@@ -38,6 +38,7 @@
       close() {
         this.pauseTimeout();
         this.open = false;
+        this.$el.blur();
       },
 
       $toast: {
@@ -100,7 +101,7 @@
                 <button
                   type="button"
                   class="btn h-6 text-xs px-2.5 rounded-sm"
-                  @click="{{ toast.message.action.onClick }}"
+                  @click="{{ toast.message.action.click }}"
                 >{{ toast.message.action.label }}</button>
               {% elif toast.message.action.url %}
                 <a
@@ -114,7 +115,7 @@
                 <button
                   type="button"
                   class="btn-outline h-6 text-xs px-2.5 rounded-sm"
-                  @click="{{ toast.message.cancel.onClick }}"
+                  @click="{{ toast.message.cancel.click }}"
                 >{{ toast.message.cancel.label }}</button>
               {% elif toast.message.cancel.url %}
                 <a
