@@ -45,11 +45,13 @@
 
   <!-- JS -->
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <script src="https://unpkg.com/htmx.org@2.0.4"></script>
 </head>
 <body>
 {% from "./_components/dialog.njk" import dialog %}
 {% from "./_components/popover.njk" import popover %}
 {% from "./_components/select.njk" import select %}
+{% from "./_components/toast.njk" import toaster %}
 
 <div
   class="fixed inset-y-0 left-0 z-50 h-svh border-r bg-sidebar text-sidebar-foreground flex flex-col w-[var(--sidebar-width)] transition-transform ease-in-out peer aria-[hidden=true]:-translate-x-full"
@@ -130,8 +132,10 @@
     {% include "./_includes/components/table.njk" %}
     {% include "./_includes/components/tabs.njk" %}
     {% include "./_includes/components/textarea.njk" %}
+    {% include "./_includes/components/toast.njk" %}
     {% include "./_includes/components/tooltip.njk" %}  
   </div>
 </main>
+{{ toaster() }}
 </body>
 </html>

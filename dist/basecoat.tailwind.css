@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -161,8 +162,7 @@
   }
   /* HTMX */
   .htmx-indicator {
-    transition-behavior: allow-discrete;
-    @apply invisible opacity-0 transition-all;
+    @apply invisible opacity-0 transition-discrete transition-all;
   }
   .htmx-indicator:not(.htmx-request) {
     @apply hidden;
@@ -359,6 +359,30 @@
   }
 }
 
+/* Card */
+@layer components {
+  .card {
+    @apply bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm;
+
+    > header {
+      @apply @container/card-header grid auto-rows-min grid-rows-[auto_auto] items-start gap-1.5 px-6 has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-6;
+
+      h2 {
+        @apply leading-none font-semibold;
+      }
+      p {
+        @apply text-muted-foreground text-sm;
+      }
+    }
+    > section {
+      @apply px-6;
+    }
+    > footer {
+      @apply flex items-center px-6 [.border-t]:pt-6;
+    }
+  }
+}
+
 /* Checkbox */
 @layer components {
   .form input[type='checkbox']:not([role='switch']),
@@ -377,8 +401,7 @@
   details {
     &::details-content {
       block-size: 0;
-      @apply block opacity-0 transition-discrete
-      transition-all;
+      @apply block opacity-0 transition-discrete transition-all;
     }
     &[open]::details-content {
       block-size: auto;
@@ -720,11 +743,59 @@
   }
 }
 
+/* Tabs */
+@layer components {
+  .tabs {  
+    [role='tablist'] {
+      @apply bg-muted text-muted-foreground inline-flex h-9 w-fit items-center justify-center rounded-lg p-[3px];
+
+      [role='tab'] {
+        @apply focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:outline-ring text-foreground dark:text-muted-foreground inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5 rounded-md border border-transparent px-2 py-1 text-sm font-medium whitespace-nowrap transition-[color,box-shadow] focus-visible:ring-[3px] focus-visible:outline-1 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4;
+
+        &[aria-selected='true'] {
+          @apply bg-background dark:text-foreground dark:border-input dark:bg-input/30 shadow-sm;
+        }
+      }
+    }
+    [role='tabpanel'] {
+      @apply flex-1 outline-none;
+    }
+  }
+}
+
 /* Textarea */
 @layer components {
   .form textarea,
   .textarea {
     @apply border-input placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 flex field-sizing-content min-h-16 w-full rounded-md border bg-transparent px-3 py-2 text-base shadow-xs transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 md:text-sm;
+  }
+}
+
+/* Toasts */
+@layer components {
+  .toaster {
+    @apply fixed bottom-0 right-0 p-4 pointer-events-none z-50 w-full sm:max-w-90 flex flex-col-reverse;
+
+    .toast {
+      @apply pointer-events-auto w-full mt-4 animate-[toast-in_0.3s_ease-in-out] grid  grid-rows-[1fr] transition-[grid-template-rows,opacity,margin] duration-300 ease-in-out;
+      
+      .toast-content {
+        @apply text-popover-foreground text-[13px] bg-popover border shadow-lg rounded-lg  overflow-hidden;
+      }
+      &[aria-hidden='true'] {
+        @apply grid-rows-[0fr] opacity-0 m-0 border-0 p-0 overflow-hidden;
+
+        .toast-content {
+          @apply border-0;
+        }
+      }
+    }
+  }
+}
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
   }
 }
 
@@ -781,70 +852,3 @@
     }
   }
 }
-
-/* -------------------------------------------------------------------- */
-
-
-/* Notifications */
-@layer components {
-  .toasts {
-    @apply fixed bottom-0 right-0 p-6 space-y-2 pointer-events-none z-[100] max-w-sm;
-  }
-  .toasts > [role='alert'],
-  .toasts > [role='status'] {
-    transition-behavior: allow-discrete;
-    @apply bg-background border shadow-lg rounded-lg p-4 pointer-events-auto flex flex-row-reverse items-start justify-between gap-x-2;
-  }
-  .toasts > [aria-hidden='true'] {
-    @apply hidden opacity-0 scale-75 transition-all;
-  }
-  .toasts > [role='alert'] > button,
-  .toasts > [role='status'] > button {
-    @apply opacity-50 hover:opacity-100 transition-opacity py-0.5;
-  }
-}
-
-/* Tabs */
-@layer components {
-  .tabs {  
-    [role='tablist'] {
-      @apply bg-muted text-muted-foreground inline-flex h-9 w-fit items-center justify-center rounded-lg p-[3px];
-
-      [role='tab'] {
-        @apply focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:outline-ring text-foreground dark:text-muted-foreground inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5 rounded-md border border-transparent px-2 py-1 text-sm font-medium whitespace-nowrap transition-[color,box-shadow] focus-visible:ring-[3px] focus-visible:outline-1 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4;
-
-        &[aria-selected='true'] {
-          @apply bg-background dark:text-foreground dark:border-input dark:bg-input/30 shadow-sm;
-        }
-      }
-    }
-    [role='tabpanel'] {
-      @apply flex-1 outline-none;
-    }
-  }
-}
-
-/* Card */
-@layer components {
-  .card {
-    @apply bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm;
-
-    > header {
-      @apply @container/card-header grid auto-rows-min grid-rows-[auto_auto] items-start gap-1.5 px-6 has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-6;
-
-      h2 {
-        @apply leading-none font-semibold;
-      }
-      p {
-        @apply text-muted-foreground text-sm;
-      }
-    }
-    > section {
-      @apply px-6;
-    }
-    > footer {
-      @apply flex items-center px-6 [.border-t]:pt-6;
-    }
-  }
-}
-

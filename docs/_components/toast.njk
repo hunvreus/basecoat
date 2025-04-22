@@ -1,155 +1,133 @@
-{% macro toast(
-  id='toasts',
-  messages=None,
-  main_attrs=None
+{% macro toaster(
+  id="toaster",
+  toasts=[],
+  main_attrs=None,
+  is_fragment=false
 ) %}
-{% if registerComponent('toast') %}
+{% if not is_fragment and registerComponent('toast') %}
 <script>
   document.addEventListener('alpine:init', () => {
-    Alpine.data('toast', () => ({
+    Alpine.store('toaster', { isPaused: false });
+    Alpine.data('toast', (category = []) => ({
       open: false,
-      focusedIndex: -1,
-      menuItems: [],
+      timeoutDuration: null,
+      timeoutId: null,
 
       init() {
-        this.$nextTick(() => {
-          const menuElement = this.$el.querySelector('[role="menu"]');
-          this.menuItems = Array.from(menuElement.querySelectorAll('[role=menuitem]'));
+        this.timeoutDuration =  category === 'error' ? 5000 : 3000;
+        this.timeoutId = setTimeout(() => { this.close() }, this.timeoutDuration);
+        this.open = true;
+        this.$watch('$store.toaster.isPaused', (isPaused) => {
+          if (!this.open) return;
+          if (isPaused) {
+            this.pauseTimeout();
+          } else {
+            this.resumeTimeout();
+          }
         });
       },
-      
-      $trigger: {
-        '@click'() { this.handleClick() },
-        '@keydown.down.prevent'() { this.open && this.nextItem() },
-        ':aria-expanded'() { return this.open },
-        ':aria-pressed'() { return this.open }
+      pauseTimeout() {
+        clearTimeout(this.timeoutId);
+        this.timeoutId = null;
       },
-      
-      $menu: {
-        '@click'(e) { this.handleMenuItemClick(e) },
-        '@keydown.escape.window'() { this.handleEscape() },
-        '@keydown.down.prevent'() { this.nextItem() },
-        '@keydown.up.prevent'() { this.prevItem() },
-        '@keydown.home.prevent'() { this.focusItem(0) },
-        '@keydown.end.prevent'() { this.focusItem(this.menuItems.length - 1) },
-        ':aria-hidden'() { return !this.open },
-        'x-cloak': ''
-      },
-      
-      focusItem(index) {
-        if (index >= 0 && index < this.menuItems.length) {
-          this.focusedIndex = index;
-          this.menuItems[index].focus();
+      resumeTimeout(index) {
+        if (this.open && this.timeoutId === null) {
+          this.timeoutId = setTimeout(() => { this.close() }, this.timeoutDuration);
         }
       },
-      
-      nextItem() {
-        this.focusItem((this.focusedIndex + 1) % this.menuItems.length);
+      close() {
+        this.pauseTimeout();
+        this.open = false;
       },
-      
-      prevItem() {
-        this.focusItem(this.focusedIndex <= 0 ? this.menuItems.length - 1 : this.focusedIndex - 1);
-      },
-      
-      handleClick() {
-        this.open = !this.open;
-        this.$nextTick(() => {
-          if(this.open && this.menuItems.length) this.focusItem(0);
-        });
-      },
-      
-      handleEscape() {
-        if (this.open) this.open = false;
-      },
-      
-      handleMenuItemClick(event) {
-        const menuItem = event.target.closest('[role=menuitem]');
-        if (menuItem && !menuItem.disabled) {
-          menuItem.blur();
-          this.open = false;
-        }
+
+      $toast: {
+        ['@mouseenter']() { this.$store.toaster.isPaused = true },
+        ['@mouseleave']() { this.$store.toaster.isPaused = false },
+        ['@keydown.escape.window']() { this.close() },
       },
     }));
   });
 </script>
 {% endif %}
 
+{% set iconMapping = {
+  'error': 'circle-x',
+  'success': 'circle-check',
+  'info': 'info',
+  'warning': 'circle-alert'
+} %}
+
 <div
   id="{{ id }}"
-  class="toasts"
-  x-data="toast"
+  class="toaster"
   {% for key, value in main_attrs %}
     {{ key }}="{{ value }}"
   {% endfor %}
+  {% if is_fragment %}hx-swap-oob="beforeend"{% endif %}
 >
-{% for category, message in toasts %}
+{% for toast in toasts %}
   <div
-    x-data="{
-      active: true,
-      init() {
-        if ('{{ category }}' !== 'error') setTimeout(() => this.active = false, 3000)
-      }
-    }"
-    role="{{ 'alert' if category == 'error' else 'status' }}"
+    class="toast"
+    role="{{ 'alert' if toast.category == 'error' else 'status' }}"
     aria-atomic="true"
-    aria-hidden="true"
-    :aria-hidden="!active"
-    :inert="!active"
+    aria-hidden="false"
+    :aria-hidden="!open"
+    {% if toast.category %}data-category="{{ toast.category }}"{% endif %}
+    x-data="toast('{{ toast.category }}')"
+    x-bind="$toast"
   >
-    <button
-      x-on:click="active = !active"
-      aria-label="{{ _('Dismiss') }}"
-    >
-      {% include "icons/x.svg" %}
-    </button>
-    <section class="w-full text-left flex-1">
-      {% if message is string %}
-        <p class="font-medium w-full text-left flex-1">{{ message }}</p>
-      {% else %}
-        <h4 class="font-medium mb-1">{{ message.title }}</h4>
-        <p class="text-muted-foreground">{{ message.description }}</p>
-        {% if message.action %}
-          <a
-            href="{{ message.action.url }}"
-            class="btn-outline h-8 px-2.5 mt-4"
-          >{{ message.action.label }}</a>
+    <div class="toast-content">
+      <div class="flex items-center justify-between gap-x-3 p-4">
+        {% if toast.category in ["error", "success", "info", "warning"] %}
+          {% lucide iconMapping[toast.category], class="size-4 shrink-0" %}
         {% endif %}
-      {% endif %}
-    </section>
-    {% if category in ('error', 'success') %}
-      {% if category == 'error' %}
-        <div class="text-danger py-0.5">
-          {% include "icons/circle-x.svg" %}
-        </div>
-      {% elif category == 'success' %}
-        <div class="text-success py-0.5">
-          {% include "icons/circle-check.svg" %}
-        </div>
-      {% endif %}
-    {% endif %}
+        <section class="flex-1 flex flex-col gap-0.5 items-start">
+          {% if toast.message is string %}
+            <h2 class="font-medium">{{ toast.message }}</h2>
+          {% elif toast.message is mapping %}
+            {% if toast.message.title %}
+              <h2 class="font-medium">{{ toast.message.title }}</h2>
+            {% endif %}
+            {% if toast.message.description %}
+              <p class="text-muted-foreground">{{ toast.message.description }}</p>
+            {% endif %}
+          {% endif %}
+        </section>
+        {% if toast.message.action or toast.message.cancel %}
+          <footer class="flex flex-col gap-1 self-start">
+            {% if toast.message.action %}
+              {% if toast.message.action.click %}
+                <button
+                  type="button"
+                  class="btn h-6 text-xs px-2.5 rounded-sm"
+                  @click="{{ toast.message.action.onClick }}"
+                >{{ toast.message.action.label }}</button>
+              {% elif toast.message.action.url %}
+                <a
+                  href="{{ toast.message.action.url }}"
+                  class="btn h-6 text-xs px-2.5 rounded-sm"
+                >{{ toast.message.action.label }}</a>
+              {% endif %}
+            {% endif %}
+            {% if toast.message.cancel %}
+              {% if toast.message.cancel.click %}
+                <button
+                  type="button"
+                  class="btn-outline h-6 text-xs px-2.5 rounded-sm"
+                  @click="{{ toast.message.cancel.onClick }}"
+                >{{ toast.message.cancel.label }}</button>
+              {% elif toast.message.cancel.url %}
+                <a
+                  href="{{ toast.message.cancel.url }}"
+                  class="btn-outline h-6 text-xs px-2.5 rounded-sm"
+                >{{ toast.message.cancel.label }}</a>
+              {% endif %}
+            {% endif %}
+          </footer>
+        {% endif %}
+      </div>
+    </div>
   </div>
 {% endfor %}
-</div>
-{% endmacro %}
-
-
-
-{% macro toasts(
-  id=None,
-  messages=None,
-  flash=True
-) %}
-{% if flash %}
-  {% set toasts = (messages or []) + get_flashed_messages(with_categories=true) %}
-{% else %}
-  {% set toasts = messages or [] %}
-{% endif %}
-<div
-  class="toasts"
-  id="{{ id or 'toasts' }}"
-  {}
-  
->
-
 </div>
 {% endmacro %}

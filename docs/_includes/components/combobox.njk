@@ -48,13 +48,12 @@
           <div role="group" aria-labelledby="demo-combobox-timezones-group-{{ loop.index0 }}">
             <span id="demo-combobox-timezones-group-{{ loop.index0 }}" role="heading">{{ group.label }}</span>
             {% for timezone in group.timezones %}
-            <div role="option" data-value="{{ timezone.value}}">
-              {{ timezone.label }}
-            </div>
+              <div role="option" data-value="{{ timezone.value}}">
+                {{ timezone.label }}
+              </div>
             {% endfor %}
           </div>
-          {% endfor %}
-        </div>
+        {% endfor %}
       </div>
       <hr role="separator">
       <div role="option">
