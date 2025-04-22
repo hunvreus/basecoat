@@ -15,7 +15,39 @@
     trigger_attrs={"class": "btn-ghost p-2 h-12 w-full justify-start"},
     content_attrs={"data-side": "right"}
   ) %}
-    Something
+  <nav role="menu">
+    <div role="group" aria-labelledby="teams-label">
+      <span id="teams-label" role="heading" class="text-xs text-muted-foreground">Teams</span>
+      <button type="button" role="menuitem" class="p-2">
+        <div class="flex size-6 items-center justify-center rounded-md border">
+          {% lucide "gallery-vertical-end", { "class": "size-3.5 shrink-0" } %}
+        </div>
+        Acme Inc
+        <span class="text-muted-foreground ml-auto text-xs tracking-widest">⌘1</span>
+      </button>
+      <button type="button" role="menuitem" class="p-2">
+        <div class="flex size-6 items-center justify-center rounded-md border">
+          {% lucide "audio-waveform", { "class": "size-3.5 shrink-0" } %}
+        </div>
+        Acme Corp
+        <span class="text-muted-foreground ml-auto text-xs tracking-widest">⌘2</span>
+      </button>
+      <button type="button" role="menuitem" class="p-2">
+        <div class="flex size-6 items-center justify-center rounded-md border">
+          {% lucide "command", { "class": "size-3.5 shrink-0" } %}
+        </div>
+        Evil Corp
+        <span class="text-muted-foreground ml-auto text-xs tracking-widest">⌘3</span>
+      </button>
+    </div>
+    <hr role="separator">
+    <button type="button" role="menuitem" class="p-2">
+      <div class="flex size-6 items-center justify-center rounded-md border">
+        {% lucide "plus", { "class": "size-3.5 shrink-0" } %}
+      </div>
+      <span class="text-muted-foreground font-medium">Add team</span>
+    </button>
+  </nav>
   {% endcall %}
 
   <div class="flex flex-col gap-2 px-2 text-sm">
