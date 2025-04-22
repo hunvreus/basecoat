@@ -773,13 +773,23 @@
 /* Toasts */
 @layer components {
   .toaster {
-    @apply fixed bottom-0 right-0 p-4 pointer-events-none z-50 w-full sm:max-w-90 flex flex-col-reverse;
+    @apply fixed bottom-0 p-4 pointer-events-none z-50 w-full sm:max-w-90 flex flex-col-reverse;
 
+    &:not([data-align]),
+    &[data-align='end'] {
+      @apply right-0;
+    }
+    &[data-align='start'] {
+      @apply left-0;
+    }
+    &[data-align='center'] {
+      @apply left-1/2 -translate-x-1/2;
+    }
     .toast {
-      @apply pointer-events-auto w-full mt-4 animate-[toast-in_0.3s_ease-in-out] grid  grid-rows-[1fr] transition-[grid-template-rows,opacity,margin] duration-300 ease-in-out;
+      @apply pointer-events-auto w-full mt-4 animate-[toast-up_0.3s_ease-in-out] grid  grid-rows-[1fr] transition-[grid-template-rows,opacity,margin] duration-300 ease-in-out;
       
       .toast-content {
-        @apply text-popover-foreground text-[13px] bg-popover border shadow-lg rounded-lg  overflow-hidden;
+        @apply text-popover-foreground text-[13px] bg-popover border shadow-lg rounded-lg overflow-hidden;
       }
       &[aria-hidden='true'] {
         @apply grid-rows-[0fr] opacity-0 m-0 border-0 p-0 overflow-hidden;
@@ -791,7 +801,7 @@
     }
   }
 }
-@keyframes toast-in {
+@keyframes toast-up {
   from {
     opacity: 0;
     transform: translateY(100%);

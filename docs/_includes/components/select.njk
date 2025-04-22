@@ -140,6 +140,10 @@
 
       $filter: {
         '@input'(e) { this.filterOptions(e.target.value) },
+        '@keydown.escape.prevent'() {
+          this.open = false;
+          this.$refs.trigger.focus();
+        },
         '@keydown.down.prevent'() { this.moveOptionFocus(+1); },
         '@keydown.up.prevent'() { this.moveOptionFocus(-1); },
         '@keydown.home.prevent'() { this.focusOption(0) },

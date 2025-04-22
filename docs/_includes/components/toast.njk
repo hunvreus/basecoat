@@ -8,13 +8,13 @@
 <script>
   document.addEventListener('alpine:init', () => {
     Alpine.store('toaster', { isPaused: false });
-    Alpine.data('toast', (category = []) => ({
+    Alpine.data('toast', (category = '', timeoutDuration = null) => ({
       open: false,
       timeoutDuration: null,
       timeoutId: null,
 
       init() {
-        this.timeoutDuration =  category === 'error' ? 5000 : 3000;
+        this.timeoutDuration = timeoutDuration || (category === 'error' ? 5000 : 3000);
         this.timeoutId = setTimeout(() => { this.close() }, this.timeoutDuration);
         this.open = true;
         this.$watch('$store.toaster.isPaused', (isPaused) => {
@@ -74,7 +74,7 @@
     aria-hidden="false"
     :aria-hidden="!open"
     {% if toast.category %}data-category="{{ toast.category }}"{% endif %}
-    x-data="toast('{{ toast.category }}')"
+    x-data="toast('{{ toast.category }}', {{ toast.timeoutDuration }})"
     x-bind="$toast"
   >
     <div class="toast-content">
