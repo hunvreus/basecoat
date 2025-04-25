@@ -5,63 +5,76 @@
     <h2 class="text-sm font-medium">Combobox</h2>
   </header>
   <div class="p-4">
-    {% set options_timezones = [
-      {
-        label: "Americas",
-        timezones: [
-          { value: "America/New_York", label: "(GMT-5) New York" },
-          { value: "America/Los_Angeles", label: "(GMT-8) Los Angeles" },
-          { value: "America/Chicago", label: "(GMT-6) Chicago" },
-          { value: "America/Toronto", label: "(GMT-5) Toronto" },
-          { value: "America/Vancouver", label: "(GMT-8) Vancouver" },
-          { value: "America/Sao_Paulo", label: "(GMT-3) São Paulo" }
-        ]
-      },
-      {
-        label: "Europe",
-        timezones: [
-          { value: "Europe/London", label: "(GMT+0) London" },
-          { value: "Europe/Paris", label: "(GMT+1) Paris" },
-          { value: "Europe/Berlin", label: "(GMT+1) Berlin" },
-          { value: "Europe/Rome", label: "(GMT+1) Rome" },
-          { value: "Europe/Madrid", label: "(GMT+1) Madrid" },
-          { value: "Europe/Amsterdam", label: "(GMT+1) Amsterdam" }
-        ]
-      },
-      {
-        label: "Asia/Pacific",
-        timezones: [
-          { value: "Asia/Tokyo", label: "(GMT+9) Tokyo" },
-          { value: "Asia/Shanghai", label: "(GMT+8) Shanghai" },
-          { value: "Asia/Singapore", label: "(GMT+8) Singapore" },
-          { value: "Asia/Dubai", label: "(GMT+4) Dubai" },
-          { value: "Australia/Sydney", label: "(GMT+11) Sydney" },
-          { value: "Asia/Seoul", label: "(GMT+9) Seoul" }
-        ]
-      }
-    ] %}
-    {% call select(
-      content_attrs={"class": "w-72"},
-      listbox_attrs={"data-empty": "No timezone found."},
-      is_combobox=true
-    ) %}
-      <div class="max-h-64 overflow-y-auto scrollbar">
-        {% for group in options_timezones %}
-          <div role="group" aria-labelledby="demo-combobox-timezones-group-{{ loop.index0 }}">
-            <span id="demo-combobox-timezones-group-{{ loop.index0 }}" role="heading">{{ group.label }}</span>
-            {% for timezone in group.timezones %}
-              <div role="option" data-value="{{ timezone.value}}">
-                {{ timezone.label }}
-              </div>
-            {% endfor %}
-          </div>
+    <div class="flex flex-wrap items-start gap-4">
+      {% set options_frameworks = ["Next.js", "SvelteKit", "Nuxt.js", "Remix", "Astro"] %}
+      {% call select(
+        content_attrs={"class": "w-48"},
+        listbox_attrs={"data-empty": "No framework found."},
+        is_combobox=true
+      ) %}
+        {% for framework in options_frameworks %}
+          <div role="option" data-value="{{ framework }}">{{ framework }}</div>
         {% endfor %}
-      </div>
-      <hr role="separator">
-      <div role="option">
-        {% lucide "circle-plus" %}
-        Create timezone
-      </div>
-    {% endcall %}
+      {% endcall %}
+
+      {% set options_timezones = [
+        {
+          label: "Americas",
+          timezones: [
+            { value: "America/New_York", label: "(GMT-5) New York" },
+            { value: "America/Los_Angeles", label: "(GMT-8) Los Angeles" },
+            { value: "America/Chicago", label: "(GMT-6) Chicago" },
+            { value: "America/Toronto", label: "(GMT-5) Toronto" },
+            { value: "America/Vancouver", label: "(GMT-8) Vancouver" },
+            { value: "America/Sao_Paulo", label: "(GMT-3) São Paulo" }
+          ]
+        },
+        {
+          label: "Europe",
+          timezones: [
+            { value: "Europe/London", label: "(GMT+0) London" },
+            { value: "Europe/Paris", label: "(GMT+1) Paris" },
+            { value: "Europe/Berlin", label: "(GMT+1) Berlin" },
+            { value: "Europe/Rome", label: "(GMT+1) Rome" },
+            { value: "Europe/Madrid", label: "(GMT+1) Madrid" },
+            { value: "Europe/Amsterdam", label: "(GMT+1) Amsterdam" }
+          ]
+        },
+        {
+          label: "Asia/Pacific",
+          timezones: [
+            { value: "Asia/Tokyo", label: "(GMT+9) Tokyo" },
+            { value: "Asia/Shanghai", label: "(GMT+8) Shanghai" },
+            { value: "Asia/Singapore", label: "(GMT+8) Singapore" },
+            { value: "Asia/Dubai", label: "(GMT+4) Dubai" },
+            { value: "Australia/Sydney", label: "(GMT+11) Sydney" },
+            { value: "Asia/Seoul", label: "(GMT+9) Seoul" }
+          ]
+        }
+      ] %}
+      {% call select(
+        content_attrs={"class": "w-72"},
+        listbox_attrs={"data-empty": "No timezone found."},
+        is_combobox=true
+      ) %}
+        <div class="max-h-64 overflow-y-auto scrollbar">
+          {% for group in options_timezones %}
+            <div role="group" aria-labelledby="demo-combobox-timezones-group-{{ loop.index0 }}">
+              <span id="demo-combobox-timezones-group-{{ loop.index0 }}" role="heading">{{ group.label }}</span>
+              {% for timezone in group.timezones %}
+                <div role="option" data-value="{{ timezone.value}}">
+                  {{ timezone.label }}
+                </div>
+              {% endfor %}
+            </div>
+          {% endfor %}
+        </div>
+        <hr role="separator">
+        <div role="option">
+          {% lucide "circle-plus" %}
+          Create timezone
+        </div>
+      {% endcall %}
+    </div>
   </div>
 </section>

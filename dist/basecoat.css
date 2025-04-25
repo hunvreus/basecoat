@@ -27,7 +27,6 @@
     --color-black: #000;
     --color-white: #fff;
     --spacing: 0.25rem;
-    --breakpoint-sm: 40rem;
     --breakpoint-md: 48rem;
     --breakpoint-lg: 64rem;
     --container-xs: 20rem;
@@ -465,6 +464,9 @@
   .w-6 {
     width: calc(var(--spacing) * 6);
   }
+  .w-48 {
+    width: calc(var(--spacing) * 48);
+  }
   .w-72 {
     width: calc(var(--spacing) * 72);
   }
@@ -479,6 +481,9 @@
   }
   .w-\[180px\] {
     width: 180px;
+  }
+  .w-\[200px\] {
+    width: 200px;
   }
   .w-\[var\(--sidebar-width\)\] {
     width: var(--sidebar-width);
@@ -2827,12 +2832,6 @@
         border-bottom-style: var(--tw-border-style);
         border-bottom-width: 1px;
         padding-inline: calc(var(--spacing) * 3);
-        svg {
-          width: calc(var(--spacing) * 4);
-          height: calc(var(--spacing) * 4);
-          flex-shrink: 0;
-          opacity: 50%;
-        }
         input[role='combobox'] {
           display: flex;
           height: calc(var(--spacing) * 10);

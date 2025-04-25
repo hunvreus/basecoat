@@ -7,12 +7,14 @@ toc:
     id: usage
 ---
 
+{% from "macros/code_preview.njk" import code_preview %}
+{% from "macros/code_block.njk" import code_block %}
+
 <div class="alert mb-6">
   {% lucide "circle-alert" %}
   <h2>There is no dedicated accordion component in Basecoat.</h2>
 </div>
 
-{% from "macros/code_preview.njk" import code_preview %}
 {% set code %}<section
   x-init
   @click="
@@ -67,5 +69,7 @@ toc:
 <h2 id="usage"><a href="#usage">Usage</a></h2>
 
 <section class="prose my-6">
-  <p>Basecoat animates <code>&lt;details&gt;</code> elements by default. The example above shows how to use Alpine.js, Tailwind and <code>&lt;details&gt;</code> elements to implement a simple accordion.</p>
+  <p>Basecoat animates <code>&lt;details&gt;</code> elements by default. Using Alpine.js to handle the open/close state and Tailwind to style the the <code>&lt;details&gt;</code> elements, you can get an accordion component:</p>
 </section>
+
+{{ code_block(code) }}

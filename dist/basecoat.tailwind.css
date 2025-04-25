@@ -652,19 +652,15 @@
       [role='separator'] {
         @apply border-border -mx-1 my-1;
       }
+      /* Combobox */
       > header {
         @apply flex h-9 items-center gap-2 border-b px-3 -mx-1 -mt-1 mb-1;
 
-        svg {
-          @apply size-4 shrink-0 opacity-50;
-        }
 
         input[role='combobox'] {
           @apply placeholder:text-muted-foreground flex h-10 w-full rounded-md bg-transparent py-3 text-sm outline-hidden disabled:cursor-not-allowed disabled:opacity-50;
         }
       }
-
-      /* Combobox */
       [role='listbox']:not(:has([data-value]:not([aria-hidden='true'])))::before {
         @apply flex items-center justify-center p-6 text-sm truncate;
       }

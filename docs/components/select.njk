@@ -1,14 +1,141 @@
 ---
 layout: layouts/component.njk
 title: Select
-description: isplays a list of options for the user to pick from—triggered by a button.
+description: Displays a list of options for the user to pick from—triggered by a button.
+toc:
+  - label: Usage
+    id: usage
+    children:
+      - label: Default
+        id: usage-default
+      - label: Jinja or Nunjucks
+        id: usage-jinja
+  - label: Examples
+    id: examples
+    children:
+      - label: Scrollable
+        id: example-scrollable
+      - label: Disabled
+        id: example-disabled
+      - label: With icon
+        id: example-with-icon
 ---
 
+{% from "macros/code_preview.njk" import code_preview %}
 {% from "macros/code_block.njk" import code_block %}
-{% set code %}<button class="btn-outline" hx-trigger="click" hx-get="/fragments/toast/success" hx-target="#toast-htmx">
-  Success
-</button>
-<div id="toast-htmx"></div>{% endset %}
-{{ code_block("accordion", code, "max-w-md") }}
+{% from "components/select.njk" import select %}
 
-<h2>Usage</h2>
+{% set code_native %}<select class="select w-[180px]">
+  <optgroup label="Fruits">
+    <option>Apple</option>
+    <option>Banana</option>
+    <option>Blueberry</option>
+    <option>Grapes</option>
+    <option>Pineapple</option>
+</select>{% endset %}
+{{ code_preview("select-native", code_native) }}
+
+{% set code_alpine %}
+{% call select(name="select-js", trigger_attrs={"class": "w-[180px]"}) %}
+<div role="group" aria-labelledby="fruit-options-label">
+  <span id="fruit-options-label" role="heading">Fruits</span>
+  <div role="option" data-value="apple">Apple</div>
+  <div role="option" data-value="banana">Banana</div>
+  <div role="option" data-value="blueberry">Blueberry</div>
+  <div role="option" data-value="pineapple">Grapes</div>
+  <div role="option" data-value="pineapple">Pineapple</div>
+</div>
+{% endcall %}
+{% endset %}
+{{ code_preview("select-alpine", code_alpine | prettyHtml) }}
+
+<h2 id="usage"><a href="#usage">Usage</a></h2>
+
+<h3 id="usage-html"><a href="#usage-html">Pure HTML</a></h3>
+
+<section class="prose my-6">
+  <p>If you use a <code>&lt;select&gt;</code> element, just add the <code>select</code> class to it or have a parent with the <code>form</code> class (<a href="/components/form">read more about form</a>).</p>
+</section>
+
+{{ code_block(code_native) }}
+
+<h3 id="usage-js"><a href="#usage-js">With Javascript</a></h3>
+
+<section class="prose my-6">
+  <p>If you need to do more than what <code>&lt;select&gt;</code> allows (e.g. HTML options), you can use the code below which uses the <a href="/components/combobox">Popover</a> component. Make sure to include the hidden input with the name you want to use for that field.</p>
+</section>
+
+{{ code_block(code_alpine | prettyHtml) }}
+
+<h3 id="usage-jinja"><a href="#usage-jinja">Jinja or Nunjucks</a></h3>
+
+<section class="prose my-6">
+  <p>If you use Jinja (or Nunjucks), you can use the <code>select()</code> macro directly.</p>
+  <ul>
+    <li>
+      <a href="/jinja-and-nunjucks">Read more about using Basecoat with Jinja or Nunjucks</a>
+    </li>
+    <li>
+      <a href="/components/popover">Read more about the Popover component</a>
+    </li>
+  </ul>
+</section>
+
+{% set raw_code %}{% raw %}{% call select(name="select-js") %}
+<div role="group" aria-labelledby="fruit-options-label">
+  <span id="fruit-options-label" role="heading">Fruits</span>
+  <div role="option" data-value="apple">Apple</div>
+  <div role="option" data-value="banana">Banana</div>
+  <div role="option" data-value="blueberry">Blueberry</div>
+  <div role="option" data-value="pineapple">Grapes</div>
+  <div role="option" data-value="pineapple">Pineapple</div>
+</div>
+{% endcall %}{% endraw %}{% endset %}
+{{ code_block(raw_code, "jinja") }}
+
+<h2 id="examples"><a href="#examples">Examples</a></h2>
+
+<h3 id="example-scrollable"><a href="#example-scrollable">Scrollable</a></h3>
+
+{% set code %}
+{% call select(
+  listbox_attrs={"class": "scrollbar overflow-y-auto max-h-64"}
+) %}
+{% for i in range(0, 99) %}
+<div role="option" data-value="item-{{ i }}">Item {{ i }}</div>
+{% endfor %}
+{% endcall %}
+{% endset %}
+
+{{ code_preview("select-scrollable", code | prettyHtml) }}
+
+<h3 id="example-disabled"><a href="#example-disabled">Disabled</a></h3>
+
+{% set code %}
+{% call select(trigger_attrs={"disabled": "disabled"}) %}
+<div role="option" data-value="disabled">Disabled</div>
+{% endcall %}
+{% endset %}
+
+{{ code_preview("select-disabled", code | prettyHtml) }}
+
+<h3 id="example-with-icon"><a href="#example-with-icon">With icon</a></h3>
+
+{% set code %}
+{% call select(trigger_attrs={'class': 'w-[180px]'}) %}
+<div type="button" role="option" data-value="bar">
+  {% lucide "chart-bar", {"class": "text-muted-foreground"} %}
+  Bar
+</div>
+<div type="button" role="option" data-value="line">
+  {% lucide "chart-line", {"class": "text-muted-foreground"} %}
+  Line
+</div>
+<div type="button" role="option" data-value="pie">
+  {% lucide "chart-pie", {"class": "text-muted-foreground"} %}
+  Pie
+</div>
+{% endcall %}
+{% endset %}
+
+{{ code_preview("select-scrollable", code | prettyHtml) }}

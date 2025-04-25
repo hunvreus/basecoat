@@ -7,13 +7,15 @@ toc:
     id: usage
 ---
 
+{% from "macros/code_preview.njk" import code_preview %}
+{% from "macros/code_block.njk" import code_block %}
+{% from "components/dropdown-menu.njk" import dropdown_menu %}
+
 <div class="alert mb-6">
   {% lucide "circle-alert" %}
   <h2>There is no dedicated breadcrumb component in Basecoat.</h2>
 </div>
 
-{% from "macros/code_preview.njk" import code_preview %}
-{% from "components/dropdown-menu.njk" import dropdown_menu %}
 {% set code %}<ol class="text-muted-foreground flex flex-wrap items-center gap-1.5 text-sm break-words sm:gap-2.5">
   <li class="inline-flex items-center gap-1.5">
     <a href="#" class="hover:text-foreground transition-colors">Home</a>
@@ -49,5 +51,7 @@ toc:
 <h2 id="usage"><a href="#usage">Usage</a></h2>
 
 <section class="prose my-6">
-  <p>The example below shows how to implement it with Tailwind and the <a href="/components/dropdown-menu" class="font-medium underline underline-offset-4">Dropdown Menu</a> component.</p>
+  <p>Using Tailind and the <a href="/components/dropdown-menu" class="font-medium underline underline-offset-4">Dropdown Menu</a> component you can get a breadcrumb component:</p>
 </section>
+
+{{ code_block(code | prettyHtml) }}

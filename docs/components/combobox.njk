@@ -1,0 +1,138 @@
+---
+layout: layouts/component.njk
+title: Combobox
+description: Autocomplete input and command palette with a list of suggestions.
+toc:
+  - label: Usage
+    id: usage
+    children:
+      - label: Default
+        id: usage-default
+      - label: Jinja or Nunjucks
+        id: usage-jinja
+  - label: Examples
+    id: examples
+    children:
+      - label: With groups
+        id: example-with-groups
+---
+
+{% from "macros/code_preview.njk" import code_preview %}
+{% from "macros/code_block.njk" import code_block %}
+{% from "components/select.njk" import select %}
+
+{% set options_frameworks = ["Next.js", "SvelteKit", "Nuxt.js", "Remix", "Astro"] %}
+{% set code %}
+{% call select(
+  trigger_attrs={"class": "w-[200px]"},
+  listbox_attrs={"data-empty": "No framework found."},
+  is_combobox=true
+) %}
+  {% for framework in options_frameworks %}
+    <div role="option" data-value="{{ framework }}">{{ framework }}</div>
+  {% endfor %}
+{% endcall %}{% endset %}
+{{ code_preview("combobox", code | prettyHtml) }}
+
+<h2 id="usage"><a href="#usage">Usage</a></h2>
+
+<h3 id="usage-default"><a href="#usage-default">Default</a></h3>
+
+<section class="prose my-6">
+  <p>The Combobox component uses the same Alpine.js code as the <a href="/components/select" class="font-medium underline underline-offset-4">Select</a> component, and almost identical markup, the only difference being the search box.</p>
+</section>
+
+{{ code_block(code | prettyHtml) }}
+
+<h3 id="usage-jinja"><a href="#usage-jinja">Jinja or Nunjucks</a></h3>
+
+<section class="prose my-6">
+  <p>If you use Jinja (or Nunjucks), you can use the <code>select()</code> macro directly, making sure to set <code>is_combobox</code> to <code>True</code> (or <code>true</code> for Nunjucks).</p>
+  <ul>
+    <li>
+      <a href="/jinja-and-nunjucks">Read more about using Basecoat with Jinja or Nunjucks</a>
+    </li>
+    <li>
+      <a href="/components/dialog">Read more about the Dialog component</a>
+    </li>
+  </ul>
+</section>
+
+{% set raw_code %}{% raw %}{% call select(
+  listbox_attrs={"data-empty": "No framework found."},
+  is_combobox=true
+) %}
+  <div role="option" data-value="nextjs">Next.js</div>
+  <div role="option" data-value="sveltekit">SvelteKit</div>
+  <div role="option" data-value="nuxtjs">Nuxt.js</div>
+  <div role="option" data-value="remix">Remix</div>
+  <div role="option" data-value="astro">Astro</div>
+{% endcall %}{% endraw %}{% endset %}
+{{ code_block(raw_code, "jinja") }}
+
+<h2 id="examples"><a href="#examples">Examples</a></h2>
+
+<h3 id="example-with-groups"><a href="#example-with-groups">With groups</a></h3>
+
+{% set options_timezones = [
+  {
+    label: "Americas",
+    timezones: [
+      { value: "America/New_York", label: "(GMT-5) New York" },
+      { value: "America/Los_Angeles", label: "(GMT-8) Los Angeles" },
+      { value: "America/Chicago", label: "(GMT-6) Chicago" },
+      { value: "America/Toronto", label: "(GMT-5) Toronto" },
+      { value: "America/Vancouver", label: "(GMT-8) Vancouver" },
+      { value: "America/Sao_Paulo", label: "(GMT-3) São Paulo" }
+    ]
+  },
+  {
+    label: "Europe",
+    timezones: [
+      { value: "Europe/London", label: "(GMT+0) London" },
+      { value: "Europe/Paris", label: "(GMT+1) Paris" },
+      { value: "Europe/Berlin", label: "(GMT+1) Berlin" },
+      { value: "Europe/Rome", label: "(GMT+1) Rome" },
+      { value: "Europe/Madrid", label: "(GMT+1) Madrid" },
+      { value: "Europe/Amsterdam", label: "(GMT+1) Amsterdam" }
+    ]
+  },
+  {
+    label: "Asia/Pacific",
+    timezones: [
+      { value: "Asia/Tokyo", label: "(GMT+9) Tokyo" },
+      { value: "Asia/Shanghai", label: "(GMT+8) Shanghai" },
+      { value: "Asia/Singapore", label: "(GMT+8) Singapore" },
+      { value: "Asia/Dubai", label: "(GMT+4) Dubai" },
+      { value: "Australia/Sydney", label: "(GMT+11) Sydney" },
+      { value: "Asia/Seoul", label: "(GMT+9) Seoul" }
+    ]
+  }
+] %}
+{% set code %}
+{% call select(
+  trigger_attrs={"class": "w-[200px]"},
+  content_attrs={"class": "w-72"},
+  listbox_attrs={"data-empty": "No timezone found."},
+  is_combobox=true
+) %}
+  <div class="max-h-64 overflow-y-auto scrollbar">
+    {% for group in options_timezones %}
+      <div role="group" aria-labelledby="demo-combobox-timezones-group-{{ loop.index0 }}">
+        <span id="demo-combobox-timezones-group-{{ loop.index0 }}" role="heading">{{ group.label }}</span>
+        {% for timezone in group.timezones %}
+          <div role="option" data-value="{{ timezone.value}}">
+            {{ timezone.label }}
+          </div>
+        {% endfor %}
+      </div>
+    {% endfor %}
+  </div>
+  <hr role="separator">
+  <div role="option">
+    {% lucide "circle-plus" %}
+    Create timezone
+  </div>
+{% endcall %}
+{% endset %}
+{{ code_preview("combobox-with-groups", code | prettyHtml) }}
