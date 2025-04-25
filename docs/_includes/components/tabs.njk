@@ -8,18 +8,16 @@
 %}
 {% if registerComponent('tabs') %}
 <script>
-  document.addEventListener('alpine:init', (initialTabIndex = 0) => {
-    Alpine.data('tabs', () => ({
+  document.addEventListener('alpine:init', () => {
+    Alpine.data('tabs', (initialTabIndex = 0) => ({
       activeTabIndex: initialTabIndex,
       tabs: [],
       panels: [],
 
       init() {
-        console.log("initialTabIndex", initialTabIndex);
         this.$nextTick(() => {
-          this.tabs = Array.from(this.$el.querySelectorAll('[role=tab]:not([disabled])'));
-          this.panels = Array.from(this.$el.querySelectorAll('[role=tabpanel]'));
-
+          this.tabs = Array.from(this.$el.querySelectorAll(':scope > [role=tablist] [role=tab]:not([disabled])'));
+          this.panels = Array.from(this.$el.querySelectorAll(':scope > [role=tabpanel]'));
           if (this.tabs.length > 0) {
             this.selectTab(this.tabs[initialTabIndex], false);
           }
@@ -76,7 +74,7 @@
 
 <div
   class="tabs {{ main_attrs.class }}"
-  x-data="tabs({{ default_tab_index }})"
+  x-data="tabs({{ default_tab_index - 1 }})"
   {% if id %}id="{{ id }}"{% endif %}
   {% for key, value in main_attrs %}
     {% if key != 'class' %}{{ key }}="{{ value }}"{% endif %}

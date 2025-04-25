@@ -16,20 +16,15 @@ toc:
 {% from "macros/code_block.njk" import code_block %}
 {% from "components/dialog.njk" import dialog %}
 
-<div class="alert mb-6">
-  {% lucide "info" %}
-  <h2>The Alert Dialog component uses the <a href="/components/dialog" class="font-medium underline underline-offset-4">Dialog</a> component.</h2>
-</div>
-
 {% set code %}{% set footer %}
   <button class="btn-outline" @click="open = false">Cancel</button>
   <button class="btn-primary" @click="open = false">Continue</button>
 {% endset %}
 {{ dialog(
-  id="demo-alert-dialog",
+  id="alert-dialog",
   title="Are you absolutely sure?",
   description="This action cannot be undone. This will permanently delete your account and remove your data from our servers.",
-  trigger="Open Alert Dialog",
+  trigger="Open alert dialog",
   trigger_attrs={"class": "btn-outline"},
   footer=footer,
   close_button=false,

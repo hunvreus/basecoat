@@ -1,0 +1,79 @@
+---
+layout: layouts/component.njk
+title: Tabs
+description: A set of layered sections of content—known as tab panels—that are displayed one at a time.
+toc:
+  - label: Usage
+    id: usage
+---
+
+{% from "macros/code_preview.njk" import code_preview %}
+{% from "macros/code_block.njk" import code_block %}
+{% from "components/tabs.njk" import tabs %}
+{% set code %}
+{% set account_panel %}
+<div class="card">
+  <header>
+    <h2>Account</h2>
+    <p>Make changes to your account here. Click save when you're done.</p>
+  </header>
+  <section>
+    <form class="form grid gap-6">
+      <div class="grid gap-3">
+        <label for="demo-tabs-account-name">Name</label>
+        <input type="text" id="demo-tabs-account-name" value="Pedro Duarte" />
+      </div>
+      <div class="grid gap-3">
+        <label for="demo-tabs-account-username">Username</label>
+        <input type="text" id="demo-tabs-account-username" value="@peduarte" />
+      </div>
+    </form>
+  </section>
+  <footer>
+    <button type="button" class="btn">Save changes</button>
+  </footer>
+</div>
+{% endset %}
+{% set password_panel %}
+<div class="card">
+  <header>
+    <h2>Password</h2>
+    <p>Change your password here. After saving, you'll be logged out.</p>
+  </header>
+  <section>
+    <form class="form grid gap-6">
+      <div class="grid gap-3">
+        <label for="demo-tabs-password-current">Current password</label>
+        <input type="password" id="demo-tabs-password-current" />
+      </div>
+      <div class="grid gap-3">
+        <label for="demo-tabs-password-new">New password</label>
+        <input type="password" id="demo-tabs-password-new"/>
+      </div>
+    </form>
+  </section>
+  <footer>
+    <button type="button" class="btn">Save Password</button>
+  </footer>
+</div>
+{% endset %}
+{% set tabsets_demo = [
+{ tab: "Account", panel: account_panel },
+{ tab: "Password", panel: password_panel }
+] %}
+{{ tabs(
+id='demo-tabs-with-panels',
+tabsets=tabsets_demo,
+main_attrs={ "class": "w-full" },
+tablist_attrs={ "class": "w-full" }
+) }}
+{% endset %}
+{{ code_preview("tabs", code | prettyHtml, "max-w-[300px] w-full") }}
+
+<h2 id="usage"><a href="#usage">Usage</a></h2>
+
+<section class="prose my-6">
+  <p>You can style an <code>&lt;input type="range"&gt;</code> element by either adding the <code>input</code> class or having a parent with the <code>form</code> class (<a href="/components/form">read more about form</a>). However, the range input also requries some Javacript code to be able to paint the left side of the slider.</p>
+</section>
+
+{{ code_block(code) }}

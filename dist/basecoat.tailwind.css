@@ -628,7 +628,7 @@
       }
       [role='menuitem'],
       [role='option'] {
-        @apply aria-hidden:hidden [&_svg]:text-muted-foreground relative flex cursor-default items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-hidden select-none [&_svg]:shrink-0 [&_svg]:size-4 aria-disabled:opacity-50 aria-disabled:pointer-events-none w-full truncate;
+        @apply aria-hidden:hidden [&_svg]:text-muted-foreground relative flex cursor-default items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-hidden select-none [&_svg]:shrink-0 [&_svg]:size-4 aria-disabled:opacity-50 aria-disabled:pointer-events-none disabled:opacity-50 disabled:pointer-events-none w-full truncate;
       }
       [role='menuitem'] {
         @apply focus-visible:bg-accent focus-visible:text-accent-foreground hover:bg-accent hover:text-accent-foreground;

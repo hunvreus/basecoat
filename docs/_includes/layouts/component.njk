@@ -22,7 +22,6 @@ layout: layouts/base.njk
             {% for item in items %}
               <li>
                 <a href="#{{ item.id }}">{{ item.label }}</a>
-                {# Recursively call the macro if there are children #}
                 {% if item.children and item.children.length %}
                   {{ renderToc(item.children) }}
                 {% endif %}

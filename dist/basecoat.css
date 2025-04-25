@@ -2743,6 +2743,12 @@
         }
         -webkit-user-select: none;
         user-select: none;
+        &:disabled {
+          pointer-events: none;
+        }
+        &:disabled {
+          opacity: 50%;
+        }
         &[aria-disabled="true"] {
           pointer-events: none;
         }

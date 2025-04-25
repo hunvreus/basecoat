@@ -102,7 +102,10 @@
           <a
             href="/components/{{ component.id }}"
             class="h-8 flex items-center gap-2 rounded-md p-2 text-left text-sm outline-hidden ring-sidebar-ring transition-[width,height,padding] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0"
-            
+            hx-boost="true"
+            hx-select="#content"
+            hx-target="#content"
+            hx-swap="outerHTML"
           >
             {{ component.name }}
           </a>
