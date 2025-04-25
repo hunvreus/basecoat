@@ -1,0 +1,75 @@
+---
+layout: layouts/component.njk
+title: Badge
+description: Displays a badge or a component that looks like a badge.
+toc:
+  - label: Usage
+    id: usage
+  - label: Examples
+    id: examples
+    children:
+      - label: Primary
+        id: example-primary
+      - label: Secondary
+        id: example-secondary
+      - label: Destructive
+        id: example-destructive
+      - label: Outline
+        id: example-outline
+      - label: With icon
+        id: example-with-icon
+      - label: Link
+        id: example-link
+---
+
+{% from "macros/code_preview.njk" import code_preview %}
+{% from "macros/code_block.njk" import code_block %}
+
+{% set code %}<span class="badge">Badge</span>{% endset %}
+{{ code_preview("badge", code) }}
+
+<h2 id="usage"><a href="#usage">Usage</a></h2>
+
+<section class="prose my-6">
+  <p>Simply use one of the badge classes: <code>badge</code>, <code>badge-primary</code>, <code>badge-secondary</code>, <code>badge-destructive</code> or <code>badge-outline</code>. <a href="/kitchen-sink#badge">You can find more examples in the kitchen sink</a>.</p>
+</section>
+
+{{ code_block(code) }}
+
+<h2 id="examples"><a href="#examples">Examples</a></h2>
+
+<h3 id="example-primary"><a href="#example-primary">Primary</a></h3>
+
+{% set code %}<span class="badge">Primary</span>{% endset %}
+{{ code_preview("badge-primary", code) }}
+
+<h3 id="example-secondary"><a href="#example-secondary">Secondary</a></h3>
+
+{% set code %}<span class="badge-secondary">Secondary</span>{% endset %}
+{{ code_preview("badge-secondary", code) }}
+
+<h3 id="example-destructive"><a href="#example-destructive">Destructive</a></h3>
+
+{% set code %}<span class="badge-destructive">Destructive</span>{% endset %}
+{{ code_preview("badge-destructive", code) }}
+
+<h3 id="example-outline"><a href="#example-outline">Outline</a></h3>
+
+{% set code %}<span class="badge-outline">Outline</span>{% endset %}
+{{ code_preview("badge-outline", code) }}
+
+<h3 id="example-with-icon"><a href="#example-with-icon">With icon</a></h3>
+
+{% set code %}<span class="badge-destructive">
+  {% lucide "circle-alert" %}
+  With icon
+</span>{% endset %}
+{{ code_preview("badge-with-icon", code) }}
+
+<h3 id="example-link"><a href="#example-link">Link</a></h3>
+
+{% set code %}<a href="#" class="badge-outline">
+  Link
+  {% lucide "arrow-right" %}
+</a>{% endset %}
+{{ code_preview("badge-link", code) }}

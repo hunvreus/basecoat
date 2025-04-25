@@ -1,0 +1,79 @@
+---
+layout: layouts/component.njk
+title: Alert Dialog
+description: A modal dialog that interrupts the user with important content and expects a response.
+toc:
+  - label: Usage
+    id: usage
+    children:
+      - label: Default
+        id: usage-default
+      - label: Jinja or Nunjucks
+        id: usage-jinja
+---
+
+{% from "macros/code_preview.njk" import code_preview %}
+{% from "macros/code_block.njk" import code_block %}
+{% from "components/dialog.njk" import dialog %}
+
+<div class="alert mb-6">
+  {% lucide "info" %}
+  <h2>The Alert Dialog component uses the <a href="/components/dialog" class="font-medium underline underline-offset-4">Dialog</a> component.</h2>
+</div>
+
+{% set code %}{% set footer %}
+  <button class="btn-outline" @click="open = false">Cancel</button>
+  <button class="btn-primary" @click="open = false">Continue</button>
+{% endset %}
+{{ dialog(
+  id="demo-alert-dialog",
+  title="Are you absolutely sure?",
+  description="This action cannot be undone. This will permanently delete your account and remove your data from our servers.",
+  trigger="Open Alert Dialog",
+  trigger_attrs={"class": "btn-outline"},
+  footer=footer,
+  close_button=false,
+  close_on_overlay_click=false
+) }}{% endset %}
+{{ code_preview("alert-dialog", code | prettyHtml) }}
+
+<h2 id="usage"><a href="#usage">Usage</a></h2>
+
+<h3 id="usage-default"><a href="#usage-default">Default</a></h3>
+
+<section class="prose my-6">
+  <p>The Alert Dialog component uses the same Alpine.js code as the <a href="/components/dialog" class="font-medium underline underline-offset-4">Dialog</a> component with one small difference: we set <code>initialCloseOnOverlayClick</code> to <code>false</code> to prevent the dialog from closing when the overlay is clicked.</p>
+</section>
+
+{{ code_block(code | prettyHtml) }}
+
+<h3 id="usage-jinja"><a href="#usage-jinja">Jinja or Nunjucks</a></h3>
+
+<section class="prose my-6">
+  <p>If you use Jinja (or Nunjucks), you can use the Dialog macro directly, making sure to set <code>close_on_overlay_click</code> to <code>False</code> (or <code>false</code> for Nunjucks).</p>
+  <ul>
+    <li>
+      <a href="/jinja-and-nunjucks">Read more about using Basecoat with Jinja or Nunjucks</a>
+    </li>
+    <li>
+      <a href="/components/dialog">Read more about the Dialog component</a>
+    </li>
+  </ul>
+</section>
+
+{% set raw_code %}{% raw %}{% set footer %}
+  <button class="btn-outline" @click="open = false">Cancel</button>
+  <button class="btn-primary" @click="open = false">Continue</button>
+{% endset %}
+{{ dialog(
+  id="demo-alert-dialog",
+  title="Are you absolutely sure?",
+  description="This action cannot be undone. This will permanently delete your account and remove your data from our servers.",
+  trigger="Open Alert Dialog",
+  trigger_attrs={"class": "btn-outline"},
+  footer=footer,
+  close_button=False,
+  close_on_overlay_click=False
+) }}{% endraw %}
+{% endset%}
+{{ code_block(raw_code, "jinja") }}

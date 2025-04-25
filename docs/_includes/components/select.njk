@@ -46,7 +46,9 @@
           this.focusedIndex = 0;
         }
         this.options.forEach(opt => opt.removeAttribute('data-focus'));
-        this.options[this.focusedIndex].setAttribute('data-focus', '');
+        const option = this.options[this.focusedIndex];
+        option.setAttribute('data-focus', '');
+        option.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
       },
       focusOnSelectedOption() {
         if (this.options.length === 0 || this.selectedValue === null) return;
@@ -77,7 +79,6 @@
         }
       },
       handleOptionMousemove(event) {
-        console.log("here");
         const option = event.target.closest('[role=option]');
         if (option && option.getAttribute('aria-disabled') !== 'true') {
           this.focusedIndex = this.options.indexOf(option);
@@ -126,18 +127,19 @@
         '@keydown.up.prevent'() { this.moveOptionFocus(-1); },
         '@keydown.home.prevent'() { this.focusOption(0) },
         '@keydown.end.prevent'() { this.focusOption(this.options.length - 1) },
-        '@keydown.enter.prevent'() { this.handleOptionEnter() },
+        '@keydown.enter.prevent'() {
+          if (this.open) this.handleOptionEnter();
+          else this.open = true;
+        },
         ':aria-expanded'() { return this.open },
         'x-ref': 'trigger'
       },
-      
       $content: {
         '@click'(e) { this.handleOptionClick(e) },
         '@mousemove'(e) { this.handleOptionMousemove(e) },
         ':aria-hidden'() { return !this.open },
         'x-cloak': ''
       },
-
       $filter: {
         '@input'(e) { this.filterOptions(e.target.value) },
         '@keydown.escape.prevent'() {
@@ -180,7 +182,11 @@
   >
     <div x-html="selectedLabel" class="flex items-center gap-x-2"
     ></div>
-    {% lucide "chevron-down", class="text-muted-foreground opacity-50 shrink-0" %}
+    {% if is_combobox %}
+      {% lucide "chevrons-up-down", class="text-muted-foreground opacity-50 shrink-0" %}
+    {% else %}
+      {% lucide "chevron-down", class="text-muted-foreground opacity-50 shrink-0" %}
+    {% endif %}
   </button>
   <div
     data-popover

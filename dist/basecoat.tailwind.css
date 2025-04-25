@@ -231,7 +231,21 @@
   .btn-icon-outline,
   .btn-icon-ghost,
   .btn-icon-link,
-  .btn-icon-destructive {
+  .btn-icon-destructive,
+  .btn-sm-icon,
+  .btn-sm-icon-primary,
+  .btn-sm-icon-secondary,
+  .btn-sm-icon-outline,
+  .btn-sm-icon-ghost,
+  .btn-sm-icon-link,
+  .btn-sm-icon-destructive,
+  .btn-lg-icon,
+  .btn-lg-icon-primary,
+  .btn-lg-icon-secondary,
+  .btn-lg-icon-outline,
+  .btn-lg-icon-ghost,
+  .btn-lg-icon-link,
+  .btn-lg-icon-destructive {
     @apply inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive cursor-pointer rounded-md;
   }
   .btn,
@@ -261,6 +275,15 @@
   .btn-sm-destructive {
     @apply gap-1.5 h-8 px-3 has-[>svg]:px-2.5;
   }
+  .btn-sm-icon,
+  .btn-sm-icon-primary,
+  .btn-sm-icon-secondary,
+  .btn-sm-icon-outline,
+  .btn-sm-icon-ghost,
+  .btn-sm-icon-link,
+  .btn-sm-icon-destructive {
+    @apply size-8;
+  }
   .btn-lg,
   .btn-lg-primary,
   .btn-lg-secondary,
@@ -270,6 +293,15 @@
   .btn-lg-destructive {
     @apply gap-2 h-10 px-6 has-[>svg]:px-4;
   }
+  .btn-lg-icon,
+  .btn-lg-icon-primary,
+  .btn-lg-icon-secondary,
+  .btn-lg-icon-outline,
+  .btn-lg-icon-ghost,
+  .btn-lg-icon-link,
+  .btn-lg-icon-destructive {
+    @apply size-10;
+  }
   .btn,
   .btn-primary,
   .btn-sm,
@@ -277,7 +309,11 @@
   .btn-lg,
   .btn-lg-primary,
   .btn-icon,
-  .btn-icon-primary {  
+  .btn-icon-primary,
+  .btn-sm-icon,
+  .btn-sm-icon-primary,
+  .btn-lg-icon,
+  .btn-lg-icon-primary {  
     @apply bg-primary text-primary-foreground shadow-xs hover:bg-primary/90;
     &[aria-pressed='true'] {
       @apply bg-primary/90;
@@ -286,7 +322,9 @@
   .btn-secondary,
   .btn-sm-secondary,
   .btn-lg-secondary,
-  .btn-icon-secondary {
+  .btn-icon-secondary,
+  .btn-sm-icon-secondary,
+  .btn-lg-icon-secondary {
     @apply bg-secondary text-secondary-foreground shadow-xs;
     &:hover,
     &[aria-pressed='true'] {
@@ -296,7 +334,9 @@
   .btn-outline,
   .btn-sm-outline,
   .btn-lg-outline,
-  .btn-icon-outline {
+  .btn-icon-outline,
+  .btn-sm-icon-outline,
+  .btn-lg-icon-outline {
     @apply border bg-background shadow-xs dark:bg-input/30 dark:border-input;
     &:hover,
     &[aria-pressed='true'] {
@@ -306,7 +346,9 @@
   .btn-ghost,
   .btn-sm-ghost,
   .btn-lg-ghost,
-  .btn-icon-ghost {
+  .btn-icon-ghost,
+  .btn-sm-icon-ghost,
+  .btn-lg-icon-ghost {
     &:hover,
     &[aria-pressed='true'] {
       @apply bg-accent text-accent-foreground dark:bg-accent/50;
@@ -315,7 +357,9 @@
   .btn-link,
   .btn-sm-link,
   .btn-lg-link,
-  .btn-icon-link {
+  .btn-icon-link,
+  .btn-sm-icon-link,
+  .btn-lg-icon-link {
     @apply text-primary underline-offset-4;
     &:hover,
     &[aria-pressed='true'] {
@@ -325,7 +369,9 @@
   .btn-destructive,
   .btn-sm-destructive,
   .btn-lg-destructive,
-  .btn-icon-destructive {
+  .btn-icon-destructive,
+  .btn-sm-icon-destructive,
+  .btn-lg-icon-destructive {
     @apply bg-destructive text-white shadow-xs focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60;
     &:hover,
     &[aria-pressed='true'] {
@@ -585,13 +631,13 @@
         @apply aria-hidden:hidden [&_svg]:text-muted-foreground relative flex cursor-default items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-hidden select-none [&_svg]:shrink-0 [&_svg]:size-4 aria-disabled:opacity-50 aria-disabled:pointer-events-none w-full truncate;
       }
       [role='menuitem'] {
-        @apply hover:bg-accent hover:text-accent-foreground;
+        @apply focus-visible:bg-accent focus-visible:text-accent-foreground hover:bg-accent hover:text-accent-foreground;
       }
       [role='option'] {
         @apply data-[focus]:bg-accent data-[focus]:text-accent-foreground pr-7.5;
 
         &[aria-selected='true'] {
-        @apply bg-[image:var(--check-icon)] bg-no-repeat bg-position-[center_right_0.5rem] bg-size-[0.875rem];
+          @apply bg-[image:var(--check-icon)] bg-no-repeat bg-position-[center_right_0.5rem] bg-size-[0.875rem];
         }
       }
       [role='menu'] [role='heading'] {
@@ -744,7 +790,9 @@
 
 /* Tabs */
 @layer components {
-  .tabs {  
+  .tabs {
+    @apply flex flex-col gap-2;
+    
     [role='tablist'] {
       @apply bg-muted text-muted-foreground inline-flex h-9 w-fit items-center justify-center rounded-lg p-[3px];
 
@@ -821,7 +869,7 @@
     }
     &:not([data-side]),
     &[data-side='top'] {
-      @apply before:bottom-full before:mb-1.5 before:translate-y-2 hover:before:translate-y-0 ;
+    @apply before:bottom-full before:mb-1.5 before:translate-y-2 hover:before:translate-y-0 ;
     }
     &[data-side='bottom'] {
       @apply before:top-full before:mt-1.5 before:-translate-y-2 hover:before:translate-y-0 ;
@@ -859,5 +907,121 @@
         @apply before:top-1/2 before:-translate-y-1/2;
       }
     }
+  }
+}
+
+/* Prose */
+@layer components {
+  .prose h1,
+  .prose h2,
+  .prose h3,
+  .prose h4,
+  .prose h5,
+  .prose h6,
+  .h1,
+  .h2,
+  .h3,
+  .h4,
+  .h5,
+  .h6 {
+    @apply font-medium leading-tight;
+  }
+  .prose h1,
+  .h1 {
+    @apply text-2xl;
+  }
+  .prose h2,
+  .h2 {
+    @apply text-xl;
+  }
+  .prose h3,
+  .h3 {
+    @apply text-lg;
+  }
+  .prose h4,
+  .prose h5,
+  .prose h6,
+  .h4,
+  .h5,
+  .h6 {
+    @apply text-base;
+  }
+  .prose a,
+  .link {
+    @apply font-medium underline underline-offset-4;
+  }
+  .prose code,
+  .code {
+    @apply relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm;
+  }
+  .prose pre:has(> code),
+  .code-block {
+    @apply bg-muted border-border rounded-md;
+  }
+  .prose pre code,
+  .code-block code {
+    @apply inline-block p-4 text-sm font-mono;
+  }
+  .prose blockquote,
+  .quote {
+    @apply border-l-4 border-border pl-4;
+  }
+  .prose ol,
+  .ordered-list {
+    @apply my-6 ml-6 list-decimal;
+
+    li {
+      @apply mb-2;
+    }
+  }
+  .prose ul,
+  .unordered-list {
+    @apply my-6 ml-6 list-disc;
+
+    li {
+      @apply mb-2;
+    }
+  }
+  .prose > *:first-child {
+    @apply !mt-0;
+  }
+  .prose > *:last-child {
+    @apply !mb-0;
+  }
+  .prose h1 {
+    @apply mb-8;
+  }
+  .prose h2 {
+    @apply mt-8 mb-6;
+  }
+  .prose h3 {
+    @apply mt-6 mb-4;
+  }
+  .prose h4 {
+    @apply my-4;
+  }
+  .prose h5 {
+    @apply my-4;
+  }
+  .prose h6 {
+    @apply my-4;
+  }
+  .prose > p,
+  .prose > blockquote,
+  .prose > ul,
+  .prose > ol,
+  .prose > dl,
+  .prose > table,
+  .prose > pre,
+  .prose > p {
+    @apply my-4;
+  }
+  .prose > *:last-child {
+    @apply !mb-0;
+  }
+  
+  .prose strong,
+  .prose b {
+    @apply font-semibold;
   }
 }

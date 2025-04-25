@@ -1,0 +1,48 @@
+---
+layout: layouts/component.njk
+title: Pagination
+description: Pagination with page navigation, next and previous links.
+toc:
+  - label: Usage
+    id: usage
+---
+
+{% from "macros/code_preview.njk" import code_preview %}
+{% from "macros/code_block.njk" import code_block %}
+
+<div class="alert mb-6">
+  {% lucide "circle-alert" %}
+  <h2>There is no dedicated pagination component in Basecoat.</h2>
+</div>
+
+{% set code %}<nav role="navigation" aria-label="pagination" class="mx-auto flex w-full justify-center">
+  <ul class="flex flex-row items-center gap-1">
+    <li>
+      <a href="#" class="btn-ghost">{% lucide "chevron-left" %} Previous</a>
+    </li>
+    <li>
+      <a href="#" class="btn-icon-ghost">1</a>
+    </li>
+    <li>
+      <a href="#" class="btn-icon-outline">2</a>
+    </li>
+    <li>
+      <a href="#" class="btn-icon-ghost">3</a>
+    </li>
+    <li>
+      <div class="size-9 flex items-center justify-center">{% lucide "ellipsis", { "class": "size-4 shrink-0" } %}</div>
+    </li>
+    <li>
+      <a href="#" class="btn-ghost">Next {% lucide "chevron-right" %}</a>
+    </li>
+  </ul>
+</nav>{% endset %}
+{{ code_preview("pagination", code, "max-w-md") }}
+
+<h2 id="usage"><a href="#usage">Usage</a></h2>
+
+<section class="prose my-6">
+  <p>A pagination is fairly simple to implement with Tailwind using the Basecoat button classes:</p>
+</section>
+
+{{ code_block(code) }}

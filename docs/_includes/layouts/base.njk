@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html class="dark"><head>
+  <!-- Theme -->
+  <script>
+  function isDark() {
+    return localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+  }
+
+  if (isDark()) {
+    document.documentElement.classList.add('dark');
+  }
+
+  document.addEventListener('alpine:init', () => {
+    Alpine.store('theme', {
+      isDark: isDark(),
+      set(value) {
+        this.isDark = value;
+        localStorage.setItem('theme', value ? 'dark' : 'light');
+      },
+      toggle() {
+        this.isDark = document.documentElement.classList.toggle('dark');
+        localStorage.setItem('theme', this.isDark ? 'dark' : 'light');
+      }
+    });
+  });
+  </script>
+
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Language" content="en">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Title & Description -->
+  <title>{{ site.title + ": " + title if page.url === "/" else title + " - " + site.title }}</title>
+  <meta name="description" content="{{ description or site.description }}"/>
+  <meta name="title" content="{{ title }} | Basecoat">
+  <meta name="description" content="{{ description }}">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+
+  <!-- CSS -->
+  <link rel="preconnect" href="https://rsms.me/">
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+  <link rel="stylesheet" href="/assets/styles.css">
+
+  <!-- JS -->
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <script src="https://unpkg.com/htmx.org@2.0.4"></script>
+</head>
+<body>
+<div
+  id="sidebar"
+  class="fixed inset-y-0 left-0 z-50 h-svh border-r bg-sidebar text-sidebar-foreground flex flex-col w-[var(--sidebar-width)] transition-transform ease-in-out peer aria-[hidden=true]:-translate-x-full"
+  aria-hidden="false"
+  :aria-hidden="open ? 'false' : 'true'"
+  @sidebar:toggle.window="toggle()"
+  x-data="{
+    open: true,
+    toggle() { this.open = !this.open }
+  }"
+>
+  {% include "partials/sidebar.njk" %}
+</div>
+
+<main id="content" class="relative ml-(--sidebar-width) peer-aria-hidden:ml-0 transition-[margin-left] ease-in-out">
+  <header class="bg-background sticky inset-x-0 top-0 isolate z-10 flex shrink-0 items-center gap-2 border-b">
+    <div class="flex h-14 w-full items-center gap-2 px-4">
+      <button
+        type="button"
+        aria-label="Hide sidebar"
+        data-tooltip="Hide sidebar"
+        :data-tooltip="sidebarOpen ? 'Hide sidebar' : 'Show sidebar'"
+        data-side="bottom"
+        data-align="start"
+        class="btn-icon-ghost size-8 mr-auto"
+        x-init
+        x-data="{ sidebarOpen: true }"
+        @click="
+          sidebarOpen = !sidebarOpen;
+          $dispatch('sidebar:toggle');
+        "
+      >
+        {% lucide "panel-left" %}
+      </button>
+      <select class="select h-8 leading-none">
+        <option value="light">Default</option>
+        <option value="light">Other</option>
+      </select>
+      <button
+        type="button"
+        aria-label="Toggle theme"
+        data-tooltip="Toggle theme"
+        data-side="bottom"
+        data-align="end"
+        class="btn-icon-outline size-8"
+        x-init
+        @click="$store.theme.toggle()" 
+      >
+        <span x-show="$store.theme.isDark">{% lucide "sun" %}</span>
+        <span x-show="!$store.theme.isDark">{% lucide "moon" %}</span>
+      </button>
+    </div>
+  </header>
+
+  <div class="container grid gap-4 p-4">
+    {{ content | safe }}
+  </div>
+</main>
+{% from "components/toast.njk" import toaster %}
+{{ toaster() }}
+</body>
+</html>

@@ -1,0 +1,26 @@
+---
+layout: layouts/component.njk
+title: Label
+description: Renders an accessible label associated with controls.
+toc:
+  - label: Usage
+    id: usage
+---
+
+{% from "macros/code_preview.njk" import code_preview %}
+{% from "macros/code_block.njk" import code_block %}
+
+{% set code %}<label class="label gap-3">
+  <input type="checkbox" class="input">
+  Accept terms and conditions
+</label>{% endset %}
+{{ code_preview("label", code) }}
+
+<h2 id="usage">Usage</h2>
+
+<section class="prose my-6">
+  <p>Simply add the <code>label</code> class to your <code>&lt;label&gt;</code> element or have a parent with the <code>form</code> class (<a href="/components/form">read more about form</a>). Labels will be styled accordingly if a peer or child element is disabled.</p>
+</section>
+
+{% set code %}<label class="label" for="email">Your email address</label>{% endset %}
+{{ code_block(code) }}

@@ -1,0 +1,17 @@
+---
+layout: layouts/component.njk
+title: Popover
+description: Displays rich content in a portal, triggered by a button.
+---
+
+<div class="alert mb-6">
+  {% lucide "info" %}
+  <h2>There is no dedicated avatar component in Basecoat.</h2>
+  <section>
+    <p>Simply use regular Tailwind classes. <a href="/kitchen-sink#avatar" class="underline hover:text-foreground transition-all">You can find more examples of avatars in the kitchen sink.</a></p>
+  </section>
+</div>
+
+{% from "macros/code_block.njk" import code_block %}
+{% set code %}<img class="size-8 shrink-0 object-cover rounded-full" alt="@hunvreus" src="https://github.com/hunvreus.png">{% endset %}
+{{ code_block("accordion", code, "max-w-md") }}

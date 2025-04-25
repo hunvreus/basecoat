@@ -1,0 +1,54 @@
+---
+layout: layouts/component.njk
+title: Switch
+description: A control that allows the user to toggle between checked and not checked.
+toc:
+  - label: Usage
+    id: usage
+  - label: Examples
+    id: examples
+    children:
+      - label: Form
+        id: example-form
+---
+
+{% from "macros/code_preview.njk" import code_preview %}
+{% from "macros/code_block.njk" import code_block %}
+
+{% set code %}<label class="label">
+  <input type="checkbox" name="switch" role="switch" class="input">
+  Airplane Mode
+</label>{% endset %}
+{{ code_preview("switch", code) }}
+
+<h2 id="usage"><a href="#usage">Usage</a></h2>
+
+<section class="prose my-6">
+  <p>You can style a <code>&lt;input type="checkbox"&gt;</code> element as a switch by adding a <code>role="switch"</code> attribute, and adding the <code>input</code> class or having a parent with the <code>form</code> class (<a href="/components/form">read more about form</a>).</p>
+</section>
+
+{% set code %}<input type="checkbox" role="switch" class="input">{% endset %}
+{{ code_block(code) }}
+
+<h2 id="examples"><a href="#examples">Examples</a></h2>
+
+<h3 id="example-form"><a href="#example-form">Form</a></h3>
+
+{% set code %}<form class="form grid gap-4">
+  <h3 class="text-lg font-medium">Email Notifications</h3>
+  <div class="gap-2 flex flex-row items-start justify-between rounded-lg border p-4 shadow-xs">
+    <div class="flex flex-col gap-0.5">
+      <label for="demo-form-switch" class="leading-normal">Marketing emails</label>
+      <p class="text-muted-foreground text-sm">Receive emails about new products, features, and more.</p>
+    </div>
+    <input type="checkbox" id="demo-form-switch" role="switch">
+  </div>
+  <div class="gap-2 flex flex-row items-start justify-between rounded-lg border p-4 shadow-xs">
+    <div class="flex flex-col gap-0.5 opacity-60">
+      <label for="demo-form-switch-disabled" class="leading-normal">Marketing emails</label>
+      <p class="text-muted-foreground text-sm">Receive emails about new products, features, and more.</p>
+    </div>
+    <input type="checkbox" id="demo-form-switch-disabled" role="switch" disabled>
+  </div>
+</form>{% endset %}
+{{ code_preview("switch-form", code, "w-full") }}

@@ -1,0 +1,14 @@
+---
+layout: layouts/component.njk
+title: Select
+description: isplays a list of options for the user to pick from—triggered by a button.
+---
+
+{% from "macros/code_block.njk" import code_block %}
+{% set code %}<button class="btn-outline" hx-trigger="click" hx-get="/fragments/toast/success" hx-target="#toast-htmx">
+  Success
+</button>
+<div id="toast-htmx"></div>{% endset %}
+{{ code_block("accordion", code, "max-w-md") }}
+
+<h2>Usage</h2>

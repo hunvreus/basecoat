@@ -1,0 +1,27 @@
+{% macro code_preview(id, code, class=None, default_code=false) %}
+{% from "./code_block.njk" import code_block %}
+{% set code_panel = code_block(code) %}
+{% set preview_panel %}
+<div class="ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 relative rounded-md border">
+  <div class="preview flex min-h-[350px] w-full justify-center p-10 items-center">
+    <div class="{{ class }}">
+      {{ code | safe }}
+    </div>
+  </div>
+</div>
+{% endset %}
+
+<div class="relative my-4">
+  {% from "components/tabs.njk" import tabs %}
+  {% set tabsets = [
+    { tab: "Preview", panel: preview_panel },
+    { tab: "Code", panel: code_panel }
+  ] %}
+  
+  {{ tabs(
+    id="code-block-{{ id }}",
+    tabsets=tabsets,
+    default_tab_index=(2 if default_code else 1)
+  ) }}
+</div>
+{% endmacro %}

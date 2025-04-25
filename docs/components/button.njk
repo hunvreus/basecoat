@@ -1,0 +1,141 @@
+---
+layout: layouts/component.njk
+title: Button
+description: Displays a button or a component that looks like a button.
+toc:
+  - label: Usage
+    id: usage
+  - label: Examples
+    id: examples
+    children:
+      - label: Primary
+        id: example-primary
+      - label: Secondary
+        id: example-secondary
+      - label: Destructive
+        id: example-destructive
+      - label: Outline
+        id: example-outline
+      - label: Ghost
+        id: example-ghost
+      - label: Link
+        id: example-link
+      - label: Icon
+        id: example-icon
+      - label: With Icon
+        id: example-with-icon
+      - label: Loading
+        id: example-loading
+      - label: Large
+        id: example-large
+      - label: Small
+        id: example-small
+---
+
+{% from "macros/code_preview.njk" import code_preview %}
+{% from "macros/code_block.njk" import code_block %}
+
+{% set code %}<button class="btn">Button</button>{% endset %}
+{{ code_preview("button", code) }}
+
+<h2 id="usage">Usage</h2>
+
+<section class="prose my-6">
+  <p>You can use one of the <code>btn</code> classes to style any element as a button:</p>
+
+  <ul>
+    <li>
+      <b>Variants</b>:
+      <ul>
+        <li><code>btn</code> or <code>btn-primary</code> for primary
+      buttons,</li>
+        <li><code>btn-secondary</code> for secondary buttons.</li>
+        <li><code>btn-destructive</code> for destructive buttons.</li>
+        <li><code>btn-outline</code> for outline buttons.</li>
+        <li><code>btn-ghost</code> for ghost buttons.</li>
+        <li><code>btn-link</code> for link buttons.</li>
+        <li><code>btn-icon</code> for icon buttons. This can be combined with other variants, for example <code>btn-icon-destructive</code>.</li>
+      </ul>
+    </li>
+    <li>
+      <b>Sizes</b>:
+      <ul>
+        <li><code>btn-sm</code> for small buttons.</li>
+        <li><code>btn-lg</code> for large buttons.</li>
+        <li>You can combine sizes with any variant, for example <code>btn-lg-destructive</code> or <code>btn-sm-icon-outline</code>.</li>
+      </ul>
+    </li>
+  </ul>
+</section>
+
+{{ code_block(code) }}
+
+<h2 id="examples"><a href="#examples">Examples</a></h2>
+
+<h3 id="example-primary"><a href="#example-primary">Primary</a></h3>
+
+{% set code %}<button class="btn">Primary</button>{% endset %}
+{{ code_preview("button-primary", code) }}
+
+<h3 id="example-secondary"><a href="#example-secondary">Secondary</a></h3>
+
+{% set code %}<button class="btn-secondary">Button</button>{% endset %}
+{{ code_preview("button-secondary", code) }}
+
+<h3 id="example-destructive"><a href="#example-destructive">Destructive</a></h3>
+
+{% set code %}<button class="btn-destructive">Destructive</button>{% endset %}
+{{ code_preview("button-destructive", code) }}
+
+<h3 id="example-outline"><a href="#example-outline">Outline</a></h3>
+
+{% set code %}<button class="btn-outline">Outline</button>{% endset %}
+{{ code_preview("button-outline", code) }}
+
+<h3 id="example-ghost"><a href="#example-ghost">Ghost</a></h3>
+
+{% set code %}<button class="btn-ghost">Ghost</button>{% endset %}
+{{ code_preview("button-ghost", code) }}
+
+<h3 id="example-link"><a href="#example-link">Link</a></h3>
+
+{% set code %}<button class="btn-link">Link</button>{% endset %}
+{{ code_preview("button-link", code) }}
+
+<h3 id="example-icon"><a href="#example-icon">Icon</a></h3>
+
+{% set code %}<button class="btn-icon-outline">
+  {% lucide "chevron-right" %}
+</button>{% endset %}
+{{ code_preview("button-icon", code) }}
+
+<h3 id="example-with-icon"><a href="#example-with-icon">With Icon</a></h3>
+
+{% set code %}<button class="btn">
+  {% lucide "send" %}
+  Send email
+</button>{% endset %}
+{{ code_preview("button-with-icon", code) }}
+
+<h3 id="example-loading"><a href="#example-loading">Loading</a></h3>
+
+{% set code %}<button class="btn-outline" disabled>
+  {% lucide "loader", { "class": "animate-spin" } %}
+  Loading
+</button>{% endset %}
+{{ code_preview("button-loading", code) }}
+
+<h3 id="example-large"><a href="#example-large">Large</a></h3>
+
+{% set code %}<button class="btn-lg">
+  {% lucide "shopping-cart" %}
+  Buy
+</button>{% endset %}
+{{ code_preview("button-large", code) }}
+
+<h3 id="example-small"><a href="#example-small">Small</a></h3>
+
+{% set code %}<button class="btn-sm-icon-destructive">
+  {% lucide "trash" %}
+</button>{% endset %}
+{{ code_preview("button-small", code) }}

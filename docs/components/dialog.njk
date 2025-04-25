@@ -1,0 +1,27 @@
+---
+layout: layouts/component.njk
+title: Dialog
+description: A window overlaid on either the primary window or another dialog window, rendering the content underneath inert.
+---
+
+{% from "macros/code_block.njk" import code_block %}
+{% from "components/dialog.njk" import dialog %}
+{% set code %}{% set footer %}
+  <button class="btn-outline" @click="open = false">Cancel</button>
+  <button class="btn-primary" @click="open = false">Continue</button>
+{% endset %}
+{{ dialog(
+  id="alert-dialog-demo",
+  title="Are you absolutely sure?",
+  description="This action cannot be undone. This will permanently delete your account and remove your data from our servers.",
+  trigger="Open dialog",
+  trigger_attrs={"class": "btn-outline"},
+  footer=footer,
+  close_button=false,
+  close_on_overlay_click=false
+) }}{% endset %}
+{{ code_block("alert-dialog", code | prettyHtml) }}
+
+<h2>Usage</h2>
+
+<p>The Alert Dialog component uses the same syntax as the <a href="/components/dialog" class="font-medium underline underline-offset-4">Dialog</a> component with one difference in the JS.</p>

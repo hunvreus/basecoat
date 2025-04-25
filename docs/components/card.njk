@@ -1,0 +1,142 @@
+---
+layout: layouts/component.njk
+title: Card
+description: Displays a card with header, content, and footer.
+toc:
+  - label: Usage
+    id: usage
+  - label: Examples
+    id: examples
+    children:
+      - label: With content and footer
+        id: example-with-content-and-footer
+      - label: With image
+        id: example-with-image
+---
+
+{% from "macros/code_preview.njk" import code_preview %}
+{% from "macros/code_block.njk" import code_block %}
+
+{% set code %}<div class="card w-full">
+  <header>
+    <h2>Login to your account</h2>
+    <p>Enter your details below to login to your account</p>
+  </header>
+  <section>
+    <form class="form grid gap-6">
+      <div class="grid gap-2">
+        <label for="demo-card-form-email">Email</label>
+        <input type="email" id="demo-card-form-email">
+      </div>
+      <div class="grid gap-2">
+        <div class="flex items-center gap-2">
+          <label for="demo-card-form-password">Password</label>
+          <a href="#" class="ml-auto inline-block text-sm underline-offset-4 hover:underline">Forgot your password?</a>
+        </div>
+        <input type="password" id="demo-card-form-password">
+      </div>
+    </form>
+  </section>
+  <footer class="flex flex-col items-center gap-2">
+    <button type="button" class="btn w-full">Login</button>
+    <button type="button" class="btn-outline w-full">Login with Google</button>
+    <p class="mt-4 text-center text-sm">Don't have an account? <a href="#" class="underline-offset-4 hover:underline">Sign up</a></p>
+  </footer>
+</div>{% endset %}
+{{ code_preview("card", code, "w-full max-w-sm") }}
+
+<h2 id="usage">Usage</h2>
+
+<section class="prose my-6">
+  <p>Simply add the <code>card</code> class to any element and then define any of the children elements:</p>
+  <ul>
+    <li>A <code>&lt;header&gt;</code> for the card header, which can contain a <code>&lt;h2&gt;</code> for the title and a <code>&lt;p&gt;</code> for the description.</li>
+    <li>A <code>&lt;section&gt;</code> for the card content.</li>
+    <li>A <code>&lt;footer&gt;</code> for the card footer.</li>
+  </ul>
+  <p><a href="/kitchen-sink#alert">See the kitchen sink for more examples.</a></p>
+</section>
+
+{% set code %}<div class="card">
+  <header>
+    <h2>Card Title</h2>
+    <p>Card Description</p>
+  </header>
+  <section>
+    <p>Card Content</p>
+  </section>
+  <footer>
+    <p>Card Footer</p>
+  </footer>
+</div>{% endset %}
+{{ code_block(code) }}
+
+<h2 id="examples"><a href="#examples">Examples</a></h2>
+
+<h3 id="example-with-content-and-footer"><a href="#example-with-content-and-footer">With content and footer</a></h3>
+
+{% set code %}<div class="card">
+  <header>
+    <h2>Meeting Notes</h2>
+    <p>Transcript from the meeting with the client.</p>
+  </header>
+  <section class="text-sm">
+    <p>Client requested dashboard redesign with focus on mobile responsiveness.</p>
+    <ol class="mt-4 flex list-decimal flex-col gap-2 pl-6">
+      <li>New analytics widgets for daily/weekly metrics</li>
+      <li>Simplified navigation menu</li>
+      <li>Dark mode support</li>
+      <li>Timeline: 6 weeks</li>
+      <li>Follow-up meeting scheduled for next Tuesday</li>
+    </ol>
+  </section>
+  <footer class="flex items-center">
+    <div class="flex -space-x-2 [&_img]:ring-card [&_img]:ring-2 [&_img]:grayscale [&_img]:size-8 [&_img]:shrink-0 [&_img]:object-cover [&_img]:rounded-full">
+      <img alt="@hunvreus" src="https://github.com/hunvreus.png">
+      <img alt="@shadcn" src="https://github.com/shadcn.png">
+      <img alt="@adamwathan" src="https://github.com/adamwathan.png">
+    </div>
+  </footer>
+</div>{% endset %}
+{{ code_preview("card-with-content-and-footer", code) }}
+
+<h3 id="example-with-image"><a href="#example-with-image">With image</a></h3>
+
+{% set code %}<div class="card">
+  <header>
+    <h2>Is this an image?</h2>
+    <p>This is a card with an image.</p>
+  </header>
+  <section class="px-0">
+    <img
+      alt="Photo by Drew Beamer"
+      loading="lazy"
+      width="500"
+      height="500"
+      class="aspect-video object-cover" style="color:transparent"
+      srcset="
+        https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80&w=640&q=75 1x,
+        https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80&w=1080&q=75 2x
+      "
+      src="https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80&w=1080&q=75"
+    />
+  </section>
+  <footer class="flex items-center gap-2">
+    <span class="badge-outline">
+      {% lucide "bed" %}
+      1
+    </span>
+    <span class="badge-outline">
+      {% lucide "bath" %}
+      2
+    </span>
+    <span class="badge-outline">
+      {% lucide "land-plot" %}
+      350m²
+    </span>
+    <span class="ml-auto font-medium tabular-nums">
+      $135,000
+    </span>
+  </footer>
+</div>{% endset %}
+{{ code_preview("card-with-image", code) }}

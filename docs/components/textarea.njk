@@ -1,0 +1,92 @@
+---
+layout: layouts/component.njk
+title: Teaxtarea
+description: Displays a form textarea or a component that looks like a textarea.
+toc:
+  - label: Usage
+    id: usage
+  - label: Examples
+    id: examples
+    children:
+      - label: Default
+        id: example-default
+      - label: Invalid
+        id: example-invalid
+      - label: Disabled
+        id: example-disabled
+      - label: With label
+        id: example-with-label
+      - label: With text
+        id: example-with-text
+      - label: With button
+        id: example-with-button
+      - label: Form
+        id: example-form
+---
+
+{% from "macros/code_preview.njk" import code_preview %}
+{% from "macros/code_block.njk" import code_block %}
+
+{% set code %}<textarea class="textarea" placeholder="Type your message here"></textarea>{% endset %}
+{{ code_preview("button", code, "w-full") }}
+
+<h2 id="usage">Usage</h2>
+
+<section class="prose my-6">
+  <p>Simply add the <code>textarea</code> class to your <code>&lt;textarea&gt;</code> element or have a parent with the <code>form</code> class (<a href="/components/form">read more about form</a>). You can also set the <code>aria-invalid</code> attribute to <code>true</code> to make the textarea invalid.</p>
+</section>
+
+{{ code_block(code) }}
+
+<h2 id="examples"><a href="#examples">Examples</a></h2>
+
+<h3 id="example-default"><a href="#example-default">Default</a></h3>
+
+{{ code_preview("textarea-default", code, "w-full") }}
+
+<h3 id="example-invalid"><a href="#example-invalid">Invalid</a></h3>
+
+{% set code %}<textarea class="textarea" placeholder="Type your message here" aria-invalid="true"></textarea>{% endset %}
+{{ code_preview("textarea-invalid", code, "w-full") }}
+
+<h3 id="example-disabled"><a href="#example-disabled">Disabled</a></h3>
+
+{% set code %}<textarea class="textarea" placeholder="Type your message here" disabled></textarea>{% endset %}
+{{ code_preview("textarea-disabled", code, "w-full") }}
+
+<h3 id="example-with-label"><a href="#example-with-label">With label</a></h3>
+
+{% set code %}<div class="grid gap-3">
+  <label for="textarea-with-label" class="label">Label</label>
+  <textarea id="textarea-with-label" class="textarea" placeholder="Type your message here"></textarea>
+</div>{% endset %}
+{{ code_preview("textarea-with-label", code, "w-full") }}
+
+<h3 id="example-with-text"><a href="#example-with-text">With text</a></h3>
+
+{% set code %}<div class="grid gap-3">
+  <label for="textarea-with-label" class="label">Label</label>
+  <textarea id="textarea-with-label" class="textarea" placeholder="Type your message here"></textarea>
+  <p class="text-muted-foreground text-sm">Type your message and press enter to send.</p>
+</div>{% endset %}
+{{ code_preview("textarea-with-text", code, "w-full") }}
+
+<h3 id="example-with-button"><a href="#example-with-button">With button</a></h3>
+
+{% set code %}<div class="grid gap-3">
+  <textarea id="textarea-with-label" class="textarea" placeholder="Type your message here"></textarea>
+  <button type="submit" class="btn">Submit</button>
+</div>{% endset %}
+{{ code_preview("textarea-form", code, "w-full") }}
+
+<h3 id="example-form"><a href="#example-form">Form</a></h3>
+
+{% set code %}<form class="form space-y-6">
+  <div class="grid gap-3">
+    <label for="textarea-form" class="label">Bio</label>
+    <textarea id="textarea-form" placeholder="Tell us a bit about yourself"></textarea>
+    <p class="text-muted-foreground text-sm">You can @mention other users and organizations.</p>
+  </div>
+  <button type="submit" class="btn">Submit</button>
+</form>{% endset %}
+{{ code_preview("textarea-form", code, "w-full max-w-sm") }}

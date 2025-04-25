@@ -1,0 +1,92 @@
+---
+layout: layouts/component.njk
+title: Input
+description: Displays a form input field or a component that looks like an input field.
+toc:
+  - label: Usage
+    id: usage
+  - label: Examples
+    id: examples
+    children:
+      - label: Default
+        id: example-default
+      - label: Invalid
+        id: example-invalid
+      - label: Disabled
+        id: example-disabled
+      - label: With label
+        id: example-with-label
+      - label: With text
+        id: example-with-text
+      - label: With button
+        id: example-with-button
+      - label: Form
+        id: example-form
+---
+
+{% from "macros/code_preview.njk" import code_preview %}
+{% from "macros/code_block.njk" import code_block %}
+
+{% set code %}<input class="input" type="email" placeholder="Email">{% endset %}
+{{ code_preview("input", code) }}
+
+<h2 id="usage">Usage</h2>
+
+<section class="prose my-6">
+  <p>Simply add the <code>input</code> class to your <code>&lt;input&gt;</code> element or have a parent with the <code>form</code> class (<a href="/components/form">read more about form</a>). You can also set the <code>aria-invalid</code> attribute to <code>true</code> to make the input invalid.</p>
+</section>
+
+{{ code_block(code) }}
+
+<h2 id="examples"><a href="#examples">Examples</a></h2>
+
+<h3 id="example-default"><a href="#example-default">Default</a></h3>
+
+{{ code_preview("input-default", code) }}
+
+<h3 id="example-invalid"><a href="#example-invalid">Invalid</a></h3>
+
+{% set code %}<input class="input" type="email" placeholder="Email" aria-invalid="true">{% endset %}
+{{ code_preview("input-invalid", code) }}
+
+<h3 id="example-disabled"><a href="#example-disabled">Disabled</a></h3>
+
+{% set code %}<input class="input" type="email" placeholder="Email" disabled>{% endset %}
+{{ code_preview("input-disabled", code) }}
+
+<h3 id="example-with-label"><a href="#example-with-label">With label</a></h3>
+
+{% set code %}<div class="grid gap-3">
+  <label for="input-with-label" class="label">Label</label>
+  <input class="input" id="input-with-label" type="email" placeholder="Email">
+</div>{% endset %}
+{{ code_preview("input-with-label", code) }}
+
+<h3 id="example-with-text"><a href="#example-with-text">With text</a></h3>
+
+{% set code %}<div class="grid gap-3">
+  <label for="input-with-text" class="label">Label</label>
+  <input class="input" id="input-with-text" type="email" placeholder="Email">
+  <p class="text-muted-foreground text-sm">Fill in your email address.</p>
+</div>{% endset %}
+{{ code_preview("input-with-text", code) }}
+
+<h3 id="example-with-button"><a href="#example-with-button">With button</a></h3>
+
+{% set code %}<div class="flex items-center space-x-2">
+  <input class="input" type="email" placeholder="Email">
+  <button type="submit" class="btn">Submit</button>
+</div>{% endset %}
+{{ code_preview("textarea-form", code) }}
+
+<h3 id="example-form"><a href="#example-form">Form</a></h3>
+
+{% set code %}<form class="form space-y-6 w-full">
+  <div class="grid gap-3">
+    <label for="input-form" class="label">Username</label>
+    <input class="input" id="input-form" type="text" placeholder="hunvreus">
+    <p class="text-muted-foreground text-sm">This is your public display name.</p>
+  </div>
+  <button type="submit" class="btn">Submit</button>
+</form>{% endset %}
+{{ code_preview("input-form", code, "w-full max-w-sm") }}

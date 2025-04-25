@@ -1,0 +1,27 @@
+---
+layout: layouts/component.njk
+title: Avatar
+description: An image element with a fallback for representing the user.
+toc:
+  - label: Usage
+    id: usage
+---
+
+{% from "macros/code_preview.njk" import code_preview %}
+{% from "macros/code_block.njk" import code_block %}
+
+<div class="alert mb-6">
+  {% lucide "circle-alert" %}
+  <h2>There is no dedicated accordion component in Basecoat.</h2>
+</div>
+
+{% set code %}<img class="size-8 shrink-0 object-cover rounded-full" alt="@hunvreus" src="https://github.com/hunvreus.png">{% endset %}
+{{ code_preview("avatar", code, "max-w-md") }}
+
+<h2 id="usage"><a href="#usage">Usage</a></h2>
+
+<section class="prose my-6">
+  <p>Avatars are fairly simple to implement with Tailwind. The example above shows how to implement one with Tailwind and an <code>&lt;img&gt;</code> element. <a href="/kitchen-sink#avatar">You can find more examples in the kitchen sink</a>.</p>
+</section>
+
+{{ code_block(code) }}

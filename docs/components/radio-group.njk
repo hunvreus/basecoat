@@ -1,0 +1,48 @@
+---
+layout: layouts/component.njk
+title: Radio Group
+description: A set of checkable buttons—known as radio buttons—where no more than one of the buttons can be checked at a time.
+toc:
+  - label: Usage
+    id: usage
+  - label: Examples
+    id: examples
+    children:
+      - label: Form
+        id: example-form
+---
+
+{% from "macros/code_preview.njk" import code_preview %}
+{% from "macros/code_block.njk" import code_block %}
+
+{% set code %}<fieldset class="grid gap-3">
+  <label class="label"><input type="radio" name="radio-group" value="default" class="input">Default</label>
+  <label class="label"><input type="radio" name="radio-group" value="comfortable" class="input" checked>Comfortable</label>
+  <label class="label"><input type="radio" name="radio-group" value="compact" class="input">Compact</label>
+</fieldset>{% endset %}
+{{ code_preview("radio-group", code) }}
+
+<h2 id="usage">Usage</h2>
+
+<section class="prose my-6">
+  <p>Simply add the <code>input</code> class to your <code>&lt;input type="radio"&gt;</code> elements or have a parent with the <code>form</code> class (<a href="/components/form">read more about form</a>). You can also set the <code>aria-invalid</code> attribute to <code>true</code> to make the input invalid.</p>
+</section>
+
+{{ code_block(code) }}
+
+<h2 id="examples"><a href="#examples">Examples</a></h2>
+
+<h3 id="example-form"><a href="#example-form">Form</a></h3>
+
+{% set code %}<form class="form space-y-6 w-full">
+  <div class="flex flex-col gap-3">
+    <label for="demo-form-radio">Notify me about...</label>
+    <fieldset id="demo-form-radio" class="grid gap-3">
+      <label class="font-normal"><input type="radio" name="demo-form-radio" value="1">All new messages</label>
+      <label class="font-normal"><input type="radio" name="demo-form-radio" value="2">Direct messages and mentions</label>
+      <label class="font-normal"><input type="radio" name="demo-form-radio" value="3" >Nothing</label>
+    </fieldset>
+  </div>
+  <button type="submit" class="btn">Submit</button>
+</form>{% endset %}
+{{ code_preview("radio-group-form", code, "w-full max-w-sm") }}

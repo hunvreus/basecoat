@@ -27,21 +27,21 @@
         this.open = initialOpen;
         this.closeOnOverlayClick = initialCloseOnOverlayClick;
       },
-
       show() {
         if (!this.open) {
           this.open = true;
-          this.$nextTick(() => this.$el.dispatchEvent(new CustomEvent('dialog:opened', { bubbles: true })));
+          this.$nextTick(() => {
+            this.$el.dispatchEvent(new CustomEvent('dialog:opened', { bubbles: true }));
+            setTimeout(() => this.$refs.dialog.focus(), 50);
+          });
         }
       },
-
       hide() {
         if (this.open) {
           this.open = false;
           this.$el.dispatchEvent(new CustomEvent('dialog:closed', { bubbles: true }));
         }
       },
-
       handleControl(event) {
         const detail = event.detail;
         if (detail && detail.targetId === this.id) {
@@ -52,9 +52,7 @@
       },
 
       $main: {
-        '@dialog:control.window'(e) { 
-          this.handleControl(e)
-        },
+        '@dialog:control.window'(e) { this.handleControl(e) },
       },
 
       $trigger: {
@@ -63,9 +61,9 @@
       },
 
       $content: {
+        '@keydown.escape'() { this.open && this.hide() },
         ':inert'() { return !this.open },
         '@click'(e) { e.target === this.$el && this.closeOnOverlayClick && this.hide() },
-        '@keydown.escape.prevent'() { this.open && this.hide() },
         'x-cloak': ''
       }
     }));
@@ -97,6 +95,8 @@
   <div
     role="dialog"
     id="{{ id }}-dialog"
+    x-ref="dialog"
+    tabindex="-1"
     aria-modal="true"
     aria-labelledby="{{ id }}-title"
     inert

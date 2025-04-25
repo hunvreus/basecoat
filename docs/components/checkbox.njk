@@ -1,0 +1,100 @@
+---
+layout: layouts/component.njk
+title: Checkbox
+description: A control that allows the user to toggle between checked and not checked.
+toc:
+  - label: Usage
+    id: usage
+  - label: Examples
+    id: examples
+    children:
+      - label: Disabled
+        id: example-disabled
+      - label: With text
+        id: example-with-text
+      - label: Form
+        id: example-form
+---
+
+{% from "macros/code_preview.njk" import code_preview %}
+{% from "macros/code_block.njk" import code_block %}
+
+{% set code %}<label class="label gap-3">
+  <input type="checkbox" class="input">
+  Accept terms and conditions
+</label>{% endset %}
+{{ code_preview("checkbox", code) }}
+
+<h2 id="usage">Usage</h2>
+
+<section class="prose my-6">
+  <p>Simply add the <code>input</code> class to your <code>&lt;input type="radio"&gt;</code> elements or have a parent with the <code>form</code> class (<a href="/components/form">read more about form</a>). You can also set the <code>aria-invalid</code> attribute to <code>true</code> to make the input invalid.</p>
+</section>
+
+{{ code_block(code) }}
+
+<h2 id="examples"><a href="#examples">Examples</a></h2>
+
+<h3 id="example-disabled"><a href="#example-disabled">Disabled</a></h3>
+
+{% set code %}<label class="label gap-3">
+  <input type="checkbox" class="input" disabled>
+  Accept terms and conditions
+</label>{% endset %}
+{{ code_preview("checkbox-disabled", code) }}
+
+<h3 id="example-with-text"><a href="#example-with-text">With text</a></h3>
+
+{% set code %}<div class="flex items-start gap-3">
+  <input type="checkbox" id="checkbox-with-text" class="input">
+  <div class="grid gap-2">
+    <label for="checkbox-with-text" class="label">Accept terms and conditions</label>
+    <p class="text-muted-foreground text-sm">By clicking this checkbox, you agree to the terms and conditions.</p>
+  </div>
+</div>{% endset %}
+{{ code_preview("checkbox-with-text", code) }}
+
+<h3 id="example-form"><a href="#example-form">Form</a></h3>
+
+{% set code %}<form class="form flex flex-row items-start gap-3 rounded-md border p-4 shadow-xs">
+  <input type="checkbox" id="checkbox-form-1">
+  <div class="flex flex-col gap-1">
+    <label for="checkbox-form-1" class="leading-snug">Use different settings for my mobile devices</label>
+    <p class="text-muted-foreground text-sm leading-snug">You can manage your mobile notifications in the mobile settings page.</p>
+  </div>
+</form>{% endset %}
+{{ code_preview("input-form", code) }}
+
+{% set code %}<form class="form flex flex-col gap-4">
+  <header>
+    <label for="demo-form-checkboxes" class="text-base leading-normal">Sidebar</label>
+    <p class="text-muted-foreground text-sm">Select the items you want to display in the sidebar.</p>
+  </header>
+  <fieldset id="demo-form-checkboxes" class="flex flex-col gap-2">
+    <label class="font-normal leading-tight">
+      <input type="checkbox" name="demo-form-checkboxes" value="1" checked>
+      Recents
+    </label>
+    <label class="font-normal leading-tight">
+      <input type="checkbox" name="demo-form-checkboxes" value="2" checked>
+      Home
+    </label>
+    <label class="font-normal leading-tight">
+      <input type="checkbox" name="demo-form-checkboxes" value="3">
+      Applications
+    </label>
+    <label class="font-normal leading-tight">
+      <input type="checkbox" name="demo-form-checkboxes" value="4">
+      Desktop
+    </label>
+    <label class="font-normal leading-tight">
+      <input type="checkbox" name="demo-form-checkboxes" value="5">
+      Download
+    </label>
+    <label class="font-normal leading-tight">
+      <input type="checkbox" name="demo-form-checkboxes" value="6">
+      Documents
+    </label>
+  </fieldset>
+</form>{% endset %}
+{{ code_preview("input-form", code) }}

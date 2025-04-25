@@ -1,0 +1,14 @@
+---
+layout: layouts/component.njk
+title: Toast
+description: A succinct message that is displayed temporarily.
+---
+
+{% from "macros/code_preview.njk" import code_preview %}
+{% set code %}<button class="btn-outline" hx-trigger="click" hx-get="/fragments/toast/success" hx-target="#toast-htmx">
+  Success
+</button>
+<div id="toast-htmx"></div>{% endset %}
+{{ code_preview("accordion", code, "max-w-md") }}
+
+<h2>Usage</h2>

@@ -1,0 +1,145 @@
+---
+layout: layouts/component.njk
+title: Dropdown Menu
+description: Displays a menu to the user — such as a set of actions or functions — triggered by a button.
+---
+
+{% from "macros/code_block.njk" import code_block %}
+{% from "components/dropdown-menu.njk" import dropdown_menu %}
+{% set code %}{% call dropdown_menu(
+  id="dropdown-menu",
+  trigger="Open Menu",
+  trigger_attrs={"class": "btn-outline"},
+  content_attrs={"class": "min-w-56"}
+) %}
+<div role="group" aria-labelledby="account-options">
+  <span id="account-options" role="heading">Account Options</span>
+  <button type="button" role="menuitem">
+    Profile
+    <span class="text-muted-foreground ml-auto text-xs tracking-widest">⇧⌘P</span>
+  </button>
+  <button type="button" role="menuitem">
+    Billing
+    <span class="text-muted-foreground ml-auto text-xs tracking-widest">⌘B</span>
+  </button>
+  <button type="button" role="menuitem">
+    Settings
+    <span class="text-muted-foreground ml-auto text-xs tracking-widest">⌘S</span>
+  </button>
+  <button type="button" role="menuitem">
+    Keyboard shortcuts
+    <span class="text-muted-foreground ml-auto text-xs tracking-widest">⌘K</span>
+  </button>
+</div>
+<hr role="separator">
+<button type="button" role="menuitem">GitHub</button>
+<button type="button" role="menuitem">Support</button>
+<button type="button" role="menuitem" disabled>API</button>
+<hr role="separator">
+<button type="button" role="menuitem">
+  Logout
+  <span class="text-muted-foreground ml-auto text-xs tracking-widest">⇧⌘P</span>
+</button>{% endcall %}{% endset %}
+{{ code_block("dropdown-menu", code | prettyHtml) }}
+
+
+<h2 id="usage">Usage</h2>
+
+<section class="prose my-6">
+  <p>You can use one of the <code class="">btn</code> classes to style any element as a button:</p>
+
+  <ul>
+    <li>
+      <b>Variants</b>: <code>btn</code> or <code>btn-primary</code> for primary
+      buttons, then <code>btn-secondary</code>, <code>btn-destructive</code>, <code>btn-outline</code>,
+      <code>btn-ghost</code>, <code>btn-link</code>. You can also use <code>btn-icon</code> to
+      style an icon as a button, along with all of its variants (e.g. <code>btn-icon-destructive</code>).
+    </li>
+    <li>
+      <b>Sizes</b>: <code>btn-sm</code> for small and <code>btn-lg</code> for large.
+      You can combine this with other attributes, for example <code>btn-lg-destructive</code>
+      or <code>btn-icon-sm-secondary</code>.
+    </li>
+  </ul>
+</section>
+
+<h2>Examples</h2>
+
+<h3>Primary</h3>
+
+{% from "macros/code_block.njk" import code_block %}
+{% set code %}<button class="btn">Primary</button>{% endset %}
+{{ code_block("accordion", code | prettyHtml) }}
+
+<h3>Secondary</h3>
+
+{% from "macros/code_block.njk" import code_block %}
+{% set code %}<button class="btn-secondary">Button</button>{% endset %}
+{{ code_block("accordion", code | prettyHtml) }}
+
+<h3>Destructive</h3>
+
+{% from "macros/code_block.njk" import code_block %}
+{% set code %}<button class="btn-destructive">Destructive</button>{% endset %}
+{{ code_block("accordion", code | prettyHtml) }}
+
+<h3>Outline</h3>
+
+{% from "macros/code_block.njk" import code_block %}
+{% set code %}<button class="btn-outline">Outline</button>{% endset %}
+{{ code_block("accordion", code | prettyHtml) }}
+
+<h3>Ghost</h3>
+
+{% from "macros/code_block.njk" import code_block %}
+{% set code %}<button class="btn-ghost">Ghost</button>{% endset %}
+{{ code_block("accordion", code | prettyHtml) }}
+
+<h3>Link</h3>
+
+{% from "macros/code_block.njk" import code_block %}
+{% set code %}<button class="btn-link">Link</button>{% endset %}
+{{ code_block("accordion", code | prettyHtml) }}
+
+<h3>Icon</h3>
+
+{% from "macros/code_block.njk" import code_block %}
+{% set code %}<button class="btn-icon-outline">
+  {% lucide "chevron-right" %}
+</button>{% endset %}
+{{ code_block("accordion", code | prettyHtml) }}
+
+<h3>With Icon</h3>
+
+{% from "macros/code_block.njk" import code_block %}
+{% set code %}<button class="btn">
+  {% lucide "send" %}
+  Send email
+</button>{% endset %}
+{{ code_block("accordion", code | prettyHtml) }}
+
+<h3>Loading</h3>
+
+{% from "macros/code_block.njk" import code_block %}
+{% set code %}<button class="btn" disabled>
+  {% lucide "loader", { "class": "animate-spin" } %}
+  Loading
+</button>{% endset %}
+{{ code_block("accordion", code) }}
+
+<h3>Large</h3>
+
+{% from "macros/code_block.njk" import code_block %}
+{% set code %}<button class="btn-lg">
+  {% lucide "shopping-cart" %}
+  Buy
+</button>{% endset %}
+{{ code_block("accordion", code) }}
+
+<h3>Small</h3>
+
+{% from "macros/code_block.njk" import code_block %}
+{% set code %}<button class="btn-icon-sm-destructive">
+  {% lucide "trash" %}
+</button>{% endset %}
+{{ code_block("accordion", code) }}
