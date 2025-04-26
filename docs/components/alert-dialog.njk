@@ -28,7 +28,8 @@ toc:
   trigger_attrs={"class": "btn-outline"},
   footer=footer,
   close_button=false,
-  close_on_overlay_click=false
+  close_on_overlay_click=false,
+  register_on=["alpine:init", "htmx:afterSwap"]
 ) }}{% endset %}
 {{ code_preview("alert-dialog", code | prettyHtml) }}
 

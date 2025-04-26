@@ -26,7 +26,8 @@ toc:
 {% call select(
   trigger_attrs={"class": "w-[200px]"},
   listbox_attrs={"data-empty": "No framework found."},
-  is_combobox=true
+  is_combobox=true,
+  register_on=["alpine:init", "htmx:afterSwap"]
 ) %}
   {% for framework in options_frameworks %}
     <div role="option" data-value="{{ framework }}">{{ framework }}</div>
@@ -114,7 +115,8 @@ toc:
   trigger_attrs={"class": "w-[200px]"},
   content_attrs={"class": "w-72"},
   listbox_attrs={"data-empty": "No timezone found."},
-  is_combobox=true
+  is_combobox=true,
+  register_on=["alpine:init", "htmx:afterSwap"]
 ) %}
   <div class="max-h-64 overflow-y-auto scrollbar">
     {% for group in options_timezones %}

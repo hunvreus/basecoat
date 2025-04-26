@@ -12,7 +12,8 @@ description: Displays a menu to the user — such as a set of actions or functio
   id="dropdown-menu",
   trigger="Open",
   trigger_attrs={"class": "btn-outline"},
-  content_attrs={"class": "min-w-56"}
+  content_attrs={"class": "min-w-56"},
+  register_on=["alpine:init", "htmx:afterSwap"]
 ) %}
 <div role="group" aria-labelledby="account-options">
   <span id="account-options" role="heading">Account Options</span>

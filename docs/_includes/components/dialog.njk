@@ -12,64 +12,77 @@
   content_footer_attrs={},
   open=false,
   close_button=true,
-  close_on_overlay_click=true
+  close_on_overlay_click=true,
+  include_html=true,
+  include_script=true,
+  register_on=["alpine:init"]
 ) %}
-{% if registerComponent('dialog') %}
+{% if include_script %}
 <script>
-  document.addEventListener('alpine:init', () => {
-    Alpine.data('dialog', (initialOpen = false, initialCloseOnOverlayClick = true) => ({
-      id: null,
-      open: false,
-      closeOnOverlayClick: true,
+  if (!window._dialogComponentLoaded) {
+    window._dialogComponentLoaded = true;
 
-      init() {
-        this.id = this.$el.id;
-        this.open = initialOpen;
-        this.closeOnOverlayClick = initialCloseOnOverlayClick;
-      },
-      show() {
-        if (!this.open) {
-          this.open = true;
-          this.$nextTick(() => {
-            this.$el.dispatchEvent(new CustomEvent('dialog:opened', { bubbles: true }));
-            setTimeout(() => this.$refs.dialog.focus(), 50);
-          });
+    const registerDialogComponent = () => {
+      Alpine.data('dialog', (initialOpen = false, initialCloseOnOverlayClick = true) => ({
+        id: null,
+        open: false,
+        closeOnOverlayClick: true,
+
+        init() {
+          this.id = this.$el.id;
+          this.open = initialOpen;
+          this.closeOnOverlayClick = initialCloseOnOverlayClick;
+        },
+        show() {
+          if (!this.open) {
+            this.open = true;
+            this.$nextTick(() => {
+              this.$el.dispatchEvent(new CustomEvent('dialog:opened', { bubbles: true }));
+              setTimeout(() => this.$refs.dialog.focus(), 50);
+            });
+          }
+        },
+        hide() {
+          if (this.open) {
+            this.open = false;
+            this.$el.dispatchEvent(new CustomEvent('dialog:closed', { bubbles: true }));
+          }
+        },
+        handleControl(event) {
+          const detail = event.detail;
+          if (detail && detail.targetId === this.id) {
+            const action = detail.action || 'toggle';
+            if (action === 'open') this.show();
+            else if (action === 'close') this.hide();
+          }
+        },
+
+        $main: {
+          '@dialog:control.window'(e) { this.handleControl(e) },
+        },
+
+        $trigger: {
+          '@click'() { this.show() },
+          ':aria-expanded'() { return this.open }
+        },
+
+        $content: {
+          '@keydown.escape'() { this.open && this.hide() },
+          ':inert'() { return !this.open },
+          '@click'(e) { e.target === this.$el && this.closeOnOverlayClick && this.hide() },
+          'x-cloak': ''
         }
-      },
-      hide() {
-        if (this.open) {
-          this.open = false;
-          this.$el.dispatchEvent(new CustomEvent('dialog:closed', { bubbles: true }));
-        }
-      },
-      handleControl(event) {
-        const detail = event.detail;
-        if (detail && detail.targetId === this.id) {
-          const action = detail.action || 'toggle';
-          if (action === 'open') this.show();
-          else if (action === 'close') this.hide();
-        }
-      },
+      }));
+    }
 
-      $main: {
-        '@dialog:control.window'(e) { this.handleControl(e) },
-      },
-
-      $trigger: {
-        '@click'() { this.show() },
-        ':aria-expanded'() { return this.open }
-      },
-
-      $content: {
-        '@keydown.escape'() { this.open && this.hide() },
-        ':inert'() { return !this.open },
-        '@click'(e) { e.target === this.$el && this.closeOnOverlayClick && this.hide() },
-        'x-cloak': ''
-      }
-    }));
-  });
+    {% for event in register_on %}
+      document.addEventListener('{{ event }}', registerDialogComponent);
+    {% endfor %}
+  }
 </script>
 {% endif %}
+
+{% if include_html %}
 <div
   id="{{ id }}"
   x-data="dialog({{ 'true' if open else 'false' }}, {{ 'true' if close_on_overlay_click else 'false' }})"
@@ -146,4 +159,5 @@
     </article>
   </div>
 </div>
+{% endif %}
 {% endmacro %}

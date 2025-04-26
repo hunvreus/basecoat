@@ -21,19 +21,4 @@ export default async function(eleventyConfig) {
       callback(err, code);
     }
   });
-  // Registry to ensure component assets (JS) load only once per page.
-  let componentRegistry;
-  eleventyConfig.on('beforeBuild', () => { componentRegistry = {}; });
-  eleventyConfig.addNunjucksGlobal("registerComponent", function(componentName) {
-    // Reset registry at the start of each page build
-    if (!this.page) {
-      componentRegistry = {};
-    }
-    
-    if (!componentRegistry[componentName]) {
-      componentRegistry[componentName] = true;
-      return true;
-    }
-    return false;
-  });
 }

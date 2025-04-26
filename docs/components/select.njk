@@ -36,7 +36,11 @@ toc:
 {{ code_preview("select-native", code_native) }}
 
 {% set code_alpine %}
-{% call select(name="select-js", trigger_attrs={"class": "w-[180px]"}) %}
+{% call select(
+  name="select-js",
+  trigger_attrs={"class": "w-[180px]"},
+  register_on=["alpine:init", "htmx:afterSwap"]
+) %}
 <div role="group" aria-labelledby="fruit-options-label">
   <span id="fruit-options-label" role="heading">Fruits</span>
   <div role="option" data-value="apple">Apple</div>
@@ -99,7 +103,8 @@ toc:
 
 {% set code %}
 {% call select(
-  listbox_attrs={"class": "scrollbar overflow-y-auto max-h-64"}
+  listbox_attrs={"class": "scrollbar overflow-y-auto max-h-64"},
+  register_on=["alpine:init", "htmx:afterSwap"]
 ) %}
 {% for i in range(0, 99) %}
 <div role="option" data-value="item-{{ i }}">Item {{ i }}</div>
@@ -112,7 +117,10 @@ toc:
 <h3 id="example-disabled"><a href="#example-disabled">Disabled</a></h3>
 
 {% set code %}
-{% call select(trigger_attrs={"disabled": "disabled"}) %}
+{% call select(
+  trigger_attrs={"disabled": "disabled"},
+  register_on=["alpine:init", "htmx:afterSwap"]
+) %}
 <div role="option" data-value="disabled">Disabled</div>
 {% endcall %}
 {% endset %}
@@ -122,7 +130,10 @@ toc:
 <h3 id="example-with-icon"><a href="#example-with-icon">With icon</a></h3>
 
 {% set code %}
-{% call select(trigger_attrs={'class': 'w-[180px]'}) %}
+{% call select(
+  trigger_attrs={'class': 'w-[180px]'},
+  register_on=["alpine:init", "htmx:afterSwap"]
+) %}
 <div type="button" role="option" data-value="bar">
   {% lucide "chart-bar", {"class": "text-muted-foreground"} %}
   Bar

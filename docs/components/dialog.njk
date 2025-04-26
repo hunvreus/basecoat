@@ -34,7 +34,8 @@ toc:
   trigger="Edit Profile",
   trigger_attrs={"class": "btn-outline"},
   content_attrs={"class": "w-full sm:max-w-[425px] max-h-[612px]"},
-  footer=footer
+  footer=footer,
+  register_on=["alpine:init", "htmx:afterSwap"]
 ) %}
 <form class="form grid gap-4">
   <div class="grid gap-3">
@@ -53,6 +54,10 @@ toc:
 <h2 id="usage"><a href="#usage">Usage</a></h2>
 
 <h3 id="usage-default"><a href="#usage-default">Default</a></h3>
+
+<section class="prose my-6">
+  <p></p>
+</section>
 
 {{ code_block(code | prettyHtml) }}
 
@@ -104,7 +109,8 @@ toc:
   trigger_attrs={"class": "btn-outline"},
   content_attrs={"class": "w-full sm:max-w-[425px] max-h-[612px]"},
   content_body_attrs={"class": "overflow-y-auto scrollbar"},
-  footer=footer
+  footer=footer,
+  register_on=["alpine:init", "htmx:afterSwap"]
 ) %}
 <div class="space-y-4 text-sm">
   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>

@@ -21,7 +21,8 @@ toc:
   id="demo-popover",
   trigger="Open popover",
   trigger_attrs={"class": "btn-outline"},
-  content_attrs={"class": "w-80 p-4"}
+  content_attrs={"class": "w-80 p-4"},
+  register_on=["alpine:init", "htmx:afterSwap"]
 ) %}
   <div class="grid gap-4">
     <header class="grid gap-1.5">

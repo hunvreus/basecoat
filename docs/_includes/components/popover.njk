@@ -3,44 +3,55 @@
   trigger=None,
   main_attrs=None,
   trigger_attrs=None,
-  content_attrs=None
+  content_attrs=None,
+  include_html=true,
+  include_script=true,
+  register_on=["alpine:init"]
 ) %}
-{% if registerComponent('popover') %}
+{% if include_script %}
 <script>
-  document.addEventListener('alpine:init', () => {
-    Alpine.data('popover', () => ({
-      open: false,
+  if (!window._popoverComponentLoaded) {
+    window._popoverComponentLoaded = true;
 
-      $trigger: {
-        '@click'() { this.open = !this.open },
-        '@keydown.escape.prevent'() {
-          this.open = false;
-          this.$refs.trigger.focus();
+    const registerPopoverComponent = () => {
+      Alpine.data('popover', () => ({
+        open: false,
+
+        $trigger: {
+          '@click'() { this.open = !this.open },
+          '@keydown.escape.prevent'() {
+            this.open = false;
+            this.$refs.trigger.focus();
+          },
+          ':aria-expanded'() { return this.open },
+          'x-ref': 'trigger'
         },
-        ':aria-expanded'() { return this.open },
-        'x-ref': 'trigger'
-      },
-      $content: {
-        '@click'(e) { this.handleMenuitemClick(e) },
-        '@keydown.escape.prevent'() {
-          this.open = false;
-          this.$refs.trigger.focus();
+        $content: {
+          '@keydown.escape.prevent'() {
+            this.open = false;
+            this.$refs.trigger.focus();
+          },
+          ':aria-hidden'() { return !this.open },
+          'x-cloak': ''
         },
-        ':aria-hidden'() { return !this.open },
-        'x-cloak': ''
-      },
-    }));
-  });
+      }));
+    }
+
+    {% for event in register_on %}
+      document.addEventListener('{{ event }}', registerPopoverComponent);
+    {% endfor %}
+  }
 </script>
 {% endif %}
 
+{% if include_html %}
 <div
-  class="popover {% if main_attrs %}{{ main_attrs.pop('class', '') }}{% endif %}"
+  class="popover {{ main_attrs.class }}"
   x-data="popover"
   @click.away="open = false"
   {% if id %}id="{{ id }}"{% endif %}
   {% for key, value in main_attrs %}
-    {{ key }}="{{ value }}"
+    {% if key != 'class' %}{{ key }}="{{ value }}"{% endif %}
   {% endfor %}
 >
   {% if trigger %}
@@ -72,4 +83,5 @@
     {% if caller %}{{ caller() }}{% endif %}
   </div>
 </div>
+{% endif %}
 {% endmacro %}

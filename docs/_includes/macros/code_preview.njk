@@ -4,7 +4,7 @@
 {% set preview_panel %}
 <div class="ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 relative rounded-md border">
   <div class="preview flex min-h-[350px] w-full justify-center p-10 items-center">
-    <div class="{{ class }}">
+    <div {% if class %}class="{{ class }}"{% endif %}>
       {{ code | safe }}
     </div>
   </div>
@@ -21,7 +21,8 @@
   {{ tabs(
     id="code-block-{{ id }}",
     tabsets=tabsets,
-    default_tab_index=(2 if default_code else 1)
+    default_tab_index=(2 if default_code else 1),
+    register_on=["alpine:init", "htmx:afterSwap"]
   ) }}
 </div>
 {% endmacro %}

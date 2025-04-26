@@ -28,7 +28,8 @@ toc:
     {% call dropdown_menu(
       id="demo-breadcrumb-menu",
       trigger=trigger,
-      trigger_attrs={"class": "flex size-9 items-center justify-center h-4 w-4 hover:text-foreground cursor-pointer"}
+      trigger_attrs={"class": "flex size-9 items-center justify-center h-4 w-4 hover:text-foreground cursor-pointer"},
+      register_on=["alpine:init", "htmx:afterSwap"]
     ) %}
       <nav role="menu">
         <button type="button" role="menuitem">Documentation</button>
