@@ -2838,6 +2838,12 @@
         border-bottom-style: var(--tw-border-style);
         border-bottom-width: 1px;
         padding-inline: calc(var(--spacing) * 3);
+        svg {
+          width: calc(var(--spacing) * 4);
+          height: calc(var(--spacing) * 4);
+          flex-shrink: 0;
+          opacity: 50%;
+        }
         input[role='combobox'] {
           display: flex;
           height: calc(var(--spacing) * 10);
