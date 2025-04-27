@@ -336,9 +336,6 @@
   .mx-auto {
     margin-inline: auto;
   }
-  .my-4 {
-    margin-block: calc(var(--spacing) * 4);
-  }
   .my-6 {
     margin-block: calc(var(--spacing) * 6);
   }
@@ -1374,6 +1371,32 @@
   }
   .\[\&_a\]\:hover\:text-foreground {
     & a {
+      &:hover {
+        @media (hover: hover) {
+          color: var(--color-foreground);
+        }
+      }
+    }
+  }
+  .\[\&_a\:not\(\[class\]\)\]\:text-muted-foreground {
+    & a:not([class]) {
+      color: var(--color-muted-foreground);
+    }
+  }
+  .\[\&_a\:not\(\[class\]\)\]\:no-underline {
+    & a:not([class]) {
+      text-decoration-line: none;
+    }
+  }
+  .\[\&_a\:not\(\[class\]\)\]\:transition-colors {
+    & a:not([class]) {
+      transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to;
+      transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
+      transition-duration: var(--tw-duration, var(--default-transition-duration));
+    }
+  }
+  .\[\&_a\:not\(\[class\]\)\]\:hover\:text-foreground {
+    & a:not([class]) {
       &:hover {
         @media (hover: hover) {
           color: var(--color-foreground);
@@ -2848,6 +2871,8 @@
           display: flex;
           height: calc(var(--spacing) * 10);
           width: 100%;
+          min-width: calc(var(--spacing) * 0);
+          flex: 1;
           border-radius: var(--radius-md);
           background-color: transparent;
           padding-block: calc(var(--spacing) * 3);

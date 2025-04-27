@@ -32,7 +32,13 @@ toc:
     <form class="form grid gap-2">
       <div class="grid grid-cols-3 items-center gap-4">
         <label for="demo-popover-width">Width</label>
-        <input type="text" id="demo-popover-width" value="100%" class="col-span-2 h-8"/>
+        <input type="text" id="demo-popover-width" value="100%" class="col-span-2 h-8" x-init="$watch('open', (value) => {
+          if (value) {
+            setTimeout(() => $el.focus(), 50)
+          } else {
+            $el.blur()
+          }
+        })"/>
       </div>
       <div class="grid grid-cols-3 items-center gap-4">
         <label for="demo-popover-max-width">Max. width</label>

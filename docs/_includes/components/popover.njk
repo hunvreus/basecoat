@@ -5,43 +5,11 @@
   trigger_attrs=None,
   content_attrs=None,
   include_html=true,
-  include_script=true,
+  include_script=false,
   register_on=["alpine:init"]
 ) %}
 {% if include_script %}
-<script>
-  if (!window._popoverComponentLoaded) {
-    window._popoverComponentLoaded = true;
-
-    const registerPopoverComponent = () => {
-      Alpine.data('popover', () => ({
-        open: false,
-
-        $trigger: {
-          '@click'() { this.open = !this.open },
-          '@keydown.escape.prevent'() {
-            this.open = false;
-            this.$refs.trigger.focus();
-          },
-          ':aria-expanded'() { return this.open },
-          'x-ref': 'trigger'
-        },
-        $content: {
-          '@keydown.escape.prevent'() {
-            this.open = false;
-            this.$refs.trigger.focus();
-          },
-          ':aria-hidden'() { return !this.open },
-          'x-cloak': ''
-        },
-      }));
-    }
-
-    {% for event in register_on %}
-      document.addEventListener('{{ event }}', registerPopoverComponent);
-    {% endfor %}
-  }
-</script>
+  {% include "components/popover-script.njk" %}
 {% endif %}
 
 {% if include_html %}

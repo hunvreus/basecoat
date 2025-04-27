@@ -6,15 +6,15 @@ toc:
   - label: Usage
     id: usage
     children:
-      - label: Default
-        id: usage-default
       - label: Jinja or Nunjucks
         id: usage-jinja
   - label: Examples
     id: examples
     children:
-      - label: With groups
-        id: example-with-groups
+      - label: Scrollable
+        id: example-scrollable
+      - label: Top side
+        id: example-top
 ---
 
 {% from "macros/code_preview.njk" import code_preview %}
@@ -27,6 +27,7 @@ toc:
   trigger_attrs={"class": "w-[200px]"},
   listbox_attrs={"data-empty": "No framework found."},
   is_combobox=true,
+  search_placeholder="Search framework...",
   register_on=["alpine:init", "htmx:afterSwap"]
 ) %}
   {% for framework in options_frameworks %}
@@ -37,26 +38,45 @@ toc:
 
 <h2 id="usage"><a href="#usage">Usage</a></h2>
 
-<h3 id="usage-default"><a href="#usage-default">Default</a></h3>
-
 <section class="prose my-6">
-  <p>The Combobox component uses the same Alpine.js code as the <a href="/components/select" class="font-medium underline underline-offset-4">Select</a> component, and almost identical markup, the only difference being the search box.</p>
+  <p>Combobox uses the same Alpine.js code and markup as the <a href="/components/select">Select</a> component, the only difference being the search box at the top of the listbox.</p>
+  <p>You can set up a few additional options on the <code>&lt;div data-popover&gt;</code> element:</p>
+  <ul>
+    <li><code>data-side</code> can be set to <code>top</code>, <code>bottom</code>, <code>left</code>, or <code>right</code> to change the side of the popover.</li>
+    <li><code>data-align</code> can be set to <code>start</code>, <code>center</code>, or <code>end</code> to change the alignment of the popover.</li>
+    <li><code>data-empty</code> to set up the message when the search is empty.</li>
+  </ul>
 </section>
 
-{{ code_block(code | prettyHtml) }}
+<h4 class="badge-secondary">HTML</h4>
+
+<section class="my-6">
+  {% set code_html %}
+  {% call select(
+    trigger_attrs={"class": "w-[200px]"},
+    listbox_attrs={"data-empty": "No framework found."},
+    is_combobox=true,
+    search_placeholder="Search framework...",
+    register_on=["alpine:init", "htmx:afterSwap"]
+  ) %}
+    {% for framework in options_frameworks %}
+      <div role="option" data-value="{{ framework }}">{{ framework }}</div>
+    {% endfor %}
+  {% endcall %}{% endset %}
+  {{ code_block(code_html | prettyHtml) }}
+</section>
+
+<h4 class="badge-secondary">Javascript (Alpine.js)</h4>
+
+<section class="my-6">
+  {% set code_script %}{% include "components/select-script.njk" %}{% endset %}
+  {{ code_block(code_script | prettyHtml) }}
+</section>
 
 <h3 id="usage-jinja"><a href="#usage-jinja">Jinja or Nunjucks</a></h3>
 
 <section class="prose my-6">
-  <p>If you use Jinja (or Nunjucks), you can use the <code>select()</code> macro directly, making sure to set <code>is_combobox</code> to <code>True</code> (or <code>true</code> for Nunjucks).</p>
-  <ul>
-    <li>
-      <a href="/jinja-and-nunjucks">Read more about using Basecoat with Jinja or Nunjucks</a>
-    </li>
-    <li>
-      <a href="/components/dialog">Read more about the Dialog component</a>
-    </li>
-  </ul>
+  <p class="my-6 prose">If you use Jinja (or Nunjucks), you can use the <code>select()</code> macro directly, making sure to set <code>is_combobox</code> to <code>True</code> (or <code>true</code> for Nunjucks). <a href="/installation#jinja-and-nunjucks">Read more about using Basecoat with Jinja and Nunjucks</a>.</p>
 </section>
 
 {% set raw_code %}{% raw %}{% call select(
@@ -73,7 +93,7 @@ toc:
 
 <h2 id="examples"><a href="#examples">Examples</a></h2>
 
-<h3 id="example-with-groups"><a href="#example-with-groups">With groups</a></h3>
+<h3 id="example-scrollable"><a href="#example-scrollable">Scrollable</a></h3>
 
 {% set options_timezones = [
   {
@@ -116,6 +136,7 @@ toc:
   content_attrs={"class": "w-72"},
   listbox_attrs={"data-empty": "No timezone found."},
   is_combobox=true,
+  search_placeholder="Search timezone...",
   register_on=["alpine:init", "htmx:afterSwap"]
 ) %}
   <div class="max-h-64 overflow-y-auto scrollbar">
@@ -138,3 +159,21 @@ toc:
 {% endcall %}
 {% endset %}
 {{ code_preview("combobox-with-groups", code | prettyHtml) }}
+
+<h3 id="example-top"><a href="#example-top">Top side</a></h3>
+
+{% set options_frameworks = ["Next.js", "SvelteKit", "Nuxt.js", "Remix", "Astro"] %}
+{% set code %}
+{% call select(
+  trigger_attrs={"class": "w-[200px]"},
+  listbox_attrs={"data-empty": "No framework found."},
+  is_combobox=true,
+  search_placeholder="Search framework...",
+  register_on=["alpine:init", "htmx:afterSwap"],
+  content_attrs={"data-side": "top"}
+) %}
+  {% for framework in options_frameworks %}
+    <div role="option" data-value="{{ framework }}">{{ framework }}</div>
+  {% endfor %}
+{% endcall %}{% endset %}
+{{ code_preview("combobox", code | prettyHtml) }}

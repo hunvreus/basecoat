@@ -51,7 +51,7 @@ toc:
 </div>
 {% endcall %}
 {% endset %}
-{{ code_preview("select-alpine", code_alpine | prettyHtml) }}
+{{ code_preview("select", code_alpine | prettyHtml) }}
 
 <h2 id="usage"><a href="#usage">Usage</a></h2>
 
@@ -69,7 +69,35 @@ toc:
   <p>If you need to do more than what <code>&lt;select&gt;</code> allows (e.g. HTML options), you can use the code below which uses the <a href="/components/combobox">Popover</a> component. Make sure to include the hidden input with the name you want to use for that field.</p>
 </section>
 
-{{ code_block(code_alpine | prettyHtml) }}
+<h4 class="badge-secondary">HTML</h4>
+
+<section class="prose my-6">
+  {% set code_html %}
+  {% call select(
+    name="select-js",
+    trigger_attrs={"class": "w-[180px]"},
+    register_on=["alpine:init", "htmx:afterSwap"],
+    include_script=false
+  ) %}
+  <div role="group" aria-labelledby="fruit-options-label">
+    <span id="fruit-options-label" role="heading">Fruits</span>
+    <div role="option" data-value="apple">Apple</div>
+    <div role="option" data-value="banana">Banana</div>
+    <div role="option" data-value="blueberry">Blueberry</div>
+    <div role="option" data-value="pineapple">Grapes</div>
+    <div role="option" data-value="pineapple">Pineapple</div>
+  </div>
+  {% endcall %}
+  {% endset %}
+  {{ code_block(code_html | prettyHtml) }}
+</section>
+
+<h4 class="badge-secondary">Javascript</h4>
+
+<section class="prose my-6">
+  {% set code_script %}{% include "components/select-script.njk" %}{% endset %}
+  {{ code_block(code_script | prettyHtml, "html") }}
+</section>
 
 <h3 id="usage-jinja"><a href="#usage-jinja">Jinja or Nunjucks</a></h3>
 

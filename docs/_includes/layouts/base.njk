@@ -47,9 +47,14 @@
   <!-- JS -->
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
   <script src="https://unpkg.com/htmx.org@2.0.4"></script>
+  {% include "components/dialog-script.njk" %}
+  {% include "components/dropdown-menu-script.njk" %}
+  {% include "components/popover-script.njk" %}
+  {% include "components/select-script.njk" %}
+  {% include "components/tabs-script.njk" %}
+  {% include "components/toast-script.njk" %}
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/html.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/django.min.js"></script>
   <script>
     const applyHighlighting = () => { if (window.hljs) hljs.highlightAll(); };
@@ -60,7 +65,7 @@
       document.addEventListener('htmx:afterSwap', applyHighlighting);
     }
   </script>
-
+  
   {% if head %}{{ head | safe }}{% endif %}
 </head>
 <body>
@@ -118,7 +123,7 @@
     </div>
   </header>
 
-  <div class="container grid gap-4 p-4">
+  <div class="grid gap-4 p-4">
     {{ content | safe }}
   </div>
 </main>

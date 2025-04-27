@@ -1,3 +1,24 @@
+{#
+  Renders a dialog component with optional trigger, header, body, and footer.
+
+  @param id {string} - Unique identifier for the dialog component.
+  @param trigger {string} [optional] - Text or HTML for the button that triggers the dialog.
+  @param title {string} [optional] - Title text displayed in the dialog header.
+  @param description {string} [optional] - Description text displayed below the title.
+  @param footer {string} [optional] - HTML content for the dialog footer.
+  @param main_attrs {object} [optional] - Additional HTML attributes for the main container div.
+  @param trigger_attrs {object} [optional] - Additional HTML attributes for the trigger button.
+  @param content_attrs {object} [optional] - Additional HTML attributes for the dialog content article.
+  @param content_header_attrs {object} [optional] - Additional HTML attributes for the dialog header.
+  @param content_body_attrs {object} [optional] - Additional HTML attributes for the dialog body section.
+  @param content_footer_attrs {object} [optional] - Additional HTML attributes for the dialog footer.
+  @param open {boolean} [optional] [default=false] - Whether the dialog should be open initially.
+  @param close_button {boolean} [optional] [default=true] - Whether to include a close button.
+  @param close_on_overlay_click {boolean} [optional] [default=true] - Whether clicking the overlay closes the dialog.
+  @param include_html {boolean} [optional] [default=true] - Whether to render the HTML structure.
+  @param include_script {boolean} [optional] [default=true] - Whether to include the Alpine.js component script.
+  @param register_on {array} [optional] [default=["alpine:init"]] - Alpine.js events to register the component on.
+#}
 {% macro dialog(
   id,
   trigger=None,
@@ -14,72 +35,11 @@
   close_button=true,
   close_on_overlay_click=true,
   include_html=true,
-  include_script=true,
+  include_script=false,
   register_on=["alpine:init"]
 ) %}
 {% if include_script %}
-<script>
-  if (!window._dialogComponentLoaded) {
-    window._dialogComponentLoaded = true;
-
-    const registerDialogComponent = () => {
-      Alpine.data('dialog', (initialOpen = false, initialCloseOnOverlayClick = true) => ({
-        id: null,
-        open: false,
-        closeOnOverlayClick: true,
-
-        init() {
-          this.id = this.$el.id;
-          this.open = initialOpen;
-          this.closeOnOverlayClick = initialCloseOnOverlayClick;
-        },
-        show() {
-          if (!this.open) {
-            this.open = true;
-            this.$nextTick(() => {
-              this.$el.dispatchEvent(new CustomEvent('dialog:opened', { bubbles: true }));
-              setTimeout(() => this.$refs.dialog.focus(), 50);
-            });
-          }
-        },
-        hide() {
-          if (this.open) {
-            this.open = false;
-            this.$el.dispatchEvent(new CustomEvent('dialog:closed', { bubbles: true }));
-          }
-        },
-        handleControl(event) {
-          const detail = event.detail;
-          if (detail && detail.targetId === this.id) {
-            const action = detail.action || 'toggle';
-            if (action === 'open') this.show();
-            else if (action === 'close') this.hide();
-          }
-        },
-
-        $main: {
-          '@dialog:control.window'(e) { this.handleControl(e) },
-        },
-
-        $trigger: {
-          '@click'() { this.show() },
-          ':aria-expanded'() { return this.open }
-        },
-
-        $content: {
-          '@keydown.escape'() { this.open && this.hide() },
-          ':inert'() { return !this.open },
-          '@click'(e) { e.target === this.$el && this.closeOnOverlayClick && this.hide() },
-          'x-cloak': ''
-        }
-      }));
-    }
-
-    {% for event in register_on %}
-      document.addEventListener('{{ event }}', registerDialogComponent);
-    {% endfor %}
-  }
-</script>
+  {% include "components/dialog-script.njk" %}
 {% endif %}
 
 {% if include_html %}
@@ -94,6 +54,7 @@
 >
   {% if trigger %}
   <button
+    type="button"
     {% if id %}aria-controls="{{ id }}-dialog"{% endif %}
     aria-expanded="false"
     aria-controls="{{ id }}-dialog"

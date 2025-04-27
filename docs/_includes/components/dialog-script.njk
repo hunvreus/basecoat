@@ -1,0 +1,55 @@
+<script>
+if (!window._dialogComponentLoaded) {
+  window._dialogComponentLoaded = true;
+
+  const registerDialogComponent = () => {
+    Alpine.data('dialog', (initialOpen = false, initialCloseOnOverlayClick = true) => ({
+      id: null,
+      open: false,
+      closeOnOverlayClick: true,
+
+      init() {
+        this.id = this.$el.id;
+        this.open = initialOpen;
+        this.closeOnOverlayClick = initialCloseOnOverlayClick;
+      },
+      show() {
+        if (!this.open) {
+          this.open = true;
+          this.$nextTick(() => {
+            this.$el.dispatchEvent(new CustomEvent('dialog:opened', { bubbles: true }));
+            setTimeout(() => this.$refs.dialog.focus(), 50);
+          });
+        }
+      },
+      hide() {
+        if (this.open) {
+          this.open = false;
+          this.$el.dispatchEvent(new CustomEvent('dialog:closed', { bubbles: true }));
+        }
+      },
+
+      $main: {
+        '@dialog:open.window'(e) {
+          if (event.detail && event.detail.id === this.id) this.show();
+         },
+      },
+      $trigger: {
+        '@click'() { this.show() },
+        ':aria-expanded'() { return this.open }
+      },
+
+      $content: {
+        '@keydown.escape'() { this.open && this.hide() },
+        ':inert'() { return !this.open },
+        '@click'(e) { e.target === this.$el && this.closeOnOverlayClick && this.hide() },
+        'x-cloak': ''
+      }
+    }));
+  }
+
+  {% for event in (register_on or ["alpine:init"]) %}
+    document.addEventListener('{{ event }}', registerDialogComponent);
+  {% endfor %}
+}
+</script>

@@ -660,7 +660,7 @@
           @apply size-4 shrink-0 opacity-50;
         }
         input[role='combobox'] {
-          @apply placeholder:text-muted-foreground flex h-10 w-full rounded-md bg-transparent py-3 text-sm outline-hidden disabled:cursor-not-allowed disabled:opacity-50;
+          @apply placeholder:text-muted-foreground flex h-10 flex-1 w-full rounded-md bg-transparent py-3 text-sm outline-hidden disabled:cursor-not-allowed disabled:opacity-50 min-w-0;
         }
       }
       [role='listbox']:not(:has([data-value]:not([aria-hidden='true'])))::before {

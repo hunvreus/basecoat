@@ -62,7 +62,7 @@
 
       <button
         x-init
-        @click="$dispatch('dialog:control', { targetId: 'dialog-example', action: 'open' })"
+        @click="$dispatch('dialog:open', { id: 'dialog-example' })"
         type="button"
         class="btn-outline"
       >

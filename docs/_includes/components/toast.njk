@@ -4,62 +4,11 @@
   main_attrs=None,
   is_fragment=false,
   include_html=true,
-  include_script=true,
+  include_script=false,
   register_on=["alpine:init"]
 ) %}
 {% if not is_fragment and include_script %}
-<script>
-  if (!window._toastComponentLoaded) {
-    window._toastComponentLoaded = true;
-
-    const registerToastComponent = () => {
-      Alpine.store('toaster', { isPaused: false });
-      Alpine.data('toast', (category = '', timeoutDuration = null) => ({
-        open: false,
-        timeoutDuration: null,
-        timeoutId: null,
-
-        init() {
-          this.timeoutDuration = timeoutDuration || (category === 'error' ? 5000 : 3000);
-          this.timeoutId = setTimeout(() => { this.close() }, this.timeoutDuration);
-          this.open = true;
-          this.$watch('$store.toaster.isPaused', (isPaused) => {
-            if (!this.open) return;
-            if (isPaused) {
-              this.pauseTimeout();
-            } else {
-              this.resumeTimeout();
-            }
-          });
-        },
-        pauseTimeout() {
-          clearTimeout(this.timeoutId);
-          this.timeoutId = null;
-        },
-        resumeTimeout(index) {
-          if (this.open && this.timeoutId === null) {
-            this.timeoutId = setTimeout(() => { this.close() }, this.timeoutDuration);
-          }
-        },
-        close() {
-          this.pauseTimeout();
-          this.open = false;
-          this.$el.blur();
-        },
-
-        $toast: {
-          ['@mouseenter']() { this.$store.toaster.isPaused = true },
-          ['@mouseleave']() { this.$store.toaster.isPaused = false },
-          ['@keydown.escape.prevent']() { this.close() },
-        },
-      }));
-    }
-
-    {% for event in register_on %}
-      document.addEventListener('{{ event }}', registerToastComponent);
-    {% endfor %}
-  }
-</script>
+  {% include "components/toast-script.njk" %}
 {% endif %}
 
 {% if include_html %}
