@@ -1,9 +1,7 @@
 {% from "../../_includes/components/toast.njk" import toaster %}
 {% set toasts = [{
   category: "error",
-  message: {
-    title: "Event has not been created",
-    cancel: { label: "Dismiss", click: "close()" }
-  }
+  title: "Event has not been created",
+  cancel: { label: "Dismiss", click: "close()" }
 }] %}
 {{ toaster(toasts=toasts, is_fragment=true) }}

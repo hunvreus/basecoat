@@ -23,7 +23,6 @@
               const option = this.options.find(opt => opt.getAttribute('data-value') === initialValue);
               this.selectOption(option, false);
               this.focusedIndex = this.options.indexOf(option);
-              this.focusOption();
             } else {
               this.selectOption(this.options[0], false);
             }

@@ -9,7 +9,6 @@
   input_attrs={},
   search_placeholder="Search entries...",
   is_combobox=false,
-  include_html=true,
   include_script=false,
   register_on=["alpine:init"]
 ) %}
@@ -17,7 +16,6 @@
   {% include "components/select-script.njk" %}
 {% endif %}
 
-{% if include_html %}
 <div
   class="popover {{ main_attrs.class }}"
   x-data="select('{{ name }}', '{{ selected or '' }}')"
@@ -99,5 +97,4 @@
     >
   {% endif %}
 </div>
-{% endif %}
 {% endmacro %}

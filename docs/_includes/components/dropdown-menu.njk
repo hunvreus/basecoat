@@ -4,7 +4,6 @@
   main_attrs={},
   trigger_attrs={},
   content_attrs={},
-  include_html=true,
   include_script=false,
   register_on=["alpine:init"]
 ) %}
@@ -12,7 +11,6 @@
   {% include "components/dropdown-menu-script.njk" %}
 {% endif %}
 
-{% if include_html %}
 <div
   class="popover {{ main_attrs.class }}"
   x-data="dropdownMenu"
@@ -53,5 +51,4 @@
     </nav>
   </div>
 </div>
-{% endif %}
 {% endmacro %}

@@ -1,9 +1,7 @@
 {% from "../../_includes/components/toast.njk" import toaster %}
 {% set toasts = [{
-  message: {
-    title: "Event has been created",
-    description: "Sunday, December 03, 2023 at 9:00 AM",
-    cancel: { label: "Undo", click: "close()" }
-  }
+  title: "Event has been created",
+  description: "Sunday, December 03, 2023 at 9:00 AM",
+  cancel: { label: "Undo", click: "close()" }
 }] %}
 {{ toaster(toasts=toasts, is_fragment=true) }}

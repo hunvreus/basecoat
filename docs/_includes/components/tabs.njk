@@ -4,7 +4,6 @@
     main_attrs=None,
     tablist_attrs=None,
     default_tab_index=1,
-    include_html=true,
     include_script=false,
     register_on=["alpine:init"]
   )
@@ -13,7 +12,6 @@
   {% include "components/tabs-script.njk" %}
 {% endif %}
 
-{% if include_html %}
 <div
   class="tabs {{ main_attrs.class }}"
   x-data="tabs({{ default_tab_index - 1 }})"
@@ -65,5 +63,4 @@
     {% endif %}
   {% endfor %}
 </div>
-{% endif %}
 {% endmacro %}

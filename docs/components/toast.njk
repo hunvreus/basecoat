@@ -5,10 +5,32 @@ description: A succinct message that is displayed temporarily.
 ---
 
 {% from "macros/code_preview.njk" import code_preview %}
-{% set code %}<button class="btn-outline" hx-trigger="click" hx-get="/fragments/toast/success" hx-target="#toast-htmx">
-  Success
+{% set code %}<button
+  class="btn-outline"
+  hx-trigger="click"
+  hx-get="/fragments/toast/success"
+  hx-target="#toast-htmx"
+>
+  Toast from backend
 </button>
 <div id="toast-htmx"></div>{% endset %}
-{{ code_preview("accordion", code, "max-w-md") }}
+{{ code_preview("toast-htmx", code, "max-w-md") }}
 
-<h2>Usage</h2>
+{% from "macros/code_preview.njk" import code_preview %}
+{% set code %}<button
+  class="btn-outline"
+  @click='
+    $toast({
+      category: "success",
+      title: "Great success",
+      description: "Tremendous success toast.",
+      action: {
+        label: "Go to Google",
+        url: "https://google.com"
+      }
+    })
+  '>
+  Toast from front-end
+</button>
+{% endset %}
+{{ code_preview("toast-alpine", code, "max-w-md") }}
