@@ -36,7 +36,7 @@
     x-bind="$toastBindings"
   >
     <div class="toast-content">
-      <div class="flex items-center justify-between gap-x-3 p-4">
+      <div class="flex items-center justify-between gap-x-3 p-4 [&>svg]:size-4 [&>svg]:shrink-0 [&>[role=img]]:size-4 [&>[role=img]]:shrink-0 [&>[role=img]>svg]:size-4">
         {% if toast.category in ["error", "success", "info", "warning"] %}
           {{ icons[toast.category] | safe }}
         {% endif %}
