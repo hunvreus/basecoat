@@ -1,0 +1,51 @@
+---
+layout: layouts/component.njk
+title: Skeleton
+description: Used to show a placeholder while content is loading.
+toc:
+  - label: Usage
+    id: usage
+  - label: Examples
+    id: examples
+    children:
+      - label: Card
+        id: example-card
+---
+
+{% from "macros/code_preview.njk" import code_preview %}
+{% from "macros/code_block.njk" import code_block %}
+
+<div class="alert mb-6">
+  {% lucide "circle-alert" %}
+  <h2>There is no dedicated skeleton component in Basecoat.</h2>
+</div>
+
+{% set code %}<div class="flex items-center gap-4">
+  <div class="bg-accent animate-pulse size-10 shrink-0 rounded-full"></div>
+  <div class="grid gap-2">
+    <div class="bg-accent animate-pulse rounded-md h-4 w-[150px]"></div>
+    <div class="bg-accent animate-pulse rounded-md h-4 w-[100px]"></div>
+  </div>
+</div>{% endset %}
+{{ code_preview("skeleton", code | prettyHtml) }}
+
+<h2 id="usage"><a href="#usage">Usage</a></h2>
+
+<p class="prose my-6">Simply use the <code>animate-pulse</code> class to create a skeleton.</p>
+
+{{ code_block(code) }}
+
+<h2 id="examples"><a href="#examples">Examples</a></h2>
+
+<h3 id="example-card"><a href="#example-card">Card</a></h3>
+
+{% set code %}<div class="card w-full @md:w-auto @md:min-w-sm">
+  <header>
+    <div class="bg-accent animate-pulse rounded-md h-4 w-2/3"></div>
+    <div class="bg-accent animate-pulse rounded-md h-4 w-1/2"></div>
+  </header>
+  <section>
+    <div class="bg-accent animate-pulse rounded-md aspect-square w-full"></div>
+  </section>
+</div>{% endset %}
+{{ code_preview("skeleton-card", code | prettyHtml, "w-full max-w-md") }}
