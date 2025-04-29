@@ -5,6 +5,11 @@ description: Renders an accessible label associated with controls.
 toc:
   - label: Usage
     id: usage
+  - label: Examples
+    id: examples
+    children:
+      - label: Disabled
+        id: example-disabled
 ---
 
 {% from "macros/code_preview.njk" import code_preview %}
@@ -19,8 +24,18 @@ toc:
 <h2 id="usage">Usage</h2>
 
 <section class="prose my-6">
-  <p>Simply add the <code>label</code> class to your <code>&lt;label&gt;</code> element or have a parent with the <code>form</code> class (<a href="/components/form">read more about form</a>). Labels will be styled accordingly if a peer or child element is disabled.</p>
+  <p>Simply add the <code>label</code> class to your <code>&lt;label&gt;</code> element or have a parent with the <code>form</code> class (<a href="/components/form">read more about form</a>). Labels' style may be affected by the presence of a disabled peer or child element.</p>
 </section>
 
 {% set code %}<label class="label" for="email">Your email address</label>{% endset %}
 {{ code_block(code) }}
+
+<h2 id="examples"><a href="#examples">Examples</a></h2>
+
+<h3 id="example-disabled"><a href="#example-disabled">Disabled</a></h3>
+
+{% set code %}<div class="grid gap-3">
+  <label class="label" for="email">Email</label>
+  <input class="input" id="email" type="email" placeholder="Email" disabled>
+</div>{% endset %}
+{{ code_preview("label-disabled", code) }}

@@ -8,12 +8,12 @@
     <div class="flex flex-wrap items-start gap-4">
       {% call dropdown_menu(
         id="dropdown-menu",
-        trigger="Open Menu",
+        trigger="Open",
         trigger_attrs={"class": "btn-outline"},
         content_attrs={"class": "min-w-56"}
       ) %}
         <div role="group" aria-labelledby="account-options">
-          <span id="account-options" role="heading">Account Options</span>
+          <span id="account-options" role="heading">My Account</span>
           <button type="button" role="menuitem">
             Profile
             <span class="text-muted-foreground ml-auto text-xs tracking-widest">⇧⌘P</span>
@@ -42,6 +42,97 @@
         </button>
       {% endcall %}
 
+      {% call dropdown_menu(
+        id="dropdown-menu-checkboxes",
+        trigger="Checkboxes",
+        trigger_attrs={"class": "btn-outline"},
+        content_attrs={"class": "min-w-56"},
+        register_on=["alpine:init", "htmx:afterSwap"]
+      ) %}
+      <div role="group" aria-labelledby="account-options">
+        <span id="account-options" role="heading">Account Options</span>
+        <button type="button" role="menuitem">
+          {% lucide "user" %}
+          Profile
+          <span class="text-muted-foreground ml-auto text-xs tracking-widest">⇧⌘P</span>
+        </button>
+        <button type="button" role="menuitem">
+          {% lucide "credit-card" %}
+          Billing
+          <span class="text-muted-foreground ml-auto text-xs tracking-widest">⌘B</span>
+        </button>
+        <button type="button" role="menuitem">
+          {% lucide "settings" %}
+          Settings
+          <span class="text-muted-foreground ml-auto text-xs tracking-widest">⌘S</span>
+        </button>
+      </div>
+      <hr role="separator">
+      <div role="group" aria-labelledby="appearance-options">
+        <span id="appearance-options" role="heading">Appearance</span>
+        <button
+          type="button"
+          role="menuitemcheckbox"
+          aria-checked="true"
+          class="group"
+          x-data="{ checked: true }"
+          @click="checked = !checked"
+          :aria-checked="checked"
+        >
+          {% lucide "check", {
+            "class": "invisible group-aria-checked:visible",
+            "aria-hidden": "true",
+            "focusable": "false"
+          } %}
+          Status Bar
+          <span class="text-muted-foreground ml-auto text-xs tracking-widest">⇧⌘P</span>
+        </button>
+        <button
+          type="button"
+          role="menuitemcheckbox"
+          aria-checked="false"
+          class="group"
+          disabled
+          x-data="{ checked: false }"
+          @click="checked = !checked"
+          :aria-checked="checked"
+        >
+          {% lucide "check", {
+            "class": "invisible group-aria-checked:visible",
+            "aria-hidden": "true",
+            "focusable": "false"
+          } %}
+          Activity Bar
+          <span class="text-muted-foreground ml-auto text-xs tracking-widest">⌘B</span>
+        </button>
+        <button
+          type="button"
+          role="menuitemcheckbox"
+          aria-checked="false"
+          class="group"
+          x-data="{ checked: false }"
+          @click="checked = !checked"
+          :aria-checked="checked"
+        >
+          {% lucide "check", {
+            "class": "invisible group-aria-checked:visible",
+            "aria-hidden": "true",
+            "focusable": "false"
+          } %}
+          Panel
+          <span class="text-muted-foreground ml-auto text-xs tracking-widest">⌘S</span>
+        </button>
+      </div>
+      <hr role="separator">
+      <button type="button" role="menuitem">
+        {% lucide "log-out" %}
+        Logout
+        <span class="text-muted-foreground ml-auto text-xs tracking-widest">⇧⌘P</span>
+      </button>
+      {% endcall %}
+
+
+
       {% set profile_menu %}
         <div class="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
           <img alt="@hunvreus" src="https://github.com/hunvreus.png" class="size-8 shrink-0 rounded-full" alt="Ronan Berder"/>
@@ -69,27 +160,78 @@
           Notifications
         </button>
         <hr role="separator">
-        <div role="group" aria-labelledby="theme-options">
-          <span id="theme-options" role="heading">Theme</span>
-          <button type="button" role="menuitem">
-            {% lucide "check", { "class": "text-foreground" } %}
-            Light
-          </button>
-          <button type="button" role="menuitem" >
-            {% lucide "check", { "class": "text-transparent" } %}
-            Dark
-          </button>
-          <button type="button" role="menuitem">
-            {% lucide "check", { "class": "text-transparent" } %}
-            System
-          </button>
-        </div>
-        <hr role="separator">
         <button type="button" role="menuitem">
           {% lucide "log-out" %}
           Signout
         </button>
       {% endset %}
+
+      {% call dropdown_menu(
+        id="dropdown-menu-radio-group",
+        trigger="Radio Group",
+        trigger_attrs={"class": "btn-outline"},
+        content_attrs={"class": "min-w-56"},
+        register_on=["alpine:init", "htmx:afterSwap"]
+      ) %}
+      <div role="group" aria-labelledby="position-options" x-data="{ checked: 'bottom' }">
+        <span id="position-options" role="heading">Panel Position</span>
+        <hr role="separator">
+        <button
+          type="button"
+          role="menuitemradio"
+          aria-checked="false"
+          class="group"
+          @click="checked = 'top'"
+          :aria-checked="checked == 'top'"
+        >
+          <div class="size-4 flex items-center justify-center">
+            <div
+              class="size-2 rounded-full bg-foreground invisible group-aria-checked:visible"
+              aria-hidden="true",
+              focusable="false"
+            ></div>
+          </div>
+          Status Bar
+          <span class="text-muted-foreground ml-auto text-xs tracking-widest">⇧⌘P</span>
+        </button>
+        <button
+          type="button"
+          role="menuitemradio"
+          aria-checked="false"
+          class="group"
+          @click="checked = 'bottom'"
+          :aria-checked="checked == 'bottom'"
+        >
+          <div class="size-4 flex items-center justify-center">
+            <div
+              class="size-2 rounded-full bg-foreground invisible group-aria-checked:visible"
+              aria-hidden="true",
+              focusable="false"
+            ></div>
+          </div>
+          Activity Bar
+          <span class="text-muted-foreground ml-auto text-xs tracking-widest">⌘B</span>
+        </button>
+        <button
+          type="button"
+          role="menuitemradio"
+          aria-checked="false"
+          class="group"
+          @click="checked = 'right'"
+          :aria-checked="checked == 'right'"
+        >
+          <div class="size-4 flex items-center justify-center">
+            <div
+              class="size-2 rounded-full bg-foreground invisible group-aria-checked:visible"
+              aria-hidden="true",
+              focusable="false"
+            ></div>
+          </div>
+          Panel
+          <span class="text-muted-foreground ml-auto text-xs tracking-widest">⌘S</span>
+        </button>
+      </div>
+      {% endcall %}
 
       {% set trigger %}
         <img alt="@hunvreus" src="https://github.com/hunvreus.png" class="size-8 shrink-0 rounded-full" alt="Ronan Berder"/>

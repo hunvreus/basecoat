@@ -20,7 +20,7 @@
     {% if key != 'class' %}{{ key }}="{{ value }}"{% endif %}
   {% endfor %}
 >
-  <div
+  <nav
     role="tablist"
     aria-orientation="horizontal"
     x-bind="$tablist"
@@ -43,7 +43,7 @@
         {{ tabset.tab | safe }}
       </button>
     {% endfor %}
-  </div>
+  </nav>
 
   {% for tabset in tabsets %}
     {% if tabset.panel %}

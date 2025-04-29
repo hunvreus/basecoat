@@ -5,12 +5,18 @@ description: A set of layered sections of content—known as tab panels—that a
 toc:
   - label: Usage
     id: usage
+    children:
+      - label: HTML + Javascript
+        id: usage-default
+      - label: Jinja or Nunjucks
+        id: usage-jinja
 ---
 
 {% from "macros/code_preview.njk" import code_preview %}
 {% from "macros/code_block.njk" import code_block %}
 {% from "components/tabs.njk" import tabs %}
-{% set code %}
+
+{% set code_html %}
 {% set account_panel %}
 <div class="card">
   <header>
@@ -62,19 +68,110 @@ toc:
 { tab: "Password", panel: password_panel }
 ] %}
 {{ tabs(
-id='demo-tabs-with-panels',
-tabsets=tabsets_demo,
-main_attrs={ "class": "w-full" },
-tablist_attrs={ "class": "w-full" },
-register_on=["alpine:init", "htmx:afterSwap"]
+  id='demo-tabs-with-panels',
+  tabsets=tabsets_demo,
+  main_attrs={ "class": "w-full" },
+  tablist_attrs={ "class": "w-full" },
+  register_on=["alpine:init", "htmx:afterSwap"]
 ) }}
 {% endset %}
-{{ code_preview("tabs", code | prettyHtml, "max-w-[300px] w-full") }}
+
+{% set code_script %}
+{% include "components/tabs-script.njk" %}
+{% endset %}
+
+{{ code_preview("tabs", code_script | prettyHtml ~ code_html | prettyHtml, "max-w-[300px] w-full") }}
 
 <h2 id="usage"><a href="#usage">Usage</a></h2>
 
+<h3 id="usage-default"><a href="#usage-default">HTML + Javascript</a></h3>
+
+<div class="alert my-6">
+  {% lucide "circle-alert" %}
+  <h2>This component requires Javascript.</h2>
+  <section>
+    <p>You will need to include the Javascript (Alpine.js) code provided below before the HTML code for this component. As with all interactive components, you will need to add some Alpine.js properties to certain elements (e.g. <code class="text-xs">x-bind</code>, <code class="text-xs">x-data</code>, <code class="text-xs">@click</code>).</p>
+  </section>
+</div>
+
 <section class="prose my-6">
-  <p>You can style an <code>&lt;input type="range"&gt;</code> element by either adding the <code>input</code> class or having a parent with the <code>form</code> class (<a href="/components/form">read more about form</a>). However, the range input also requries some Javacript code to be able to paint the left side of the slider.</p>
+  <p>The component is structured as such:</p>
+  <ul>
+    <li>A <code>&lt;div class="tabs"&gt;</code> which wraps around the entire component and holds it state (e.g. open/close).</li>
+    <li>A <code>&lt;nav role="tablist"&gt;</code> that holds the tab buttons (<code>&lt;button role="tab"&gt;</code>).</li>
+    <li>A series of <code>&lt;div role="tabpanel"&gt;</code> that holds the tab panels corresponding to each tab button.</li>
+  </ul>
 </section>
 
-{{ code_block(code) }}
+{% from "components/tabs.njk" import tabs %}
+{% set tabsets = [
+  { tab: "HTML", panel: code_block(code_html | prettyHtml) },
+  { tab: "Javascipt (Alpine.js)", panel: code_block(code_script | prettyHtml) }
+] %}
+{{ tabs(id="combobox", tabsets=tabsets) }}
+
+<h3 id="usage-jinja"><a href="#usage-jinja">Jinja or Nunjucks</a></h3>
+
+<p class="my-6 prose">If you use Jinja (or Nunjucks), you can use the <code>tabs()</code> macro directly. <a href="/installation#jinja-and-nunjucks">Read more about using Basecoat with Jinja and Nunjucks</a>.</p>
+
+{% set raw_code %}{% raw %}{% set account_panel %}
+<div class="card">
+  <header>
+    <h2>Account</h2>
+    <p>Make changes to your account here. Click save when you're done.</p>
+  </header>
+  <section>
+    <form class="form grid gap-6">
+      <div class="grid gap-3">
+        <label for="demo-tabs-account-name">Name</label>
+        <input type="text" id="demo-tabs-account-name" value="Pedro Duarte" />
+      </div>
+      <div class="grid gap-3">
+        <label for="demo-tabs-account-username">Username</label>
+        <input type="text" id="demo-tabs-account-username" value="@peduarte" />
+      </div>
+    </form>
+  </section>
+  <footer>
+    <button type="button" class="btn">Save changes</button>
+  </footer>
+</div>
+{% endset %}
+
+{% set password_panel %}
+<div class="card">
+  <header>
+    <h2>Password</h2>
+    <p>Change your password here. After saving, you'll be logged out.</p>
+  </header>
+  <section>
+    <form class="form grid gap-6">
+      <div class="grid gap-3">
+        <label for="demo-tabs-password-current">Current password</label>
+        <input type="password" id="demo-tabs-password-current" />
+      </div>
+      <div class="grid gap-3">
+        <label for="demo-tabs-password-new">New password</label>
+        <input type="password" id="demo-tabs-password-new"/>
+      </div>
+    </form>
+  </section>
+  <footer>
+    <button type="button" class="btn">Save Password</button>
+  </footer>
+</div>
+{% endset %}
+
+{% set tabsets_demo = [
+{ tab: "Account", panel: account_panel },
+{ tab: "Password", panel: password_panel }
+] %}
+
+{{ tabs(
+  id='demo-tabs-with-panels',
+  tabsets=tabsets_demo,
+  main_attrs={ "class": "w-full" },
+  tablist_attrs={ "class": "w-full" },
+  register_on=["alpine:init", "htmx:afterSwap"]
+) }}{% endraw %}{% endset%}
+{{ code_block(raw_code, "jinja") }}

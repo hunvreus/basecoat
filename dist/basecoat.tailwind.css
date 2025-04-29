@@ -627,10 +627,14 @@
         }
       }
       [role='menuitem'],
+      [role='menuitemcheckbox'],
+      [role='menuitemradio'],
       [role='option'] {
         @apply aria-hidden:hidden [&_svg]:text-muted-foreground relative flex cursor-default items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-hidden select-none [&_svg]:shrink-0 [&_svg]:size-4 aria-disabled:opacity-50 aria-disabled:pointer-events-none disabled:opacity-50 disabled:pointer-events-none w-full truncate;
       }
-      [role='menuitem'] {
+      [role='menuitem'],
+      [role='menuitemcheckbox'],
+      [role='menuitemradio'] {
         @apply focus-visible:bg-accent focus-visible:text-accent-foreground hover:bg-accent hover:text-accent-foreground;
       }
       [role='option'] {
@@ -860,10 +864,13 @@
     @apply relative;
 
     &:before {
-      @apply absolute content-[attr(data-tooltip)] bg-primary text-primary-foreground z-50 truncate max-w-xs w-fit rounded-md px-3 py-1.5 text-xs invisible opacity-0 scale-95 transition-all;
+      @apply absolute content-[attr(data-tooltip)] bg-primary text-primary-foreground z-50 truncate max-w-xs w-fit rounded-md px-3 py-1.5 text-xs invisible opacity-0 scale-95 transition-all pointer-events-none;
     }
     &:hover:before {
       @apply visible opacity-100 scale-100;
+    }
+    &:focus-visible:not(:hover):before {
+      @apply hidden;
     }
     &:not([data-side]),
     &[data-side='top'] {
@@ -978,6 +985,10 @@
 
     li {
       @apply mb-2;
+    }
+    ul,
+    ol {
+      @apply my-2;
     }
   }
   .prose > *:first-child {

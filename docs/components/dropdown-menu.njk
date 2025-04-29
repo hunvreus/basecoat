@@ -2,14 +2,174 @@
 layout: layouts/component.njk
 title: Dropdown Menu
 description: Displays a menu to the user — such as a set of actions or functions — triggered by a button.
+toc:
+  - label: Usage
+    id: usage
+    children:
+      - label: HTML + Javascript
+        id: usage-default
+      - label: Jinja or Nunjucks
+        id: usage-jinja
+  - label: Examples
+    id: examples
+    children:
+      - label: Checkboxes
+        id: example-checkboxes
+      - label: Radio Group
+        id: example-radio-group
 ---
 
 {% from "macros/code_block.njk" import code_block %}
 {% from "macros/code_preview.njk" import code_preview %}
 {% from "components/dropdown-menu.njk" import dropdown_menu %}
 
-{% set code %}{% call dropdown_menu(
+{% set code_html %}
+{% call dropdown_menu(
   id="dropdown-menu",
+  trigger="Open",
+  trigger_attrs={"class": "btn-outline"},
+  content_attrs={"class": "min-w-56"},
+  register_on=["alpine:init", "htmx:afterSwap"]
+) %}
+<div role="group" aria-labelledby="account-options">
+  <span id="account-options" role="heading">My Account</span>
+  <button type="button" role="menuitem">
+    Profile
+    <span class="text-muted-foreground ml-auto text-xs tracking-widest">⇧⌘P</span>
+  </button>
+  <button type="button" role="menuitem">
+    Billing
+    <span class="text-muted-foreground ml-auto text-xs tracking-widest">⌘B</span>
+  </button>
+  <button type="button" role="menuitem">
+    Settings
+    <span class="text-muted-foreground ml-auto text-xs tracking-widest">⌘S</span>
+  </button>
+  <button type="button" role="menuitem">
+    Keyboard shortcuts
+    <span class="text-muted-foreground ml-auto text-xs tracking-widest">⌘K</span>
+  </button>
+</div>
+<hr role="separator">
+<button type="button" role="menuitem">
+  GitHub
+</button>
+<button type="button" role="menuitem">
+  Support
+</button>
+<button type="button" role="menuitem" disabled>
+  API
+</button>
+<hr role="separator">
+<button type="button" role="menuitem">
+  Logout
+  <span class="text-muted-foreground ml-auto text-xs tracking-widest">⇧⌘P</span>
+</button>
+{% endcall %}
+{% endset %}
+
+{% set code_script %}
+{% include "components/dropdown-menu-script.njk" %}
+{% endset %}
+
+{{ code_preview("dropdown-menu", code_script | prettyHtml ~ code_html | prettyHtml) }}
+
+<h2 id="usage">Usage</h2>
+
+<h3 id="usage-default"><a href="#usage-default">HTML + Javascript</a></h3>
+
+<div class="alert my-6">
+  {% lucide "circle-alert" %}
+  <h2>This component requires Javascript.</h2>
+  <section>
+    <p>You will need to include the Javascript (Alpine.js) code provided below before the HTML code for this component. As with all interactive components, you will need to add some Alpine.js properties to certain elements (e.g. <code class="text-xs">x-bind</code>, <code class="text-xs">x-data</code>, <code class="text-xs">@click</code>).</p>
+  </section>
+</div>
+
+<section class="prose my-6">
+  <p>The component is structured as such:</p>
+  <ul>
+    <li>A <code>&lt;div class="popover"&gt;</code> which wraps around the entire component and holds it state (e.g. open/close).</li>
+    <li>A <code>&lt;button&gt;</code> that acts as the trigger to open or close the popover.</li>
+    <li>A <code>&lt;div data-popover&gt;</code> that holds the content of the popover.</li>
+    <li>Inside of the <code>&lt;div data-popover&gt;</code> is a <code>&lt;nav role="menu"&gt;</code> that contains a combination of:
+      <ul>
+        <li><code>&lt;button role="menuitem"&gt;</code> for menu items.</li>
+        <li><code>&lt;button role="menuitemcheckbox"&gt;</code> for menu items with checkboxes.</li>
+        <li><code>&lt;button role="menuitemradio"&gt;</code> for menu items with radio buttons.</li>
+        <li><code>&lt;hr role="separator"&gt;</code> to display a horizontal separator.</li>
+        <li><code>&lt;div role="group"&gt;</code> to group options.</li>
+        <li><code>&lt;span role="heading"&gt;</code> for group headings.</li>
+      </ul>
+  </ul>
+  <p>As with the <a href="/components/popover">Popover</a> component, you can set up a few additional options on the <code>&lt;div data-popover&gt;</code> element:</p>
+  <ul>
+    <li><code>data-side</code> can be set to <code>top</code>, <code>bottom</code>, <code>left</code>, or <code>right</code> to change the side of the popover.</li>
+    <li><code>data-align</code> can be set to <code>start</code>, <code>center</code>, or <code>end</code> to change the alignment of the popover.</li>
+  </ul>
+</section>
+
+{% from "components/tabs.njk" import tabs %}
+{% set tabsets = [
+  { tab: "HTML", panel: code_block(code_html | prettyHtml) },
+  { tab: "Javascipt (Alpine.js)", panel: code_block(code_script | prettyHtml) }
+] %}
+{{ tabs(id="dropdown-menu", tabsets=tabsets) }}
+
+<h3 id="usage-jinja"><a href="#usage-jinja">Jinja or Nunjucks</a></h3>
+
+<p class="my-6 prose">If you use Jinja (or Nunjucks), you can use the <code>dropdown_menu()</code> macro directly. <a href="/installation#jinja-and-nunjucks">Read more about using Basecoat with Jinja and Nunjucks</a>.</p>
+
+{% set raw_code %}{% raw %}{% call dropdown_menu(
+  id="dropdown-menu",
+  trigger="Open",
+  trigger_attrs={"class": "btn-outline"},
+  content_attrs={"class": "min-w-56"},
+  register_on=["alpine:init", "htmx:afterSwap"]
+) %}
+<div role="group" aria-labelledby="account-options">
+  <span id="account-options" role="heading">My Account</span>
+  <button type="button" role="menuitem">
+    Profile
+    <span class="text-muted-foreground ml-auto text-xs tracking-widest">⇧⌘P</span>
+  </button>
+  <button type="button" role="menuitem">
+    Billing
+    <span class="text-muted-foreground ml-auto text-xs tracking-widest">⌘B</span>
+  </button>
+  <button type="button" role="menuitem">
+    Settings
+    <span class="text-muted-foreground ml-auto text-xs tracking-widest">⌘S</span>
+  </button>
+  <button type="button" role="menuitem">
+    Keyboard shortcuts
+    <span class="text-muted-foreground ml-auto text-xs tracking-widest">⌘K</span>
+  </button>
+</div>
+<hr role="separator">
+<button type="button" role="menuitem">
+  GitHub
+</button>
+<button type="button" role="menuitem">
+  Support
+</button>
+<button type="button" role="menuitem" disabled>
+  API
+</button>
+<hr role="separator">
+<button type="button" role="menuitem">
+  Logout
+  <span class="text-muted-foreground ml-auto text-xs tracking-widest">⇧⌘P</span>
+</button>
+{% endcall %}{% endraw %}{% endset%}
+{{ code_block(raw_code, "jinja") }}
+
+<h2 id="examples"><a href="#examples">Examples</a></h2>
+
+<h3 id="example-checkboxes"><a href="#example-checkboxes">Checkboxes</a></h3>
+
+{% set code %}{% call dropdown_menu(
+  id="dropdown-menu-checkboxes",
   trigger="Open",
   trigger_attrs={"class": "btn-outline"},
   content_attrs={"class": "min-w-56"},
@@ -32,49 +192,138 @@ description: Displays a menu to the user — such as a set of actions or functio
     Settings
     <span class="text-muted-foreground ml-auto text-xs tracking-widest">⌘S</span>
   </button>
-  <button type="button" role="menuitem">
-    {% lucide "keyboard" %}
-    Keyboard shortcuts
-    <span class="text-muted-foreground ml-auto text-xs tracking-widest">⌘K</span>
-  </button>
 </div>
 <hr role="separator">
-<button type="button" role="menuitem">
-  {% lucide "github" %}
-  GitHub
-</button>
-<button type="button" role="menuitem">
-  {% lucide "life-buoy" %}
-  Support
-</button>
-<button type="button" role="menuitem" disabled>
-  {% lucide "cloud" %}
-  API
-</button>
+<div role="group" aria-labelledby="appearance-options">
+  <span id="appearance-options" role="heading">Appearance</span>
+  <button
+    type="button"
+    role="menuitemcheckbox"
+    aria-checked="true"
+    class="group"
+    x-data="{ checked: true }"
+    @click="checked = !checked"
+    :aria-checked="checked"
+  >
+    {% lucide "check", {
+      "class": "invisible group-aria-checked:visible",
+      "aria-hidden": "true",
+      "focusable": "false"
+    } %}
+    Status Bar
+    <span class="text-muted-foreground ml-auto text-xs tracking-widest">⇧⌘P</span>
+  </button>
+  <button
+    type="button"
+    role="menuitemcheckbox"
+    aria-checked="false"
+    class="group"
+    disabled
+    x-data="{ checked: false }"
+    @click="checked = !checked"
+    :aria-checked="checked"
+  >
+    {% lucide "check", {
+      "class": "invisible group-aria-checked:visible",
+      "aria-hidden": "true",
+      "focusable": "false"
+    } %}
+    Activity Bar
+    <span class="text-muted-foreground ml-auto text-xs tracking-widest">⌘B</span>
+  </button>
+  <button
+    type="button"
+    role="menuitemcheckbox"
+    aria-checked="false"
+    class="group"
+    x-data="{ checked: false }"
+    @click="checked = !checked"
+    :aria-checked="checked"
+  >
+    {% lucide "check", {
+      "class": "invisible group-aria-checked:visible",
+      "aria-hidden": "true",
+      "focusable": "false"
+    } %}
+    Panel
+    <span class="text-muted-foreground ml-auto text-xs tracking-widest">⌘S</span>
+  </button>
+</div>
 <hr role="separator">
 <button type="button" role="menuitem">
   {% lucide "log-out" %}
   Logout
   <span class="text-muted-foreground ml-auto text-xs tracking-widest">⇧⌘P</span>
-</button>{% endcall %}{% endset %}
+</button>
+{% endcall %}{% endset %}
+{{ code_preview("dropdown-menu-checkboxes", code | prettyHtml) }}
+
+<h3 id="example-radio-group"><a href="#example-radio-group">Radio Group</a></h3>
+
+{% set code %}{% call dropdown_menu(
+  id="dropdown-menu-radio-group",
+  trigger="Open",
+  trigger_attrs={"class": "btn-outline"},
+  content_attrs={"class": "min-w-56"},
+  register_on=["alpine:init", "htmx:afterSwap"]
+) %}
+<div role="group" aria-labelledby="position-options" x-data="{ checked: 'bottom' }">
+  <span id="position-options" role="heading">Panel Position</span>
+  <hr role="separator">
+  <button
+    type="button"
+    role="menuitemradio"
+    aria-checked="false"
+    class="group"
+    @click="checked = 'top'"
+    :aria-checked="checked == 'top'"
+  >
+    <div class="size-4 flex items-center justify-center">
+      <div
+        class="size-2 rounded-full bg-foreground invisible group-aria-checked:visible"
+        aria-hidden="true",
+        focusable="false"
+      ></div>
+    </div>
+    Status Bar
+    <span class="text-muted-foreground ml-auto text-xs tracking-widest">⇧⌘P</span>
+  </button>
+  <button
+    type="button"
+    role="menuitemradio"
+    aria-checked="false"
+    class="group"
+    @click="checked = 'bottom'"
+    :aria-checked="checked == 'bottom'"
+  >
+    <div class="size-4 flex items-center justify-center">
+      <div
+        class="size-2 rounded-full bg-foreground invisible group-aria-checked:visible"
+        aria-hidden="true",
+        focusable="false"
+      ></div>
+    </div>
+    Activity Bar
+    <span class="text-muted-foreground ml-auto text-xs tracking-widest">⌘B</span>
+  </button>
+  <button
+    type="button"
+    role="menuitemradio"
+    aria-checked="false"
+    class="group"
+    @click="checked = 'right'"
+    :aria-checked="checked == 'right'"
+  >
+    <div class="size-4 flex items-center justify-center">
+      <div
+        class="size-2 rounded-full bg-foreground invisible group-aria-checked:visible"
+        aria-hidden="true",
+        focusable="false"
+      ></div>
+    </div>
+    Panel
+    <span class="text-muted-foreground ml-auto text-xs tracking-widest">⌘S</span>
+  </button>
+</div>
+{% endcall %}{% endset %}
 {{ code_preview("dropdown-menu", code | prettyHtml) }}
-
-<h2 id="usage">Usage</h2>
-
-<section class="prose my-6">
-  <p>You can use one of the <code class="">btn</code> classes to style any element as a button:</p>
-
-  <ul>
-    <li>
-      <b>Variants</b>: <code>btn</code> or <code>btn-primary</code> for primary
-      buttons, then <code>btn-secondary</code>, <code>btn-destructive</code>, <code>btn-outline</code>,
-      <code>btn-ghost</code>, <code>btn-link</code>. You can also use <code>btn-icon</code> to
-      style an icon as a button, along with all of its variants (e.g. <code>btn-icon-destructive</code>).
-    </li>
-    <li>
-      <b>Sizes</b>: <code>btn-sm</code> for small and <code>btn-lg</code> for large.
-      You can combine this with other attributes, for example <code>btn-lg-destructive</code>
-      or <code>btn-icon-sm-secondary</code>.
-    </li>
-  </ul>
-</section>

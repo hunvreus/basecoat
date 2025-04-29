@@ -10,7 +10,7 @@
 
         init() {
           this.$nextTick(() => {
-            this.menuItems = Array.from(this.$el.querySelectorAll('[role=menuitem]:not([disabled])'));
+            this.menuItems = Array.from(this.$el.querySelectorAll('[role=menuitem]:not([disabled]),[role=menuitemcheckbox]:not([disabled]),[role=menuitemradio]:not([disabled])'));
           });
         },
         focusMenuitem() {
@@ -44,7 +44,7 @@
           }
         },
         handleMenuitemClick(event) {
-          const menuitem = event.target.closest('[role=menuitem]');
+          const menuitem = event.target.closest('[role=menuitem],[role=menuitemcheckbox],[role=menuitemradio]');
           if (menuitem && menuitem.getAttribute('aria-disabled') !== 'true' && !menuitem.disabled) {
             this.$nextTick(() => {
               this.$refs.trigger.focus();
@@ -53,7 +53,7 @@
           }
         },
         handleMenuitemMousemove(event) {
-          const menuitem = event.target.closest('[role=menuitem]');
+          const menuitem = event.target.closest('[role=menuitem],[role=menuitemcheckbox],[role=menuitemradio]');
           if (menuitem && menuitem.getAttribute('aria-disabled') !== 'true' && !menuitem.disabled) {
             this.focusedIndex = this.menuItems.indexOf(menuitem);
             this.focusMenuitem();

@@ -6,7 +6,7 @@ toc:
   - label: Usage
     id: usage
     children:
-      - label: Default
+      - label: HTML + Javascript
         id: usage-default
       - label: Jinja or Nunjucks
         id: usage-jinja
@@ -21,7 +21,7 @@ toc:
 {% from "macros/code_preview.njk" import code_preview %}
 {% from "components/dialog.njk" import dialog %}
 
-{% set code %}
+{% set code_html %}
 {% set footer %}
   <button class="btn-outline" @click="open = false">Cancel</button>
   <button class="btn" @click="open = false">Save changes</button>
@@ -49,47 +49,79 @@ toc:
 </form>
 {% endcall %}
 {% endset %}
-{{ code_preview("dialog", code | prettyHtml) }}
+
+{% set code_script %}
+{% include "components/dialog-script.njk" %}
+{% endset %}
+
+{{ code_preview("dialog", code_script | prettyHtml ~ code_html | prettyHtml) }}
 
 <h2 id="usage"><a href="#usage">Usage</a></h2>
 
-<h3 id="usage-default"><a href="#usage-default">Default</a></h3>
+<h3 id="usage-default"><a href="#usage-default">HTML + Javascript</a></h3>
+
+<div class="alert my-6">
+  {% lucide "circle-alert" %}
+  <h2>This component requires Javascript.</h2>
+  <section>
+    <p>You will need to include the Javascript (Alpine.js) code provided below before the HTML code for this component. As with all interactive components, you will need to add some Alpine.js properties to certain elements (e.g. <code class="text-xs">x-bind</code>, <code class="text-xs">x-data</code>, <code class="text-xs">@click</code>).</p>
+  </section>
+</div>
 
 <section class="prose my-6">
-  <p></p>
-</section>
-
-{{ code_block(code | prettyHtml) }}
-
-<h3 id="usage-jinja"><a href="#usage-jinja">Jinja or Nunjucks</a></h3>
-
-<section class="prose my-6">
-  <p>If you use Jinja (or Nunjucks), you can use the <code>dialog()</code> macro directly, making sure to set <code>close_on_overlay_click</code> to <code>False</code> (or <code>false</code> for Nunjucks).</p>
+  <p>The component is structured as such:</p>
   <ul>
-    <li>
-      <a href="/jinja-and-nunjucks">Read more about using Basecoat with Jinja or Nunjucks</a>
-    </li>
-    <li>
-      <a href="/components/dialog">Read more about the Dialog component</a>
+    <li>A <code>&lt;div class="dialog"&gt;</code> which wraps around the entire component and holds it state (e.g. open/close).</li>
+    <li>A <code>&lt;button&gt;</code> that acts as the trigger to open or close the popover.</li>
+    <li>A <code>&lt;div role="dialog"&gt;</code> that holds the dialog itself. It also acts as the backdrop for the dialog.</li>
+    <li>Inside of it, we have:
+      <ul>
+        <li>A <code>&lt;header&gt;</code> that contains the title (<code>&lt;h2&gt;</code>) and description (<code>&lt;p&gt;</code>) of the dialog.</li>
+        <li>A <code>&lt;section&gt;</code> for the content.</li>
+        <li>A <code>&lt;footer&gt;</code> that usually contains actions.</li>
+        <li>A close <code>&lt;button&gt;</code>.</li>
+      </ul>
     </li>
   </ul>
 </section>
 
+{% from "components/tabs.njk" import tabs %}
+{% set tabsets = [
+  { tab: "HTML", panel: code_block(code_html | prettyHtml) },
+  { tab: "Javascipt (Alpine.js)", panel: code_block(code_script | prettyHtml) }
+] %}
+{{ tabs(id="combobox", tabsets=tabsets) }}
+
+<h3 id="usage-jinja"><a href="#usage-jinja">Jinja or Nunjucks</a></h3>
+
+<p class="my-6 prose">If you use Jinja (or Nunjucks), you can use the <code>dialog()</code> macro directly. <a href="/installation#jinja-and-nunjucks">Read more about using Basecoat with Jinja and Nunjucks</a>.</p>
+
 {% set raw_code %}{% raw %}{% set footer %}
   <button class="btn-outline" @click="open = false">Cancel</button>
-  <button class="btn-primary" @click="open = false">Continue</button>
+  <button class="btn" @click="open = false">Save changes</button>
 {% endset %}
-{{ dialog(
-  id="demo-alert-dialog",
-  title="Are you absolutely sure?",
-  description="This action cannot be undone. This will permanently delete your account and remove your data from our servers.",
-  trigger="Open Alert Dialog",
+{% call dialog(
+  id="demo-dialog-edit-profile",
+  title="Edit profile",
+  description="Make changes to your profile here. Click save when you're done.",
+  main_attrs={"x-ref": "myDialog"},
+  trigger="Edit Profile",
   trigger_attrs={"class": "btn-outline"},
+  content_attrs={"class": "w-full sm:max-w-[425px] max-h-[612px]"},
   footer=footer,
-  close_button=False,
-  close_on_overlay_click=False
-) }}{% endraw %}
-{% endset%}
+  register_on=["alpine:init", "htmx:afterSwap"]
+) %}
+<form class="form grid gap-4">
+  <div class="grid gap-3">
+    <label for="demo-dialog-edit-profile-name">Name</label>
+    <input type="text" value="Pedro Duarte" id="demo-dialog-edit-profile-name" />
+  </div>
+  <div class="grid gap-3">
+    <label for="demo-dialog-edit-profile-username">Username</label>
+    <input type="text" value="@peduarte" id="demo-dialog-edit-profile-username" />
+  </div>
+</form>
+{% endcall %}{% endraw %}{% endset%}
 {{ code_block(raw_code, "jinja") }}
 
 <h2 id="examples"><a href="#examples">Examples</a></h2>

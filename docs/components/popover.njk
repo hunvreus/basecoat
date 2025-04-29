@@ -6,7 +6,7 @@ toc:
   - label: Usage
     id: usage
     children:
-      - label: Default
+      - label: HTML + Javascript
         id: usage-default
       - label: Jinja or Nunjucks
         id: usage-jinja
@@ -16,7 +16,7 @@ toc:
 {% from "macros/code_block.njk" import code_block %}
 {% from "components/popover.njk" import popover %}
 
-{% set code %}
+{% set code_html %}
 {% call popover(
   id="demo-popover",
   trigger="Open popover",
@@ -32,13 +32,7 @@ toc:
     <form class="form grid gap-2">
       <div class="grid grid-cols-3 items-center gap-4">
         <label for="demo-popover-width">Width</label>
-        <input type="text" id="demo-popover-width" value="100%" class="col-span-2 h-8" x-init="$watch('open', (value) => {
-          if (value) {
-            setTimeout(() => $el.focus(), 50)
-          } else {
-            $el.blur()
-          }
-        })"/>
+        <input type="text" id="demo-popover-width" value="100%" class="col-span-2 h-8"/>
       </div>
       <div class="grid grid-cols-3 items-center gap-4">
         <label for="demo-popover-max-width">Max. width</label>
@@ -56,61 +50,82 @@ toc:
   </div>
 {% endcall %}
 {% endset %}
-{{ code_preview("popover", code | prettyHtml ) }}
+
+{% set code_script %}
+{% include "components/popover-script.njk" %}
+{% endset %}
+
+{{ code_preview("combobox", code_script | prettyHtml ~ code_html | prettyHtml) }}
 
 <h2 id="usage"><a href="#usage">Usage</a></h2>
 
-<h3 id="usage-html"><a href="#usage-html">Default</a></h3>
+<h3 id="usage-default"><a href="#usage-default">HTML + Javascript</a></h3>
+
+<div class="alert my-6">
+  {% lucide "circle-alert" %}
+  <h2>This component requires Javascript.</h2>
+  <section>
+    <p>You will need to include the Javascript (Alpine.js) code provided below before the HTML code for this component. As with all interactive components, you will need to add some Alpine.js properties to certain elements (e.g. <code class="text-xs">x-bind</code>, <code class="text-xs">x-data</code>, <code class="text-xs">@click</code>).</p>
+  </section>
+</div>
 
 <section class="prose my-6">
-  <p>If you need to do more than what <code>&lt;select&gt;</code> allows (e.g. HTML options), you can use the code below which uses the <a href="/components/combobox">Popover</a> component. Make sure to include the hidden input with the name you want to use for that field.</p>
+  <p>The component is structured as such:</p>
+  <ul>
+    <li>A <code>&lt;div class="popover"&gt;</code> which wraps around the entire component and holds it state (e.g. open/close).</li>
+    <li>A <code>&lt;button&gt;</code> that acts as the trigger to open or close the popover.</li>
+    <li>A <code>&lt;div data-popover&gt;</code> that holds the content of the popover.</li>
+  </ul>
+  <p>You can set up a few additional options on the <code>&lt;div data-popover&gt;</code> element:</p>
+  <ul>
+    <li><code>data-side</code> can be set to <code>top</code>, <code>bottom</code>, <code>left</code>, or <code>right</code> to change the side of the popover.</li>
+    <li><code>data-align</code> can be set to <code>start</code>, <code>center</code>, or <code>end</code> to change the alignment of the popover.</li>
+  </ul>
 </section>
 
-{{ code_block(code | prettyHtml) }}
+{% from "components/tabs.njk" import tabs %}
+{% set tabsets = [
+  { tab: "HTML", panel: code_block(code_html | prettyHtml) },
+  { tab: "Javascipt (Alpine.js)", panel: code_block(code_script | prettyHtml) }
+] %}
+{{ tabs(id="popover", tabsets=tabsets) }}
 
 <h3 id="usage-jinja"><a href="#usage-jinja">Jinja or Nunjucks</a></h3>
 
 <section class="prose my-6">
-  <p>If you use Jinja (or Nunjucks), you can use the <code>popover()</code> macro directly.</p>
-  <ul>
-    <li>
-      <a href="/jinja-and-nunjucks">Read more about using Basecoat with Jinja or Nunjucks</a>
-    </li>
-    <li>
-      <a href="/components/popover">Read more about the Popover component</a>
-    </li>
-  </ul>
+  <p class="my-6 prose">If you use Jinja (or Nunjucks), you can use the <code>popover()</code> macro directly. <a href="/installation#jinja-and-nunjucks">Read more about using Basecoat with Jinja and Nunjucks</a>.</p>
 </section>
 
 {% set raw_code %}{% raw %}{% call popover(
   id="demo-popover",
   trigger="Open popover",
   trigger_attrs={"class": "btn-outline"},
-  content_attrs={"class": "w-80 p-4"}
+  content_attrs={"class": "w-80 p-4"},
+  register_on=["alpine:init", "htmx:afterSwap"]
 ) %}
-<div class="grid gap-4">
-  <header class="grid gap-1.5">
-    <h4 class="leading-none font-medium">Dimensions</h4>
-    <p class="text-muted-foreground text-sm">Set the dimensions for the layer.</p>
-  </header>
-  <form class="form grid gap-2">
-    <div class="grid grid-cols-3 items-center gap-4">
-      <label for="demo-popover-width">Width</label>
-      <input type="text" id="demo-popover-width" value="100%" class="col-span-2 h-8"/>
-    </div>
-    <div class="grid grid-cols-3 items-center gap-4">
-      <label for="demo-popover-max-width">Max. width</label>
-      <input type="text" id="demo-popover-max-width" value="300px" class="col-span-2 h-8"/>
-    </div>
-    <div class="grid grid-cols-3 items-center gap-4">
-      <label for="demo-popover-height">Height</label>
-      <input type="text" id="demo-popover-height" value="25px" class="col-span-2 h-8"/>
-    </div>
-    <div class="grid grid-cols-3 items-center gap-4">
-      <label for="demo-popover-max-height">Max. height</label>
-      <input type="text" id="demo-popover-max-height" value="none" class="col-span-2 h-8"/>
-    </div>
-  </form>
-</div>
+  <div class="grid gap-4">
+    <header class="grid gap-1.5">
+      <h4 class="leading-none font-medium">Dimensions</h4>
+      <p class="text-muted-foreground text-sm">Set the dimensions for the layer.</p>
+    </header>
+    <form class="form grid gap-2">
+      <div class="grid grid-cols-3 items-center gap-4">
+        <label for="demo-popover-width">Width</label>
+        <input type="text" id="demo-popover-width" value="100%" class="col-span-2 h-8"/>
+      </div>
+      <div class="grid grid-cols-3 items-center gap-4">
+        <label for="demo-popover-max-width">Max. width</label>
+        <input type="text" id="demo-popover-max-width" value="300px" class="col-span-2 h-8"/>
+      </div>
+      <div class="grid grid-cols-3 items-center gap-4">
+        <label for="demo-popover-height">Height</label>
+        <input type="text" id="demo-popover-height" value="25px" class="col-span-2 h-8"/>
+      </div>
+      <div class="grid grid-cols-3 items-center gap-4">
+        <label for="demo-popover-max-height">Max. height</label>
+        <input type="text" id="demo-popover-max-height" value="none" class="col-span-2 h-8"/>
+      </div>
+    </form>
+  </div>
 {% endcall %}{% endraw %}{% endset %}
 {{ code_block(raw_code, "jinja") }}

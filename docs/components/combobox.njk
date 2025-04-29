@@ -6,6 +6,8 @@ toc:
   - label: Usage
     id: usage
     children:
+      - label: HTML + Javascript
+        id: usage-default
       - label: Jinja or Nunjucks
         id: usage-jinja
   - label: Examples
@@ -22,7 +24,7 @@ toc:
 {% from "components/select.njk" import select %}
 
 {% set options_frameworks = ["Next.js", "SvelteKit", "Nuxt.js", "Remix", "Astro"] %}
-{% set code %}
+{% set code_html %}
 {% call select(
   trigger_attrs={"class": "w-[200px]"},
   listbox_attrs={"data-empty": "No framework found."},
@@ -33,10 +35,26 @@ toc:
   {% for framework in options_frameworks %}
     <div role="option" data-value="{{ framework }}">{{ framework }}</div>
   {% endfor %}
-{% endcall %}{% endset %}
-{{ code_preview("combobox", code | prettyHtml) }}
+{% endcall %}
+{% endset %}
+
+{% set code_script %}
+{% include "components/select-script.njk" %}
+{% endset %}
+
+{{ code_preview("combobox", code_script | prettyHtml ~ code_html | prettyHtml) }}
 
 <h2 id="usage"><a href="#usage">Usage</a></h2>
+
+<h3 id="usage-default"><a href="#usage-default">HTML + Javascript</a></h3>
+
+<div class="alert my-6">
+  {% lucide "circle-alert" %}
+  <h2>This component requires Javascript.</h2>
+  <section>
+    <p>You will need to include the Javascript (Alpine.js) code provided below before the HTML code for this component. As with all interactive components, you will need to add some Alpine.js properties to certain elements (e.g. <code class="text-xs">x-bind</code>, <code class="text-xs">x-data</code>, <code class="text-xs">@click</code>).</p>
+  </section>
+</div>
 
 <section class="prose my-6">
   <p>Combobox uses the same Alpine.js code and markup as the <a href="/components/select">Select</a> component, the only difference being the search box at the top of the listbox.</p>
@@ -48,30 +66,12 @@ toc:
   </ul>
 </section>
 
-<h4 class="badge-secondary">HTML</h4>
-
-<section class="my-6">
-  {% set code_html %}
-  {% call select(
-    trigger_attrs={"class": "w-[200px]"},
-    listbox_attrs={"data-empty": "No framework found."},
-    is_combobox=true,
-    search_placeholder="Search framework...",
-    register_on=["alpine:init", "htmx:afterSwap"]
-  ) %}
-    {% for framework in options_frameworks %}
-      <div role="option" data-value="{{ framework }}">{{ framework }}</div>
-    {% endfor %}
-  {% endcall %}{% endset %}
-  {{ code_block(code_html | prettyHtml) }}
-</section>
-
-<h4 class="badge-secondary">Javascript (Alpine.js)</h4>
-
-<section class="my-6">
-  {% set code_script %}{% include "components/select-script.njk" %}{% endset %}
-  {{ code_block(code_script | prettyHtml) }}
-</section>
+{% from "components/tabs.njk" import tabs %}
+{% set tabsets = [
+  { tab: "HTML", panel: code_block(code_html | prettyHtml) },
+  { tab: "Javascipt (Alpine.js)", panel: code_block(code_script | prettyHtml) }
+] %}
+{{ tabs(id="combobox", tabsets=tabsets) }}
 
 <h3 id="usage-jinja"><a href="#usage-jinja">Jinja or Nunjucks</a></h3>
 

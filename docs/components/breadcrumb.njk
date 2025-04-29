@@ -16,8 +16,12 @@ toc:
   <h2>There is no dedicated breadcrumb component in Basecoat.</h2>
 </div>
 
-{% set code_script %}{% include "components/dropdown-menu-script.njk" %}{% endset %}
-{% set code_html %}<ol class="text-muted-foreground flex flex-wrap items-center gap-1.5 text-sm break-words sm:gap-2.5">
+{% set code_script %}
+{% include "components/dropdown-menu-script.njk" %}
+{% endset %}
+
+{% set code_html %}
+<ol class="text-muted-foreground flex flex-wrap items-center gap-1.5 text-sm break-words sm:gap-2.5">
   <li class="inline-flex items-center gap-1.5">
     <a href="#" class="hover:text-foreground transition-colors">Home</a>
   </li>
@@ -47,8 +51,10 @@ toc:
   <li class="inline-flex items-center gap-1.5">
     <span class="text-foreground font-normal">Breadcrumb</span>
   </li>
-</ol>{% endset %}
-{{ code_preview("dropdown-menu", code_script ~ code_html | prettyHtml) }}
+</ol>
+{% endset %}
+
+{{ code_preview("dropdown-menu", code_script | prettyHtml ~ code_html | prettyHtml) }}
 
 <h2 id="usage"><a href="#usage">Usage</a></h2>
 
@@ -56,14 +62,9 @@ toc:
   <p>The example above uses some simple Tailwind CSS along with the <a href="/components/dropdown-menu">Dropdown Menu</a>.</p>
 </section>
 
-<h4 class="badge-secondary">HTML</h3>
-
-<section class="my-6">
-  {{ code_block(code_html | prettyHtml) }}
-</section>
-
-<h4 class="badge-secondary">Javascript (Alpine.js) for the Dropdown Menu</h3>
-
-<section class="my-6">
-  {{ code_block(code_script | prettyHtml) }}
-</section>
+{% from "components/tabs.njk" import tabs %}
+{% set tabsets = [
+  { tab: "HTML", panel: code_block(code_html | prettyHtml) },
+  { tab: "Javascipt (Alpine.js)", panel: code_block(code_script | prettyHtml) }
+] %}
+{{ tabs(id="alert-dialog", tabsets=tabsets) }}
