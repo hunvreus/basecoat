@@ -82,6 +82,7 @@
   --scrollbar-radius: 6px;
   --chevron-down-icon: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="oklch(0.708 0 0 / 0.5)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down"><path d="m6 9 6 6 6-6"/></svg>'); /* --muted-foreground + 50% opacity */
   --check-icon: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="oklch(0.708 0 0)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-icon lucide-check"><path d="M20 6 9 17l-5-5"/></svg>');/* --muted-foreground */
+  color-scheme: dark;
 }
 
 @theme {
@@ -123,8 +124,6 @@
   --font-sans: 'Inter var', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
 }
-
-/* @import "./theme.css"; */
 
 @layer base {
   * {
@@ -544,7 +543,7 @@
   .input[type='month'],
   .input[type='week'],
   .input[type='time'] {
-    @apply dark:scheme-dark;
+    
   }
 }
 

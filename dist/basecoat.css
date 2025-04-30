@@ -1254,43 +1254,43 @@
     }
   }
   .dark\:border-amber-950 {
-    &:is(.dark *) {
+    &:where(.dark, .dark *) {
       border-color: var(--color-amber-950);
     }
   }
   .dark\:bg-amber-950 {
-    &:is(.dark *) {
+    &:where(.dark, .dark *) {
       background-color: var(--color-amber-950);
     }
   }
   .dark\:text-amber-100 {
-    &:is(.dark *) {
+    &:where(.dark, .dark *) {
       color: var(--color-amber-100);
     }
   }
   .dark\:checked\:border-blue-700 {
-    &:is(.dark *) {
+    &:where(.dark, .dark *) {
       &:checked {
         border-color: var(--color-blue-700);
       }
     }
   }
   .dark\:checked\:bg-blue-600 {
-    &:is(.dark *) {
+    &:where(.dark, .dark *) {
       &:checked {
         background-color: var(--color-blue-600);
       }
     }
   }
   .dark\:checked\:bg-blue-700 {
-    &:is(.dark *) {
+    &:where(.dark, .dark *) {
       &:checked {
         background-color: var(--color-blue-700);
       }
     }
   }
   .dark\:checked\:bg-input\/30 {
-    &:is(.dark *) {
+    &:where(.dark, .dark *) {
       &:checked {
         background-color: color-mix(in srgb, var(--input) 30%, transparent);
         @supports (color: color-mix(in lab, red, red)) {
@@ -1300,7 +1300,7 @@
     }
   }
   .dark\:checked\:before\:bg-primary {
-    &:is(.dark *) {
+    &:where(.dark, .dark *) {
       &:checked {
         &::before {
           content: var(--tw-content);
@@ -1310,7 +1310,7 @@
     }
   }
   .dark\:hover\:bg-destructive\/20 {
-    &:is(.dark *) {
+    &:where(.dark, .dark *) {
       &:hover {
         @media (hover: hover) {
           background-color: color-mix(in srgb, var(--destructive) 20%, transparent);
@@ -1322,7 +1322,7 @@
     }
   }
   .dark\:focus\:bg-destructive\/20 {
-    &:is(.dark *) {
+    &:where(.dark, .dark *) {
       &:focus {
         background-color: color-mix(in srgb, var(--destructive) 20%, transparent);
         @supports (color: color-mix(in lab, red, red)) {
@@ -1332,28 +1332,28 @@
     }
   }
   .dark\:has-\[input\[type\=\'checkbox\'\]\:checked\]\:border-blue-900 {
-    &:is(.dark *) {
+    &:where(.dark, .dark *) {
       &:has(*:is(input[type='checkbox']:checked)) {
         border-color: var(--color-blue-900);
       }
     }
   }
   .dark\:has-\[input\[type\=\'checkbox\'\]\:checked\]\:bg-blue-950 {
-    &:is(.dark *) {
+    &:where(.dark, .dark *) {
       &:has(*:is(input[type='checkbox']:checked)) {
         background-color: var(--color-blue-950);
       }
     }
   }
   .dark\:has-\[input\[type\=\'radio\'\]\:checked\]\:border-green-900 {
-    &:is(.dark *) {
+    &:where(.dark, .dark *) {
       &:has(*:is(input[type='radio']:checked)) {
         border-color: var(--color-green-900);
       }
     }
   }
   .dark\:has-\[input\[type\=\'radio\'\]\:checked\]\:bg-green-950 {
-    &:is(.dark *) {
+    &:where(.dark, .dark *) {
       &:has(*:is(input[type='radio']:checked)) {
         background-color: var(--color-green-950);
       }
@@ -1705,6 +1705,7 @@
   --scrollbar-radius: 6px;
   --chevron-down-icon: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="oklch(0.708 0 0 / 0.5)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down"><path d="m6 9 6 6 6-6"/></svg>');
   --check-icon: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="oklch(0.708 0 0)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-icon lucide-check"><path d="M20 6 9 17l-5-5"/></svg>');
+  color-scheme: dark;
 }
 @layer base {
   * {
@@ -1870,7 +1871,7 @@
         --tw-ring-color: color-mix(in oklab, var(--color-destructive) 20%, transparent);
       }
     }
-    &:is(.dark *) {
+    &:where(.dark, .dark *) {
       &[aria-invalid="true"] {
         --tw-ring-color: color-mix(in srgb, var(--destructive) 40%, transparent);
         @supports (color: color-mix(in lab, red, red)) {
@@ -1964,10 +1965,10 @@
     background-color: var(--color-background);
     --tw-shadow: 0 1px 2px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.05));
     box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
-    &:is(.dark *) {
+    &:where(.dark, .dark *) {
       border-color: var(--color-input);
     }
-    &:is(.dark *) {
+    &:where(.dark, .dark *) {
       background-color: color-mix(in srgb, var(--input) 30%, transparent);
       @supports (color: color-mix(in lab, red, red)) {
         background-color: color-mix(in oklab, var(--color-input) 30%, transparent);
@@ -1976,7 +1977,7 @@
     &:hover, &[aria-pressed='true'] {
       background-color: var(--color-accent);
       color: var(--color-accent-foreground);
-      &:is(.dark *) {
+      &:where(.dark, .dark *) {
         background-color: color-mix(in srgb, var(--accent) 50%, transparent);
         @supports (color: color-mix(in lab, red, red)) {
           background-color: color-mix(in oklab, var(--color-accent) 50%, transparent);
@@ -1988,7 +1989,7 @@
     &:hover, &[aria-pressed='true'] {
       background-color: var(--color-accent);
       color: var(--color-accent-foreground);
-      &:is(.dark *) {
+      &:where(.dark, .dark *) {
         background-color: color-mix(in srgb, var(--accent) 50%, transparent);
         @supports (color: color-mix(in lab, red, red)) {
           background-color: color-mix(in oklab, var(--color-accent) 50%, transparent);
@@ -2018,13 +2019,13 @@
         --tw-ring-color: color-mix(in oklab, var(--color-destructive) 20%, transparent);
       }
     }
-    &:is(.dark *) {
+    &:where(.dark, .dark *) {
       background-color: color-mix(in srgb, var(--destructive) 60%, transparent);
       @supports (color: color-mix(in lab, red, red)) {
         background-color: color-mix(in oklab, var(--color-destructive) 60%, transparent);
       }
     }
-    &:is(.dark *) {
+    &:where(.dark, .dark *) {
       &:focus-visible {
         --tw-ring-color: color-mix(in srgb, var(--destructive) 40%, transparent);
         @supports (color: color-mix(in lab, red, red)) {
@@ -2037,7 +2038,7 @@
       @supports (color: color-mix(in lab, red, red)) {
         background-color: color-mix(in oklab, var(--color-destructive) 90%, transparent);
       }
-      &:is(.dark *) {
+      &:where(.dark, .dark *) {
         background-color: color-mix(in srgb, var(--destructive) 50%, transparent);
         @supports (color: color-mix(in lab, red, red)) {
           background-color: color-mix(in oklab, var(--color-destructive) 50%, transparent);
@@ -2090,7 +2091,7 @@
         --tw-ring-color: color-mix(in oklab, var(--color-destructive) 20%, transparent);
       }
     }
-    &:is(.dark *) {
+    &:where(.dark, .dark *) {
       &[aria-invalid="true"] {
         --tw-ring-color: color-mix(in srgb, var(--destructive) 40%, transparent);
         @supports (color: color-mix(in lab, red, red)) {
@@ -2146,13 +2147,13 @@
         --tw-ring-color: color-mix(in oklab, var(--color-destructive) 20%, transparent);
       }
     }
-    &:is(.dark *) {
+    &:where(.dark, .dark *) {
       background-color: color-mix(in srgb, var(--destructive) 60%, transparent);
       @supports (color: color-mix(in lab, red, red)) {
         background-color: color-mix(in oklab, var(--color-destructive) 60%, transparent);
       }
     }
-    &:is(.dark *) {
+    &:where(.dark, .dark *) {
       &:focus-visible {
         --tw-ring-color: color-mix(in srgb, var(--destructive) 40%, transparent);
         @supports (color: color-mix(in lab, red, red)) {
@@ -2293,18 +2294,18 @@
         --tw-ring-color: color-mix(in oklab, var(--color-destructive) 20%, transparent);
       }
     }
-    &:is(.dark *) {
+    &:where(.dark, .dark *) {
       background-color: color-mix(in srgb, var(--input) 30%, transparent);
       @supports (color: color-mix(in lab, red, red)) {
         background-color: color-mix(in oklab, var(--color-input) 30%, transparent);
       }
     }
-    &:is(.dark *) {
+    &:where(.dark, .dark *) {
       &:checked {
         background-color: var(--color-primary);
       }
     }
-    &:is(.dark *) {
+    &:where(.dark, .dark *) {
       &[aria-invalid="true"] {
         --tw-ring-color: color-mix(in srgb, var(--destructive) 40%, transparent);
         @supports (color: color-mix(in lab, red, red)) {
@@ -2584,7 +2585,7 @@
       font-size: var(--text-sm);
       line-height: var(--tw-leading, var(--text-sm--line-height));
     }
-    &:is(.dark *) {
+    &:where(.dark, .dark *) {
       background-color: color-mix(in srgb, var(--input) 30%, transparent);
       @supports (color: color-mix(in lab, red, red)) {
         background-color: color-mix(in oklab, var(--color-input) 30%, transparent);
@@ -2612,18 +2613,13 @@
         --tw-ring-color: color-mix(in oklab, var(--color-destructive) 20%, transparent);
       }
     }
-    &:is(.dark *) {
+    &:where(.dark, .dark *) {
       &[aria-invalid="true"] {
         --tw-ring-color: color-mix(in srgb, var(--destructive) 40%, transparent);
         @supports (color: color-mix(in lab, red, red)) {
           --tw-ring-color: color-mix(in oklab, var(--color-destructive) 40%, transparent);
         }
       }
-    }
-  }
-  .form input[type='date'], .form input[type='datetime-local'], .form input[type='month'], .form input[type='week'], .form input[type='time'], .input[type='date'], .input[type='datetime-local'], .input[type='month'], .input[type='week'], .input[type='time'] {
-    &:is(.dark *) {
-      color-scheme: dark;
     }
   }
 }
@@ -2968,13 +2964,13 @@
         --tw-ring-color: color-mix(in oklab, var(--color-destructive) 20%, transparent);
       }
     }
-    &:is(.dark *) {
+    &:where(.dark, .dark *) {
       background-color: color-mix(in srgb, var(--input) 30%, transparent);
       @supports (color: color-mix(in lab, red, red)) {
         background-color: color-mix(in oklab, var(--color-input) 30%, transparent);
       }
     }
-    &:is(.dark *) {
+    &:where(.dark, .dark *) {
       &[aria-invalid="true"] {
         --tw-ring-color: color-mix(in srgb, var(--destructive) 40%, transparent);
         @supports (color: color-mix(in lab, red, red)) {
@@ -3164,13 +3160,13 @@
         --tw-ring-color: color-mix(in oklab, var(--color-destructive) 20%, transparent);
       }
     }
-    &:is(.dark *) {
+    &:where(.dark, .dark *) {
       background-color: color-mix(in srgb, var(--input) 30%, transparent);
       @supports (color: color-mix(in lab, red, red)) {
         background-color: color-mix(in oklab, var(--color-input) 30%, transparent);
       }
     }
-    &:is(.dark *) {
+    &:where(.dark, .dark *) {
       &:hover {
         @media (hover: hover) {
           background-color: color-mix(in srgb, var(--input) 50%, transparent);
@@ -3180,7 +3176,7 @@
         }
       }
     }
-    &:is(.dark *) {
+    &:where(.dark, .dark *) {
       &[aria-invalid="true"] {
         --tw-ring-color: color-mix(in srgb, var(--destructive) 40%, transparent);
         @supports (color: color-mix(in lab, red, red)) {
@@ -3236,13 +3232,13 @@
     &:checked {
       background-color: var(--color-primary);
     }
-    &:is(.dark *) {
+    &:where(.dark, .dark *) {
       background-color: color-mix(in srgb, var(--input) 80%, transparent);
       @supports (color: color-mix(in lab, red, red)) {
         background-color: color-mix(in oklab, var(--color-input) 80%, transparent);
       }
     }
-    &:is(.dark *) {
+    &:where(.dark, .dark *) {
       &:checked {
         background-color: var(--color-primary);
       }
@@ -3284,7 +3280,7 @@
       content: var(--tw-content);
       background-color: var(--color-background);
     }
-    &:is(.dark *) {
+    &:where(.dark, .dark *) {
       &::before {
         content: var(--tw-content);
         background-color: var(--color-foreground);
@@ -3296,7 +3292,7 @@
         margin-inline-start: calc(var(--spacing) * 3.5);
       }
     }
-    &:is(.dark *) {
+    &:where(.dark, .dark *) {
       &:checked {
         &::before {
           content: var(--tw-content);
@@ -3455,7 +3451,7 @@
         &:disabled {
           opacity: 50%;
         }
-        &:is(.dark *) {
+        &:where(.dark, .dark *) {
           color: var(--color-muted-foreground);
         }
         & svg {
@@ -3472,16 +3468,16 @@
           background-color: var(--color-background);
           --tw-shadow: 0 1px 3px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 1px 2px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
           box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
-          &:is(.dark *) {
+          &:where(.dark, .dark *) {
             border-color: var(--color-input);
           }
-          &:is(.dark *) {
+          &:where(.dark, .dark *) {
             background-color: color-mix(in srgb, var(--input) 30%, transparent);
             @supports (color: color-mix(in lab, red, red)) {
               background-color: color-mix(in oklab, var(--color-input) 30%, transparent);
             }
           }
-          &:is(.dark *) {
+          &:where(.dark, .dark *) {
             color: var(--color-foreground);
           }
         }
@@ -3551,13 +3547,13 @@
       font-size: var(--text-sm);
       line-height: var(--tw-leading, var(--text-sm--line-height));
     }
-    &:is(.dark *) {
+    &:where(.dark, .dark *) {
       background-color: color-mix(in srgb, var(--input) 30%, transparent);
       @supports (color: color-mix(in lab, red, red)) {
         background-color: color-mix(in oklab, var(--color-input) 30%, transparent);
       }
     }
-    &:is(.dark *) {
+    &:where(.dark, .dark *) {
       &[aria-invalid="true"] {
         --tw-ring-color: color-mix(in srgb, var(--destructive) 40%, transparent);
         @supports (color: color-mix(in lab, red, red)) {
