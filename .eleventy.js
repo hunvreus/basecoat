@@ -2,9 +2,8 @@ import eleventyLucideicons from "@grimlink/eleventy-plugin-lucide-icons";
 import prettier from "prettier";
 
 export default async function(eleventyConfig) {
-  eleventyConfig.setInputDirectory("./docs");
-  eleventyConfig.setServerPassthroughCopyBehavior("passthrough");
-  eleventyConfig.addPassthroughCopy({"./dist/basecoat.css": "./assets/styles.css"});
+  eleventyConfig.setInputDirectory("./docs/src");
+  eleventyConfig.addPassthroughCopy({"docs/src/assets": "assets"});
   eleventyConfig.addPlugin(eleventyLucideicons);
   eleventyConfig.addNunjucksAsyncFilter("prettyHtml", async (code, callback) => {
     try {

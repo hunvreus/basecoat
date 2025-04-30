@@ -1,11 +1,25 @@
 {
+  "name": "basecoat",
+  "version": "0.1.0",
+  "description": "shadcn/ui for the rest of us",
   "type": "module",
+  "files": ["src"],
+  "exports": "./src/basecoat.css",
+  "keywords": ["tailwind", "tailwindcss", "css", "components"],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hunvreus/basecoat.git"
+  },
+  "bugs": {
+    "url": "https://github.com/hunvreus/basecoat/issues"
+  },
+  "homepage": "https://github.com/hunvreus/basecoat#readme",
   "scripts": {
-    "css:dev": "tailwindcss -i ./dist/basecoat.tailwind.css -o ./dist/basecoat.css --watch",
-    "css:build": "tailwindcss -i ./dist/basecoat.tailwind.css -o ./dist/basecoat.css --minify",
+    "css:dev": "tailwindcss -i ./docs/styles.css -o ./docs/src/assets/styles.css --watch",
     "eleventy:serve": "eleventy --serve",
     "dev": "concurrently \"npm:css:dev\" \"npm:eleventy:serve\"",
-    "build": "npm run css:build & eleventy"
+    "build": "tailwindcss -i ./docs/styles.css -o ./docs/src/assets/styles.css --minify && eleventy"
   },
   "devDependencies": {
     "@11ty/eleventy": "^3.0.0",

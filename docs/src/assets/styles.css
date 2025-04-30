@@ -1,17 +1,18 @@
-/*! tailwindcss v4.1.3 | MIT License | https://tailwindcss.com */
+/*! tailwindcss v4.1.4 | MIT License | https://tailwindcss.com */
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
 @layer properties;
 @layer theme, base, components, utilities;
 @layer theme {
   :root, :host {
-    --font-sans: 'Inter var', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-    --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
-    --color-red-500: oklch(63.7% 0.237 25.331);
+    --font-sans: 'Inter';
+    --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+    --font-mono: 'JetBrains Mono';
     --color-amber-50: oklch(98.7% 0.022 95.277);
     --color-amber-100: oklch(96.2% 0.059 95.617);
     --color-amber-900: oklch(41.4% 0.112 45.904);
     --color-amber-950: oklch(27.9% 0.077 45.635);
     --color-green-50: oklch(98.2% 0.018 155.826);
-    --color-green-500: oklch(72.3% 0.219 149.579);
     --color-green-600: oklch(62.7% 0.194 149.214);
     --color-green-900: oklch(39.3% 0.095 152.535);
     --color-green-950: oklch(26.6% 0.065 152.934);
@@ -442,20 +443,6 @@
   .min-h-\[350px\] {
     min-height: 350px;
   }
-  .scrollbar {
-    scrollbar-width: thin;
-    scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
-    &::-webkit-scrollbar {
-      width: var(--scrollbar-width);
-    }
-    &::-webkit-scrollbar-track {
-      background: var(--scrollbar-track);
-    }
-    &::-webkit-scrollbar-thumb {
-      background: var(--scrollbar-thumb);
-      border-radius: var(--scrollbar-radius);
-    }
-  }
   .w-1\/2 {
     width: calc(1/2 * 100%);
   }
@@ -879,7 +866,7 @@
     color: var(--color-sidebar-foreground);
   }
   .text-sidebar-foreground\/70 {
-    color: color-mix(in srgb, var(--sidebar-foreground) 70%, transparent);
+    color: var(--color-sidebar-foreground);
     @supports (color: color-mix(in lab, red, red)) {
       color: color-mix(in oklab, var(--color-sidebar-foreground) 70%, transparent);
     }
@@ -1052,7 +1039,7 @@
   .hover\:bg-accent\/50 {
     &:hover {
       @media (hover: hover) {
-        background-color: color-mix(in srgb, var(--accent) 50%, transparent);
+        background-color: var(--color-accent);
         @supports (color: color-mix(in lab, red, red)) {
           background-color: color-mix(in oklab, var(--color-accent) 50%, transparent);
         }
@@ -1062,7 +1049,7 @@
   .hover\:bg-destructive\/10 {
     &:hover {
       @media (hover: hover) {
-        background-color: color-mix(in srgb, var(--destructive) 10%, transparent);
+        background-color: var(--color-destructive);
         @supports (color: color-mix(in lab, red, red)) {
           background-color: color-mix(in oklab, var(--color-destructive) 10%, transparent);
         }
@@ -1113,7 +1100,7 @@
   }
   .focus\:bg-destructive\/10 {
     &:focus {
-      background-color: color-mix(in srgb, var(--destructive) 10%, transparent);
+      background-color: var(--color-destructive);
       @supports (color: color-mix(in lab, red, red)) {
         background-color: color-mix(in oklab, var(--color-destructive) 10%, transparent);
       }
@@ -1154,7 +1141,7 @@
   }
   .focus-visible\:ring-ring\/50 {
     &:focus-visible {
-      --tw-ring-color: color-mix(in srgb, var(--ring) 50%, transparent);
+      --tw-ring-color: var(--color-ring);
       @supports (color: color-mix(in lab, red, red)) {
         --tw-ring-color: color-mix(in oklab, var(--color-ring) 50%, transparent);
       }
@@ -1254,45 +1241,45 @@
     }
   }
   .dark\:border-amber-950 {
-    &:where(.dark, .dark *) {
+    &:is(.dark *) {
       border-color: var(--color-amber-950);
     }
   }
   .dark\:bg-amber-950 {
-    &:where(.dark, .dark *) {
+    &:is(.dark *) {
       background-color: var(--color-amber-950);
     }
   }
   .dark\:text-amber-100 {
-    &:where(.dark, .dark *) {
+    &:is(.dark *) {
       color: var(--color-amber-100);
     }
   }
   .dark\:checked\:border-blue-700 {
-    &:where(.dark, .dark *) {
+    &:is(.dark *) {
       &:checked {
         border-color: var(--color-blue-700);
       }
     }
   }
   .dark\:checked\:bg-blue-600 {
-    &:where(.dark, .dark *) {
+    &:is(.dark *) {
       &:checked {
         background-color: var(--color-blue-600);
       }
     }
   }
   .dark\:checked\:bg-blue-700 {
-    &:where(.dark, .dark *) {
+    &:is(.dark *) {
       &:checked {
         background-color: var(--color-blue-700);
       }
     }
   }
   .dark\:checked\:bg-input\/30 {
-    &:where(.dark, .dark *) {
+    &:is(.dark *) {
       &:checked {
-        background-color: color-mix(in srgb, var(--input) 30%, transparent);
+        background-color: var(--color-input);
         @supports (color: color-mix(in lab, red, red)) {
           background-color: color-mix(in oklab, var(--color-input) 30%, transparent);
         }
@@ -1300,7 +1287,7 @@
     }
   }
   .dark\:checked\:before\:bg-primary {
-    &:where(.dark, .dark *) {
+    &:is(.dark *) {
       &:checked {
         &::before {
           content: var(--tw-content);
@@ -1310,10 +1297,10 @@
     }
   }
   .dark\:hover\:bg-destructive\/20 {
-    &:where(.dark, .dark *) {
+    &:is(.dark *) {
       &:hover {
         @media (hover: hover) {
-          background-color: color-mix(in srgb, var(--destructive) 20%, transparent);
+          background-color: var(--color-destructive);
           @supports (color: color-mix(in lab, red, red)) {
             background-color: color-mix(in oklab, var(--color-destructive) 20%, transparent);
           }
@@ -1322,9 +1309,9 @@
     }
   }
   .dark\:focus\:bg-destructive\/20 {
-    &:where(.dark, .dark *) {
+    &:is(.dark *) {
       &:focus {
-        background-color: color-mix(in srgb, var(--destructive) 20%, transparent);
+        background-color: var(--color-destructive);
         @supports (color: color-mix(in lab, red, red)) {
           background-color: color-mix(in oklab, var(--color-destructive) 20%, transparent);
         }
@@ -1332,28 +1319,28 @@
     }
   }
   .dark\:has-\[input\[type\=\'checkbox\'\]\:checked\]\:border-blue-900 {
-    &:where(.dark, .dark *) {
+    &:is(.dark *) {
       &:has(*:is(input[type='checkbox']:checked)) {
         border-color: var(--color-blue-900);
       }
     }
   }
   .dark\:has-\[input\[type\=\'checkbox\'\]\:checked\]\:bg-blue-950 {
-    &:where(.dark, .dark *) {
+    &:is(.dark *) {
       &:has(*:is(input[type='checkbox']:checked)) {
         background-color: var(--color-blue-950);
       }
     }
   }
   .dark\:has-\[input\[type\=\'radio\'\]\:checked\]\:border-green-900 {
-    &:where(.dark, .dark *) {
+    &:is(.dark *) {
       &:has(*:is(input[type='radio']:checked)) {
         border-color: var(--color-green-900);
       }
     }
   }
   .dark\:has-\[input\[type\=\'radio\'\]\:checked\]\:bg-green-950 {
-    &:where(.dark, .dark *) {
+    &:is(.dark *) {
       &:has(*:is(input[type='radio']:checked)) {
         background-color: var(--color-green-950);
       }
@@ -1710,7 +1697,7 @@
 @layer base {
   * {
     border-color: var(--color-border);
-    outline-color: color-mix(in srgb, var(--ring) 50%, transparent);
+    outline-color: var(--color-ring);
     @supports (color: color-mix(in lab, red, red)) {
       outline-color: color-mix(in oklab, var(--color-ring) 50%, transparent);
     }
@@ -1725,8 +1712,20 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
-}
-@layer utilities {
+  .scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+    &::-webkit-scrollbar {
+      width: var(--scrollbar-width);
+    }
+    &::-webkit-scrollbar-track {
+      background: var(--scrollbar-track);
+    }
+    &::-webkit-scrollbar-thumb {
+      background: var(--scrollbar-thumb);
+      border-radius: var(--scrollbar-radius);
+    }
+  }
   [x-cloak] {
     display: none !important;
   }
@@ -1851,7 +1850,7 @@
       box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
     }
     &:focus-visible {
-      --tw-ring-color: color-mix(in srgb, var(--ring) 50%, transparent);
+      --tw-ring-color: var(--color-ring);
       @supports (color: color-mix(in lab, red, red)) {
         --tw-ring-color: color-mix(in oklab, var(--color-ring) 50%, transparent);
       }
@@ -1866,14 +1865,14 @@
       border-color: var(--color-destructive);
     }
     &[aria-invalid="true"] {
-      --tw-ring-color: color-mix(in srgb, var(--destructive) 20%, transparent);
+      --tw-ring-color: var(--color-destructive);
       @supports (color: color-mix(in lab, red, red)) {
         --tw-ring-color: color-mix(in oklab, var(--color-destructive) 20%, transparent);
       }
     }
-    &:where(.dark, .dark *) {
+    &:is(.dark *) {
       &[aria-invalid="true"] {
-        --tw-ring-color: color-mix(in srgb, var(--destructive) 40%, transparent);
+        --tw-ring-color: var(--color-destructive);
         @supports (color: color-mix(in lab, red, red)) {
           --tw-ring-color: color-mix(in oklab, var(--color-destructive) 40%, transparent);
         }
@@ -1934,14 +1933,14 @@
     box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
     &:hover {
       @media (hover: hover) {
-        background-color: color-mix(in srgb, var(--primary) 90%, transparent);
+        background-color: var(--color-primary);
         @supports (color: color-mix(in lab, red, red)) {
           background-color: color-mix(in oklab, var(--color-primary) 90%, transparent);
         }
       }
     }
     &[aria-pressed='true'] {
-      background-color: color-mix(in srgb, var(--primary) 90%, transparent);
+      background-color: var(--color-primary);
       @supports (color: color-mix(in lab, red, red)) {
         background-color: color-mix(in oklab, var(--color-primary) 90%, transparent);
       }
@@ -1953,7 +1952,7 @@
     --tw-shadow: 0 1px 2px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.05));
     box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
     &:hover, &[aria-pressed='true'] {
-      background-color: color-mix(in srgb, var(--secondary) 80%, transparent);
+      background-color: var(--color-secondary);
       @supports (color: color-mix(in lab, red, red)) {
         background-color: color-mix(in oklab, var(--color-secondary) 80%, transparent);
       }
@@ -1965,11 +1964,11 @@
     background-color: var(--color-background);
     --tw-shadow: 0 1px 2px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.05));
     box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
-    &:where(.dark, .dark *) {
+    &:is(.dark *) {
       border-color: var(--color-input);
     }
-    &:where(.dark, .dark *) {
-      background-color: color-mix(in srgb, var(--input) 30%, transparent);
+    &:is(.dark *) {
+      background-color: var(--color-input);
       @supports (color: color-mix(in lab, red, red)) {
         background-color: color-mix(in oklab, var(--color-input) 30%, transparent);
       }
@@ -1977,8 +1976,8 @@
     &:hover, &[aria-pressed='true'] {
       background-color: var(--color-accent);
       color: var(--color-accent-foreground);
-      &:where(.dark, .dark *) {
-        background-color: color-mix(in srgb, var(--accent) 50%, transparent);
+      &:is(.dark *) {
+        background-color: var(--color-accent);
         @supports (color: color-mix(in lab, red, red)) {
           background-color: color-mix(in oklab, var(--color-accent) 50%, transparent);
         }
@@ -1989,8 +1988,8 @@
     &:hover, &[aria-pressed='true'] {
       background-color: var(--color-accent);
       color: var(--color-accent-foreground);
-      &:where(.dark, .dark *) {
-        background-color: color-mix(in srgb, var(--accent) 50%, transparent);
+      &:is(.dark *) {
+        background-color: var(--color-accent);
         @supports (color: color-mix(in lab, red, red)) {
           background-color: color-mix(in oklab, var(--color-accent) 50%, transparent);
         }
@@ -2014,32 +2013,32 @@
     --tw-shadow: 0 1px 2px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.05));
     box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
     &:focus-visible {
-      --tw-ring-color: color-mix(in srgb, var(--destructive) 20%, transparent);
+      --tw-ring-color: var(--color-destructive);
       @supports (color: color-mix(in lab, red, red)) {
         --tw-ring-color: color-mix(in oklab, var(--color-destructive) 20%, transparent);
       }
     }
-    &:where(.dark, .dark *) {
-      background-color: color-mix(in srgb, var(--destructive) 60%, transparent);
+    &:is(.dark *) {
+      background-color: var(--color-destructive);
       @supports (color: color-mix(in lab, red, red)) {
         background-color: color-mix(in oklab, var(--color-destructive) 60%, transparent);
       }
     }
-    &:where(.dark, .dark *) {
+    &:is(.dark *) {
       &:focus-visible {
-        --tw-ring-color: color-mix(in srgb, var(--destructive) 40%, transparent);
+        --tw-ring-color: var(--color-destructive);
         @supports (color: color-mix(in lab, red, red)) {
           --tw-ring-color: color-mix(in oklab, var(--color-destructive) 40%, transparent);
         }
       }
     }
     &:hover, &[aria-pressed='true'] {
-      background-color: color-mix(in srgb, var(--destructive) 90%, transparent);
+      background-color: var(--color-destructive);
       @supports (color: color-mix(in lab, red, red)) {
         background-color: color-mix(in oklab, var(--color-destructive) 90%, transparent);
       }
-      &:where(.dark, .dark *) {
-        background-color: color-mix(in srgb, var(--destructive) 50%, transparent);
+      &:is(.dark *) {
+        background-color: var(--color-destructive);
         @supports (color: color-mix(in lab, red, red)) {
           background-color: color-mix(in oklab, var(--color-destructive) 50%, transparent);
         }
@@ -2077,7 +2076,7 @@
       box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
     }
     &:focus-visible {
-      --tw-ring-color: color-mix(in srgb, var(--ring) 50%, transparent);
+      --tw-ring-color: var(--color-ring);
       @supports (color: color-mix(in lab, red, red)) {
         --tw-ring-color: color-mix(in oklab, var(--color-ring) 50%, transparent);
       }
@@ -2086,14 +2085,14 @@
       border-color: var(--color-destructive);
     }
     &[aria-invalid="true"] {
-      --tw-ring-color: color-mix(in srgb, var(--destructive) 20%, transparent);
+      --tw-ring-color: var(--color-destructive);
       @supports (color: color-mix(in lab, red, red)) {
         --tw-ring-color: color-mix(in oklab, var(--color-destructive) 20%, transparent);
       }
     }
-    &:where(.dark, .dark *) {
+    &:is(.dark *) {
       &[aria-invalid="true"] {
-        --tw-ring-color: color-mix(in srgb, var(--destructive) 40%, transparent);
+        --tw-ring-color: var(--color-destructive);
         @supports (color: color-mix(in lab, red, red)) {
           --tw-ring-color: color-mix(in oklab, var(--color-destructive) 40%, transparent);
         }
@@ -2114,7 +2113,7 @@
     a& {
       &:hover {
         @media (hover: hover) {
-          background-color: color-mix(in srgb, var(--primary) 90%, transparent);
+          background-color: var(--color-primary);
           @supports (color: color-mix(in lab, red, red)) {
             background-color: color-mix(in oklab, var(--color-primary) 90%, transparent);
           }
@@ -2129,7 +2128,7 @@
     a& {
       &:hover {
         @media (hover: hover) {
-          background-color: color-mix(in srgb, var(--secondary) 90%, transparent);
+          background-color: var(--color-secondary);
           @supports (color: color-mix(in lab, red, red)) {
             background-color: color-mix(in oklab, var(--color-secondary) 90%, transparent);
           }
@@ -2142,20 +2141,20 @@
     background-color: var(--color-destructive);
     color: var(--color-white);
     &:focus-visible {
-      --tw-ring-color: color-mix(in srgb, var(--destructive) 20%, transparent);
+      --tw-ring-color: var(--color-destructive);
       @supports (color: color-mix(in lab, red, red)) {
         --tw-ring-color: color-mix(in oklab, var(--color-destructive) 20%, transparent);
       }
     }
-    &:where(.dark, .dark *) {
-      background-color: color-mix(in srgb, var(--destructive) 60%, transparent);
+    &:is(.dark *) {
+      background-color: var(--color-destructive);
       @supports (color: color-mix(in lab, red, red)) {
         background-color: color-mix(in oklab, var(--color-destructive) 60%, transparent);
       }
     }
-    &:where(.dark, .dark *) {
+    &:is(.dark *) {
       &:focus-visible {
-        --tw-ring-color: color-mix(in srgb, var(--destructive) 40%, transparent);
+        --tw-ring-color: var(--color-destructive);
         @supports (color: color-mix(in lab, red, red)) {
           --tw-ring-color: color-mix(in oklab, var(--color-destructive) 40%, transparent);
         }
@@ -2164,7 +2163,7 @@
     a& {
       &:hover {
         @media (hover: hover) {
-          background-color: color-mix(in srgb, var(--destructive) 90%, transparent);
+          background-color: var(--color-destructive);
           @supports (color: color-mix(in lab, red, red)) {
             background-color: color-mix(in oklab, var(--color-destructive) 90%, transparent);
           }
@@ -2274,7 +2273,7 @@
       box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
     }
     &:focus-visible {
-      --tw-ring-color: color-mix(in srgb, var(--ring) 50%, transparent);
+      --tw-ring-color: var(--color-ring);
       @supports (color: color-mix(in lab, red, red)) {
         --tw-ring-color: color-mix(in oklab, var(--color-ring) 50%, transparent);
       }
@@ -2289,25 +2288,25 @@
       border-color: var(--color-destructive);
     }
     &[aria-invalid="true"] {
-      --tw-ring-color: color-mix(in srgb, var(--destructive) 20%, transparent);
+      --tw-ring-color: var(--color-destructive);
       @supports (color: color-mix(in lab, red, red)) {
         --tw-ring-color: color-mix(in oklab, var(--color-destructive) 20%, transparent);
       }
     }
-    &:where(.dark, .dark *) {
-      background-color: color-mix(in srgb, var(--input) 30%, transparent);
+    &:is(.dark *) {
+      background-color: var(--color-input);
       @supports (color: color-mix(in lab, red, red)) {
         background-color: color-mix(in oklab, var(--color-input) 30%, transparent);
       }
     }
-    &:where(.dark, .dark *) {
+    &:is(.dark *) {
       &:checked {
         background-color: var(--color-primary);
       }
     }
-    &:where(.dark, .dark *) {
+    &:is(.dark *) {
       &[aria-invalid="true"] {
-        --tw-ring-color: color-mix(in srgb, var(--destructive) 40%, transparent);
+        --tw-ring-color: var(--color-destructive);
         @supports (color: color-mix(in lab, red, red)) {
           --tw-ring-color: color-mix(in oklab, var(--color-destructive) 40%, transparent);
         }
@@ -2585,8 +2584,8 @@
       font-size: var(--text-sm);
       line-height: var(--tw-leading, var(--text-sm--line-height));
     }
-    &:where(.dark, .dark *) {
-      background-color: color-mix(in srgb, var(--input) 30%, transparent);
+    &:is(.dark *) {
+      background-color: var(--color-input);
       @supports (color: color-mix(in lab, red, red)) {
         background-color: color-mix(in oklab, var(--color-input) 30%, transparent);
       }
@@ -2599,7 +2598,7 @@
       box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
     }
     &:focus-visible {
-      --tw-ring-color: color-mix(in srgb, var(--ring) 50%, transparent);
+      --tw-ring-color: var(--color-ring);
       @supports (color: color-mix(in lab, red, red)) {
         --tw-ring-color: color-mix(in oklab, var(--color-ring) 50%, transparent);
       }
@@ -2608,14 +2607,14 @@
       border-color: var(--color-destructive);
     }
     &[aria-invalid="true"] {
-      --tw-ring-color: color-mix(in srgb, var(--destructive) 20%, transparent);
+      --tw-ring-color: var(--color-destructive);
       @supports (color: color-mix(in lab, red, red)) {
         --tw-ring-color: color-mix(in oklab, var(--color-destructive) 20%, transparent);
       }
     }
-    &:where(.dark, .dark *) {
+    &:is(.dark *) {
       &[aria-invalid="true"] {
-        --tw-ring-color: color-mix(in srgb, var(--destructive) 40%, transparent);
+        --tw-ring-color: var(--color-destructive);
         @supports (color: color-mix(in lab, red, red)) {
           --tw-ring-color: color-mix(in oklab, var(--color-destructive) 40%, transparent);
         }
@@ -2944,7 +2943,7 @@
       box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
     }
     &:focus-visible {
-      --tw-ring-color: color-mix(in srgb, var(--ring) 50%, transparent);
+      --tw-ring-color: var(--color-ring);
       @supports (color: color-mix(in lab, red, red)) {
         --tw-ring-color: color-mix(in oklab, var(--color-ring) 50%, transparent);
       }
@@ -2959,20 +2958,20 @@
       border-color: var(--color-destructive);
     }
     &[aria-invalid="true"] {
-      --tw-ring-color: color-mix(in srgb, var(--destructive) 20%, transparent);
+      --tw-ring-color: var(--color-destructive);
       @supports (color: color-mix(in lab, red, red)) {
         --tw-ring-color: color-mix(in oklab, var(--color-destructive) 20%, transparent);
       }
     }
-    &:where(.dark, .dark *) {
-      background-color: color-mix(in srgb, var(--input) 30%, transparent);
+    &:is(.dark *) {
+      background-color: var(--color-input);
       @supports (color: color-mix(in lab, red, red)) {
         background-color: color-mix(in oklab, var(--color-input) 30%, transparent);
       }
     }
-    &:where(.dark, .dark *) {
+    &:is(.dark *) {
       &[aria-invalid="true"] {
-        --tw-ring-color: color-mix(in srgb, var(--destructive) 40%, transparent);
+        --tw-ring-color: var(--color-destructive);
         @supports (color: color-mix(in lab, red, red)) {
           --tw-ring-color: color-mix(in oklab, var(--color-destructive) 40%, transparent);
         }
@@ -3032,7 +3031,7 @@
       background-color: var(--color-background);
       --tw-shadow: 0 1px 3px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 1px 2px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
       box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
-      --tw-ring-color: color-mix(in srgb, var(--ring) 50%, transparent);
+      --tw-ring-color: var(--color-ring);
       @supports (color: color-mix(in lab, red, red)) {
         --tw-ring-color: color-mix(in oklab, var(--color-ring) 50%, transparent);
       }
@@ -3058,7 +3057,7 @@
       background-color: var(--color-background);
       --tw-shadow: 0 1px 3px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 1px 2px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
       box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
-      --tw-ring-color: color-mix(in srgb, var(--ring) 50%, transparent);
+      --tw-ring-color: var(--color-ring);
       @supports (color: color-mix(in lab, red, red)) {
         --tw-ring-color: color-mix(in oklab, var(--color-ring) 50%, transparent);
       }
@@ -3084,7 +3083,7 @@
       background-color: var(--color-background);
       --tw-shadow: 0 1px 3px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 1px 2px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
       box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
-      --tw-ring-color: color-mix(in srgb, var(--ring) 50%, transparent);
+      --tw-ring-color: var(--color-ring);
       @supports (color: color-mix(in lab, red, red)) {
         --tw-ring-color: color-mix(in oklab, var(--color-ring) 50%, transparent);
       }
@@ -3140,7 +3139,7 @@
       box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
     }
     &:focus-visible {
-      --tw-ring-color: color-mix(in srgb, var(--ring) 50%, transparent);
+      --tw-ring-color: var(--color-ring);
       @supports (color: color-mix(in lab, red, red)) {
         --tw-ring-color: color-mix(in oklab, var(--color-ring) 50%, transparent);
       }
@@ -3155,30 +3154,30 @@
       border-color: var(--color-destructive);
     }
     &[aria-invalid="true"] {
-      --tw-ring-color: color-mix(in srgb, var(--destructive) 20%, transparent);
+      --tw-ring-color: var(--color-destructive);
       @supports (color: color-mix(in lab, red, red)) {
         --tw-ring-color: color-mix(in oklab, var(--color-destructive) 20%, transparent);
       }
     }
-    &:where(.dark, .dark *) {
-      background-color: color-mix(in srgb, var(--input) 30%, transparent);
+    &:is(.dark *) {
+      background-color: var(--color-input);
       @supports (color: color-mix(in lab, red, red)) {
         background-color: color-mix(in oklab, var(--color-input) 30%, transparent);
       }
     }
-    &:where(.dark, .dark *) {
+    &:is(.dark *) {
       &:hover {
         @media (hover: hover) {
-          background-color: color-mix(in srgb, var(--input) 50%, transparent);
+          background-color: var(--color-input);
           @supports (color: color-mix(in lab, red, red)) {
             background-color: color-mix(in oklab, var(--color-input) 50%, transparent);
           }
         }
       }
     }
-    &:where(.dark, .dark *) {
+    &:is(.dark *) {
       &[aria-invalid="true"] {
-        --tw-ring-color: color-mix(in srgb, var(--destructive) 40%, transparent);
+        --tw-ring-color: var(--color-destructive);
         @supports (color: color-mix(in lab, red, red)) {
           --tw-ring-color: color-mix(in oklab, var(--color-destructive) 40%, transparent);
         }
@@ -3217,7 +3216,7 @@
       box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
     }
     &:focus-visible {
-      --tw-ring-color: color-mix(in srgb, var(--ring) 50%, transparent);
+      --tw-ring-color: var(--color-ring);
       @supports (color: color-mix(in lab, red, red)) {
         --tw-ring-color: color-mix(in oklab, var(--color-ring) 50%, transparent);
       }
@@ -3232,13 +3231,13 @@
     &:checked {
       background-color: var(--color-primary);
     }
-    &:where(.dark, .dark *) {
-      background-color: color-mix(in srgb, var(--input) 80%, transparent);
+    &:is(.dark *) {
+      background-color: var(--color-input);
       @supports (color: color-mix(in lab, red, red)) {
         background-color: color-mix(in oklab, var(--color-input) 80%, transparent);
       }
     }
-    &:where(.dark, .dark *) {
+    &:is(.dark *) {
       &:checked {
         background-color: var(--color-primary);
       }
@@ -3280,7 +3279,7 @@
       content: var(--tw-content);
       background-color: var(--color-background);
     }
-    &:where(.dark, .dark *) {
+    &:is(.dark *) {
       &::before {
         content: var(--tw-content);
         background-color: var(--color-foreground);
@@ -3292,7 +3291,7 @@
         margin-inline-start: calc(var(--spacing) * 3.5);
       }
     }
-    &:where(.dark, .dark *) {
+    &:is(.dark *) {
       &:checked {
         &::before {
           content: var(--tw-content);
@@ -3323,7 +3322,7 @@
     tfoot {
       border-top-style: var(--tw-border-style);
       border-top-width: 1px;
-      background-color: color-mix(in srgb, var(--muted) 50%, transparent);
+      background-color: var(--color-muted);
       @supports (color: color-mix(in lab, red, red)) {
         background-color: color-mix(in oklab, var(--color-muted) 50%, transparent);
       }
@@ -3344,7 +3343,7 @@
       transition-duration: var(--tw-duration, var(--default-transition-duration));
       &:hover {
         @media (hover: hover) {
-          background-color: color-mix(in srgb, var(--muted) 50%, transparent);
+          background-color: var(--color-muted);
           @supports (color: color-mix(in lab, red, red)) {
             background-color: color-mix(in oklab, var(--color-muted) 50%, transparent);
           }
@@ -3433,7 +3432,7 @@
           box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
         }
         &:focus-visible {
-          --tw-ring-color: color-mix(in srgb, var(--ring) 50%, transparent);
+          --tw-ring-color: var(--color-ring);
           @supports (color: color-mix(in lab, red, red)) {
             --tw-ring-color: color-mix(in oklab, var(--color-ring) 50%, transparent);
           }
@@ -3451,7 +3450,7 @@
         &:disabled {
           opacity: 50%;
         }
-        &:where(.dark, .dark *) {
+        &:is(.dark *) {
           color: var(--color-muted-foreground);
         }
         & svg {
@@ -3468,16 +3467,16 @@
           background-color: var(--color-background);
           --tw-shadow: 0 1px 3px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 1px 2px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
           box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
-          &:where(.dark, .dark *) {
+          &:is(.dark *) {
             border-color: var(--color-input);
           }
-          &:where(.dark, .dark *) {
-            background-color: color-mix(in srgb, var(--input) 30%, transparent);
+          &:is(.dark *) {
+            background-color: var(--color-input);
             @supports (color: color-mix(in lab, red, red)) {
               background-color: color-mix(in oklab, var(--color-input) 30%, transparent);
             }
           }
-          &:where(.dark, .dark *) {
+          &:is(.dark *) {
             color: var(--color-foreground);
           }
         }
@@ -3523,7 +3522,7 @@
       box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
     }
     &:focus-visible {
-      --tw-ring-color: color-mix(in srgb, var(--ring) 50%, transparent);
+      --tw-ring-color: var(--color-ring);
       @supports (color: color-mix(in lab, red, red)) {
         --tw-ring-color: color-mix(in oklab, var(--color-ring) 50%, transparent);
       }
@@ -3538,7 +3537,7 @@
       border-color: var(--color-destructive);
     }
     &[aria-invalid="true"] {
-      --tw-ring-color: color-mix(in srgb, var(--destructive) 20%, transparent);
+      --tw-ring-color: var(--color-destructive);
       @supports (color: color-mix(in lab, red, red)) {
         --tw-ring-color: color-mix(in oklab, var(--color-destructive) 20%, transparent);
       }
@@ -3547,15 +3546,15 @@
       font-size: var(--text-sm);
       line-height: var(--tw-leading, var(--text-sm--line-height));
     }
-    &:where(.dark, .dark *) {
-      background-color: color-mix(in srgb, var(--input) 30%, transparent);
+    &:is(.dark *) {
+      background-color: var(--color-input);
       @supports (color: color-mix(in lab, red, red)) {
         background-color: color-mix(in oklab, var(--color-input) 30%, transparent);
       }
     }
-    &:where(.dark, .dark *) {
+    &:is(.dark *) {
       &[aria-invalid="true"] {
-        --tw-ring-color: color-mix(in srgb, var(--destructive) 40%, transparent);
+        --tw-ring-color: var(--color-destructive);
         @supports (color: color-mix(in lab, red, red)) {
           --tw-ring-color: color-mix(in oklab, var(--color-destructive) 40%, transparent);
         }
