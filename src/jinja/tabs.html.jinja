@@ -1,0 +1,75 @@
+{#
+  Renders a tabs component.
+
+  @param id {string} - Unique identifier for the tabs component.
+  @param tabsets {array} - An array of objects, each representing a tab and its panel.
+    Each object should have:
+    - id {string}: Unique identifier prefix for the tab and panel.
+    - tab {string}: HTML content for the tab button.
+    - panel {string} [optional]: HTML content for the tab panel.
+    - tab_attrs {object} [optional]: Additional HTML attributes for the tab button.
+    - panel_attrs {object} [optional]: Additional HTML attributes for the tab panel div.
+  @param main_attrs {object} [optional] - Additional HTML attributes for the main container div.
+  @param tablist_attrs {object} [optional] - Additional HTML attributes for the tablist nav element.
+  @param default_tab_index {number} [optional] [default=1] - The 1-based index of the tab to be active initially.
+#}
+{% macro tabs(
+    id,
+    tabsets=[],
+    main_attrs=None,
+    tablist_attrs=None,
+    default_tab_index=1
+  )
+%}
+<div
+  class="tabs {{ main_attrs.class }}"
+  x-data="tabs({{ default_tab_index - 1 }})"
+  {% if id %}id="{{ id }}"{% endif %}
+  {% for key, value in main_attrs.items() %}
+    {% if key != 'class' %}{{ key }}="{{ value }}"{% endif %}
+  {% endfor %}
+>
+  <nav
+    role="tablist"
+    aria-orientation="horizontal"
+    x-bind="$tablist"
+    {% for key, value in tablist_attrs.items() %}
+      {{ key }}="{{ value }}"
+    {% endfor %}
+  >
+    {% for tabset in tabsets %}
+      <button
+        type="button"
+        role="tab"
+        id="{{ tabset.id }}-tab-{{ loop.index }}"
+        aria-controls="{{ tabset.id }}-panel-{{ loop.index }}"
+        aria-selected="{{ 'true' if loop.index == default_tab_index else 'false' }}"
+        tabindex="0"
+        {% for key, value in tabset.tab_attrs.items() %}
+          {{ key }}="{{ value }}"
+        {% endfor %}
+      >
+        {{ tabset.tab | safe }}
+      </button>
+    {% endfor %}
+  </nav>
+
+  {% for tabset in tabsets %}
+    {% if tabset.panel %}
+      <div
+        role="tabpanel"
+        id="{{ tabset.id }}-panel-{{ loop.index }}"
+        aria-labelledby="{{ tabset.id }}-tab-{{ loop.index }}"
+        tabindex="-1"
+        aria-selected="{{ 'true' if loop.index == default_tab_index else 'false' }}"
+        {% if loop.index != default_tab_index %}hidden{% endif %}
+        {% for key, value in tabset.panel_attrs.items() %}
+          {{ key }}="{{ value }}"
+        {% endfor %}
+      >
+        {{ tabset.panel | safe }}
+      </div>
+    {% endif %}
+  {% endfor %}
+</div>
+{% endmacro %}

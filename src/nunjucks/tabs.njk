@@ -12,23 +12,15 @@
   @param main_attrs {object} [optional] - Additional HTML attributes for the main container div.
   @param tablist_attrs {object} [optional] - Additional HTML attributes for the tablist nav element.
   @param default_tab_index {number} [optional] [default=1] - The 1-based index of the tab to be active initially.
-  @param include_script {boolean} [optional] [default=false] - Whether to include the Alpine.js component script.
-  @param register_on {array} [optional] [default=[\"alpine:init\"]] - Alpine.js events to register the component on.
 #}
 {% macro tabs(
     id,
     tabsets=[],
     main_attrs=None,
     tablist_attrs=None,
-    default_tab_index=1,
-    include_script=false,
-    register_on=["alpine:init"]
+    default_tab_index=1
   )
 %}
-{% if include_script %}
-  {% include "components/tabs-script.njk" %}
-{% endif %}
-
 <div
   class="tabs {{ main_attrs.class }}"
   x-data="tabs({{ default_tab_index - 1 }})"

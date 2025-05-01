@@ -3839,12 +3839,17 @@
       margin-left: calc(var(--spacing) * 6);
       list-style-type: disc;
     }
+    ol, ul {
+      li {
+        margin-top: calc(var(--spacing) * 2);
+      }
+    }
     b, strong {
       --tw-font-weight: var(--font-weight-semibold);
       font-weight: var(--font-weight-semibold);
     }
     > p, > blockquote, > ul, > ol, > dl, > table, > pre, > p {
-      margin-block: calc(var(--spacing) * 4);
+      margin-block: calc(var(--spacing) * 6);
     }
     > *:first-child {
       margin-top: calc(var(--spacing) * 0) !important;

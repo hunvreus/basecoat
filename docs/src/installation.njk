@@ -81,37 +81,30 @@ toc:
 </div>
 {% endcall %}{% endraw %}{% endset %}
   {{ code_block(code, "jinja") }}
-  <p>You still need to make sure to include the Javascript code, to do so you have two options:</p>
+  <p>Make sure to include the Javascript code <b>before</b> Alpine.js core JS file:</p>
+  {% set code %}<script src="/assets/js/select.js" defer></script>
+<script>
+  document.addEventListener('alpine:init', () => {
+    window.basecoat.registerSelect(Alpine);
+  });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>{% endset %}
+{{ code_block(code, "jinja") }}
+
+<h2 id="install-theming"><a href="#install-theming">Theming</a></h2>
+
+<div class="prose">
+  <p>You can import any <a href="https://shadcn-ui.com" target="_blank">shadcn/ui</a> compatible theme. For example:</p>
   <ul>
+    <li>Go to <a href="https://ui.shadcn.com/themes" target="_blank">ui.shadcn.com/themes</a> and select a theme.</li>
+    <li>Click "Copy code" and save the theme variables in a file (e.g. <code>theme.css</code>).</li>
     <li>
-      Set <code>include_script</code> to <code>true</code> when calling the macro. This will include the <code>&lt;script&gt;</code> code snippet directly before the component's HTML:
-      {% set code %}{% raw %}{% call select(include_script=true) %} {# Or `True` for Jinja #}
-<div role="group" aria-labelledby="fruit-options-label">
-  <span id="fruit-options-label" role="heading">Fruits</span>
-  <div role="option" data-value="apple">Apple</div>
-  <div role="option" data-value="banana">Banana</div>
-  <div role="option" data-value="blueberry">Blueberry</div>
-  <div role="option" data-value="pineapple">Grapes</div>
-  <div role="option" data-value="pineapple">Pineapple</div>
-</div>
-{% endcall %}{% endraw %}{% endset %}
-      {{ code_block(code, "jinja") }}
-    </li>
-    <li>
-      Manually include the <code>&lt;script&gt;</code> code snippet anywhere before the component's HTML. You can use the relevant script partial to do this, for example:
-      {% set code_script %}{% raw %}{% include "select-script.njk" %}
-{% call select() %}
-<div role="group" aria-labelledby="fruit-options-label">
-  <span id="fruit-options-label" role="heading">Fruits</span>
-  <div role="option" data-value="apple">Apple</div>
-  <div role="option" data-value="banana">Banana</div>
-  <div role="option" data-value="blueberry">Blueberry</div>
-  <div role="option" data-value="pineapple">Grapes</div>
-  <div role="option" data-value="pineapple">Pineapple</div>
-</div>
-{% endcall %}{% endraw %}{% endset %}
-      {{ code_block(code_script, "jinja") }}
+      Import the theme in your CSS file:
+      {% set code %}@import "tailwindcss";
+@import "basecoat";
+@import "theme.css";{% endset %}
+      {{ code_block(code, "css") }}
     </li>
   </ul>
-  <p>Documentation for each macro's parameters is available in the <a href="https://github.com/hunvreus/basecoat/tree/main/docs/src/_includes/components" target="_blank">source code</a>.</p>
+  <p><a href="https://ui.shadcn.com/docs/theming" target="_blank">Read more about theming on the shadcn/ui website.</a></p>
 </div>

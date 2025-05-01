@@ -21,7 +21,7 @@ toc:
 
 {% from "macros/code_preview.njk" import code_preview %}
 {% from "macros/code_block.njk" import code_block %}
-{% from "components/select.njk" import select %}
+{% from "select.njk" import select %}
 
 {% set options_frameworks = ["Next.js", "SvelteKit", "Nuxt.js", "Remix", "Astro"] %}
 {% set code_html %}
@@ -39,7 +39,13 @@ toc:
 {% endset %}
 
 {% set code_script %}
-{% include "components/select-script.njk" %}
+<script>
+{% fetchCode "src/js/select.js" %}
+
+document.addEventListener('alpine:init', () => {
+  window.basecoat.registerSelect(Alpine);
+});
+</script>
 {% endset %}
 
 {{ code_preview("combobox", code_script | prettyHtml ~ code_html | prettyHtml) }}
@@ -56,7 +62,7 @@ toc:
   </section>
 </div>
 
-<section class="prose my-6">
+<section class="prose">
   <p>Combobox uses the same Alpine.js code and markup as the <a href="/components/select">Select</a> component, the only difference being the search box at the top of the listbox.</p>
   <p>You can set up a few additional options on the <code>&lt;div data-popover&gt;</code> element:</p>
   <ul>
@@ -66,18 +72,16 @@ toc:
   </ul>
 </section>
 
-{% from "components/tabs.njk" import tabs %}
+{% from "tabs.njk" import tabs %}
 {% set tabsets = [
-  { tab: "HTML", panel: code_block(code_html | prettyHtml) },
-  { tab: "Javascipt (Alpine.js)", panel: code_block(code_script | prettyHtml) }
+  { tab: "HTML", panel: code_block(code_html | prettyHtml, class="") },
+  { tab: "Javascipt (Alpine.js)", panel: code_block(code_script | prettyHtml, class="") }
 ] %}
 {{ tabs(id="combobox", tabsets=tabsets) }}
 
 <h3 id="usage-jinja"><a href="#usage-jinja">Jinja or Nunjucks</a></h3>
 
-<section class="prose my-6">
-  <p class="my-6 prose">If you use Jinja (or Nunjucks), you can use the <code>select()</code> macro directly, making sure to set <code>is_combobox</code> to <code>True</code> (or <code>true</code> for Nunjucks). <a href="/installation#jinja-and-nunjucks">Read more about using Basecoat with Jinja and Nunjucks</a>.</p>
-</section>
+<p class="prose">If you use Jinja (or Nunjucks), you can use the <code>select()</code> macro directly, making sure to set <code>is_combobox</code> to <code>True</code> (or <code>true</code> for Nunjucks). <a href="/installation#jinja-and-nunjucks">Read more about using Basecoat with Jinja and Nunjucks</a>.</p>
 
 {% set raw_code %}{% raw %}{% call select(
   listbox_attrs={"data-empty": "No framework found."},

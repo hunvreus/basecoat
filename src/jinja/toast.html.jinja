@@ -1,0 +1,173 @@
+{#
+  Renders a toaster container and individual toast messages.
+  Can render the initial container or be used with htmx OOB swaps to add toasts dynamically.
+
+  @param id {string} [optional] [default="toaster"] - Unique identifier for the toaster container.
+  @param toasts {array} [optional] - An array of toast objects to render initially.
+    Each toast object can have:
+    - category {string} [optional]: Type of toast ('success', 'error', 'info', 'warning'). Determines icon and ARIA role.
+    - title {string} [optional]: The main title text of the toast.
+    - description {string} [optional]: The secondary description text.
+    - duration {number} [optional] [default=5000]: Duration in milliseconds before the toast auto-dismisses.
+    - action {object} [optional]: Defines an action button.
+      - label {string}: Button text.
+      - click {string}: JavaScript code to execute on click (e.g., '$dispatch(\'custom-event\')').
+      - url {string}: URL for an anchor link button.
+    - cancel {object} [optional]: Defines a cancel/dismiss button (similar structure to action).
+  @param main_attrs {object} [optional] - Additional HTML attributes for the main toaster container div.
+  @param is_fragment {boolean} [optional] [default=False] - If true, renders only the toast elements with hx-swap-oob="beforeend", suitable for htmx responses. Skips script and template inclusion.
+#}
+{% macro toaster(
+  id="toaster",
+  toasts=[],
+  main_attrs=None,
+  is_fragment=False
+) %}
+{% set icons = {
+  'success': '<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-check-icon lucide-circle-check"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>',
+  'error': '<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-x-icon lucide-circle-x"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>',
+  'info': '<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-info-icon lucide-info"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>',
+  'warning': '<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-triangle-alert-icon lucide-triangle-alert"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>'
+} %}
+
+<div
+  id="{{ id }}"
+  class="toaster"
+  {% for key, value in main_attrs.items() %}
+    {{ key }}="{{ value }}"
+  {% endfor %}
+  {% if is_fragment %}hx-swap-oob="beforeend"{% endif %}
+>
+{% for toast in toasts %}
+  <div
+    class="toast"
+    role="{{ 'alert' if toast.category == 'error' else 'status' }}"
+    aria-atomic="true"
+    aria-hidden="false"
+    {% if toast.category %}data-category="{{ toast.category }}"{% endif %}
+    x-data="toast('{{ toast.category }}', {{ toast.duration }})"
+    x-bind="$toastBindings"
+  >
+    <div class="toast-content">
+      <div class="flex items-center justify-between gap-x-3 p-4 [&>svg]:size-4 [&>svg]:shrink-0 [&>[role=img]]:size-4 [&>[role=img]]:shrink-0 [&>[role=img]>svg]:size-4">
+        {% if toast.category in ["error", "success", "info", "warning"] %}
+          {{ icons[toast.category] | safe }}
+        {% endif %}
+        <section class="flex-1 flex flex-col gap-0.5 items-start">
+          {% if toast.title %}
+            <h2 class="font-medium">{{ toast.title }}</h2>
+          {% endif %}
+          {% if toast.description %}
+            <p class="text-muted-foreground">{{ toast.description }}</p>
+          {% endif %}
+        </section>
+        {% if toast.action or toast.cancel %}
+          <footer class="flex flex-col gap-1 self-start">
+            {% if toast.action %}
+              {% if toast.action.click %}
+                <button
+                  type="button"
+                  class="btn h-6 text-xs px-2.5 rounded-sm"
+                  @click="{{ toast.action.click }}"
+                >{{ toast.action.label }}</button>
+              {% elif toast.action.url %}
+                <a
+                  href="{{ toast.action.url }}"
+                  class="btn h-6 text-xs px-2.5 rounded-sm"
+                >{{ toast.action.label }}</a>
+              {% endif %}
+            {% endif %}
+            {% if toast.cancel %}
+              {% if toast.cancel.click %}
+                <button
+                  type="button"
+                  class="btn-outline h-6 text-xs px-2.5 rounded-sm"
+                  @click="{{ toast.cancel.click }}"
+                >{{ toast.cancel.label }}</button>
+              {% elif toast.cancel.url %}
+                <a
+                  href="{{ toast.cancel.url }}"
+                  class="btn-outline h-6 text-xs px-2.5 rounded-sm"
+                >{{ toast.cancel.label }}</a>
+              {% endif %}
+            {% endif %}
+          </footer>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endfor %}
+</div>
+
+{% if not is_fragment %}
+<template id="toast-template">
+  <div
+    class="toast"
+    role="status"
+    aria-atomic="true"
+    x-bind="$toastBindings"
+  >
+    <div class="toast-content">
+      <div class="flex items-center justify-between gap-x-3 p-4 [&>svg]:size-4 [&>svg]:shrink-0 [&>[role=img]]:size-4 [&>[role=img]]:shrink-0 [&>[role=img]>svg]:size-4">
+        <template x-if="config.icon">
+          <span aria-hidden="true" role="img" x-html="config.icon"></span>
+        </template>
+        <template x-if="!config.icon && config.category === 'success'">
+          {{ icons.success | safe }}
+        </template>
+        <template x-if="!config.icon && config.category === 'error'">
+          {{ icons.error | safe }}
+        </template>
+        <template x-if="!config.icon && config.category === 'info'">
+          {{ icons.info | safe }}
+        </template>
+        <template x-if="!config.icon && config.category === 'warning'">
+          {{ icons.warning | safe }}
+        </template>
+        <section class="flex-1 flex flex-col gap-0.5 items-start">
+          <template x-if="config.title">
+            <h2 class="font-medium" x-text="config.title"></h2>
+          </template>
+          <template x-if="config.description">
+            <p class="text-muted-foreground" x-text="config.description"></p>
+          </template>
+        </section>
+        <template x-if="config.action || config.cancel">
+          <footer class="flex flex-col gap-1 self-start">
+            <template x-if="config.action?.click">
+              <button
+                type="button"
+                class="btn h-6 text-xs px-2.5 rounded-sm"
+                @click="$evaluate(config.action.click)"
+                x-text="config.action.label"
+              ></button>
+            </template>
+            <template x-if="config.action?.url">
+              <a
+                :href="config.action.url"
+                class="btn h-6 text-xs px-2.5 rounded-sm"
+                x-text="config.action.label"
+              ></a>
+            </template>
+            <template x-if="config.cancel?.click">
+              <button
+                type="button"
+                class="btn-outline h-6 text-xs px-2.5 rounded-sm"
+                @click="$evaluate(config.cancel.click)"
+                x-text="config.cancel.label"
+              ></button>
+            </template>
+            <template x-if="config.cancel?.url">
+              <a
+                :href="config.cancel.url"
+                class="btn-outline h-6 text-xs px-2.5 rounded-sm"
+                x-text="config.cancel.label"
+              ></a>
+            </template>
+          </footer>
+      </div>
+    </div>
+  </div>
+</template>
+{% endif %}
+{% endmacro %}

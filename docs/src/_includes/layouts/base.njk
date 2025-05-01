@@ -45,14 +45,24 @@
   <link rel="stylesheet" href="/assets/styles.css">
 
   <!-- JS -->
-  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <script src="/assets/js/dialog.js" defer></script>
+  <script src="/assets/js/dropdown-menu.js" defer></script>
+  <script src="/assets/js/popover.js" defer></script>
+  <script src="/assets/js/select.js" defer></script>
+  <script src="/assets/js/tabs.js" defer></script>
+  <script src="/assets/js/toast.js" defer></script>
+  <script>
+    document.addEventListener('alpine:init', () => {
+      window.basecoat.registerDialog(Alpine);
+      window.basecoat.registerDropdownMenu(Alpine);
+      window.basecoat.registerPopover(Alpine);
+      window.basecoat.registerSelect(Alpine);
+      window.basecoat.registerTabs(Alpine);
+      window.basecoat.registerToast(Alpine);
+    });
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
   <script src="https://unpkg.com/htmx.org@2.0.4"></script>
-  {% include "components/dialog-script.njk" %}
-  {% include "components/dropdown-menu-script.njk" %}
-  {% include "components/popover-script.njk" %}
-  {% include "components/select-script.njk" %}
-  {% include "components/tabs-script.njk" %}
-  {% include "components/toast-script.njk" %}
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/django.min.js"></script>
@@ -128,7 +138,7 @@
   </div>
 </main>
 
-{% from "components/toast.njk" import toaster %}
+{% from "toast.njk" import toaster %}
 {{ toaster() }}
 </body>
 </html>

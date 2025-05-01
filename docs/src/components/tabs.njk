@@ -14,7 +14,7 @@ toc:
 
 {% from "macros/code_preview.njk" import code_preview %}
 {% from "macros/code_block.njk" import code_block %}
-{% from "components/tabs.njk" import tabs %}
+{% from "tabs.njk" import tabs %}
 
 {% set code_html %}
 {% set account_panel %}
@@ -77,7 +77,13 @@ toc:
 {% endset %}
 
 {% set code_script %}
-{% include "components/tabs-script.njk" %}
+<script>
+{% fetchCode "src/js/tabs.js" %}
+
+document.addEventListener('alpine:init', () => {
+  window.basecoat.registerTabs(Alpine);
+});
+</script>
 {% endset %}
 
 {{ code_preview("tabs", code_script | prettyHtml ~ code_html | prettyHtml, "max-w-[300px] w-full") }}
@@ -94,7 +100,7 @@ toc:
   </section>
 </div>
 
-<section class="prose my-6">
+<section class="prose">
   <p>The component is structured as such:</p>
   <ul>
     <li>A <code>&lt;div class="tabs"&gt;</code> which wraps around the entire component and holds it state (e.g. open/close).</li>
@@ -103,16 +109,16 @@ toc:
   </ul>
 </section>
 
-{% from "components/tabs.njk" import tabs %}
+{% from "tabs.njk" import tabs %}
 {% set tabsets = [
-  { tab: "HTML", panel: code_block(code_html | prettyHtml) },
-  { tab: "Javascipt (Alpine.js)", panel: code_block(code_script | prettyHtml) }
+  { tab: "HTML", panel: code_block(code_html | prettyHtml, class="") },
+  { tab: "Javascipt (Alpine.js)", panel: code_block(code_script | prettyHtml, class="") }
 ] %}
 {{ tabs(id="combobox", tabsets=tabsets) }}
 
 <h3 id="usage-jinja"><a href="#usage-jinja">Jinja or Nunjucks</a></h3>
 
-<p class="my-6 prose">If you use Jinja (or Nunjucks), you can use the <code>tabs()</code> macro directly. <a href="/installation#jinja-and-nunjucks">Read more about using Basecoat with Jinja and Nunjucks</a>.</p>
+<p class="prose">If you use Jinja (or Nunjucks), you can use the <code>tabs()</code> macro directly. <a href="/installation#jinja-and-nunjucks">Read more about using Basecoat with Jinja and Nunjucks</a>.</p>
 
 {% set raw_code %}{% raw %}{% set account_panel %}
 <div class="card">

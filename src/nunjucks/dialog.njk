@@ -15,8 +15,6 @@
   @param open {boolean} [optional] [default=false] - Whether the dialog should be open initially.
   @param close_button {boolean} [optional] [default=true] - Whether to include a close button.
   @param close_on_overlay_click {boolean} [optional] [default=true] - Whether clicking the overlay closes the dialog.
-  @param include_script {boolean} [optional] [default=true] - Whether to include the Alpine.js component script.
-  @param register_on {array} [optional] [default=["alpine:init"]] - Alpine.js events to register the component on.
 #}
 {% macro dialog(
   id,
@@ -32,14 +30,8 @@
   content_footer_attrs={},
   open=false,
   close_button=true,
-  close_on_overlay_click=true,
-  include_script=false,
-  register_on=["alpine:init"]
+  close_on_overlay_click=true
 ) %}
-{% if include_script %}
-  {% include "components/dialog-script.njk" %}
-{% endif %}
-
 <div
   id="{{ id }}"
   x-data="dialog({{ 'true' if open else 'false' }}, {{ 'true' if close_on_overlay_click else 'false' }})"
@@ -65,7 +57,6 @@
   <div
     role="dialog"
     id="{{ id }}-dialog"
-    x-ref="dialog"
     tabindex="-1"
     aria-modal="true"
     aria-labelledby="{{ id }}-title"

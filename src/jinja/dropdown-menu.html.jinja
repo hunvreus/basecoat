@@ -1,0 +1,57 @@
+{#
+  Renders a dropdown menu component.
+
+  @param id {string} [optional] - Unique identifier for the dropdown component.
+  @param trigger {string} [optional] - HTML content for the button that triggers the dropdown.
+  @param main_attrs {object} [optional] - Additional HTML attributes for the main container div.
+  @param trigger_attrs {object} [optional] - Additional HTML attributes for the trigger button.
+  @param content_attrs {object} [optional] - Additional HTML attributes for the dropdown content div.
+#}
+{% macro dropdown_menu(
+  id=None,
+  trigger=None,
+  main_attrs={},
+  trigger_attrs={},
+  content_attrs={}
+) %}
+<div
+  class="popover {{ main_attrs.class }}"
+  x-data="dropdownMenu"
+  @click.away="open = false"
+  {% if id %}id="{{ id }}"{% endif %}
+  {% for key, value in main_attrs.items() %}
+    {% if key != 'class' %}{{ key }}="{{ value }}"{% endif %}
+  {% endfor %}
+>
+  {% if trigger %}
+  <button
+    type="button"
+    aria-haspopup="menu"
+    aria-expanded="false"
+    x-bind="$trigger"
+    {% if id %}
+    id="{{ id }}-trigger"
+    aria-controls="{{ id }}-menu"
+    {% endif %}
+    {% for key, value in trigger_attrs.items() %}
+      {{ key }}="{{ value }}"
+    {% endfor %}
+  >
+    {{ trigger | safe }}
+  </button>
+  {% endif %}
+  <div
+    data-popover
+    aria-hidden="true"
+    x-bind="$content"
+    {% if id %}id="{{ id }}-menu"{% endif %}
+    {% for key, value in content_attrs.items() %}
+      {{ key }}="{{ value }}"
+    {% endfor %}
+  >
+    <nav role="menu">
+      {% if caller %}{{ caller() }}{% endif %}
+    </nav>
+  </div>
+</div>
+{% endmacro %}

@@ -3,9 +3,35 @@
   "version": "0.1.0",
   "description": "shadcn/ui for the rest of us",
   "type": "module",
-  "files": ["src"],
-  "exports": "./src/basecoat.css",
-  "keywords": ["tailwind", "tailwindcss", "css", "components"],
+  "files": [
+    "css",
+    "js",
+    "nunjucks",
+    "jinja",
+    "cli"
+  ],
+  "bin": {
+    "basecoat": "./cli/index.js"
+  },
+  "exports": {
+    ".": "./css/basecoat.css"
+  },
+  "keywords": [
+    "components",
+    "component library",
+    "component system",
+    "ui",
+    "ui kit",
+    "shadcn",
+    "shadcn/ui",
+    "tailwind",
+    "tailwindcss",
+    "css",
+    "html",
+    "jinja",
+    "nunjucks",
+    "alpinejs"
+  ],
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -25,7 +51,10 @@
     "@11ty/eleventy": "^3.0.0",
     "@grimlink/eleventy-plugin-lucide-icons": "^2.1.4",
     "@tailwindcss/cli": "^4.1.3",
+    "commander": "^13.1.0",
     "concurrently": "^9.1.2",
+    "fs-extra": "^11.3.0",
+    "inquirer": "^12.6.0",
     "prettier": "^3.5.3",
     "tailwindcss": "^4.1.3"
   }

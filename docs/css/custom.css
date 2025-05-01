@@ -23,6 +23,12 @@
     ul {
       @apply list-disc ml-6;
     }
+    ol,
+    ul {
+      li {
+        @apply mt-2;
+      }
+    }
     b,
     strong {
       @apply font-semibold;
@@ -35,7 +41,7 @@
     > table,
     > pre,
     > p {
-      @apply my-4;
+      @apply my-6;
     }
     > *:first-child {
       @apply !mt-0;

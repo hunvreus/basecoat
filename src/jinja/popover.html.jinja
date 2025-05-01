@@ -1,0 +1,55 @@
+{#
+  Renders a generic popover component, often used internally by other components like dropdowns or selects.
+
+  @param id {string} [optional] - Unique identifier for the popover component.
+  @param trigger {string} [optional] - HTML content for the element that triggers the popover.
+  @param main_attrs {object} [optional] - Additional HTML attributes for the main container div.
+  @param trigger_attrs {object} [optional] - Additional HTML attributes for the trigger element.
+  @param content_attrs {object} [optional] - Additional HTML attributes for the popover content div.
+#}
+{% macro popover(
+  id=None,
+  trigger=None,
+  main_attrs=None,
+  trigger_attrs=None,
+  content_attrs=None
+) %}
+<div
+  class="popover {{ main_attrs.class }}"
+  x-data="popover"
+  @click.away="open = false"
+  {% if id %}id="{{ id }}"{% endif %}
+  {% for key, value in main_attrs.items() %}
+    {% if key != 'class' %}{{ key }}="{{ value }}"{% endif %}
+  {% endfor %}
+>
+  {% if trigger %}
+  <button
+    type="button"
+    aria-haspopup="menu"
+    aria-expanded="false"
+    x-bind="$trigger"
+    {% if id %}
+    id="{{ id }}-trigger"
+    aria-controls="{{ id }}-menu"
+    {% endif %}
+    {% for key, value in trigger_attrs.items() %}
+      {{ key }}="{{ value }}"
+    {% endfor %}
+  >
+    {{ trigger | safe }}
+  </button>
+  {% endif %}
+  <div
+    data-popover
+    aria-hidden="true"
+    x-bind="$content"
+    {% if id %}id="{{ id }}-menu"{% endif %}
+    {% for key, value in content_attrs.items() %}
+      {{ key }}="{{ value }}"
+    {% endfor %}
+  >
+    {% if caller %}{{ caller() }}{% endif %}
+  </div>
+</div>
+{% endmacro %}

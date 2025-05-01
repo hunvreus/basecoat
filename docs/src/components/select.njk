@@ -25,7 +25,7 @@ toc:
 
 {% from "macros/code_preview.njk" import code_preview %}
 {% from "macros/code_block.njk" import code_block %}
-{% from "components/select.njk" import select %}
+{% from "select.njk" import select %}
 
 {% set code_native %}<select class="select w-[180px]">
   <optgroup label="Fruits">
@@ -55,16 +55,22 @@ toc:
 {% endset %}
 
 {% set code_script %}
-{% include "components/select-script.njk" %}
+<script>
+{% fetchCode "src/js/select.js" %}
+
+document.addEventListener('alpine:init', () => {
+  window.basecoat.registerSelect(Alpine);
+});
+</script>
 {% endset %}
 
-{{ code_preview("combobox", code_script | prettyHtml ~ code_html | prettyHtml) }}
+{{ code_preview("select", code_script | prettyHtml ~ code_html | prettyHtml) }}
 
 <h2 id="usage"><a href="#usage">Usage</a></h2>
 
 <h3 id="usage-html"><a href="#usage-html">HTML</a></h3>
 
-<section class="prose my-6">
+<section class="prose">
   <p>If you use a <code>&lt;select&gt;</code> element, just add the <code>select</code> class to it or have a parent with the <code>form</code> class (<a href="/components/form">read more about form</a>).</p>
 </section>
 
@@ -80,7 +86,7 @@ toc:
   </section>
 </div>
 
-<section class="prose my-6">
+<section class="prose">
   <p>If you need to do more than what <code>&lt;select&gt;</code> allows (e.g. HTML options), you can use this component. It is structured as such:</p>
   <ul>
     <li>A <code>&lt;div class="popover"&gt;</code> which wraps around the entire component and holds it state (e.g. open/close).</li>
@@ -103,16 +109,16 @@ toc:
   </ul>
 </section>
 
-{% from "components/tabs.njk" import tabs %}
+{% from "tabs.njk" import tabs %}
 {% set tabsets = [
-  { tab: "HTML", panel: code_block(code_html | prettyHtml) },
-  { tab: "Javascipt (Alpine.js)", panel: code_block(code_script | prettyHtml) }
+  { tab: "HTML", panel: code_block(code_html | prettyHtml, class="") },
+  { tab: "Javascipt (Alpine.js)", panel: code_block(code_script | prettyHtml, class="") }
 ] %}
 {{ tabs(id="select", tabsets=tabsets) }}
 
 <h3 id="usage-jinja"><a href="#usage-jinja">Jinja or Nunjucks</a></h3>
 
-<p class="my-6 prose">If you use Jinja (or Nunjucks), you can use the <code>dropdown_menu()</code> macro directly. <a href="/installation#jinja-and-nunjucks">Read more about using Basecoat with Jinja and Nunjucks</a>.</p>
+<p class="prose">If you use Jinja (or Nunjucks), you can use the <code>dropdown_menu()</code> macro directly. <a href="/installation#jinja-and-nunjucks">Read more about using Basecoat with Jinja and Nunjucks</a>.</p>
 
 {% set raw_code %}{% raw %}{% call select(name="select-js") %}
 <div role="group" aria-labelledby="fruit-options-label">

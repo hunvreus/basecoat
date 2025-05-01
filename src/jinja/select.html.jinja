@@ -1,0 +1,108 @@
+{#
+  Renders a select or combobox component.
+
+  @param id {string} [optional] - Unique identifier for the select component.
+  @param selected {string} [optional] - The initially selected value.
+  @param name {string} [optional] - The name attribute for the hidden input storing the selected value.
+  @param main_attrs {object} [optional] - Additional HTML attributes for the main container div.
+  @param trigger_attrs {object} [optional] - Additional HTML attributes for the trigger button.
+  @param content_attrs {object} [optional] - Additional HTML attributes for the popover content div.
+  @param listbox_attrs {object} [optional] - Additional HTML attributes for the listbox div.
+  @param input_attrs {object} [optional] - Additional HTML attributes for the hidden input.
+  @param search_placeholder {string} [optional] [default="Search entries..."] - Placeholder text for the search input (combobox only).
+  @param is_combobox {boolean} [optional] [default=False] - Renders a combobox with search functionality if true.
+#}
+{% macro select(
+  id=None,
+  selected=None,
+  name=None,
+  main_attrs={},
+  trigger_attrs={},
+  content_attrs={},
+  listbox_attrs={},
+  input_attrs={},
+  search_placeholder="Search entries...",
+  is_combobox=False
+) %}
+<div
+  class="popover {{ main_attrs.class }}"
+  x-data="select('{{ name }}', '{{ selected or '' }}')"
+  @click.away="open = false"
+  {% if id %}id="{{ id }}"{% endif %}
+  {% for key, value in main_attrs.items() %}
+    {% if key != 'class' %}{{ key }}="{{ value }}"{% endif %}
+  {% endfor %}
+>
+  <button
+    type="button"
+    aria-haspopup="listbox"
+    aria-expanded="false"
+    x-bind="$trigger"
+    {% if id %}
+    id="{{ id }}-trigger"
+    aria-controls="{{ id }}-content"
+    {% endif %}
+    class="btn-outline justify-between font-normal {{ trigger_attrs.class }}"
+    {% for key, value in trigger_attrs.items() %}
+      {% if key != 'class' %}{{ key }}="{{ value }}"{% endif %}
+    {% endfor %}
+  >
+    <div x-html="selectedLabel" class="flex items-center gap-x-2"
+    ></div>
+    {% if is_combobox %}
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevrons-up-down-icon lucide-chevrons-up-down text-muted-foreground opacity-50 shrink-0"><path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/></svg>
+    {% else %}
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down text-muted-foreground opacity-50 shrink-0"><path d="m6 9 6 6 6-6"/></svg>
+    {% endif %}
+  </button>
+  <div
+    data-popover
+    aria-hidden="true"
+    x-bind="$content"
+    {% if id %}id="{{ id }}-content"{% endif %}
+    {% for key, value in content_attrs.items() %}
+      {{ key }}="{{ value }}"
+    {% endfor %}
+  >
+    {% if is_combobox %}
+    <header>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search-icon lucide-search"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      <input
+        type="text"
+        value=""
+        placeholder="{{ search_placeholder }}"
+        autocomplete="off"
+        autocorrect="off"
+        spellcheck="false"
+        aria-autocomplete="list"
+        role="combobox"
+        aria-expanded="true"
+        aria-controls="{{ id }}-content"
+        aria-labelledby="{{ id }}-trigger"
+        x-model="query"
+        x-bind="$filter"
+      >
+    </header>
+    {% endif %}
+    <div
+      role="listbox"
+      aria-orientation="vertical"
+      {% for key, value in listbox_attrs.items() %}
+        {{ key }}="{{ value }}"
+      {% endfor %}
+    >
+      {% if caller %}{{ caller() }}{% endif %}
+    </div>
+  </div>
+  {% if name is defined %}
+    <input
+      type="hidden"
+      name="{{ name }}"
+      x-model="selectedValue"
+      {% for key, value in input_attrs.items() %}
+        {% if key != 'name' %}{{ key }}="{{ value }}"{% endif %}
+      {% endfor %}
+    >
+  {% endif %}
+</div>
+{% endmacro %}

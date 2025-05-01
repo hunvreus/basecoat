@@ -9,7 +9,7 @@ toc:
 
 {% from "macros/code_preview.njk" import code_preview %}
 {% from "macros/code_block.njk" import code_block %}
-{% from "components/dropdown-menu.njk" import dropdown_menu %}
+{% from "dropdown-menu.njk" import dropdown_menu %}
 
 <div class="alert mb-6">
   {% lucide "circle-alert" %}
@@ -17,7 +17,13 @@ toc:
 </div>
 
 {% set code_script %}
-{% include "components/dropdown-menu-script.njk" %}
+<script>
+{% fetchCode "src/js/dropdown-menu.js" %}
+
+document.addEventListener('alpine:init', () => {
+  window.basecoat.registerDropdownMenu(Alpine);
+});
+</script>
 {% endset %}
 
 {% set code_html %}
@@ -58,13 +64,13 @@ toc:
 
 <h2 id="usage"><a href="#usage">Usage</a></h2>
 
-<section class="prose my-6">
+<section class="prose">
   <p>The example above uses some simple Tailwind CSS along with the <a href="/components/dropdown-menu">Dropdown Menu</a>.</p>
 </section>
 
-{% from "components/tabs.njk" import tabs %}
+{% from "tabs.njk" import tabs %}
 {% set tabsets = [
-  { tab: "HTML", panel: code_block(code_html | prettyHtml) },
-  { tab: "Javascipt (Alpine.js)", panel: code_block(code_script | prettyHtml) }
+  { tab: "HTML", panel: code_block(code_html | prettyHtml, class="") },
+  { tab: "Javascipt (Alpine.js)", panel: code_block(code_script | prettyHtml, class="") }
 ] %}
 {{ tabs(id="alert-dialog", tabsets=tabsets) }}

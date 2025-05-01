@@ -14,7 +14,7 @@ toc:
 
 {% from "macros/code_preview.njk" import code_preview %}
 {% from "macros/code_block.njk" import code_block %}
-{% from "components/dialog.njk" import dialog %}
+{% from "dialog.njk" import dialog %}
 
 {% set code_html %}
 {% set footer %}
@@ -34,9 +34,13 @@ toc:
 ) }}
 {% endset %}
 
-{% set code_script %}
-{% include "components/dialog-script.njk" %}
-{% endset %}
+{% set code_script %}<script>
+{% fetchCode "src/js/dialog.js" %}
+
+document.addEventListener('alpine:init', () => {
+  window.basecoat.registerDialog(Alpine);
+});
+</script>{% endset %}
 
 {{ code_preview("alert-dialog", code_script | prettyHtml ~ code_html | prettyHtml) }}
 
@@ -52,18 +56,18 @@ toc:
   </section>
 </div>
 
-<p class="prose my-6">The Alert Dialog component uses the same Alpine.js code as the <a href="/components/dialog" class="font-medium underline underline-offset-4">Dialog</a> component with one small difference: we set <code>initialCloseOnOverlayClick</code> to <code>false</code> to prevent the dialog from closing when the overlay is clicked.</p>
+<p class="prose">The Alert Dialog component uses the same Alpine.js code as the <a href="/components/dialog" class="font-medium underline underline-offset-4">Dialog</a> component with one small difference: we set <code>initialCloseOnOverlayClick</code> to <code>false</code> to prevent the dialog from closing when the overlay is clicked.</p>
 
-{% from "components/tabs.njk" import tabs %}
+{% from "tabs.njk" import tabs %}
 {% set tabsets = [
-  { tab: "HTML", panel: code_block(code_html | prettyHtml) },
-  { tab: "Javascipt (Alpine.js)", panel: code_block(code_script | prettyHtml) }
+  { tab: "HTML", panel: code_block(code_html | prettyHtml, class="") },
+  { tab: "Javascipt (Alpine.js)", panel: code_block(code_script | prettyHtml, class="") }
 ] %}
 {{ tabs(id="alert-dialog", tabsets=tabsets) }}
 
 <h3 id="usage-jinja"><a href="#usage-jinja">Jinja or Nunjucks</a></h3>
 
-<p class="my-6 prose">If you use Jinja (or Nunjucks), you can use the <code>dialog()</code> macro directly, making sure to set <code>close_on_overlay_click</code> and <code>close_button</code> to <code>False</code> (or <code>false</code> for Nunjucks). <a href="/installation#jinja-and-nunjucks">Read more about using Basecoat with Jinja and Nunjucks</a>.</p>
+<p class="prose">If you use Jinja (or Nunjucks), you can use the <code>dialog()</code> macro directly, making sure to set <code>close_on_overlay_click</code> and <code>close_button</code> to <code>False</code> (or <code>false</code> for Nunjucks). <a href="/installation#jinja-and-nunjucks">Read more about using Basecoat with Jinja and Nunjucks</a>.</p>
 
 {% set raw_code %}{% raw %}{% set footer %}
   <button class="btn-outline" @click="open = false">Cancel</button>

@@ -6,22 +6,14 @@
   @param main_attrs {object} [optional] - Additional HTML attributes for the main container div.
   @param trigger_attrs {object} [optional] - Additional HTML attributes for the trigger element.
   @param content_attrs {object} [optional] - Additional HTML attributes for the popover content div.
-  @param include_script {boolean} [optional] [default=false] - Whether to include the Alpine.js component script.
-  @param register_on {array} [optional] [default=[\"alpine:init\"]] - Alpine.js events to register the component on.
 #}
 {% macro popover(
   id=None,
   trigger=None,
   main_attrs=None,
   trigger_attrs=None,
-  content_attrs=None,
-  include_script=false,
-  register_on=["alpine:init"]
+  content_attrs=None
 ) %}
-{% if include_script %}
-  {% include "components/popover-script.njk" %}
-{% endif %}
-
 <div
   class="popover {{ main_attrs.class }}"
   x-data="popover"

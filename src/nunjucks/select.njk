@@ -11,8 +11,6 @@
   @param input_attrs {object} [optional] - Additional HTML attributes for the hidden input.
   @param search_placeholder {string} [optional] [default="Search entries..."] - Placeholder text for the search input (combobox only).
   @param is_combobox {boolean} [optional] [default=false] - Renders a combobox with search functionality if true.
-  @param include_script {boolean} [optional] [default=false] - Whether to include the Alpine.js component script.
-  @param register_on {array} [optional] [default=[\"alpine:init\"]] - Alpine.js events to register the component on.
 #}
 {% macro select(
   id=None,
@@ -24,14 +22,8 @@
   listbox_attrs={},
   input_attrs={},
   search_placeholder="Search entries...",
-  is_combobox=false,
-  include_script=false,
-  register_on=["alpine:init"]
+  is_combobox=false
 ) %}
-{% if include_script %}
-  {% include "components/select-script.njk" %}
-{% endif %}
-
 <div
   class="popover {{ main_attrs.class }}"
   x-data="select('{{ name }}', '{{ selected or '' }}')"
