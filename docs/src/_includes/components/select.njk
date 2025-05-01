@@ -1,3 +1,19 @@
+{#
+  Renders a select or combobox component.
+
+  @param id {string} [optional] - Unique identifier for the select component.
+  @param selected {string} [optional] - The initially selected value.
+  @param name {string} [optional] - The name attribute for the hidden input storing the selected value.
+  @param main_attrs {object} [optional] - Additional HTML attributes for the main container div.
+  @param trigger_attrs {object} [optional] - Additional HTML attributes for the trigger button.
+  @param content_attrs {object} [optional] - Additional HTML attributes for the popover content div.
+  @param listbox_attrs {object} [optional] - Additional HTML attributes for the listbox div.
+  @param input_attrs {object} [optional] - Additional HTML attributes for the hidden input.
+  @param search_placeholder {string} [optional] [default="Search entries..."] - Placeholder text for the search input (combobox only).
+  @param is_combobox {boolean} [optional] [default=false] - Renders a combobox with search functionality if true.
+  @param include_script {boolean} [optional] [default=false] - Whether to include the Alpine.js component script.
+  @param register_on {array} [optional] [default=[\"alpine:init\"]] - Alpine.js events to register the component on.
+#}
 {% macro select(
   id=None,
   selected=None,
@@ -42,9 +58,9 @@
     <div x-html="selectedLabel" class="flex items-center gap-x-2"
     ></div>
     {% if is_combobox %}
-      {% lucide "chevrons-up-down", class="text-muted-foreground opacity-50 shrink-0" %}
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevrons-up-down-icon lucide-chevrons-up-down text-muted-foreground opacity-50 shrink-0"><path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/></svg>
     {% else %}
-      {% lucide "chevron-down", class="text-muted-foreground opacity-50 shrink-0" %}
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down text-muted-foreground opacity-50 shrink-0"><path d="m6 9 6 6 6-6"/></svg>
     {% endif %}
   </button>
   <div
@@ -58,7 +74,7 @@
   >
     {% if is_combobox %}
     <header>
-      {% lucide "search" %}
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search-icon lucide-search"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
       <input
         type="text"
         value=""

@@ -1,3 +1,14 @@
+{#
+  Renders a dropdown menu component.
+
+  @param id {string} [optional] - Unique identifier for the dropdown component.
+  @param trigger {string} [optional] - HTML content for the button that triggers the dropdown.
+  @param main_attrs {object} [optional] - Additional HTML attributes for the main container div.
+  @param trigger_attrs {object} [optional] - Additional HTML attributes for the trigger button.
+  @param content_attrs {object} [optional] - Additional HTML attributes for the dropdown content div.
+  @param include_script {boolean} [optional] [default=false] - Whether to include the Alpine.js component script.
+  @param register_on {array} [optional] [default=[\"alpine:init\"]] - Alpine.js events to register the component on.
+#}
 {% macro dropdown_menu(
   id=None,
   trigger=None,

@@ -16,10 +16,10 @@
   },
   "homepage": "https://github.com/hunvreus/basecoat#readme",
   "scripts": {
-    "css:dev": "tailwindcss -i ./docs/styles.css -o ./docs/src/assets/styles.css --watch",
+    "css:dev": "tailwindcss -i ./docs/css/styles.css -o ./docs/src/assets/styles.css --watch",
     "eleventy:serve": "eleventy --serve",
     "dev": "concurrently \"npm:css:dev\" \"npm:eleventy:serve\"",
-    "build": "tailwindcss -i ./docs/styles.css -o ./docs/src/assets/styles.css --minify && eleventy"
+    "build": "tailwindcss -i ./docs/css/styles.css -o ./docs/src/assets/styles.css --minify && eleventy"
   },
   "devDependencies": {
     "@11ty/eleventy": "^3.0.0",

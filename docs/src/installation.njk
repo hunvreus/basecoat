@@ -2,10 +2,116 @@
 layout: layouts/page.njk
 title: Installation
 description: How to install Basecoat in your app.
+toc:
+  - label: Installing the CSS
+    id: install-css
+    children:
+      - label: Add Tailwind CSS
+        id: install-css-tailwind
+      - label: Add Basecoat
+        id: install-css-basecoat
+      - label: Import basecoat in your CSS
+        id: install-css-import
+      - label: That's it
+        id: install-css-done
+  - label: Components with Javascript code
+    id: install-js
+  - label: Use Nunjucks or Jinja macros
+    id: install-macros
 ---
 
-<h2 id="jinja-and-nunjucks"><a href="#jinja-and-nunjucks">CSS vs. Tailwind</a></h2>
+{% from "macros/code_block.njk" import code_block %}
 
-<h2 id="htmx"><a href="#htmx">HTML &amp; Javascript</a></h2>
+<h2 id="install-css">Installing the CSS</h2>
 
-<h2 id="jinja-and-nunjucks"><a href="#jinja-and-nunjucks">Jinja and Nunjucks</a></h2>
+<ol class="[&>h3]:step steps mb-12 md:ml-4 md:border-l md:pl-8">
+  <li class="step">
+    <h3 class="mb-4 scroll-m-20 font-semibold tracking-tight" id="install-css-tailwind"><a href="#install-css-tailwind">Add Tailwind CSS</a></h3>
+    <div class="prose">
+      <p>Basecoat uses Tailwind CSS. You need to install it in your project.</p>
+      <p><a href="https://tailwindcss.com/docs/installation" target="_blank">Follow the Tailwind CSS installation instructions to get started.</a></p>
+    </div>
+  </li>
+  <li class="step mt-8">
+    <h3 class="mb-4 scroll-m-20 font-semibold tracking-tight" id="install-css-basecoat"><a href="#install-css-basecoat">Add Basecoat</a></h3>
+    <div class="prose">
+      <p>Add Basecoat to your Tailwind CSS file.</p>
+    </div>
+    {% set code %}npm install hunvreus/basecoat{% endset %}
+    {{ code_block(code, "bash") }}
+  </li>
+  <li class="step mt-8">
+    <h3 class="mb-4 scroll-m-20 font-semibold tracking-tight" id="install-css-import"><a href="#install-css-import">Import basecoat in your CSS</a></h3>
+    {% set code %}@import "tailwindcss";
+@import "basecoat";{% endset %}
+    {{ code_block(code, "css") }}
+  </li>
+  <li class="step mt-8">
+    <h3 class="mb-4 scroll-m-20 font-semibold tracking-tight" id="install-css-done"><a href="#install-css-done">That's it</a></h3>
+    <div class="prose">
+      <p>You can now use any of the Basecoat classes in your project (e.g. <code>btn</code>, <code>card</code>, <code>input</code>, etc). Read the documentation about each component to get started (e.g. <a href="/components/button">button</a>, <a href="/components/card">card</a>, <a href="/components/input">input</a>, etc).</p>
+    </div>
+  </li>
+</ol>
+
+<h2 id="install-js"><a href="#install-js">Components with Javascript code</a></h2>
+
+<div class="prose">
+  <p><b>Some components require Javascript code to work.</b></p>
+  <p>The documentation provides Alpine.js code snippets to cover that. <a href="https://alpinejs.dev/docs/installation" target="_blank">Make sure to install Alpine.js if you decide to use them.</a></p>
+  <p>For simple components like <a href="/components/accordion">Accordion</a> or <a href="/components/slider">Slider</a>, you will notice some inline Alpine.js code that you can just copy along with the rest of the HTML.</p>
+  <p>For more complex components (<a href="/components/dialog">Dialog</a>, <a href="/components/dropdown-menu">Dropdown Menu</a>, <a href="/components/popover">Popover</a>, <a href="/components/select">Select</a>, <a href="/components/tabs">Tabs</a> and <a href="/components/tooltip">Toast</a>), we provide a separate <code>&lt;script&gt;</code> code snippet that must be included anywhere <b>before</b> the HTML for the component.</p>
+  <p>You are also welcome to write your own Javascript.</p>
+  <p>All of the components try and implement WAI-ARIA standards to make them accessible.</p>
+</div>
+
+<h2 id="install-macros"><a href="#install-macros">Use Nunjucks or Jinja macros</a></h2>
+
+<div class="prose">
+  <p>For more complex components, you can use <a href="https://mozilla.github.io/nunjucks/" target="_blank">Nunjucks</a> or <a href="https://jinja.palletsprojects.com" target="_blank">Jinja</a> macros to help you generate the HTML and Javascript code.</p>
+  <p>For example, here's how you could use the <code>select()</code> macro to generate the HTML and Javascript code for a <a href="/components/select">Select</a> component:</p>
+  {% set code %}{% raw %}{% call select() %}
+<div role="group" aria-labelledby="fruit-options-label">
+  <span id="fruit-options-label" role="heading">Fruits</span>
+  <div role="option" data-value="apple">Apple</div>
+  <div role="option" data-value="banana">Banana</div>
+  <div role="option" data-value="blueberry">Blueberry</div>
+  <div role="option" data-value="pineapple">Grapes</div>
+  <div role="option" data-value="pineapple">Pineapple</div>
+</div>
+{% endcall %}{% endraw %}{% endset %}
+  {{ code_block(code, "jinja") }}
+  <p>You still need to make sure to include the Javascript code, to do so you have two options:</p>
+  <ul>
+    <li>
+      Set <code>include_script</code> to <code>true</code> when calling the macro. This will include the <code>&lt;script&gt;</code> code snippet directly before the component's HTML:
+      {% set code %}{% raw %}{% call select(include_script=true) %} {# Or `True` for Jinja #}
+<div role="group" aria-labelledby="fruit-options-label">
+  <span id="fruit-options-label" role="heading">Fruits</span>
+  <div role="option" data-value="apple">Apple</div>
+  <div role="option" data-value="banana">Banana</div>
+  <div role="option" data-value="blueberry">Blueberry</div>
+  <div role="option" data-value="pineapple">Grapes</div>
+  <div role="option" data-value="pineapple">Pineapple</div>
+</div>
+{% endcall %}{% endraw %}{% endset %}
+      {{ code_block(code, "jinja") }}
+    </li>
+    <li>
+      Manually include the <code>&lt;script&gt;</code> code snippet anywhere before the component's HTML. You can use the relevant script partial to do this, for example:
+      {% set code_script %}{% raw %}{% include "select-script.njk" %}
+{% call select() %}
+<div role="group" aria-labelledby="fruit-options-label">
+  <span id="fruit-options-label" role="heading">Fruits</span>
+  <div role="option" data-value="apple">Apple</div>
+  <div role="option" data-value="banana">Banana</div>
+  <div role="option" data-value="blueberry">Blueberry</div>
+  <div role="option" data-value="pineapple">Grapes</div>
+  <div role="option" data-value="pineapple">Pineapple</div>
+</div>
+{% endcall %}{% endraw %}{% endset %}
+      {{ code_block(code_script, "jinja") }}
+    </li>
+  </ul>
+  <p>Documentation for each macro's parameters is available in the <a href="https://github.com/hunvreus/basecoat/tree/main/docs/src/_includes/components" target="_blank">source code</a>.</p>
+</div>

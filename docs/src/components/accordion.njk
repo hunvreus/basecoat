@@ -1,5 +1,5 @@
 ---
-layout: layouts/component.njk
+layout: layouts/page.njk
 title: Accordion
 description: A vertically stacked set of interactive headings that each reveal a section of content.
 toc:
@@ -8,7 +8,6 @@ toc:
 ---
 
 {% from "macros/code_preview.njk" import code_preview %}
-{% from "macros/code_block.njk" import code_block %}
 
 <div class="alert mb-6">
   {% lucide "circle-alert" %}
@@ -68,4 +67,4 @@ toc:
 
 <h2 id="usage"><a href="#usage">Usage</a></h2>
 
-<p class="prose my-6">Basecoat animates <code>&lt;details&gt;</code> elements by default. The example above uses Alpine.js to handle the open/close state along with some Tailwind CSS classes.</p>
+<p class="prose">Basecoat animates <code>&lt;details&gt;</code> elements by default. The example above uses Alpine.js to handle the open/close state along with some Tailwind CSS classes.</p>

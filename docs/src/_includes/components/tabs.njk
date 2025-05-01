@@ -1,3 +1,20 @@
+{#
+  Renders a tabs component.
+
+  @param id {string} - Unique identifier for the tabs component.
+  @param tabsets {array} - An array of objects, each representing a tab and its panel.
+    Each object should have:
+    - id {string}: Unique identifier prefix for the tab and panel.
+    - tab {string}: HTML content for the tab button.
+    - panel {string} [optional]: HTML content for the tab panel.
+    - tab_attrs {object} [optional]: Additional HTML attributes for the tab button.
+    - panel_attrs {object} [optional]: Additional HTML attributes for the tab panel div.
+  @param main_attrs {object} [optional] - Additional HTML attributes for the main container div.
+  @param tablist_attrs {object} [optional] - Additional HTML attributes for the tablist nav element.
+  @param default_tab_index {number} [optional] [default=1] - The 1-based index of the tab to be active initially.
+  @param include_script {boolean} [optional] [default=false] - Whether to include the Alpine.js component script.
+  @param register_on {array} [optional] [default=[\"alpine:init\"]] - Alpine.js events to register the component on.
+#}
 {% macro tabs(
     id,
     tabsets=[],

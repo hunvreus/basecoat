@@ -1,6 +1,6 @@
 {% macro code_preview(id, code, class=None, default_code=false) %}
 {% from "./code_block.njk" import code_block %}
-{% set code_panel = code_block(code) %}
+{% set code_panel = code_block(code, class="") %}
 {% set preview_panel %}
 <div class="ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 relative rounded-md border">
   <div class="preview flex min-h-[350px] w-full justify-center p-10 items-center">

@@ -1,3 +1,24 @@
+{#
+  Renders a toaster container and individual toast messages.
+  Can render the initial container or be used with htmx OOB swaps to add toasts dynamically.
+
+  @param id {string} [optional] [default="toaster"] - Unique identifier for the toaster container.
+  @param toasts {array} [optional] - An array of toast objects to render initially.
+    Each toast object can have:
+    - category {string} [optional]: Type of toast ('success', 'error', 'info', 'warning'). Determines icon and ARIA role.
+    - title {string} [optional]: The main title text of the toast.
+    - description {string} [optional]: The secondary description text.
+    - duration {number} [optional] [default=5000]: Duration in milliseconds before the toast auto-dismisses.
+    - action {object} [optional]: Defines an action button.
+      - label {string}: Button text.
+      - click {string}: JavaScript code to execute on click (e.g., '$dispatch(\'custom-event\')').
+      - url {string}: URL for an anchor link button.
+    - cancel {object} [optional]: Defines a cancel/dismiss button (similar structure to action).
+  @param main_attrs {object} [optional] - Additional HTML attributes for the main toaster container div.
+  @param is_fragment {boolean} [optional] [default=false] - If true, renders only the toast elements with hx-swap-oob="beforeend", suitable for htmx responses. Skips script and template inclusion.
+  @param include_script {boolean} [optional] [default=false] - Whether to include the Alpine.js component script. Ignored if is_fragment is true.
+  @param register_on {array} [optional] [default=[\"alpine:init\"]] - Alpine.js events to register the component on. Ignored if is_fragment is true.
+#}
 {% macro toaster(
   id="toaster",
   toasts=[],

@@ -1,6 +1,6 @@
-{% macro code_block(code, language="html") %}
+{% macro code_block(code, language="html", class="my-4") %}
 <div 
-  class="relative"
+  class="relative {{ class }}"
   x-data="{ 
     copied: false, 
     copy() { 
@@ -26,4 +26,3 @@
   </button>
 </div>
 {% endmacro %}
-

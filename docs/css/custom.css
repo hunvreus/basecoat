@@ -1,0 +1,55 @@
+.content {
+  > h2 {
+    @apply mt-16 mb-6 scroll-m-22 border-b pb-4 text-xl font-semibold tracking-tight first:mt-0;
+  }
+  > h3 {
+    @apply mt-8 mb-6 scroll-m-22 text-lg font-semibold tracking-tight;
+  }
+  .prose {
+    @apply my-6;
+    
+    a {
+      @apply font-medium underline underline-offset-4;
+    }
+    code:not(pre > code) {
+      @apply relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm;
+    }
+    blockquote {
+      @apply border-l-4 border-border pl-4;
+    }
+    ol {
+      @apply list-decimal ml-6;
+    }
+    ul {
+      @apply list-disc ml-6;
+    }
+    b,
+    strong {
+      @apply font-semibold;
+    }
+    > p,
+    > blockquote,
+    > ul,
+    > ol,
+    > dl,
+    > table,
+    > pre,
+    > p {
+      @apply my-4;
+    }
+    > *:first-child {
+      @apply !mt-0;
+    }
+    > *:last-child {
+      @apply !mb-0;
+    }
+  }
+  .step {
+    counter-increment: step;
+  }
+  .step:before {
+    @apply md:absolute w-8 h-8 md:w-9 md:h-9 bg-muted rounded-full font-mono font-medium text-center text-base inline-flex items-center justify-center -indent-px border-4 mr-2 border-background;
+    @apply md:ml-[-50px] md:mt-[-4px];
+    content: counter(step);
+  }
+}
