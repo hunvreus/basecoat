@@ -9,18 +9,6 @@ export default async function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy({"docs/src/assets": "assets"});
   eleventyConfig.addPassthroughCopy({ "src/js": "assets/js" });
   eleventyConfig.addPlugin(eleventyLucideicons);
-  // eleventyConfig.addShortcode("fetchCode", async function(filePath) {
-  //   return "HELLO";
-  //   const absolutePath = path.resolve(process.cwd(), filePath);
-  //   return absolutePath;
-  //   try {
-  //     console.log(absolutePath);
-  //     return fs.readFileSync(absolutePath, 'utf8');
-  //   } catch (error) {
-  //     console.error(`[Eleventy FetchCode Error] Failed to read: ${absolutePath}`, error);
-  //     return `<!-- Error fetching code for ${filePath} -->`;
-  //   }
-  // });
   eleventyConfig.addShortcode("fetchCode", function(filePath) {
     const absolutePath = path.resolve(process.cwd(), filePath);
     try {

@@ -10,9 +10,9 @@
 {% macro popover(
   id=None,
   trigger=None,
-  main_attrs=None,
-  trigger_attrs=None,
-  content_attrs=None
+  main_attrs={},
+  trigger_attrs={},
+  content_attrs={}
 ) %}
 <div
   class="popover {{ main_attrs.class }}"

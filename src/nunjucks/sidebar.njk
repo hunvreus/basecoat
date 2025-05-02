@@ -4,7 +4,13 @@
     {% set item_id = parent_id ~ loop.index %}
     {% if item.type == 'item' %}
     <li>
-      <a href="{{ item.url }}" {{ 'aria-current="page"' if item.current }}>
+      <a
+        href="{{ item.url }}"
+        {{ 'aria-current="page"' if item.current }}
+        {% for key, value in item.attrs %}
+          {% if key != 'href' and key != 'aria-current' %}{{ key }}="{{ value }}"{% endif %}
+        {% endfor %}
+      >
         {% if item.icon %}{{ item.icon | safe }}{% endif %}
         <span>{{ item.label }}</span>
       </a>
@@ -12,7 +18,12 @@
     {% elif item.type == 'submenu' %}
     <li>
       <details {{ 'open' if item.open }} id="submenu-{{ item_id }}">
-        <summary aria-controls="submenu-{{ item_id }}-content">
+        <summary
+          aria-controls="submenu-{{ item_id }}-content"
+          {% for key, value in item.attrs %}
+            {% if key != 'aria-controls' %}{{ key }}="{{ value }}"{% endif %}
+          {% endfor %}
+        >
           {% if item.icon %}{{ item.icon | safe }}{% endif %}
           {{ item.label }}
         </summary>
@@ -40,10 +51,9 @@
   footer_attrs={},
   content_wrapper_attrs=None
 ) %}
-<nav
+<div
   {% if id %}id="{{ id }}"{% endif %}
-  class="sidebar peer {{ main_attrs.class }}"
-  aria-label="{{ label }}"
+  class="sidebar {{ main_attrs.class }}"
   aria-hidden="{{ 'false' if open else 'true' }}"
   data-side="{{ side if side else 'left' }}"
   {{ 'inert' if not open }}
@@ -53,49 +63,52 @@
   x-data="sidebar({{ 'true' if open else 'false' }})"
   x-bind="$main"
 >
-  {% if header %}
-  <header
-    {% for key, value in header_attrs %}
-      {{ key }}="{{ value }}"
-    {% endfor %}
+  <nav
+    aria-label="{{ label }}"
   >
-    {{ header | safe }}
-  </header>
-  {% endif %}
-  <hr role="separator"/>
-
-  <section
-    {% for key, value in content_attrs %}
-      {{ key }}="{{ value }}"
-    {% endfor %}
-  >
-    {% if menu %}
-      {% for group_or_item in menu %}
-        {% set group_id = loop.index %}
-        {% if group_or_item.type == 'group' %}
-          <div role="group" aria-labelledby="nav-group-{{ group_id }}">
-            <h3 id="nav-group-{{ group_id }}">{{ group_or_item.label }}</h3>
-            {{ render_menu_items(group_or_item.items, 0, group_id + '-') }}
-          </div>
-        {% elif group_or_item.type == 'separator' %}
-          <hr role="separator"/>
-        {% elif group_or_item.type == 'item' or group_or_item.type == 'submenu' %}
-          {{ render_menu_items([group_or_item], 0, 'top-' + group_id + '-') }}
-        {% endif %}
+    {% if header %}
+    <header
+      {% for key, value in header_attrs %}
+        {{ key }}="{{ value }}"
       {% endfor %}
-    {% else %}
-      {{ caller() if caller }}
+    >
+      {{ header | safe }}
+    </header>
     {% endif %}
-  </section>
 
-  {% if footer %}
-  <footer
-    {% for key, value in footer_attrs %}
-      {{ key }}="{{ value }}"
-    {% endfor %}
-  >
-    {{ footer | safe }}
-  </footer>
-  {% endif %}
-</nav>
+    <section
+      {% for key, value in content_attrs %}
+        {{ key }}="{{ value }}"
+      {% endfor %}
+    >
+      {% if menu %}
+        {% for group_or_item in menu %}
+          {% set group_id = loop.index %}
+          {% if group_or_item.type == 'group' %}
+            <div role="group" aria-labelledby="nav-group-{{ group_id }}">
+              <h3 id="nav-group-{{ group_id }}">{{ group_or_item.label }}</h3>
+              {{ render_menu_items(group_or_item.items, 0, group_id + '-') }}
+            </div>
+          {% elif group_or_item.type == 'separator' %}
+            <hr role="separator"/>
+          {% elif group_or_item.type == 'item' or group_or_item.type == 'submenu' %}
+            {{ render_menu_items([group_or_item], 0, 'top-' + group_id + '-') }}
+          {% endif %}
+        {% endfor %}
+      {% else %}
+        {{ caller() if caller }}
+      {% endif %}
+    </section>
+
+    {% if footer %}
+    <footer
+      {% for key, value in footer_attrs %}
+        {{ key }}="{{ value }}"
+      {% endfor %}
+    >
+      {{ footer | safe }}
+    </footer>
+    {% endif %}
+  </nav>
+</div>
 {% endmacro %}

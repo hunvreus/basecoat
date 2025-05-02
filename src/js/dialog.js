@@ -39,7 +39,7 @@ window.basecoat.registerDialog = function(Alpine) {
     $main: {
       '@dialog:open.window'(e) { if (e.detail && e.detail.id === this.id) this.show() },
       '@dialog:close.window'(e) { if (e.detail && e.detail.id === this.id) this.hide() },
-      '@keydown.escape.window'() { this.open && this.hide(); },
+      '@keydown.escape.window'() { this.open && this.hide() },
     },
     $trigger: {
       '@click'() { this.show() },
