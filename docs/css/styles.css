@@ -1,3 +1,5 @@
+@source "../../src/css/basecoat.css";
+
 @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Lora&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Fira+Code&display=swap");
@@ -5,12 +7,13 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
 
 @import "tailwindcss";
-@import "basecoat";
+@import "../../src/css/basecoat.css";
 @import "./custom.css";
 
 @theme {
   --font-sans: 'Inter';
   --font-mono: 'JetBrains Mono';
+
 }
 
 /* @import "./theme-orange.css"; */

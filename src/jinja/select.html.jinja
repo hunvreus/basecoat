@@ -91,7 +91,7 @@
         {{ key }}="{{ value }}"
       {% endfor %}
     >
-      {% if caller %}{{ caller() }}{% endif %}
+      {{ caller() if caller }}
     </div>
   </div>
   {% if name is defined %}

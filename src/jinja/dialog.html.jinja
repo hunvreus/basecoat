@@ -84,7 +84,7 @@
             {{ key }}="{{ value }}"
           {% endfor %}
         >
-          {% if caller %}{{ caller() }}{% endif %}
+          {{ caller() }}
         </section>
       {% endif %}
       {% if footer %}

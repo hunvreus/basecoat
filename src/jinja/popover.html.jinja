@@ -49,7 +49,7 @@
       {{ key }}="{{ value }}"
     {% endfor %}
   >
-    {% if caller %}{{ caller() }}{% endif %}
+    {{ caller() if caller }}
   </div>
 </div>
 {% endmacro %}

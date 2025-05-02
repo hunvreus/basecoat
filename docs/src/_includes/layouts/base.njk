@@ -49,6 +49,7 @@
   <script src="/assets/js/dropdown-menu.js" defer></script>
   <script src="/assets/js/popover.js" defer></script>
   <script src="/assets/js/select.js" defer></script>
+  <script src="/assets/js/sidebar.js" defer></script>
   <script src="/assets/js/tabs.js" defer></script>
   <script src="/assets/js/toast.js" defer></script>
   <script>
@@ -57,6 +58,7 @@
       window.basecoat.registerDropdownMenu(Alpine);
       window.basecoat.registerPopover(Alpine);
       window.basecoat.registerSelect(Alpine);
+      window.basecoat.registerSidebar(Alpine);
       window.basecoat.registerTabs(Alpine);
       window.basecoat.registerToast(Alpine);
     });
@@ -79,21 +81,84 @@
   {% if head %}{{ head | safe }}{% endif %}
 </head>
 <body>
-<div
-  id="sidebar"
-  class="fixed inset-y-0 left-0 z-50 h-svh border-r bg-sidebar text-sidebar-foreground flex flex-col w-[var(--sidebar-width)] transition-transform ease-in-out peer aria-[hidden=true]:-translate-x-full"
-  aria-hidden="false"
-  :aria-hidden="open ? 'false' : 'true'"
-  @sidebar:toggle.window="toggle()"
-  x-data="{
-    open: true,
-    toggle() { this.open = !this.open }
-  }"
->
-  {% include "partials/sidebar.njk" %}
-</div>
 
-<main id="content" class="relative ml-(--sidebar-width) peer-aria-hidden:ml-0 transition-[margin-left] ease-in-out">
+{% from "sidebar.njk" import sidebar %}
+{% set footer %}
+<a href="/logout">
+  <span class="icon" aria-hidden="true">🚪</span>
+  <span>Logout</span>
+</a>
+{% endset %}
+
+{% set header %}
+<a href="/" class="btn-ghost p-2 h-12 w-full justify-start">
+  <div class="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" class="h-4 w-4"><rect width="256" height="256" fill="none"></rect><line x1="208" y1="128" x2="128" y2="208" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"></line><line x1="192" y1="40" x2="40" y2="192" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"></line></svg>
+  </div>
+  <div class="grid flex-1 text-left text-sm leading-tight">
+    <span class="truncate font-medium">Basecoat</span>
+    <span class="truncate text-xs">v0.1.0</span>
+  </div>
+</a>
+<div class="flex flex-col gap-2 px-2 text-sm">
+  <form class="form relative">
+    <label for="search" class="sr-only">Search</label>
+    <input type="text" placeholder="Search the docs..." class="h-8 w-full shadow-none pl-8">
+    {% lucide "search", { "class": "pointer-events-none absolute top-1/2 left-2 size-4 -translate-y-1/2 opacity-50 select-none" } %}
+  </form>
+</div>
+{% endset %}
+
+{% set icon_info %}{% lucide "info" %}{% endset %}
+{% set icon_square_terminal %}{% lucide "square-terminal" %}{% endset %}
+{% set icon_layout_dashboard %}{% lucide "layout-dashboard" %}{% endset %}
+
+{% set menu = [
+  { type: "group", label: "Getting started", items: [
+    { type: "item", label: "Introduction", url: "/", icon: icon_info, current: true },
+    { type: "item", label: "Installation", url: "/installation", icon: icon_square_terminal },
+    { type: "item", label: "Kitchen sink", url: "/kitchen-sink", icon: icon_layout_dashboard }
+  ]},
+  { type: 'group', label: 'Components', items: [
+    { type: "item", url: "/components/accordion", label: "Accordion" },
+    { type: "item", url: "/components/alert", label: "Alert" },
+    { type: "item", url: "/components/alert-dialog", label: "Alert Dialog" },
+    { type: "item", url: "/components/avatar", label: "Avatar" },
+    { type: "item", url: "/components/badge", label: "Badge" },
+    { type: "item", url: "/components/breadcrumb", label: "Breadcrumb" },
+    { type: "item", url: "/components/button", label: "Button" },
+    { type: "item", url: "/components/card", label: "Card" },
+    { type: "item", url: "/components/checkbox", label: "Checkbox" },
+    { type: "item", url: "/components/combobox", label: "Combobox" },
+    { type: "item", url: "/components/dialog", label: "Dialog" },
+    { type: "item", url: "/components/dropdown-menu", label: "Dropdown Menu" },
+    { type: "item", url: "/components/form", label: "Form" },
+    { type: "item", url: "/components/input", label: "Input" },
+    { type: "item", url: "/components/label", label: "Label" },
+    { type: "item", url: "/components/pagination", label: "Pagination" },
+    { type: "item", url: "/components/popover", label: "Popover" },
+    { type: "item", url: "/components/radio-group", label: "Radio Group" },
+    { type: "item", url: "/components/select", label: "Select" },
+    { type: "item", url: "/components/skeleton", label: "Skeleton" },
+    { type: "item", url: "/components/sidebar", label: "Sidebar" },
+    { type: "item", url: "/components/slider", label: "Slider" },
+    { type: "item", url: "/components/switch", label: "Switch" },
+    { type: "item", url: "/components/table", label: "Table" },
+    { type: "item", url: "/components/tabs", label: "Tabs" },
+    { type: "item", url: "/components/textarea", label: "Textarea" },
+    { type: "item", url: "/components/toast", label: "Toast" },
+    { type: "item", url: "/components/tooltip", label: "Tooltip" }
+  ]}
+] %}
+
+{{ sidebar(
+  label="Sidebar navigation",
+  header=header,
+  footer=footer,
+  menu=menu
+) }}
+
+<main id="content">
   <header class="bg-background sticky inset-x-0 top-0 isolate z-10 flex shrink-0 items-center gap-2 border-b">
     <div class="flex h-14 w-full items-center gap-2 px-4">
       <button
@@ -103,7 +168,7 @@
         :data-tooltip="sidebarOpen ? 'Hide sidebar' : 'Show sidebar'"
         data-side="bottom"
         data-align="start"
-        class="btn-icon-ghost size-8 mr-auto"
+        class="btn-sm-icon-ghost mr-auto"
         x-init
         x-data="{ sidebarOpen: true }"
         @click="

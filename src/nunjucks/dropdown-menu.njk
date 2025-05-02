@@ -50,7 +50,7 @@
     {% endfor %}
   >
     <nav role="menu">
-      {% if caller %}{{ caller() }}{% endif %}
+      {{ caller() if caller }}
     </nav>
   </div>
 </div>

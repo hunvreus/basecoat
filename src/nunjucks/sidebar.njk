@@ -1,0 +1,101 @@
+{% macro render_menu_items(items, level=0, parent_id="") %}
+<ul>
+  {% for item in items %}
+    {% set item_id = parent_id ~ loop.index %}
+    {% if item.type == 'item' %}
+    <li>
+      <a href="{{ item.url }}" {{ 'aria-current="page"' if item.current }}>
+        {% if item.icon %}{{ item.icon | safe }}{% endif %}
+        <span>{{ item.label }}</span>
+      </a>
+    </li>
+    {% elif item.type == 'submenu' %}
+    <li>
+      <details {{ 'open' if item.open }} id="submenu-{{ item_id }}">
+        <summary aria-controls="submenu-{{ item_id }}-content">
+          {% if item.icon %}{{ item.icon | safe }}{% endif %}
+          {{ item.label }}
+        </summary>
+        <div id="submenu-{{ item_id }}-content">
+          {{ render_menu_items(item.items, level + 1, item_id + '-') }}
+        </div>
+      </details>
+    </li>
+    {% endif %}
+  {% endfor %}
+</ul>
+{% endmacro %}
+
+{% macro sidebar(
+  id=None,
+  label="Sidebar navigation",
+  open=true,
+  side=None,
+  header=None,
+  footer=None,
+  menu=None,
+  main_attrs={},
+  header_attrs={},
+  content_attrs={},
+  footer_attrs={},
+  content_wrapper_attrs=None
+) %}
+<nav
+  {% if id %}id="{{ id }}"{% endif %}
+  class="sidebar peer {{ main_attrs.class }}"
+  aria-label="{{ label }}"
+  aria-hidden="{{ 'false' if open else 'true' }}"
+  data-side="{{ side if side else 'left' }}"
+  {{ 'inert' if not open }}
+  {% for key, value in main_attrs %}
+    {% if key != "class" %}{{ key }}="{{ value }}"{% endif %}
+  {% endfor %}
+  x-data="sidebar({{ 'true' if open else 'false' }})"
+  x-bind="$main"
+>
+  {% if header %}
+  <header
+    {% for key, value in header_attrs %}
+      {{ key }}="{{ value }}"
+    {% endfor %}
+  >
+    {{ header | safe }}
+  </header>
+  {% endif %}
+  <hr role="separator"/>
+
+  <section
+    {% for key, value in content_attrs %}
+      {{ key }}="{{ value }}"
+    {% endfor %}
+  >
+    {% if menu %}
+      {% for group_or_item in menu %}
+        {% set group_id = loop.index %}
+        {% if group_or_item.type == 'group' %}
+          <div role="group" aria-labelledby="nav-group-{{ group_id }}">
+            <h3 id="nav-group-{{ group_id }}">{{ group_or_item.label }}</h3>
+            {{ render_menu_items(group_or_item.items, 0, group_id + '-') }}
+          </div>
+        {% elif group_or_item.type == 'separator' %}
+          <hr role="separator"/>
+        {% elif group_or_item.type == 'item' or group_or_item.type == 'submenu' %}
+          {{ render_menu_items([group_or_item], 0, 'top-' + group_id + '-') }}
+        {% endif %}
+      {% endfor %}
+    {% else %}
+      {{ caller() if caller }}
+    {% endif %}
+  </section>
+
+  {% if footer %}
+  <footer
+    {% for key, value in footer_attrs %}
+      {{ key }}="{{ value }}"
+    {% endfor %}
+  >
+    {{ footer | safe }}
+  </footer>
+  {% endif %}
+</nav>
+{% endmacro %}
