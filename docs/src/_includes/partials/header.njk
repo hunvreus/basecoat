@@ -1,0 +1,36 @@
+<div class="flex h-14 w-full items-center gap-2 px-4">
+  <button
+    type="button"
+    aria-label="Hide sidebar"
+    data-tooltip="Hide sidebar"
+    :data-tooltip="sidebarOpen ? 'Hide sidebar' : 'Show sidebar'"
+    data-side="bottom"
+    data-align="start"
+    class="btn-sm-icon-ghost mr-auto size-7 -ml-1.5"
+    x-init
+    x-data="{ sidebarOpen: true }"
+    @click="
+      sidebarOpen = !sidebarOpen;
+      $dispatch('sidebar:toggle');
+    "
+  >
+    {% lucide "panel-left" %}
+  </button>
+  <select class="select h-8 leading-none">
+    <option value="light">Default</option>
+    <option value="light">Other</option>
+  </select>
+  <button
+    type="button"
+    aria-label="Toggle theme"
+    data-tooltip="Toggle theme"
+    data-side="bottom"
+    data-align="end"
+    class="btn-icon-outline size-8"
+    x-init
+    @click="$store.theme.toggle()"
+  >
+    <span x-show="$store.theme.isDark">{% lucide "sun" %}</span>
+    <span x-show="!$store.theme.isDark">{% lucide "moon" %}</span>
+  </button>
+</div>
