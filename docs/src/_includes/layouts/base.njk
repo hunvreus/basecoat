@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html class="dark"><head>
+<html>
+<head>
   <!-- Theme -->
   <script>
   function isDark() {
@@ -13,10 +14,6 @@
   document.addEventListener('alpine:init', () => {
     Alpine.store('theme', {
       isDark: isDark(),
-      set(value) {
-        this.isDark = value;
-        localStorage.setItem('theme', value ? 'dark' : 'light');
-      },
       toggle() {
         this.isDark = document.documentElement.classList.toggle('dark');
         localStorage.setItem('theme', this.isDark ? 'dark' : 'light');
@@ -82,154 +79,14 @@
 </head>
 <body>
 
-{% from "sidebar.njk" import sidebar %}
-{% from "popover.njk" import popover %}
-
-{% set footer %}
-{% set trigger %}
-<img src="https://github.com/hunvreus.png" class="rounded-lg shrink-0 size-8">
-<div class="grid flex-1 text-left text-sm leading-tight">
-  <span class="truncate font-medium">Ronan Berder</span>
-  <span class="truncate text-xs">@hunvreus</span>
-</div>
-{% lucide "chevrons-up-down" %}
-{% endset %}
-{% call popover(
-  trigger=trigger,
-  trigger_attrs={"class": "btn-ghost p-2 h-12 w-full flex items-center justify-start"},
-  content_attrs={"data-side": "right", "data-align": "end", "class": "w-80"}
-) %}
-<div class="grid gap-4 p-4">
-  <header class="grid gap-1.5">
-    <h2 class="font-semibold">I hope you like Basecoat...</h2>
-    <p class="text-muted-foreground text-sm">I made this (and <a class="underline underline-offset-4" href="https://pagescms.org" target="_target">other things</a>) because I thought it'd be helpful to others. If you find it useful, please consider sponsoring me on GitHub or following me on X.</p>
-  </header>
-  <footer class="grid gap-2">
-    <a href="https://github.com/sponsors/hunvreus" class="btn-sm" target="_blank">Sponsor me on GitHub</a>
-    <a href="https://x.com/hunvreus" class="btn-sm-outline" target="_blank">Follow me on X</a>
-  </footer>
-</div>
-{% endcall %}
-{% endset %}
-
-{% set header %}
-<a href="/" class="btn-ghost p-2 h-12 w-full justify-start">
-  <div class="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" class="h-4 w-4"><rect width="256" height="256" fill="none"></rect><line x1="208" y1="128" x2="128" y2="208" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"></line><line x1="192" y1="40" x2="40" y2="192" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"></line></svg>
-  </div>
-  <div class="grid flex-1 text-left text-sm leading-tight">
-    <span class="truncate font-medium">Basecoat</span>
-    <span class="truncate text-xs">v{{ pkg.version }}</span>
-  </div>
-</a>
-<div class="flex flex-col gap-2 px-2 text-sm">
-  <form class="form relative">
-    <label for="search" class="sr-only">Search</label>
-    <input type="text" placeholder="Search the docs..." class="h-8 w-full shadow-none pl-8">
-    {% lucide "search", { "class": "pointer-events-none absolute top-1/2 left-2 size-4 -translate-y-1/2 opacity-50 select-none" } %}
-  </form>
-</div>
-{% endset %}
-
-{% set link_attrs = {
-  "hx-boost": "true",
-  "hx-select": "#content",
-  "hx-target": "#content",
-  "hx-swap": "outerHTML"
-} %}
-
-{% set icon_info %}{% lucide "info" %}{% endset %}
-{% set icon_square_terminal %}{% lucide "square-terminal" %}{% endset %}
-{% set icon_layout_dashboard %}{% lucide "layout-dashboard" %}{% endset %}
-{% set icon_github %}{% lucide "github" %}{% endset %}
-
-{% set menu = [
-  { type: "group", label: "Getting started", items: [
-    { type: "item", label: "Introduction", url: "/", icon: icon_info, current: true, attrs: link_attrs },
-    { type: "item", label: "Installation", url: "/installation", icon: icon_square_terminal, attrs: link_attrs },
-    { type: "item", label: "Kitchen sink", url: "/kitchen-sink", icon: icon_layout_dashboard, attrs: link_attrs },
-    { type: "item", label: "GitHub", url: "https://github.com/hunvreus/basecoat", icon: icon_github, attrs: link_attrs }
-  ]},
-  { type: 'group', label: 'Components', items: [
-    { type: "item", url: "/components/accordion", label: "Accordion", attrs: link_attrs },
-    { type: "item", url: "/components/alert", label: "Alert", attrs: link_attrs },
-    { type: "item", url: "/components/alert-dialog", label: "Alert Dialog", attrs: link_attrs },
-    { type: "item", url: "/components/avatar", label: "Avatar", attrs: link_attrs },
-    { type: "item", url: "/components/badge", label: "Badge", attrs: link_attrs },
-    { type: "item", url: "/components/breadcrumb", label: "Breadcrumb", attrs: link_attrs },
-    { type: "item", url: "/components/button", label: "Button", attrs: link_attrs },
-    { type: "item", url: "/components/card", label: "Card", attrs: link_attrs },
-    { type: "item", url: "/components/checkbox", label: "Checkbox", attrs: link_attrs },
-    { type: "item", url: "/components/combobox", label: "Combobox", attrs: link_attrs },
-    { type: "item", url: "/components/dialog", label: "Dialog", attrs: link_attrs },
-    { type: "item", url: "/components/dropdown-menu", label: "Dropdown Menu", attrs: link_attrs },
-    { type: "item", url: "/components/form", label: "Form", attrs: link_attrs },
-    { type: "item", url: "/components/input", label: "Input", attrs: link_attrs },
-    { type: "item", url: "/components/label", label: "Label", attrs: link_attrs },
-    { type: "item", url: "/components/pagination", label: "Pagination", attrs: link_attrs },
-    { type: "item", url: "/components/popover", label: "Popover", attrs: link_attrs },
-    { type: "item", url: "/components/radio-group", label: "Radio Group", attrs: link_attrs },
-    { type: "item", url: "/components/select", label: "Select", attrs: link_attrs },
-    { type: "item", url: "/components/skeleton", label: "Skeleton", attrs: link_attrs },
-    { type: "item", url: "/components/sidebar", label: "Sidebar", attrs: link_attrs },
-    { type: "item", url: "/components/slider", label: "Slider", attrs: link_attrs },
-    { type: "item", url: "/components/switch", label: "Switch", attrs: link_attrs },
-    { type: "item", url: "/components/table", label: "Table", attrs: link_attrs },
-    { type: "item", url: "/components/tabs", label: "Tabs", attrs: link_attrs },
-    { type: "item", url: "/components/textarea", label: "Textarea", attrs: link_attrs },
-    { type: "item", url: "/components/toast", label: "Toast", attrs: link_attrs },
-    { type: "item", url: "/components/tooltip", label: "Tooltip", attrs: link_attrs }
-  ]}
-] %}
-
-{{ sidebar(
-  label="Sidebar navigation",
-  header=header,
-  footer=footer,
-  menu=menu
-) }}
+{% include "partials/sidebar.njk" %}
 
 <main id="content">
   <header class="bg-background sticky inset-x-0 top-0 isolate z-20 flex shrink-0 items-center gap-2 border-b z-10">
-    <div class="flex h-14 w-full items-center gap-2 px-4">
-      <button
-        type="button"
-        aria-label="Hide sidebar"
-        data-tooltip="Hide sidebar"
-        :data-tooltip="sidebarOpen ? 'Hide sidebar' : 'Show sidebar'"
-        data-side="bottom"
-        data-align="start"
-        class="btn-sm-icon-ghost mr-auto"
-        x-init
-        x-data="{ sidebarOpen: true }"
-        @click="
-          sidebarOpen = !sidebarOpen;
-          $dispatch('sidebar:toggle');
-        "
-      >
-        {% lucide "panel-left" %}
-      </button>
-      <select class="select h-8 leading-none">
-        <option value="light">Default</option>
-        <option value="light">Other</option>
-      </select>
-      <button
-        type="button"
-        aria-label="Toggle theme"
-        data-tooltip="Toggle theme"
-        data-side="bottom"
-        data-align="end"
-        class="btn-icon-outline size-8"
-        x-init
-        @click="$store.theme.toggle()" 
-      >
-        <span x-show="$store.theme.isDark">{% lucide "sun" %}</span>
-        <span x-show="!$store.theme.isDark">{% lucide "moon" %}</span>
-      </button>
-    </div>
+    {% include "partials/header.njk" %}
   </header>
 
-  <div class="grid gap-4 p-4">
+  <div class="p-4">
     {{ content | safe }}
   </div>
 </main>

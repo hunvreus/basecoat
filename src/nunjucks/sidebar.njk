@@ -1,42 +1,14 @@
-{% macro render_menu_items(items, level=0, parent_id="") %}
-<ul>
-  {% for item in items %}
-    {% set item_id = parent_id ~ loop.index %}
-    {% if item.type == 'item' %}
-    <li>
-      <a
-        href="{{ item.url }}"
-        {{ 'aria-current="page"' if item.current }}
-        {% for key, value in item.attrs %}
-          {% if key != 'href' and key != 'aria-current' %}{{ key }}="{{ value }}"{% endif %}
-        {% endfor %}
-      >
-        {% if item.icon %}{{ item.icon | safe }}{% endif %}
-        <span>{{ item.label }}</span>
-      </a>
-    </li>
-    {% elif item.type == 'submenu' %}
-    <li>
-      <details {{ 'open' if item.open }} id="submenu-{{ item_id }}">
-        <summary
-          aria-controls="submenu-{{ item_id }}-content"
-          {% for key, value in item.attrs %}
-            {% if key != 'aria-controls' %}{{ key }}="{{ value }}"{% endif %}
-          {% endfor %}
-        >
-          {% if item.icon %}{{ item.icon | safe }}{% endif %}
-          {{ item.label }}
-        </summary>
-        <div id="submenu-{{ item_id }}-content">
-          {{ render_menu_items(item.items, level + 1, item_id + '-') }}
-        </div>
-      </details>
-    </li>
-    {% endif %}
-  {% endfor %}
-</ul>
-{% endmacro %}
+{#
+  Renders a sidebar component.
 
+  @param id {string} [optional] - Unique identifier for the sidebar component.
+  @param label {string} [optional] - Label for the sidebar navigation.
+  @param open {boolean} [optional] - Whether the sidebar is open.
+  @param side {string} [optional] - Side of the sidebar to display.
+  @param header {string} [optional] - Header content for the sidebar.
+  @param footer {string} [optional] - Footer content for the sidebar.
+  @param menu {array} [optional] - Array of menu items for the sidebar.
+#}
 {% macro sidebar(
   id=None,
   label="Sidebar navigation",
@@ -54,13 +26,14 @@
 <div
   {% if id %}id="{{ id }}"{% endif %}
   class="sidebar {{ main_attrs.class }}"
-  aria-hidden="{{ 'false' if open else 'true' }}"
-  data-side="{{ side if side else 'left' }}"
-  {{ 'inert' if not open }}
+  data-uninitialized
+  data-side="{{ side if side else "left" }}"
+  aria-hidden="{{ "true" if not open else "false" }}"
+  {{ "inert" if not open }}
   {% for key, value in main_attrs %}
     {% if key != "class" %}{{ key }}="{{ value }}"{% endif %}
   {% endfor %}
-  x-data="sidebar({{ 'true' if open else 'false' }})"
+  x-data="sidebar({{ "true" if open else "false" }})"
   x-bind="$main"
 >
   <nav
@@ -82,19 +55,7 @@
       {% endfor %}
     >
       {% if menu %}
-        {% for group_or_item in menu %}
-          {% set group_id = loop.index %}
-          {% if group_or_item.type == 'group' %}
-            <div role="group" aria-labelledby="nav-group-{{ group_id }}">
-              <h3 id="nav-group-{{ group_id }}">{{ group_or_item.label }}</h3>
-              {{ render_menu_items(group_or_item.items, 0, group_id + '-') }}
-            </div>
-          {% elif group_or_item.type == 'separator' %}
-            <hr role="separator"/>
-          {% elif group_or_item.type == 'item' or group_or_item.type == 'submenu' %}
-            {{ render_menu_items([group_or_item], 0, 'top-' + group_id + '-') }}
-          {% endif %}
-        {% endfor %}
+        {{ render_sidebar_content(menu, id ~ "-content" if id else "content") }}
       {% else %}
         {{ caller() if caller }}
       {% endif %}
@@ -111,4 +72,67 @@
     {% endif %}
   </nav>
 </div>
+{% endmacro %}
+
+{#
+  Renders sidebar content recursively (groups, items, submenus, separators).
+
+  @param items {array} - The array of items to render.
+  @param parent_id_prefix {string} [optional] - Prefix for generating element IDs.
+#}
+{% macro render_sidebar_content(items, parent_id_prefix="content") %}
+  {% for item in items %}
+    {% set item_id = parent_id_prefix ~ "-" ~ loop.index %}
+
+    {% if item.type == "group" %}
+      {% set group_label_id = item.id if item.id else "group-label-" + item_id %}
+      <div
+        role="group"
+        {% if item.label %}aria-labelledby="{{ group_label_id }}"{% endif %}
+        {% for key, value in item.attrs %}
+          {{ key }}="{{ value }}"
+        {% endfor %}
+      >
+        {% if item.label %}
+          <h3 id="{{ group_label_id }}">{{ item.label }}</h3>
+        {% endif %}
+        <ul>
+          {{ render_sidebar_content(item.items, item_id) if item.items }}
+        </ul>
+      </div>
+    {% elif item.type == "separator" %}
+      <hr role="separator"/>
+    {% elif item.type == "submenu" %}
+      <li>
+        <details
+          id="submenu-{{ item_id }}"
+          {{ "open" if item.open }}
+          {% for key, value in item.attrs %}
+            {% if key != "open" %}{{ key }}="{{ value }}"{% endif %}
+          {% endfor %}
+        >
+          <summary aria-controls="submenu-{{ item_id }}-content">
+            {% if item.icon %}{{ item.icon | safe }}{% endif %}
+            {{ item.label }}
+          </summary>
+          <ul id="submenu-{{ item_id }}-content">
+            {{ render_sidebar_content(item.items, item_id) if item.items }}
+          </ul>
+        </details>
+      </li>
+    {% elif item.type == "item" or not item.type %}
+       <li>
+        <a
+          href="{{ item.url }}"
+          {{ 'aria-current="page"' if item.current }}
+          {% for key, value in item.attrs %}
+            {% if key != "href" and key != "aria-current" %}{{ key }}="{{ value }}"{% endif %}
+          {% endfor %}
+        >
+          {% if item.icon %}{{ item.icon | safe }}{% endif %}
+          <span>{{ item.label }}</span>
+        </a>
+       </li>
+    {% endif %}
+  {% endfor %}
 {% endmacro %}

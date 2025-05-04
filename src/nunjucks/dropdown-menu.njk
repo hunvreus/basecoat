@@ -3,6 +3,7 @@
 
   @param id {string} [optional] - Unique identifier for the dropdown component.
   @param trigger {string} [optional] - HTML content for the button that triggers the dropdown.
+  @param menu {array} [optional] - Array of menu items for the dropdown.
   @param main_attrs {object} [optional] - Additional HTML attributes for the main container div.
   @param trigger_attrs {object} [optional] - Additional HTML attributes for the trigger button.
   @param content_attrs {object} [optional] - Additional HTML attributes for the dropdown content div.
@@ -10,6 +11,7 @@
 {% macro dropdown_menu(
   id=None,
   trigger=None,
+  menu=None,
   main_attrs={},
   trigger_attrs={},
   content_attrs={}
@@ -20,7 +22,7 @@
   @click.away="open = false"
   {% if id %}id="{{ id }}"{% endif %}
   {% for key, value in main_attrs %}
-    {% if key != 'class' %}{{ key }}="{{ value }}"{% endif %}
+    {% if key != "class" %}{{ key }}="{{ value }}"{% endif %}
   {% endfor %}
 >
   {% if trigger %}
@@ -50,8 +52,62 @@
     {% endfor %}
   >
     <nav role="menu">
-      {{ caller() if caller }}
+      {% if menu %}
+        {{ render_dropdown_items(menu, id ~ "-items" if id else "items") }}
+      {% else %}
+        {{ caller() if caller }}
+      {% endif %}
     </nav>
   </div>
 </div>
+{% endmacro %}
+
+{#
+  Renders dropdown menu items recursively.
+
+  @param items {array} - The array of items to render.
+  @param parent_id_prefix {string} [optional] - Prefix for generating element IDs.
+#}
+{% macro render_dropdown_items(items, parent_id_prefix="items") %}
+  {% for item in items %}
+    {% set item_id = parent_id_prefix ~ "-" ~ loop.index %}
+
+    {% if item.type == "group" %}
+      {% set group_label_id = item.id if item.id else "group-label-" + item_id %}
+      <div
+        role="group"
+        aria-labelledby="{{ group_label_id }}"
+        {% for key, value in item.attrs %}
+          {{ key }}="{{ value }}"
+        {% endfor %}
+      >
+        <div role="heading" id="{{ group_label_id }}">{{ item.label }}</div>
+        {{ render_dropdown_items(item.items, item_id) if item.items }}
+      </div>
+    {% elif item.type == "separator" %}
+      <hr role="separator" />
+    {% elif item.type == "item" or not item.type %}
+      {% if item.url %}
+        <a
+          role="menuitem"
+          href="{{ item.url }}"
+          {% for key, value in item.attrs %}
+            {% if key != "url" %} {{ key }}="{{ value }}" {% endif %}
+          {% endfor %}
+        >
+          {{ item.label | safe }}
+        </a>
+      {% else %}
+        <button
+          role="menuitem"
+          type="button"
+          {% for key, value in item.attrs %}
+             {{ key }}="{{ value }}"
+          {% endfor %}
+        >
+          {{ item.label | safe }}
+        </button>
+      {% endif %}
+    {% endif %}
+  {% endfor %}
 {% endmacro %}

@@ -1,149 +1,128 @@
-{% set components = [
-  { "id": "accordion", "name": "Accordion" },
-  { "id": "alert", "name": "Alert" },
-  { "id": "alert-dialog", "name": "Alert Dialog" },
-  { "id": "avatar", "name": "Avatar" },
-  { "id": "badge", "name": "Badge" },
-  { "id": "breadcrumb", "name": "Breadcrumb" },
-  { "id": "button", "name": "Button" },
-  { "id": "card", "name": "Card" },
-  { "id": "checkbox", "name": "Checkbox" },
-  { "id": "combobox", "name": "Combobox" },
-  { "id": "dialog", "name": "Dialog" },
-  { "id": "dropdown-menu", "name": "Dropdown Menu" },
-  { "id": "form", "name": "Form" },
-  { "id": "input", "name": "Input" },
-  { "id": "label", "name": "Label" },
-  { "id": "pagination", "name": "Pagination" },
-  { "id": "popover", "name": "Popover" },
-  { "id": "radio-group", "name": "Radio Group" },
-  { "id": "select", "name": "Select" },
-  { "id": "skeleton", "name": "Skeleton" },
-  { "id": "sidebar", "name": "Sidebar" },
-  { "id": "slider", "name": "Slider" },
-  { "id": "switch", "name": "Switch" },
-  { "id": "table", "name": "Table" },
-  { "id": "tabs", "name": "Tabs" },
-  { "id": "textarea", "name": "Textarea" },
-  { "id": "toast", "name": "Toast" },
-  { "id": "tooltip", "name": "Tooltip" }
+{% from "sidebar.njk" import sidebar %}
+{% from "popover.njk" import popover %}
+
+{% set footer %}
+{% set trigger %}
+<img src="https://github.com/hunvreus.png" class="rounded-lg shrink-0 size-8">
+<div class="grid flex-1 text-left text-sm leading-tight">
+  <span class="truncate font-medium">Ronan Berder</span>
+  <span class="truncate text-xs">@hunvreus</span>
+</div>
+{% lucide "chevrons-up-down" %}
+{% endset %}
+{% call popover(
+  trigger=trigger,
+  trigger_attrs={"class": "btn-ghost p-2 h-12 w-full flex items-center justify-start"},
+  content_attrs={"data-side": "right", "data-align": "end", "class": "w-80"}
+) %}
+<div class="grid gap-4 p-4">
+  <header class="grid gap-1.5">
+    <h2 class="font-semibold">I hope you like Basecoat...</h2>
+    <p class="text-muted-foreground text-sm">I made this (and <a class="underline underline-offset-4" href="https://pagescms.org" target="_target">other things</a>) because I thought it'd be helpful to others. If you find it useful, please consider sponsoring me on GitHub or following me on X.</p>
+  </header>
+  <footer class="grid gap-2">
+    <a href="https://github.com/sponsors/hunvreus" class="btn-sm" target="_blank">Sponsor me on GitHub</a>
+    <a href="https://x.com/hunvreus" class="btn-sm-outline" target="_blank">Follow me on X</a>
+  </footer>
+</div>
+{% endcall %}
+{% endset %}
+
+{% set header %}
+<a href="/" class="btn-ghost p-2 h-12 w-full justify-start">
+  <div class="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" class="h-4 w-4"><rect width="256" height="256" fill="none"></rect><line x1="208" y1="128" x2="128" y2="208" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"></line><line x1="192" y1="40" x2="40" y2="192" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"></line></svg>
+  </div>
+  <div class="grid flex-1 text-left text-sm leading-tight">
+    <span class="truncate font-medium">Basecoat</span>
+    <span class="truncate text-xs">v{{ pkg.version }}</span>
+  </div>
+</a>
+<div class="flex flex-col gap-2 px-2 text-sm">
+  <form class="form relative">
+    <label for="search" class="sr-only">Search</label>
+    <input type="text" placeholder="Search the docs..." class="h-8 w-full shadow-none pl-8">
+    {% lucide "search", { "class": "pointer-events-none absolute top-1/2 left-2 size-4 -translate-y-1/2 opacity-50 select-none" } %}
+  </form>
+</div>
+{% endset %}
+
+{% set link_attrs = {
+  "hx-boost": "true",
+  "hx-select": "#content",
+  "hx-target": "#content",
+  "hx-swap": "outerHTML"
+} %}
+
+{% set icon_info %}{% lucide "info" %}{% endset %}
+{% set icon_square_terminal %}{% lucide "square-terminal" %}{% endset %}
+{% set icon_layout_dashboard %}{% lucide "layout-dashboard" %}{% endset %}
+{% set icon_github %}{% lucide "github" %}{% endset %}
+
+{% set menu = [
+  { type: "group", label: "Getting started", items: [
+    { label: "Introduction", url: "/", icon: icon_info, current: true, attrs: link_attrs },
+    { label: "Installation", url: "/installation", icon: icon_square_terminal, attrs: link_attrs },
+    { label: "Kitchen sink", url: "/kitchen-sink", icon: icon_layout_dashboard, attrs: link_attrs },
+    { label: "GitHub", url: "https://github.com/hunvreus/basecoat", icon: icon_github, attrs: link_attrs }
+  ]},
+  { type: 'group', label: 'Components', items: [
+    { label: "Accordion", url: "/components/accordion", attrs: link_attrs },
+    { label: "Alert", url: "/components/alert", attrs: link_attrs },
+    { label: "Alert Dialog", url: "/components/alert-dialog", attrs: link_attrs },
+    { label: "Avatar", url: "/components/avatar", attrs: link_attrs },
+    { label: "Badge", url: "/components/badge", attrs: link_attrs },
+    { label: "Breadcrumb", url: "/components/breadcrumb", attrs: link_attrs },
+    { label: "Button", url: "/components/button", attrs: link_attrs },
+    { label: "Card", url: "/components/card", attrs: link_attrs },
+    { label: "Checkbox", url: "/components/checkbox", attrs: link_attrs },
+    { label: "Combobox", url: "/components/combobox", attrs: link_attrs },
+    { label: "Dialog", url: "/components/dialog", attrs: link_attrs },
+    { label: "Dropdown Menu", url: "/components/dropdown-menu", attrs: link_attrs },
+    { label: "Form", url: "/components/form", attrs: link_attrs },
+    { label: "Input", url: "/components/input", attrs: link_attrs },
+    { label: "Label", url: "/components/label", attrs: link_attrs },
+    { label: "Pagination", url: "/components/pagination", attrs: link_attrs },
+    { label: "Popover", url: "/components/popover", attrs: link_attrs },
+    { label: "Radio Group", url: "/components/radio-group", attrs: link_attrs },
+    { label: "Select", url: "/components/select", attrs: link_attrs },
+    { label: "Skeleton", url: "/components/skeleton", attrs: link_attrs },
+    { label: "Sidebar", url: "/components/sidebar", attrs: link_attrs },
+    { label: "Slider", url: "/components/slider", attrs: link_attrs },
+    { label: "Switch", url: "/components/switch", attrs: link_attrs },
+    { label: "Table", url: "/components/table", attrs: link_attrs },
+    { label: "Tabs", url: "/components/tabs", attrs: link_attrs },
+    { label: "Textarea", url: "/components/textarea", attrs: link_attrs },
+    { label: "Toast", url: "/components/toast", attrs: link_attrs },
+    { label: "Tooltip", url: "/components/tooltip", attrs: link_attrs }
+  ]}
 ] %}
 
-<header class="flex flex-col gap-2 p-2">
-  <a href="/" class="btn-ghost p-2 h-12 w-full justify-start">
-    <div class="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" class="h-4 w-4"><rect width="256" height="256" fill="none"></rect><line x1="208" y1="128" x2="128" y2="208" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"></line><line x1="192" y1="40" x2="40" y2="192" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"></line></svg>
-    </div>
-    <div class="grid flex-1 text-left text-sm leading-tight">
-      <span class="truncate font-medium">Basecoat</span>
-      <span class="truncate text-xs">v0.1.0</span>
-    </div>
-  </a>
-  <div class="flex flex-col gap-2 px-2 text-sm">
-    <form class="form relative">
-      <label for="search" class="sr-only">Search</label>
-      <input type="text" placeholder="Search the docs..." class="h-8 w-full shadow-none pl-8">
-      {% lucide "search", { "class": "pointer-events-none absolute top-1/2 left-2 size-4 -translate-y-1/2 opacity-50 select-none" } %}
-    </form>
-  </div>
-</header>
-<section class="flex flex-1 flex-col gap-2 overflow-y-auto scrollbar">
-  <nav aria-label="Pages navigation" class="flex flex-col p-2">
-    <h2 class="text-sidebar-foreground/70 flex h-8 items-center px-2 text-xs font-medium">Getting Started</h2>
-    <ul class="flex flex-col gap-1">
-      <li>
-        <a
-          href="/"
-          class="h-8 flex items-center gap-2 rounded-md p-2 text-left text-sm outline-hidden ring-sidebar-ring transition-[width,height,padding] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0"
-        >
-          {% lucide "info" %}
-          Introduction
-        </a>
-      </li>
-      <li>
-        <a
-          href="/installation"
-          class="h-8 flex items-center gap-2 rounded-md p-2 text-left text-sm outline-hidden ring-sidebar-ring transition-[width,height,padding] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0"
-        >
-          {% lucide "terminal" %}
-          Installation
-        </a>
-      </li>
-      <li>
-        <a
-          href="/kitchen-sink"
-          class="h-8 flex items-center gap-2 rounded-md p-2 text-left text-sm outline-hidden ring-sidebar-ring transition-[width,height,padding] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0"
-        >
-          {% lucide "layout-dashboard" %}
-          Kitchen sink
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://github.com/hunvreus/basecoat"
-          target="_blank"
-          class="h-8 flex items-center gap-2 rounded-md p-2 text-left text-sm outline-hidden ring-sidebar-ring transition-[width,height,padding] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0"
-        >
-          {% lucide "github" %}
-          GitHub
-          {% lucide "arrow-up-right", { "class": "text-muted-foreground size-3.5 ml-auto" } %}
-        </a>
-      </li>
-    </ul>
-  </nav>
-  <nav aria-label="Components navigation" class="flex flex-col p-2">
-    <h2 class="text-sidebar-foreground/70 flex h-8 items-center px-2 text-xs font-medium">Components</h2>
-    <ul class="flex flex-col gap-1">
-      {% for component in components %}
-        <li>
-          <a
-            href="/components/{{ component.id }}"
-            class="h-8 flex items-center gap-2 rounded-md p-2 text-left text-sm outline-hidden ring-sidebar-ring transition-[width,height,padding] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0"
-            hx-boost="true"
-            hx-select="#content"
-            hx-target="#content"
-            hx-swap="outerHTML"
-          >
-            {{ component.name }}
-          </a>
-        </li>
-      {% endfor %}
-    </ul>
-  </nav>
-</section>
-<footer class="flex flex-col gap-2 p-2">
-  {% set profile_menu %}
-    <div class="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-      <img src="https://avatar.vercel.sh/ronan_berder" class="size-8 shrink-0 rounded-full" alt="Ronan Berder"/>
-      <div class="grid flex-1 text-left text-sm leading-tight">
-        <span class="truncate font-medium">hunvreus</span>
-        <span class="text-muted-foreground truncate text-xs">hunvreus@example.com</span>
-      </div>
-    </div>
-    <hr role="separator">
-    <nav role="menu">
-      <button type="button" role="menuitem">
-        {% lucide "star" %}
-        Upgrade to Pro
-      </button>
-      <hr role="separator">
-      <button type="button" role="menuitem">
-        {% lucide "user" %}
-        Account
-      </button>
-      <button type="button" role="menuitem">
-        {% lucide "credit-card" %}
-        Billing
-      </button>
-      <button type="button" role="menuitem">
-        {% lucide "bell" %}
-        Notifications
-      </button>
-      <hr role="separator">
-      <button type="button" role="menuitem">
-        {% lucide "log-out" %}
-        Signout
-      </button>
-    </nav>
-  {% endset %}
-</footer>
+
+{{ sidebar(
+  label="Sidebar navigation",
+  header=header,
+  footer=footer,
+  content_attrs={
+    "x-data": "{
+      updateCurrentPage() {
+        $el.querySelectorAll('a').forEach(link => {
+          normalizedCurrentPathname = window.location.pathname.endsWith('/') ?
+            window.location.pathname.slice(0, -1) :
+            window.location.pathname;
+          normalizedLinkPathname = link.pathname.endsWith('/') ?
+            link.pathname.slice(0, -1) :
+            link.pathname;
+          if (normalizedCurrentPathname === normalizedLinkPathname) {
+            link.setAttribute('aria-current', 'page');
+          } else {
+            link.setAttribute('aria-current', 'false');
+          }
+        });
+      }
+    }",
+    "x-init": "updateCurrentPage()",
+    "@htmx:pushed-into-history.window": "updateCurrentPage()"
+  },
+  menu=menu
+) }}
