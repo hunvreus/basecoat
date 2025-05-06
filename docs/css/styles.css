@@ -13,7 +13,8 @@
 @theme {
   --font-sans: 'Inter';
   --font-mono: 'JetBrains Mono';
-
 }
 
-/* @import "./themes/claude.css"; */
+@import "./themes/claude.css";
+@import "./themes/doom-64.css";
+@import "./themes/supabase.css";

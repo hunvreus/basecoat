@@ -1,0 +1,20 @@
+{% macro toc_nav(items=[]) %}
+<nav class="sticky top-22 space-y-2 [&_ul]:m-0 [&_ul]:list-none [&_ul_ul]:pl-4 [&_li]:mt-0 [&_li]:pt-2 [&_a]:inline-block [&_a]:no-underline [&_a]:transition-colors [&_a]:hover:text-foreground [&_a]:text-muted-foreground">
+  <h4 class="font-medium">On This Page</h4>
+  {% macro toc_list(items=[]) %}
+    {% if items and items.length %}
+      <ul>
+      {% for item in items %}
+        <li>
+          <a href="#{{ item.id }}">{{ item.label }}</a>
+          {% if item.children and item.children.length %}
+            {{ toc_list(item.children) }}
+          {% endif %}
+        </li>
+      {% endfor %}
+      </ul>
+    {% endif %}
+  {% endmacro %}
+  {{ toc_list(items) }}
+</nav>
+{% endmacro %}

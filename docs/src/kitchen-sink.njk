@@ -1,30 +1,44 @@
 ---
 layout: layouts/base.njk
 ---
-{% include "partials/kitchen-sink/accordion.njk" %}
-{% include "partials/kitchen-sink/alert.njk" %}
-{% include "partials/kitchen-sink/alert-dialog.njk" %}
-{% include "partials/kitchen-sink/avatar.njk" %}
-{% include "partials/kitchen-sink/badge.njk" %}
-{% include "partials/kitchen-sink/breadcrumb.njk" %}
-{% include "partials/kitchen-sink/button.njk" %}
-{% include "partials/kitchen-sink/card.njk" %}
-{% include "partials/kitchen-sink/checkbox.njk" %}
-{% include "partials/kitchen-sink/combobox.njk" %}
-{% include "partials/kitchen-sink/dialog.njk" %}
-{% include "partials/kitchen-sink/dropdown-menu.njk" %}
-{% include "partials/kitchen-sink/form.njk" %}
-{% include "partials/kitchen-sink/input.njk" %}
-{% include "partials/kitchen-sink/label.njk" %}
-{% include "partials/kitchen-sink/pagination.njk" %}
-{% include "partials/kitchen-sink/popover.njk" %}
-{% include "partials/kitchen-sink/radio-group.njk" %}
-{% include "partials/kitchen-sink/select.njk" %}
-{% include "partials/kitchen-sink/skeleton.njk" %}
-{% include "partials/kitchen-sink/slider.njk" %}
-{% include "partials/kitchen-sink/switch.njk" %}
-{% include "partials/kitchen-sink/table.njk" %}
-{% include "partials/kitchen-sink/tabs.njk" %}
-{% include "partials/kitchen-sink/textarea.njk" %}
-{% include "partials/kitchen-sink/toast.njk" %}
-{% include "partials/kitchen-sink/tooltip.njk" %}
+{% set components = [
+  { label: "Accordion", id: "accordion" },
+  { label: "Alert", id: "alert" },
+  { label: "Alert Dialog", id: "alert-dialog" },
+  { label: "Avatar", id: "avatar" },
+  { label: "Badge", id: "badge" },
+  { label: "Breadcrumb", id: "breadcrumb" },
+  { label: "Button", id: "button" },
+  { label: "Card", id: "card" },
+  { label: "Checkbox", id: "checkbox" },
+  { label: "Combobox", id: "combobox" },
+  { label: "Dialog", id: "dialog" },
+  { label: "Dropdown Menu", id: "dropdown-menu" },
+  { label: "Form", id: "form" },
+  { label: "Input", id: "input" },
+  { label: "Label", id: "label" },
+  { label: "Pagination", id: "pagination" },
+  { label: "Popover", id: "popover" },
+  { label: "Radio Group", id: "radio-group" },
+  { label: "Select", id: "select" },
+  { label: "Skeleton", id: "skeleton" },
+  { label: "Slider", id: "slider" },
+  { label: "Switch", id: "switch" },
+  { label: "Table", id: "table" },
+  { label: "Tabs", id: "tabs" },
+  { label: "Textarea", id: "textarea" },
+  { label: "Toast", id: "toast" },
+  { label: "Tooltip", id: "tooltip" }
+] %}
+
+<div class="flex gap-x-10">
+  <div class="grid gap-4 flex-1">
+    {% for component in components %}
+      {% include "partials/kitchen-sink/" ~ component.id ~ ".njk" %}
+    {% endfor %}
+  </div>
+  <div class="hidden text-sm xl:block w-full max-w-[200px]">
+    {% from "macros/toc.njk" import toc_nav %}
+    {{ toc_nav(components) }}
+  </div>
+</div>

@@ -34,13 +34,15 @@ toc:
 ) }}
 {% endset %}
 
-{% set code_script %}<script>
+{% set code_script %}
+<script>
 {% fetchCode "src/js/dialog.js" %}
 
 document.addEventListener('alpine:init', () => {
   window.basecoat.registerDialog(Alpine);
 });
-</script>{% endset %}
+</script>
+{% endset %}
 
 {{ code_preview("alert-dialog", code_script | prettyHtml ~ code_html | prettyHtml) }}
 

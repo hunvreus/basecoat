@@ -1,8 +1,11 @@
 {% from "dialog.njk" import dialog %}
 
-<section id="dialog" class="w-full rounded-lg border scroll-mt-16">
-  <header class="border-b px-4 py-3">
+<section id="dialog"  class="w-full rounded-lg border scroll-mt-14">
+  <header class="border-b px-4 py-3 flex items-center justify-between">
     <h2 class="text-sm font-medium">Dialog</h2>
+    <a href="/components/dialog" class="text-muted-foreground hover:text-foreground" data-tooltip="See documentation">
+      {% lucide "book-open", { "class": "size-4" }   %}
+    </a>
   </header>
   <div class="p-4">
     <div class="flex flex-wrap items-center gap-4">

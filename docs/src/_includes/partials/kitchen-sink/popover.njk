@@ -1,8 +1,11 @@
 {% from "popover.njk" import popover %}
 
-<section id="popover" class="w-full rounded-lg border scroll-mt-16">
-  <header class="border-b px-4 py-3">
+<section id="popover"  class="w-full rounded-lg border scroll-mt-14">
+  <header class="border-b px-4 py-3 flex items-center justify-between">
     <h2 class="text-sm font-medium">Popover</h2>
+    <a href="/components/popover" class="text-muted-foreground hover:text-foreground" data-tooltip="See documentation">
+      {% lucide "book-open", { "class": "size-4" }   %}
+    </a>
   </header>
   <div class="p-4">
     {% call popover(

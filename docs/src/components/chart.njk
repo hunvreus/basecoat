@@ -7,61 +7,79 @@ toc:
     id: usage
 ---
 <div class="grid gap-6">
-  <div class="card">
-    <header>
-      <h2>Area Chart</h2>
-      <p>Showing total visitors for the last 6 months</p>
-    </header>
-    <section>
-      <canvas id="chart-area-default"></canvas>
-    </section>
-    <footer>
-      <div class="grid gap-2 text-sm">
-        <div class="flex items-center gap-2 leading-none font-medium">
-          Trending up by 5.2% this month
-          {% lucide "trending-up", { "class": "size-4" } %}
+  <div class="grid grid-cols-2 gap-6">
+    <div class="card">
+      <header>
+        <h2>Area Chart</h2>
+        <p>Showing total visitors for the last 6 months</p>
+      </header>
+      <section>
+        <canvas id="chart-area-default"></canvas>
+      </section>
+      <footer>
+        <div class="grid gap-2 text-sm">
+          <div class="flex items-center gap-2 leading-none font-medium">
+            Trending up by 5.2% this month
+            {% lucide "trending-up", { "class": "size-4" } %}
+          </div>
+          <div class="text-muted-foreground flex items-center gap-2 leading-none">January - June 2024</div>
         </div>
-        <div class="text-muted-foreground flex items-center gap-2 leading-none">January - June 2024</div>
-      </div>
-    </footer>
-  </div>
+      </footer>
+    </div>
 
-  <div class="card">
-    <header>
-      <h2>Area Chart - Stacked</h2>
-      <p>Showing total visitors for the last 6 months</p>
-    </header>
-    <section>
-      <canvas id="chart-area-stacked"></canvas>
-    </section>
-    <footer>
-      <div class="grid gap-2 text-sm">
-        <div class="flex items-center gap-2 leading-none font-medium">
-          Trending up by 5.2% this month
-          {% lucide "trending-up", { "class": "size-4" } %}
+    <div class="card">
+      <header>
+        <h2>Area Chart - Stacked</h2>
+        <p>Showing total visitors for the last 6 months</p>
+      </header>
+      <section>
+        <canvas id="chart-area-stacked"></canvas>
+      </section>
+      <footer>
+        <div class="grid gap-2 text-sm">
+          <div class="flex items-center gap-2 leading-none font-medium">
+            Trending up by 5.2% this month
+            {% lucide "trending-up", { "class": "size-4" } %}
+          </div>
+          <div class="text-muted-foreground flex items-center gap-2 leading-none">January - June 2024</div>
         </div>
-        <div class="text-muted-foreground flex items-center gap-2 leading-none">January - June 2024</div>
-      </div>
-    </footer>
-  </div>
+      </footer>
+    </div>
 
-  <div class="card">
-    <header>
-      <h2>Bar Chart - Multiple</h2>
-      <p>Showing total visitors for the last 6 months</p>
-    </header>
-    <section>
-      <canvas id="chart-bar-multiple"></canvas>
-    </section>
-    <footer>
-      <div class="grid gap-2 text-sm">
-        <div class="flex items-center gap-2 leading-none font-medium">
-          Trending up by 5.2% this month
-          {% lucide "trending-up", { "class": "size-4" } %}
+    <div class="card">
+      <header>
+        <h2>Bar Chart - Multiple</h2>
+        <p>Showing total visitors for the last 6 months</p>
+      </header>
+      <section>
+        <canvas id="chart-bar-multiple"></canvas>
+      </section>
+      <footer>
+        <div class="grid gap-2 text-sm">
+          <div class="flex items-center gap-2 leading-none font-medium">
+            Trending up by 5.2% this month
+            {% lucide "trending-up", { "class": "size-4" } %}
+          </div>
+          <div class="text-muted-foreground flex items-center gap-2 leading-none">January - June 2024</div>
         </div>
-        <div class="text-muted-foreground flex items-center gap-2 leading-none">January - June 2024</div>
-      </div>
-    </footer>
+      </footer>
+    </div>
+
+    <div class="card">
+      <header>
+        <h2>Doughnut Chart</h2>
+        <p>Showing total visitors for the last 6 months</p>
+      </header>
+      <section class="relative">
+        <div>
+          <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center">
+            <div class="text-3xl font-semibold">1,125</div>
+            <div class="text-muted-foreground text-xs">Visitors</div>
+          </div>
+          <canvas id="chart-doughnut" class="max-h-[200px] mx-auto"></canvas>
+        </div>
+      </section>
+    </div>
   </div>
 
   <div class="card">
@@ -79,18 +97,8 @@ toc:
       <h2>Bar Chart - Interactive</h2>
       <p>Showing total visitors for the last 6 months</p>
     </header>
-    <section class="h-[150px]">
+    <section class="max-h-[150px]">
       <canvas id="chart-line-interactive"></canvas>
-    </section>
-  </div>
-
-  <div class="card">
-    <header>
-      <h2>Doughnut Chart</h2>
-      <p>Showing total visitors for the last 6 months</p>
-    </header>
-    <section>
-      <canvas id="chart-doughnut"></canvas>
     </section>
   </div>
 
@@ -147,10 +155,10 @@ toc:
       const tooltipHTML = `
         <div
           role="tooltip" 
-          class="border-border/50 bg-background grid min-w-[8rem] items-start gap-1.5 rounded-lg border px-2.5 py-1.5 text-xs shadow-xl opacity-0 absolute pointer-events-none transition-all duration-400"
+          class="border-border/50 bg-background grid min-w-[8rem] items-start gap-1.5 rounded-lg border px-2.5 py-1.5 text-xs shadow-xl opacity-0 absolute pointer-events-none transition-all duration-400 space-y-1"
         >
           <h3 class="font-medium"></h3>
-          <ul class="grid gap-1 mt-1"></ul>
+          <ul class="grid gap-1"></ul>
         </div>`;
       const parser = new DOMParser();
       const doc = parser.parseFromString(tooltipHTML.trim(), 'text/html');
@@ -162,6 +170,7 @@ toc:
 
   const externalTooltipHandler = (context) => {
     const {chart, tooltip} = context;
+    const chartType = chart.config._config.type;
     const tooltipEl = getOrCreateTooltip(chart);
     const titleEl = tooltipEl.querySelector('h3');
     const bodyEl = tooltipEl.querySelector('ul');
@@ -178,20 +187,36 @@ toc:
       const titleLines = tooltip.title || [];
       const bodyLines = tooltip.body.map(b => b.lines);
 
-      if (titleEl) titleEl.textContent = titleLines[0] || '';
-      if (titleEl) titleEl.className = titleLines.length > 0 ? 'font-medium' : '';
+      if (titleEl) {
+        if (chartType === 'doughnut') {
+          titleEl.remove();
+        } else {
+          titleEl.textContent = titleLines[0] || '';
+        }
+      } 
 
       bodyLines.forEach((body, i) => {
         const colors = tooltip.labelColors[i];
         const parts = body[0].split(': ');
-        const label = parts[0] || '';
+        const label = chartType === 'doughnut'
+          ? titleLines[0] || ''
+          : parts[0] || '';
         const value = parts[1] || '';
 
-        console.log(colors)
+        let color;
+        switch (chartType) {
+          case 'doughnut':
+          case 'pie':
+          case 'bar':
+            color = colors.backgroundColor;
+            break;
+          default:
+            color = colors.borderColor;
+        }
 
         bodyHtml += `<li class="flex w-full flex-wrap items-center justify-between leading-none gap-x-2">
           <div class="flex items-center gap-x-1.5">
-            <div class="shrink-0 rounded-[2px] size-2.5 block" style="background:${colors.backgroundColor}"></div>
+            <div class="shrink-0 rounded-[2px] size-2.5 block" style="background:${color}"></div>
             <span class="text-muted-foreground">${label}</span>
           </div>
           <span class="text-foreground font-medium font-mono tabular-nums">${value}</span>
@@ -250,7 +275,7 @@ toc:
 
   let ctx = document.getElementById('chart-area-default');
   let data = {
-    labels: ['January', 'February', 'March', 'April', 'May', 'June'],
+    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
     datasets: [{
       label: 'Desktop',
       data: [186, 305, 237, 73, 209, 214],
@@ -306,7 +331,7 @@ toc:
 
   ctx = document.getElementById('chart-area-stacked');
   data = {
-    labels: ['January', 'February', 'March', 'April', 'May', 'June'],
+    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
     datasets: [{
       label: 'Desktop',
       data: [186, 305, 237, 73, 209, 214],
@@ -373,7 +398,7 @@ toc:
 
   ctx = document.getElementById('chart-bar-multiple');
   data = {
-    labels: ['January', 'February', 'March', 'April', 'May', 'June'],
+    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
     datasets: [{
         label: 'Desktop',
         data: [186, 305, 237, 73, 209, 214],
@@ -749,28 +774,6 @@ const chartDataDoughnut = [
   { browser: "other", visitors: 190, fill: themeColors.chart5 },
 ]
 
-const totalVisitors = chartDataDoughnut.reduce((sum, item) => sum + item.visitors, 0);
-
-// Plugin to draw text in the center
-const centerTextPlugin = {
-  id: 'centerText',
-  afterDraw: (chart) => {
-    const { ctx, chartArea } = chart;
-    if (!chartArea) return;
-
-    const centerX = chartArea.left + (chartArea.right - chartArea.left) / 2;
-    const centerY = chartArea.top + (chartArea.bottom - chartArea.top) / 2;
-
-    ctx.save();
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.font = '1.5rem sans-serif'; // Adjust font size as needed
-    ctx.fillStyle = themeColors.foreground; // Use foreground color
-    ctx.fillText(totalVisitors.toLocaleString(), centerX, centerY); // Format number if desired
-    ctx.restore();
-  }
-};
-
 // Prepare data for the doughnut chart
 const doughnutData = {
   labels: chartDataDoughnut.map(d => d.browser),
@@ -790,7 +793,7 @@ const doughnutConfig = {
   type: 'doughnut',
   data: doughnutData,
   options: {
-    cutout: '80%', // Adjust hole size
+    cutout: '50%', // Adjust hole size
     plugins: {
       legend: {
         display: false, // Hide default legend
@@ -802,8 +805,7 @@ const doughnutConfig = {
       },
       centerText: {} // Keep the custom plugin for center text
     }
-  },
-  plugins: [centerTextPlugin] // Register the plugin
+  }
 };
 
 // Assume you have a canvas with id="chart-doughnut" in your HTML

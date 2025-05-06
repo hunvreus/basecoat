@@ -130,7 +130,7 @@ window.basecoat.registerSelect = function(Alpine) {
     },
     $content: {
       '@click'(e) { this.handleOptionClick(e) },
-      '@mousemove'(e) { this.handleOptionMousemove(e) },
+      '@mouseover'(e) { this.handleOptionMousemove(e) },
       ':aria-hidden'() { return !this.open },
       'x-cloak': ''
     },

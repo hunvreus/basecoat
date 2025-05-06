@@ -2,7 +2,7 @@
 layout: layouts/base.njk
 ---
 
-<main class="mx-auto relative py-6 lg:gap-10 lg:py-8 flex w-full max-w-screen-lg">
+<main class="mx-auto relative flex w-full max-w-screen-lg gap-10">
   <div class="mx-auto w-full max-w-screen-md">
     <header class="space-y-2">
       <h1 class="text-3xl font-semibold tracking-tight">{{ title }}</h1>
@@ -14,26 +14,8 @@ layout: layouts/base.njk
   </div>
   {% if toc %}
     <div class="hidden text-sm xl:block w-full max-w-[300px]">
-      <nav class="sticky top-22 space-y-2 [&_ul]:m-0 [&_ul]:list-none [&_ul_ul]:pl-4 [&_li]:mt-0 [&_li]:pt-2 [&_a]:inline-block [&_a]:no-underline [&_a]:transition-colors [&_a]:hover:text-foreground [&_a]:text-muted-foreground">
-        <h4 class="font-medium">On This Page</h4>
-        {% if toc %}
-          {% macro renderToc(items) %}
-            {% if items and items.length %}
-              <ul>
-              {% for item in items %}
-                <li>
-                  <a href="#{{ item.id }}">{{ item.label }}</a>
-                  {% if item.children and item.children.length %}
-                    {{ renderToc(item.children) }}
-                  {% endif %}
-                </li>
-              {% endfor %}
-              </ul>
-            {% endif %}
-          {% endmacro %}
-          {{ renderToc(toc) }}
-        {% endif %}
-      </nav>
+      {% from "macros/toc.njk" import toc_nav %}
+      {{ toc_nav(toc) }}
     </div>
   {% endif %}
 </main>

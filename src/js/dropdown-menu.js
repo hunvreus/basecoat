@@ -83,7 +83,7 @@ window.basecoat.registerDropdownMenu = function(Alpine) {
       '@keydown.up.prevent'() { this.moveMenuitemFocus(-1); },
       '@keydown.home.prevent'() { this.focusMenuitem(0) },
       '@keydown.end.prevent'() { this.focusMenuitem(this.menuItems.length - 1) },
-      '@mousemove'(e) { this.handleMenuitemMousemove(e) },
+      '@mouseover'(e) { this.handleMenuitemMousemove(e) },
       ':aria-hidden'() { return !this.open },
       'x-cloak': ''
     },

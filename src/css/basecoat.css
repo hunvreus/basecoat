@@ -526,18 +526,6 @@
     @apply focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px];
     @apply aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive;
   }
-  .form input[type='date'],
-  .form input[type='datetime-local'],
-  .form input[type='month'],
-  .form input[type='week'],
-  .form input[type='time'],
-  .input[type='date'],
-  .input[type='datetime-local'],
-  .input[type='month'],
-  .input[type='week'],
-  .input[type='time'] {
-    
-  }
 }
 
 /* Label */

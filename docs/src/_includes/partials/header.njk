@@ -16,21 +16,28 @@
   >
     {% lucide "panel-left" %}
   </button>
-  <select class="select h-8 leading-none">
-    <option value="light">Default</option>
-    <option value="light">Other</option>
+  <select
+    class="select h-8 leading-none"
+    x-init
+    @change="$store.themeVariant.setThemeVariant($event.target.value)"
+    :value="$store.themeVariant.name"
+  >
+    <option value="">Default</option>
+    <option value="claude">Claude</option>
+    <option value="doom-64">Doom 64</option>
+    <option value="supabase">Supabase</option>
   </select>
   <button
     type="button"
-    aria-label="Toggle theme"
-    data-tooltip="Toggle theme"
+    :aria-label="$store.darkMode.isDark ? 'Switch to light mode' : 'Switch to dark mode'"
+    :data-tooltip="$store.darkMode.isDark ? 'Light mode' : 'Dark mode'"
     data-side="bottom"
     data-align="end"
     class="btn-icon-outline size-8"
     x-init
-    @click="$store.theme.toggle()"
+    @click="$store.darkMode.toggle()"
   >
-    <span x-show="$store.theme.isDark">{% lucide "sun" %}</span>
-    <span x-show="!$store.theme.isDark">{% lucide "moon" %}</span>
+    <span x-show="$store.darkMode.isDark">{% lucide "sun" %}</span>
+    <span x-show="!$store.darkMode.isDark">{% lucide "moon" %}</span>
   </button>
 </div>

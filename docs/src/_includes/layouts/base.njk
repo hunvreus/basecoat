@@ -4,19 +4,37 @@
   <!-- Theme -->
   <script>
   function isDark() {
-    return localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    return localStorage.getItem('darkMode') === 'dark' || (!localStorage.getItem('darkMode') && window.matchMedia('(prefers-color-scheme: dark)').matches);
   }
 
   if (isDark()) {
     document.documentElement.classList.add('dark');
   }
 
+  if (localStorage.getItem('themeVariant')) {
+    document.documentElement.classList.add(`theme-${localStorage.getItem('themeVariant')}`);
+  }
+
   document.addEventListener('alpine:init', () => {
-    Alpine.store('theme', {
+    Alpine.store('darkMode', {
       isDark: isDark(),
       toggle() {
         this.isDark = document.documentElement.classList.toggle('dark');
-        localStorage.setItem('theme', this.isDark ? 'dark' : 'light');
+        localStorage.setItem('darkMode', this.isDark ? 'dark' : 'light');
+      }
+    });
+
+    Alpine.store('themeVariant', {
+      name: localStorage.getItem('themeVariant'),
+      setThemeVariant(name) {
+        this.name = name;
+        localStorage.setItem('themeVariant', name);
+        document.documentElement.classList.forEach(className => {
+          if (className.startsWith('theme-')) {
+            document.documentElement.classList.remove(className);
+          }
+        });
+        document.documentElement.classList.add(`theme-${name}`);
       }
     });
   });
@@ -82,11 +100,11 @@
 {% include "partials/sidebar.njk" %}
 
 <main id="content">
-  <header class="bg-background sticky inset-x-0 top-0 isolate z-20 flex shrink-0 items-center gap-2 border-b z-10">
+  <header class="bg-background sticky inset-x-0 top-0 isolate flex shrink-0 items-center gap-2 border-b z-10">
     {% include "partials/header.njk" %}
   </header>
 
-  <div class="p-4">
+  <div class="p-6 md:p-8 xl:p-12">
     {{ content | safe }}
   </div>
 </main>
