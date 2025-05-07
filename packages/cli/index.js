@@ -1,9 +1,13 @@
 #!/usr/bin/env node
 
+console.log('CLI starting...');
+
 import { Command } from 'commander';
 import inquirer from 'inquirer';
 import fs from 'fs-extra';
 import path from 'path';
+
+console.log('Imports loaded');
 
 const program = new Command();
 
