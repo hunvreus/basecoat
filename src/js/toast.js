@@ -36,6 +36,11 @@ window.basecoat.registerToast = function(Alpine) {
       this.open = false;
       this.$el.blur();
     },
+    executeAction(actionString) {
+      if (actionString) {
+        Alpine.evaluate(this.$el, actionString);
+      }
+    },
 
     $toastBindings: {
       ['@mouseenter']() { this.$store.toaster.isPaused = true },
@@ -50,7 +55,7 @@ window.basecoat.registerToast = function(Alpine) {
     const template = document.getElementById('toast-template');
 
     if (!toaster) {
-      console.error(`Toaster container with id #${targetId} not found.`);
+      console.error(`Toaster container with id #${toasterId} not found.`);
       return;
     }
     if (!template) {

@@ -1,11 +1,151 @@
 ---
 layout: layouts/page.njk
 title: Sidebar
-description: A responsive table component.
+description: A composable, themeable and customizable sidebar component.
+toc:
+  - label: Usage
+    id: usage
+    children:
+      - label: HTML + Javascript
+        id: usage-default
+      - label: Jinja and Nunjucks
+        id: usage-macro
 ---
 
+{% from "macros/code_preview.njk" import code_preview %}
+{% from "macros/code_block.njk" import code_block %}
 {% from "sidebar.njk" import sidebar %}
 
+<h2 id="usage"><a href="#usage">Usage</a></h2>
 
+<h3 id="usage-default"><a href="#usage-default">HTML + Javascript</a></h3>
 
+<div class="alert my-6">
+  {% lucide "circle-alert" %}
+  <h2>This component requires Javascript.</h2>
+</div>
 
+<section class="prose">
+  <p>To use a sidebar, you will need the sidebar itself and a sibling container for the content of the page (e.g. <code>&lt;main&gt;</code>), with the following structure for the sidebar:</p>
+
+  <ul>
+    <li>A <code>&lt;div class="sidebar"&gt;</code> which wraps around the entire component and holds it state (e.g. open/close). It accepts an optional <code>data-side</code> set to <code>left</code>, or <code>right</code> to specify the side of the sidebar (defaults to <code>left</code>).</li>
+    <li>A <code>&lt;nav&gt;</code> that contains the actual sidebar with the following children:
+      <ul>
+        <li>A <code>&lt;header&gt;</code> and <code>&lt;footer&gt;</code> for the header and footer of the sidebar (fixed position).</li>
+        <li>A <code>&lt;section&gt;</code> for the main navigation list. To add links, you <b>must</b> wrap them in a <code>&lt;div role="group"&gt;</code> first. These groups can contain <code>&lt;h3"&gt;</code> for group headings and lists (i.e. <code>&lt;ul&gt;</code>) of links or buttons. You can also use <code>&lt;details&gt;</code> to wrap around collapsbile sections.</li>
+      </ul>
+    </li>
+  </ul>
+
+  <p>Any elememt on the page can toggle, open or close the sidebar by dispatching the <code>sidebar:toggle</code>, <code>sidebar:open</code> or <code>sidebar:close</code> events.</p>
+
+  <p>You can include the Javascript code provided below, load it as an individual file or use the CLI. Some Alpine.js properties are also required on certain elements (e.g. <code class="text-xs">x-bind</code>, <code class="text-xs">x-data</code>, <code class="text-xs">@click</code>).</p>
+</section>
+
+<div class="flex gap-2 my-6">
+  <a class="badge-outline" href="/installation/#install-js">
+    Components with Javascript
+    {% lucide "arrow-right" %}
+  </a>
+  <a class="badge-outline" href="/installation/#install-cli">
+    Use the CLI
+    {% lucide "arrow-right" %}
+  </a>
+  <a class="badge-outline" href="https://github.com/hunvreus/basecoat/blob/main/src/js/sidebar.js" target="_blank">
+    Individual JS file (sidebar.js)
+    {% lucide "arrow-right" %}
+  </a>
+</div>
+
+{% set code_html %}
+{% set icon_square_terminal %}{% lucide "square-terminal" %}{% endset %}
+{% set icon_bot %}{% lucide "bot" %}{% endset %}
+{% set icon_settings %}{% lucide "settings" %}{% endset %}
+
+{% set menu = [
+  { type: "group", label: "Getting started", items: [
+    { label: "Playground", url: "#", icon: icon_square_terminal },
+    { label: "Models", url: "#", icon: icon_bot },
+    { label: "Settings", type: "submenu", icon: icon_settings, items: [
+      { label: "General", url: "#" },
+      { label: "Team", url: "#" },
+      { label: "Billing", url: "#" },
+      { label: "Limits", url: "#" }
+    ] }
+  ]}
+] %}
+
+{{ sidebar(
+  label="Sidebar navigation",
+  content_attrs={
+    "class": "scrollbar"
+  },
+  menu=menu
+) }}
+<main>
+  <button type="button" @click="$dispatch('sidebar:toggle')">Toggle sidebar</button>
+  <h1>Content</h1>
+</main>
+{% endset %}
+
+{% set code_script %}
+<script>
+{% fetchCode "src/js/sidebar.js" %}
+
+document.addEventListener('alpine:init', () => {
+  window.basecoat.registerSidebar(Alpine);
+});
+</script>
+{% endset %}
+
+{% from "tabs.njk" import tabs %}
+{% set tabsets = [
+  { tab: "HTML", panel: code_block(code_html | prettyHtml, class="") },
+  { tab: "Javascipt (Alpine.js)", panel: code_block(code_script | prettyHtml, class="") }
+] %}
+{{ tabs(id="sidebar", tabsets=tabsets) }}
+
+<h3 id="usage-macro"><a href="#usage-macro">Jinja and Nunjucks</a></h3>
+
+<div class="prose">
+  <p>You can use the <code class="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-xs">sidebar()</code> Nunjucks or Jinja macro for this component.</p>
+</div>
+
+<div class="flex gap-2 my-6">
+  <a class="badge-outline" href="/installation/#install-macros" target="_blank">
+    Use Nunjucks or Jinja macros
+    {% lucide "arrow-right" %}
+  </a>
+  <a class="badge-outline" href="https://github.com/hunvreus/basecoat/blob/main/src/jinja/sidebar.html.jinja" target="_blank">
+    Jinja macro
+    {% lucide "arrow-right" %}
+  </a>
+  <a class="badge-outline" href="https://github.com/hunvreus/basecoat/blob/main/src/nunjucks/sidebar.njk" target="_blank">
+    Nunjucks macro
+    {% lucide "arrow-right" %}
+  </a>
+</div>
+
+{% set raw_code %}{% raw %}{% set menu = [
+  { type: "group", label: "Getting started", items: [
+    { label: "Playground", url: "#" },
+    { label: "Models", url: "#" },
+    { label: "Settings", type: "submenu", items: [
+      { label: "General", url: "#" },
+      { label: "Team", url: "#" },
+      { label: "Billing", url: "#" },
+      { label: "Limits", url: "#" }
+    ] }
+  ]}
+] %}
+
+{{ sidebar(
+  label="Sidebar navigation",
+  menu=menu
+) }}
+<main>
+  <h1>Content</h1>
+</main>
+{% endraw %}{% endset%}
+{{ code_block(raw_code, "jinja") }}

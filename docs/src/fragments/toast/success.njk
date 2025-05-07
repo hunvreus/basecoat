@@ -1,7 +1,6 @@
-{% from "toast.njk" import toaster %}
-{% set toasts = [{
-  title: "Event has been created",
-  description: "Sunday, December 03, 2023 at 9:00 AM",
-  cancel: { label: "Undo", click: "close()" }
-}] %}
-{{ toaster(toasts=toasts, is_fragment=true) }}
+{% from "toast.njk" import toast %}
+{{ toast(
+  title="Event has been created",
+  description="Sunday, December 03, 2023 at 9:00 AM",
+  cancel={ label: "Undo", click: "close()" }
+) }}

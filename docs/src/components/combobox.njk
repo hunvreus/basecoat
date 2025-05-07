@@ -8,8 +8,8 @@ toc:
     children:
       - label: HTML + Javascript
         id: usage-default
-      - label: Jinja or Nunjucks
-        id: usage-jinja
+      - label: Jinja and Nunjucks
+        id: usage-macro
   - label: Examples
     id: examples
     children:
@@ -57,12 +57,9 @@ document.addEventListener('alpine:init', () => {
 <div class="alert my-6">
   {% lucide "circle-alert" %}
   <h2>This component requires Javascript.</h2>
-  <section>
-    <p>You will need to include the Javascript (Alpine.js) code provided below before the HTML code for this component. As with all interactive components, you will need to add some Alpine.js properties to certain elements (e.g. <code class="text-xs">x-bind</code>, <code class="text-xs">x-data</code>, <code class="text-xs">@click</code>).</p>
-  </section>
 </div>
 
-<section class="prose">
+<div class="prose">
   <p>Combobox uses the same Alpine.js code and markup as the <a href="/components/select">Select</a> component, the only difference being the search box at the top of the listbox.</p>
   <p>You can set up a few additional options on the <code>&lt;div data-popover&gt;</code> element:</p>
   <ul>
@@ -70,7 +67,24 @@ document.addEventListener('alpine:init', () => {
     <li><code>data-align</code> can be set to <code>start</code>, <code>center</code>, or <code>end</code> to change the alignment of the popover.</li>
     <li><code>data-empty</code> to set up the message when the search is empty.</li>
   </ul>
-</section>
+
+  <p>You can include the Javascript code provided below, load it as an individual file or use the CLI. Some Alpine.js properties are also required on certain elements (e.g. <code class="text-xs">x-bind</code>, <code class="text-xs">x-data</code>, <code class="text-xs">@click</code>).</p>
+</div>
+
+<div class="flex gap-2 my-6">
+  <a class="badge-outline" href="/installation/#install-js">
+    Components with Javascript
+    {% lucide "arrow-right" %}
+  </a>
+  <a class="badge-outline" href="/installation/#install-cli">
+    Use the CLI
+    {% lucide "arrow-right" %}
+  </a>
+  <a class="badge-outline" href="https://github.com/hunvreus/basecoat/blob/main/src/js/select.js" target="_blank">
+    Individual JS file (select.js)
+    {% lucide "arrow-right" %}
+  </a>
+</div>
 
 {% from "tabs.njk" import tabs %}
 {% set tabsets = [
@@ -79,9 +93,26 @@ document.addEventListener('alpine:init', () => {
 ] %}
 {{ tabs(id="combobox", tabsets=tabsets) }}
 
-<h3 id="usage-jinja"><a href="#usage-jinja">Jinja or Nunjucks</a></h3>
+<h3 id="usage-macro"><a href="#usage-macro">Jinja and Nunjucks</a></h3>
 
-<p class="prose">If you use Jinja (or Nunjucks), you can use the <code>select()</code> macro directly, making sure to set <code>is_combobox</code> to <code>True</code> (or <code>true</code> for Nunjucks). <a href="/installation/#install-macros">Read more about using Basecoat with Jinja and Nunjucks</a>.</p>
+<div class="prose">
+  <p>You can use the <code class="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-xs">select()</code> Nunjucks or Jinja macro for this component. If you use one of the macros, make sure to set <code>is_combobox</code> to <code>True</code> (or <code>true</code> for Nunjucks).</p>
+</div>
+
+<div class="flex gap-2 my-6">
+  <a class="badge-outline" href="/installation/#install-macros" target="_blank">
+    Use Nunjucks or Jinja macros
+    {% lucide "arrow-right" %}
+  </a>
+  <a class="badge-outline" href="https://github.com/hunvreus/basecoat/blob/main/src/jinja/select.html.jinja" target="_blank">
+    Jinja macro
+    {% lucide "arrow-right" %}
+  </a>
+  <a class="badge-outline" href="https://github.com/hunvreus/basecoat/blob/main/src/nunjucks/select.njk" target="_blank">
+    Nunjucks macro
+    {% lucide "arrow-right" %}
+  </a>
+</div>
 
 {% set raw_code %}{% raw %}{% call select(
   listbox_attrs={"data-empty": "No framework found."},

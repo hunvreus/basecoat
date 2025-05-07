@@ -64,9 +64,31 @@ document.addEventListener('alpine:init', () => {
 
 <h2 id="usage"><a href="#usage">Usage</a></h2>
 
+<div class="alert my-6">
+  {% lucide "circle-alert" %}
+  <h2>This component requires Javascript.</h2>
+</div>
+
 <section class="prose">
-  <p>The example above uses some simple Tailwind CSS along with the <a href="/components/dropdown-menu">Dropdown Menu</a>.</p>
+  <p>This example uses some simple Tailwind CSS styles along with the <a href="/components/dropdown-menu">Dropdown Menu</a>.</p>
+
+  <p>You can include the Javascript code provided below, load it as an individual file or use the CLI. Some Alpine.js properties are also required on certain elements (e.g. <code class="text-xs">x-bind</code>, <code class="text-xs">x-data</code>, <code class="text-xs">@click</code>).</p>
 </section>
+
+<div class="flex gap-2 my-6">
+  <a class="badge-outline" href="/installation/#install-js">
+    Components with Javascript
+    {% lucide "arrow-right" %}
+  </a>
+  <a class="badge-outline" href="/installation/#install-cli">
+    Use the CLI
+    {% lucide "arrow-right" %}
+  </a>
+  <a class="badge-outline" href="https://github.com/hunvreus/basecoat/blob/main/src/js/select.js" target="_blank">
+    Individual JS file (select.js)
+    {% lucide "arrow-right" %}
+  </a>
+</div>
 
 {% from "tabs.njk" import tabs %}
 {% set tabsets = [
