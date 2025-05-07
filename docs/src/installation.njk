@@ -46,7 +46,7 @@ toc:
     <div class="prose">
       <p>Add Basecoat to your Tailwind CSS file.</p>
     </div>
-    {% set code %}npm install basecoatui{% endset %}
+    {% set code %}npm install @hunvreus/basecoat{% endset %}
     {{ code_block(code, "bash") }}
     <div class="prose">
       <p>Alternatively, you can directly <a href="https://github.com/hunvreus/basecoat/blob/main/src/css/basecoat.css" target="_blank">copy the <code>basecoat.css</code> file</a> into your project.</p>
@@ -97,7 +97,7 @@ toc:
 <div class="prose">
   <p>If you're using Nunjucks or Jinja, you can use the CLI to install the CSS and macros for any of the complex components(e.g. <a href="/components/dialog">Dialog</a>). It will copy the JS and `<code>.html.jinja</code> or <code>.njk</code> macros into your code.</p>
   <p>For example, to add the Dialog component, run:</p>
-  {% set code %}npx basecoatui add dialog{% endset %}
+  {% set code %}npx @hunvreus/basecoat add dialog{% endset %}
   {{ code_block(code, "bash") }}
   <p>You will be asked to confirm the template engine and destination directory for the Javascript and macros.</p>
 </div>
