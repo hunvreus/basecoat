@@ -15,7 +15,7 @@
     "basecoat": "./cli/index.js"
   },
   "exports": {
-    ".": "./css/basecoat.css"
+    ".": "./src/css/basecoat.css"
   },
   "keywords": [
     "components",
