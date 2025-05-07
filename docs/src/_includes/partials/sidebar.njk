@@ -51,7 +51,8 @@
   "hx-boost": "true",
   "hx-select": "#content",
   "hx-target": "#content",
-  "hx-swap": "outerHTML"
+  "hx-swap": "outerHTML",
+  "@click": "open = false"
 } %}
 
 {% set icon_home %}{% lucide "house" %}{% endset %}
@@ -65,7 +66,7 @@
     { label: "Introduction", url: "/introduction", icon: icon_info, attrs: link_attrs },
     { label: "Installation", url: "/installation", icon: icon_square_terminal, attrs: link_attrs },
     { label: "Kitchen sink", url: "/kitchen-sink", icon: icon_layout_dashboard, attrs: link_attrs },
-    { label: "GitHub", url: "https://github.com/hunvreus/basecoat", icon: icon_github, attrs: { "target": "_blank" } }
+    { label: "GitHub", url: "https://github.com/hunvreus/basecoat", icon: icon_github, attrs: { "target": "_blank", "@click": "open = false" } }
   ]},
   { type: 'group', label: 'Components', items: [
     { label: "Accordion", url: "/components/accordion", attrs: link_attrs },
