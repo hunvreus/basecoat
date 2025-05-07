@@ -1,7 +1,8 @@
 {
-  "name": "basecoat",
+  "name": "basecoatui",
   "version": "0.1.0",
   "description": "shadcn/ui for the rest of us",
+  "author": "hunvreus",
   "type": "module",
   "files": [
     "src/css",
