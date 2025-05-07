@@ -4,15 +4,17 @@
   "description": "shadcn/ui for the rest of us",
   "author": "hunvreus",
   "type": "module",
+  "workspaces": [
+    "packages/*"
+  ],
   "files": [
     "src/css",
     "src/js",
     "src/nunjucks",
-    "src/jinja",
-    "cli"
+    "src/jinja"
   ],
   "bin": {
-    "basecoat": "cli/index.js"
+    "add": "./packages/cli/index.js"
   },
   "exports": {
     ".": "./src/css/basecoat.css"
@@ -48,16 +50,11 @@
     "dev": "concurrently \"npm:css:dev\" \"npm:eleventy:serve\"",
     "build": "tailwindcss -i ./docs/css/styles.css -o ./docs/src/assets/styles.css --minify && eleventy"
   },
-  "dependencies": {
-    "commander": "^13.1.0"
-  },
   "devDependencies": {
     "@11ty/eleventy": "^3.0.0",
     "@grimlink/eleventy-plugin-lucide-icons": "^2.1.4",
     "@tailwindcss/cli": "^4.1.3",
     "concurrently": "^9.1.2",
-    "fs-extra": "^11.3.0",
-    "inquirer": "^12.6.0",
     "prettier": "^3.5.3",
     "tailwindcss": "^4.1.3"
   }

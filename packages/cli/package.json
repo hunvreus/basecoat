@@ -1,0 +1,14 @@
+{
+  "name": "@hunvreus/basecoat-cli",
+  "version": "0.1.0",
+  "description": "CLI for Basecoat UI components",
+  "type": "module",
+  "bin": {
+    "basecoat": "./index.js"
+  },
+  "dependencies": {
+    "commander": "^13.1.0",
+    "inquirer": "^12.6.0",
+    "fs-extra": "^11.3.0"
+  }
+}

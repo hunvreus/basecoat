@@ -26,7 +26,7 @@ let config = { ...DEFAULT_CONFIG };
 
 async function getAvailableComponents() {
   try {
-    const packageRoot = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
+    const packageRoot = path.resolve(path.dirname(new URL(import.meta.url).pathname), '../..');
     const jsSourceDir = path.join(packageRoot, 'src', 'js');
     const jsFiles = await fs.readdir(jsSourceDir);
     return jsFiles
@@ -76,13 +76,9 @@ async function ensureConfiguration() {
 console.log('Basecoat CLI');
 
 program
-  .name('basecoat')
+  .name('add')
   .description('Add Basecoat components to your project')
-  .version(packageVersion);
-
-program
-  .command('add')
-  .description('Add one or more components to your project')
+  .version(packageVersion)
   .argument('[components...]', 'Names of components to add')
   .action(async (componentsArg) => {
     let componentsToAdd = componentsArg;
@@ -135,11 +131,11 @@ async function addComponent(componentName) {
   console.log(`\nProcessing component: ${componentName}...`);
 
   // 1. Determine source paths (relative to package root)
-  const cliScriptDir = path.dirname(new URL(import.meta.url).pathname); // Get directory of the current script file
-  // Go UP from cli/, then DOWN into src/, then the specific folder
+  const cliScriptDir = path.dirname(new URL(import.meta.url).pathname);
+  const packageRoot = path.resolve(cliScriptDir, '../..');
   const templateExt = config.templateEngine === 'jinja' ? '.html.jinja' : '.njk';
-  const templateSource = path.resolve(cliScriptDir, '..', 'src', config.templateEngine, `${componentName}${templateExt}`); 
-  const scriptSource = path.resolve(cliScriptDir, '..', 'src', 'js', `${componentName}.js`); 
+  const templateSource = path.join(packageRoot, 'src', config.templateEngine, `${componentName}${templateExt}`); 
+  const scriptSource = path.join(packageRoot, 'src', 'js', `${componentName}.js`); 
 
   // 2. Determine destination paths (relative to user's current working directory)
   const templateDestPath = path.resolve(process.cwd(), config.templateDest, `${componentName}${templateExt}`);
