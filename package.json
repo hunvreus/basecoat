@@ -13,9 +13,6 @@
     "src/nunjucks",
     "src/jinja"
   ],
-  "bin": {
-    "add": "./packages/cli/index.js"
-  },
   "exports": {
     ".": "./src/css/basecoat.css"
   },
