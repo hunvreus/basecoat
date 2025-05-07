@@ -43,6 +43,21 @@ toc:
   <p>You can include the Javascript code provided below, load it as an individual file or use the CLI. Some Alpine.js properties are also required on certain elements (e.g. <code class="text-xs">x-bind</code>, <code class="text-xs">x-data</code>, <code class="text-xs">@click</code>).</p>
 </section>
 
+<div class="flex gap-2 my-6">
+  <a class="badge-outline" href="/installation/#install-js">
+    Components with Javascript
+    {% lucide "arrow-right" %}
+  </a>
+  <a class="badge-outline" href="/installation/#install-cli">
+    Use the CLI
+    {% lucide "arrow-right" %}
+  </a>
+  <a class="badge-outline" href="https://github.com/hunvreus/basecoat/blob/main/src/js/sidebar.js" target="_blank">
+    Individual JS file (sidebar.js)
+    {% lucide "arrow-right" %}
+  </a>
+</div>
+
 {% set code_html %}
 {% set icon_square_terminal %}{% lucide "square-terminal" %}{% endset %}
 {% set icon_bot %}{% lucide "bot" %}{% endset %}
@@ -69,6 +84,7 @@ toc:
   menu=menu
 ) }}
 <main>
+  <button type="button" @click="$dispatch('sidebar:toggle')">Toggle sidebar</button>
   <h1>Content</h1>
 </main>
 {% endset %}

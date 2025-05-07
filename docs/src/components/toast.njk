@@ -2,35 +2,252 @@
 layout: layouts/page.njk
 title: Toast
 description: A succinct message that is displayed temporarily.
+toc:
+  - label: Usage
+    id: usage
+    children:
+      - label: HTML + Javascript
+        id: usage-default
+        children:
+          - label: Append a toast
+            id: usage-append-toast
+          - label: Use $toast()
+            id: usage-use-magic-method
+      - label: Jinja and Nunjucks
+        id: usage-macro
 ---
 
+{% from "toast.njk" import toaster, toast %}
 {% from "macros/code_preview.njk" import code_preview %}
-{% set code %}<button
+{% from "macros/code_block.njk" import code_block %}
+
+{% set code_htmx %}<button
   class="btn-outline"
   hx-trigger="click"
   hx-get="/fragments/toast/success"
-  hx-target="#toast-htmx"
+  hx-target="#toaster"
+  hx-swap="beforeend"
 >
-  Toast from backend
-</button>
-<div id="toast-htmx"></div>{% endset %}
-{{ code_preview("toast-htmx", code, "max-w-md") }}
+  Toast from backend (with HTMX)
+</button>{% endset %}
+{{ code_preview("toast-htmx", code_htmx, "max-w-md") }}
 
-{% from "macros/code_preview.njk" import code_preview %}
-{% set code %}<button
+{% set code_alpine %}<button
   class="btn-outline"
   @click='
     $toast({
       category: "success",
-      title: "Great success",
-      description: "Tremendous success toast.",
+      title: "Success",
+      description: "A success toast called from the front-end.",
       action: {
-        label: "Go to Google",
-        url: "https://google.com"
+        label: "Dismiss",
+        click: "open =false"
       }
     })
   '>
   Toast from front-end
 </button>
 {% endset %}
-{{ code_preview("toast-alpine", code, "max-w-md") }}
+{{ code_preview("toast-alpine", code_alpine, "max-w-md") }}
+
+<h2 id="usage"><a href="#usage">Usage</a></h2>
+
+<h3 id="usage-default"><a href="#usage-default">HTML + Javascript</a></h3>
+
+<div class="alert my-6">
+  {% lucide "circle-alert" %}
+  <h2>This component requires Javascript.</h2>
+</div>
+
+<section class="prose">
+  <p>To use toasts, you will first need to set up the toaster code to the end of your <code>&lt;body&gt;</code> (see HTML below).</p>
+
+  <p>The <code>&lt;template id="toast-template"&gt;</code> bit is only required if you plan on using the <code>$toast()</code> method (see below).</p>
+
+  <p>You will also need to include the Javascript code provided below, load it as an individual file or use the CLI. Some Alpine.js properties are also required on certain elements (e.g. <code class="text-xs">x-bind</code>, <code class="text-xs">x-data</code>, <code class="text-xs">@click</code>).</p>
+</section>
+
+<div class="flex gap-2 my-6">
+  <a class="badge-outline" href="/installation/#install-js">
+    Components with Javascript
+    {% lucide "arrow-right" %}
+  </a>
+  <a class="badge-outline" href="/installation/#install-cli">
+    Use the CLI
+    {% lucide "arrow-right" %}
+  </a>
+  <a class="badge-outline" href="https://github.com/hunvreus/basecoat/blob/main/src/js/toast.js" target="_blank">
+    Individual JS file (toast.js)
+    {% lucide "arrow-right" %}
+  </a>
+</div>
+
+
+{% set code_script %}
+<script>
+{% fetchCode "src/js/popover.js" %}
+
+document.addEventListener('alpine:init', () => {
+  window.basecoat.registerPopover(Alpine);
+});
+</script>
+{% endset %}
+
+{% set code_html_toaster %}{{ toaster() }}{% endset %}
+
+{% from "tabs.njk" import tabs %}
+{% set tabsets = [
+  { tab: "HTML", panel: code_block(code_html_toaster | prettyHtml, class="") },
+  { tab: "Javascipt (Alpine.js)", panel: code_block(code_script | prettyHtml, class="") }
+] %}
+{{ tabs(id="popover", tabsets=tabsets) }}
+
+<section class="prose">
+  <p>Once that's in place, we can do one of two things:</p>
+
+  <ul>
+    <li>Append a <code>&lt;div class="toast"&gt;</code> to the toaster.</li>
+    <li>Use the <code>$toast()</code> Alpine.js "magic method".</li>
+  </ul>
+</section>
+
+<h4 id="usage-append-toast"><a href="#usage-append-toast">Append a toast</a></h4>
+
+<section class="prose">
+  <p>To display a toast, just append the following to the toaster:</p>
+</section>
+
+{% set code_toast_simple %}<div class="toast" x-data="toast" x-bind="$toastBindings">
+  <div class="toast-content">
+    <p>This is a toast.</p>
+  </div>
+</div>{% endset %}
+
+{{ code_block(code_toast_simple | prettyHtml, "html") }}
+
+<section class="prose">
+  <p>You can implement the layout you want within the toast, but here is the standard format used in the examples above:</p>
+</section>
+
+{% set code_toast %}{{ toast(
+  category="success",
+  title="Success",
+  description="A success toast called from the front-end.",
+  action={
+    label: "Dismiss",
+    click: "close()"
+  }
+) }}{% endset %}
+{{ code_block(code_toast | prettyHtml, "html") }}
+
+<section class="prose">
+  <p>When setting up <code>x-data</code>, you can pass a config object with `category` (e.g. "success", "error", "info", "warning") and `duration` (in milliseconds). By default, the duration will be 3 seconds, and 5 seconds for errors.</p>
+
+  <p>This approach is used in the first example with HTMX: when the button is clicked, we retrieve the a fragment that contains the markup for the toast and append it to <code>#toaster</code>.</p>
+</section>
+
+{% set code_htmx %}<button
+  class="btn-outline"
+  hx-trigger="click"
+  hx-get="/fragments/toast/success"
+  hx-target="#toaster"
+  hx-swap="beforeend"
+>
+  Toast from backend (with HTMX)
+</button>{% endset %}
+
+<h4 id="usage-use-magic-method"><a href="#usage-use-magic-method">Use $toast()</a></h4>
+
+<section class="prose">
+  <p>If you want to display a toast directly from the front-end, you can use the <code>$toast()</code> Alpine.js magic method. This is what we're doing in the second example above:</p>
+</section>
+
+{% set code_magic_method %}<button
+  class="btn-outline"
+  @click='
+    $toast({
+      category: "success",
+      title: "Success",
+      description: "A success toast called from the front-end.",
+      action: {
+        label: "Dismiss",
+        click: "open =false"
+      }
+    })
+  '>
+  Toast from front-end
+</button>
+{% endset %}
+{{ code_block(code_magic_method, "html") }}
+
+<section class="prose">
+  <p>The <code>$toast()</code> method accepts a config object with the following properties:</p>
+
+  <ul>
+    <li><code>duration</code> (optional): the duration of the toast in milliseconds. By default, the duration will be 3 seconds, or 5 seconds if <code>category</code> is "error".</li>
+    <li><code>category</code> (optional): "success", "error", "info", "warning" or any arbitrary string.</li>
+    <li><code>title</code> (optional): the title of the toast.</li>
+    <li><code>description</code> (optional): the description of the toast.</li>
+    <li><code>action</code> (optional): an object to define an action button:
+      <ul>
+        <li><code>label</code>: the label of the action button.</li>
+        <li><code>click</code> (optional): a string of Javascript to execute when the button is clicked.</li>
+        <li><code>url</code> (optional): a URL to link to when the button is clicked.</li>
+      </ul>
+    </li>
+    <li><code>cancel</code> (optional): an object to define a cancel button (similar structure to action).</li>
+  </ul>
+</section>
+
+<h3 id="usage-macro"><a href="#usage-macro">Jinja and Nunjucks</a></h3>
+
+<div class="prose">
+  <p>You can use the <code class="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-xs">toaster()</code> and <code class="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-xs">toast()</code> Nunjucks or Jinja macros for this component.</p>
+</div>
+
+<div class="flex gap-2 my-6">
+  <a class="badge-outline" href="/installation/#install-macros" target="_blank">
+    Use Nunjucks or Jinja macros
+    {% lucide "arrow-right" %}
+  </a>
+  <a class="badge-outline" href="https://github.com/hunvreus/basecoat/blob/main/src/jinja/toast.html.jinja" target="_blank">
+    Jinja macro
+    {% lucide "arrow-right" %}
+  </a>
+  <a class="badge-outline" href="https://github.com/hunvreus/basecoat/blob/main/src/nunjucks/toast.njk" target="_blank">
+    Nunjucks macro
+    {% lucide "arrow-right" %}
+  </a>
+</div>
+
+{% set raw_code_toaster %}{% raw %}{% from "toast.njk" import toaster %}
+{{ toaster(
+  toasts=[
+    {
+      type: "success",
+      title: "Success",
+      description: "A success toast called from the front-end.",
+      action: { label: "Dismiss", click: "close()" }
+    },
+    {
+      type: "info",
+      title: "Info",
+      description: "An info toast called from the front-end.",
+      action: { label: "Dismiss", click: "close()" }
+    }
+  ]
+) }}{% endraw %}{% endset%}
+
+{% set raw_code_toast %}{% raw %}{% from "toast.njk" import toast %}
+{{ toast(
+  title="Event has been created",
+  description="Sunday, December 03, 2023 at 9:00 AM",
+  cancel={ label: "Undo", click: "close()" }
+) }}{% endraw %}{% endset %}
+
+{% from "tabs.njk" import tabs %}
+{% set tabsets = [
+  { tab: "toaster()", panel: code_block(raw_code_toaster, "jinja", class="") },
+  { tab: "toast()", panel: code_block(raw_code_toast, "jinja", class="") }
+] %}
+{{ tabs(id="macros", tabsets=tabsets) }}

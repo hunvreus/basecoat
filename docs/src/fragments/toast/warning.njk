@@ -1,6 +1,5 @@
-{% from "toast.njk" import toaster %}
-{% set toasts = [{
-  category: "warning",
-  title: "Event start time cannot be earlier than 8am"
-}] %}
-{{ toaster(toasts=toasts, is_fragment=true) }}
+{% from "toast.njk" import toast %}
+{{ toast(
+  category="warning",
+  title="Event start time cannot be earlier than 8am"
+) }}

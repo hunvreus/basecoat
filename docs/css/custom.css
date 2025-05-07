@@ -1,9 +1,24 @@
+/* HTMX */
+.htmx-indicator {
+  @apply invisible opacity-0 transition-discrete transition-all;
+}
+.htmx-indicator:not(.htmx-request) {
+  @apply hidden;
+}
+.htmx-request,
+.htmx-request.htmx-indicator {
+  @apply visible opacity-100;
+}
+
 .content {
   > h2 {
     @apply mt-16 mb-6 scroll-m-22 border-b pb-4 text-xl font-semibold tracking-tight first:mt-0;
   }
   > h3 {
     @apply mt-8 mb-6 scroll-m-22 text-lg font-semibold tracking-tight;
+  }
+  > h4 {
+    @apply my-6 scroll-m-22 font-semibold tracking-tight;
   }
   .prose {
     @apply my-6;

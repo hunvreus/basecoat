@@ -150,17 +150,6 @@
   [x-cloak] {
     display: none !important;
   }
-  /* HTMX */
-  .htmx-indicator {
-    @apply invisible opacity-0 transition-discrete transition-all;
-  }
-  .htmx-indicator:not(.htmx-request) {
-    @apply hidden;
-  }
-  .htmx-request,
-  .htmx-request.htmx-indicator {
-    @apply visible opacity-100;
-  }
 }
 
 /* Alert */

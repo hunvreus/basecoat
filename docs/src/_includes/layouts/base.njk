@@ -97,5 +97,8 @@
 </head>
 <body>
 {{ content | safe }}
+
+{% from "toast.njk" import toaster %}
+{{ toaster() }}
 </body>
 </html>

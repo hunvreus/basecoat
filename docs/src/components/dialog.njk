@@ -60,7 +60,7 @@ document.addEventListener('alpine:init', () => {
 </script>
 {% endset %}
 
-{{ code_preview("dialog", code_html | prettyHtml) }}
+{{ code_preview("dialog", code_script | prettyHtml ~ code_html | prettyHtml) }}
 
 <h2 id="usage"><a href="#usage">Usage</a></h2>
 
@@ -90,8 +90,18 @@ document.addEventListener('alpine:init', () => {
 </section>
 
 <div class="flex gap-2 my-6">
-  <a class="badge-outline" href="/installation/#install-js">Components with Javascript {% lucide "arrow-right" %}</a>
-  <a class="badge-outline" href="/installation/#install-cli">Use the CLI {% lucide "arrow-right" %}</a>
+  <a class="badge-outline" href="/installation/#install-js">
+    Components with Javascript
+    {% lucide "arrow-right" %}
+  </a>
+  <a class="badge-outline" href="/installation/#install-cli">
+    Use the CLI
+    {% lucide "arrow-right" %}
+  </a>
+  <a class="badge-outline" href="https://github.com/hunvreus/basecoat/blob/main/src/js/dialog.js" target="_blank">
+    Individual JS file (dialog.js)
+    {% lucide "arrow-right" %}
+  </a>
 </div>
 
 {% from "tabs.njk" import tabs %}

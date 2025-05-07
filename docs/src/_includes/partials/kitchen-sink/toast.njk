@@ -8,19 +8,18 @@
   <div class="p-4">
     <div class="flex flex-wrap items-center gap-2">
     <div class="flex flex-wrap items-center gap-2">
-      <button class="btn-outline" hx-trigger="click" hx-get="/fragments/toast/success" hx-target="#toast-htmx">
+      <button class="btn-outline" hx-trigger="click" hx-get="/fragments/toast/success" hx-target="#toaster" hx-swap="beforeend">
         Success
       </button>
-      <button class="btn-outline" hx-trigger="click" hx-get="/fragments/toast/error" hx-target="#toast-htmx">
+      <button class="btn-outline" hx-trigger="click" hx-get="/fragments/toast/error" hx-target="#toaster" hx-swap="beforeend">
         Error
       </button>
-      <button class="btn-outline" hx-trigger="click" hx-get="/fragments/toast/info" hx-target="#toast-htmx">
+      <button class="btn-outline" hx-trigger="click" hx-get="/fragments/toast/info" hx-target="#toaster" hx-swap="beforeend">
         Info
       </button>
-      <button class="btn-outline" hx-trigger="click" hx-get="/fragments/toast/warning" hx-target="#toast-htmx">
+      <button class="btn-outline" hx-trigger="click" hx-get="/fragments/toast/warning" hx-target="#toaster" hx-swap="beforeend">
         Warning
       </button>
-      <div id="toast-htmx"></div>
     </div>
   </div>
 </section>
