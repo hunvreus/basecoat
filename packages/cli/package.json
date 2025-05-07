@@ -4,7 +4,7 @@
   "description": "CLI for Basecoat UI components",
   "type": "module",
   "bin": {
-    "basecoat": "./index.js"
+    "add": "./index.js"
   },
   "dependencies": {
     "commander": "^13.1.0",

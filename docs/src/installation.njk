@@ -97,7 +97,7 @@ toc:
 <div class="prose">
   <p>If you're using Nunjucks or Jinja, you can use the CLI to install the CSS and macros for any of the complex components(e.g. <a href="/components/dialog">Dialog</a>). It will copy the JS and `<code>.html.jinja</code> or <code>.njk</code> macros into your code.</p>
   <p>For example, to add the Dialog component, run:</p>
-  {% set code %}npx hunvreus/basecoat add dialog{% endset %}
+  {% set code %}npx github:hunvreus/basecoat/packages/cli add dialog{% endset %}
   {{ code_block(code, "bash") }}
   <p>You will be asked to confirm the template engine and destination directory for the Javascript and macros.</p>
 </div>
