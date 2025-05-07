@@ -2,6 +2,8 @@
 
 A collection of modern UI components built with Tailwind CSS that works with any web stack. Basecoat brings the magic of [shadcn/ui](https://ui.shadcn.com) to traditional web applications, no React required.
 
+![screenshot](docs/src/assets/images/screenshot.png)
+
 ## Features
 
 - **Lightweight**: no runtime JS, just CSS and tiny Alpine.js scripts for the more interactive components.
