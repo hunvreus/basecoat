@@ -83,9 +83,13 @@ async function ensureConfiguration() {
 console.log('Basecoat CLI');
 
 program
-  .name('add')
+  .name('basecoat')
   .description('Add Basecoat components to your project')
-  .version(packageVersion)
+  .version(packageVersion);
+
+program
+  .command('add')
+  .description('Add one or more components to your project')
   .argument('[components...]', 'Names of components to add')
   .action(async (componentsArg) => {
     let componentsToAdd = componentsArg;
