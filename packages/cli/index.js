@@ -14,7 +14,7 @@ const program = new Command();
 let packageVersion = 'unknown';
 try {
   const cliScriptDir = path.dirname(new URL(import.meta.url).pathname);
-  const packageJsonPath = path.resolve(cliScriptDir, '..', 'package.json');
+  const packageJsonPath = path.resolve(cliScriptDir, 'package.json');
   const packageJsonContent = fs.readFileSync(packageJsonPath, 'utf8');
   packageVersion = JSON.parse(packageJsonContent).version;
 } catch (error) {
@@ -85,9 +85,7 @@ console.log('Basecoat CLI');
 program
   .name('basecoat')
   .description('Add Basecoat components to your project')
-  .version(packageVersion);
-
-program
+  .version(packageVersion)
   .command('add')
   .description('Add one or more components to your project')
   .argument('[components...]', 'Names of components to add')
