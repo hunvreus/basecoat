@@ -37,7 +37,7 @@
       {{ key }}="{{ value }}"
     {% endfor %}
   >
-    {% for tabset in tabsets %}
+    {% for tabset in tabsets.items() %}
       <button
         type="button"
         role="tab"
@@ -54,7 +54,7 @@
     {% endfor %}
   </nav>
 
-  {% for tabset in tabsets %}
+  {% for tabset in tabsets.items() %}
     {% if tabset.panel %}
       <div
         role="tabpanel"

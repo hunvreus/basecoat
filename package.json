@@ -4,10 +4,10 @@
   "description": "shadcn/ui for the rest of us",
   "type": "module",
   "files": [
-    "css",
-    "js",
-    "nunjucks",
-    "jinja",
+    "src/css",
+    "src/js",
+    "src/nunjucks",
+    "src/jinja",
     "cli"
   ],
   "bin": {
