@@ -10,8 +10,8 @@ toc:
         id: usage-html
       - label: HTML + Javascript
         id: usage-js
-      - label: Jinja or Nunjucks
-        id: usage-jinja
+      - label: Jinja and Nunjucks
+        id: usage-macro
   - label: Examples
     id: examples
     children:
@@ -78,16 +78,9 @@ document.addEventListener('alpine:init', () => {
 
 <h3 id="usage-js"><a href="#usage-js">HTML + Javascript</a></h3>
 
-<div class="alert my-6">
-  {% lucide "circle-alert" %}
-  <h2>This component requires Javascript.</h2>
-  <section>
-    <p>You will need to include the Javascript (Alpine.js) code provided below before the HTML code for this component. As with all interactive components, you will need to add some Alpine.js properties to certain elements (e.g. <code class="text-xs">x-bind</code>, <code class="text-xs">x-data</code>, <code class="text-xs">@click</code>).</p>
-  </section>
-</div>
-
 <section class="prose">
   <p>If you need to do more than what <code>&lt;select&gt;</code> allows (e.g. HTML options), you can use this component. It is structured as such:</p>
+
   <ul>
     <li>A <code>&lt;div class="popover"&gt;</code> which wraps around the entire component and holds it state (e.g. open/close).</li>
     <li>A <code>&lt;button&gt;</code> that acts as the trigger to open or close the popover.</li>
@@ -102,12 +95,21 @@ document.addEventListener('alpine:init', () => {
     </li>
     <li>An <code>&lt;input type="hidden"&gt;</code> to hold the value of the field (if needed).</li>
   </ul>
+
   <p>As with the <a href="/components/popover">Popover</a> component, you can set up a few additional options on the <code>&lt;div data-popover&gt;</code> element:</p>
+
   <ul>
     <li><code>data-side</code> can be set to <code>top</code>, <code>bottom</code>, <code>left</code>, or <code>right</code> to change the side of the popover.</li>
     <li><code>data-align</code> can be set to <code>start</code>, <code>center</code>, or <code>end</code> to change the alignment of the popover.</li>
   </ul>
+
+  <p>You can include the Javascript code provided below, load it as an individual file or use the CLI. Some Alpine.js properties are also required on certain elements (e.g. <code class="text-xs">x-bind</code>, <code class="text-xs">x-data</code>, <code class="text-xs">@click</code>).</p>
 </section>
+
+<div class="flex gap-2 my-6">
+  <a class="badge-outline" href="/installation/#install-js">Components with Javascript {% lucide "arrow-right" %}</a>
+  <a class="badge-outline" href="/installation/#install-cli">Use the CLI {% lucide "arrow-right" %}</a>
+</div>
 
 {% from "tabs.njk" import tabs %}
 {% set tabsets = [
@@ -116,9 +118,26 @@ document.addEventListener('alpine:init', () => {
 ] %}
 {{ tabs(id="select", tabsets=tabsets) }}
 
-<h3 id="usage-jinja"><a href="#usage-jinja">Jinja or Nunjucks</a></h3>
+<h3 id="usage-macro"><a href="#usage-macro">Jinja and Nunjucks</a></h3>
 
-<p class="prose">If you use Jinja (or Nunjucks), you can use the <code>dropdown_menu()</code> macro directly. <a href="/installation/#install-macros">Read more about using Basecoat with Jinja and Nunjucks</a>.</p>
+<div class="prose">
+  <p>You can use the <code class="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-xs">dropdown_menu()</code> Nunjucks or Jinja macro for this component.</p>
+</div>
+
+<div class="flex gap-2 my-6">
+  <a class="badge-outline" href="/installation/#install-macros" target="_blank">
+    Use Nunjucks or Jinja macros
+    {% lucide "arrow-right" %}
+  </a>
+  <a class="badge-outline" href="https://github.com/hunvreus/basecoat/blob/main/src/jinja/dialog.html.jinja" target="_blank">
+    Jinja macro
+    {% lucide "arrow-right" %}
+  </a>
+  <a class="badge-outline" href="https://github.com/hunvreus/basecoat/blob/main/src/nunjucks/dialog.njk" target="_blank">
+    Nunjucks macro
+    {% lucide "arrow-right" %}
+  </a>
+</div>
 
 {% set raw_code %}{% raw %}{% call select(name="select-js") %}
 <div role="group" aria-labelledby="fruit-options-label">

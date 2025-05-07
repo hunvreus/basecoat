@@ -1,0 +1,18 @@
+---
+layout: layouts/base.njk
+---
+
+{% include "partials/sidebar.njk" %}
+
+<main id="content">
+  <header class="bg-background sticky inset-x-0 top-0 isolate flex shrink-0 items-center gap-2 border-b z-10">
+    {% include "partials/header.njk" %}
+  </header>
+
+  <div class="p-6 md:p-8 xl:p-12">
+    {{ content | safe }}
+  </div>
+</main>
+
+{% from "toast.njk" import toaster %}
+{{ toaster() }}
