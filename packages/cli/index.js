@@ -26,9 +26,12 @@ let config = { ...DEFAULT_CONFIG };
 
 async function getAvailableComponents() {
   try {
-    const packageRoot = path.resolve(path.dirname(new URL(import.meta.url).pathname), '../..');
+    const packageRoot = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..', '..');
+    console.log('Package root:', packageRoot);
     const jsSourceDir = path.join(packageRoot, 'src', 'js');
+    console.log('JS source dir:', jsSourceDir);
     const jsFiles = await fs.readdir(jsSourceDir);
+    console.log('Found JS files:', jsFiles);
     return jsFiles
       .filter(file => file.endsWith('.js'))
       .map(file => path.basename(file, '.js'));
@@ -132,7 +135,7 @@ async function addComponent(componentName) {
 
   // 1. Determine source paths (relative to package root)
   const cliScriptDir = path.dirname(new URL(import.meta.url).pathname);
-  const packageRoot = path.resolve(cliScriptDir, '../..');
+  const packageRoot = path.resolve(cliScriptDir, '..', '..');
   const templateExt = config.templateEngine === 'jinja' ? '.html.jinja' : '.njk';
   const templateSource = path.join(packageRoot, 'src', config.templateEngine, `${componentName}${templateExt}`); 
   const scriptSource = path.join(packageRoot, 'src', 'js', `${componentName}.js`); 
