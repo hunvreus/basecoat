@@ -48,8 +48,8 @@ toc:
       <p>Add Basecoat to your Tailwind CSS file.</p>
     </div>
     {% set code_npm %}npm install basecoat-css{% endset %}
-    {% set code_bun %}bun install basecoat-css{% endset %}
-    {% set code_pnpm %}pnpm install basecoat-css{% endset %}
+    {% set code_pnpm %}pnpm add basecoat-css{% endset %}
+    {% set code_bun %}bun add basecoat-css{% endset %}
     {% set code_yarn %}yarn add basecoat-css{% endset %}
     {% set tabsets = [
       { tab: "npm", panel: code_block(code_npm, class="") },
@@ -110,8 +110,8 @@ toc:
 </div>
 
 {% set code_npm_exec %}npx basecoat-cli add dialog{% endset %}
-{% set code_bun_exec %}bunx basecoat-cli add dialog{% endset %}
 {% set code_pnpm_exec %}pnpm dlx basecoat-cli add dialog{% endset %}
+{% set code_bun_exec %}bunx basecoat-cli add dialog{% endset %}
 {% set code_yarn_exec %}yarn dlx basecoat-cli add dialog{% endset %}
 {% set exec_tabsets = [
   { tab: "npm", panel: code_block(code_npm_exec, class="") },
