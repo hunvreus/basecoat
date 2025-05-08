@@ -1,9 +1,10 @@
 {
-  "name": "basecoat-ui",
-  "version": "0.1.0",
+  "name": "basecoat",
+  "version": "0.0.1",
   "description": "shadcn/ui for the rest of us",
   "author": "hunvreus",
   "type": "module",
+  "private": true,
   "workspaces": [
     "packages/*"
   ],
@@ -42,10 +43,11 @@
   },
   "homepage": "https://github.com/hunvreus/basecoat#readme",
   "scripts": {
-    "css:dev": "tailwindcss -i ./docs/css/styles.css -o ./docs/src/assets/styles.css --watch",
-    "eleventy:serve": "eleventy --serve",
-    "dev": "concurrently \"npm:css:dev\" \"npm:eleventy:serve\"",
-    "build": "tailwindcss -i ./docs/css/styles.css -o ./docs/src/assets/styles.css --minify && eleventy"
+    "build": "node ./scripts/build.js",
+    "docs:build": "tailwindcss -i ./docs/css/styles.css -o ./docs/src/assets/styles.css --minify && eleventy",
+    "docs:dev:css": "tailwindcss -i ./docs/css/styles.css -o ./docs/src/assets/styles.css --watch",
+    "docs:dev:eleventy": "eleventy --serve",
+    "docs:dev": "concurrently \"npm:docs:dev:css\" \"npm:docs:dev:eleventy\""
   },
   "devDependencies": {
     "@11ty/eleventy": "^3.0.0",

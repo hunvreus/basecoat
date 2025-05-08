@@ -1,23 +1,18 @@
 {
-  "name": "basecoat-cli",
+  "name": "basecoat-css",
   "version": "0.1.0",
-  "description": "Add Basecoat components to your project",
-  "author": "hunvreus",
-  "license": "MIT",
-  "type": "module",
-  "bin": {
-    "basecoat": "./dist/index.js"
+  "description": "CSS for Basecoat UI components",
+  "author": {
+    "name": "hunvreus",
+    "url": "https://x.com/hunvreus"
   },
+  "license": "MIT",
+  "main": "dist/basecoat.css",
+  "style": "dist/basecoat.css",
   "files": [
     "dist/"
   ],
-  "dependencies": {
-    "commander": "^13.1.0",
-    "fs-extra": "^11.3.0",
-    "inquirer": "^12.6.0"
-  },
   "keywords": [
-    "cli",
     "components",
     "component library",
     "component system",
@@ -36,10 +31,10 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/hunvreus/basecoat.git",
-    "directory": "packages/cli"
+    "directory": "packages/css"
   },
   "bugs": {
     "url": "https://github.com/hunvreus/basecoat/issues"
   },
-  "homepage": "https://basecoatui.com/installation#install-cli"
+  "homepage": "https://basecoatui.com/installation#install-css"
 }
