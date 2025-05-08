@@ -126,7 +126,7 @@ async function addComponent(componentName) {
 
 // Setup main CLI program
 program
-  .name('basecoat')
+  .name('basecoat-cli')
   .description('Add Basecoat components to your project')
   .version(packageVersion);
 
@@ -136,31 +136,43 @@ program
   .description('Add one or more Basecoat components to your project')
   .argument('[components...]', 'Names of components to add (e.g., dialog select)')
   .action(async (componentsArg) => {
-    let componentsToAdd = componentsArg;
+    let componentsToAdd = []; // Initialize as an empty array
     try {
-      if (!componentsToAdd || componentsToAdd.length === 0) {
+      if (!componentsArg || componentsArg.length === 0) {
         const availableComponents = await getAvailableComponents();
         if (availableComponents.length === 0) {
           console.error('Error: No components available in the CLI. Build might be corrupted.');
           return;
         }
+
+        const allComponentsChoice = 'All components';
+        const choices = [allComponentsChoice, ...availableComponents];
+
         const answers = await inquirer.prompt([
           {
-            type: 'checkbox',
-            name: 'selectedComponents',
+            type: 'list', // Changed from checkbox to list
+            name: 'selectedComponent', // Changed name for clarity
             message: 'Which component(s) would you like to add?',
-            choices: availableComponents,
-            validate: (input) => input.length > 0 ? true : 'Please select at least one component.'
+            choices: choices,
           }
         ]);
-        componentsToAdd = answers.selectedComponents;
+        
+        if (answers.selectedComponent === allComponentsChoice) {
+          componentsToAdd = availableComponents; // Add all
+        } else {
+          componentsToAdd = [answers.selectedComponent]; // Add the single selected one
+        }
+      } else {
+        // If components were provided as arguments, use them directly
+        // (This part of the logic remains, ensuring componentsArg is an array)
+        componentsToAdd = Array.isArray(componentsArg) ? componentsArg : [componentsArg];
       }
 
       if (!componentsToAdd || componentsToAdd.length === 0) {
         console.log('No components selected. Exiting.');
         return;
       }
-      
+
       await ensureConfiguration(); // Confirm/gather destination paths
 
       for (const componentName of componentsToAdd) {

@@ -6,7 +6,7 @@
   "license": "MIT",
   "type": "module",
   "bin": {
-    "basecoat": "./dist/index.js"
+    "basecoat-cli": "./dist/index.js"
   },
   "files": [
     "dist/"
