@@ -45,14 +45,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- Title & Description -->
-  <title>{{ site.title + ": " + title if page.url === "/" else title + " - " + site.title }}</title>
-  <meta name="description" content="{{ description or site.description }}"/>
-  <meta name="title" content="{{ title }} | Basecoat">
-  <meta name="description" content="{{ description }}">
+  {% set meta_title = title ~ ' | ' ~ site.title  if title else site.title %}
+  {% set meta_description = description or site.description %}
+  <title>{{ meta_title }}</title>
+  <meta name="description" content="{{ meta_description }}"/>
+  <meta name="title" content="{{ meta_title }}">
 
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
   <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+
+   <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="{{ site.url }}{{ page.url }}">
+  <meta property="og:title" content="{{ meta_title }}">
+  <meta property="og:description" content="{{ meta_description }}">
+  <meta property="og:image" content="{{ site.url }}/assets/social.png">
+  <meta property="og:site_name" content="{{ site.title }}">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:author" content="{{ site.author.name }}">
+
+  <!-- X/Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="{{ site.url }}{{ page.url }}">
+  <meta name="twitter:title" content="{{ title if title else site.title }}">
+  <meta name="twitter:description" content="{{ meta_description }}">
+  <meta name="twitter:image" content="{{ site.url }}/assets/social.png">
+  <meta name="twitter:creator" content="{{ site.author.x }}">
 
   <!-- CSS -->
   <link rel="preconnect" href="https://rsms.me/">

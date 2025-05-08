@@ -46,7 +46,7 @@
     "build": "node ./scripts/build.js",
     "docs:build": "tailwindcss -i ./docs/css/styles.css -o ./docs/src/assets/styles.css --minify && eleventy",
     "docs:dev:css": "tailwindcss -i ./docs/css/styles.css -o ./docs/src/assets/styles.css --watch",
-    "docs:dev:eleventy": "eleventy --serve",
+    "docs:dev:eleventy": "ELEVENTY_ENV=prod eleventy --serve",
     "docs:dev": "concurrently \"npm:docs:dev:css\" \"npm:docs:dev:eleventy\""
   },
   "devDependencies": {
