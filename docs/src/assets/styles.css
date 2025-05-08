@@ -498,6 +498,9 @@
   .w-max {
     width: max-content;
   }
+  .max-w-80 {
+    max-width: calc(var(--spacing) * 80);
+  }
   .max-w-\[75\%\] {
     max-width: 75%;
   }

@@ -13,7 +13,18 @@
 {% call popover(
   trigger=trigger,
   trigger_attrs={"class": "btn-ghost p-2 h-12 w-full flex items-center justify-start"},
-  content_attrs={"data-side": "right", "data-align": "end", "class": "w-80"}
+  content_attrs={
+    "data-side": "right",
+    "data-align": "end",
+    "class": "w-80",
+    "x-init": "
+      if (window.innerWidth < 768) {
+        $el.setAttribute('data-side', 'top');
+        $el.setAttribute('data-align', 'start');
+        $el.classList.add('w-full');
+      }
+    "
+  }
 ) %}
 <div class="grid gap-4 p-4">
   <header class="grid gap-1.5">

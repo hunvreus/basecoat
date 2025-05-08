@@ -1,7 +1,7 @@
 {
   "name": "basecoat-css",
   "version": "0.1.0",
-  "description": "CSS for Basecoat UI components",
+  "description": "Tailwind CSS for Basecoat components",
   "author": {
     "name": "hunvreus",
     "url": "https://x.com/hunvreus"

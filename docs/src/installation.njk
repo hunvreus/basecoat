@@ -25,6 +25,7 @@ toc:
 ---
 
 {% from "macros/code_block.njk" import code_block %}
+{% from "tabs.njk" import tabs %}
 
 <h2 id="install-css">Install the CSS</h2>
 
@@ -46,8 +47,17 @@ toc:
     <div class="prose">
       <p>Add Basecoat to your Tailwind CSS file.</p>
     </div>
-    {% set code %}npm install basecoat-css{% endset %}
-    {{ code_block(code, "bash") }}
+    {% set code_npm %}npm install basecoat-css{% endset %}
+    {% set code_bun %}bun install basecoat-css{% endset %}
+    {% set code_pnpm %}pnpm install basecoat-css{% endset %}
+    {% set code_yarn %}yarn add basecoat-css{% endset %}
+    {% set tabsets = [
+      { tab: "npm", panel: code_block(code_npm, class="") },
+      { tab: "pnpm", panel: code_block(code_pnpm, class="") },
+      { tab: "bun", panel: code_block(code_bun, class="") },
+      { tab: "yarn", panel: code_block(code_yarn, class="") }
+    ] %}
+    {{ tabs(id="npm-install", tabsets=tabsets) }}
     <div class="prose">
       <p>Alternatively, you can directly <a href="https://github.com/hunvreus/basecoat/blob/main/src/css/basecoat.css" target="_blank">copy the <code>basecoat.css</code> file</a> into your project.</p>
     </div>
@@ -95,10 +105,23 @@ toc:
 <h2 id="install-cli"><a href="#install-cli">Use the CLI</a></h2>
 
 <div class="prose">
-  <p>If you're using Nunjucks or Jinja, you can use the CLI to install the CSS and macros for any of the complex components(e.g. <a href="/components/dialog">Dialog</a>). It will copy the JS and `<code>.html.jinja</code> or <code>.njk</code> macros into your code.</p>
-  <p>For example, to add the Dialog component, run:</p>
-  {% set code %}npx basecoat-cli add dialog{% endset %}
-  {{ code_block(code, "bash") }}
+  <p>If you're using Nunjucks or Jinja, you can use the CLI to install the CSS and macros for any of the complex components(e.g. <a href="/components/dialog">Dialog</a>). It will copy the JS and <code>.html.jinja</code> or <code>.njk</code> macros into your code.</p>
+  <p>For example, to add the Dialog component, run one of the following commands:</p>
+</div>
+
+{% set code_npm_exec %}npx basecoat-cli add dialog{% endset %}
+{% set code_bun_exec %}bunx basecoat-cli add dialog{% endset %}
+{% set code_pnpm_exec %}pnpm dlx basecoat-cli add dialog{% endset %}
+{% set code_yarn_exec %}yarn dlx basecoat-cli add dialog{% endset %}
+{% set exec_tabsets = [
+  { tab: "npm", panel: code_block(code_npm_exec, class="") },
+  { tab: "pnpm", panel: code_block(code_pnpm_exec, class="") },
+  { tab: "bun", panel: code_block(code_bun_exec, class="") },
+  { tab: "yarn", panel: code_block(code_yarn_exec, class="") }
+] %}
+{{ tabs(id="cli-execution", tabsets=exec_tabsets, label="Execute CLI commands to add components:") }}
+
+<div class="prose my-6">
   <p>You will be asked to confirm the template engine and destination directory for the Javascript and macros.</p>
 </div>
 
@@ -152,4 +175,19 @@ toc:
     About shadcn/ui theming
     {% lucide "arrow-right" %}
   </a>
+</div>
+
+<h2 id="install-customization"><a href="#install-manual">Customization</a></h2>
+
+<div class="prose">
+  <p>You can override default styles using Tailwind:</p>
+  {% set code %}<button class="btn font-normal ">Click me</button>{% endset %}
+  {{ code_block(code, "html") }}
+  <p>You can also obviously extend and/or override the existing styles with your own Tailwind files:</p>
+  {% set code %}@import "tailwindcss";
+@import "basecoat-css";
+@import "theme.css";{% endset %}
+  {{ code_block(code, "css") }}
+  <p>You can also use use the <a href="#install-theming">theme variables</a> to customize many aspects of the components (colors, fonts, sizes, etc).</p>
+  <p><b>If you want to make more drastic changes</b>, I recommend <a href="https://github.com/hunvreus/basecoat/blob/main/src/css/basecoat.css" target="_blank">copying the <code>basecoat.css</code> file</a> into your project and making your changes there.</p>
 </div>
