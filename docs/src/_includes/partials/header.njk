@@ -32,7 +32,6 @@
     :aria-label="$store.darkMode.isDark ? 'Switch to light mode' : 'Switch to dark mode'"
     :data-tooltip="$store.darkMode.isDark ? 'Light mode' : 'Dark mode'"
     data-side="bottom"
-    data-align="end"
     class="btn-icon-outline size-8"
     x-init
     @click="$store.darkMode.toggle()"
@@ -40,4 +39,15 @@
     <span x-show="$store.darkMode.isDark">{% lucide "sun" %}</span>
     <span x-show="!$store.darkMode.isDark">{% lucide "moon" %}</span>
   </button>
+  <a
+    href="https://github.com/hunvreu/basecoat"
+    class="btn-icon size-8"
+    target="_blank"
+    rel="noopener noreferrer"
+    data-tooltip="GitHub repository"
+    data-side="bottom"
+    data-align="end"
+  >
+    {% lucide "github" %}
+  </a>
 </div>
