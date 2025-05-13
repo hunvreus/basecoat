@@ -258,7 +258,8 @@
       {% call dropdown_menu(
         id="dropdown-checkboxes",
         trigger=trigger,
-        trigger_attrs={"class": "btn-icon-ghost rounded-full size-8"}
+        trigger_attrs={"class": "btn-icon-ghost rounded-full size-8"},
+        content_attrs={"data-align": "end"}
       ) %}
         {{ profile_menu | safe }}
       {% endcall %}
