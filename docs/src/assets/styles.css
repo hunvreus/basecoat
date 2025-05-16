@@ -3176,8 +3176,9 @@
     background-size: 1rem;
     background-position: center right 0.75rem;
     background-repeat: no-repeat;
-    option {
+    option, optgroup {
       background-color: var(--color-popover);
+      color: var(--color-popover-foreground);
     }
   }
 }

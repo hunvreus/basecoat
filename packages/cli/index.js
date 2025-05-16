@@ -62,17 +62,17 @@ async function ensureConfiguration() {
   const pathPrompts = [];
   if (!config.templateDest || config.templateDest === DEFAULT_CONFIG.templateDest) {
     pathPrompts.push({
-        type: 'input',
-        name: 'templateDest',
-        message: 'Where should template files be placed?',
+      type: 'input',
+      name: 'templateDest',
+      message: 'Where should template files be placed?',
         default: DEFAULT_CONFIG.templateDest,
     });
   }
   if (!config.scriptDest || config.scriptDest === DEFAULT_CONFIG.scriptDest) {
     pathPrompts.push({
-        type: 'input',
-        name: 'scriptDest',
-        message: 'Where should script files be placed?',
+      type: 'input',
+      name: 'scriptDest',
+      message: 'Where should script files be placed?',
         default: DEFAULT_CONFIG.scriptDest,
     });
   }
@@ -108,7 +108,7 @@ async function addComponent(componentName) {
     }
     if (!scriptExists) {
       console.error(`  Error: Script file for component '${componentName}' not found in CLI assets. Searched: ${scriptSource}`);
-    }
+}
     if (!templateExists || !scriptExists) return; // Skip this component if sources are missing
 
     await fs.ensureDir(path.dirname(templateDestPath));
