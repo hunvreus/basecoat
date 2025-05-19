@@ -1,0 +1,45 @@
+{
+  "name": "basecoat-cli",
+  "version": "0.1.1",
+  "description": "Add Basecoat components to your project",
+  "author": "hunvreus",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "basecoat-cli": "./dist/index.js"
+  },
+  "files": [
+    "dist/"
+  ],
+  "dependencies": {
+    "commander": "^13.1.0",
+    "fs-extra": "^11.3.0",
+    "inquirer": "^12.6.0"
+  },
+  "keywords": [
+    "cli",
+    "components",
+    "component library",
+    "component system",
+    "ui",
+    "ui kit",
+    "shadcn",
+    "shadcn/ui",
+    "tailwind",
+    "tailwindcss",
+    "css",
+    "html",
+    "jinja",
+    "nunjucks",
+    "alpinejs"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hunvreus/basecoat.git",
+    "directory": "packages/cli"
+  },
+  "bugs": {
+    "url": "https://github.com/hunvreus/basecoat/issues"
+  },
+  "homepage": "https://basecoatui.com/installation#install-cli"
+}

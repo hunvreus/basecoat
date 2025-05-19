@@ -89,7 +89,7 @@ document.addEventListener('alpine:init', () => {
   <p>You can include the Javascript code provided below, load it as an individual file or use the CLI. Some Alpine.js properties are also required on certain elements (e.g. <code class="text-xs">x-bind</code>, <code class="text-xs">x-data</code>, <code class="text-xs">@click</code>).</p>
 </section>
 
-<div class="flex gap-2 my-6">
+<div class="flex flex-wrap gap-2 my-6">
   <a class="badge-outline" href="/installation/#install-js">
     Components with Javascript
     {% lucide "arrow-right" %}
@@ -111,13 +111,22 @@ document.addEventListener('alpine:init', () => {
 ] %}
 {{ tabs(id="combobox", tabsets=tabsets) }}
 
+<section class="prose">
+  <p>The component will dispatch <code>dialog:opened</code> and <code>dialog:closed</code> events when the dialog is opened or closed. You can also dispatch <code>dialog:open</code> and <code>dialog:close</code> events to open or close the dialog programmatically. You will need the element to have an <code>id</code> to be able to target it (e.g. <code>&lt;div id="my-dialog" class="dialog"&gt;</code>):</p>
+</section>
+
+{% set code_dispatch %}<button type="button" x-init @click="$dispatch('dialog:open', { id: 'my-dialog' })">
+  Open #my-dialog
+</button>{% endset %}
+{{ code_block(code_dispatch | prettyHtml, "html") }}
+
 <h3 id="usage-macro"><a href="#usage-macro">Jinja and Nunjucks</a></h3>
 
 <div class="prose">
   <p>You can use the <code class="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-xs">dialog()</code> Nunjucks or Jinja macro for this component.</p>
 </div>
 
-<div class="flex gap-2 my-6">
+<div class="flex flex-wrap gap-2 my-6">
   <a class="badge-outline" href="/installation/#install-macros" target="_blank">
     Use Nunjucks or Jinja macros
     {% lucide "arrow-right" %}

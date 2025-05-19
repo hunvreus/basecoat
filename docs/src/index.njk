@@ -7,7 +7,7 @@ layout: layouts/layout.njk
 <div class="max-w-screen-lg mx-auto">
   <header class="flex flex-col gap-4">
     <div class="flex flex-col gap-2">
-      <h1 class="text-2xl font-semibold tracking-tighter sm:text-3xl md:text-4xl">All of the shadcn/ui magic, none of the React</h1>
+      <h1 class="text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl">All of the shadcn/ui magic, none of the React</h1>
       <p class="sm:text-lg text-muted-foreground">A components library built with Tailwind CSS that works with any web stack.</p>
     </div>
     <div class="flex w-full items-center justify-start gap-2 pt-2">
@@ -92,7 +92,7 @@ layout: layouts/layout.njk
               <div class="font-medium">Strictly Necessary</div>
               <div class="text-muted-foreground">These cookies are essential in order to use the website and use its features.</div>
             </div>
-            <input type="checkbox" role="switch" class="input" />
+            <input type="checkbox" role="switch" class="input" checked />
           </label>
           <label class="flex items-center justify-between gap-2">
             <div class="flex flex-col gap-0.5">
@@ -192,7 +192,7 @@ layout: layouts/layout.njk
               </div>
               <div class="grid gap-2 flex-1">
                 <label for="payment-method-cvv">CVV</label>
-                <input type="text" id="payment-method-cvv" placeholder="123" maxlength="3" class="w-full" />
+                <input type="text" id="payment-method-cvv" placeholder="123" maxlength="4" class="w-full" />
               </div>
             </div>
             <button type="button" class="btn w-full">Continue</button>

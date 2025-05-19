@@ -1,5 +1,7 @@
 ---
 layout: layouts/layout.njk
+title: Kitchen Sink
+description: A collection of all the components available in Basecoat.
 ---
 {% set components = [
   { label: "Accordion", id: "accordion" },
@@ -31,11 +33,17 @@ layout: layouts/layout.njk
   { label: "Tooltip", id: "tooltip" }
 ] %}
 
-<div class="flex gap-x-10">
-  <div class="grid gap-4 flex-1">
-    {% for component in components %}
-      {% include "partials/kitchen-sink/" ~ component.id ~ ".njk" %}
-    {% endfor %}
+<div class="flex gap-x-10 justify-center">
+  <div>
+    <header class="space-y-2 mb-8">
+      <h1 class="text-3xl font-semibold tracking-tight">{{ title }}</h1>
+      <p class="text-muted-foreground">{{ description }}</p>
+    </header>
+    <div class="grid gap-4 flex-1">
+      {% for component in components %}
+        {% include "partials/kitchen-sink/" ~ component.id ~ ".njk" %}
+      {% endfor %}
+    </div>
   </div>
   <div class="hidden text-sm xl:block w-full max-w-[200px]">
     {% from "macros/toc.njk" import toc_nav %}

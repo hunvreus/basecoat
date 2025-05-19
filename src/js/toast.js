@@ -10,8 +10,10 @@ window.basecoat.registerToast = function(Alpine) {
     timeoutId: null,
 
     init() {
-      this.timeoutDuration = config.duration || (config.category === 'error' ? 5000 : 3000);
-      this.timeoutId = setTimeout(() => { this.close() }, this.timeoutDuration);
+      if (config.duration !== -1) {
+        this.timeoutDuration = config.duration || (config.category === 'error' ? 5000 : 3000);
+        this.timeoutId = setTimeout(() => { this.close() }, this.timeoutDuration);
+      }
       this.open = true;
       this.$watch('$store.toaster.isPaused', (isPaused) => {
         if (!this.open) return;

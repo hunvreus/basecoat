@@ -2,19 +2,20 @@
   "name": "basecoat",
   "version": "0.1.0",
   "description": "shadcn/ui for the rest of us",
+  "author": "hunvreus",
   "type": "module",
-  "files": [
-    "css",
-    "js",
-    "nunjucks",
-    "jinja",
-    "cli"
+  "private": true,
+  "workspaces": [
+    "packages/*"
   ],
-  "bin": {
-    "basecoat": "./cli/index.js"
-  },
+  "files": [
+    "src/css",
+    "src/js",
+    "src/nunjucks",
+    "src/jinja"
+  ],
   "exports": {
-    ".": "./css/basecoat.css"
+    ".": "./src/css/basecoat.css"
   },
   "keywords": [
     "components",
@@ -42,19 +43,17 @@
   },
   "homepage": "https://github.com/hunvreus/basecoat#readme",
   "scripts": {
-    "css:dev": "tailwindcss -i ./docs/css/styles.css -o ./docs/src/assets/styles.css --watch",
-    "eleventy:serve": "eleventy --serve",
-    "dev": "concurrently \"npm:css:dev\" \"npm:eleventy:serve\"",
-    "build": "tailwindcss -i ./docs/css/styles.css -o ./docs/src/assets/styles.css --minify && eleventy"
+    "build": "node ./scripts/build.js",
+    "docs:build": "tailwindcss -i ./docs/css/styles.css -o ./docs/src/assets/styles.css --minify && eleventy",
+    "docs:dev:css": "tailwindcss -i ./docs/css/styles.css -o ./docs/src/assets/styles.css --watch",
+    "docs:dev:eleventy": "ELEVENTY_ENV=prod eleventy --serve",
+    "docs:dev": "concurrently \"npm:docs:dev:css\" \"npm:docs:dev:eleventy\""
   },
   "devDependencies": {
     "@11ty/eleventy": "^3.0.0",
     "@grimlink/eleventy-plugin-lucide-icons": "^2.1.4",
     "@tailwindcss/cli": "^4.1.3",
-    "commander": "^13.1.0",
     "concurrently": "^9.1.2",
-    "fs-extra": "^11.3.0",
-    "inquirer": "^12.6.0",
     "prettier": "^3.5.3",
     "tailwindcss": "^4.1.3"
   }

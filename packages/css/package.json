@@ -1,0 +1,40 @@
+{
+  "name": "basecoat-css",
+  "version": "0.1.2",
+  "description": "Tailwind CSS for Basecoat components",
+  "author": {
+    "name": "hunvreus",
+    "url": "https://x.com/hunvreus"
+  },
+  "license": "MIT",
+  "main": "dist/basecoat.css",
+  "style": "dist/basecoat.css",
+  "files": [
+    "dist/"
+  ],
+  "keywords": [
+    "components",
+    "component library",
+    "component system",
+    "ui",
+    "ui kit",
+    "shadcn",
+    "shadcn/ui",
+    "tailwind",
+    "tailwindcss",
+    "css",
+    "html",
+    "jinja",
+    "nunjucks",
+    "alpinejs"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hunvreus/basecoat.git",
+    "directory": "packages/css"
+  },
+  "bugs": {
+    "url": "https://github.com/hunvreus/basecoat/issues"
+  },
+  "homepage": "https://basecoatui.com/installation#install-css"
+}

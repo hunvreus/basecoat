@@ -2,11 +2,10 @@
 !.gitignore
 !.eleventy.js
 
-/node_modules
-/_site
-
+_site/
+node_modules/
+packages/cli/dist/
+packages/css/dist/
 
 # Logs
 npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
