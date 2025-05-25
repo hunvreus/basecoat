@@ -6,7 +6,7 @@ toc:
   - label: Usage
     id: usage
     children:
-      - label: HTML + Javascript
+      - label: HTML + JavaScript
         id: usage-default
       - label: Jinja and Nunjucks
         id: usage-macro
@@ -18,11 +18,11 @@ toc:
 
 <h2 id="usage"><a href="#usage">Usage</a></h2>
 
-<h3 id="usage-default"><a href="#usage-default">HTML + Javascript</a></h3>
+<h3 id="usage-default"><a href="#usage-default">HTML + JavaScript</a></h3>
 
 <div class="alert my-6">
   {% lucide "circle-alert" %}
-  <h2>This component requires Javascript.</h2>
+  <h2>This component requires JavaScript.</h2>
 </div>
 
 <section class="prose">
@@ -38,14 +38,14 @@ toc:
     </li>
   </ul>
 
-  <p>Any elememt on the page can toggle, open or close the sidebar by dispatching the <code>sidebar:toggle</code>, <code>sidebar:open</code> or <code>sidebar:close</code> events.</p>
+  <p>Any element on the page can toggle, open or close the sidebar by dispatching the <code>sidebar:toggle</code>, <code>sidebar:open</code> or <code>sidebar:close</code> events.</p>
 
-  <p>You can include the Javascript code provided below, load it as an individual file or use the CLI. Some Alpine.js properties are also required on certain elements (e.g. <code class="text-xs">x-bind</code>, <code class="text-xs">x-data</code>, <code class="text-xs">@click</code>).</p>
+  <p>You can include the JavaScript code provided below, load it as an individual file or use the CLI. Some Alpine.js properties are also required on certain elements (e.g. <code class="text-xs">x-bind</code>, <code class="text-xs">x-data</code>, <code class="text-xs">@click</code>).</p>
 </section>
 
 <div class="flex flex-wrap gap-2 my-6">
   <a class="badge-outline" href="/installation/#install-js">
-    Components with Javascript
+    Components with JavaScript
     {% lucide "arrow-right" %}
   </a>
   <a class="badge-outline" href="/installation/#install-cli">
@@ -102,7 +102,7 @@ document.addEventListener('alpine:init', () => {
 {% from "tabs.njk" import tabs %}
 {% set tabsets = [
   { tab: "HTML", panel: code_block(code_html | prettyHtml, class="") },
-  { tab: "Javascipt (Alpine.js)", panel: code_block(code_script | prettyHtml, class="") }
+  { tab: "JavaScript (Alpine.js)", panel: code_block(code_script | prettyHtml, class="") }
 ] %}
 {{ tabs(id="sidebar", tabsets=tabsets) }}
 
