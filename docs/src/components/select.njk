@@ -27,194 +27,225 @@ toc:
 {% from "macros/code_block.njk" import code_block %}
 {% from "select.njk" import select %}
 
-{% set code_native %}<select class="select w-[180px]">
+{% set code_native %}
+<select class="select w-[180px]">
   <optgroup label="Fruits">
     <option>Apple</option>
     <option>Banana</option>
     <option>Blueberry</option>
     <option>Grapes</option>
     <option>Pineapple</option>
-</select>{% endset %}
-{{ code_preview("select-native", code_native) }}
+  </select>{% endset %}
+  {{ code_preview("select-native", code_native) }}
 
-{% set code_html %}
-{% call select(
+  {% set code_html %}
+  {% call select(
   name="select-js",
   trigger_attrs={"class": "w-[180px]"},
   register_on=["alpine:init", "htmx:afterSwap"]
 ) %}
-<div role="group" aria-labelledby="fruit-options-label">
-  <span id="fruit-options-label" role="heading">Fruits</span>
-  <div role="option" data-value="apple">Apple</div>
-  <div role="option" data-value="banana">Banana</div>
-  <div role="option" data-value="blueberry">Blueberry</div>
-  <div role="option" data-value="pineapple">Grapes</div>
-  <div role="option" data-value="pineapple">Pineapple</div>
-</div>
-{% endcall %}
-{% endset %}
+  <div role="group" aria-labelledby="fruit-options-label">
+    <span id="fruit-options-label" role="heading">Fruits</span>
+    <div role="option" data-value="apple">Apple</div>
+    <div role="option" data-value="banana">Banana</div>
+    <div role="option" data-value="blueberry">Blueberry</div>
+    <div role="option" data-value="pineapple">Grapes</div>
+    <div role="option" data-value="pineapple">Pineapple</div>
+  </div>
+  {% endcall %}
+  {% endset %}
 
-{% set code_script %}
-<script>
-{% fetchCode "src/js/select.js" %}
+  {% set code_script %}
+  <script>
+    {% fetchCode "src/js/select.js" %}
 
-document.addEventListener('alpine:init', () => {
-  window.basecoat.registerSelect(Alpine);
-});
-</script>
-{% endset %}
+    document.addEventListener('alpine:init', () => {
+      window
+        .basecoat
+        .registerSelect(Alpine);
+    });
+  </script>
+  {% endset %}
 
-{{ code_preview("select", code_script | prettyHtml ~ code_html | prettyHtml) }}
+  {{ code_preview("select", code_script | prettyHtml ~ code_html | prettyHtml) }}
 
-<h2 id="usage"><a href="#usage">Usage</a></h2>
+  <h2 id="usage">
+    <a href="#usage">Usage</a>
+  </h2>
 
-<h3 id="usage-html"><a href="#usage-html">HTML</a></h3>
+  <h3 id="usage-html">
+    <a href="#usage-html">HTML</a>
+  </h3>
 
-<section class="prose">
-  <p>If you use a <code>&lt;select&gt;</code> element, just add the <code>select</code> class to it or have a parent with the <code>form</code> class (<a href="/components/form">read more about form</a>).</p>
-</section>
+  <section class="prose">
+    <p>If you use a <code>&lt;select&gt;</code> element, just add the <code>select</code> class to it or have a parent with the <code>form</code> class (<a href="/components/form">read more about form</a>).</p>
+  </section>
 
-{{ code_block(code_native) }}
+  {{ code_block(code_native) }}
 
-<h3 id="usage-js"><a href="#usage-js">HTML + Javascript</a></h3>
+  <h3 id="usage-js">
+    <a href="#usage-js">HTML + Javascript</a>
+  </h3>
 
-<section class="prose">
-  <p>If you need to do more than what <code>&lt;select&gt;</code> allows (e.g. HTML options), you can use this component. It is structured as such:</p>
+  <section class="prose">
+    <p>If you need to do more than what <code>&lt;select&gt;</code> allows (e.g. HTML options), you can use this component. It is structured as such:</p>
 
-  <ul>
-    <li>A <code>&lt;div class="popover"&gt;</code> which wraps around the entire component and holds it state (e.g. open/close).</li>
-    <li>A <code>&lt;button&gt;</code> that acts as the trigger to open or close the popover.</li>
-    <li>A <code>&lt;div data-popover&gt;</code> that holds the content of the popover.</li>
-    <li>Inside of the <code>&lt;div data-popover&gt;</code> is a <code>&lt;nav role="listbox"&gt;</code> that contains a combination of:
+    <ul>
+      <li>A <code>&lt;div class="popover"&gt;</code> which wraps around the entire component and holds it state (e.g. open/close).</li>
+      <li>A <code>&lt;button&gt;</code> that acts as the trigger to open or close the popover.</li>
+      <li>A <code>&lt;div data-popover&gt;</code> that holds the content of the popover.</li>
+      <li>Inside of the <code>&lt;div data-popover&gt;</code> is a <code>&lt;nav role="listbox"&gt;</code> that contains a combination of:
       <ul>
-        <li><code>&lt;div role="option"&gt;</code> for the options with a <code>data-value</code> attribute.</li>
-        <li><code>&lt;hr role="separator"&gt;</code> to display a horizontal separator.</li>
-        <li><code>&lt;div role="group"&gt;</code> to group options.</li>
-        <li><code>&lt;span role="heading"&gt;</code> for group headings.</li>
-      </ul>
-    </li>
-    <li>An <code>&lt;input type="hidden"&gt;</code> to hold the value of the field (if needed).</li>
-  </ul>
+          <li>
+            <code>&lt;div role="option"&gt;</code> for the options with a <code>data-value</code> attribute.</li>
+          <li>
+            <code>&lt;hr role="separator"&gt;</code> to display a horizontal separator.</li>
+          <li>
+            <code>&lt;div role="group"&gt;</code> to group options.</li>
+          <li>
+            <code>&lt;span role="heading"&gt;</code> for group headings.</li>
+        </ul>
+      </li>
+      <li>An <code>&lt;input type="hidden"&gt;</code> to hold the value of the field (if needed).</li>
+    </ul>
 
-  <p>As with the <a href="/components/popover">Popover</a> component, you can set up a few additional options on the <code>&lt;div data-popover&gt;</code> element:</p>
+    <p>As with the <a href="/components/popover">Popover</a> component, you can set up a few additional options on the <code>&lt;div data-popover&gt;</code> element:</p>
 
-  <ul>
-    <li><code>data-side</code> can be set to <code>top</code>, <code>bottom</code>, <code>left</code>, or <code>right</code> to change the side of the popover.</li>
-    <li><code>data-align</code> can be set to <code>start</code>, <code>center</code>, or <code>end</code> to change the alignment of the popover.</li>
-  </ul>
+    <ul>
+      <li>
+        <code>data-side</code> can be set to <code>top</code>, <code>bottom</code>, <code>left</code>, or <code>right</code> to change the side of the popover.</li>
+      <li>
+        <code>data-align</code> can be set to <code>start</code>, <code>center</code>, or <code>end</code> to change the alignment of the popover.</li>
+    </ul>
 
-  <p>You can include the Javascript code provided below, load it as an individual file or use the CLI. Some Alpine.js properties are also required on certain elements (e.g. <code class="text-xs">x-bind</code>, <code class="text-xs">x-data</code>, <code class="text-xs">@click</code>).</p>
-</section>
+    <p>You can include the Javascript code provided below, load it as an individual file or use the CLI. Some Alpine.js properties are also required on certain elements (e.g. <code class="text-xs">x-bind</code>, <code class="text-xs">x-data</code>, <code class="text-xs">@click</code>).</p>
+  </section>
 
-<div class="flex flex-wrap gap-2 my-6">
-  <a class="badge-outline" href="/installation/#install-js">
+  <div class="flex flex-wrap gap-2 my-6">
+    <a class="badge-outline" href="/installation/#install-js">
     Components with Javascript
     {% lucide "arrow-right" %}
-  </a>
-  <a class="badge-outline" href="/installation/#install-cli">
+    </a>
+    <a class="badge-outline" href="/installation/#install-cli">
     Use the CLI
     {% lucide "arrow-right" %}
-  </a>
-  <a class="badge-outline" href="https://github.com/hunvreus/basecoat/blob/main/src/js/select.js" target="_blank">
+    </a>
+    <a class="badge-outline" href="https://github.com/hunvreus/basecoat/blob/main/src/js/select.js" target="_blank">
     Individual JS file (select.js)
     {% lucide "arrow-right" %}
-  </a>
-</div>
+    </a>
+  </div>
 
-{% from "tabs.njk" import tabs %}
-{% set tabsets = [
-  { tab: "HTML", panel: code_block(code_html | prettyHtml, class="") },
-  { tab: "Javascipt (Alpine.js)", panel: code_block(code_script | prettyHtml, class="") }
-] %}
-{{ tabs(id="select", tabsets=tabsets) }}
+  {% from "tabs.njk" import tabs %}
+  {% set tabsets = [
+    {
+      tab: "HTML",
+      panel: code_block(code_html | prettyHtml, class = "")
+    }, {
+      tab: "Javascipt (Alpine.js)",
+      panel: code_block(code_script | prettyHtml, class = "")
+    }
+  ] %}
+  {{ tabs(id="select", tabsets=tabsets) }}
 
-<section class="prose">
-  <p>The component will dispatch a <code>select:change</code> event when a value is selected, along with the value and label of the selected option in the <code>detail</code> object.</p>
-</section>
+  <section class="prose">
+    <p>The component will dispatch a <code>select:change</code> event when a value is selected, along with the value and label of the selected option in the <code>detail</code> object.</p>
+  </section>
 
-<h3 id="usage-macro"><a href="#usage-macro">Jinja and Nunjucks</a></h3>
+  <h3 id="usage-macro">
+    <a href="#usage-macro">Jinja and Nunjucks</a>
+  </h3>
 
-<div class="prose">
-  <p>You can use the <code class="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-xs">dropdown_menu()</code> Nunjucks or Jinja macro for this component.</p>
-</div>
+  <div class="prose">
+    <p>You can use the <code class="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-xs">dropdown_menu()</code> Nunjucks or Jinja macro for this component.</p>
+  </div>
 
-<div class="flex flex-wrap gap-2 my-6">
-  <a class="badge-outline" href="/installation/#install-macros" target="_blank">
+  <div class="flex flex-wrap gap-2 my-6">
+    <a class="badge-outline" href="/installation/#install-macros" target="_blank">
     Use Nunjucks or Jinja macros
     {% lucide "arrow-right" %}
-  </a>
-  <a class="badge-outline" href="https://github.com/hunvreus/basecoat/blob/main/src/jinja/dialog.html.jinja" target="_blank">
+    </a>
+    <a class="badge-outline" href="https://github.com/hunvreus/basecoat/blob/main/src/jinja/select.html.jinja" target="_blank">
     Jinja macro
     {% lucide "arrow-right" %}
-  </a>
-  <a class="badge-outline" href="https://github.com/hunvreus/basecoat/blob/main/src/nunjucks/dialog.njk" target="_blank">
+    </a>
+    <a class="badge-outline" href="https://github.com/hunvreus/basecoat/blob/main/src/nunjucks/select.njk" target="_blank">
     Nunjucks macro
     {% lucide "arrow-right" %}
-  </a>
-</div>
+    </a>
+  </div>
 
-{% set raw_code %}{% raw %}{% call select(name="select-js") %}
-<div role="group" aria-labelledby="fruit-options-label">
-  <span id="fruit-options-label" role="heading">Fruits</span>
-  <div role="option" data-value="apple">Apple</div>
-  <div role="option" data-value="banana">Banana</div>
-  <div role="option" data-value="blueberry">Blueberry</div>
-  <div role="option" data-value="pineapple">Grapes</div>
-  <div role="option" data-value="pineapple">Pineapple</div>
-</div>
-{% endcall %}{% endraw %}{% endset %}
-{{ code_block(raw_code, "jinja") }}
+  {% set raw_code %}
+  {% raw %}{% call select(name="select-js") %}
+    <div role="group" aria-labelledby="fruit-options-label">
+      <span id="fruit-options-label" role="heading">Fruits</span>
+      <div role="option" data-value="apple">Apple</div>
+      <div role="option" data-value="banana">Banana</div>
+      <div role="option" data-value="blueberry">Blueberry</div>
+      <div role="option" data-value="pineapple">Grapes</div>
+      <div role="option" data-value="pineapple">Pineapple</div>
+    </div>
+    {% endcall %}
+  {% endraw %}{% endset %}
+  {{ code_block(raw_code, "jinja") }}
 
-<h2 id="examples"><a href="#examples">Examples</a></h2>
+  <h2 id="examples">
+    <a href="#examples">Examples</a>
+  </h2>
 
-<h3 id="example-scrollable"><a href="#example-scrollable">Scrollable</a></h3>
+  <h3 id="example-scrollable">
+    <a href="#example-scrollable">Scrollable</a>
+  </h3>
 
-{% set code %}
-{% call select(
+  {% set code %}
+  {% call select(
   listbox_attrs={"class": "scrollbar overflow-y-auto max-h-64"},
   register_on=["alpine:init", "htmx:afterSwap"]
 ) %}
-{% for i in range(0, 99) %}
-<div role="option" data-value="item-{{ i }}">Item {{ i }}</div>
-{% endfor %}
-{% endcall %}
-{% endset %}
+  {% for i in range(0, 99) %}
+    <div role="option" data-value="item-{{ i }}">Item {{ i }}</div>
+  {% endfor %}
+  {% endcall %}
+  {% endset %}
 
-{{ code_preview("select-scrollable", code | prettyHtml) }}
+  {{ code_preview("select-scrollable", code | prettyHtml) }}
 
-<h3 id="example-disabled"><a href="#example-disabled">Disabled</a></h3>
+  <h3 id="example-disabled">
+    <a href="#example-disabled">Disabled</a>
+  </h3>
 
-{% set code %}
-{% call select(
-  trigger_attrs={"disabled": "disabled"},
-  register_on=["alpine:init", "htmx:afterSwap"]
-) %}
-<div role="option" data-value="disabled">Disabled</div>
-{% endcall %}
-{% endset %}
+  {% set code %}
+  {% call select(trigger_attrs = {
+    "disabled": "disabled"
+  }, register_on = ["alpine:init", "htmx:afterSwap"]) %}
+  <div role="option" data-value="disabled">Disabled</div>
+  {% endcall %}
+  {% endset %}
 
-{{ code_preview("select-disabled", code | prettyHtml) }}
+  {{ code_preview("select-disabled", code | prettyHtml) }}
 
-<h3 id="example-with-icon"><a href="#example-with-icon">With icon</a></h3>
+  <h3 id="example-with-icon">
+    <a href="#example-with-icon">With icon</a>
+  </h3>
 
-{% set code %}
-{% call select(
+  {% set code %}
+  {% call select(
   trigger_attrs={'class': 'w-[180px]'},
   register_on=["alpine:init", "htmx:afterSwap"]
 ) %}
-<div type="button" role="option" data-value="bar">
-  {% lucide "chart-bar", {"class": "text-muted-foreground"} %}
+  <div type="button" role="option" data-value="bar">
+    {% lucide "chart-bar", {"class": "text-muted-foreground"} %}
   Bar
 </div>
-<div type="button" role="option" data-value="line">
-  {% lucide "chart-line", {"class": "text-muted-foreground"} %}
+  <div type="button" role="option" data-value="line">
+    {% lucide "chart-line", {"class": "text-muted-foreground"} %}
   Line
 </div>
-<div type="button" role="option" data-value="pie">
-  {% lucide "chart-pie", {"class": "text-muted-foreground"} %}
+  <div type="button" role="option" data-value="pie">
+    {% lucide "chart-pie", {"class": "text-muted-foreground"} %}
   Pie
 </div>
-{% endcall %}
-{% endset %}
+  {% endcall %}
+  {% endset %}
 
-{{ code_preview("select-scrollable", code | prettyHtml) }}
+  {{ code_preview("select-scrollable", code | prettyHtml) }}
