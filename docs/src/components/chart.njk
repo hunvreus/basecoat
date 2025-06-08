@@ -782,9 +782,9 @@ const doughnutData = {
     data: chartDataDoughnut.map(d => d.visitors),
     backgroundColor: chartDataDoughnut.map(d => d.fill),
     borderColor: themeColors.background, // Use background for border
-    borderWidth: 2, // Add border between segments
+    borderWidth: 0, // Add border between segments
     hoverBorderColor: themeColors.background,
-    hoverBorderWidth: 2
+    hoverBorderWidth: 0
   }]
 };
 
@@ -793,7 +793,7 @@ const doughnutConfig = {
   type: 'doughnut',
   data: doughnutData,
   options: {
-    cutout: '50%', // Adjust hole size
+    cutout: '70%', // Adjust hole size
     plugins: {
       legend: {
         display: false, // Hide default legend

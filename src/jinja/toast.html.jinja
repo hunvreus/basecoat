@@ -10,7 +10,7 @@
 {% macro toaster(
   id="toaster",
   toasts=[],
-  main_attrs=None,
+  main_attrs={},
   is_fragment=False
 ) %}
 <div
@@ -21,7 +21,7 @@
   {% endfor %}
   {% if is_fragment %}hx-swap-oob="beforeend"{% endif %}
 >
-{% for item in toasts.items() %}
+{% for item in toasts %}
   {{ toast(
     category=item.category,
     title=item.title,

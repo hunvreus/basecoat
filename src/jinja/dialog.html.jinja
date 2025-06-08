@@ -75,7 +75,7 @@
           {% endfor %}
         >
           <h2 id="{{ id }}-title">{{ title | safe }}</h2>
-          <p>{{ description | safe }}</p>
+          {% if description %}<p>{{ description | safe }}</p>{% endif %}
         </header>
       {% endif %}
       {% if caller %}

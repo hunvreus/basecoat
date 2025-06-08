@@ -2,9 +2,8 @@ window.basecoat = window.basecoat || {};
 window.basecoat.registerSelect = function(Alpine) {
   if (Alpine.components && Alpine.components.select) return;
   
-  Alpine.data('select', (name = null, initialValue = null) => ({
+  Alpine.data('select', (initialValue = null) => ({
     open: false,
-    name: null,
     options: [],
     disabledOptions: [],
     focusedIndex: null,
@@ -14,7 +13,6 @@ window.basecoat.registerSelect = function(Alpine) {
     
     init() {
       this.$nextTick(() => {
-        if (name) this.name = name;
         this.options = Array.from(this.$el.querySelectorAll('[role=option]:not([aria-disabled])'));
         this.disabledOptions = Array.from(this.$el.querySelectorAll('[role=option][aria-disabled=true]'));
         if (this.options.length === 0) return;
@@ -78,6 +76,14 @@ window.basecoat.registerSelect = function(Alpine) {
     handleOptionEnter(event) {
       this.selectOption(this.options[this.focusedIndex]);
       this.open = !this.open;
+    },
+    selectValue(value, dispatch = true) {
+      if (this.options.length === 0 || value == null) return;
+      
+      const option = this.options.find(opt => opt.getAttribute('data-value') === String(value));
+      if (option) {
+        this.selectOption(option, dispatch);
+      }
     },
     selectOption(option, dispatch = true) {
       if (this.options.length === 0 || !option || option.disabled || option.getAttribute('data-value') == null) {

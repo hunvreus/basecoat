@@ -21,7 +21,7 @@
   x-data="dropdownMenu"
   @click.away="open = false"
   {% if id %}id="{{ id }}"{% endif %}
-  {% for key, value in main_attrs %}
+  {% for key, value in main_attrs.items() %}
     {% if key != "class" %}{{ key }}="{{ value }}"{% endif %}
   {% endfor %}
 >
@@ -35,7 +35,7 @@
     id="{{ id }}-trigger"
     aria-controls="{{ id }}-menu"
     {% endif %}
-    {% for key, value in trigger_attrs %}
+    {% for key, value in trigger_attrs.items() %}
       {{ key }}="{{ value }}"
     {% endfor %}
   >
@@ -47,7 +47,7 @@
     aria-hidden="true"
     x-bind="$content"
     {% if id %}id="{{ id }}-menu"{% endif %}
-    {% for key, value in content_attrs %}
+    {% for key, value in content_attrs.items() %}
       {{ key }}="{{ value }}"
     {% endfor %}
   >
