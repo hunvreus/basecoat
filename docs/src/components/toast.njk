@@ -84,13 +84,13 @@ toc:
 
 
 {% set code_script %}
-<script>
+{# <script>
 {% fetchCode "src/js/popover.js" %}
 
 document.addEventListener('alpine:init', () => {
   window.basecoat.registerPopover(Alpine);
 });
-</script>
+</script> #}
 {% endset %}
 
 {% set code_html_toaster %}{{ toaster() }}{% endset %}

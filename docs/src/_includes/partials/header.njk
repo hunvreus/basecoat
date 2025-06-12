@@ -1,18 +1,12 @@
 <div class="flex h-14 w-full items-center gap-2 px-4">
   <button
     type="button"
-    aria-label="Hide sidebar"
-    data-tooltip="Hide sidebar"
-    :data-tooltip="sidebarOpen ? 'Hide sidebar' : 'Show sidebar'"
+    onclick="window.dispatchEvent(new CustomEvent('sidebar:toggle'))"
+    aria-label="Toggle sidebar"
+    data-tooltip="Toggle sidebar"
     data-side="bottom"
     data-align="start"
     class="btn-sm-icon-ghost mr-auto size-7 -ml-1.5"
-    x-init
-    x-data="{ sidebarOpen: true }"
-    @click="
-      sidebarOpen = !sidebarOpen;
-      $dispatch('sidebar:toggle');
-    "
   >
     {% lucide "panel-left" %}
   </button>

@@ -8,7 +8,6 @@
     </a>
   </header>
   <div class="p-4 gap">
-
     <div class="flex flex-col gap-4">
       <div class="flex flex-wrap items-center gap-2 md:flex-row">
         <select class="select w-[180px]">
@@ -28,46 +27,70 @@
 
       <div class="flex flex-wrap items-center gap-4">
         <div class="flex flex-wrap items-center gap-2 md:flex-row">
-          {% call select(trigger_attrs={"class": "w-[180px]"}) %}
-          <div role="group" aria-labelledby="fruit-options-label">
-            <span id="fruit-options-label" role="heading">Fruits</span>
-            <div role="option" data-value="apple">Apple</div>
-            <div role="option" data-value="banana">Banana</div>
-            <div role="option" data-value="blueberry">Blueberry</div>
-          </div>
-          <div role="group" aria-labelledby="vegetable-options-label">
-            <span id="vegetable-options-label" role="heading">Grapes</span>
-            <div role="option" data-value="pineapple">Pineapple</div>
-          </div>
-          {% endcall %}
-
+          {{ select(
+            id="select-default",
+            trigger_attrs={"class": "w-[180px]"},
+            selected="blueberry",
+            items=[
+              {
+                type: "group",
+                label: "Fruits",
+                items: [
+                  { type: "item", label: "Apple", value: "apple" },
+                  { type: "item", label: "Banana", value: "banana" },
+                  { type: "item", label: "Blueberry Blueberry Blueberry Blueberry Blueberry", value: "blueberry" }
+                ]
+              },
+              {
+                type: "group",
+                label: "Grapes",
+                items: [
+                  { type: "item", label: "Pineapple", value: "pineapple" }
+                ]
+              }
+            ]
+          ) }}
           {% call select(
+            id="select-scrollbar",
             trigger_attrs={"class": "w-[180px]"},
             listbox_attrs={"class": "scrollbar overflow-y-auto max-h-64"}
           ) %}
-          {% for i in range(0, 99) %}
-          <div role="option" data-value="item-{{ i }}">Item {{ i }}</div>
-          {% endfor %}
+            {% for i in range(0, 99) %}
+              <div role="option" data-value="item-{{ i }}">Item {{ i }}</div>
+            {% endfor %}
           {% endcall %}
 
-          {% call select(trigger_attrs={"disabled": "disabled", "class": "w-[180px]"}) %}
+          {% call select(
+            id="select-disabled",
+            trigger_attrs={"disabled": "disabled", "class": "w-[180px]"}
+          ) %}
           <div role="option" data-value="disabled">Disabled</div>
           {% endcall %}
 
 
-          {% call select(name="just-testing", trigger_attrs={'class': 'w-[180px]'}) %}
-          <div type="button" role="option" data-value="bar">
-            {% lucide "chart-bar", {"class": "text-muted-foreground"} %}
-            Bar
-          </div>
-          <div type="button" role="option" data-value="line">
-            {% lucide "chart-line", {"class": "text-muted-foreground"} %}
-            Line
-          </div>
-          <div type="button" role="option" data-value="pie">
-            {% lucide "chart-pie", {"class": "text-muted-foreground"} %}
-            Pie
-          </div>
+          {% call select(
+            id="select-with-icon",
+            name="chart-type",
+            trigger_attrs={'class': 'w-[180px]'}
+          ) %}
+            <div type="button" role="option" data-value="bar">
+              <span class="flex items-center gap-2">
+                {% lucide "chart-bar", {"class": "text-muted-foreground"} %}
+                Bar
+              </span>
+            </div>
+            <div type="button" role="option" data-value="line">
+              <span class="flex items-center gap-2">
+                {% lucide "chart-line", {"class": "text-muted-foreground"} %}
+                Line
+              </span>
+            </div>
+            <div type="button" role="option" data-value="pie">
+              <span class="flex items-center gap-2">
+                {% lucide "chart-pie", {"class": "text-muted-foreground"} %}
+                Pie
+              </span>
+            </div>
           {% endcall %}
         </div>
       </div>

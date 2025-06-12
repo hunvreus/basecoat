@@ -63,7 +63,7 @@
   "hx-select": "#content",
   "hx-target": "#content",
   "hx-swap": "outerHTML",
-  "@click": "if (window.innerWidth < 768) { open = false }"
+  "data-sidebar-close-on-mobile": ""
 } %}
 
 {% set icon_home %}{% lucide "house" %}{% endset %}
@@ -79,7 +79,7 @@
     { label: "Kitchen sink", url: "/kitchen-sink", icon: icon_layout_dashboard, attrs: link_attrs },
     { label: "GitHub", url: "https://github.com/hunvreus/basecoat", icon: icon_github, attrs: {
         "target": "_blank",
-        "@click": "if (window.innerWidth < 768) { open = false }"
+        "data-sidebar-close-on-mobile": ""
       }
     }
   ]},
@@ -117,6 +117,7 @@
 
 
 {{ sidebar(
+  id="sidebar",
   label="Sidebar navigation",
   header=header,
   footer=footer,

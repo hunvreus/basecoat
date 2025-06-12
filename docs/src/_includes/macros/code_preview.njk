@@ -19,7 +19,6 @@
   ] %}
   
   {{ tabs(
-    id="code-block-{{ id }}",
     tabsets=tabsets,
     default_tab_index=(2 if default_code else 1),
     register_on=["alpine:init", "htmx:afterSwap"]

@@ -21,8 +21,7 @@ toc:
   id="demo-popover",
   trigger="Open popover",
   trigger_attrs={"class": "btn-outline"},
-  content_attrs={"class": "w-80 p-4"},
-  register_on=["alpine:init", "htmx:afterSwap"]
+  popover_attrs={"class": "w-80"}
 ) %}
   <div class="grid gap-4">
     <header class="grid gap-1.5">
@@ -52,13 +51,13 @@ toc:
 {% endset %}
 
 {% set code_script %}
-<script>
+{# <script>
 {% fetchCode "src/js/popover.js" %}
 
 document.addEventListener('alpine:init', () => {
   window.basecoat.registerPopover(Alpine);
 });
-</script>
+</script> #}
 {% endset %}
 
 {{ code_preview("popover", code_script | prettyHtml ~ code_html | prettyHtml) }}

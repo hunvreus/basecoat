@@ -34,34 +34,30 @@ toc:
     <option>Blueberry</option>
     <option>Grapes</option>
     <option>Pineapple</option>
+  </optgroup>
 </select>{% endset %}
 {{ code_preview("select-native", code_native) }}
 
 {% set code_html %}
-{% call select(
-  name="select-js",
+{{ select(
   trigger_attrs={"class": "w-[180px]"},
-  register_on=["alpine:init", "htmx:afterSwap"]
-) %}
-<div role="group" aria-labelledby="fruit-options-label">
-  <span id="fruit-options-label" role="heading">Fruits</span>
-  <div role="option" data-value="apple">Apple</div>
-  <div role="option" data-value="banana">Banana</div>
-  <div role="option" data-value="blueberry">Blueberry</div>
-  <div role="option" data-value="pineapple">Grapes</div>
-  <div role="option" data-value="pineapple">Pineapple</div>
-</div>
-{% endcall %}
+  items=[
+    {
+      type: "group",
+      label: "Fruits",
+      items: [
+        { type: "item", value: "apple", label: "Apple" },
+        { type: "item", value: "banana", label: "Banana" },
+        { type: "item", value: "blueberry", label: "Blueberry" },
+        { type: "item", value: "pineapple", label: "Grapes" },
+        { type: "item", value: "pineapple", label: "Pineapple" }
+      ]
+    }
+  ]
+) }}
 {% endset %}
 
 {% set code_script %}
-<script>
-{% fetchCode "src/js/select.js" %}
-
-document.addEventListener('alpine:init', () => {
-  window.basecoat.registerSelect(Alpine);
-});
-</script>
 {% endset %}
 
 {{ code_preview("select", code_script | prettyHtml ~ code_html | prettyHtml) }}
@@ -153,16 +149,21 @@ document.addEventListener('alpine:init', () => {
   </a>
 </div>
 
-{% set raw_code %}{% raw %}{% call select(name="select-js") %}
-<div role="group" aria-labelledby="fruit-options-label">
-  <span id="fruit-options-label" role="heading">Fruits</span>
-  <div role="option" data-value="apple">Apple</div>
-  <div role="option" data-value="banana">Banana</div>
-  <div role="option" data-value="blueberry">Blueberry</div>
-  <div role="option" data-value="pineapple">Grapes</div>
-  <div role="option" data-value="pineapple">Pineapple</div>
-</div>
-{% endcall %}{% endraw %}{% endset %}
+{% set raw_code %}{% raw %}{{ select(
+  items=[
+    {
+      type: "group",
+      label: "Fruits",
+      items: [
+        { type: "item", value: "apple", label: "Apple" },
+        { type: "item", value: "banana", label: "Banana" },
+        { type: "item", value: "blueberry", label: "Blueberry" },
+        { type: "item", value: "pineapple", label: "Grapes" },
+        { type: "item", value: "pineapple", label: "Pineapple" }
+      ]
+    }
+  ]
+) }}{% endraw %}{% endset %}
 {{ code_block(raw_code, "jinja") }}
 
 <h2 id="examples"><a href="#examples">Examples</a></h2>

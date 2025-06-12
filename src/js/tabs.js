@@ -1,64 +1,75 @@
-window.basecoat = window.basecoat || {};
-window.basecoat.registerTabs = function(Alpine) {
-  if (Alpine.components && Alpine.components.tabs) return;
-  
-  Alpine.data('tabs', (initialTabIndex = 0) => ({
-    activeTabIndex: initialTabIndex,
-    tabs: [],
-    panels: [],
+(() => {
+  const initTabs = (tabsComponent) => {
+    const tablist = tabsComponent.querySelector('[role="tablist"]');
+    if (!tablist) return;
 
-    init() {
-      this.$nextTick(() => {
-        this.tabs = Array.from(this.$el.querySelectorAll(':scope > [role=tablist] [role=tab]:not([disabled])'));
-        this.panels = Array.from(this.$el.querySelectorAll(':scope > [role=tabpanel]'));
-        if (this.tabs.length > 0) {
-          this.selectTab(this.tabs[initialTabIndex], false);
+    const tabs = Array.from(tablist.querySelectorAll('[role="tab"]'));
+    const panels = tabs.map(tab => document.getElementById(tab.getAttribute('aria-controls'))).filter(Boolean);
+
+    const selectTab = (tabToSelect) => {
+      tabs.forEach((tab, index) => {
+        tab.setAttribute('aria-selected', 'false');
+        tab.setAttribute('tabindex', '-1');
+        if (panels[index]) panels[index].hidden = true;
+      });
+
+      tabToSelect.setAttribute('aria-selected', 'true');
+      tabToSelect.setAttribute('tabindex', '0');
+      const activePanel = document.getElementById(tabToSelect.getAttribute('aria-controls'));
+      if (activePanel) activePanel.hidden = false;
+    };
+
+    tablist.addEventListener('click', (e) => {
+      const clickedTab = e.target.closest('[role="tab"]');
+      if (clickedTab) selectTab(clickedTab);
+    });
+
+    tablist.addEventListener('keydown', (e) => {
+      const currentTab = e.target;
+      if (!tabs.includes(currentTab)) return;
+
+      let nextTab;
+      const currentIndex = tabs.indexOf(currentTab);
+
+      switch (e.key) {
+        case 'ArrowRight':
+          nextTab = tabs[(currentIndex + 1) % tabs.length];
+          break;
+        case 'ArrowLeft':
+          nextTab = tabs[(currentIndex - 1 + tabs.length) % tabs.length];
+          break;
+        case 'Home':
+          nextTab = tabs[0];
+          break;
+        case 'End':
+          nextTab = tabs[tabs.length - 1];
+          break;
+        default:
+          return;
+      }
+
+      e.preventDefault();
+      selectTab(nextTab);
+      nextTab.focus();
+    });
+    
+    tabsComponent.dataset.tabsInitialized = true;
+  };
+
+  document.querySelectorAll('.tabs:not([data-tabs-initialized])').forEach(initTabs);
+
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      mutation.addedNodes.forEach((node) => {
+        if (node.nodeType === Node.ELEMENT_NODE) {
+          if (node.matches('.tabs:not([data-tabs-initialized])')) {
+            initTabs(node);
+          }
+          node.querySelectorAll('.tabs:not([data-tabs-initialized])').forEach(initTabs);
         }
       });
-    },
-    nextTab() {
-      if (this.tabs.length === 0) return;
-      let newIndex = (this.activeTabIndex + 1) % this.tabs.length;
-      this.selectTab(this.tabs[newIndex]);
-    },
-    prevTab() {
-      if (this.tabs.length === 0) return;
-      let newIndex = (this.activeTabIndex - 1 + this.tabs.length) % this.tabs.length;
-      this.selectTab(this.tabs[newIndex]);
-    },
-    selectTab(tab, focus = true) {
-      if (!tab || this.tabs.length === 0) return;
+    });
+  });
 
-      this.tabs.forEach((t, index) => {
-        const isSelected = t === tab;
-        t.setAttribute('aria-selected', isSelected);
-        t.setAttribute('tabindex', isSelected ? '0' : '-1');
-        if (isSelected) {
-          this.activeTabIndex = index;
-          this.activeTab = t;
-          if (focus) {
-            t.focus();
-          }
-        }
-      });
-
-      const panelId = tab.getAttribute('aria-controls');
-      if (!panelId) return;
-
-      this.panels.forEach(panel => {
-          panel.hidden = (panel.getAttribute('id') !== panelId);
-      });
-    },
-
-    $tablist: {
-      ['@click'](event) {
-          const clickedTab = event.target.closest('[role=tab]');
-          if (clickedTab) {
-              this.selectTab(clickedTab);
-          }
-      },
-      ['@keydown.arrow-right.prevent']() { this.nextTab() },
-      ['@keydown.arrow-left.prevent']() { this.prevTab() },
-    },
-  }));
-};
+  observer.observe(document.body, { childList: true, subtree: true });
+})();

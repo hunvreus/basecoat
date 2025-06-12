@@ -23,18 +23,15 @@
   footer_attrs={},
   content_wrapper_attrs=None
 ) %}
-<div
+<aside
   {% if id %}id="{{ id }}"{% endif %}
   class="sidebar {{ main_attrs.class }}"
-  data-uninitialized
   data-side="{{ side if side else "left" }}"
   aria-hidden="{{ "true" if not open else "false" }}"
   {{ "inert" if not open }}
   {% for key, value in main_attrs %}
     {% if key != "class" %}{{ key }}="{{ value }}"{% endif %}
   {% endfor %}
-  x-data="sidebar({{ "true" if open else "false" }})"
-  x-bind="$main"
 >
   <nav
     aria-label="{{ label }}"
@@ -71,7 +68,7 @@
     </footer>
     {% endif %}
   </nav>
-</div>
+</aside>
 {% endmacro %}
 
 {#

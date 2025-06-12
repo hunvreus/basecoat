@@ -5,6 +5,7 @@ import fs from "fs";
 import path from "path";
 
 export default async function(eleventyConfig) {
+  eleventyConfig.addWatchTarget("src/nunjucks/");
   eleventyConfig.setInputDirectory("./docs/src");
   eleventyConfig.addPassthroughCopy({"docs/src/assets": "assets"});
   eleventyConfig.addPassthroughCopy({ "src/js": "assets/js" });

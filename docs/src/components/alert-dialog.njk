@@ -18,8 +18,8 @@ toc:
 
 {% set code_html %}
 {% set footer %}
-  <button class="btn-outline" @click="open = false">Cancel</button>
-  <button class="btn-primary" @click="open = false">Continue</button>
+  <button class="btn-outline" onClick="document.getElementById('alert-dialog').close()">Cancel</button>
+  <button class="btn-primary" onClick="document.getElementById('alert-dialog').close()">Continue</button>
 {% endset %}
 {{ dialog(
   id="alert-dialog",
@@ -105,8 +105,8 @@ document.addEventListener('alpine:init', () => {
 </div>
 
 {% set raw_code %}{% raw %}{% set footer %}
-  <button class="btn-outline" @click="open = false">Cancel</button>
-  <button class="btn-primary" @click="open = false">Continue</button>
+  <button class="btn-outline" onClick="document.getElementById('demo-alert-dialog').close()">Cancel</button>
+  <button class="btn-primary" onClick="document.getElementById('demo-alert-dialog').close()">Continue</button>
 {% endset %}
 {{ dialog(
   id="demo-alert-dialog",

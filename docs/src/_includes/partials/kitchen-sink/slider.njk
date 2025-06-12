@@ -13,18 +13,24 @@
         min="0"
         max="27"
         value="12"
-      x-data="{
-        updatePercent(el) {
-          const min = parseFloat(el.min || 0);
-          const max = parseFloat(el.max || 100);
-          const value = parseFloat(el.value);
-          const percent = (max === min) ? 0 : ((value - min) / (max - min)) * 100;
-          el.style.setProperty('--slider-value', `${percent}%`);
-        }
-      }"
-        x-init="updatePercent($el)"
-        @input="updatePercent($el)"
       >
     </div>
   </div>
 </section>
+<script>
+  (() => {
+    const sliderEl = document.querySelector('input[type="range"].input');
+    if (!sliderEl) return;
+
+    const updateSlider = (el) => {
+      const min = parseFloat(el.min || 0);
+      const max = parseFloat(el.max || 100);
+      const value = parseFloat(el.value);
+      const percent = (max === min) ? 0 : ((value - min) / (max - min)) * 100;
+      el.style.setProperty('--slider-value', `${percent}%`);
+    };
+
+    updateSlider(sliderEl);
+    sliderEl.addEventListener('input', (e) => updateSlider(e.target));
+  })();
+</script>

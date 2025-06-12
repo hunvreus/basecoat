@@ -32,16 +32,17 @@ layout: layouts/layout.njk
                 <p class="text-sm text-muted-foreground">m@example.com</p>
               </div>
               
-              {% call select(
+              {{ select(
                 is_combobox=true,
                 selected="owner",
-                content_attrs={"data-align": "end"}
-              ) %}
-                <div role="option" data-value="viewer">Viewer</div>
-                <div role="option" data-value="developer">Developer</div>
-                <div role="option" data-value="billing">Billing</div>
-                <div role="option" data-value="owner">Owner</div>
-              {% endcall %}
+                popover_attrs={"data-align": "end"},
+                items=[
+                  { type: "item", value: "viewer", label: "Viewer" },
+                  { type: "item", value: "developer", label: "Developer" },
+                  { type: "item", value: "billing", label: "Billing" },
+                  { type: "item", value: "owner", label: "Owner" }
+                ]
+              ) }}
             </li>
             <li class="flex items-center gap-4">
               <img src="/assets/images/avatar-2.png" alt="Jackson Lee" class="w-10 h-10 rounded-full" />

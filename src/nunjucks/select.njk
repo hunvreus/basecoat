@@ -17,39 +17,53 @@
   selected=None,
   name=None,
   items=None,
-  main_attrs={},
   trigger_attrs={},
-  content_attrs={},
+  popover_attrs={},
   listbox_attrs={},
-  input_attrs={},
   search_placeholder="Search entries...",
   is_combobox=false
 ) %}
-<div
-  class="popover {{ main_attrs.class }}"
-  x-data="select('{{ name }}', '{{ selected or '' }}')"
-  @click.away="open = false"
-  {% if id %}id="{{ id }}"{% endif %}
-  {% for key, value in main_attrs %}
-    {% if key != 'class' %}{{ key }}="{{ value }}"{% endif %}
-  {% endfor %}
->
+{% set id = id or ("select-" + (range(100000, 999999) | random | string)) %}
+
+{% set first_option = [] %}
+{% set selected_option = [] %}
+
+{% for item in items %}
+  {% if item.type == "group" %}
+    {% for sub_item in item.items %}
+      {% if not first_option[0] %}
+        {% set first_option = (first_option.push(sub_item), first_option) %}
+      {% endif %}
+      {% if selected and sub_item.value == selected and not selected_option[0] %}
+        {% set selected_option = (selected_option.push(sub_item), selected_option) %}
+      {% endif %}
+    {% endfor %}
+  {% else %}
+    {% if not first_option[0] %}
+      {% set first_option = (first_option.push(item), first_option) %}
+    {% endif %}
+    {% if selected and item.value == selected and not selected_option[0] %}
+      {% set selected_option = (selected_option.push(item), selected_option) %}
+    {% endif %}
+  {% endif %}
+{% endfor %}
+
+{% set default_option = selected_option[0] or first_option[0] or None %}
+
+<div class="select">
   <button
     type="button"
+    class="btn-outline justify-between font-normal {{ trigger_attrs.class }}"
+    id="{{ id }}-trigger"
+    popovertarget="{{ id }}"
     aria-haspopup="listbox"
     aria-expanded="false"
-    x-bind="$trigger"
-    {% if id %}
-    id="{{ id }}-trigger"
-    aria-controls="{{ id }}-content"
-    {% endif %}
-    class="btn-outline justify-between font-normal {{ trigger_attrs.class }}"
+    aria-controls="{{ id }}-listbox"
     {% for key, value in trigger_attrs %}
       {% if key != 'class' %}{{ key }}="{{ value }}"{% endif %}
     {% endfor %}
   >
-    <div x-html="selectedLabel" class="flex items-center gap-x-2"
-    ></div>
+    <span class="truncate">{{ default_option.label }}</span>
     {% if is_combobox %}
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevrons-up-down-icon lucide-chevrons-up-down text-muted-foreground opacity-50 shrink-0"><path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/></svg>
     {% else %}
@@ -57,12 +71,11 @@
     {% endif %}
   </button>
   <div
-    data-popover
-    aria-hidden="true"
-    x-bind="$content"
-    {% if id %}id="{{ id }}-content"{% endif %}
-    {% for key, value in content_attrs %}
-      {{ key }}="{{ value }}"
+    popover
+    id="{{ id }}"
+    class="popover {{ popover_attrs.class }}"
+    {% for key, value in popover_attrs %}
+      {% if key != 'class' %}{{ key }}="{{ value }}"{% endif %}
     {% endfor %}
   >
     {% if is_combobox %}
@@ -80,35 +93,33 @@
         aria-expanded="true"
         aria-controls="{{ id }}-content"
         aria-labelledby="{{ id }}-trigger"
-        x-model="query"
-        x-bind="$filter"
       >
     </header>
     {% endif %}
     <div
       role="listbox"
+      id="{{ id }}-listbox"
       aria-orientation="vertical"
+      aria-labelledby="{{ id }}-trigger"
       {% for key, value in listbox_attrs %}
         {{ key }}="{{ value }}"
       {% endfor %}
     >
-      {% if items %}
-        {{ render_select_items(items, id ~ "-items" if id else "items") }}
+      {% if items.length > 0 %}
+        {{ render_select_items(items, default_option.value, id ~ "-items" if id else "items") }}
       {% else %}
         {{ caller() if caller }}
       {% endif %}
     </div>
   </div>
-  {% if name is defined %}
-    <input
-      type="hidden"
-      name="{{ name }}"
-      x-model="selectedValue"
-      {% for key, value in input_attrs %}
-        {% if key != 'name' %}{{ key }}="{{ value }}"{% endif %}
-      {% endfor %}
-    >
-  {% endif %}
+  <input
+    type="hidden"
+    name="{{ name or id ~ '-value' }}"
+    value="{{ selected or '' }}"
+    {% for key, value in input_attrs %}
+      {% if key != 'name' and key != 'value' %}{{ key }}="{{ value }}"{% endif %}
+    {% endfor %}
+  >
 </div>
 {% endmacro %}
 
@@ -118,10 +129,9 @@
   @param items {array} - The array of items to render.
   @param parent_id_prefix {string} [optional] - The prefix for the item id.
 #}
-{% macro render_select_items(items, parent_id_prefix="items") %}
+{% macro render_select_items(items, selected, parent_id_prefix="items") %}
   {% for item in items %}
     {% set item_id = parent_id_prefix ~ "-" ~ loop.index %}
-
     {% if item.type == "group" %}
       {% set group_label_id = item.id if item.id else "group-label-" + item_id %}
       <div
@@ -132,14 +142,16 @@
         {% endfor %}
       >
         <div role="heading" id="{{ group_label_id }}">{{ item.label }}</div>
-        {{ render_select_items(item.items, item_id) if item.items }}
+        {{ render_select_items(item.items, selected, item_id) if item.items }}
       </div>
     {% elif item.type == "separator" %}
       <hr role="separator" />
     {% elif item.type == "item" or not item.type %}
       <div
+        id="{{ item_id }}"
         role="option"
         data-value="{{ item.value }}"
+        {% if selected == item.value %}aria-selected="true"{% endif %}
         {% for key, value in item.attrs %}
            {{ key }}="{{ value }}"
         {% endfor %}

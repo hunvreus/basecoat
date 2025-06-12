@@ -10,7 +10,7 @@
   <div class="p-4">
     <div class="flex flex-wrap items-start gap-4">
       {% call dropdown_menu(
-        id="dropdown-menu",
+        id="dropdown-menu-default",
         trigger="Open",
         trigger_attrs={"class": "btn-outline"},
         content_attrs={"class": "min-w-56"}
@@ -134,8 +134,6 @@
       </button>
       {% endcall %}
 
-
-
       {% set profile_menu %}
         <div class="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
           <img alt="@hunvreus" src="https://github.com/hunvreus.png" class="size-8 shrink-0 rounded-full" alt="Ronan Berder"/>
@@ -170,7 +168,6 @@
       {% endset %}
 
       {% call dropdown_menu(
-        id="dropdown-menu-radio-group",
         trigger="Radio Group",
         trigger_attrs={"class": "btn-outline"},
         content_attrs={"class": "min-w-56"},

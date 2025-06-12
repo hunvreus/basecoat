@@ -1,4 +1,4 @@
-{% from "popover.njk" import popover %}
+{% from "dropdown-menu.njk" import dropdown_menu %}
 
 <section id="breadcrumb"  class="w-full rounded-lg border scroll-mt-14">
   <header class="border-b px-4 py-3 flex items-center justify-between">
@@ -17,17 +17,17 @@
         {% set trigger %}
           {% lucide "ellipsis" %}
         {% endset %}
-        {% call popover(
+        {{ dropdown_menu(
           id="demo-breadcrumb-menu",
           trigger=trigger,
-          trigger_attrs={"class": "flex size-9 items-center justify-center h-4 w-4 hover:text-foreground cursor-pointer"}
-        ) %}
-          <nav role="menu">
-            <button type="button" role="menuitem">Documentation</button>
-            <button type="button" role="menuitem">Themes</button>
-            <button type="button" role="menuitem">GitHub</button>
-          </nav>
-        {% endcall %}
+          trigger_attrs={"class": "flex size-9 items-center justify-center h-4 w-4 hover:text-foreground cursor-pointer"},
+          popover_attrs={"class": "p-1"},
+          items=[
+            { label: "Documentation" },
+            { label: "Themes" },
+            { label: "GitHub" }
+          ]
+        ) }}
       </li>
       <li>{% lucide "chevron-right", { "class": "size-3.5" } %}</li>
       <li class="inline-flex items-center gap-1.5">
