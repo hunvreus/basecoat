@@ -1,91 +1,124 @@
-window.basecoat = window.basecoat || {};
-window.basecoat.registerDropdownMenu = function(Alpine) {
-  if (Alpine.components && Alpine.components.dropdownMenu) return;
+(() => {
+  const initDropdownMenu = (dropdownMenuComponent) => {
+    const trigger = dropdownMenuComponent.querySelector('[popovertarget]');
+    const popover = dropdownMenuComponent.querySelector('[popover]');
+    const menu = popover?.querySelector('[role="menu"]');
+    if (!trigger || !popover || !menu) return;
 
-  Alpine.data('dropdownMenu', () => ({
-    open: false,
-    focusedIndex: null,
-    menuItems: [],
+    let menuItems = [];
+    let activeIndex = -1;
 
-    init() {
-      this.$nextTick(() => {
-        this.menuItems = Array.from(this.$el.querySelectorAll('[role=menuitem]:not([disabled]),[role=menuitemcheckbox]:not([disabled]),[role=menuitemradio]:not([disabled])'));
-      });
-    },
-    focusMenuitem() {
-      if (this.menuItems.length === 0) return;
-
-      if (this.focusedIndex >= this.menuItems.length) {
-        this.focusedIndex = this.menuItems.length - 1;
-      } else if (this.focusedIndex < 0 || this.focusedIndex === null) {
-        this.focusedIndex = 0;
+    const setActiveItem = (index) => {
+      if (activeIndex > -1 && menuItems[activeIndex]) {
+        menuItems[activeIndex].classList.remove('active');
       }
-      this.menuItems.forEach(item => item.blur());
-      this.menuItems[this.focusedIndex].focus();
-    },
-    moveMenuitemFocus(delta) {
-      if (this.menuItems.length === 0) return;
-
-      let wasOpen = this.open;
-      if (!this.open) { 
-        this.open = true;
-        this.focusedIndex = 0;
+      activeIndex = index;
+      if (activeIndex > -1 && menuItems[activeIndex]) {
+        const activeItem = menuItems[activeIndex];
+        activeItem.classList.add('active');
+        trigger.setAttribute('aria-activedescendant', activeItem.id);
+        activeItem.scrollIntoView({ block: 'nearest' });
       } else {
-        this.focusedIndex = this.focusedIndex === null
-          ? 0
-          : this.focusedIndex + delta;
+        trigger.removeAttribute('aria-activedescendant');
+      }
+    };
+
+    const handleKeyDown = (e) => {
+      // If the menu isn't open, we only care about ArrowUp/Down/Enter/Space to open it.
+      if (!popover.matches(':popover-open')) {
+        if (['ArrowDown', 'ArrowUp', 'Enter', ' '].includes(e.key)) {
+          e.preventDefault();
+          trigger.click();
+        }
+        return;
       }
 
-      if (wasOpen) {
-        this.focusMenuitem();
-      } else {
-        setTimeout(() => this.focusMenuitem(), 50);
+      // If the menu IS open, we handle all navigation.
+      let nextIndex = activeIndex;
+      if (menuItems.length === 0) return;
+
+      switch (e.key) {
+        case 'ArrowDown':
+          e.preventDefault();
+          if (activeIndex < menuItems.length - 1) {
+            nextIndex = activeIndex + 1;
+          }
+          break;
+        case 'ArrowUp':
+          e.preventDefault();
+          if (activeIndex > 0) {
+            nextIndex = activeIndex - 1;
+          }
+          break;
+        case 'Home':
+          e.preventDefault();
+          nextIndex = 0;
+          break;
+        case 'End':
+          e.preventDefault();
+          nextIndex = menuItems.length - 1;
+          break;
+        case 'Enter':
+        case ' ':
+          e.preventDefault();
+          menuItems[activeIndex]?.click();
+          break;
       }
-    },
-    handleMenuitemClick(event) {
-      const menuitem = event.target.closest('[role=menuitem],[role=menuitemcheckbox],[role=menuitemradio]');
-      if (menuitem && menuitem.getAttribute('aria-disabled') !== 'true' && !menuitem.disabled) {
-        this.$nextTick(() => {
-          this.$refs.trigger.focus();
-          this.open = false;
+
+      if (nextIndex !== activeIndex) {
+        setActiveItem(nextIndex);
+      }
+    };
+    
+    trigger.addEventListener('keydown', handleKeyDown);
+    
+    popover.addEventListener('toggle', (e) => {
+      trigger.setAttribute('aria-expanded', e.newState === 'open');
+      if (e.newState === 'open') {
+        menuItems = Array.from(menu.querySelectorAll('[role^="menuitem"]:not([disabled])'));
+        // Ensure all menu items have IDs for aria-activedescendant
+        menuItems.forEach((item, index) => {
+          if (!item.id) item.id = `${menu.id}-item-${index}`;
         });
+        setActiveItem(0);
+      } else {
+        setActiveItem(-1);
       }
-    },
-    handleMenuitemMousemove(event) {
-      const menuitem = event.target.closest('[role=menuitem],[role=menuitemcheckbox],[role=menuitemradio]');
-      if (menuitem && menuitem.getAttribute('aria-disabled') !== 'true' && !menuitem.disabled) {
-        this.focusedIndex = this.menuItems.indexOf(menuitem);
-        this.focusMenuitem();
-      }
-    },
+    });
 
-    $trigger: {
-      '@click'() { this.open = !this.open },
-      '@keydown.escape.prevent'() {
-        this.open = false;
-        this.$refs.trigger.focus();
-      },
-      '@keydown.down.prevent'() { this.moveMenuitemFocus(+1); },
-      '@keydown.up.prevent'() { this.moveMenuitemFocus(-1); },
-      '@keydown.home.prevent'() { this.focusMenuitem(0) },
-      '@keydown.end.prevent'() { this.focusMenuitem(this.menuItems.length - 1) },
-      '@keydown.enter.prevent'() { this.open = !this.open },
-      ':aria-expanded'() { return this.open },
-      'x-ref': 'trigger'
-    },
-    $content: {
-      '@click'(e) { this.handleMenuitemClick(e) },
-      '@keydown.escape.prevent'() {
-        this.open = false;
-        this.$refs.trigger.focus();
-      },
-      '@keydown.down.prevent'() { this.moveMenuitemFocus(+1); },
-      '@keydown.up.prevent'() { this.moveMenuitemFocus(-1); },
-      '@keydown.home.prevent'() { this.focusMenuitem(0) },
-      '@keydown.end.prevent'() { this.focusMenuitem(this.menuItems.length - 1) },
-      '@mouseover'(e) { this.handleMenuitemMousemove(e) },
-      ':aria-hidden'() { return !this.open },
-      'x-cloak': ''
-    },
-  }));
-};
+    menu.addEventListener('click', (e) => {
+      if (e.target.closest('[role^="menuitem"]')) {
+        popover.hidePopover();
+      }
+    });
+
+    menu.addEventListener('mouseover', (e) => {
+      const item = e.target.closest('[role^="menuitem"]:not([disabled])');
+      if (item) {
+        const index = menuItems.indexOf(item);
+        if (index > -1 && index !== activeIndex) {
+          setActiveItem(index);
+        }
+      }
+    });
+
+    dropdownMenuComponent.dataset.dropdownMenuInitialized = true;
+  };
+
+  document.querySelectorAll('.dropdown-menu:not([data-dropdown-menu-initialized])').forEach(initDropdownMenu);
+
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      mutation.addedNodes.forEach((node) => {
+        if (node.nodeType === Node.ELEMENT_NODE) {
+          if (node.matches('.dropdown-menu:not([data-dropdown-menu-initialized])')) {
+            initDropdownMenu(node);
+          }
+          node.querySelectorAll('.dropdown-menu:not([data-dropdown-menu-initialized])').forEach(initDropdownMenu);
+        }
+      });
+    });
+  });
+
+  observer.observe(document.body, { childList: true, subtree: true });
+})();

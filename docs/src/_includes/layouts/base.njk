@@ -1,44 +1,31 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <!-- Theme -->
+  <!-- Dark Mode -->
   <script>
-  function isDark() {
-    return localStorage.getItem('darkMode') === 'dark' || (!localStorage.getItem('darkMode') && window.matchMedia('(prefers-color-scheme: dark)').matches);
-  }
-
-  if (isDark()) {
-    document.documentElement.classList.add('dark');
-  }
-
-  if (localStorage.getItem('themeVariant')) {
-    document.documentElement.classList.add(`theme-${localStorage.getItem('themeVariant')}`);
-  }
-
-  document.addEventListener('alpine:init', () => {
-    Alpine.store('darkMode', {
-      isDark: isDark(),
-      toggle() {
-        this.isDark = document.documentElement.classList.toggle('dark');
-        localStorage.setItem('darkMode', this.isDark ? 'dark' : 'light');
+    (function() {
+      try {
+        const storedMode = localStorage.getItem('darkMode');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (storedMode === 'dark' || (storedMode === null && prefersDark)) document.documentElement.classList.add('dark');
+      } catch (e) {
+        console.error('Could not apply dark mode from localStorage', e);
       }
-    });
-
-    Alpine.store('themeVariant', {
-      name: localStorage.getItem('themeVariant'),
-      setThemeVariant(name) {
-        this.name = name;
-        localStorage.setItem('themeVariant', name);
-        document.documentElement.classList.forEach(className => {
-          if (className.startsWith('theme-')) {
-            document.documentElement.classList.remove(className);
-          }
-        });
-        document.documentElement.classList.add(`theme-${name}`);
-      }
-    });
-  });
+    })();
   </script>
+  <script src="/assets/js/dark-mode.js" defer></script>
+  <!-- Theme variant -->
+  <script>
+    (function() {
+      try {
+        const storedTheme = localStorage.getItem('themeVariant');
+        if (storedTheme) document.documentElement.classList.add(`theme-${storedTheme}`);
+      } catch (e) {
+        console.error('Could not apply theme variant from localStorage', e);
+      }
+    })();
+  </script>
+  <script src="/assets/js/theme.js" defer></script>
 
   <meta charset="utf-8">
   <meta http-equiv="Content-Language" content="en">
@@ -81,6 +68,7 @@
   <script src="/assets/js/toast.js" defer></script>
 
   <script src="/assets/js/select.js" defer></script>
+  <script src="/assets/js/dropdown-menu.js" defer></script>
   <script src="/assets/js/sidebar.js" defer></script>
   <script src="/assets/js/tabs.js" defer></script>
   

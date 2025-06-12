@@ -1,13 +1,15 @@
 (() => {
-  const initSelect = (select) => {
-    const trigger = select.querySelector(':scope > [popovertarget]');
+  const initSelect = (selectComponent) => {
+    const trigger = selectComponent.querySelector(':scope > [popovertarget]');
     const selectedValue = trigger.querySelector(':scope > span');
-    const popover = select.querySelector(':scope > [popover]');
+    const popover = selectComponent.querySelector(':scope > [popover]');
     const listbox = popover.querySelector('[role="listbox"]');
-    const input = select.querySelector(':scope > input[type="hidden"]');
+    const input = selectComponent.querySelector(':scope > input[type="hidden"]');
+    const filter = selectComponent.querySelector('header input[type="text"]');
     if (!trigger || !popover || !listbox || !input) return;
     
     const options = Array.from(listbox.querySelectorAll('[role="option"]'));
+    let visibleOptions = [...options];
     let activeIndex = -1;
 
     const updateValue = (option) => {
@@ -30,49 +32,150 @@
       popover.hidePopover();
     };
 
+    if (filter) {
+      const filterOptions = () => {
+        const searchTerm = filter.value.trim().toLowerCase();
+        
+        if (activeIndex > -1) {
+          options[activeIndex].classList.remove('active');
+          trigger.removeAttribute('aria-activedescendant');
+          activeIndex = -1;
+        }
+
+        visibleOptions = [];
+        options.forEach(option => {
+          const optionText = (option.dataset.label || option.textContent).trim().toLowerCase();
+          const matches = optionText.includes(searchTerm);
+          option.setAttribute('aria-hidden', String(!matches));
+          if (matches) {
+            visibleOptions.push(option);
+          }
+        });
+      };
+  
+      filter.addEventListener('input', filterOptions);
+    }
+
     let initialOption = options.find(opt => input.value && opt.dataset.value === input.value);
     if (!initialOption && options.length > 0) initialOption = options[0];
 
     updateValue(initialOption);
 
-    trigger.addEventListener('keydown', (e) => {
-      if (!popover.matches(':popover-open')) return;
-
-      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
-        e.preventDefault();
-        if (activeIndex > -1) options[activeIndex]?.classList.remove('active');
-        
-        if (e.key === 'ArrowDown') activeIndex = (activeIndex + 1) % options.length;
-        else activeIndex = (activeIndex - 1 + options.length) % options.length;
-
-        const activeOption = options[activeIndex];
-        if (activeOption) {
-          activeOption.classList.add('active');
-          if (activeOption.id) {
-            trigger.setAttribute('aria-activedescendant', activeOption.id);
-          }
-          activeOption.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
-        }
-      } else if (e.key === 'Enter') {
-        e.preventDefault();
-        selectOption(options[activeIndex]);
+    const handleKeyNavigation = (e) => {
+      if (!['ArrowDown', 'ArrowUp', 'Enter', 'Home', 'End'].includes(e.key)) {
+        return;
       }
-    });
+
+      if (!popover.matches(':popover-open')) {
+        if (e.currentTarget === trigger && e.key !== 'Enter') {
+          e.preventDefault();
+          trigger.click();
+        }
+        return;
+      }
+      
+      e.preventDefault();
+
+      if (e.key === 'Enter') {
+        if (activeIndex > -1) {
+          selectOption(options[activeIndex]);
+        }
+        return;
+      }
+
+      if (visibleOptions.length === 0) return;
+
+      const currentVisibleIndex = activeIndex > -1 ? visibleOptions.indexOf(options[activeIndex]) : -1;
+      let nextVisibleIndex = currentVisibleIndex;
+
+      switch (e.key) {
+        case 'ArrowDown':
+          if (currentVisibleIndex < visibleOptions.length - 1) {
+            nextVisibleIndex = currentVisibleIndex + 1;
+          }
+          break;
+        case 'ArrowUp':
+          if (currentVisibleIndex > 0) {
+            nextVisibleIndex = currentVisibleIndex - 1;
+          } else if (currentVisibleIndex === -1) {
+            nextVisibleIndex = 0; // Start from top if nothing is active
+          }
+          break;
+        case 'Home':
+          nextVisibleIndex = 0;
+          break;
+        case 'End':
+          nextVisibleIndex = visibleOptions.length - 1;
+          break;
+      }
+
+      if (nextVisibleIndex !== currentVisibleIndex) {
+        if (currentVisibleIndex > -1) {
+          visibleOptions[currentVisibleIndex].classList.remove('active');
+        }
+        
+        const newActiveOption = visibleOptions[nextVisibleIndex];
+        newActiveOption.classList.add('active');
+        activeIndex = options.indexOf(newActiveOption);
+        
+        if (newActiveOption.id) {
+          trigger.setAttribute('aria-activedescendant', newActiveOption.id);
+        }
+        newActiveOption.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      }
+    };
+
+    trigger.addEventListener('keydown', handleKeyNavigation);
+    if (filter) {
+      filter.addEventListener('keydown', handleKeyNavigation);
+    }
 
     listbox.addEventListener('click', (e) => {
       const clickedOption = e.target.closest('[role="option"]');
-      if (clickedOption) selectOption(clickedOption);
+      if (clickedOption) {
+        selectOption(clickedOption);
+      }
     });
 
     popover.addEventListener('toggle', (e) => {
-      if (e.newState === 'closed') {
+      if (e.newState === 'open') {
+        if (filter) filter.focus();
+        
+        const selectedOption = listbox.querySelector('[role="option"][aria-selected="true"]');
+        let startingOption = null;
+
+        if (selectedOption && visibleOptions.includes(selectedOption)) {
+          startingOption = selectedOption;
+        } else if (visibleOptions.length > 0) {
+          startingOption = visibleOptions[0];
+        }
+
+        if (activeIndex > -1) options[activeIndex]?.classList.remove('active');
+
+        if (startingOption) {
+          activeIndex = options.indexOf(startingOption);
+          startingOption.classList.add('active');
+          if (startingOption.id) {
+            trigger.setAttribute('aria-activedescendant', startingOption.id);
+          }
+          startingOption.scrollIntoView({ block: 'nearest' });
+        } else {
+          activeIndex = -1;
+        }
+      } else if (e.newState === 'closed') {
+        if (filter) {
+          filter.value = '';
+          visibleOptions = [...options];
+          options.forEach(opt => opt.setAttribute('aria-hidden', 'false'));
+        }
+
         trigger.removeAttribute('aria-activedescendant');
         if (activeIndex > -1) options[activeIndex]?.classList.remove('active');
         activeIndex = -1;
       }
     });
 
-    select.dataset.selectInitialized = true;
+    selectComponent.dataset.selectInitialized = true;
   };
 
   document.querySelectorAll('div.select:not([data-select-initialized])').forEach(initSelect);
@@ -89,7 +192,6 @@
       });
     });
   });
-
-  // Start observing the whole document
+  
   observer.observe(document.body, { childList: true, subtree: true });
 })();

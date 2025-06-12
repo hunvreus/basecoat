@@ -15,7 +15,8 @@
     } 
   }"
 >
-  <pre x-ref="code" class="text-sm max-h-[650px] overflow-y-auto rounded-xl scrollbar"><code class="language-{{ language }} !bg-neutral-900 p-0">{{- code | escape -}}</code></pre>
+  <pre x-ref="code" class="text-sm max-h-[650px] overflow-y-auto rounded-xl scrollbar whitespace-pre-wrap
+"><code class="language-{{ language }} !bg-neutral-900 p-0">{{- code | escape -}}</code></pre>
   
   <button 
     @click="copy()" 

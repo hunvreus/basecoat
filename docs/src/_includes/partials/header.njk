@@ -12,26 +12,43 @@
   </button>
   <select
     class="select h-8 leading-none"
-    x-init
-    @change="$store.themeVariant.setThemeVariant($event.target.value)"
-    :value="$store.themeVariant.name"
+    id="theme-select"
   >
     <option value="">Default</option>
     <option value="claude">Claude</option>
     <option value="doom-64">Doom 64</option>
     <option value="supabase">Supabase</option>
   </select>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const themeSelect = document.getElementById('theme-select');
+      const storedTheme = localStorage.getItem('themeVariant');
+      if (themeSelect && storedTheme) themeSelect.value = storedTheme;
+      themeSelect.addEventListener('change', () => {
+        const newTheme = themeSelect.value;
+        document.documentElement.classList.forEach(c => {
+          if (c.startsWith('theme-')) document.documentElement.classList.remove(c);
+        });
+        if (newTheme) {
+          document.documentElement.classList.add(`theme-${newTheme}`);
+          localStorage.setItem('themeVariant', newTheme);
+        } else {
+          localStorage.removeItem('themeVariant');
+        }
+      });
+    });
+  </script>
+
   <button
     type="button"
-    :aria-label="$store.darkMode.isDark ? 'Switch to light mode' : 'Switch to dark mode'"
-    :data-tooltip="$store.darkMode.isDark ? 'Light mode' : 'Dark mode'"
+    aria-label="Toggle dark mode"
+    data-tooltip="Toggle dark mode"
     data-side="bottom"
+    data-action="toggle-dark-mode"
     class="btn-icon-outline size-8"
-    x-init
-    @click="$store.darkMode.toggle()"
   >
-    <span x-show="$store.darkMode.isDark">{% lucide "sun" %}</span>
-    <span x-show="!$store.darkMode.isDark">{% lucide "moon" %}</span>
+    <span class="hidden dark:block">{% lucide "sun" %}</span>
+    <span class="block dark:hidden">{% lucide "moon" %}</span>
   </button>
   <a
     href="https://github.com/hunvreus/basecoat"

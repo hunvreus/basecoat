@@ -33,18 +33,18 @@ toc:
 ) %}
 <div role="group" aria-labelledby="account-options">
   <span id="account-options" role="heading">My Account</span>
-  <button type="button" role="menuitem">
+  <button type="button" role="menuitem" onclick="console.log('clicked')">
     Profile
     <span class="text-muted-foreground ml-auto text-xs tracking-widest">⇧⌘P</span>
   </button>
-  <button type="button" role="menuitem">
+  <button type="button" role="menuitem" onclick="window.open('https://google.com', '_blank')">
     Billing
     <span class="text-muted-foreground ml-auto text-xs tracking-widest">⌘B</span>
   </button>
-  <button type="button" role="menuitem">
+  <a role="menuitem" href="https://google.com" target="_blank">
     Settings
     <span class="text-muted-foreground ml-auto text-xs tracking-widest">⌘S</span>
-  </button>
+  </a>
   <button type="button" role="menuitem">
     Keyboard shortcuts
     <span class="text-muted-foreground ml-auto text-xs tracking-widest">⌘K</span>
@@ -69,13 +69,7 @@ toc:
 {% endset %}
 
 {% set code_script %}
-<script>
-{% fetchCode "src/js/dropdown-menu.js" %}
 
-document.addEventListener('alpine:init', () => {
-  window.basecoat.registerDropdownMenu(Alpine);
-});
-</script>
 {% endset %}
 
 {{ code_preview("dropdown-menu", code_script | prettyHtml ~ code_html | prettyHtml) }}
