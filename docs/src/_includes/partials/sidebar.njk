@@ -119,25 +119,7 @@
   header=header,
   footer=footer,
   content_attrs={
-    "x-data": "{
-      updateCurrentPage() {
-        $el.querySelectorAll('a').forEach(link => {
-          normalizedCurrentPathname = window.location.pathname.endsWith('/') ?
-            window.location.pathname.slice(0, -1) :
-            window.location.pathname;
-          normalizedLinkPathname = link.pathname.endsWith('/') ?
-            link.pathname.slice(0, -1) :
-            link.pathname;
-          if (normalizedCurrentPathname === normalizedLinkPathname) {
-            link.setAttribute('aria-current', 'page');
-          } else {
-            link.setAttribute('aria-current', 'false');
-          }
-        });
-      }
-    }",
-    "class": "scrollbar",
-    "x-init": "updateCurrentPage()",
+     "class": "scrollbar",
     "@htmx:pushed-into-history.window": "updateCurrentPage()"
   },
   menu=menu

@@ -8,7 +8,7 @@ toc:
     children:
       - label: HTML
         id: usage-html
-      - label: HTML + Javascript
+      - label: HTML + JavaScript
         id: usage-js
       - label: Jinja and Nunjucks
         id: usage-macro
@@ -73,39 +73,66 @@ toc:
 
 {{ code_block(code_native) }}
 
-<h3 id="usage-js"><a href="#usage-js">HTML + Javascript</a></h3>
+<h3 id="usage-js"><a href="#usage-js">HTML + JavaScript</a></h3>
 
 <section class="prose">
-  <p>If you need to do more than what <code>&lt;select&gt;</code> allows (e.g. HTML options), you can use this component. It is structured as such:</p>
-
-  <ul>
-    <li>A <code>&lt;div class="popover"&gt;</code> which wraps around the entire component and holds it state (e.g. open/close).</li>
-    <li>A <code>&lt;button&gt;</code> that acts as the trigger to open or close the popover.</li>
-    <li>A <code>&lt;div data-popover&gt;</code> that holds the content of the popover.</li>
-    <li>Inside of the <code>&lt;div data-popover&gt;</code> is a <code>&lt;nav role="listbox"&gt;</code> that contains a combination of:
-      <ul>
-        <li><code>&lt;div role="option"&gt;</code> for the options with a <code>data-value</code> attribute.</li>
-        <li><code>&lt;hr role="separator"&gt;</code> to display a horizontal separator.</li>
-        <li><code>&lt;div role="group"&gt;</code> to group options.</li>
-        <li><code>&lt;span role="heading"&gt;</code> for group headings.</li>
-      </ul>
-    </li>
-    <li>An <code>&lt;input type="hidden"&gt;</code> to hold the value of the field (if needed).</li>
-  </ul>
-
-  <p>As with the <a href="/components/popover">Popover</a> component, you can set up a few additional options on the <code>&lt;div data-popover&gt;</code> element:</p>
-
-  <ul>
-    <li><code>data-side</code> can be set to <code>top</code>, <code>bottom</code>, <code>left</code>, or <code>right</code> to change the side of the popover.</li>
-    <li><code>data-align</code> can be set to <code>start</code>, <code>center</code>, or <code>end</code> to change the alignment of the popover.</li>
-  </ul>
-
-  <p>You can include the Javascript code provided below, load it as an individual file or use the CLI. Some Alpine.js properties are also required on certain elements (e.g. <code class="text-xs">x-bind</code>, <code class="text-xs">x-data</code>, <code class="text-xs">@click</code>).</p>
+  <p>The component has the following structure:</p>
+  <dl>
+    <dt><code class="highlight language-html">&lt;div class="select"&gt;</code></dt>
+    <dd>Wraps around the entire component.
+      <dl>
+        <dt><code class="highlight language-html">&lt;button type="button" popovertarget="{ POPOVER_ID }"&gt;</code></dt>
+        <dd>
+          <p>The trigger to open the popover, can also have the following attributes:</p>
+          <ul>
+            <li><code>id="{BUTTON_ID}"</code>: linked to by the <code>aria-labelledby</code> attribute of the listbox.</li>
+            <li><code>aria-haspopup="listbox"</code>: indicates that the button opens a listbox.</li>
+            <li><code>aria-controls="{ LISTBOX_ID }"</code>: points to the listbox's id.</li>
+            <li><code>aria-expanded="false"</code>: tracks the popover's state.</li>
+            <li><code>aria-activedescendant="{ OPTION_ID }"</code>: points to the active option's id.</li>
+          </ul>
+        </dd>
+        <dt><code class="highlight language-html">&lt;div popover class="popover" id="{ POPOVER_ID }"&gt;</code></dt>
+        <dd>As with the <a href="/components/popover">Popover</a> component, you can set up the side and alignment of the popover using the <code>data-side</code> and <code>data-align</code> attributes.
+        <dl>
+          <dt><code class="highlight language-html">&lt;div role="listbox"&gt;</code></dt>
+          <dd>The listbox containing the options. Should have the following attributes:
+            <ul>
+              <li><code>id="{ LISTBOX_ID }"</code>: refered to by the <code>aria-controls</code> attribute of the trigger.</li>
+              <li><code>aria-labelledby="{ BUTTON_ID }"</code>: linked to by the button's <code>id</code> attribute.</li>
+            </ul>
+            <dl>
+              <dt><code class="highlight language-html">&lt;div role="option" data-value="{ VALUE }"&gt;</code></dt>
+              <dd>Option that can be selected.Should have a unique id if you use the <code>aria-activedescendant</code> attribute on the trigger.</dd>
+              <dt><code class="highlight language-html">&lt;hr role="separator"&gt;</code> <span class="badge-secondary">Optional</span></dt>
+              <dd>Separator between groups/options.</dd>
+              <dt><code class="highlight language-html">&lt;div role="group"&gt;</code> <span class="badge-secondary">Optional</span></dt>
+              <dd>Group of options.</dd>
+              <dt><code class="highlight language-html">&lt;span role="heading"&gt;</code></dt>
+              <dd>Group heading.</dd>
+            </dl>
+          </dd>
+        </dl>
+      </dl>
+    </dd>
+    <dt><code class="highlight language-html">&lt;input type="hidden" name="{ NAME }" value="{ VALUE }"&gt;</code> <span class="badge-secondary">Optional</span></dt>
+    <dd>The hidden input that holds the value of the field (if needed).</dd>
+  </dl>
+  <p>More aria-related attributes are also recommended as illustrated in the example below:</p>
 </section>
+
+{{ code_block(code_html | prettyHtml, "html") }}
+
+<section class="prose">
+  <p>This component requires you to include the <a class="badge-outline" href="https://github.com/hunvreus/basecoat/blob/main/src/js/select.js" target="_blank"><code>select.js</code></a> file and recommends you include the <a href="https://github.com/oddbird/css-anchor-positioning" target="_blank">CSS anchor positioning polyfill</a> to support older browsers. You can either include the code shown below in your <code>&lt;head&gt;</code> or <a class="badge-outline" href="/installation/#install-js">use one of the alternative methods</a>.</p>
+</section>
+
+{% set code_script %}{% raw %}<script src="https://unpkg.com/css-anchor-positioning"></script>{% endraw %}{% endset %}
+{{ code_block(code_script | prettyHtml, "html") }}
 
 <div class="flex flex-wrap gap-2 my-6">
   <a class="badge-outline" href="/installation/#install-js">
-    Components with Javascript
+    Components with JavaScript
     {% lucide "arrow-right" %}
   </a>
   <a class="badge-outline" href="/installation/#install-cli">
@@ -118,36 +145,10 @@ toc:
   </a>
 </div>
 
-{% from "tabs.njk" import tabs %}
-{% set tabsets = [
-  { tab: "HTML", panel: code_block(code_html | prettyHtml, class="") },
-  { tab: "Javascipt (Alpine.js)", panel: code_block(code_script | prettyHtml, class="") }
-] %}
-{{ tabs(id="select", tabsets=tabsets) }}
-
-<section class="prose">
-  <p>The component will dispatch a <code>select:change</code> event when a value is selected, along with the value and label of the selected option in the <code>detail</code> object.</p>
-</section>
-
 <h3 id="usage-macro"><a href="#usage-macro">Jinja and Nunjucks</a></h3>
 
 <div class="prose">
-  <p>You can use the <code class="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-xs">dropdown_menu()</code> Nunjucks or Jinja macro for this component.</p>
-</div>
-
-<div class="flex flex-wrap gap-2 my-6">
-  <a class="badge-outline" href="/installation/#install-macros" target="_blank">
-    Use Nunjucks or Jinja macros
-    {% lucide "arrow-right" %}
-  </a>
-  <a class="badge-outline" href="https://github.com/hunvreus/basecoat/blob/main/src/jinja/dialog.html.jinja" target="_blank">
-    Jinja macro
-    {% lucide "arrow-right" %}
-  </a>
-  <a class="badge-outline" href="https://github.com/hunvreus/basecoat/blob/main/src/nunjucks/dialog.njk" target="_blank">
-    Nunjucks macro
-    {% lucide "arrow-right" %}
-  </a>
+  <p>You can use the <code class="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-xs">select()</code> Nunjucks or Jinja macro for this component.</p>
 </div>
 
 {% set raw_code %}{% raw %}{{ select(
@@ -166,6 +167,21 @@ toc:
   ]
 ) }}{% endraw %}{% endset %}
 {{ code_block(raw_code, "jinja") }}
+
+<div class="flex flex-wrap gap-2 my-6">
+  <a class="badge-outline" href="/installation/#install-macros" target="_blank">
+    Use Nunjucks or Jinja macros
+    {% lucide "arrow-right" %}
+  </a>
+  <a class="badge-outline" href="https://github.com/hunvreus/basecoat/blob/main/src/jinja/dialog.html.jinja" target="_blank">
+    Jinja macro
+    {% lucide "arrow-right" %}
+  </a>
+  <a class="badge-outline" href="https://github.com/hunvreus/basecoat/blob/main/src/nunjucks/dialog.njk" target="_blank">
+    Nunjucks macro
+    {% lucide "arrow-right" %}
+  </a>
+</div>
 
 <h2 id="examples"><a href="#examples">Examples</a></h2>
 

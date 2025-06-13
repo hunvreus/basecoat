@@ -20,7 +20,7 @@
     <option value="supabase">Supabase</option>
   </select>
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
+    (() => {
       const themeSelect = document.getElementById('theme-select');
       const storedTheme = localStorage.getItem('themeVariant');
       if (themeSelect && storedTheme) themeSelect.value = storedTheme;
@@ -36,7 +36,7 @@
           localStorage.removeItem('themeVariant');
         }
       });
-    });
+    })();
   </script>
 
   <button

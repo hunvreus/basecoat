@@ -6,8 +6,10 @@ toc:
   - label: Usage
     id: usage
     children:
-      - label: HTML + Javascript
-        id: usage-default
+      - label: HTML
+        id: usage-html
+      - label: JavasScript
+        id: usage-html
       - label: Jinja and Nunjucks
         id: usage-macro
   - label: Examples
@@ -30,12 +32,10 @@ toc:
   id="demo-dialog-edit-profile",
   title="Edit profile",
   description="Make changes to your profile here. Click save when you're done.",
-  main_attrs={"x-ref": "myDialog"},
   trigger="Edit Profile",
   trigger_attrs={"class": "btn-outline"},
   content_attrs={"class": "w-full sm:max-w-[425px] max-h-[612px]"},
-  footer=footer,
-  register_on=["alpine:init", "htmx:afterSwap"]
+  footer=footer
 ) %}
 <form class="form grid gap-4">
   <div class="grid gap-3">
@@ -50,75 +50,40 @@ toc:
 {% endcall %}
 {% endset %}
 
-{% set code_script %}
-<script>
-{% fetchCode "src/js/dialog.js" %}
-
-document.addEventListener('alpine:init', () => {
-  window.basecoat.registerDialog(Alpine);
-});
-</script>
-{% endset %}
-
-{{ code_preview("dialog", code_script | prettyHtml ~ code_html | prettyHtml) }}
+{{ code_preview("dialog", code_html | prettyHtml) }}
 
 <h2 id="usage"><a href="#usage">Usage</a></h2>
 
-<h3 id="usage-default"><a href="#usage-default">HTML + Javascript</a></h3>
-
-<div class="alert my-6">
-  {% lucide "circle-alert" %}
-  <h2>This component requires Javascript.</h2>
-</div>
+<h3 id="usage-html"><a href="#usage-html">HTML</a></h3>
 
 <section class="prose">
-  <p>The component is structured as such:</p>
-  <ul>
-    <li>A <code>&lt;div class="dialog"&gt;</code> which wraps around the entire component and holds it state (e.g. open/close).</li>
-    <li>A <code>&lt;button&gt;</code> that acts as the trigger to open or close the popover.</li>
-    <li>A <code>&lt;div role="dialog"&gt;</code> that holds the dialog itself. It also acts as the backdrop for the dialog.</li>
-    <li>Inside of it, we have:
-      <ul>
-        <li>A <code>&lt;header&gt;</code> that contains the title (<code>&lt;h2&gt;</code>) and description (<code>&lt;p&gt;</code>) of the dialog.</li>
-        <li>A <code>&lt;section&gt;</code> for the content.</li>
-        <li>A <code>&lt;footer&gt;</code> that usually contains actions.</li>
-        <li>A close <code>&lt;button&gt;</code>.</li>
-      </ul>
-    </li>
-  </ul>
-  <p>You can include the Javascript code provided below, load it as an individual file or use the CLI. Some Alpine.js properties are also required on certain elements (e.g. <code class="text-xs">x-bind</code>, <code class="text-xs">x-data</code>, <code class="text-xs">@click</code>).</p>
+  <p>The component has the following structure:</p>
+  <dl>
+    <dt><code class="highlight language-html">&lt;dialog class="dialog"&gt;</code></dt>
+    <dd>Wraps around the entire component and acts as its backdrop.
+      <dl>
+        <dt><code class="highlight language-html">&lt;header&gt;</code></dt>
+        <dd>Contains the header for the dialog:
+          <dl>
+            <dt><code class="highlight language-html">&lt;h2&gt;</code></dt>
+            <dd>The title of the dialog.</dd>
+            <dt><code class="highlight language-html">&lt;p&gt;</code> <span class="badge-secondary">Optional</span></dt>
+            <dd>The description of the dialog.</dd>
+          </dl>
+        </dd>
+        <dt><code class="highlight language-html">&lt;section&gt;</code> <span class="badge-secondary">Optional</span></dt>
+        <dd>For the content.</dd>
+        <dt><code class="highlight language-html">&lt;footer&gt;</code> <span class="badge-secondary">Optional</span></dt>
+        <dd>Usually contains actions.</dd>
+        <dt><code class="highlight language-html">&lt;form method="dialog"&gt;</code> <span class="badge-secondary">Optional</span></dt>
+        <dd>A form that contains a single button to close the dialog.</dd>
+      </dl>
+    </dd>
+  </dl>
+  <p>The example below also include a <code>&lt;button type="button&gt;</code> to show how we can open the dialog using <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLDialogElement/showModal" target="_blank">the <code>showModal()</code> method</a> as well as aria-related attributes recommended for accessiblity:</p>.</p>
 </section>
 
-<div class="flex flex-wrap gap-2 my-6">
-  <a class="badge-outline" href="/installation/#install-js">
-    Components with Javascript
-    {% lucide "arrow-right" %}
-  </a>
-  <a class="badge-outline" href="/installation/#install-cli">
-    Use the CLI
-    {% lucide "arrow-right" %}
-  </a>
-  <a class="badge-outline" href="https://github.com/hunvreus/basecoat/blob/main/src/js/dialog.js" target="_blank">
-    Individual JS file (dialog.js)
-    {% lucide "arrow-right" %}
-  </a>
-</div>
-
-{% from "tabs.njk" import tabs %}
-{% set tabsets = [
-  { tab: "HTML", panel: code_block(code_html | prettyHtml, class="") },
-  { tab: "Javascipt (Alpine.js)", panel: code_block(code_script | prettyHtml, class="") }
-] %}
-{{ tabs(id="combobox", tabsets=tabsets) }}
-
-<section class="prose">
-  <p>The component will dispatch <code>dialog:opened</code> and <code>dialog:closed</code> events when the dialog is opened or closed. You can also dispatch <code>dialog:open</code> and <code>dialog:close</code> events to open or close the dialog programmatically. You will need the element to have an <code>id</code> to be able to target it (e.g. <code>&lt;div id="my-dialog" class="dialog"&gt;</code>):</p>
-</section>
-
-{% set code_dispatch %}<button type="button" x-init @click="$dispatch('dialog:open', { id: 'my-dialog' })">
-  Open #my-dialog
-</button>{% endset %}
-{{ code_block(code_dispatch | prettyHtml, "html") }}
+{{ code_block(code_html | prettyHtml, class="") }}
 
 <h3 id="usage-macro"><a href="#usage-macro">Jinja and Nunjucks</a></h3>
 
@@ -141,20 +106,19 @@ document.addEventListener('alpine:init', () => {
   </a>
 </div>
 
-{% set raw_code %}{% raw %}{% set footer %}
-  <button class="btn-outline" @click="open = false">Cancel</button>
-  <button class="btn" @click="open = false">Save changes</button>
+{% set raw_code %}{% raw %}{% set code_html %}
+{% set footer %}
+  <button class="btn-outline" onClick="this.closest('dialog').close()">Cancel</button>
+  <button class="btn" onClick="this.closest('dialog').close()">Save changes</button>
 {% endset %}
 {% call dialog(
   id="demo-dialog-edit-profile",
   title="Edit profile",
   description="Make changes to your profile here. Click save when you're done.",
-  main_attrs={"x-ref": "myDialog"},
   trigger="Edit Profile",
   trigger_attrs={"class": "btn-outline"},
   content_attrs={"class": "w-full sm:max-w-[425px] max-h-[612px]"},
-  footer=footer,
-  register_on=["alpine:init", "htmx:afterSwap"]
+  footer=footer
 ) %}
 <form class="form grid gap-4">
   <div class="grid gap-3">

@@ -22,12 +22,11 @@
   title=None,
   description=None,
   footer=None,
-  main_attrs={},
+  dialog_attrs={},
   trigger_attrs={},
-  content_attrs={},
-  content_header_attrs={},
-  content_body_attrs={},
-  content_footer_attrs={},
+  header_attrs={},
+  body_attrs={},
+  footer_attrs={},
   open=false,
   close_button=true,
   close_on_overlay_click=true
@@ -47,25 +46,27 @@
 <dialog
   id="{{ id }}"
   class="dialog"
-  onClick="this.close()"
-  {% for key, value in main_attrs %}
+  aria-labelledby="{{ id }}-title"
+  {% if description %}aria-describedby="{{ id }}-description"{% endif %}
+  {% if close_on_overlay_click %}onClick="this.close()"{% endif %}
+  {% for key, value in dialog_attrs %}
     {{ key }}="{{ value }}"
   {% endfor %}
 >
-  <article onClick="event.stopPropagation()">
+  <article {% if close_on_overlay_click %}onClick="event.stopPropagation()"{% endif %}>
     {% if title or description %}
       <header
-        {% for key, value in content_header_attrs %}
+        {% for key, value in header_attrs %}
           {{ key }}="{{ value }}"
         {% endfor %}
       >
         <h2 id="{{ id }}-title">{{ title | safe }}</h2>
-        {% if description %}<p>{{ description | safe }}</p>{% endif %}
+        {% if description %}<p id="{{ id }}-description">{{ description | safe }}</p>{% endif %}
       </header>
     {% endif %}
     {% if caller %}
       <section
-        {% for key, value in content_body_attrs %}
+        {% for key, value in body_attrs %}
           {{ key }}="{{ value }}"
         {% endfor %}
       >
@@ -74,7 +75,7 @@
     {% endif %}
     {% if footer %}
       <footer
-        {% for key, value in content_footer_attrs %}
+        {% for key, value in footer_attrs %}
           {{ key }}="{{ value }}"
         {% endfor %}
       >
@@ -85,7 +86,7 @@
       <form method="dialog">
         <button aria-label="Close dialog">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
-        </button>
+      </button>
       </form>
     {% endif %}
   </article>

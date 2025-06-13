@@ -15,15 +15,14 @@
     } 
   }"
 >
-  <pre x-ref="code" class="text-sm max-h-[650px] overflow-y-auto rounded-xl scrollbar whitespace-pre-wrap
-"><code class="language-{{ language }} !bg-neutral-900 p-0">{{- code | escape -}}</code></pre>
+  <pre x-ref="code" class="grid text-sm max-h-[650px] overflow-y-auto rounded-xl scrollbar"><code class="language-{{ language }} !bg-neutral-900 p-0">{{- code | escape -}}</code></pre>
   
   <button 
     @click="copy()" 
-    class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 z-10 h-6 w-6 text-zinc-50 hover:bg-zinc-700 hover:text-zinc-50 [&_svg]:h-3 [&_svg]:w-3 absolute right-3 top-3"
+    class="btn-icon-ghost size-8 absolute right-2.5 top-2 text-muted-foreground hover:text-foreground"
   >
-    {% lucide "clipboard", { "class": "size-4", "x-show": "!copied" } %}
-    {% lucide "check", { "class": "size-4", "x-show": "copied" } %}
+    {% lucide "clipboard", {"x-show": "!copied" } %}
+    {% lucide "check", {"x-show": "copied" } %}
   </button>
 </div>
 {% endmacro %}

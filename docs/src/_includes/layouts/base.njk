@@ -65,12 +65,11 @@
   <link rel="stylesheet" href="/assets/styles.css">
 
   <!-- JS -->
-  <script src="/assets/js/toast.js" defer></script>
-
+  {# <script src="/assets/js/dropdown-menu.js" defer></script> #}
   <script src="/assets/js/select.js" defer></script>
-  <script src="/assets/js/dropdown-menu.js" defer></script>
   <script src="/assets/js/sidebar.js" defer></script>
   <script src="/assets/js/tabs.js" defer></script>
+  <script src="/assets/js/toast.js" defer></script>
   
   <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
   <script src="https://unpkg.com/htmx.org@2.0.4"></script>
@@ -78,7 +77,12 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/django.min.js"></script>
   <script>
-    const applyHighlighting = () => { if (window.hljs) hljs.highlightAll(); };
+    const applyHighlighting = () => { if (window.hljs) {
+      hljs.highlightAll();
+      document.querySelectorAll('code.highlight').forEach((block) => {
+        hljs.highlightElement(block);
+      });
+    }};
 
     if (!window._hljsInitialized) {
       window._hljsInitialized = true;

@@ -10,7 +10,8 @@ toc:
 {% from "macros/code_preview.njk" import code_preview %}
 {% from "macros/code_block.njk" import code_block %}
 
-{% set code %}<table class="table">
+{% set code %}<div class="overflow-x-auto">
+<table class="table">
   <caption>A list of your recent invoices.</caption>
   <thead>
     <tr>
@@ -70,7 +71,8 @@ toc:
       <td class="text-right">$2,500.00</td>
     </tr>
   </tfoot>
-</table>{% endset %}
+</table>
+</div>{% endset %}
 {{ code_preview("table", code, "w-full") }}
 
 <h2 id="usage"><a href="#usage">Usage</a></h2>

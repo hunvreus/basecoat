@@ -12,10 +12,10 @@
 
 .content {
   > h2 {
-    @apply mt-16 mb-6 scroll-m-22 border-b pb-4 text-xl font-semibold tracking-tight first:mt-0;
+    @apply mt-12 lg:mt-20 mb-6 scroll-m-22 text-2xl font-semibold tracking-tight first:mt-0;
   }
   > h3 {
-    @apply mt-8 mb-6 scroll-m-22 text-lg font-semibold tracking-tight;
+    @apply mt-8 mb-6 scroll-m-22 text-xl font-semibold tracking-tight;
   }
   > h4 {
     @apply my-6 scroll-m-22 font-semibold tracking-tight;
@@ -42,6 +42,18 @@
     ul {
       li {
         @apply mt-2;
+      }
+    }
+    dl {
+      @apply border-b pb-3 my-6;
+      dt {
+        @apply border-t pt-3 mt-3 first:mt-0;
+      }
+      dd {
+        @apply mt-2;
+      }
+      dl {
+        @apply mt-4 border-b-0 pb-0 pl-8 my-0;
       }
     }
     b,

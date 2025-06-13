@@ -3,10 +3,10 @@ layout: layouts/layout.njk
 ---
 
 <main class="mx-auto relative flex w-full max-w-screen-lg gap-10">
-  <div class="mx-auto w-full max-w-screen-md">
+  <div class="mx-auto w-full flex-1 max-w-screen-md">
     <header class="space-y-2">
-      <h1 class="text-3xl font-bold tracking-tight">{{ title }}</h1>
-      <p class="text-muted-foreground">{{ description }}</p>
+      <h1 class="text-2xl font-semibold tracking-tight sm:text-3xl xl:text-4xl">{{ title }}</h1>
+      <p class="text-muted-foreground text-[1.05rem] sm:text-base">{{ description }}</p>
     </header>
     <article class="pb-12 mt-8 content">
       {{ content | safe }}

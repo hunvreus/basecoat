@@ -14,7 +14,7 @@ toc:
         id: install-css-import
       - label: That's it
         id: install-css-done
-  - label: Components with Javascript
+  - label: Components with JavaScript
     id: install-js
   - label: Use the CLI
     id: install-cli
@@ -67,20 +67,20 @@ toc:
     <h3 class="mb-4 scroll-m-20 font-semibold tracking-tight" id="install-css-done"><a href="#install-css-done">That's it</a></h3>
     <div class="prose">
       <p>You can now use any of the Basecoat classes in your project (e.g. <code>btn</code>, <code>card</code>, <code>input</code>, etc). Read the documentation about each component to get started (e.g. <a href="/components/button">button</a>, <a href="/components/card">card</a>, <a href="/components/input">input</a>, etc).</p>
-      <p>Some components (e.g. <a href="/components/select">Select</a>) require <a href="#install-js">Javascript code to work</a>.</p>
+      <p>Some components (e.g. <a href="/components/select">Select</a>) require <a href="#install-js">JavaScript code to work</a>.</p>
     </div>
   </li>
 </ol>
 
-<h2 id="install-js"><a href="#install-js">Components with Javascript</a></h2>
+<h2 id="install-js"><a href="#install-js">Components with JavaScript</a></h2>
 
 <div class="prose">
-  <p><b>Some components require Javascript code to work.</b></p>
+  <p><b>Some components require JavaScript code to work.</b></p>
   <p>The documentation provides Alpine.js code snippets to cover that. <a href="https://alpinejs.dev/docs/installation" target="_blank">Make sure to install Alpine.js if you decide to use them.</a></p>
   <p>For simple components like <a href="/components/accordion">Accordion</a> or <a href="/components/slider">Slider</a>, you will notice some inline Alpine.js code that you can just copy along with the rest of the HTML.</p>
   <p>For more complex components (<a href="/components/dialog">Dialog</a>, <a href="/components/dropdown-menu">Dropdown Menu</a>, <a href="/components/popover">Popover</a>, <a href="/components/select">Select</a>, <a href="/components/tabs">Tabs</a> and <a href="/components/tooltip">Toast</a>), you have one of 2 options:
   <ul>
-    <li>Copy the Javascript snippet provided in the documentation page into your project.</li>
+    <li>Copy the JavaScript snippet provided in the documentation page into your project.</li>
     <li>
       <p><a href="https://github.com/hunvreus/basecoat/tree/main/src/js" target="_blank">Download the script as a separate file</a> and include it in your project (<a href="#install-cli">or let the CLI do it for you</a>). <b>If you use this approach, make sure to load the file before the Alpine.js core JS file and register the component on the <code>alpine:init</code> event.</b> For example:</p>
       {% set code %}<script src="/assets/js/dialog.js" defer></script>
@@ -93,7 +93,7 @@ toc:
       {{ code_block(code, "html") }}
     </li>
   </ul>
-  <p>You are also welcome to write your own Javascript.</p>
+  <p>You are also welcome to write your own JavaScript.</p>
   <p>All of the components try and implement WAI-ARIA standards to make them accessible.</p>
 </div>
 
@@ -117,15 +117,15 @@ toc:
 {{ tabs(id="cli-execution", tabsets=exec_tabsets, label="Execute CLI commands to add components:") }}
 
 <div class="prose my-6">
-  <p>You will be asked to confirm the template engine and destination directory for the Javascript and macros.</p>
+  <p>You will be asked to confirm the template engine and destination directory for the JavaScript and macros.</p>
 </div>
 
 <h2 id="install-macros"><a href="#install-macros">Use Nunjucks or Jinja macros</a></h2>
 
 <div class="prose">
-  <p>For more complex components, you can use <a href="https://mozilla.github.io/nunjucks/" target="_blank">Nunjucks</a> or <a href="https://jinja.palletsprojects.com" target="_blank">Jinja</a> macros to help you generate the HTML and Javascript code.</p>
+  <p>For more complex components, you can use <a href="https://mozilla.github.io/nunjucks/" target="_blank">Nunjucks</a> or <a href="https://jinja.palletsprojects.com" target="_blank">Jinja</a> macros to help you generate the HTML and JavaScript code.</p>
   <p>To install them, either <a href="https://github.com/hunvreus/basecoat/tree/main/src" target="_blank">copy them directly from the GitHub repository</a> or use <a href="#install-cli">the CLI</a> to do the work for you.</p>
-  <p>For example, here's how you could use the <code>select()</code> macro to generate the HTML and Javascript code for a <a href="/components/select">Select</a> component:</p>
+  <p>For example, here's how you could use the <code>select()</code> macro to generate the HTML and JavaScript code for a <a href="/components/select">Select</a> component:</p>
   {% set code %}{% raw %}{% call select() %}
 <div role="group" aria-labelledby="fruit-options-label">
   <span id="fruit-options-label" role="heading">Fruits</span>
@@ -137,7 +137,7 @@ toc:
 </div>
 {% endcall %}{% endraw %}{% endset %}
   {{ code_block(code, "jinja") }}
-  <p>Make sure to include the Javascript code <b>before</b> Alpine.js core JS file:</p>
+  <p>Make sure to include the JavaScript code <b>before</b> Alpine.js core JS file:</p>
   {% set code %}<script src="/assets/js/select.js" defer></script>
 <script>
   document.addEventListener('alpine:init', () => {
