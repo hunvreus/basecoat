@@ -12,8 +12,11 @@
 {% endset %}
 {% call popover(
   trigger=trigger,
-  trigger_attrs={"class": "btn-ghost p-2 h-12 w-full flex items-center justify-start"},
-  content_attrs={
+  trigger_attrs={
+    "class": "btn-ghost p-2 h-12 w-full flex items-center justify-start",
+    "data-keep-mobile-sidebar-open": ""
+  },
+  popover_attrs={
     "data-side": "right",
     "data-align": "end",
     "class": "w-80",
@@ -21,7 +24,7 @@
       if (window.innerWidth < 768) {
         $el.setAttribute('data-side', 'top');
         $el.setAttribute('data-align', 'start');
-        $el.classList.add('w-full');
+        $el.classList.add('w-[271px]');
       }
     "
   }
@@ -118,9 +121,6 @@
   label="Sidebar navigation",
   header=header,
   footer=footer,
-  content_attrs={
-     "class": "scrollbar",
-    "@htmx:pushed-into-history.window": "updateCurrentPage()"
-  },
+  content_attrs={ "class": "scrollbar" },
   menu=menu
 ) }}

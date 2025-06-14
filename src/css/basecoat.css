@@ -161,7 +161,6 @@
     h2 {
       @apply col-start-2 line-clamp-1 min-h-4 font-medium tracking-tight;
     }
-
     section {
       @apply text-muted-foreground col-start-2 grid justify-items-start gap-1 text-sm [&_p]:leading-relaxed;
 
@@ -989,7 +988,27 @@
       @apply pointer-events-auto w-full mt-4 animate-[toast-up_0.3s_ease-in-out] grid  grid-rows-[1fr] transition-[grid-template-rows,opacity,margin] duration-300 ease-in-out;
       
       .toast-content {
-        @apply text-popover-foreground text-[13px] bg-popover border shadow-lg rounded-lg overflow-hidden;
+        @apply text-popover-foreground text-[13px] bg-popover border shadow-lg rounded-lg overflow-hidden flex gap-2.5 p-3 items-center;
+
+        svg {
+          @apply size-4 shrink-0;
+        }
+        section {
+          h2 {
+            @apply font-medium tracking-tight;
+          }
+          p {
+            @apply text-muted-foreground;
+          }
+        }
+        footer {
+          @apply ml-auto flex flex-col gap-2;
+
+          [data-toast-action],
+          [data-toast-cancel] {
+            @apply h-6 px-2.5 text-xs;
+          }
+        }
       }
       &[aria-hidden='true'] {
         @apply grid-rows-[0fr] opacity-0 m-0 border-0 p-0 overflow-hidden;

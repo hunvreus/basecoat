@@ -8,8 +8,6 @@ toc:
     children:
       - label: HTML
         id: usage-html
-      - label: JavasScript
-        id: usage-html
       - label: Jinja and Nunjucks
         id: usage-macro
   - label: Examples
@@ -25,8 +23,8 @@ toc:
 
 {% set code_html %}
 {% set footer %}
-  <button class="btn-outline" onClick="this.closest('dialog').close()">Cancel</button>
-  <button class="btn" onClick="this.closest('dialog').close()">Save changes</button>
+  <button class="btn-outline" onclick="this.closest('dialog').close()">Cancel</button>
+  <button class="btn" onclick="this.closest('dialog').close()">Save changes</button>
 {% endset %}
 {% call dialog(
   id="demo-dialog-edit-profile",
@@ -56,34 +54,45 @@ toc:
 
 <h3 id="usage-html"><a href="#usage-html">HTML</a></h3>
 
+{{ code_block(code_html | prettyHtml, class="") }}
+
 <section class="prose">
-  <p>The component has the following structure:</p>
+  <p>The component has the following HTML structure:</p>
   <dl>
-    <dt><code class="highlight language-html">&lt;dialog class="dialog"&gt;</code></dt>
-    <dd>Wraps around the entire component and acts as its backdrop.
+    <dt><code class="highlight language-html">&lt;button type="button"&gt;</code> <span class="badge-secondary">Optional</span></dt>
+    <dd>The trigger button to open the dialog (using <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLDialogElement/showModal" target="_blank">the native <code>showModal()</code> method</a>).</dd>
+    <dt><code class="highlight language-html">&lt;dialog class="dialog" id="{ DIALOG_ID }"&gt;</code></dt>
+    <dd>Wraps the whole component and acts as the backdrop. It can also have the following attributes:
+      <ul>
+        <li><code>aria-labelledby="{ TITLE_ID }"</code>: linked to by the <code>aria-labelledby</code> attribute of the <code>&lt;dialog&gt;</code>.</li>
+        <li><code>aria-describedby="{ DESCRIPTION_ID }"</code>: linked to by the <code>aria-describedby</code> attribute of the <code>&lt;dialog&gt;</code>.</li>
+        <li><code>onclick</code>: closes the dialog when the backdrop is clicked.</li>
+      </ul>
       <dl>
-        <dt><code class="highlight language-html">&lt;header&gt;</code></dt>
-        <dd>Contains the header for the dialog:
+        <dt><code class="highlight language-html">&lt;article&gt;</code></dt>
+        <dd>Wraps the content of the dialog. It includes an <code>onclick</code> attribute to prevent from closing the dialog if we have an <code>onclick</code> event on <code>&lt;dialog&gt;</code>.
           <dl>
-            <dt><code class="highlight language-html">&lt;h2&gt;</code></dt>
-            <dd>The title of the dialog.</dd>
-            <dt><code class="highlight language-html">&lt;p&gt;</code> <span class="badge-secondary">Optional</span></dt>
-            <dd>The description of the dialog.</dd>
+            <dt><code class="highlight language-html">&lt;header&gt;</code></dt>
+            <dd>Contains the header for the dialog:
+              <dl>
+                <dt><code class="highlight language-html">&lt;h2&gt;</code></dt>
+                <dd>The title of the dialog, must have an <code>id</code> if you use the <code>aria-labelledby</code> attribute on the <code>&lt;dialog&gt;</code>.</dd>
+                <dt><code class="highlight language-html">&lt;p&gt;</code> <span class="badge-secondary">Optional</span></dt>
+                <dd>The description of the dialog, must have an <code>id</code> if you use the <code>aria-describedby</code> attribute on the <code>&lt;dialog&gt;</code>.</dd>
+              </dl>
+            </dd>
+            <dt><code class="highlight language-html">&lt;section&gt;</code> <span class="badge-secondary">Optional</span></dt>
+            <dd>For the content.</dd>
+            <dt><code class="highlight language-html">&lt;footer&gt;</code> <span class="badge-secondary">Optional</span></dt>
+            <dd>Usually contains actions.</dd>
+            <dt><code class="highlight language-html">&lt;form method="dialog"&gt;</code> <span class="badge-secondary">Optional</span></dt>
+            <dd>A form that contains a single button to close the dialog.</dd>
           </dl>
         </dd>
-        <dt><code class="highlight language-html">&lt;section&gt;</code> <span class="badge-secondary">Optional</span></dt>
-        <dd>For the content.</dd>
-        <dt><code class="highlight language-html">&lt;footer&gt;</code> <span class="badge-secondary">Optional</span></dt>
-        <dd>Usually contains actions.</dd>
-        <dt><code class="highlight language-html">&lt;form method="dialog"&gt;</code> <span class="badge-secondary">Optional</span></dt>
-        <dd>A form that contains a single button to close the dialog.</dd>
       </dl>
     </dd>
   </dl>
-  <p>The example below also include a <code>&lt;button type="button&gt;</code> to show how we can open the dialog using <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLDialogElement/showModal" target="_blank">the <code>showModal()</code> method</a> as well as aria-related attributes recommended for accessiblity:</p>.</p>
 </section>
-
-{{ code_block(code_html | prettyHtml, class="") }}
 
 <h3 id="usage-macro"><a href="#usage-macro">Jinja and Nunjucks</a></h3>
 
@@ -108,8 +117,8 @@ toc:
 
 {% set raw_code %}{% raw %}{% set code_html %}
 {% set footer %}
-  <button class="btn-outline" onClick="this.closest('dialog').close()">Cancel</button>
-  <button class="btn" onClick="this.closest('dialog').close()">Save changes</button>
+  <button class="btn-outline" onclick="this.closest('dialog').close()">Cancel</button>
+  <button class="btn" onclick="this.closest('dialog').close()">Save changes</button>
 {% endset %}
 {% call dialog(
   id="demo-dialog-edit-profile",
@@ -139,7 +148,7 @@ toc:
 
 {% set code %}
 {% set footer %}
-  <button class="btn-outline" onClick="this.closest('dialog').close()">Close</button>
+  <button class="btn-outline" onclick="this.closest('dialog').close()">Close</button>
 {% endset %}
 {% call dialog(
   id="dialog-example",

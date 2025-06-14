@@ -76,38 +76,18 @@ toc:
 ) }}
 {% endset %}
 
-{% set code_script %}
-<script>
-{% fetchCode "src/js/tabs.js" %}
-
-document.addEventListener('alpine:init', () => {
-  window.basecoat.registerTabs(Alpine);
-});
-</script>
-{% endset %}
-
-{{ code_preview("tabs", code_script | prettyHtml ~ code_html | prettyHtml, "max-w-[300px] w-full") }}
+{{ code_preview("tabs", code_html | prettyHtml, "max-w-[300px] w-full") }}
 
 <h2 id="usage"><a href="#usage">Usage</a></h2>
 
-<h3 id="usage-default"><a href="#usage-default">HTML + JavaScript</a></h3>
-
-<div class="alert my-6">
-  {% lucide "circle-alert" %}
-  <h2>This component requires JavaScript.</h2>
-</div>
+<h4 id="usage-html-js-1"><a href="#usage-html-js-1">Step 1: Include the JavaScript files</a></h4>
 
 <section class="prose">
-  <p>The component is structured as such:</p>
-
-  <ul>
-    <li>A <code>&lt;div class="tabs"&gt;</code> which wraps around the entire component and holds it state (e.g. open/close).</li>
-    <li>A <code>&lt;nav role="tablist"&gt;</code> that holds the tab buttons (<code>&lt;button role="tab"&gt;</code>).</li>
-    <li>A series of <code>&lt;div role="tabpanel"&gt;</code> that holds the tab panels corresponding to each tab button.</li>
-  </ul>
-
-  <p>You can include the JavaScript code provided below, load it as an individual file or use the CLI. Some Alpine.js properties are also required on certain elements (e.g. <code class="text-xs">x-bind</code>, <code class="text-xs">x-data</code>, <code class="text-xs">@click</code>).</p>
+  <p>Include the <a href="https://github.com/hunvreus/basecoat/blob/main/src/js/tabs.js" target="_blank"><code>tabs.js</code></a> file. Add this to the <code>&lt;head&gt;</code> of your page:</p>
 </section>
+
+{% set code_script %}{% raw %}<script src="https://unpkg.com/css-anchor-positioning"></script>{% endraw %}{% endset %}
+{{ code_block(code_script | prettyHtml, "html") }}
 
 <div class="flex flex-wrap gap-2 my-6">
   <a class="badge-outline" href="/installation/#install-js">
@@ -119,17 +99,37 @@ document.addEventListener('alpine:init', () => {
     {% lucide "arrow-right" %}
   </a>
   <a class="badge-outline" href="https://github.com/hunvreus/basecoat/blob/main/src/js/tabs.js" target="_blank">
-    Individual JS file (tabs.js)
+    tabs.js
     {% lucide "arrow-right" %}
   </a>
 </div>
 
-{% from "tabs.njk" import tabs %}
-{% set tabsets = [
-  { tab: "HTML", panel: code_block(code_html | prettyHtml, class="") },
-  { tab: "Javascipt (Alpine.js)", panel: code_block(code_script | prettyHtml, class="") }
-] %}
-{{ tabs(id="combobox", tabsets=tabsets) }}
+<h4 id="usage-html-js-2"><a href="#usage-html-js-2">Step 2: Add your select HTML</a></h4>
+
+{{ code_block(code_html | prettyHtml, "html") }}
+
+<h4 id="usage-html-js-3"><a href="#usage-html-js-3">HTML structure</a></h4>
+
+<section class="prose">
+  <dl>
+    <dt><code class="highlight language-html">&lt;div class="tabs"&gt;</code></dt>
+    <dd>Wraps around the entire component.
+      <dl>
+        <dt><code class="highlight language-html">&lt;nav role="tablist" aria-orientation="horizontal"&gt;</code></dt>
+        <dd>The tablist containing the tab buttons
+          <dl>
+            <dt><code class="highlight language-html">&lt;button role="tab" id="{ TAB_ID }" aria-controls="{ PANEL_ID }" aria-selected="false" tabindex="0"&gt;</code></dt>
+            <dd>The tab button. When active, the <code>aria-selected</code> attribute is set to <code>true</code>. <code>tabindex="0"</code> is required for keyboard navigation.</dd>
+          </dl>
+        </dd>
+      </dl>
+    </dd>
+    <dl>
+      <dt><code class="highlight language-html">&lt;div role="tabpanel" id="{ PANEL_ID }" aria-labelledby="{ TAB_ID }" tabindex="-1" aria-selected="false"&gt;</code></dt>
+      <dd>The tab panel. When active, the <code>aria-selected</code> attribute is set to <code>true</code>.</dd>
+    </dl>
+  </dl>
+</section>
 
 <h3 id="usage-macro"><a href="#usage-macro">Jinja and Nunjucks</a></h3>
 

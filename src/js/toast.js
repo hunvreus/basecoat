@@ -1,75 +1,196 @@
-window.basecoat = window.basecoat || {};
-window.basecoat.registerToast = function(Alpine) {
-  if (Alpine.components && Alpine.components.toast) return;
+(() => {
+  let toaster;
+  const toasts = new WeakMap();
+  let isPaused = false;
+  const ICONS = {
+    success: '<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>',
+    error: '<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>',
+    info: '<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>',
+    warning: '<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>'
+  };
 
-  Alpine.store('toaster', { isPaused: false });
-  Alpine.data('toast', (config={}) => ({
-    config: config,
-    open: false,
-    timeoutDuration: null,
-    timeoutId: null,
+  function initToaster(toasterElement) {
+    if (toasterElement.dataset.toasterInitialized) return;
+    toaster = toasterElement;
 
-    init() {
-      if (config.duration !== -1) {
-        this.timeoutDuration = config.duration || (config.category === 'error' ? 5000 : 3000);
-        this.timeoutId = setTimeout(() => { this.close() }, this.timeoutDuration);
+    toaster.addEventListener('mouseenter', pauseAllTimeouts);
+    toaster.addEventListener('mouseleave', resumeAllTimeouts);
+    toaster.addEventListener('click', (e) => {
+      const actionLink = e.target.closest('.toast footer a');
+      const actionButton = e.target.closest('.toast footer button');
+      if (actionLink || actionButton) {
+        closeToast(e.target.closest('.toast'));
       }
-      this.open = true;
-      this.$watch('$store.toaster.isPaused', (isPaused) => {
-        if (!this.open) return;
-        if (isPaused) {
-          this.pauseTimeout();
+    });
+
+    toaster.querySelectorAll('.toast:not([data-toast-initialized])').forEach(initToast);
+    toaster.dataset.toasterInitialized = 'true';
+  }
+
+  function initToast(element) {
+    if (element.dataset.toastInitialized) return;
+
+    const duration = parseInt(element.dataset.duration);
+    const timeoutDuration = duration !== -1
+      ? duration || (element.dataset.category === 'error' ? 5000 : 3000)
+      : -1;
+    
+    const state = {
+      remainingTime: timeoutDuration,
+      timeoutId: null,
+      startTime: null,
+    };
+    
+    if (timeoutDuration !== -1) {
+      if (isPaused) {
+        state.timeoutId = null;
+      } else {
+        state.startTime = Date.now();
+        state.timeoutId = setTimeout(() => closeToast(element), timeoutDuration);
+      }
+    }
+    toasts.set(element, state);
+    
+    element.dataset.toastInitialized = 'true';
+  }
+
+  function pauseAllTimeouts() {
+    if (isPaused) return;
+
+    isPaused = true;
+    
+    toaster.querySelectorAll('.toast:not([aria-hidden="true"])').forEach(element => {
+      if (!toasts.has(element)) return;
+      
+      const state = toasts.get(element);
+      if (state.timeoutId) {
+        clearTimeout(state.timeoutId);
+        state.timeoutId = null;
+        state.remainingTime -= Date.now() - state.startTime;
+      }
+    });
+  }
+
+  function resumeAllTimeouts() {
+    if (!isPaused) return;
+
+    isPaused = false;
+
+    toaster.querySelectorAll('.toast:not([aria-hidden="true"])').forEach(element => {
+      if (!toasts.has(element)) return;
+
+      const state = toasts.get(element);
+      if (state.remainingTime !== -1 && !state.timeoutId) {
+        if (state.remainingTime > 0) {
+          state.startTime = Date.now();
+          state.timeoutId = setTimeout(() => closeToast(element), state.remainingTime);
         } else {
-          this.resumeTimeout();
+          closeToast(element);
+        }
+      }
+    });
+  }
+
+  function closeToast(element) {
+    if (!toasts.has(element)) return;
+
+    const state = toasts.get(element);
+    clearTimeout(state.timeoutId);
+    toasts.delete(element);
+    
+    if (document.activeElement) document.activeElement.blur();
+    element.setAttribute('aria-hidden', 'true');
+    element.addEventListener('transitionend', () => element.remove(), { once: true });
+  }
+
+  function executeAction(button, toast) {
+    const actionString = button.dataset.toastAction;
+    if (!actionString) return;
+    try {
+      const func = new Function('close', actionString);
+      func(() => closeToast(toast));
+    } catch (e) {
+      console.error('Error executing toast action:', e);
+    }
+  }
+
+  function createToast(config) {
+    const {
+      category = 'info',
+      title,
+      description,
+      action,
+      cancel,
+      duration,
+      icon,
+    } = config;
+
+    const iconHtml = icon || (category && ICONS[category]) || '';
+    const titleHtml = title ? `<h2>${title}</h2>` : '';
+    const descriptionHtml = description ? `<p>${description}</p>` : '';
+    const actionHtml = action?.href
+      ? `<a href="${action.href}" class="btn" data-toast-action>${action.label}</a>`
+      : action?.onclick
+        ? `<button type="button" class="btn" data-toast-action onclick="${action.onclick}">${action.label}</button>`
+        : '';
+    const cancelHtml = cancel
+      ? `<button type="button" class="btn-outline h-6 text-xs px-2.5 rounded-sm" data-toast-cancel onclick="${cancel?.onclick}">${cancel.label}</button>`
+      : '';
+
+    const footerHtml = actionHtml || cancelHtml ? `<footer>${actionHtml}${cancelHtml}</footer>` : '';
+
+    const html = `
+      <div
+        class="toast"
+        role="${category === 'error' ? 'alert' : 'status'}"
+        aria-atomic="true"
+        ${category ? `data-category="${category}"` : ''}
+        ${duration !== undefined ? `data-duration="${duration}"` : ''}
+      >
+        <div class="toast-content">
+          ${iconHtml}
+          <section>
+            ${titleHtml}
+            ${descriptionHtml}
+          </section>
+          ${footerHtml}
+          </div>
+        </div>
+      </div>
+    `;
+    const template = document.createElement('template');
+    template.innerHTML = html.trim();
+    return template.content.firstChild;
+  }
+
+  const initialToaster = document.getElementById('toaster');
+  if (initialToaster) initToaster(initialToaster);
+
+  window.addEventListener('basecoat:toast', (e) => {
+    if (!toaster) {
+      console.error('Cannot create toast: toaster container not found on page.');
+      return;
+    }
+    const config = e.detail?.config || {};
+    const toastElement = createToast(config);
+    toaster.appendChild(toastElement);
+  });
+
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      mutation.addedNodes.forEach((node) => {
+        if (node.nodeType !== Node.ELEMENT_NODE) return;
+        
+        if (node.matches('#toaster')) {
+          initToaster(node);
+        }
+
+        if (toaster && node.matches('.toast:not([data-toast-initialized])')) {
+          initToast(node);
         }
       });
-    },
-    pauseTimeout() {
-      clearTimeout(this.timeoutId);
-      this.timeoutId = null;
-    },
-    resumeTimeout(index) {
-      if (this.open && this.timeoutId === null) {
-        this.timeoutId = setTimeout(() => { this.close() }, this.timeoutDuration);
-      }
-    },
-    close() {
-      this.pauseTimeout();
-      this.open = false;
-      this.$el.blur();
-    },
-    executeAction(actionString) {
-      if (actionString) {
-        Alpine.evaluate(this.$el, actionString);
-      }
-    },
-
-    $toastBindings: {
-      ['@mouseenter']() { this.$store.toaster.isPaused = true },
-      ['@mouseleave']() { this.$store.toaster.isPaused = false },
-      ['@keydown.escape.prevent']() { this.close() },
-      [':aria-hidden']() { return !this.open }
-    },
-  }));
-
-  Alpine.magic('toast', (el) => (config, toasterId='toaster') => {
-    const toaster = document.getElementById(toasterId);
-    const template = document.getElementById('toast-template');
-
-    if (!toaster) {
-      console.error(`Toaster container with id #${toasterId} not found.`);
-      return;
-    }
-    if (!template) {
-      console.error('Toast template with id #toast-template not found.');
-      return;
-    }
-
-    const clone = template.content.firstElementChild.cloneNode(true);
-
-    clone.setAttribute('x-data', `toast(${JSON.stringify(config)})`);
-    clone.removeAttribute('id'); 
-
-    toaster.appendChild(clone);
+    });
   });
-};
+
+  observer.observe(document.body, { childList: true, subtree: true });
+})();

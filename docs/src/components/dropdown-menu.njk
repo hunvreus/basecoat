@@ -7,7 +7,14 @@ toc:
     id: usage
     children:
       - label: HTML + JavaScript
-        id: usage-default
+        id: usage-html-js
+        children:
+          - label: "Step 1: Include the JavaScript files"
+            id: usage-html-js-1
+          - label: "Step 2: Add your dropdown menu HTML"
+            id: usage-html-js-2
+          - label: HTML structure
+            id: usage-html-js-3
       - label: Jinja and Nunjucks
         id: usage-macro
   - label: Examples
@@ -25,26 +32,25 @@ toc:
 
 {% set code_html %}
 {% call dropdown_menu(
-  id="dropdown-menu",
+  id="demo-dropdown-menu",
   trigger="Open",
   trigger_attrs={"class": "btn-outline"},
-  content_attrs={"class": "min-w-56"},
-  register_on=["alpine:init", "htmx:afterSwap"]
+  popover_attrs={"class": "min-w-56"}
 ) %}
 <div role="group" aria-labelledby="account-options">
   <span id="account-options" role="heading">My Account</span>
-  <button type="button" role="menuitem" onclick="console.log('clicked')">
+  <button type="button" role="menuitem">
     Profile
     <span class="text-muted-foreground ml-auto text-xs tracking-widest">⇧⌘P</span>
   </button>
-  <button type="button" role="menuitem" onclick="window.open('https://google.com', '_blank')">
+  <button type="button" role="menuitem">
     Billing
     <span class="text-muted-foreground ml-auto text-xs tracking-widest">⌘B</span>
   </button>
-  <a role="menuitem" href="https://google.com" target="_blank">
+  <button type="button" role="menuitem">
     Settings
     <span class="text-muted-foreground ml-auto text-xs tracking-widest">⌘S</span>
-  </a>
+  </button>
   <button type="button" role="menuitem">
     Keyboard shortcuts
     <span class="text-muted-foreground ml-auto text-xs tracking-widest">⌘K</span>
@@ -68,45 +74,20 @@ toc:
 {% endcall %}
 {% endset %}
 
-{% set code_script %}
-
-{% endset %}
-
-{{ code_preview("dropdown-menu", code_script | prettyHtml ~ code_html | prettyHtml) }}
+{{ code_preview("dropdown-menu", code_html | prettyHtml) }}
 
 <h2 id="usage">Usage</h2>
 
-<h3 id="usage-default"><a href="#usage-default">HTML + JavaScript</a></h3>
+<h3 id="usage-html-js"><a href="#usage-html-js">HTML + JavaScript</a></h3>
 
-<div class="alert my-6">
-  {% lucide "circle-alert" %}
-  <h2>This component requires JavaScript.</h2>
-</div>
+<h4 id="usage-html-js-1"><a href="#usage-html-js-1">Step 1: Include the JavaScript files</a></h4>
 
 <section class="prose">
-  <p>The component is structured as such:</p>
-  <ul>
-    <li>A <code>&lt;div class="popover"&gt;</code> which wraps around the entire component and holds it state (e.g. open/close).</li>
-    <li>A <code>&lt;button&gt;</code> that acts as the trigger to open or close the popover.</li>
-    <li>A <code>&lt;div data-popover&gt;</code> that holds the content of the popover.</li>
-    <li>Inside of the <code>&lt;div data-popover&gt;</code> is a <code>&lt;nav role="menu"&gt;</code> that contains a combination of:
-      <ul>
-        <li><code>&lt;button role="menuitem"&gt;</code> for menu items.</li>
-        <li><code>&lt;button role="menuitemcheckbox"&gt;</code> for menu items with checkboxes.</li>
-        <li><code>&lt;button role="menuitemradio"&gt;</code> for menu items with radio buttons.</li>
-        <li><code>&lt;hr role="separator"&gt;</code> to display a horizontal separator.</li>
-        <li><code>&lt;div role="group"&gt;</code> to group options.</li>
-        <li><code>&lt;span role="heading"&gt;</code> for group headings.</li>
-      </ul>
-  </ul>
-  <p>As with the <a href="/components/popover">Popover</a> component, you can set up a few additional options on the <code>&lt;div data-popover&gt;</code> element:</p>
-  <ul>
-    <li><code>data-side</code> can be set to <code>top</code>, <code>bottom</code>, <code>left</code>, or <code>right</code> to change the side of the popover.</li>
-    <li><code>data-align</code> can be set to <code>start</code>, <code>center</code>, or <code>end</code> to change the alignment of the popover.</li>
-  </ul>
-
-  <p>You can include the JavaScript code provided below, load it as an individual file or use the CLI. Some Alpine.js properties are also required on certain elements (e.g. <code class="text-xs">x-bind</code>, <code class="text-xs">x-data</code>, <code class="text-xs">@click</code>).</p>
+  <p>Include the <a href="https://github.com/hunvreus/basecoat/blob/main/src/js/dropdown-menu.js" target="_blank"><code>dropdown-menu.js</code></a> file. It is recommended to also include the <a href="https://github.com/oddbird/css-anchor-positioning" target="_blank">CSS anchor positioning polyfill</a> to support older browsers. Add this to the <code>&lt;head&gt;</code> of your page:</p>
 </section>
+
+{% set code_script %}{% raw %}<script src="https://unpkg.com/css-anchor-positioning"></script>{% endraw %}{% endset %}
+{{ code_block(code_script | prettyHtml, "html") }}
 
 <div class="flex flex-wrap gap-2 my-6">
   <a class="badge-outline" href="/installation/#install-js">
@@ -118,17 +99,61 @@ toc:
     {% lucide "arrow-right" %}
   </a>
   <a class="badge-outline" href="https://github.com/hunvreus/basecoat/blob/main/src/js/dropdown-menu.js" target="_blank">
-    Individual JS file (dropdown-menu.js)
+    dropdown-menu.js
     {% lucide "arrow-right" %}
   </a>
 </div>
 
-{% from "tabs.njk" import tabs %}
-{% set tabsets = [
-  { tab: "HTML", panel: code_block(code_html | prettyHtml, class="") },
-  { tab: "Javascipt (Alpine.js)", panel: code_block(code_script | prettyHtml, class="") }
-] %}
-{{ tabs(id="dropdown-menu", tabsets=tabsets) }}
+<h4 id="usage-html-js-2"><a href="#usage-html-js-2">Step 2: Add your dropdown menu HTML</a></h4>
+
+{{ code_block(code_html | prettyHtml, "html") }}
+
+<h4 id="usage-html-js-3"><a href="#usage-html-js-3">HTML structure</a></h4>
+
+<section class="prose">
+  <dl>
+    <dt><code class="highlight language-html">&lt;div class="dropdown-menu"&gt;</code></dt>
+    <dd>Wraps around the entire component.
+      <dl>
+        <dt><code class="highlight language-html">&lt;button type="button" popovertarget="{ POPOVER_ID }"&gt;</code></dt>
+        <dd>
+          <p>The trigger to open the popover, can also have the following attributes:</p>
+          <ul>
+            <li><code>id="{BUTTON_ID}"</code>: linked to by the <code>aria-labelledby</code> attribute of the listbox.</li>
+            <li><code>aria-haspopup="menu"</code>: indicates that the button opens a menu.</li>
+            <li><code>aria-controls="{ MENU_ID }"</code>: points to the menu's id.</li>
+            <li><code>aria-expanded="false"</code>: tracks the popover's state.</li>
+          </ul>
+        </dd>
+        <dt><code class="highlight language-html">&lt;div popover class="popover" id="{ POPOVER_ID }"&gt;</code></dt>
+        <dd>As with the <a href="/components/popover">Popover</a> component, you can set up the side and alignment of the popover using the <code>data-side</code> and <code>data-align</code> attributes.
+        <dl>
+          <dt><code class="highlight language-html">&lt;div role="menu"&gt;</code></dt>
+          <dd>The menu containing the options. Should have the following attributes:
+            <ul>
+              <li><code>id="{ MENU_ID }"</code>: refered to by the <code>aria-controls</code> attribute of the trigger.</li>
+              <li><code>aria-labelledby="{ BUTTON_ID }"</code>: linked to by the button's <code>id</code> attribute.</li>
+            </ul>
+            <dl>
+              <dt><code class="highlight language-html">&lt;button role="menuitem"&gt;</code></dt>
+              <dd>Menu item.</dd>
+              <dt><code class="highlight language-html">&lt;button role="menuitemcheckbox"&gt;</code></dt>
+              <dd>Menu item with a checkbox.</dd>
+              <dt><code class="highlight language-html">&lt;button role="menuitemradio"&gt;</code></dt>
+              <dd>Menu item with a radio button.</dd>
+              <dt><code class="highlight language-html">&lt;hr role="separator"&gt;</code> <span class="badge-secondary">Optional</span></dt>
+              <dd>Separator between groups/options.</dd>
+              <dt><code class="highlight language-html">&lt;div role="group"&gt;</code> <span class="badge-secondary">Optional</span></dt>
+              <dd>Group of options, can have a <code>aria-labelledby</code> attribute to link to a heading.</dd>
+              <dt><code class="highlight language-html">&lt;span role="heading"&gt;</code></dt>
+              <dd>Group heading, must have an <code>id</code> attribute if you use the <code>aria-labelledby</code> attribute on the group.</dd>
+            </dl>
+          </dd>
+        </dl>
+      </dl>
+    </dd>
+  </dl>
+</section>
 
 <h3 id="usage-macro"><a href="#usage-macro">Jinja and Nunjucks</a></h3>
 
@@ -295,8 +320,7 @@ toc:
   id="dropdown-menu-radio-group",
   trigger="Open",
   trigger_attrs={"class": "btn-outline"},
-  content_attrs={"class": "min-w-56"},
-  register_on=["alpine:init", "htmx:afterSwap"]
+  popover_attrs={"class": "min-w-56"}
 ) %}
 <div role="group" aria-labelledby="position-options" x-data="{ checked: 'bottom' }">
   <span id="position-options" role="heading">Panel Position</span>

@@ -7,23 +7,80 @@ toc:
     id: usage
     children:
       - label: HTML + JavaScript
-        id: usage-default
+        id: usage-html-js
+        children:
+          - label: "Step 1: Include the JavaScript files"
+            id: usage-html-js-1
+          - label: "Step 2: Add your sidebar HTML"
+            id: usage-html-js-2
+          - label: HTML structure
+            id: usage-html-js-3
       - label: Jinja and Nunjucks
         id: usage-macro
 ---
 
-{% from "macros/code_preview.njk" import code_preview %}
 {% from "macros/code_block.njk" import code_block %}
 {% from "sidebar.njk" import sidebar %}
 
 <h2 id="usage"><a href="#usage">Usage</a></h2>
 
-<h3 id="usage-default"><a href="#usage-default">HTML + JavaScript</a></h3>
+<h3 id="usage-html-js"><a href="#usage-html-js">HTML + JavaScript</a></h3>
 
-<div class="alert my-6">
-  {% lucide "circle-alert" %}
-  <h2>This component requires JavaScript.</h2>
+<h4 id="usage-html-js-1"><a href="#usage-html-js-1">Step 1: Include the JavaScript files</a></h4>
+
+<section class="prose">
+  <p>Include the <a href="https://github.com/hunvreus/basecoat/blob/main/src/js/sidebar.js" target="_blank"><code>sidebar.js</code></a> file. Add this to the <code>&lt;head&gt;</code> of your page:</p>
+</section>
+
+{% set code_script %}{% raw %}<script src="https://unpkg.com/css-anchor-positioning"></script>{% endraw %}{% endset %}
+{{ code_block(code_script | prettyHtml, "html") }}
+
+<div class="flex flex-wrap gap-2 my-6">
+  <a class="badge-outline" href="/installation/#install-js">
+    Components with JavaScript
+    {% lucide "arrow-right" %}
+  </a>
+  <a class="badge-outline" href="/installation/#install-cli">
+    Use the CLI
+    {% lucide "arrow-right" %}
+  </a>
+  <a class="badge-outline" href="https://github.com/hunvreus/basecoat/blob/main/src/js/sidebar.js" target="_blank">
+    sidebar.js
+    {% lucide "arrow-right" %}
+  </a>
 </div>
+
+<h4 id="usage-html-js-2"><a href="#usage-html-js-2">Step 2: Add your sidebar HTML</a></h4>
+
+{% set code_html %}
+{% set icon_square_terminal %}{% lucide "square-terminal" %}{% endset %}
+{% set icon_bot %}{% lucide "bot" %}{% endset %}
+{% set icon_settings %}{% lucide "settings" %}{% endset %}
+{% set menu = [
+  { type: "group", label: "Getting started", items: [
+    { label: "Playground", url: "#", icon: icon_square_terminal },
+    { label: "Models", url: "#", icon: icon_bot },
+    { label: "Settings", type: "submenu", icon: icon_settings, items: [
+      { label: "General", url: "#" },
+      { label: "Team", url: "#" },
+      { label: "Billing", url: "#" },
+      { label: "Limits", url: "#" }
+    ] }
+  ]}
+] %}
+{{ sidebar(
+  label="Sidebar navigation",
+  content_attrs={
+    "class": "scrollbar"
+  },
+  menu=menu
+) }}
+<main>
+  <button type="button" onclick="window.dispatchEvent(new CustomEvent('sidebar:toggle'))">Toggle sidebar</button>
+  <h1>Content</h1>
+</main>
+{% endset %}
+{{ code_block(code_html | prettyHtml, "html") }}
 
 <section class="prose">
   <p>To use a sidebar, you will need the sidebar itself and a sibling container for the content of the page (e.g. <code>&lt;main&gt;</code>), with the following structure for the sidebar:</p>
@@ -43,68 +100,74 @@ toc:
   <p>You can include the JavaScript code provided below, load it as an individual file or use the CLI. Some Alpine.js properties are also required on certain elements (e.g. <code class="text-xs">x-bind</code>, <code class="text-xs">x-data</code>, <code class="text-xs">@click</code>).</p>
 </section>
 
-<div class="flex flex-wrap gap-2 my-6">
-  <a class="badge-outline" href="/installation/#install-js">
-    Components with JavaScript
-    {% lucide "arrow-right" %}
-  </a>
-  <a class="badge-outline" href="/installation/#install-cli">
-    Use the CLI
-    {% lucide "arrow-right" %}
-  </a>
-  <a class="badge-outline" href="https://github.com/hunvreus/basecoat/blob/main/src/js/sidebar.js" target="_blank">
-    Individual JS file (sidebar.js)
-    {% lucide "arrow-right" %}
-  </a>
-</div>
+<h4 id="usage-html-js-3"><a href="#usage-html-js-3">HTML structure</a></h4>
 
-{% set code_html %}
-{% set icon_square_terminal %}{% lucide "square-terminal" %}{% endset %}
-{% set icon_bot %}{% lucide "bot" %}{% endset %}
-{% set icon_settings %}{% lucide "settings" %}{% endset %}
-
-{% set menu = [
-  { type: "group", label: "Getting started", items: [
-    { label: "Playground", url: "#", icon: icon_square_terminal },
-    { label: "Models", url: "#", icon: icon_bot },
-    { label: "Settings", type: "submenu", icon: icon_settings, items: [
-      { label: "General", url: "#" },
-      { label: "Team", url: "#" },
-      { label: "Billing", url: "#" },
-      { label: "Limits", url: "#" }
-    ] }
-  ]}
-] %}
-
-{{ sidebar(
-  label="Sidebar navigation",
-  content_attrs={
-    "class": "scrollbar"
-  },
-  menu=menu
-) }}
-<main>
-  <button type="button" @click="$dispatch('sidebar:toggle')">Toggle sidebar</button>
-  <h1>Content</h1>
-</main>
-{% endset %}
-
-{% set code_script %}
-<script>
-{% fetchCode "src/js/sidebar.js" %}
-
-document.addEventListener('alpine:init', () => {
-  window.basecoat.registerSidebar(Alpine);
-});
-</script>
-{% endset %}
-
-{% from "tabs.njk" import tabs %}
-{% set tabsets = [
-  { tab: "HTML", panel: code_block(code_html | prettyHtml, class="") },
-  { tab: "Javascipt (Alpine.js)", panel: code_block(code_script | prettyHtml, class="") }
-] %}
-{{ tabs(id="sidebar", tabsets=tabsets) }}
+<section class="prose">
+  <dl>
+    <dt><code class="highlight language-html">&lt;aside class="sidebar" aria-hidden="false"&gt;</code></dt>
+    <dd>Wraps around the entire component. It can have the following attributes:
+      <ul>
+        <li><code>aria-hidden="true"</code>: controls the default state of the sidebar (hidden or visible).</li>
+        <li><code>data-side="left"</code>: specifies the side of the sidebar (<code>left</code> or <code>right</code>, defaults to <code>left</code>).</li>
+      </ul>
+    </dd>
+      <dl>
+        <dt><code class="highlight language-html">&lt;nav&gt;</code></dt>
+        <dd>
+          <p>The navigation element that contains the sidebar's content. It can have the following attributes:</p>
+          <ul>
+            <li><code>id="{BUTTON_ID}"</code>: linked to by the <code>aria-labelledby</code> attribute of the listbox.</li>
+            <li><code>aria-haspopup="menu"</code>: indicates that the button opens a menu.</li>
+            <li><code>aria-controls="{ MENU_ID }"</code>: points to the menu's id.</li>
+            <li><code>aria-expanded="false"</code>: tracks the popover's state.</li>
+          </ul>
+          <dl>
+            <dt><code class="highlight language-html">&lt;header&gt;</code> <span class="badge-secondary">Optional</span></dt>
+            <dd>The header of the sidebar.</dd>
+            <dt><code class="highlight language-html">&lt;section&gt;</code></dt>
+            <dd>The main navigation list.
+              <dl>
+                <dt><code class="highlight language-html">&lt;div role="group"&gt;</code></dt>
+                <dd>Group of options, can have a <code>aria-labelledby</code> attribute to link to a heading.</dd>
+                <dt><code class="highlight language-html">&lt;span role="heading"&gt;</code></dt>
+                <dd>Group heading, must have an <code>id</code> attribute if you use the <code>aria-labelledby</code> attribute on the group.</dd>
+                <dt><code class="highlight language-html">&lt;ul&gt;</code></dt>
+                <dd>List of links or buttons.
+                  <dl>
+                    <dt><code class="highlight language-html">&lt;li&gt;</code></dt>
+                    <dd>Individual item.
+                      <dl>
+                        <dt><code class="highlight language-html">&lt;a&gt;</code></dt>
+                        <dd>A link. By default, clicking on a link will close the sidebar on mobile unless the <code>data-keep-mobile-sidebar-open</code> attribute is present.</dd>
+                        <dt><code class="highlight language-html">&lt;button&gt;</code></dt>
+                        <dd>A button. By default, clicking on a button will close the sidebar on mobile unless the <code>data-keep-mobile-sidebar-open</code> attribute is present.</dd>
+                        <dt><code class="highlight language-html">&lt;details&gt;</code></dt>
+                        <dd>Collapsible section.
+                          <dl>
+                            <dt><code class="highlight language-html">&lt;summary&gt;</code></dt>
+                            <dd>Summary of the collapsible section.</dd>
+                            <dt><code class="highlight language-html">&lt;ul&gt;</code></dt>
+                            <dd>List of links or buttons.</dd>
+                          </dl>
+                        </dd>
+                      </dl>
+                    </dd>
+                  </dl>
+                </dd>
+              </dl>
+            </dd>
+            <dt><code class="highlight language-html">&lt;footer&gt;</code> <span class="badge-secondary">Optional</span></dt>
+            <dd>The footer of the sidebar.</dd>
+          </dl>
+        </dd>
+      </dl>
+    </dd>
+    <dt><code class="highlight language-html">&lt;main&gt;</code></dt>
+    <dd>A wrapper for the content of the page.</dd>
+    <dt><code class="highlight language-html">&lt;button type="button" onclick="window.dispatchEvent(new CustomEvent('sidebar:toggle'))"&gt;</code></dt>
+    <dd>A button to toggle the sidebar. If you want to use multiple sidebars you will need to add unique ids to the sidebars (i.e. <code>&lt;aside class="sidebar" id="{SIDEBAR_ID}"&gt;</code>) and refer to them in the event <code>detail</code> (i.e. <code>window.dispatchEvent(new CustomEvent('sidebar:toggle', { detail: { id: '{SIDEBAR_ID}' } }));</code>).</dd>
+  </dl>
+</section>
 
 <h3 id="usage-macro"><a href="#usage-macro">Jinja and Nunjucks</a></h3>
 

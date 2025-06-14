@@ -10,16 +10,14 @@
 {% macro toaster(
   id="toaster",
   toasts=[],
-  main_attrs=None,
-  is_fragment=false
+  attrs=None
 ) %}
 <div
   id="{{ id }}"
   class="toaster"
-  {% for key, value in main_attrs %}
+  {% for key, value in attrs %}
     {{ key }}="{{ value }}"
   {% endfor %}
-  {% if is_fragment %}hx-swap-oob="beforeend"{% endif %}
 >
 {% for item in toasts %}
   {{ toast(
@@ -31,79 +29,6 @@
   ) }}
 {% endfor %}
 </div>
-
-{% if not is_fragment %}
-<template id="toast-template">
-  <div
-    class="toast"
-    role="status"
-    aria-atomic="true"
-    x-bind="$toastBindings"
-  >
-    <div class="toast-content">
-      <div class="flex items-center justify-between gap-x-3 p-4 [&>svg]:size-4 [&>svg]:shrink-0 [&>[role=img]]:size-4 [&>[role=img]]:shrink-0 [&>[role=img]>svg]:size-4">
-        <template x-if="config.icon">
-          <span aria-hidden="true" role="img" x-html="config.icon"></span>
-        </template>
-        <template x-if="!config.icon && config.category === 'success'">
-          {{ toast_icons.success | safe }}
-        </template>
-        <template x-if="!config.icon && config.category === 'error'">
-          {{ toast_icons.error | safe }}
-        </template>
-        <template x-if="!config.icon && config.category === 'info'">
-          {{ toast_icons.info | safe }}
-        </template>
-        <template x-if="!config.icon && config.category === 'warning'">
-          {{ toast_icons.warning | safe }}
-        </template>
-        <section class="flex-1 flex flex-col gap-0.5 items-start">
-          <template x-if="config.title">
-            <h2 class="font-medium" x-text="config.title"></h2>
-          </template>
-          <template x-if="config.description">
-            <p class="text-muted-foreground" x-text="config.description"></p>
-          </template>
-        </section>
-        <template x-if="config.action || config.cancel">
-          <footer class="flex flex-col gap-1 self-start">
-            <template x-if="config.action?.click">
-              <button
-                type="button"
-                class="btn h-6 text-xs px-2.5 rounded-sm"
-                @click="executeAction(config.action.click)"
-                x-text="config.action.label"
-              ></button>
-            </template>
-            <template x-if="config.action?.url">
-              <a
-                :href="config.action.url"
-                class="btn h-6 text-xs px-2.5 rounded-sm"
-                x-text="config.action.label"
-              ></a>
-            </template>
-            <template x-if="config.cancel?.click">
-              <button
-                type="button"
-                class="btn-outline h-6 text-xs px-2.5 rounded-sm"
-                @click="executeAction(config.cancel.click)"
-                x-text="config.cancel.label"
-              ></button>
-            </template>
-            <template x-if="config.cancel?.url">
-              <a
-                :href="config.cancel.url"
-                class="btn-outline h-6 text-xs px-2.5 rounded-sm"
-                x-text="config.cancel.label"
-              ></a>
-            </template>
-          </footer>
-        </template>
-      </div>
-    </div>
-  </div>
-</template>
-{% endif %}
 {% endmacro %}
 
 {#
@@ -134,65 +59,51 @@
   aria-atomic="true"
   aria-hidden="false"
   {% if category %}data-category="{{ category }}"{% endif %}
-  x-data="toast({
-    category: '{{ category }}',
-    duration: {{ duration or 'null' }}
-  })"
-  x-bind="$toastBindings"
 >
   <div class="toast-content">
-    <div class="flex items-center justify-between gap-x-3 p-4 [&>svg]:size-4 [&>svg]:shrink-0 [&>[role=img]]:size-4 [&>[role=img]]:shrink-0 [&>[role=img]>svg]:size-4">
-      {% if category in ["error", "success", "info", "warning"] %}
-        {{ toast_icons[category] | safe }}
+    {% if category in ["error", "success", "info", "warning"] %}
+      {% if category == "success" %}
+        {% lucide "circle-check" %}
+      {% elif category == "error" %}
+        {% lucide "circle-x" %}
+      {% elif category == "info" %}
+        {% lucide "info" %}
+      {% elif category == "warning" %}
+        {% lucide "triangle-alert" %}
       {% endif %}
-      <section class="flex-1 flex flex-col gap-0.5 items-start">
-        {% if title %}
-          <h2 class="font-medium">{{ title }}</h2>
-        {% endif %}
-        {% if description %}
-          <p class="text-muted-foreground">{{ description }}</p>
-        {% endif %}
-      </section>
-      {% if action or cancel %}
-        <footer class="flex flex-col gap-1 self-start">
-          {% if action %}
-            {% if action.click %}
-              <button
-                type="button"
-                class="btn h-6 text-xs px-2.5 rounded-sm"
-                @click="{{ action.click }}"
-              >{{ action.label }}</button>
-            {% elif action.url %}
-              <a
-                href="{{ action.url }}"
-                class="btn h-6 text-xs px-2.5 rounded-sm"
-              >{{ action.label }}</a>
-            {% endif %}
+    {% endif %}
+    <section>
+      {% if title %}<h2>{{ title }}</h2>{% endif %}
+      {% if description %}<p>{{ description }}</p>{% endif %}
+    </section>
+    {% if action or cancel %}
+      <footer>
+        {% if action %}
+          {% if action.href %}
+            <a
+              href="{{ action.href }}"
+              class="btn-sm"
+              data-toast-action
+            >{{ action.label }}</a>
+          {% else %}
+            <button
+              type="button"
+              class="btn"
+              data-toast-action
+              {% if action.onclick %}onclick="{{ action.onclick }}"{% endif %}
+            >{{ action.label }}</button>
           {% endif %}
-          {% if cancel %}
-            {% if cancel.click %}
-              <button
-                type="button"
-                class="btn-outline h-6 text-xs px-2.5 rounded-sm"
-                @click="{{ cancel.click }}"
-              >{{ cancel.label }}</button>
-            {% elif cancel.url %}
-              <a
-                href="{{ cancel.url }}"
-                class="btn-outline h-6 text-xs px-2.5 rounded-sm"
-              >{{ toast.cancel.label }}</a>
-            {% endif %}
-          {% endif %}
-        </footer>
-      {% endif %}
-    </div>
+        {% endif %}
+        {% if cancel %}
+          <button
+            type="button"
+            class="btn-sm-outline"
+            data-toast-cancel
+            {% if cancel.onclick %}onclick="{{ cancel.onclick }}"{% endif %}
+          >{{ cancel.label }}</button>
+        {% endif %}
+      </footer>
+    {% endif %}
   </div>
 </div>
 {% endmacro %}
-
-{% set toast_icons = {
-  'success': '<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-check-icon lucide-circle-check"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>',
-  'error': '<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-x-icon lucide-circle-x"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>',
-  'info': '<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-info-icon lucide-info"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>',
-  'warning': '<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-triangle-alert-icon lucide-triangle-alert"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>'
-} %}

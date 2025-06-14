@@ -7,12 +7,18 @@ toc:
     id: usage
     children:
       - label: HTML + JavaScript
-        id: usage-default
+        id: usage-html-js
         children:
-          - label: Append a toast
-            id: usage-append-toast
-          - label: Use $toast()
-            id: usage-use-magic-method
+          - label: "Step 1: Include the JavaScript file"
+            id: usage-html-js-1
+          - label: "Step 2: Add the toaster HTML"
+            id: usage-html-js-2
+          - label: "Step 3: Add your toasts"
+            id: usage-html-js-3
+          - label: HTML structure
+            id: usage-html-js-4
+          - label: JavaScript config object
+            id: usage-html-js-5
       - label: Jinja and Nunjucks
         id: usage-macro
 ---
@@ -21,51 +27,48 @@ toc:
 {% from "macros/code_preview.njk" import code_preview %}
 {% from "macros/code_block.njk" import code_block %}
 
-{% set code_htmx %}<button
+{% set code_server_side %}<button
   class="btn-outline"
   hx-trigger="click"
-  hx-get="/fragments/toast/success"
+  hx-get="/fragments/toast/error"
   hx-target="#toaster"
   hx-swap="beforeend"
 >
   Toast from backend (with HTMX)
 </button>{% endset %}
-{{ code_preview("toast-htmx", code_htmx, "max-w-md") }}
+{{ code_preview("toast-server-side", code_server_side, "max-w-md") }}
 
-{% set code_alpine %}<button
+{% set code_client_side %}<button
   class="btn-outline"
-  @click='
-    $toast({
-      category: "success",
-      title: "Success",
-      description: "A success toast called from the front-end.",
-      action: {
-        label: "Dismiss",
-        click: "open =false"
+  onclick="window.dispatchEvent(new CustomEvent('basecoat:toast', {
+    detail: {
+      config: {
+        category: 'success',
+        title: 'Success',
+        description: 'A success toast called from the front-end.',
+        cancel: {
+          label: 'Dismiss'
+        }
       }
-    })
-  '>
+    }
+  }))"
+>
   Toast from front-end
-</button>
-{% endset %}
-{{ code_preview("toast-alpine", code_alpine, "max-w-md") }}
+</button>{% endset %}
+{{ code_preview("toast-client-side", code_client_side, "max-w-md") }}
 
 <h2 id="usage"><a href="#usage">Usage</a></h2>
 
-<h3 id="usage-default"><a href="#usage-default">HTML + JavaScript</a></h3>
+<h3 id="usage-html-js"><a href="#usage-html-js">HTML + JavaScript</a></h3>
 
-<div class="alert my-6">
-  {% lucide "circle-alert" %}
-  <h2>This component requires JavaScript.</h2>
-</div>
+<h4 id="usage-html-js-1"><a href="#usage-html-js-1">Step 1: Include the JavaScript file</a></h4>
 
 <section class="prose">
-  <p>To use toasts, you will first need to set up the toaster code to the end of your <code>&lt;body&gt;</code> (see HTML below).</p>
-
-  <p>The <code>&lt;template id="toast-template"&gt;</code> bit is only required if you plan on using the <code>$toast()</code> method (see below).</p>
-
-  <p>You will also need to include the JavaScript code provided below, load it as an individual file or use the CLI. Some Alpine.js properties are also required on certain elements (e.g. <code class="text-xs">x-bind</code>, <code class="text-xs">x-data</code>, <code class="text-xs">@click</code>).</p>
+  <p>Include the <a href="https://github.com/hunvreus/basecoat/blob/main/src/js/toast.js" target="_blank"><code>toast.js</code></a> file. Add this to the <code>&lt;head&gt;</code> of your page:</p>
 </section>
+
+{% set code_script %}{% raw %}<script src="https://unpkg.com/css-anchor-positioning"></script>{% endraw %}{% endset %}
+{{ code_block(code_script | prettyHtml, "html") }}
 
 <div class="flex flex-wrap gap-2 my-6">
   <a class="badge-outline" href="/installation/#install-js">
@@ -77,59 +80,28 @@ toc:
     {% lucide "arrow-right" %}
   </a>
   <a class="badge-outline" href="https://github.com/hunvreus/basecoat/blob/main/src/js/toast.js" target="_blank">
-    Individual JS file (toast.js)
+    toast.js
     {% lucide "arrow-right" %}
   </a>
 </div>
 
-
-{% set code_script %}
-{# <script>
-{% fetchCode "src/js/popover.js" %}
-
-document.addEventListener('alpine:init', () => {
-  window.basecoat.registerPopover(Alpine);
-});
-</script> #}
-{% endset %}
-
-{% set code_html_toaster %}{{ toaster() }}{% endset %}
-
-{% from "tabs.njk" import tabs %}
-{% set tabsets = [
-  { tab: "HTML", panel: code_block(code_html_toaster | prettyHtml, class="") },
-  { tab: "Javascipt (Alpine.js)", panel: code_block(code_script | prettyHtml, class="") }
-] %}
-{{ tabs(id="popover", tabsets=tabsets) }}
+<h4 id="usage-html-js-2"><a href="#usage-html-js-2">Step 2: Add the toaster HTML</a></h4>
 
 <section class="prose">
-  <p>Once that's in place, we can do one of two things:</p>
-
-  <ul>
-    <li>Append a <code>&lt;div class="toast"&gt;</code> to the toaster.</li>
-    <li>Use the <code>$toast()</code> Alpine.js "magic method".</li>
-  </ul>
+  <p>Toasts are displayed in a parent element, the "toaster". Add this to this to at the end of your <code>&lt;body&gt;</code>:</p>
 </section>
 
-<h4 id="usage-append-toast"><a href="#usage-append-toast">Append a toast</a></h4>
+{% set code_toaster %}<div id="toaster" class="toaster"></div>{% endset %}
+{{ code_block(code_toaster | prettyHtml, "html") }}
+
+<h4 id="usage-html-js-3"><a href="#usage-html-js-3">Step 3: Add your toasts</a></h4>
 
 <section class="prose">
-  <p>To display a toast, just append the following to the toaster:</p>
+  <p>If you decide to server-render your toasts, or load them using asynchronoulsy with something like HTMX, you can just add the toast's markup to the toaster:</p>
 </section>
 
-{% set code_toast_simple %}<div class="toast" x-data="toast" x-bind="$toastBindings">
-  <div class="toast-content">
-    <p>This is a toast.</p>
-  </div>
-</div>{% endset %}
-
-{{ code_block(code_toast_simple | prettyHtml, "html") }}
-
-<section class="prose">
-  <p>You can implement the layout you want within the toast, but here is the standard format used in the examples above:</p>
-</section>
-
-{% set code_toast %}{{ toast(
+{% set code_toast_html %}<div id="toaster" class="toaster">
+  {{ toast(
   category="success",
   title="Success",
   description="A success toast called from the front-end.",
@@ -137,66 +109,98 @@ document.addEventListener('alpine:init', () => {
     label: "Dismiss",
     click: "close()"
   }
-) }}{% endset %}
-{{ code_block(code_toast | prettyHtml, "html") }}
+) }}
+</div>{% endset %}
+{{ code_block(code_toast_html | prettyHtml, "html") }}
+
+<div class="flex flex-wrap gap-2 my-6">
+  <a class="badge-outline" href="#usage-html-js-4">
+    HTML structure
+    {% lucide "arrow-right" %}
+  </a>
+</div>
 
 <section class="prose">
-  <p>When setting up <code>x-data</code>, you can pass a config object with `category` (e.g. "success", "error", "info", "warning") and `duration` (in milliseconds). By default, the duration will be 3 seconds, and 5 seconds for errors.</p>
-
-  <p>This approach is used in the first example with HTMX: when the button is clicked, we retrieve the a fragment that contains the markup for the toast and append it to <code>#toaster</code>.</p>
+  <p>If you need to create a toast from the front-end, you can dispatch a custom <code>basecoat:toast</code> event as such:</p>
 </section>
 
-{% set code_htmx %}<button
-  class="btn-outline"
-  hx-trigger="click"
-  hx-get="/fragments/toast/success"
-  hx-target="#toaster"
-  hx-swap="beforeend"
->
-  Toast from backend (with HTMX)
-</button>{% endset %}
+{{ code_block(code_client_side | prettyHtml, "html") }}
 
-<h4 id="usage-use-magic-method"><a href="#usage-use-magic-method">Use $toast()</a></h4>
+<div class="flex flex-wrap gap-2 my-6">
+  <a class="badge-outline" href="#usage-html-js-5">
+    JavaScript config object
+    {% lucide "arrow-right" %}
+  </a>
+</div>
+
+<h4 id="usage-html-js-4"><a href="#usage-html-js-4">HTML structure</a></h4>
 
 <section class="prose">
-  <p>If you want to display a toast directly from the front-end, you can use the <code>$toast()</code> Alpine.js magic method. This is what we're doing in the second example above:</p>
+  <dl>
+    <dt><code class="highlight language-html">&lt;div class="toast"&gt;</code></dt>
+    <dd>Wraps around the toast component.
+      <dl>
+        <dt><code class="highlight language-html">&lt;div class="toast-content"&gt;</code></dt>
+        <dd>The content of the toast.
+          <dl>
+            <dt><code class="highlight language-html">&lt;svg aria-hidden="true"&gt;</code> <span class="badge-secondary">Optional</span></dt>
+            <dd>The toast's icon.</dd>
+            <dt><code class="highlight language-html">&lt;section&gt;</code></dt>
+            <dd>The toast's message.
+              <dl>
+                <dt><code class="highlight language-html">&lt;h2&gt;</code></dt>
+                <dd>The toast's title.</dd>
+                <dt><code class="highlight language-html">&lt;p&gt;</code> <span class="badge-secondary">Optional</span></dt>
+                <dd>The toast's description.</dd>
+              </dl>
+            </dd>
+            <dt><code class="highlight language-html">&lt;footer&gt;</code> <span class="badge-secondary">Optional</span></dt>
+            <dd>The toast's buttons. When clicked, the toast will be closed (unless the button's <code>onclick</code> is set to <code>e.preventDefault()</code>).
+              <dl>
+                <dt><code class="highlight language-html">&lt;button type="button" class="btn" onclick="{ ONCLICK }"&gt;</code> or <code class="highlight language-html">&lt;a href="{ URL }" class="btn" &gt;</code> <span class="badge-secondary">Optional</span></dt>
+                <dd>The toast's action button. This can either be a link (with a <code>href</code> attribute) or a button (with an <code>onclick</code> attribute).</dd>
+              </dl>
+              <dl>
+                <dt><code class="highlight language-html">&lt;button type="button" class="btn-outline" onclick="{ ONCLICK }"&gt;</code> <span class="badge-secondary">Optional</span></dt>
+                <dd>The toast's cancel button (with an optional <code>onclick</code> attribute).</dd>
+              </dl>
+            </dd>
+          </dl>
+        </dd>
+      </dl>
+    </dd>
+  </dl>
 </section>
 
-{% set code_magic_method %}<button
-  class="btn-outline"
-  @click='
-    $toast({
-      category: "success",
-      title: "Success",
-      description: "A success toast called from the front-end.",
-      action: {
-        label: "Dismiss",
-        click: "open =false"
-      }
-    })
-  '>
-  Toast from front-end
-</button>
-{% endset %}
-{{ code_block(code_magic_method, "html") }}
+<h4 id="usage-html-js-5"><a href="#usage-html-js-5">JavaScript config object</a></h4>
 
 <section class="prose">
-  <p>The <code>$toast()</code> method accepts a config object with the following properties:</p>
-
-  <ul>
-    <li><code>duration</code> (optional): the duration of the toast in milliseconds. By default, the duration will be 3 seconds, or 5 seconds if <code>category</code> is "error".</li>
-    <li><code>category</code> (optional): "success", "error", "info", "warning" or any arbitrary string.</li>
-    <li><code>title</code> (optional): the title of the toast.</li>
-    <li><code>description</code> (optional): the description of the toast.</li>
-    <li><code>action</code> (optional): an object to define an action button:
-      <ul>
-        <li><code>label</code>: the label of the action button.</li>
-        <li><code>click</code> (optional): a string of JavaScript to execute when the button is clicked.</li>
-        <li><code>url</code> (optional): a URL to link to when the button is clicked.</li>
-      </ul>
-    </li>
-    <li><code>cancel</code> (optional): an object to define a cancel button (similar structure to action).</li>
-  </ul>
+  <dl>
+    <dt><code>category</code> <span class="badge-secondary">Optional</span></dt>
+    <dd>Category of the toast, either <code>success</code>, <code>info</code>, <code>warning</code>, or <code>error</code>.</dd>
+    <dt><code>title</code></dt>
+    <dd>The title of the toast.</dd>
+    <dt><code>description</code> <span class="badge-secondary">Optional</span></dt>
+    <dd>The description of the toast.</dd>
+    <dt><code>action</code> <span class="badge-secondary">Optional</span></dt>
+    <dd>Action button.
+      <dl>
+        <dt><code>label</code> <span class="badge-secondary">Optional</span></dt>
+        <dd>The label of the cancel button. If not provided, the default label is "Dismiss".</dd>
+        <dt><code>onclick</code> <span class="badge-secondary">Optional</span></dt>
+        <dd>The onclick of the cancel button.</dd>
+      </dl>
+    </dd>
+    <dt><code>cancel</code> <span class="badge-secondary">Optional</span></dt>
+    <dd>Cancel button.
+      <dl>
+        <dt><code>label</code> <span class="badge-secondary">Optional</span></dt>
+        <dd>The label of the cancel button. If not provided, the default label is "Dismiss".</dd>
+        <dt><code>onclick</code> <span class="badge-secondary">Optional</span></dt>
+        <dd>The onclick of the cancel button.</dd>
+      </dl>
+    </dd>
+  </dl>
 </section>
 
 <h3 id="usage-macro"><a href="#usage-macro">Jinja and Nunjucks</a></h3>

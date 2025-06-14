@@ -9,7 +9,14 @@ toc:
       - label: HTML
         id: usage-html
       - label: HTML + JavaScript
-        id: usage-js
+        id: usage-html-js
+        children:
+          - label: "Step 1: Include the JavaScript files"
+            id: usage-html-js-1
+          - label: "Step 2: Add your select HTML"
+            id: usage-html-js-2
+          - label: HTML structure
+            id: usage-html-js-3
       - label: Jinja and Nunjucks
         id: usage-macro
   - label: Examples
@@ -73,10 +80,39 @@ toc:
 
 {{ code_block(code_native) }}
 
-<h3 id="usage-js"><a href="#usage-js">HTML + JavaScript</a></h3>
+<h3 id="usage-html-js"><a href="#usage-html-js">HTML + JavaScript</a></h3>
+
+<h4 id="usage-html-js-1"><a href="#usage-html-js-1">Step 1: Include the JavaScript files</a></h4>
 
 <section class="prose">
-  <p>The component has the following structure:</p>
+  <p>Include the <a href="https://github.com/hunvreus/basecoat/blob/main/src/js/select.js" target="_blank"><code>select.js</code></a> file. It is recommended to also include the <a href="https://github.com/oddbird/css-anchor-positioning" target="_blank">CSS anchor positioning polyfill</a> to support older browsers. Add this to the <code>&lt;head&gt;</code> of your page:</p>
+</section>
+
+{% set code_script %}{% raw %}<script src="https://unpkg.com/css-anchor-positioning"></script>{% endraw %}{% endset %}
+{{ code_block(code_script | prettyHtml, "html") }}
+
+<div class="flex flex-wrap gap-2 my-6">
+  <a class="badge-outline" href="/installation/#install-js">
+    Components with JavaScript
+    {% lucide "arrow-right" %}
+  </a>
+  <a class="badge-outline" href="/installation/#install-cli">
+    Use the CLI
+    {% lucide "arrow-right" %}
+  </a>
+  <a class="badge-outline" href="https://github.com/hunvreus/basecoat/blob/main/src/js/select.js" target="_blank">
+    select.js
+    {% lucide "arrow-right" %}
+  </a>
+</div>
+
+<h4 id="usage-html-js-2"><a href="#usage-html-js-2">Step 2: Add your select HTML</a></h4>
+
+{{ code_block(code_html | prettyHtml, "html") }}
+
+<h4 id="usage-html-js-3"><a href="#usage-html-js-3">HTML structure</a></h4>
+
+<section class="prose">
   <dl>
     <dt><code class="highlight language-html">&lt;div class="select"&gt;</code></dt>
     <dd>Wraps around the entire component.
@@ -107,9 +143,9 @@ toc:
               <dt><code class="highlight language-html">&lt;hr role="separator"&gt;</code> <span class="badge-secondary">Optional</span></dt>
               <dd>Separator between groups/options.</dd>
               <dt><code class="highlight language-html">&lt;div role="group"&gt;</code> <span class="badge-secondary">Optional</span></dt>
-              <dd>Group of options.</dd>
+              <dd>Group of options, can have a <code>aria-labelledby</code> attribute to link to a heading.</dd>
               <dt><code class="highlight language-html">&lt;span role="heading"&gt;</code></dt>
-              <dd>Group heading.</dd>
+              <dd>Group heading, must have an <code>id</code> attribute if you use the <code>aria-labelledby</code> attribute on the group.</dd>
             </dl>
           </dd>
         </dl>
@@ -118,37 +154,27 @@ toc:
     <dt><code class="highlight language-html">&lt;input type="hidden" name="{ NAME }" value="{ VALUE }"&gt;</code> <span class="badge-secondary">Optional</span></dt>
     <dd>The hidden input that holds the value of the field (if needed).</dd>
   </dl>
-  <p>More aria-related attributes are also recommended as illustrated in the example below:</p>
 </section>
-
-{{ code_block(code_html | prettyHtml, "html") }}
-
-<section class="prose">
-  <p>This component requires you to include the <a class="badge-outline" href="https://github.com/hunvreus/basecoat/blob/main/src/js/select.js" target="_blank"><code>select.js</code></a> file and recommends you include the <a href="https://github.com/oddbird/css-anchor-positioning" target="_blank">CSS anchor positioning polyfill</a> to support older browsers. You can either include the code shown below in your <code>&lt;head&gt;</code> or <a class="badge-outline" href="/installation/#install-js">use one of the alternative methods</a>.</p>
-</section>
-
-{% set code_script %}{% raw %}<script src="https://unpkg.com/css-anchor-positioning"></script>{% endraw %}{% endset %}
-{{ code_block(code_script | prettyHtml, "html") }}
-
-<div class="flex flex-wrap gap-2 my-6">
-  <a class="badge-outline" href="/installation/#install-js">
-    Components with JavaScript
-    {% lucide "arrow-right" %}
-  </a>
-  <a class="badge-outline" href="/installation/#install-cli">
-    Use the CLI
-    {% lucide "arrow-right" %}
-  </a>
-  <a class="badge-outline" href="https://github.com/hunvreus/basecoat/blob/main/src/js/select.js" target="_blank">
-    Individual JS file (select.js)
-    {% lucide "arrow-right" %}
-  </a>
-</div>
 
 <h3 id="usage-macro"><a href="#usage-macro">Jinja and Nunjucks</a></h3>
 
 <div class="prose">
   <p>You can use the <code class="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-xs">select()</code> Nunjucks or Jinja macro for this component.</p>
+</div>
+
+<div class="flex flex-wrap gap-2 my-6">
+  <a class="badge-outline" href="/installation/#install-macros" target="_blank">
+    Use Nunjucks or Jinja macros
+    {% lucide "arrow-right" %}
+  </a>
+  <a class="badge-outline" href="https://github.com/hunvreus/basecoat/blob/main/src/jinja/dialog.html.jinja" target="_blank">
+    Jinja macro
+    {% lucide "arrow-right" %}
+  </a>
+  <a class="badge-outline" href="https://github.com/hunvreus/basecoat/blob/main/src/nunjucks/dialog.njk" target="_blank">
+    Nunjucks macro
+    {% lucide "arrow-right" %}
+  </a>
 </div>
 
 {% set raw_code %}{% raw %}{{ select(
@@ -167,21 +193,6 @@ toc:
   ]
 ) }}{% endraw %}{% endset %}
 {{ code_block(raw_code, "jinja") }}
-
-<div class="flex flex-wrap gap-2 my-6">
-  <a class="badge-outline" href="/installation/#install-macros" target="_blank">
-    Use Nunjucks or Jinja macros
-    {% lucide "arrow-right" %}
-  </a>
-  <a class="badge-outline" href="https://github.com/hunvreus/basecoat/blob/main/src/jinja/dialog.html.jinja" target="_blank">
-    Jinja macro
-    {% lucide "arrow-right" %}
-  </a>
-  <a class="badge-outline" href="https://github.com/hunvreus/basecoat/blob/main/src/nunjucks/dialog.njk" target="_blank">
-    Nunjucks macro
-    {% lucide "arrow-right" %}
-  </a>
-</div>
 
 <h2 id="examples"><a href="#examples">Examples</a></h2>
 
@@ -221,16 +232,22 @@ toc:
   register_on=["alpine:init", "htmx:afterSwap"]
 ) %}
 <div type="button" role="option" data-value="bar">
-  {% lucide "chart-bar", {"class": "text-muted-foreground"} %}
-  Bar
+  <span class="flex items-center gap-2">
+    {% lucide "chart-bar", {"class": "text-muted-foreground"} %}
+    Bar
+  </span>
 </div>
 <div type="button" role="option" data-value="line">
-  {% lucide "chart-line", {"class": "text-muted-foreground"} %}
-  Line
+  <span class="flex items-center gap-2">
+    {% lucide "chart-line", {"class": "text-muted-foreground"} %}
+    Line
+  </span>
 </div>
 <div type="button" role="option" data-value="pie">
-  {% lucide "chart-pie", {"class": "text-muted-foreground"} %}
-  Pie
+  <span class="flex items-center gap-2">
+    {% lucide "chart-pie", {"class": "text-muted-foreground"} %}
+    Pie
+  </span>
 </div>
 {% endcall %}
 {% endset %}

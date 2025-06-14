@@ -18,8 +18,8 @@ toc:
 
 {% set code_html %}
 {% set footer %}
-  <button class="btn-outline" onClick="document.getElementById('alert-dialog').close()">Cancel</button>
-  <button class="btn-primary" onClick="document.getElementById('alert-dialog').close()">Continue</button>
+  <button class="btn-outline" onclick="document.getElementById('alert-dialog').close()">Cancel</button>
+  <button class="btn-primary" onclick="document.getElementById('alert-dialog').close()">Continue</button>
 {% endset %}
 {{ dialog(
   id="alert-dialog",
@@ -40,10 +40,45 @@ toc:
 <h3 id="usage-default"><a href="#usage-html">HTML</a></h3>
 
 <section class="prose">
-  <p>The Alert Dialog component is identical to <a href="/components/dialog" class="font-medium underline underline-offset-4">Dialog</a> except for two small differences: we do not display a close button and we do not let the user close the dialog when clicking on the backdrop (no <code>onClick</code> attribute on the <code>&lt;dialog&gt;</code> or the <code>&lt;article&gt;</code> elements).</p>
+  <p>The Alert Dialog component is identical to <a href="/components/dialog" class="font-medium underline underline-offset-4">Dialog</a> except for two small differences: we do not display a close button and we do not let the user close the dialog when clicking on the backdrop (no <code>onclick</code> attribute on the <code>&lt;dialog&gt;</code> or the <code>&lt;article&gt;</code> elements).</p>
 </section>
 
 {{ code_block(code_html | prettyHtml, class="") }}
+
+<section class="prose">
+  <p>The component has the following HTML structure:</p>
+  <dl>
+    <dt><code class="highlight language-html">&lt;button type="button"&gt;</code> <span class="badge-secondary">Optional</span></dt>
+    <dd>The trigger button to open the alert dialog (using <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLDialogElement/showModal" target="_blank">the native <code>showModal()</code> method</a>).</dd>
+    <dt><code class="highlight language-html">&lt;dialog class="dialog" id="{ DIALOG_ID }"&gt;</code></dt>
+    <dd>Wraps the whole component and acts as the backdrop. It can also have the following attributes:
+      <ul>
+        <li><code>aria-labelledby="{ TITLE_ID }"</code>: linked to by the <code>aria-labelledby</code> attribute of the dialog.</li>
+        <li><code>aria-describedby="{ DESCRIPTION_ID }"</code>: linked to by the <code>aria-describedby</code> attribute of the <code>&lt;dialog&gt;</code>.</li>
+      </ul>
+      <dl>
+        <dt><code class="highlight language-html">&lt;article&gt;</code></dt>
+        <dd>Wraps the content of the alert dialog.
+          <dl>
+            <dt><code class="highlight language-html">&lt;header&gt;</code></dt>
+            <dd>Contains the header for the alert dialog:
+              <dl>
+                <dt><code class="highlight language-html">&lt;h2&gt;</code></dt>
+                <dd>The title of the alert dialog, must have an <code>id</code> if you use the <code>aria-labelledby</code> attribute on the <code>&lt;dialog&gt;</code>.</dd>
+                <dt><code class="highlight language-html">&lt;p&gt;</code> <span class="badge-secondary">Optional</span></dt>
+                <dd>The description of the alert dialog, must have an <code>id</code> if you use the <code>aria-describedby</code> attribute on the <code>&lt;dialog&gt;</code>.</dd>
+              </dl>
+            </dd>
+            <dt><code class="highlight language-html">&lt;section&gt;</code> <span class="badge-secondary">Optional</span></dt>
+            <dd>For the content.</dd>
+            <dt><code class="highlight language-html">&lt;footer&gt;</code> <span class="badge-secondary">Optional</span></dt>
+            <dd>Usually contains actions.</dd>
+          </dl>
+        </dd>
+      </dl>
+    </dd>
+  </dl>
+</section>
 
 <h3 id="usage-macro"><a href="#usage-macro">Jinja and Nunjucks</a></h3>
 
@@ -67,8 +102,8 @@ toc:
 </div>
 
 {% set raw_code %}{% raw %}{% set footer %}
-  <button class="btn-outline" onClick="document.getElementById('demo-alert-dialog').close()">Cancel</button>
-  <button class="btn-primary" onClick="document.getElementById('demo-alert-dialog').close()">Continue</button>
+  <button class="btn-outline" onclick="document.getElementById('demo-alert-dialog').close()">Cancel</button>
+  <button class="btn-primary" onclick="document.getElementById('demo-alert-dialog').close()">Continue</button>
 {% endset %}
 {{ dialog(
   id="demo-alert-dialog",

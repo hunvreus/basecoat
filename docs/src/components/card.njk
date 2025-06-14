@@ -47,15 +47,6 @@ toc:
 
 <h2 id="usage">Usage</h2>
 
-<section class="prose">
-  <p>Add the <code>card</code> class to any element and then define any of the children elements:</p>
-  <ul>
-    <li>A <code>&lt;header&gt;</code> for the card header, which can contain a <code>&lt;h2&gt;</code> for the title and a <code>&lt;p&gt;</code> for the description.</li>
-    <li>A <code>&lt;section&gt;</code> for the card content.</li>
-    <li>A <code>&lt;footer&gt;</code> for the card footer.</li>
-  </ul>
-</section>
-
 {% set code %}<div class="card">
   <header>
     <h2>Card Title</h2>
@@ -69,6 +60,30 @@ toc:
   </footer>
 </div>{% endset %}
 {{ code_block(code) }}
+
+<section class="prose">
+  <p>The component has the following HTML structure:</p>
+  <dl>
+    <dt><code class="highlight language-html">&lt;div class="card"&gt;</code></dt>
+    <dd>The card container.
+      <dl>
+        <dt><code class="highlight language-html">&lt;header&gt;</code></dt>
+        <dd>The header of the card.
+          <dl>
+            <dt><code class="highlight language-html">&lt;h2&gt;</code></dt>
+            <dd>The title of the card.</dd>
+            <dt><code class="highlight language-html">&lt;p&gt;</code> <span class="badge-secondary">Optional</span></dt>
+            <dd>The description of the card.</dd>
+          </dl>
+        </dd>
+        <dt><code class="highlight language-html">&lt;section&gt;</code></dt>
+        <dd>The content of the card.</dd>
+        <dt><code class="highlight language-html">&lt;footer&gt;</code> <span class="badge-secondary">Optional</span></dt>
+        <dd>The footer of the card.</dd>
+      </dl>
+    </dd>
+  </dl>
+</section>
 
 <h2 id="examples"><a href="#examples">Examples</a></h2>
 

@@ -71,7 +71,7 @@
       
       const isMobile = window.innerWidth < breakpoint;
       
-      if (isMobile && (target.closest('[data-close-mobile-sidebar]') || (target.closest('a, button') && !target.closest('[data-keep-mobile-sidebar-open]')))) {
+      if (isMobile && (target.closest('a, button') && !target.closest('[data-keep-mobile-sidebar-open]'))) {
         if (document.activeElement) document.activeElement.blur();
         setState(false);
         return;

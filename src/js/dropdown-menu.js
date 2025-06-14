@@ -24,7 +24,6 @@
     };
 
     const handleKeyDown = (e) => {
-      // If the menu isn't open, we only care about ArrowUp/Down/Enter/Space to open it.
       if (!popover.matches(':popover-open')) {
         if (['ArrowDown', 'ArrowUp', 'Enter', ' '].includes(e.key)) {
           e.preventDefault();
@@ -33,7 +32,6 @@
         return;
       }
 
-      // If the menu IS open, we handle all navigation.
       let nextIndex = activeIndex;
       if (menuItems.length === 0) return;
 
@@ -76,7 +74,6 @@
       trigger.setAttribute('aria-expanded', e.newState === 'open');
       if (e.newState === 'open') {
         menuItems = Array.from(menu.querySelectorAll('[role^="menuitem"]:not([disabled])'));
-        // Ensure all menu items have IDs for aria-activedescendant
         menuItems.forEach((item, index) => {
           if (!item.id) item.id = `${menu.id}-item-${index}`;
         });

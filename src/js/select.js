@@ -138,6 +138,8 @@
     });
 
     popover.addEventListener('toggle', (e) => {
+      trigger.setAttribute('aria-expanded', e.newState === 'open');
+
       if (e.newState === 'open') {
         if (filter) filter.focus();
         
