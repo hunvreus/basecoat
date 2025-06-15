@@ -71,7 +71,7 @@ toc:
 
 {% set code_script %}<script type="module">
   if (!("anchorName" in document.documentElement.style)) {
-    import("https://cdn.jsdelivr.net/npm/basecoat-css@{{ pkg.version }}/dist/js/css-anchor-positioning.min.js");
+    import("https://cdn.jsdelivr.net/npm/basecoat-css@{{ site.version }}/dist/js/css-anchor-positioning.min.js");
   }
 </script>{% endset %}
 {{ code_block(code_script | prettyHtml, "html") }}

@@ -6,5 +6,6 @@ export default {
     name: "Ronan Berder",
     x: "@hunvreus"
   },
-  url: process.env.ELEVENTY_ENV === 'development' ? "http://localhost:8080" : "https://basecoatui.com"
+  url: process.env.ELEVENTY_ENV === 'development' ? "http://localhost:8080" : "https://basecoatui.com",
+  version: "beta"
 };

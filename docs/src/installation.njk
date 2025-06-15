@@ -39,11 +39,11 @@ toc:
   <p>The fastest way to get up and running is to load the CSS and all of the components' JavaScript using the CDN. Add the following to the <code>&lt;head&gt;</code> of your HTML file:</p>
 </section>
 
-{% set code %}<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@{{ pkg.version }}/dist/cdn.min.css">
-<script src="https://cdn.jsdelivr.net/npm/basecoat-css@{{ pkg.version }}/dist/js/all.min.js" defer></script>
+{% set code %}<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@{{ site.version }}/dist/cdn.min.css">
+<script src="https://cdn.jsdelivr.net/npm/basecoat-css@{{ site.version }}/dist/js/all.min.js" defer></script>
 <script type="module">
   if (!("anchorName" in document.documentElement.style)) {
-    import("https://cdn.jsdelivr.net/npm/basecoat-css@{{ pkg.version }}/dist/js/css-anchor-positioning.min.js");
+    import("https://cdn.jsdelivr.net/npm/basecoat-css@{{ site.version }}/dist/js/css-anchor-positioning.min.js");
   }
 </script>{% endset %}
 {{ code_block(code, "html") }}
@@ -58,14 +58,14 @@ toc:
   <p>The easiest way to use Basecoat is use the CDN. First, add the CSS to the <code>&lt;head&gt;</code> of your HTML file:</p>
 </section>
 
-{% set code %}<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@{{ pkg.version }}/dist/cdn.min.css">{% endset %}
+{% set code %}<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@{{ site.version }}/dist/cdn.min.css">{% endset %}
 {{ code_block(code, "html") }}
 
 <section class="prose">
   <p>Depending on the components you want to use, you may also need to add JavaScript files as instructed on the component's page. For example, for the <a href="/components/tabs">Tabs</a> component, you would add the following:</p>
 </section>
 
-{% set code %}<script src="https://cdn.jsdelivr.net/npm/basecoat-css@{{ pkg.version }}/dist/js/tabs.min.js"></script>{% endset %}
+{% set code %}<script src="https://cdn.jsdelivr.net/npm/basecoat-css@{{ site.version }}/dist/js/tabs.min.js"></script>{% endset %}
 {{ code_block(code, "html") }}
 
 <h2 id="install-npm"><a href="#install-npm">Install using NPM</a></h2>
