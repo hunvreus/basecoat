@@ -1,6 +1,10 @@
 import fs from 'fs/promises';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { exec } from 'child_process';
+import { promisify } from 'util';
+
+const execPromise = promisify(exec);
 
 // Resolve project root, assuming this script is in <project_root>/scripts/
 const __filename = fileURLToPath(import.meta.url);
@@ -90,8 +94,66 @@ async function build() {
   await fs.copyFile(path.join(cliPackageDir, 'index.js'), path.join(cliDistDir, 'index.js'));
   console.log(`Copied CLI index.js to ${cliDistDir}`);
 
-  await copyDirRecursive(srcJsDir, path.join(cliDistAssetsDir, 'js'));
-  console.log(`Copied JS assets to ${path.join(cliDistAssetsDir, 'js')}`);
+  // JS files minification and copy
+  const jsFiles = await fs.readdir(srcJsDir);
+  const cliJsDistDir = path.join(cliDistAssetsDir, 'js');
+  const cssJsDistDir = path.join(cssDistDir, 'js');
+  await ensureDir(cliJsDistDir);
+  await ensureDir(cssJsDistDir);
+  console.log('Copying and minifying JS files...');
+
+  for (const jsFile of jsFiles) {
+    if (path.extname(jsFile) === '.js') {
+      const srcFile = path.join(srcJsDir, jsFile);
+      const baseName = path.basename(jsFile, '.js');
+      const minifiedFileName = `${baseName}.min.js`;
+
+      // Copy original file to both destinations
+      await fs.copyFile(srcFile, path.join(cliJsDistDir, jsFile));
+      await fs.copyFile(srcFile, path.join(cssJsDistDir, jsFile));
+
+      // Create and copy minified file to both destinations
+      const cliDestMinFile = path.join(cliJsDistDir, minifiedFileName);
+      await execPromise(`npx terser ${srcFile} -o ${cliDestMinFile} --compress --mangle`);
+      await fs.copyFile(cliDestMinFile, path.join(cssJsDistDir, minifiedFileName));
+    }
+  }
+
+  // Handle anchor positioning polyfill
+  const polyfillSrc = path.join(projectRoot, 'node_modules', '@oddbird', 'css-anchor-positioning', 'dist', 'css-anchor-positioning.js');
+  const polyfillDest = 'css-anchor-positioning.js';
+  const polyfillMinDest = 'css-anchor-positioning.min.js';
+
+  // Copy original polyfill
+  await fs.copyFile(polyfillSrc, path.join(cliJsDistDir, polyfillDest));
+  await fs.copyFile(polyfillSrc, path.join(cssJsDistDir, polyfillDest));
+
+  // Minify and copy polyfill
+  const cliPolyfillMinDest = path.join(cliJsDistDir, polyfillMinDest);
+  await execPromise(`npx terser ${polyfillSrc} -o ${cliPolyfillMinDest} --compress --mangle`);
+  await fs.copyFile(cliPolyfillMinDest, path.join(cssJsDistDir, polyfillMinDest));
+
+  // Create combined component files
+  console.log('Creating combined component files...');
+  const componentsToCombine = ['dropdown-menu.js', 'select.js', 'sidebar.js', 'tabs.js', 'toast.js'];
+  const componentPaths = componentsToCombine.map(f => path.join(srcJsDir, f));
+
+  // Create non-minified bundle
+  let combinedContent = '';
+  for (const p of componentPaths) {
+    combinedContent += await fs.readFile(p, 'utf-8') + '\n';
+  }
+  const allJsPath = path.join(cliJsDistDir, 'all.js');
+  await fs.writeFile(allJsPath, combinedContent);
+  await fs.copyFile(allJsPath, path.join(cssJsDistDir, 'all.js'));
+  
+  // Create minified bundle
+  const allMinJsPath = path.join(cliJsDistDir, 'all.min.js');
+  await execPromise(`npx terser ${componentPaths.join(' ')} -o ${allMinJsPath} --compress --mangle`);
+  await fs.copyFile(allMinJsPath, path.join(cssJsDistDir, 'all.min.js'));
+
+  console.log(`Copied and minified JS to ${cliJsDistDir} and ${cssJsDistDir}`);
+
   await copyDirRecursive(srcNunjucksDir, path.join(cliDistAssetsDir, 'nunjucks'));
   console.log(`Copied Nunjucks assets to ${path.join(cliDistAssetsDir, 'nunjucks')}`);
   await copyDirRecursive(srcJinjaDir, path.join(cliDistAssetsDir, 'jinja'));
@@ -102,6 +164,16 @@ async function build() {
   await ensureDir(cssDistDir); // Ensure dist dir exists for css package
   await fs.copyFile(path.join(srcCssDir, 'basecoat.css'), path.join(cssDistDir, 'basecoat.css'));
   console.log(`Copied basecoat.css to ${cssDistDir}`);
+
+  // Create Tailwind CSS builds for the CSS package
+  const cdnCssSrc = path.join(srcCssDir, 'cdn.css');
+  const cssDistCdnPath = path.join(cssDistDir, 'cdn.css');
+  const cssDistCdnMinPath = path.join(cssDistDir, 'cdn.min.css');
+  
+  await execPromise(`npx tailwindcss -i "${cdnCssSrc}" -o "${cssDistCdnPath}"`);
+  console.log(`Generated non-minified CSS: ${cssDistCdnPath}`);
+  await execPromise(`npx tailwindcss -i "${cdnCssSrc}" -o "${cssDistCdnMinPath}" --minify`);
+  console.log(`Generated minified CSS: ${cssDistCdnMinPath}`);
 
   console.log('Build process finished successfully!');
 }

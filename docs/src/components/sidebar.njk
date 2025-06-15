@@ -32,7 +32,7 @@ toc:
   <p>Include the <a href="https://github.com/hunvreus/basecoat/blob/main/src/js/sidebar.js" target="_blank"><code>sidebar.js</code></a> file. Add this to the <code>&lt;head&gt;</code> of your page:</p>
 </section>
 
-{% set code_script %}{% raw %}<script src="https://unpkg.com/css-anchor-positioning"></script>{% endraw %}{% endset %}
+{% set code_script %}<script src="https://cdn.jsdelivr.net/npm/basecoat-css@{{ pkg.version }}/dist/js/sidebar.min.js" defer></script>{% endset %}
 {{ code_block(code_script | prettyHtml, "html") }}
 
 <div class="flex flex-wrap gap-2 my-6">
