@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  {#- Dark mode -#}
+  {# Dark mode #}
   <script>
     (function() {
       try {
@@ -14,7 +14,7 @@
     })();
   </script>
   <script src="/assets/js/dark-mode.js" defer></script>
-  {#- Theme variant -#}
+  {# Theme variant #}
   <script>
     (function() {
       try {
@@ -25,21 +25,21 @@
       }
     })();
   </script>
-  {#- Meta -#}
+  {# Meta #}
   <meta charset="utf-8">
   <meta http-equiv="Content-Language" content="en">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  {#- Title & Description -#}
+  {# Title & Description #}
   {% set meta_title = title ~ ' | ' ~ site.title  if title else site.title %}
   {% set meta_description = description or site.description %}
   <title>{{ meta_title }}</title>
   <meta name="description" content="{{ meta_description }}"/>
   <meta name="title" content="{{ meta_title }}">
   {% if site.keywords %}<meta name="keywords" content="{{ site.keywords | join(',') }}" />{% endif %}
-  {#- Favicon -#}
+  {# Favicon #}
   <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
   <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
-  {#- Open Graph / Facebook -#}
+  {# Open Graph / Facebook #}
   <meta property="og:type" content="website">
   <meta property="og:url" content="{{ site.url }}{{ page.url }}">
   <meta property="og:title" content="{{ meta_title }}">
@@ -48,26 +48,26 @@
   <meta property="og:site_name" content="{{ site.title }}">
   <meta property="og:locale" content="en_US">
   <meta property="og:author" content="{{ site.author.name }}">
-  {#- X/Twitter -#}
+  {# X/Twitter #}
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:url" content="{{ site.url }}{{ page.url }}">
   <meta name="twitter:title" content="{{ title if title else site.title }}">
   <meta name="twitter:description" content="{{ meta_description }}">
   <meta name="twitter:image" content="{{ site.url }}/assets/social-screenshot.png">
   <meta name="twitter:creator" content="{{ site.author.x }}">
-  {#- CSS -#}
+  {# CSS #}
   <link rel="stylesheet" href="/assets/styles.css">
-  {#- JS -#}
+  {# JS #}
   <script src="/assets/js/dropdown-menu.js" defer></script>
   <script src="/assets/js/select.js" defer></script>
   <script src="/assets/js/sidebar.js" defer></script>
   <script src="/assets/js/tabs.js" defer></script>
   <script src="/assets/js/toast.js" defer></script>
-  {#- Alpine.js -#}
+  {# Alpine.js #}
   <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
-  {#- HTMX -#}
+  {# HTMX #}
   <script src="https://unpkg.com/htmx.org@2.0.4"></script>
-  {#- Highlight.js -#}
+  {# Highlight.js #}
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/django.min.js"></script>
   <script>
