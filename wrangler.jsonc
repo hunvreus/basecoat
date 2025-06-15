@@ -1,0 +1,7 @@
+{
+  "name": "basecoat-docs",
+  "compatibility_date": "2025-06-15",
+  "assets": {
+    "directory": "./_site"
+  }
+} 
