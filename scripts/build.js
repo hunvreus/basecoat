@@ -152,9 +152,9 @@ async function build() {
   console.log(`Copied basecoat.css to ${cssDistDir}`);
 
   // Create Tailwind CSS builds for the CSS package
-  const cdnCssSrc = path.join(srcCssDir, 'cdn.css');
-  const cssDistCdnPath = path.join(cssDistDir, 'cdn.css');
-  const cssDistCdnMinPath = path.join(cssDistDir, 'cdn.min.css');
+  const cdnCssSrc = path.join(srcCssDir, 'basecoat.cdn.css');
+  const cssDistCdnPath = path.join(cssDistDir, 'basecoat.cdn.css');
+  const cssDistCdnMinPath = path.join(cssDistDir, 'basecoat.cdn.min.css');
   
   await execPromise(`npx tailwindcss -i "${cdnCssSrc}" -o "${cssDistCdnPath}"`);
   console.log(`Generated non-minified CSS: ${cssDistCdnPath}`);

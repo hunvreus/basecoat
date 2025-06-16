@@ -39,7 +39,7 @@ toc:
   <p>Add the following to the <code>&lt;head&gt;</code> of your HTML file:</p>
 </section>
 
-{% set code %}<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@{{ site.version }}/dist/cdn.min.css">
+{% set code %}<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@{{ site.version }}/dist/basecoat.cdn.min.css">
 <script src="https://cdn.jsdelivr.net/npm/basecoat-css@{{ site.version }}/dist/js/all.min.js" defer></script>{% endset %}
 {{ code_block(code, "html") }}
 
@@ -49,7 +49,7 @@ toc:
   <p>While the JavaScript file for all components is small (around 3kB gzipped), you can cherry-pick the components you need as instructed in the component's page (<a href="/components/dropdown-menu">Dropdown Menu</a>, <a href="/components/popover">Popover</a>, <a href="/components/select">Select</a>, <a href="/components/sidebar">Sidebar</a>, <a href="/components/tabs">Tabs</a> and <a href="/components/toast">Toast</a>). For example, to add the <a href="/components/dropdown-menu">Dropdown Menu</a> component, add the following to the <code>&lt;head&gt;</code> of your HTML file:</p>
 </section>
 
-{% set code %}<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@{{ site.version }}/dist/cdn.min.css">
+{% set code %}<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@{{ site.version }}/dist/basecoat.cdn.min.css">
 <script src="https://cdn.jsdelivr.net/npm/basecoat-css@{{ site.version }}/dist/js/dropdown-menu.min.js" defer></script>{% endset %}
 {{ code_block(code, "html") }}
 
@@ -107,7 +107,7 @@ import 'basecoat-css/tabs';{% endraw %}{% endset %}
     {{ code_block(code, "js") }}
     <div class="prose">
       <h4 class="mt-6 font-semibold">Without a build tool</h4>
-      <p>Copy the pre-built files from <code>node_modules</code> into your public directory (one-off command):</p>
+      <p>Copy the pre-built files from <code>node_modules</code> into your public directory:</p>
     </div>
     {% set code %}npx copyfiles -u 1 "node_modules/basecoat-css/dist/js/**/*" public/js/basecoat{% endset %}
     {{ code_block(code, "bash") }}
