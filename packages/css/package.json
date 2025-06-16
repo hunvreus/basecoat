@@ -1,6 +1,6 @@
 {
   "name": "basecoat-css",
-  "version": "0.2.0-beta.1",
+  "version": "0.2.0",
   "description": "Tailwind CSS for Basecoat components",
   "author": {
     "name": "hunvreus",
@@ -36,5 +36,24 @@
   "bugs": {
     "url": "https://github.com/hunvreus/basecoat/issues"
   },
-  "homepage": "https://basecoatui.com/installation#install-css"
+  "homepage": "https://basecoatui.com/installation#install-npm",
+  "exports": {
+    ".": "./dist/basecoat.css",
+    "./css": "./dist/basecoat.css",
+    "./all": "./dist/js/all.js",
+    "./all.min": "./dist/js/all.min.js",
+    "./dropdown-menu": "./dist/js/dropdown-menu.js",
+    "./dropdown-menu.min": "./dist/js/dropdown-menu.min.js",
+    "./popover": "./dist/js/popover.js",
+    "./popover.min": "./dist/js/popover.min.js",
+    "./select": "./dist/js/select.js",
+    "./select.min": "./dist/js/select.min.js",
+    "./sidebar": "./dist/js/sidebar.js",
+    "./sidebar.min": "./dist/js/sidebar.min.js",
+    "./tabs": "./dist/js/tabs.js",
+    "./tabs.min": "./dist/js/tabs.min.js",
+    "./toast": "./dist/js/toast.js",
+    "./toast.min": "./dist/js/toast.min.js",
+    "./package.json": "./package.json"
+  }
 }

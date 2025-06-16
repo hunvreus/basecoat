@@ -57,7 +57,7 @@ toc:
 
 <ol class="[&>h3]:step steps mb-12 md:ml-4 md:border-l md:pl-8">
   <li class="step">
-    <h4 class="mb-4 scroll-m-20 font-semibold tracking-tight" id="install-npm-tailwind"><a href="#install-npm-tailwind">Add Tailwind CSS</a></h4>
+    <h3 class="mb-4 scroll-m-20 font-semibold tracking-tight" id="install-npm-tailwind"><a href="#install-npm-tailwind">Add Tailwind CSS</a></h3>
     <div class="prose">
       <p>Basecoat uses Tailwind CSS. You need to install it in your project.</p>
       <p><a href="https://tailwindcss.com/docs/installation" target="_blank">Follow the Tailwind CSS installation instructions to get started.</a></p>
@@ -92,7 +92,32 @@ toc:
   <li class="step mt-8">
     <h3 class="mb-4 scroll-m-20 font-semibold tracking-tight" id="install-npm-js"><a href="#install-npm-js">(Optional) Add JavaScript files</a></h3>
     <div class="prose">
-      <p>Some of the components <a href="#install-js">may require some JavaScript</a>, for example the <a href="/components/tabs">Tabs component</a>. Follow the instructions on the component's page.</p>
+      <p>Some components <a href="#install-js">need some JavaScript/a> (e.g. the <a href="/components/tabs">Tabs</a> component). There are two ways to get it into your project:</p>
+
+      <h4 class="mt-6 font-semibold">Using a build tool (Vite, Webpack…)</h4>
+      <p>If your project is ESM-aware you can directly import the scripts. To include all components:</p>
+    </div>
+    {% set code %}{% raw %}import 'basecoat-css/all';{% endraw %}{% endset %}
+    {{ code_block(code, "js") }}
+    <div class="prose">
+      <p>Or cherry-pick specific components, for example:</p>
+    </div>
+    {% set code %}{% raw %}import 'basecoat-css/popover';
+import 'basecoat-css/tabs';{% endraw %}{% endset %}
+    {{ code_block(code, "js") }}
+    <div class="prose">
+      <h4 class="mt-6 font-semibold">Without a build tool</h4>
+      <p>Copy the pre-built files from <code>node_modules</code> into your public directory (one-off command):</p>
+    </div>
+    {% set code %}npx copyfiles -u 1 "node_modules/basecoat-css/dist/js/**/*" public/js/basecoat{% endset %}
+    {{ code_block(code, "bash") }}
+    <div class="prose">
+      <p>Then reference the script you need:</p>
+    </div>
+    {% set code %}<script src="/js/basecoat/tabs.min.js" defer></script>{% endset %}
+    {{ code_block(code, "html") }}
+    <div class="prose">
+      <p>See each component page for the minimal script required.</p>
     </div>
   </li>
   <li class="step mt-8">

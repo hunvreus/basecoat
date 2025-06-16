@@ -79,10 +79,14 @@
   }
   .step {
     counter-increment: step;
-  }
-  .step:before {
-    @apply md:absolute w-8 h-8 md:w-9 md:h-9 bg-muted rounded-full font-mono font-medium text-center text-base inline-flex items-center justify-center -indent-px border-4 mr-2 border-background;
-    @apply md:ml-[-50px] md:mt-[-4px];
-    content: counter(step);
+
+    &:before {
+      @apply absolute w-8 h-8 md:w-9 md:h-9 bg-muted rounded-full font-mono font-semibold text-center text-sm inline-flex items-center justify-center -indent-px border-4 mr-2 border-background;
+      @apply md:ml-[-50px] md:mt-[-4px];
+      content: counter(step);
+    }
+    > h3 {
+      @apply max-md:ml-10 min-h-8 flex items-center;
+    }
   }
 }

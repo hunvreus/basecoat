@@ -7,5 +7,5 @@ export default {
     x: "@hunvreus"
   },
   url: process.env.ELEVENTY_ENV === 'development' ? "http://localhost:8080" : "https://basecoatui.com",
-  version: "beta"
+  version: "0.2.0"
 };
