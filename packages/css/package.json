@@ -7,6 +7,7 @@
     "url": "https://x.com/hunvreus"
   },
   "license": "MIT",
+  "type": "module",
   "main": "dist/basecoat.css",
   "style": "dist/basecoat.css",
   "files": [

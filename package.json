@@ -8,15 +8,6 @@
   "workspaces": [
     "packages/*"
   ],
-  "files": [
-    "src/css",
-    "src/js",
-    "src/nunjucks",
-    "src/jinja"
-  ],
-  "exports": {
-    ".": "./src/css/basecoat.css"
-  },
   "keywords": [
     "components",
     "component library",
