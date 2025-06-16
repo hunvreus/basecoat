@@ -13,68 +13,66 @@
         id="dropdown-menu-default",
         trigger="Open",
         trigger_attrs={"class": "btn-outline"},
-        content_attrs={"class": "min-w-56"}
+        popover_attrs={"class": "min-w-56"}
       ) %}
         <div role="group" aria-labelledby="account-options">
-          <span id="account-options" role="heading">My Account</span>
-          <button type="button" role="menuitem">
+          <div role="presentation" id="account-options">My Account</div>
+          <div role="menuitem">
             Profile
             <span class="text-muted-foreground ml-auto text-xs tracking-widest">⇧⌘P</span>
-          </button>
-          <button type="button" role="menuitem">
+          </div>
+          <div role="menuitem">
             Billing
             <span class="text-muted-foreground ml-auto text-xs tracking-widest">⌘B</span>
-          </button>
-          <button type="button" role="menuitem">
+          </div>
+          <div role="menuitem">
             Settings
             <span class="text-muted-foreground ml-auto text-xs tracking-widest">⌘S</span>
-          </button>
-          <button type="button" role="menuitem">
+          </div>
+          <div role="menuitem">
             Keyboard shortcuts
             <span class="text-muted-foreground ml-auto text-xs tracking-widest">⌘K</span>
-          </button>
+          </div>
         </div>
         <hr role="separator">
-        <button type="button" role="menuitem">GitHub</button>
-        <button type="button" role="menuitem">Support</button>
-        <button type="button" role="menuitem" disabled>API</button>
+        <div role="menuitem">GitHub</div>
+        <div role="menuitem">Support</div>
+        <div role="menuitem" disabled>API</div>
         <hr role="separator">
-        <button type="button" role="menuitem">
+        <div role="menuitem">
           Logout
           <span class="text-muted-foreground ml-auto text-xs tracking-widest">⇧⌘P</span>
-        </button>
+        </div>
       {% endcall %}
 
       {% call dropdown_menu(
         id="dropdown-menu-checkboxes",
         trigger="Checkboxes",
         trigger_attrs={"class": "btn-outline"},
-        content_attrs={"class": "min-w-56"},
-        register_on=["alpine:init", "htmx:afterSwap"]
+        popover_attrs={"class": "min-w-56"}
       ) %}
       <div role="group" aria-labelledby="account-options">
-        <span id="account-options" role="heading">Account Options</span>
-        <button type="button" role="menuitem">
+        <div role="presentation" id="account-options">Account Options</div>
+        <div role="menuitem">
           {% lucide "user" %}
           Profile
           <span class="text-muted-foreground ml-auto text-xs tracking-widest">⇧⌘P</span>
-        </button>
-        <button type="button" role="menuitem">
+        </div>
+        <div role="menuitem">
           {% lucide "credit-card" %}
           Billing
           <span class="text-muted-foreground ml-auto text-xs tracking-widest">⌘B</span>
-        </button>
-        <button type="button" role="menuitem">
+        </div>
+        <div role="menuitem">
           {% lucide "settings" %}
           Settings
           <span class="text-muted-foreground ml-auto text-xs tracking-widest">⌘S</span>
-        </button>
+        </div>
       </div>
       <hr role="separator">
       <div role="group" aria-labelledby="appearance-options">
-        <span id="appearance-options" role="heading">Appearance</span>
-        <button
-          type="button"
+        <div role="presentation" id="appearance-options">Appearance</div>
+        <div
           role="menuitemcheckbox"
           aria-checked="true"
           class="group"
@@ -89,9 +87,8 @@
           } %}
           Status Bar
           <span class="text-muted-foreground ml-auto text-xs tracking-widest">⇧⌘P</span>
-        </button>
-        <button
-          type="button"
+        </div>
+        <div
           role="menuitemcheckbox"
           aria-checked="false"
           class="group"
@@ -107,9 +104,8 @@
           } %}
           Activity Bar
           <span class="text-muted-foreground ml-auto text-xs tracking-widest">⌘B</span>
-        </button>
-        <button
-          type="button"
+        </div>
+        <div
           role="menuitemcheckbox"
           aria-checked="false"
           class="group"
@@ -124,14 +120,14 @@
           } %}
           Panel
           <span class="text-muted-foreground ml-auto text-xs tracking-widest">⌘S</span>
-        </button>
+        </div>
       </div>
       <hr role="separator">
-      <button type="button" role="menuitem">
+      <div role="menuitem">
         {% lucide "log-out" %}
         Logout
         <span class="text-muted-foreground ml-auto text-xs tracking-widest">⇧⌘P</span>
-      </button>
+      </div>
       {% endcall %}
 
       {% set profile_menu %}
@@ -143,41 +139,39 @@
           </div>
         </div>
         <hr role="separator">
-        <button type="button" role="menuitem">
+        <div role="menuitem">
           {% lucide "star" %}
           Upgrade to Pro
-        </button>
+        </div>
         <hr role="separator">
-        <button type="button" role="menuitem">
+        <div role="menuitem">
           {% lucide "user" %}
           Account
-        </button>
-        <button type="button" role="menuitem">
+        </div>
+        <div role="menuitem">
           {% lucide "credit-card" %}
           Billing
-        </button>
-        <button type="button" role="menuitem">
+        </div>
+        <div role="menuitem">
           {% lucide "bell" %}
           Notifications
-        </button>
+        </div>
         <hr role="separator">
-        <button type="button" role="menuitem">
+        <div role="menuitem">
           {% lucide "log-out" %}
           Signout
-        </button>
+        </div>
       {% endset %}
 
       {% call dropdown_menu(
         trigger="Radio Group",
         trigger_attrs={"class": "btn-outline"},
-        content_attrs={"class": "min-w-56"},
-        register_on=["alpine:init", "htmx:afterSwap"]
+        popover_attrs={"class": "min-w-56"}
       ) %}
       <div role="group" aria-labelledby="position-options" x-data="{ checked: 'bottom' }">
         <span id="position-options" role="heading">Panel Position</span>
         <hr role="separator">
-        <button
-          type="button"
+        <div
           role="menuitemradio"
           aria-checked="false"
           class="group"
@@ -193,9 +187,8 @@
           </div>
           Status Bar
           <span class="text-muted-foreground ml-auto text-xs tracking-widest">⇧⌘P</span>
-        </button>
-        <button
-          type="button"
+        </div>
+        <div
           role="menuitemradio"
           aria-checked="false"
           class="group"
@@ -211,9 +204,8 @@
           </div>
           Activity Bar
           <span class="text-muted-foreground ml-auto text-xs tracking-widest">⌘B</span>
-        </button>
-        <button
-          type="button"
+        </div>
+        <div
           role="menuitemradio"
           aria-checked="false"
           class="group"
@@ -229,7 +221,7 @@
           </div>
           Panel
           <span class="text-muted-foreground ml-auto text-xs tracking-widest">⌘S</span>
-        </button>
+        </div>
       </div>
       {% endcall %}
 
@@ -256,7 +248,7 @@
         id="dropdown-checkboxes",
         trigger=trigger,
         trigger_attrs={"class": "btn-icon-ghost rounded-full size-8"},
-        content_attrs={"data-align": "end"}
+        popover_attrs={"data-align": "end"}
       ) %}
         {{ profile_menu | safe }}
       {% endcall %}
@@ -268,21 +260,21 @@
         id="dropdown-checkboxes",
         trigger=trigger,
         trigger_attrs={"class": "btn-icon-ghost"},
-        content_attrs={"class": "min-w-32"}
+        popover_attrs={"class": "min-w-32"}
       ) %}
-        <button type="button" role="menuitem">
+        <div role="menuitem">
           {% lucide "pencil" %}
           Edit
-        </button>
-        <button type="button" role="menuitem">
+        </div>
+        <div role="menuitem">
           {% lucide "share" %}
           Share
-        </button>
+        </div>
         <hr role="separator">
-        <button type="button" role="menuitem" class="text-destructive hover:bg-destructive/10 dark:hover:bg-destructive/20 focus:bg-destructive/10 dark:focus:bg-destructive/20 focus:text-destructive [&_svg]:!text-destructive">
+        <div role="menuitem" class="text-destructive hover:bg-destructive/10 dark:hover:bg-destructive/20 focus:bg-destructive/10 dark:focus:bg-destructive/20 focus:text-destructive [&_svg]:!text-destructive">
           {% lucide "trash-2" %}
           Delete
-        </button>
+        </div>
       {% endcall %}
     </div>
   </div>

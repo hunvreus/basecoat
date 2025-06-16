@@ -119,23 +119,9 @@ async function build() {
     }
   }
 
-  // Handle anchor positioning polyfill
-  const polyfillSrc = path.join(projectRoot, 'node_modules', '@oddbird', 'css-anchor-positioning', 'dist', 'css-anchor-positioning.js');
-  const polyfillDest = 'css-anchor-positioning.js';
-  const polyfillMinDest = 'css-anchor-positioning.min.js';
-
-  // Copy original polyfill
-  await fs.copyFile(polyfillSrc, path.join(cliJsDistDir, polyfillDest));
-  await fs.copyFile(polyfillSrc, path.join(cssJsDistDir, polyfillDest));
-
-  // Minify and copy polyfill
-  const cliPolyfillMinDest = path.join(cliJsDistDir, polyfillMinDest);
-  await execPromise(`npx terser ${polyfillSrc} -o ${cliPolyfillMinDest} --compress --mangle`);
-  await fs.copyFile(cliPolyfillMinDest, path.join(cssJsDistDir, polyfillMinDest));
-
   // Create combined component files
   console.log('Creating combined component files...');
-  const componentsToCombine = ['dropdown-menu.js', 'select.js', 'sidebar.js', 'tabs.js', 'toast.js'];
+  const componentsToCombine = ['dropdown-menu.js', 'popover.js', 'select.js', 'sidebar.js', 'tabs.js', 'toast.js'];
   const componentPaths = componentsToCombine.map(f => path.join(srcJsDir, f));
 
   // Create non-minified bundle

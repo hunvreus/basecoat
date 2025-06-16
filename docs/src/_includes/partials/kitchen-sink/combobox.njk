@@ -11,7 +11,7 @@
     <div class="flex flex-wrap items-start gap-4">
       {% set options_frameworks = ["Next.js", "SvelteKit", "Nuxt.js", "Remix", "Astro"] %}
       {% call select(
-        content_attrs={"class": "w-48"},
+        popover_attrs={"class": "w-48"},
         listbox_attrs={"data-empty": "No framework found."},
         is_combobox=true
       ) %}
@@ -56,7 +56,7 @@
         }
       ] %}
       {% call select(
-        content_attrs={"class": "w-72"},
+        popover_attrs={"class": "w-72"},
         listbox_attrs={"data-empty": "No timezone found."},
         is_combobox=true
       ) %}

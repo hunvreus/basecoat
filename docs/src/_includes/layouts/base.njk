@@ -59,6 +59,7 @@
   <link rel="stylesheet" href="/assets/styles.css">
   {# JS #}
   <script src="/assets/js/dropdown-menu.js" defer></script>
+  <script src="/assets/js/popover.js" defer></script>
   <script src="/assets/js/select.js" defer></script>
   <script src="/assets/js/sidebar.js" defer></script>
   <script src="/assets/js/tabs.js" defer></script>
@@ -71,17 +72,17 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/django.min.js"></script>
   <script>
-    const applyHighlighting = () => { if (window.hljs) {
-      hljs.highlightAll();
-      document.querySelectorAll('code.highlight').forEach((block) => {
-        hljs.highlightElement(block);
-      });
-    }};
+    const highlight = () => {
+      if (!window.hljs) return;
+      document
+        .querySelectorAll('code:not([data-highlighted])')
+        .forEach(el => hljs.highlightElement(el));
+    };
 
-    if (!window._hljsInitialized) {
-      window._hljsInitialized = true;
-      document.addEventListener('DOMContentLoaded', applyHighlighting);
-      document.addEventListener('htmx:afterSwap', applyHighlighting);
+    if (!window._hljsInit) {
+      window._hljsInit = true;
+      document.addEventListener('DOMContentLoaded', highlight);
+      document.addEventListener('htmx:afterSwap', highlight);
     }
   </script>
   {% if head %}{{ head | safe }}{% endif %}

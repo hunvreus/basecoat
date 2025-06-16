@@ -38,39 +38,39 @@ toc:
   popover_attrs={"class": "min-w-56"}
 ) %}
 <div role="group" aria-labelledby="account-options">
-  <span id="account-options" role="heading">My Account</span>
-  <button type="button" role="menuitem">
+  <div role="presentation" id="account-options">My Account</div>
+  <div role="menuitem">
     Profile
     <span class="text-muted-foreground ml-auto text-xs tracking-widest">⇧⌘P</span>
-  </button>
-  <button type="button" role="menuitem">
+  </div>
+  <div role="menuitem">
     Billing
     <span class="text-muted-foreground ml-auto text-xs tracking-widest">⌘B</span>
-  </button>
-  <button type="button" role="menuitem">
+  </div>
+  <div role="menuitem">
     Settings
     <span class="text-muted-foreground ml-auto text-xs tracking-widest">⌘S</span>
-  </button>
-  <button type="button" role="menuitem">
+  </div>
+  <div role="menuitem">
     Keyboard shortcuts
     <span class="text-muted-foreground ml-auto text-xs tracking-widest">⌘K</span>
-  </button>
+  </div>
 </div>
 <hr role="separator">
-<button type="button" role="menuitem">
+<div role="menuitem">
   GitHub
-</button>
-<button type="button" role="menuitem">
+</div>
+<div role="menuitem">
   Support
-</button>
-<button type="button" role="menuitem" disabled>
+</div>
+<div role="menuitem" disabled>
   API
-</button>
+</div>
 <hr role="separator">
-<button type="button" role="menuitem">
+<div role="menuitem">
   Logout
   <span class="text-muted-foreground ml-auto text-xs tracking-widest">⇧⌘P</span>
-</button>
+</div>
 {% endcall %}
 {% endset %}
 
@@ -83,15 +83,10 @@ toc:
 <h4 id="usage-html-js-1"><a href="#usage-html-js-1">Step 1: Include the JavaScript files</a></h4>
 
 <section class="prose">
-  <p>Include the <a href="https://github.com/hunvreus/basecoat/blob/main/src/js/dropdown-menu.js" target="_blank"><code>dropdown-menu.js</code></a> file. It is recommended to also include the <a href="https://github.com/oddbird/css-anchor-positioning" target="_blank">CSS anchor positioning polyfill</a> to support older browsers. Add this to the <code>&lt;head&gt;</code> of your page:</p>
+  <p>You can either <a href="/installation/#install-cdn-all">include the JavaScript file for all the components</a>, or just the one for this component by adding this to the <code>&lt;head&gt;</code> of your page:</p>
 </section>
 
-{% set code_script %}<script src="https://cdn.jsdelivr.net/npm/basecoat-css@{{ site.version }}/dist/js/dropdown-menu.min.js" defer></script>
-<script type="module">
-  if (!("anchorName" in document.documentElement.style)) {
-    import("https://cdn.jsdelivr.net/npm/basecoat-css@{{ site.version }}/dist/js/css-anchor-positioning.min.js");
-  }
-</script>{% endset %}
+{% set code_script %}<script src="https://cdn.jsdelivr.net/npm/basecoat-css@{{ pkg.version }}/dist/js/dropdown-menu.min.js" defer></script>{% endset %}
 {{ code_block(code_script | prettyHtml, "html") }}
 
 <div class="flex flex-wrap gap-2 my-6">
@@ -185,43 +180,42 @@ toc:
   id="dropdown-menu",
   trigger="Open",
   trigger_attrs={"class": "btn-outline"},
-  content_attrs={"class": "min-w-56"},
-  register_on=["alpine:init", "htmx:afterSwap"]
+  popover_attrs={"class": "min-w-56"}
 ) %}
 <div role="group" aria-labelledby="account-options">
-  <span id="account-options" role="heading">My Account</span>
-  <button type="button" role="menuitem">
+  <div role="presentation" id="account-options">My Account</div>
+  <div role="menuitem">
     Profile
     <span class="text-muted-foreground ml-auto text-xs tracking-widest">⇧⌘P</span>
-  </button>
-  <button type="button" role="menuitem">
+  </div>
+  <div role="menuitem">
     Billing
     <span class="text-muted-foreground ml-auto text-xs tracking-widest">⌘B</span>
-  </button>
-  <button type="button" role="menuitem">
+  </div>
+  <div role="menuitem">
     Settings
     <span class="text-muted-foreground ml-auto text-xs tracking-widest">⌘S</span>
-  </button>
-  <button type="button" role="menuitem">
+  </div>
+  <div role="menuitem">
     Keyboard shortcuts
     <span class="text-muted-foreground ml-auto text-xs tracking-widest">⌘K</span>
-  </button>
+  </div>
 </div>
 <hr role="separator">
-<button type="button" role="menuitem">
+<div role="menuitem">
   GitHub
-</button>
-<button type="button" role="menuitem">
+</div>
+<div role="menuitem">
   Support
-</button>
-<button type="button" role="menuitem" disabled>
+</div>
+<div role="menuitem" disabled>
   API
-</button>
+</div>
 <hr role="separator">
-<button type="button" role="menuitem">
+<div role="menuitem">
   Logout
   <span class="text-muted-foreground ml-auto text-xs tracking-widest">⇧⌘P</span>
-</button>
+</div>
 {% endcall %}{% endraw %}{% endset%}
 {{ code_block(raw_code, "jinja") }}
 
@@ -233,32 +227,30 @@ toc:
   id="dropdown-menu-checkboxes",
   trigger="Open",
   trigger_attrs={"class": "btn-outline"},
-  content_attrs={"class": "min-w-56"},
-  register_on=["alpine:init", "htmx:afterSwap"]
+  popover_attrs={"class": "min-w-56"}
 ) %}
 <div role="group" aria-labelledby="account-options">
-  <span id="account-options" role="heading">Account Options</span>
-  <button type="button" role="menuitem">
+  <div role="presentation" id="account-options">Account Options</div>
+  <div role="menuitem">
     {% lucide "user" %}
     Profile
     <span class="text-muted-foreground ml-auto text-xs tracking-widest">⇧⌘P</span>
-  </button>
-  <button type="button" role="menuitem">
+  </div>
+  <div role="menuitem">
     {% lucide "credit-card" %}
     Billing
     <span class="text-muted-foreground ml-auto text-xs tracking-widest">⌘B</span>
-  </button>
-  <button type="button" role="menuitem">
+  </div>
+  <div role="menuitem">
     {% lucide "settings" %}
     Settings
     <span class="text-muted-foreground ml-auto text-xs tracking-widest">⌘S</span>
-  </button>
+  </div>
 </div>
 <hr role="separator">
 <div role="group" aria-labelledby="appearance-options">
-  <span id="appearance-options" role="heading">Appearance</span>
-  <button
-    type="button"
+  <div role="presentation" id="appearance-options">Appearance</div>
+  <div
     role="menuitemcheckbox"
     aria-checked="true"
     class="group"
@@ -273,9 +265,8 @@ toc:
     } %}
     Status Bar
     <span class="text-muted-foreground ml-auto text-xs tracking-widest">⇧⌘P</span>
-  </button>
-  <button
-    type="button"
+  </div>
+  <div
     role="menuitemcheckbox"
     aria-checked="false"
     class="group"
@@ -291,9 +282,8 @@ toc:
     } %}
     Activity Bar
     <span class="text-muted-foreground ml-auto text-xs tracking-widest">⌘B</span>
-  </button>
-  <button
-    type="button"
+  </div>
+  <div
     role="menuitemcheckbox"
     aria-checked="false"
     class="group"
@@ -308,14 +298,14 @@ toc:
     } %}
     Panel
     <span class="text-muted-foreground ml-auto text-xs tracking-widest">⌘S</span>
-  </button>
+  </div>
 </div>
 <hr role="separator">
-<button type="button" role="menuitem">
+<div role="menuitem">
   {% lucide "log-out" %}
   Logout
   <span class="text-muted-foreground ml-auto text-xs tracking-widest">⇧⌘P</span>
-</button>
+</div>
 {% endcall %}{% endset %}
 {{ code_preview("dropdown-menu-checkboxes", code | prettyHtml) }}
 
@@ -330,8 +320,7 @@ toc:
 <div role="group" aria-labelledby="position-options" x-data="{ checked: 'bottom' }">
   <span id="position-options" role="heading">Panel Position</span>
   <hr role="separator">
-  <button
-    type="button"
+  <div
     role="menuitemradio"
     aria-checked="false"
     class="group"
@@ -347,9 +336,8 @@ toc:
     </div>
     Status Bar
     <span class="text-muted-foreground ml-auto text-xs tracking-widest">⇧⌘P</span>
-  </button>
-  <button
-    type="button"
+  </div>
+  <div
     role="menuitemradio"
     aria-checked="false"
     class="group"
@@ -365,9 +353,8 @@ toc:
     </div>
     Activity Bar
     <span class="text-muted-foreground ml-auto text-xs tracking-widest">⌘B</span>
-  </button>
-  <button
-    type="button"
+  </div>
+  <div
     role="menuitemradio"
     aria-checked="false"
     class="group"
@@ -383,7 +370,7 @@ toc:
     </div>
     Panel
     <span class="text-muted-foreground ml-auto text-xs tracking-widest">⌘S</span>
-  </button>
+  </div>
 </div>
 {% endcall %}{% endset %}
 {{ code_preview("dropdown-menu", code | prettyHtml) }}

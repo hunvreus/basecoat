@@ -36,8 +36,7 @@ toc:
   trigger_attrs={"class": "w-[200px]"},
   listbox_attrs={"data-empty": "No framework found."},
   is_combobox=true,
-  search_placeholder="Search framework...",
-  register_on=["alpine:init", "htmx:afterSwap"]
+  search_placeholder="Search framework..."
 ) %}
   {% for framework in options_frameworks %}
     <div role="option" data-value="{{ framework }}">{{ framework }}</div>
@@ -54,15 +53,10 @@ toc:
 <h4 id="usage-html-js-1"><a href="#usage-html-js-1">Step 1: Include the JavaScript files</a></h4>
 
 <section class="prose">
-  <p>Include the <a href="https://github.com/hunvreus/basecoat/blob/main/src/js/select.js" target="_blank"><code>select.js</code></a> file. It is recommended to also include the <a href="https://github.com/oddbird/css-anchor-positioning" target="_blank">CSS anchor positioning polyfill</a> to support older browsers. Add this to the <code>&lt;head&gt;</code> of your page:</p>
+  <p>You can either <a href="/installation/#install-cdn-all">include the JavaScript file for all the components</a>, or just the one for this component by adding this to the <code>&lt;head&gt;</code> of your page:</p>
 </section>
 
-{% set code_script %}<script src="https://cdn.jsdelivr.net/npm/basecoat-css@{{ site.version }}/dist/js/select.min.js" defer></script>
-<script type="module">
-  if (!("anchorName" in document.documentElement.style)) {
-    import("https://cdn.jsdelivr.net/npm/basecoat-css@{{ site.version }}/dist/js/css-anchor-positioning.min.js");
-  }
-</script>{% endset %}
+{% set code_script %}<script src="https://cdn.jsdelivr.net/npm/basecoat-css@{{ pkg.version }}/dist/js/select.min.js" defer></script>{% endset %}
 {{ code_block(code_script | prettyHtml, "html") }}
 
 <div class="flex flex-wrap gap-2 my-6">
@@ -211,16 +205,15 @@ toc:
 {% set code %}
 {% call select(
   trigger_attrs={"class": "w-[200px]"},
-  content_attrs={"class": "w-72"},
+  popover_attrs={"class": "w-72"},
   listbox_attrs={"data-empty": "No timezone found."},
   is_combobox=true,
-  search_placeholder="Search timezone...",
-  register_on=["alpine:init", "htmx:afterSwap"]
+  search_placeholder="Search timezone..."
 ) %}
   <div class="max-h-64 overflow-y-auto scrollbar">
     {% for group in options_timezones %}
       <div role="group" aria-labelledby="demo-combobox-timezones-group-{{ loop.index0 }}">
-        <span id="demo-combobox-timezones-group-{{ loop.index0 }}" role="heading">{{ group.label }}</span>
+        <div role="presentation" id="demo-combobox-timezones-group-{{ loop.index0 }}">{{ group.label }}</div>
         {% for timezone in group.timezones %}
           <div role="option" data-value="{{ timezone.value}}">
             {{ timezone.label }}
@@ -247,8 +240,7 @@ toc:
   listbox_attrs={"data-empty": "No framework found."},
   is_combobox=true,
   search_placeholder="Search framework...",
-  register_on=["alpine:init", "htmx:afterSwap"],
-  content_attrs={"data-side": "top"}
+  popover_attrs={"data-side": "top"}
 ) %}
   {% for framework in options_frameworks %}
     <div role="option" data-value="{{ framework }}">{{ framework }}</div>

@@ -20,8 +20,7 @@
   
   {{ tabs(
     tabsets=tabsets,
-    default_tab_index=(2 if default_code else 1),
-    register_on=["alpine:init", "htmx:afterSwap"]
+    default_tab_index=(2 if default_code else 1)
   ) }}
 </div>
 {% endmacro %}

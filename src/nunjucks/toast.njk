@@ -14,9 +14,9 @@
 ) %}
 <div
   id="{{ id }}"
-  class="toaster"
+  class="toaster {{ attrs.class }}"
   {% for key, value in attrs %}
-    {{ key }}="{{ value }}"
+    {% if key != 'class' %}{{ key }}="{{ value }}"{% endif %}
   {% endfor %}
 >
 {% for item in toasts %}

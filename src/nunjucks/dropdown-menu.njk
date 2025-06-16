@@ -6,23 +6,28 @@
   @param menu {array} [optional] - Array of menu items for the dropdown.
   @param main_attrs {object} [optional] - Additional HTML attributes for the main container div.
   @param trigger_attrs {object} [optional] - Additional HTML attributes for the trigger button.
-  @param content_attrs {object} [optional] - Additional HTML attributes for the dropdown content div.
+  @param popover_attrs {object} [optional] - Additional HTML attributes for the dropdown content div.
 #}
 {% macro dropdown_menu(
   id=None,
   trigger,
   items=None,
+  main_attrs={},
   trigger_attrs={},
   popover_attrs={},
   menu_attrs={}
 ) %}
 {% set id = id or ("dropdown-menu-" + (range(100000, 999999) | random | string)) %}
 
-<div class="dropdown-menu">
+<div
+  class="dropdown-menu {{ main_attrs.class }}"
+  {% for key, value in main_attrs %}
+    {% if key != 'class' %}{{ key }}="{{ value }}"{% endif %}
+  {% endfor %}
+>
   <button
     type="button"
     id="{{ id }}-trigger"
-    popovertarget="{{ id }}"
     aria-haspopup="menu"
     aria-controls="{{ id }}-menu"
     aria-expanded="false"
@@ -33,14 +38,14 @@
     {{ trigger | safe }}
   </button>
   <div
-    popover
-    class="popover p-1 {% if popover_attrs.class %} {{ popover_attrs.class }}{% endif %}"
     id="{{ id }}"
+    data-popover
+    aria-hidden="true"
     {% for key, value in popover_attrs %}
-      {% if key != "class" %}{{ key }}="{{ value }}"{% endif %}
+      {{ key }}="{{ value }}"
     {% endfor %}
   >
-    <nav
+    <div
       role="menu"
       id="{{ id }}-menu"
       aria-labelledby="{{ id }}-trigger"
@@ -53,7 +58,7 @@
       {% else %}
         {{ caller() if caller }}
       {% endif %}
-    </nav>
+    </div>
   </div>
 </div>
 {% endmacro %}
@@ -77,7 +82,7 @@
           {{ key }}="{{ value }}"
         {% endfor %}
       >
-        <div role="heading" id="{{ group_label_id }}">{{ item.label }}</div>
+        <div role="presentation" id="{{ group_label_id }}">{{ item.label }}</div>
         {{ render_dropdown_items(item.items, item_id) if item.items }}
       </div>
     {% elif item.type == "separator" %}
@@ -85,6 +90,7 @@
     {% elif item.type == "item" or not item.type %}
       {% if item.url %}
         <a
+          id="{{ item_id }}"
           role="menuitem"
           href="{{ item.url }}"
           {% for key, value in item.attrs %}
@@ -94,15 +100,15 @@
           {{ item.label | safe }}
         </a>
       {% else %}
-        <button
+        <div
+          id="{{ item_id }}"
           role="menuitem"
-          type="button"
           {% for key, value in item.attrs %}
              {{ key }}="{{ value }}"
           {% endfor %}
         >
           {{ item.label | safe }}
-        </button>
+        </div>
       {% endif %}
     {% endif %}
   {% endfor %}

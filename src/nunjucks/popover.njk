@@ -5,35 +5,43 @@
   @param trigger {string} [optional] - HTML content for the element that triggers the popover.
   @param main_attrs {object} [optional] - Additional HTML attributes for the main container div.
   @param trigger_attrs {object} [optional] - Additional HTML attributes for the trigger element.
-  @param content_attrs {object} [optional] - Additional HTML attributes for the popover content div.
+  @param popover_attrs {object} [optional] - Additional HTML attributes for the popover content div.
 #}
 {% macro popover(
   id=None,
   trigger,
+  main_attrs={},
   trigger_attrs={},
   popover_attrs={}
 ) %}
 {% set id = id or ("popover-" + (range(100000, 999999) | random | string)) %}
-<button
-  type="button"
-  popovertarget="{{ id }}"
-  id="{{ id }}-trigger"
-  onclick="this.setAttribute('aria-expanded', this.getAttribute('aria-expanded') === 'false' ? 'true' : 'false')"
-  aria-expanded="false"
-  {% for key, value in trigger_attrs %}
-    {{ key }}="{{ value }}"
-  {% endfor %}
->
-  {{ trigger | safe }}
-</button>
+
 <div
-  popover
-  id="{{ id }}"
-  class="popover {{ popover_attrs.class }}"
-  {% for key, value in popover_attrs %}
+  class="popover {{ main_attrs.class }}"
+  {% for key, value in main_attrs %}
     {% if key != 'class' %}{{ key }}="{{ value }}"{% endif %}
   {% endfor %}
-> 
-  {{ caller() if caller }}
+>
+  <button
+    id="{{ id }}-trigger"
+    type="button"
+    aria-expanded="false"
+    aria-controls="{{ id }}"
+    {% for key, value in trigger_attrs %}
+      {{ key }}="{{ value }}"
+    {% endfor %}
+  >
+    {{ trigger | safe }}
+  </button>
+  <div
+    id="{{ id }}"
+    data-popover
+    aria-hidden="true"
+    {% for key, value in popover_attrs %}
+      {{ key }}="{{ value }}"
+    {% endfor %}
+  > 
+    {{ caller() if caller }}
+  </div>
 </div>
 {% endmacro %}
