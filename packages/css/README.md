@@ -8,42 +8,51 @@ Your project must have [Tailwind CSS](https://tailwindcss.com/docs/installation)
 
 ## Installation
 
-You can install `basecoat-css` using your preferred package manager:
+Install with any package manager:
 
 ```bash
-# npm
-npm install basecoat-css
-
-# yarn
-yarn add basecoat-css
-
-# pnpm
-pnpm add basecoat-css
-
-# bun
-bun add basecoat-css
+npm install basecoat-css # or pnpm add / yarn add / bun add
 ```
-
-Alternatively, you can download the `basecoat.css` file directly from the [GitHub repository](https://github.com/hunvreus/basecoat/blob/main/src/css/basecoat.css) (or the `dist/basecoat.css` file from this package after installation) and include it in your project.
 
 ## Usage
 
-After installation, import `basecoat-css` into your main CSS file. Make sure to import it **after** Tailwind CSS and **before** any custom theme overrides.
+Add it just after Tailwind in your stylesheet:
 
 ```css
-/* Your main CSS file (e.g., styles.css) */
-
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
-
-@import "basecoat-css"; /* Or the path to basecoat.css if manually added */
-
-/* Your custom styles or theme overrides (optional) */
-/* @import "your-theme.css"; */
+@import "tailwindcss";
+@import "basecoat-css";
 ```
 
-Once imported, you can start using Basecoat's component classes in your HTML.
+That's it, you can use any Basecoat class (`btn`, `card`, `input`, etc) in your markup.
+
+### (Optional) JavaScript files
+
+Some interactive components (Dropdown Menu, Popover, Select, Sidebar, Tabs, Toast) need some JavaScript.
+
+With a build tool (ESM):
+
+```js
+import 'basecoat-css/all';
+```
+
+Or cherry-pick the components you need:
+
+```js
+import 'basecoat-css/tabs';
+import 'basecoat-css/popover';
+```
+
+Without a build tool, copy the files from `node_modules`:
+
+```bash
+npx copyfiles -u 1 "node_modules/basecoat-css/dist/js/**/*" public/js/basecoat
+```
+
+Then reference what you need, e.g.
+
+```html
+<script src="/js/basecoat/tabs.min.js" defer></script>
+```
 
 ## Documentation
 
