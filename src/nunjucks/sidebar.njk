@@ -7,7 +7,11 @@
   @param side {string} [optional] - Side of the sidebar to display.
   @param header {string} [optional] - Header content for the sidebar.
   @param footer {string} [optional] - Footer content for the sidebar.
-  @param menu {array} [optional] - Array of menu items for the sidebar.
+  @param items {array} [optional] - Array of menu items for the sidebar.
+  @param main_attrs {object} [optional] - Additional HTML attributes for the main container div.
+  @param header_attrs {object} [optional] - Additional HTML attributes for the header element.
+  @param content_attrs {object} [optional] - Additional HTML attributes for the content section.
+  @param footer_attrs {object} [optional] - Additional HTML attributes for the footer element.
 #}
 {% macro sidebar(
   id=None,
@@ -20,8 +24,7 @@
   main_attrs={},
   header_attrs={},
   content_attrs={},
-  footer_attrs={},
-  content_wrapper_attrs=None
+  footer_attrs={}
 ) %}
 <aside
   {% if id %}id="{{ id }}"{% endif %}
@@ -86,9 +89,11 @@
       <div
         role="group"
         {% if item.label %}aria-labelledby="{{ group_label_id }}"{% endif %}
-        {% for key, value in item.attrs %}
-          {{ key }}="{{ value }}"
-        {% endfor %}
+        {% if item.attrs %}
+          {% for key, value in item.attrs %}
+            {{ key }}="{{ value }}"
+          {% endfor %}
+        {% endif %}
       >
         {% if item.label %}
           <h3 id="{{ group_label_id }}">{{ item.label }}</h3>
@@ -104,9 +109,11 @@
         <details
           id="submenu-{{ item_id }}"
           {{ "open" if item.open }}
-          {% for key, value in item.attrs %}
-            {% if key != "open" %}{{ key }}="{{ value }}"{% endif %}
-          {% endfor %}
+          {% if item.attrs %}
+            {% for key, value in item.attrs %}
+              {% if key != "open" %}{{ key }}="{{ value }}"{% endif %}
+            {% endfor %}
+          {% endif %}
         >
           <summary aria-controls="submenu-{{ item_id }}-content">
             {% if item.icon %}{{ item.icon | safe }}{% endif %}
@@ -122,9 +129,11 @@
         <a
           href="{{ item.url }}"
           {{ 'aria-current="page"' if item.current }}
-          {% for key, value in item.attrs %}
-            {% if key != "href" and key != "aria-current" %}{{ key }}="{{ value }}"{% endif %}
-          {% endfor %}
+          {% if item.attrs %}
+            {% for key, value in item.attrs %}
+              {% if key != "href" and key != "aria-current" %}{{ key }}="{{ value }}"{% endif %}
+            {% endfor %}
+          {% endif %}
         >
           {% if item.icon %}{{ item.icon | safe }}{% endif %}
           <span>{{ item.label }}</span>

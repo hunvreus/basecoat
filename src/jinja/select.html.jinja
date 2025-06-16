@@ -6,7 +6,7 @@
   @param name {string} [optional] - The name attribute for the hidden input storing the selected value.
   @param main_attrs {object} [optional] - Additional HTML attributes for the main container div.
   @param trigger_attrs {object} [optional] - Additional HTML attributes for the trigger button.
-  @param content_attrs {object} [optional] - Additional HTML attributes for the popover content div.
+  @param popover_attrs {object} [optional] - Additional HTML attributes for the popover content div.
   @param listbox_attrs {object} [optional] - Additional HTML attributes for the listbox div.
   @param input_attrs {object} [optional] - Additional HTML attributes for the hidden input.
   @param search_placeholder {string} [optional] [default="Search entries..."] - Placeholder text for the search input (combobox only).
@@ -17,49 +17,55 @@
   selected=None,
   name=None,
   items=None,
+  main_attrs={},
   trigger_attrs={},
   popover_attrs={},
   listbox_attrs={},
+  input_attrs={},
   search_placeholder="Search entries...",
   is_combobox=false
 ) %}
 {% set id = id or ("select-" + (range(100000, 999999) | random | string)) %}
 
-{% set first_option = [] %}
-{% set selected_option = [] %}
+{% set first_option = namespace(item=None) %}
+{% set selected_option = namespace(item=None) %}
 
-{% for item in items.items() %}
+{% for item in items %}
   {% if item.type == "group" %}
-    {% for sub_item in item.items.items() %}
-      {% if not first_option[0] %}
-        {% set first_option = (first_option.push(sub_item), first_option) %}
+    {% for sub_item in item.items %}
+      {% if not first_option.item %}
+        {% set first_option.item = sub_item %}
       {% endif %}
-      {% if selected and sub_item.value == selected and not selected_option[0] %}
-        {% set selected_option = (selected_option.push(sub_item), selected_option) %}
+      {% if selected and sub_item.value == selected and not selected_option.item %}
+        {% set selected_option.item = sub_item %}
       {% endif %}
     {% endfor %}
   {% else %}
-    {% if not first_option[0] %}
-      {% set first_option = (first_option.push(item), first_option) %}
+    {% if not first_option.item %}
+      {% set first_option.item = item %}
     {% endif %}
-    {% if selected and item.value == selected and not selected_option[0] %}
-      {% set selected_option = (selected_option.push(item), selected_option) %}
+    {% if selected and item.value == selected and not selected_option.item %}
+      {% set selected_option.item = item %}
     {% endif %}
   {% endif %}
 {% endfor %}
 
-{% set default_option = selected_option[0] or first_option[0] or None %}
+{% set default_option = selected_option.item or first_option.item or None %}
 
-<div class="select">
+<div
+  class="select {{ main_attrs.class }}"
+  {% for key, value in main_attrs.items() %}
+    {% if key != 'class' %}{{ key }}="{{ value }}"{% endif %}
+  {% endfor %}
+>
   <button
     type="button"
     class="btn-outline justify-between font-normal {{ trigger_attrs.class }}"
     id="{{ id }}-trigger"
-    popovertarget="{{ id }}"
     aria-haspopup="listbox"
     aria-expanded="false"
     aria-controls="{{ id }}-listbox"
-    {% for key, value in trigger_attrs %}
+    {% for key, value in trigger_attrs.items() %}
       {% if key != 'class' %}{{ key }}="{{ value }}"{% endif %}
     {% endfor %}
   >
@@ -71,11 +77,11 @@
     {% endif %}
   </button>
   <div
-    popover
     id="{{ id }}"
-    class="popover {{ popover_attrs.class }}"
+    data-popover
+    aria-hidden="true"
     {% for key, value in popover_attrs.items() %}
-      {% if key != 'class' %}{{ key }}="{{ value }}"{% endif %}
+      {{ key }}="{{ value }}"
     {% endfor %}
   >
     {% if is_combobox %}
@@ -90,8 +96,8 @@
         spellcheck="false"
         aria-autocomplete="list"
         role="combobox"
-        aria-expanded="true"
-        aria-controls="{{ id }}-content"
+        aria-expanded="false"
+        aria-controls="{{ id }}-listbox"
         aria-labelledby="{{ id }}-trigger"
       >
     </header>
@@ -101,11 +107,11 @@
       id="{{ id }}-listbox"
       aria-orientation="vertical"
       aria-labelledby="{{ id }}-trigger"
-      {% for key, value in listbox_attrs %}
+      {% for key, value in listbox_attrs.items() %}
         {{ key }}="{{ value }}"
       {% endfor %}
     >
-      {% if items.length > 0 %}
+      {% if items %}
         {{ render_select_items(items, default_option.value, id ~ "-items" if id else "items") }}
       {% else %}
         {{ caller() if caller }}
@@ -115,7 +121,7 @@
   <input
     type="hidden"
     name="{{ name or id ~ '-value' }}"
-    value="{{ selected or '' }}"
+    value="{{ (default_option.value if default_option) or '' }}"
     {% for key, value in input_attrs.items() %}
       {% if key != 'name' and key != 'value' %}{{ key }}="{{ value }}"{% endif %}
     {% endfor %}
@@ -130,18 +136,20 @@
   @param parent_id_prefix {string} [optional] - The prefix for the item id.
 #}
 {% macro render_select_items(items, selected, parent_id_prefix="items") %}
-  {% for item in items.items() %}
+  {% for item in items %}
     {% set item_id = parent_id_prefix ~ "-" ~ loop.index %}
     {% if item.type == "group" %}
       {% set group_label_id = item.id if item.id else "group-label-" + item_id %}
       <div
         role="group"
         aria-labelledby="{{ group_label_id }}"
-        {% for key, value in item.attrs %}
-          {{ key }}="{{ value }}"
-        {% endfor %}
+        {% if item.attrs %}
+          {% for key, value in item.attrs.items() %}
+            {{ key }}="{{ value }}"
+          {% endfor %}
+        {% endif %}
       >
-        <div role="heading" id="{{ group_label_id }}">{{ item.label }}</div>
+        <div role="presentation" id="{{ group_label_id }}">{{ item.label }}</div>
         {{ render_select_items(item.items, selected, item_id) if item.items }}
       </div>
     {% elif item.type == "separator" %}
@@ -152,9 +160,11 @@
         role="option"
         data-value="{{ item.value }}"
         {% if selected == item.value %}aria-selected="true"{% endif %}
-        {% for key, value in item.attrs %}
-           {{ key }}="{{ value }}"
-        {% endfor %}
+        {% if item.attrs %}
+          {% for key, value in item.attrs.items() %}
+            {{ key }}="{{ value }}"
+          {% endfor %}
+        {% endif %}
       >
         {{ item.label | safe }}
       </div>

@@ -145,9 +145,11 @@
       <div
         role="group"
         aria-labelledby="{{ group_label_id }}"
-        {% for key, value in item.attrs %}
-          {{ key }}="{{ value }}"
-        {% endfor %}
+        {% if item.attrs %}
+          {% for key, value in item.attrs %}
+            {{ key }}="{{ value }}"
+          {% endfor %}
+        {% endif %}
       >
         <div role="presentation" id="{{ group_label_id }}">{{ item.label }}</div>
         {{ render_select_items(item.items, selected, item_id) if item.items }}
@@ -160,9 +162,11 @@
         role="option"
         data-value="{{ item.value }}"
         {% if selected == item.value %}aria-selected="true"{% endif %}
-        {% for key, value in item.attrs %}
-           {{ key }}="{{ value }}"
-        {% endfor %}
+        {% if item.attrs %}
+          {% for key, value in item.attrs %}
+            {{ key }}="{{ value }}"
+          {% endfor %}
+        {% endif %}
       >
         {{ item.label | safe }}
       </div>

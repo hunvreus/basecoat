@@ -8,103 +8,87 @@
   @param footer {string} [optional] - HTML content for the dialog footer.
   @param main_attrs {object} [optional] - Additional HTML attributes for the main container div.
   @param trigger_attrs {object} [optional] - Additional HTML attributes for the trigger button.
-  @param content_attrs {object} [optional] - Additional HTML attributes for the dialog content article.
-  @param content_header_attrs {object} [optional] - Additional HTML attributes for the dialog header.
-  @param content_body_attrs {object} [optional] - Additional HTML attributes for the dialog body section.
-  @param content_footer_attrs {object} [optional] - Additional HTML attributes for the dialog footer.
-  @param open {boolean} [optional] [default=False] - Whether the dialog should be open initially.
-  @param close_button {boolean} [optional] [default=True] - Whether to include a close button.
-  @param close_on_overlay_click {boolean} [optional] [default=True] - Whether clicking the overlay closes the dialog.
+  @param dialog_attrs {object} [optional] - Additional HTML attributes for the dialog content article.
+  @param header_attrs {object} [optional] - Additional HTML attributes for the dialog header.
+  @param body_attrs {object} [optional] - Additional HTML attributes for the dialog body section.
+  @param footer_attrs {object} [optional] - Additional HTML attributes for the dialog footer.
+  @param open {boolean} [optional] [default=false] - Whether the dialog should be open initially.
+  @param close_button {boolean} [optional] [default=true] - Whether to include a close button.
+  @param close_on_overlay_click {boolean} [optional] [default=true] - Whether clicking the overlay closes the dialog.
 #}
 {% macro dialog(
-  id,
+  id=None,
   trigger=None,
   title=None,
   description=None,
   footer=None,
-  main_attrs={},
+  dialog_attrs={},
   trigger_attrs={},
-  content_attrs={},
-  content_header_attrs={},
-  content_body_attrs={},
-  content_footer_attrs={},
-  open=False,
-  close_button=True,
-  close_on_overlay_click=True
+  header_attrs={},
+  body_attrs={},
+  footer_attrs={},
+  open=false,
+  close_button=true,
+  close_on_overlay_click=true
 ) %}
-<div
-  id="{{ id }}"
-  x-data="dialog({{ 'true' if open else 'false' }}, {{ 'true' if close_on_overlay_click else 'false' }})"
-  x-bind="$main"
-  class="dialog"
-  {% for key, value in main_attrs.items() %}
+{% set id = id or ("dialog-" + (range(100000, 999999) | random | string)) %}
+{% if trigger %}
+<button
+  type="button"
+  onclick="document.getElementById('{{ id }}').showModal()"
+  {% for key, value in trigger_attrs.items() %}
     {{ key }}="{{ value }}"
   {% endfor %}
 >
-  {% if trigger %}
-  <button
-    type="button"
-    aria-expanded="false"
-    aria-controls="{{ id }}-dialog"
-    x-bind="$trigger"
-    {% for key, value in trigger_attrs.items() %}
-      {{ key }}="{{ value }}"
-    {% endfor %}
-  >
-    {{ trigger }} 
-  </button>
-  {% endif %}
-  <div
-    role="dialog"
-    id="{{ id }}-dialog"
-    tabindex="-1"
-    aria-modal="true"
-    aria-labelledby="{{ id }}-title"
-    inert
-    x-bind="$content"
-  >
-    <article
-      {% for key, value in content_attrs.items() %}
-        {{ key }}="{{ value }}"
-      {% endfor %}
-    >
-      {% if title or description %}
-        <header
-          {% for key, value in content_header_attrs.items() %}
-            {{ key }}="{{ value }}"
-          {% endfor %}
-        >
-          <h2 id="{{ id }}-title">{{ title | safe }}</h2>
-          {% if description %}<p>{{ description | safe }}</p>{% endif %}
-        </header>
-      {% endif %}
-      {% if caller %}
-        <section
-          {% for key, value in content_body_attrs.items() %}
-            {{ key }}="{{ value }}"
-          {% endfor %}
-        >
-          {{ caller() }}
-        </section>
-      {% endif %}
-      {% if footer %}
-        <footer
-          {% for key, value in content_footer_attrs.items() %}
-            {{ key }}="{{ value }}"
-          {% endfor %}
-        >
-          {{ footer | safe }}
-        </footer>
-      {% endif %}
-      {% if close_button %}
-        <button
-          @click="hide()"
-          aria-label="Close dialog"
-        >
+  {{ trigger }} 
+</button>
+{% endif %}
+<dialog
+  id="{{ id }}"
+  class="dialog"
+  aria-labelledby="{{ id }}-title"
+  {% if description %}aria-describedby="{{ id }}-description"{% endif %}
+  {% if close_on_overlay_click %}onclick="this.close()"{% endif %}
+  {% for key, value in dialog_attrs.items() %}
+    {{ key }}="{{ value }}"
+  {% endfor %}
+>
+  <article {% if close_on_overlay_click %}onclick="event.stopPropagation()"{% endif %}>
+    {% if title or description %}
+      <header
+        {% for key, value in header_attrs %}
+          {{ key }}="{{ value }}"
+        {% endfor %}
+      >
+        <h2 id="{{ id }}-title">{{ title | safe }}</h2>
+        {% if description %}<p id="{{ id }}-description">{{ description | safe }}</p>{% endif %}
+      </header>
+    {% endif %}
+    {% if caller %}
+      <section
+        {% for key, value in body_attrs.items() %}
+          {{ key }}="{{ value }}"
+        {% endfor %}
+      >
+        {{ caller() }}
+      </section>
+    {% endif %}
+    {% if footer %}
+      <footer
+        {% for key, value in footer_attrs.items() %}
+          {{ key }}="{{ value }}"
+        {% endfor %}
+      >
+        {{ footer | safe }}
+      </footer>
+    {% endif %}
+    {% if close_button %}
+      <form method="dialog">
+        <button aria-label="Close dialog">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
-        </button>
-      {% endif %}
-    </article>
-  </div>
-</div>
+      </button>
+      </form>
+    {% endif %}
+  </article>
+</dialog>
 {% endmacro %}

@@ -5,50 +5,42 @@
   @param trigger {string} [optional] - HTML content for the element that triggers the popover.
   @param main_attrs {object} [optional] - Additional HTML attributes for the main container div.
   @param trigger_attrs {object} [optional] - Additional HTML attributes for the trigger element.
-  @param content_attrs {object} [optional] - Additional HTML attributes for the popover content div.
+  @param popover_attrs {object} [optional] - Additional HTML attributes for the popover content div.
 #}
 {% macro popover(
+  trigger,
   id=None,
-  trigger=None,
   main_attrs={},
   trigger_attrs={},
-  content_attrs={}
+  popover_attrs={}
 ) %}
+{% set id = id or ("popover-" + (range(100000, 999999) | random | string)) %}
+
 <div
   class="popover {{ main_attrs.class }}"
-  x-data="popover"
-  @click.away="open = false"
-  {% if id %}id="{{ id }}"{% endif %}
   {% for key, value in main_attrs.items() %}
     {% if key != 'class' %}{{ key }}="{{ value }}"{% endif %}
   {% endfor %}
 >
-  {% if trigger %}
   <button
-    type="button"
-    aria-haspopup="menu"
-    aria-expanded="false"
-    x-bind="$trigger"
-    {% if id %}
     id="{{ id }}-trigger"
-    aria-controls="{{ id }}-menu"
-    {% endif %}
+    type="button"
+    aria-expanded="false"
+    aria-controls="{{ id }}"
     {% for key, value in trigger_attrs.items() %}
       {{ key }}="{{ value }}"
     {% endfor %}
   >
     {{ trigger | safe }}
   </button>
-  {% endif %}
   <div
+    id="{{ id }}"
     data-popover
     aria-hidden="true"
-    x-bind="$content"
-    {% if id %}id="{{ id }}-menu"{% endif %}
-    {% for key, value in content_attrs.items() %}
+    {% for key, value in popover_attrs.items() %}
       {{ key }}="{{ value }}"
     {% endfor %}
-  >
+  > 
     {{ caller() if caller }}
   </div>
 </div>

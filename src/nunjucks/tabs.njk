@@ -16,8 +16,8 @@
 {% macro tabs(
     id=None,
     tabsets=[],
-    main_attrs=None,
-    tablist_attrs=None,
+    main_attrs={},
+    tablist_attrs={},
     default_tab_index=1
   )
 %}
@@ -44,9 +44,11 @@
         aria-controls="{{ id }}-panel-{{ loop.index }}"
         aria-selected="{{ 'true' if loop.index == default_tab_index else 'false' }}"
         tabindex="0"
-        {% for key, value in tabset.tab_attrs %}
-          {{ key }}="{{ value }}"
-        {% endfor %}
+        {% if tabset.tab_attrs %}
+          {% for key, value in tabset.tab_attrs %}
+            {{ key }}="{{ value }}"
+          {% endfor %}
+        {% endif %}
       >
         {{ tabset.tab | safe }}
       </button>
@@ -62,9 +64,11 @@
         tabindex="-1"
         aria-selected="{{ 'true' if loop.index == default_tab_index else 'false' }}"
         {% if loop.index != default_tab_index %}hidden{% endif %}
-        {% for key, value in tabset.panel_attrs %}
-          {{ key }}="{{ value }}"
-        {% endfor %}
+        {% if tabset.panel_attrs %}
+          {% for key, value in tabset.panel_attrs %}
+            {{ key }}="{{ value }}"
+          {% endfor %}
+        {% endif %}
       >
         {{ tabset.panel | safe }}
       </div>

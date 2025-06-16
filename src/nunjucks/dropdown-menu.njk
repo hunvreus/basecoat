@@ -3,14 +3,14 @@
 
   @param id {string} [optional] - Unique identifier for the dropdown component.
   @param trigger {string} [optional] - HTML content for the button that triggers the dropdown.
-  @param menu {array} [optional] - Array of menu items for the dropdown.
+  @param items {array} [optional] - Array of menu items for the dropdown.
   @param main_attrs {object} [optional] - Additional HTML attributes for the main container div.
   @param trigger_attrs {object} [optional] - Additional HTML attributes for the trigger button.
   @param popover_attrs {object} [optional] - Additional HTML attributes for the dropdown content div.
 #}
 {% macro dropdown_menu(
-  id=None,
   trigger,
+  id=None,
   items=None,
   main_attrs={},
   trigger_attrs={},
@@ -78,9 +78,11 @@
       <div
         role="group"
         aria-labelledby="{{ group_label_id }}"
-        {% for key, value in item.attrs %}
-          {{ key }}="{{ value }}"
-        {% endfor %}
+        {% if item.attrs %}
+          {% for key, value in item.attrs %}
+            {{ key }}="{{ value }}"
+          {% endfor %}
+        {% endif %}
       >
         <div role="presentation" id="{{ group_label_id }}">{{ item.label }}</div>
         {{ render_dropdown_items(item.items, item_id) if item.items }}
@@ -93,9 +95,11 @@
           id="{{ item_id }}"
           role="menuitem"
           href="{{ item.url }}"
-          {% for key, value in item.attrs %}
-            {% if key != "url" %} {{ key }}="{{ value }}" {% endif %}
-          {% endfor %}
+          {% if item.attrs %}
+            {% for key, value in item.attrs %}
+              {% if key != "url" %} {{ key }}="{{ value }}" {% endif %}
+            {% endfor %}
+          {% endif %}
         >
           {{ item.label | safe }}
         </a>
@@ -103,9 +107,11 @@
         <div
           id="{{ item_id }}"
           role="menuitem"
-          {% for key, value in item.attrs %}
-             {{ key }}="{{ value }}"
-          {% endfor %}
+          {% if item.attrs %}
+            {% for key, value in item.attrs %}
+              {{ key }}="{{ value }}"
+            {% endfor %}
+          {% endif %}
         >
           {{ item.label | safe }}
         </div>
