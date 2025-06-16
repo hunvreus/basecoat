@@ -75,7 +75,7 @@
     const highlight = () => {
       if (!window.hljs) return;
       document
-        .querySelectorAll('code:not([data-highlighted])')
+        .querySelectorAll('pre code:not([data-highlighted]), code.highlight:not([data-highlighted])')
         .forEach(el => hljs.highlightElement(el));
     };
 
