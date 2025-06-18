@@ -1,0 +1,53 @@
+---
+layout: layouts/page.njk
+title: Theme Switcher
+description: A component that allows the user to switch between light and dark mode.
+toc:
+  - label: Usage
+    id: usage
+  - label: Examples
+    id: examples
+    children:
+      - label: Default
+        id: example-default
+      - label: Right
+        id: example-right
+      - label: Bottom + Start
+        id: example-bottom-start
+---
+
+{% from "macros/code_preview.njk" import code_preview %}
+{% from "macros/code_block.njk" import code_block %}
+
+{% set code %}<button class="btn-outline" data-tooltip="Add to library">Hover</button>{% endset %}
+{{ code_preview("button", code) }}
+
+<h2 id="usage">Usage</h2>
+
+<section class="prose">
+  <p>On any element, set the value of the <code>data-tooltip</code> attribute to the text you want to display in the tooltip. Additionally, you can set:</p>
+  <ul>
+    <li><code>data-side</code> attribute to <code>top</code>, <code>bottom</code>, <code>left</code>, or <code>right</code> to change the side of the tooltip.</li>
+    <li><code>data-align</code> attribute to <code>start</code>, <code>center</code>, or <code>end</code> to change the alignment of the tooltip.</li>
+  </ul>
+</section>
+
+{% set code %}<button class="btn-outline" data-tooltip="Tooltip text" data-side="bottom" data-align="center">Bottom left</button>{% endset %}
+{{ code_block(code) }}
+
+<h2 id="examples"><a href="#examples">Examples</a></h2>
+
+<h3 id="example-default"><a href="#example-default">Default</a></h3>
+
+{% set code %}<button class="btn-outline" data-tooltip="Default tooltip">Default</button>{% endset %}
+{{ code_preview("button", code) }}
+
+<h3 id="example-right"><a href="#example-right">Right</a></h3>
+
+{% set code %}<button class="btn-outline" data-tooltip="Right side tooltip" data-side="right">Right</button>{% endset %}
+{{ code_preview("button", code) }}
+
+<h3 id="example-bottom-start"><a href="#example-bottom-start">Bottom + Start</a></h3>
+
+{% set code %}<button class="btn-outline" data-tooltip="Bottom side and start aligned tooltip" data-side="bottom" data-align="start">Bottom + Start</button>{% endset %}
+{{ code_preview("button", code) }}
