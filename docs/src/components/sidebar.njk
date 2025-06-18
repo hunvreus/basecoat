@@ -32,7 +32,7 @@ toc:
   <p>You can either <a href="/installation/#install-cdn-all">include the JavaScript file for all the components</a>, or just the one for this component by adding this to the <code>&lt;head&gt;</code> of your page:</p>
 </section>
 
-{% set code_script %}<script src="https://cdn.jsdelivr.net/npm/basecoat-css@{{ site.version }}/dist/js/select.min.js" defer></script>{% endset %}
+{% set code_script %}<script src="https://cdn.jsdelivr.net/npm/basecoat-css@{{ site.version }}/dist/js/sidebar.min.js" defer></script>{% endset %}
 {{ code_block(code_script | prettyHtml, "html") }}
 
 <div class="flex flex-wrap gap-2 my-6">
@@ -76,7 +76,7 @@ toc:
   menu=menu
 ) }}
 <main>
-  <button type="button" onclick="window.dispatchEvent(new CustomEvent('sidebar:toggle'))">Toggle sidebar</button>
+  <button type="button" onclick="window.dispatchEvent(new CustomEvent('basecoat:sidebar'))">Toggle sidebar</button>
   <h1>Content</h1>
 </main>
 {% endset %}
@@ -95,7 +95,7 @@ toc:
     </li>
   </ul>
 
-  <p>Any elememt on the page can toggle, open or close the sidebar by dispatching the <code>sidebar:toggle</code>, <code>sidebar:open</code> or <code>sidebar:close</code> events.</p>
+  <p>Any elememt on the page can toggle, open or close the sidebar by dispatching the <code>basecoat:sidebar</code>, <code>sidebar:open</code> or <code>sidebar:close</code> events.</p>
 
   <p>You can include the JavaScript code provided below, load it as an individual file or use the CLI. Some Alpine.js properties are also required on certain elements (e.g. <code class="text-xs">x-bind</code>, <code class="text-xs">x-data</code>, <code class="text-xs">@click</code>).</p>
 </section>

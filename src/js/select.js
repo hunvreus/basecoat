@@ -6,11 +6,24 @@
     const listbox = popover.querySelector('[role="listbox"]');
     const input = selectComponent.querySelector(':scope > input[type="hidden"]');
     const filter = selectComponent.querySelector('header input[type="text"]');
-    if (!trigger || !popover || !listbox || !input) return;
+    if (!trigger || !popover || !listbox || !input) {
+      const missing = [];
+      if (!trigger) missing.push('trigger');
+      if (!popover) missing.push('popover');
+      if (!listbox) missing.push('listbox');
+      if (!input)   missing.push('input');
+      console.error(`Select component initialisation failed. Missing element(s): ${missing.join(', ')}`, selectComponent);
+      return;
+    }
     
     const options = Array.from(listbox.querySelectorAll('[role="option"]'));
     let visibleOptions = [...options];
     let activeIndex = -1;
+
+    const hasTransition = () => {
+      const style = getComputedStyle(popover);
+      return parseFloat(style.transitionDuration) > 0 || parseFloat(style.transitionDelay) > 0;
+    };
 
     const updateValue = (option) => {
       if (option) {
@@ -21,14 +34,26 @@
       }
     };
 
-    const closePopover = () => {
+    const closePopover = (focusOnTrigger = true) => {
+      if (popover.getAttribute('aria-hidden') === 'true') return;
+      
+      if (filter) {
+        const resetFilter = () => {
+          filter.value = '';
+          visibleOptions = [...options];
+          options.forEach(opt => opt.setAttribute('aria-hidden', 'false'));
+        };
+        
+        if (hasTransition()) {
+          popover.addEventListener('transitionend', resetFilter, { once: true });
+        } else {
+          resetFilter();
+        }
+      }
+      
+      if (focusOnTrigger) trigger.focus();
       popover.setAttribute('aria-hidden', 'true');
       trigger.setAttribute('aria-expanded', 'false');
-      if (filter) {
-        filter.value = '';
-        visibleOptions = [...options];
-        options.forEach(opt => opt.setAttribute('aria-hidden', 'false'));
-      }
       trigger.removeAttribute('aria-activedescendant');
       if (activeIndex > -1) options[activeIndex]?.classList.remove('active');
       activeIndex = -1;
@@ -37,10 +62,17 @@
     const selectOption = (option) => {
       if (!option) return;
       
-      if (option.dataset.value) {
+      if (option.dataset.value != null) {
         updateValue(option);
       }
+      
       closePopover();
+      
+      const event = new CustomEvent('change', {
+        detail: { value: option.dataset.value },
+        bubbles: true
+      });
+      selectComponent.dispatchEvent(event);
     };
 
     if (filter) {
@@ -67,36 +99,36 @@
       filter.addEventListener('input', filterOptions);
     }
 
-    let initialOption = options.find(opt => input.value && opt.dataset.value === input.value);
+    let initialOption = options.find(opt => opt.dataset.value === input.value);
     if (!initialOption && options.length > 0) initialOption = options[0];
 
     updateValue(initialOption);
 
-    const handleKeyNavigation = (e) => {
+    const handleKeyNavigation = (event) => {
       const isPopoverOpen = popover.getAttribute('aria-hidden') === 'false';
 
-      if (!['ArrowDown', 'ArrowUp', 'Enter', 'Home', 'End', 'Escape'].includes(e.key)) {
+      if (!['ArrowDown', 'ArrowUp', 'Enter', 'Home', 'End', 'Escape'].includes(event.key)) {
         return;
       }
 
       if (!isPopoverOpen) {
-        if (e.key !== 'Enter' && e.key !== 'Escape') {
-          e.preventDefault();
+        if (event.key !== 'Enter' && event.key !== 'Escape') {
+          event.preventDefault();
           trigger.click();
         }
         return;
       }
       
-      e.preventDefault();
+      event.preventDefault();
 
-      if (e.key === 'Escape') {
+      if (event.key === 'Escape') {
         closePopover();
         return;
       }
       
-      if (e.key === 'Enter') {
+      if (event.key === 'Enter') {
         if (activeIndex > -1) {
-          selectOption(visibleOptions[activeIndex]);
+          selectOption(options[activeIndex]);
         }
         return;
       }
@@ -106,7 +138,7 @@
       const currentVisibleIndex = activeIndex > -1 ? visibleOptions.indexOf(options[activeIndex]) : -1;
       let nextVisibleIndex = currentVisibleIndex;
 
-      switch (e.key) {
+      switch (event.key) {
         case 'ArrowDown':
           if (currentVisibleIndex < visibleOptions.length - 1) {
             nextVisibleIndex = currentVisibleIndex + 1;
@@ -154,9 +186,18 @@
       if (isExpanded) {
         closePopover();
       } else {
+        if (filter) {
+          if (hasTransition()) {
+            popover.addEventListener('transitionend', () => {
+              filter.focus();
+            }, { once: true });
+          } else {
+            filter.focus();
+          }
+        }
+
         popover.setAttribute('aria-hidden', 'false');
         trigger.setAttribute('aria-expanded', 'true');
-        if (filter) filter.focus();
         
         const selectedOption = listbox.querySelector('[role="option"][aria-selected="true"]');
         if (selectedOption) {
@@ -173,16 +214,16 @@
       }
     });
 
-    listbox.addEventListener('click', (e) => {
-      const clickedOption = e.target.closest('[role="option"]');
+    listbox.addEventListener('click', (event) => {
+      const clickedOption = event.target.closest('[role="option"]');
       if (clickedOption) {
         selectOption(clickedOption);
       }
     });
 
-    document.addEventListener('click', (e) => {
-      if (!selectComponent.contains(e.target)) {
-        closePopover();
+    document.addEventListener('click', (event) => {
+      if (!selectComponent.contains(event.target)) {
+        closePopover(false);
       }
     });
 

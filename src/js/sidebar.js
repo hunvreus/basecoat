@@ -55,18 +55,24 @@
 
     const sidebarId = sidebarComponent.id;
 
-    window.addEventListener('sidebar:open', (e) => {
-      if (!e.detail?.id || e.detail.id === sidebarId) setState(true);
-    });
-    window.addEventListener('sidebar:close', (e) => {
-      if (!e.detail?.id || e.detail.id === sidebarId) setState(false);
-    });
-    window.addEventListener('sidebar:toggle', (e) => {
-      if (!e.detail?.id || e.detail.id === sidebarId) setState(!open);
+    document.addEventListener('basecoat:sidebar', (event) => {
+      if (event.detail?.id && event.detail.id !== sidebarId) return;
+
+      switch (event.detail?.action) {
+        case 'open':
+          setState(true);
+          break;
+        case 'close':
+          setState(false);
+          break;
+        default:
+          setState(!open);
+          break;
+      }
     });
     
-    sidebarComponent.addEventListener('click', (e) => {
-      const target = e.target;
+    sidebarComponent.addEventListener('click', (event) => {
+      const target = event.target;
       const nav = sidebarComponent.querySelector('nav');
       
       const isMobile = window.innerWidth < breakpoint;

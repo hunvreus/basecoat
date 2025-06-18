@@ -94,6 +94,10 @@ toc:
 {% set code_toaster %}<div id="toaster" class="toaster"></div>{% endset %}
 {{ code_block(code_toaster | prettyHtml, "html") }}
 
+<section class="prose">
+  <p>You can set up the alignment of the toaster using the <code>data-align</code> attribute: <code>start</code>, <code>center</code>, or <code>end</code> (default to <code>end</code>).</p>
+</section>
+
 <h4 id="usage-html-js-3"><a href="#usage-html-js-3">Step 3: Add your toasts</a></h4>
 
 <section class="prose">
@@ -248,7 +252,7 @@ toc:
 {{ toast(
   title="Event has been created",
   description="Sunday, December 03, 2023 at 9:00 AM",
-  cancel={ label: "Undo", click: "close()" }
+  cancel={ label: "Undo" }
 ) }}{% endraw %}{% endset %}
 
 {% from "tabs.njk" import tabs %}

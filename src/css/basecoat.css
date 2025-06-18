@@ -504,7 +504,7 @@
 /* Dropdown Menu */
 @layer components {
   .dropdown-menu {
-    @apply relative inline-flex p-1;
+    @apply relative inline-flex;
 
     [data-popover] {
       @apply p-1;

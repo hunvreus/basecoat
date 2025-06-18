@@ -680,9 +680,6 @@
   .gap-x-2 {
     column-gap: calc(var(--spacing) * 2);
   }
-  .gap-x-3 {
-    column-gap: calc(var(--spacing) * 3);
-  }
   .gap-x-10 {
     column-gap: calc(var(--spacing) * 10);
   }
@@ -708,9 +705,6 @@
   }
   .gap-y-10 {
     row-gap: calc(var(--spacing) * 10);
-  }
-  .self-start {
-    align-self: flex-start;
   }
   .truncate {
     overflow: hidden;
@@ -1020,6 +1014,11 @@
   }
   .filter {
     filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
+  }
+  .transition {
+    transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter;
+    transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
+    transition-duration: var(--tw-duration, var(--default-transition-duration));
   }
   .transition-all {
     transition-property: all;
@@ -1596,43 +1595,15 @@
       }
     }
   }
-  .\[\&\>\[role\=img\]\]\:size-4 {
-    &>[role=img] {
-      width: calc(var(--spacing) * 4);
-      height: calc(var(--spacing) * 4);
-    }
-  }
-  .\[\&\>\[role\=img\]\]\:shrink-0 {
-    &>[role=img] {
-      flex-shrink: 0;
-    }
-  }
-  .\[\&\>\[role\=img\]\>svg\]\:size-4 {
-    &>[role=img]>svg {
-      width: calc(var(--spacing) * 4);
-      height: calc(var(--spacing) * 4);
-    }
-  }
   .\[\&\>svg\]\:mb-3 {
     &>svg {
       margin-bottom: calc(var(--spacing) * 3);
-    }
-  }
-  .\[\&\>svg\]\:size-4 {
-    &>svg {
-      width: calc(var(--spacing) * 4);
-      height: calc(var(--spacing) * 4);
     }
   }
   .\[\&\>svg\]\:size-6 {
     &>svg {
       width: calc(var(--spacing) * 6);
       height: calc(var(--spacing) * 6);
-    }
-  }
-  .\[\&\>svg\]\:shrink-0 {
-    &>svg {
-      flex-shrink: 0;
     }
   }
 }
@@ -2536,7 +2507,6 @@
   .dropdown-menu {
     position: relative;
     display: inline-flex;
-    padding: calc(var(--spacing) * 1);
     [data-popover] {
       padding: calc(var(--spacing) * 1);
       min-width: anchor-size(width);

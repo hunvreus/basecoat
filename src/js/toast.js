@@ -15,11 +15,11 @@
 
     toaster.addEventListener('mouseenter', pauseAllTimeouts);
     toaster.addEventListener('mouseleave', resumeAllTimeouts);
-    toaster.addEventListener('click', (e) => {
-      const actionLink = e.target.closest('.toast footer a');
-      const actionButton = e.target.closest('.toast footer button');
+    toaster.addEventListener('click', (event) => {
+      const actionLink = event.target.closest('.toast footer a');
+      const actionButton = event.target.closest('.toast footer button');
       if (actionLink || actionButton) {
-        closeToast(e.target.closest('.toast'));
+        closeToast(event.target.closest('.toast'));
       }
     });
 
@@ -109,8 +109,8 @@
     try {
       const func = new Function('close', actionString);
       func(() => closeToast(toast));
-    } catch (e) {
-      console.error('Error executing toast action:', e);
+    } catch (event) {
+      console.error('Error executing toast action:', event);
     }
   }
 
@@ -166,12 +166,12 @@
   const initialToaster = document.getElementById('toaster');
   if (initialToaster) initToaster(initialToaster);
 
-  window.addEventListener('basecoat:toast', (e) => {
+  window.addEventListener('basecoat:toast', (event) => {
     if (!toaster) {
       console.error('Cannot create toast: toaster container not found on page.');
       return;
     }
-    const config = e.detail?.config || {};
+    const config = event.detail?.config || {};
     const toastElement = createToast(config);
     toaster.appendChild(toastElement);
   });

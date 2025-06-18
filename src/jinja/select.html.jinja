@@ -16,7 +16,7 @@
   id=None,
   selected=None,
   name=None,
-  items=None,
+  items=[],
   main_attrs={},
   trigger_attrs={},
   popover_attrs={},
@@ -30,25 +30,27 @@
 {% set first_option = namespace(item=None) %}
 {% set selected_option = namespace(item=None) %}
 
-{% for item in items %}
-  {% if item.type == "group" %}
-    {% for sub_item in item.items %}
+{% if items %}
+  {% for item in items %}
+    {% if item.type == "group" %}
+      {% for sub_item in item.items %}
+        {% if not first_option.item %}
+          {% set first_option.item = sub_item %}
+        {% endif %}
+        {% if selected and sub_item.value == selected and not selected_option.item %}
+          {% set selected_option.item = sub_item %}
+        {% endif %}
+      {% endfor %}
+    {% else %}
       {% if not first_option.item %}
-        {% set first_option.item = sub_item %}
+        {% set first_option.item = item %}
       {% endif %}
-      {% if selected and sub_item.value == selected and not selected_option.item %}
-        {% set selected_option.item = sub_item %}
+      {% if selected and item.value == selected and not selected_option.item %}
+        {% set selected_option.item = item %}
       {% endif %}
-    {% endfor %}
-  {% else %}
-    {% if not first_option.item %}
-      {% set first_option.item = item %}
     {% endif %}
-    {% if selected and item.value == selected and not selected_option.item %}
-      {% set selected_option.item = item %}
-    {% endif %}
-  {% endif %}
-{% endfor %}
+  {% endfor %}
+{% endif %}
 
 {% set default_option = selected_option.item or first_option.item or None %}
 

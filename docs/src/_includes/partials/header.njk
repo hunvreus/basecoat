@@ -1,7 +1,7 @@
 <div class="flex h-14 w-full items-center gap-2 px-4">
   <button
     type="button"
-    onclick="window.dispatchEvent(new CustomEvent('sidebar:toggle'))"
+    onclick="document.dispatchEvent(new CustomEvent('basecoat:sidebar'))"
     aria-label="Toggle sidebar"
     data-tooltip="Toggle sidebar"
     data-side="bottom"
@@ -44,7 +44,7 @@
     aria-label="Toggle dark mode"
     data-tooltip="Toggle dark mode"
     data-side="bottom"
-    data-action="toggle-dark-mode"
+    onclick="document.dispatchEvent(new CustomEvent('basecoat:theme'))"
     class="btn-icon-outline size-8"
   >
     <span class="hidden dark:block">{% lucide "sun" %}</span>

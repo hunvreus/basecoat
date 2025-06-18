@@ -171,6 +171,8 @@ import 'basecoat-css/tabs';{% endraw %}{% endset %}
   <p>For more complex components, you can use <a href="https://mozilla.github.io/nunjucks/" target="_blank">Nunjucks</a> or <a href="https://jinja.palletsprojects.com" target="_blank">Jinja</a> macros to help you generate the HTML and JavaScript code.</p>
   <p>To install them, either <a href="https://github.com/hunvreus/basecoat/tree/main/src" target="_blank">copy them directly from the GitHub repository</a> or use <a href="#install-cli">the CLI</a> to do the work for you.</p>
   <p>For example, here's how you could use the <code>select()</code> macro to generate the HTML and JavaScript code for a <a href="/components/select">Select</a> component:</p>
+</div>
+
   {% set code %}{% raw %}{% call select() %}
 <div role="group" aria-labelledby="fruit-options-label">
   <span id="fruit-options-label" role="heading">Fruits</span>
@@ -182,16 +184,6 @@ import 'basecoat-css/tabs';{% endraw %}{% endset %}
 </div>
 {% endcall %}{% endraw %}{% endset %}
   {{ code_block(code, "jinja") }}
-  <p>Make sure to include the JavaScript code <b>before</b> Alpine.js core JS file:</p>
-  {% set code %}<script src="/assets/js/select.js" defer></script>
-<script>
-  document.addEventListener('alpine:init', () => {
-    window.basecoat.registerSelect(Alpine);
-  });
-</script>
-<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>{% endset %}
-{{ code_block(code, "jinja") }}
-</div>
 
 <h2 id="install-theming"><a href="#install-theming">Theming</a></h2>
 
@@ -233,7 +225,7 @@ import 'basecoat-css/tabs';{% endraw %}{% endset %}
   
   {% set code %}@import "tailwindcss";
 @import "basecoat-css";
-@import "theme.css";{% endset %}
+@import "./custom.css";{% endset %}
   {{ code_block(code, "css") }}
   
   <section class="prose">

@@ -19,19 +19,19 @@
       if (activePanel) activePanel.hidden = false;
     };
 
-    tablist.addEventListener('click', (e) => {
-      const clickedTab = e.target.closest('[role="tab"]');
+    tablist.addEventListener('click', (event) => {
+      const clickedTab = event.target.closest('[role="tab"]');
       if (clickedTab) selectTab(clickedTab);
     });
 
-    tablist.addEventListener('keydown', (e) => {
-      const currentTab = e.target;
+    tablist.addEventListener('keydown', (event) => {
+      const currentTab = event.target;
       if (!tabs.includes(currentTab)) return;
 
       let nextTab;
       const currentIndex = tabs.indexOf(currentTab);
 
-      switch (e.key) {
+      switch (event.key) {
         case 'ArrowRight':
           nextTab = tabs[(currentIndex + 1) % tabs.length];
           break;
@@ -48,7 +48,7 @@
           return;
       }
 
-      e.preventDefault();
+      event.preventDefault();
       selectTab(nextTab);
       nextTab.focus();
     });

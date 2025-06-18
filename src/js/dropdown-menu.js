@@ -5,7 +5,11 @@
     const menu = popover.querySelector('[role="menu"]');
     
     if (!trigger || !menu || !popover) {
-      console.error('Dropdown menu component is missing a trigger, a menu, or a popover content element.', dropdownMenuComponent);
+      const missing = [];
+      if (!trigger) missing.push('trigger');
+      if (!menu) missing.push('menu');
+      if (!popover) missing.push('popover');
+      console.error(`Dropdown menu initialisation failed. Missing element(s): ${missing.join(', ')}`, dropdownMenuComponent);
       return;
     }
 
@@ -18,7 +22,7 @@
       trigger.removeAttribute('aria-activedescendant');
       popover.setAttribute('aria-hidden', 'true');
       trigger.focus();
-      activeIndex = -1;
+      setActiveItem(-1);
     };
 
     const openMenu = () => {
@@ -53,17 +57,17 @@
       }
     });
 
-    dropdownMenuComponent.addEventListener('keydown', (e) => {
+    dropdownMenuComponent.addEventListener('keydown', (event) => {
       const isExpanded = trigger.getAttribute('aria-expanded') === 'true';
 
-      if (e.key === 'Escape') {
+      if (event.key === 'Escape') {
         if (isExpanded) closeMenu();
         return;
       }
       
       if (!isExpanded) {
-        if (['ArrowDown', 'ArrowUp', 'Enter', ' '].includes(e.key)) {
-          e.preventDefault();
+        if (['ArrowDown', 'ArrowUp', 'Enter', ' '].includes(event.key)) {
+          event.preventDefault();
           openMenu();
         }
         return;
@@ -73,26 +77,30 @@
 
       let nextIndex = activeIndex;
 
-      switch (e.key) {
+      switch (event.key) {
         case 'ArrowDown':
-          e.preventDefault();
-          nextIndex = activeIndex < menuItems.length - 1 ? activeIndex + 1 : 0;
-          break;
+          event.preventDefault();
+          if (activeIndex < menuItems.length - 1) {
+            nextIndex = activeIndex + 1;
+          }
+          break;  
         case 'ArrowUp':
-          e.preventDefault();
-          nextIndex = activeIndex > 0 ? activeIndex - 1 : menuItems.length - 1;
+          event.preventDefault();
+          if (activeIndex > 0) {
+            nextIndex = activeIndex - 1;
+          }
           break;
         case 'Home':
-          e.preventDefault();
+          event.preventDefault();
           nextIndex = 0;
           break;
         case 'End':
-          e.preventDefault();
+          event.preventDefault();
           nextIndex = menuItems.length - 1;
           break;
         case 'Enter':
         case ' ':
-          e.preventDefault();
+          event.preventDefault();
           menuItems[activeIndex]?.click();
           closeMenu();
           return;
@@ -103,14 +111,14 @@
       }
     });
 
-    menu.addEventListener('click', (e) => {
-      if (e.target.closest('[role^="menuitem"]')) {
+    menu.addEventListener('click', (event) => {
+      if (event.target.closest('[role^="menuitem"]')) {
         closeMenu();
       }
     });
 
-    document.addEventListener('click', (e) => {
-      if (!dropdownMenuComponent.contains(e.target)) {
+    document.addEventListener('click', (event) => {
+      if (!dropdownMenuComponent.contains(event.target)) {
         closeMenu();
       }
     });

@@ -4,7 +4,10 @@
     const content = popoverComponent.querySelector(':scope > [data-popover]');
 
     if (!trigger || !content) {
-      console.error('Popover component is missing a trigger button or a content element.', popoverComponent);
+      const missing = [];
+      if (!trigger) missing.push('trigger');
+      if (!content) missing.push('content');
+      console.error(`Popover initialisation failed. Missing element(s): ${missing.join(', ')}`, popoverComponent);
       return;
     }
 
@@ -36,14 +39,14 @@
       }
     });
 
-    popoverComponent.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
+    popoverComponent.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
         closePopover();
       }
     });
 
-    document.addEventListener('click', (e) => {
-      if (!popoverComponent.contains(e.target)) {
+    document.addEventListener('click', (event) => {
+      if (!popoverComponent.contains(event.target)) {
         closePopover();
       }
     });
