@@ -39,8 +39,8 @@ toc:
   <p>Add the following to the <code>&lt;head&gt;</code> of your HTML file:</p>
 </section>
 
-{% set code %}<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@{{ site.version }}/dist/basecoat.cdn.min.css">
-<script src="https://cdn.jsdelivr.net/npm/basecoat-css@{{ site.version }}/dist/js/all.min.js" defer></script>{% endset %}
+{% set code %}<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@{{ pkg.version }}/dist/basecoat.cdn.min.css">
+<script src="https://cdn.jsdelivr.net/npm/basecoat-css@{{ pkg.version }}/dist/js/all.min.js" defer></script>{% endset %}
 {{ code_block(code, "html") }}
 
 <h3 id="install-cdn-all"><a href="#install-cdn-all">Install specific components</a></h3>
@@ -49,8 +49,8 @@ toc:
   <p>While the JavaScript file for all components is small (around 3kB gzipped), you can cherry-pick the components you need as instructed in the component's page (<a href="/components/dropdown-menu">Dropdown Menu</a>, <a href="/components/popover">Popover</a>, <a href="/components/select">Select</a>, <a href="/components/sidebar">Sidebar</a>, <a href="/components/tabs">Tabs</a> and <a href="/components/toast">Toast</a>). For example, to add the <a href="/components/dropdown-menu">Dropdown Menu</a> component, add the following to the <code>&lt;head&gt;</code> of your HTML file:</p>
 </section>
 
-{% set code %}<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@{{ site.version }}/dist/basecoat.cdn.min.css">
-<script src="https://cdn.jsdelivr.net/npm/basecoat-css@{{ site.version }}/dist/js/dropdown-menu.min.js" defer></script>{% endset %}
+{% set code %}<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@{{ pkg.version }}/dist/basecoat.cdn.min.css">
+<script src="https://cdn.jsdelivr.net/npm/basecoat-css@{{ pkg.version }}/dist/js/dropdown-menu.min.js" defer></script>{% endset %}
 {{ code_block(code, "html") }}
 
 <h2 id="install-npm"><a href="#install-npm">Install using NPM</a></h2>
