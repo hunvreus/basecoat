@@ -40,7 +40,7 @@ toc:
 
 {% set code_client_side %}<button
   class="btn-outline"
-  onclick="window.dispatchEvent(new CustomEvent('basecoat:toast', {
+  onclick="document.dispatchEvent(new CustomEvent('basecoat:toast', {
     detail: {
       config: {
         category: 'success',

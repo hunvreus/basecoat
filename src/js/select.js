@@ -148,7 +148,7 @@
           if (currentVisibleIndex > 0) {
             nextVisibleIndex = currentVisibleIndex - 1;
           } else if (currentVisibleIndex === -1) {
-            nextVisibleIndex = 0; // Start from top if nothing is active
+            nextVisibleIndex = 0;
           }
           break;
         case 'Home':
@@ -180,37 +180,44 @@
       filter.addEventListener('keydown', handleKeyNavigation);
     }
 
+    const openPopover = () => {
+      document.dispatchEvent(new CustomEvent('basecoat:popover', {
+        detail: { source: selectComponent }
+      }));
+      
+      if (filter) {
+        if (hasTransition()) {
+          popover.addEventListener('transitionend', () => {
+            filter.focus();
+          }, { once: true });
+        } else {
+          filter.focus();
+        }
+      }
+
+      popover.setAttribute('aria-hidden', 'false');
+      trigger.setAttribute('aria-expanded', 'true');
+      
+      const selectedOption = listbox.querySelector('[role="option"][aria-selected="true"]');
+      if (selectedOption) {
+        if (activeIndex > -1) {
+          options[activeIndex]?.classList.remove('active');
+        }
+        activeIndex = options.indexOf(selectedOption);
+        selectedOption.classList.add('active');
+        if (selectedOption.id) {
+          trigger.setAttribute('aria-activedescendant', selectedOption.id);
+        }
+        selectedOption.scrollIntoView({ block: 'nearest' });
+      }
+    };
+
     trigger.addEventListener('click', () => {
       const isExpanded = trigger.getAttribute('aria-expanded') === 'true';
-      
       if (isExpanded) {
         closePopover();
       } else {
-        if (filter) {
-          if (hasTransition()) {
-            popover.addEventListener('transitionend', () => {
-              filter.focus();
-            }, { once: true });
-          } else {
-            filter.focus();
-          }
-        }
-
-        popover.setAttribute('aria-hidden', 'false');
-        trigger.setAttribute('aria-expanded', 'true');
-        
-        const selectedOption = listbox.querySelector('[role="option"][aria-selected="true"]');
-        if (selectedOption) {
-          if (activeIndex > -1) {
-            options[activeIndex]?.classList.remove('active');
-          }
-          activeIndex = options.indexOf(selectedOption);
-          selectedOption.classList.add('active');
-          if (selectedOption.id) {
-            trigger.setAttribute('aria-activedescendant', selectedOption.id);
-          }
-          selectedOption.scrollIntoView({ block: 'nearest' });
-        }
+        openPopover();
       }
     });
 
@@ -223,6 +230,12 @@
 
     document.addEventListener('click', (event) => {
       if (!selectComponent.contains(event.target)) {
+        closePopover(false);
+      }
+    });
+
+    document.addEventListener('basecoat:popover', (event) => {
+      if (event.detail.source !== selectComponent) {
         closePopover(false);
       }
     });

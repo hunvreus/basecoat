@@ -16,19 +16,30 @@
     let menuItems = [];
     let activeIndex = -1;
 
-    const closeMenu = () => {
+    const closePopover = (focusOnTrigger = true) => {
       if (trigger.getAttribute('aria-expanded') === 'false') return;
       trigger.setAttribute('aria-expanded', 'false');
       trigger.removeAttribute('aria-activedescendant');
       popover.setAttribute('aria-hidden', 'true');
-      trigger.focus();
+      
+      if (focusOnTrigger) {
+        trigger.focus();
+      }
+      
       setActiveItem(-1);
     };
 
-    const openMenu = () => {
+    const openPopover = () => {
+      document.dispatchEvent(new CustomEvent('basecoat:popover', {
+        detail: { source: dropdownMenuComponent }
+      }));
+      
       trigger.setAttribute('aria-expanded', 'true');
       popover.setAttribute('aria-hidden', 'false');
-      menuItems = Array.from(menu.querySelectorAll('[role^="menuitem"]:not([disabled])'));
+      menuItems = Array.from(menu.querySelectorAll('[role^="menuitem"]')).filter(item => 
+        !item.hasAttribute('disabled') && 
+        item.getAttribute('aria-disabled') !== 'true'
+      );
       if (menuItems.length > 0) {
         setActiveItem(0);
       }
@@ -51,9 +62,9 @@
     trigger.addEventListener('click', () => {
       const isExpanded = trigger.getAttribute('aria-expanded') === 'true';
       if (isExpanded) {
-        closeMenu();
+        closePopover();
       } else {
-        openMenu();
+        openPopover();
       }
     });
 
@@ -61,14 +72,14 @@
       const isExpanded = trigger.getAttribute('aria-expanded') === 'true';
 
       if (event.key === 'Escape') {
-        if (isExpanded) closeMenu();
+        if (isExpanded) closePopover();
         return;
       }
       
       if (!isExpanded) {
         if (['ArrowDown', 'ArrowUp', 'Enter', ' '].includes(event.key)) {
           event.preventDefault();
-          openMenu();
+          openPopover();
         }
         return;
       }
@@ -80,15 +91,11 @@
       switch (event.key) {
         case 'ArrowDown':
           event.preventDefault();
-          if (activeIndex < menuItems.length - 1) {
-            nextIndex = activeIndex + 1;
-          }
-          break;  
+          nextIndex = Math.min(activeIndex + 1, menuItems.length - 1);
+          break;
         case 'ArrowUp':
           event.preventDefault();
-          if (activeIndex > 0) {
-            nextIndex = activeIndex - 1;
-          }
+          nextIndex = Math.max(activeIndex - 1, 0);
           break;
         case 'Home':
           event.preventDefault();
@@ -102,7 +109,7 @@
         case ' ':
           event.preventDefault();
           menuItems[activeIndex]?.click();
-          closeMenu();
+          closePopover();
           return;
       }
 
@@ -113,13 +120,19 @@
 
     menu.addEventListener('click', (event) => {
       if (event.target.closest('[role^="menuitem"]')) {
-        closeMenu();
+        closePopover();
       }
     });
 
     document.addEventListener('click', (event) => {
       if (!dropdownMenuComponent.contains(event.target)) {
-        closeMenu();
+        closePopover();
+      }
+    });
+
+    document.addEventListener('basecoat:popover', (event) => {
+      if (event.detail.source !== dropdownMenuComponent) {
+        closePopover(false);
       }
     });
 

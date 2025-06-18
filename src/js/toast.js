@@ -166,7 +166,7 @@
   const initialToaster = document.getElementById('toaster');
   if (initialToaster) initToaster(initialToaster);
 
-  window.addEventListener('basecoat:toast', (event) => {
+  document.addEventListener('basecoat:toast', (event) => {
     if (!toaster) {
       console.error('Cannot create toast: toaster container not found on page.');
       return;

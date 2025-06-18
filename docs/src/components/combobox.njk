@@ -213,7 +213,7 @@ toc:
   <div class="max-h-64 overflow-y-auto scrollbar">
     {% for group in options_timezones %}
       <div role="group" aria-labelledby="demo-combobox-timezones-group-{{ loop.index0 }}">
-        <div role="presentation" id="demo-combobox-timezones-group-{{ loop.index0 }}">{{ group.label }}</div>
+        <div role="heading" id="demo-combobox-timezones-group-{{ loop.index0 }}">{{ group.label }}</div>
         {% for timezone in group.timezones %}
           <div role="option" data-value="{{ timezone.value}}">
             {{ timezone.label }}

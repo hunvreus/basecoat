@@ -514,12 +514,16 @@
       [role='menuitemcheckbox'],
       [role='menuitemradio'] {
         @apply aria-hidden:hidden [&_svg]:text-muted-foreground relative flex cursor-default items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-hidden select-none [&_svg]:shrink-0 [&_svg]:size-4 aria-disabled:opacity-50 aria-disabled:pointer-events-none disabled:opacity-50 disabled:pointer-events-none w-full truncate;
-        @apply focus-visible:bg-accent focus-visible:text-accent-foreground hover:bg-accent hover:text-accent-foreground;
+
+        &:not([aria-disabled='true']) {
+          @apply focus-visible:bg-accent focus-visible:text-accent-foreground hover:bg-accent hover:text-accent-foreground;
+        }
+
         &.active {
           @apply bg-accent text-accent-foreground;
         }
       }
-      [role='menu'] [role="presentation"] {
+      [role='menu'] [role='heading'] {
         @apply flex px-2 py-1.5 text-sm font-medium;
       }
       [role='separator'] {
@@ -734,7 +738,7 @@
           @apply bg-[image:var(--check-icon)] bg-no-repeat bg-position-[center_right_0.5rem] bg-size-[0.875rem];
         }
       }
-      [role='listbox'] [role="presentation"] {
+      [role='listbox'] [role='heading'] {
         @apply flex text-muted-foreground px-2 py-1.5 text-xs;
       }
       [role='listbox'] [role='group']:not(:has([role='option']:not([aria-hidden='true']))) {

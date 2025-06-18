@@ -11,14 +11,20 @@
       return;
     }
 
-    const closePopover = () => {
+    const closePopover = (focusOnTrigger = true) => {
       if (trigger.getAttribute('aria-expanded') === 'false') return;
       trigger.setAttribute('aria-expanded', 'false');
       content.setAttribute('aria-hidden', 'true');
-      trigger.focus();
+      if (focusOnTrigger) {
+        trigger.focus();
+      }
     };
 
     const openPopover = () => {
+      document.dispatchEvent(new CustomEvent('basecoat:popover', {
+        detail: { source: popoverComponent }
+      }));
+      
       const elementToFocus = content.querySelector('[autofocus]');
       if (elementToFocus) {
         content.addEventListener('transitionend', () => {
@@ -48,6 +54,12 @@
     document.addEventListener('click', (event) => {
       if (!popoverComponent.contains(event.target)) {
         closePopover();
+      }
+    });
+
+    document.addEventListener('basecoat:popover', (event) => {
+      if (event.detail.source !== popoverComponent) {
+        closePopover(false);
       }
     });
 

@@ -16,7 +16,7 @@
         popover_attrs={"class": "min-w-56"}
       ) %}
         <div role="group" aria-labelledby="account-options">
-          <div role="presentation" id="account-options">My Account</div>
+          <div role="heading" id="account-options">My Account</div>
           <div role="menuitem">
             Profile
             <span class="text-muted-foreground ml-auto text-xs tracking-widest">⇧⌘P</span>
@@ -37,7 +37,7 @@
         <hr role="separator">
         <div role="menuitem">GitHub</div>
         <div role="menuitem">Support</div>
-        <div role="menuitem" disabled>API</div>
+        <div role="menuitem" aria-disabled="true">API</div>
         <hr role="separator">
         <div role="menuitem">
           Logout
@@ -52,7 +52,7 @@
         popover_attrs={"class": "min-w-56"}
       ) %}
       <div role="group" aria-labelledby="account-options">
-        <div role="presentation" id="account-options">Account Options</div>
+        <div role="heading" id="account-options">Account Options</div>
         <div role="menuitem">
           {% lucide "user" %}
           Profile
@@ -71,7 +71,7 @@
       </div>
       <hr role="separator">
       <div role="group" aria-labelledby="appearance-options">
-        <div role="presentation" id="appearance-options">Appearance</div>
+        <div role="heading" id="appearance-options">Appearance</div>
         <div
           role="menuitemcheckbox"
           aria-checked="true"
@@ -92,7 +92,7 @@
           role="menuitemcheckbox"
           aria-checked="false"
           class="group"
-          disabled
+          aria-disabled="true"
           x-data="{ checked: false }"
           @click="checked = !checked"
           :aria-checked="checked"
