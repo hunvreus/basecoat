@@ -137,6 +137,7 @@
     });
 
     dropdownMenuComponent.dataset.dropdownMenuInitialized = true;
+    dropdownMenuComponent.dispatchEvent(new CustomEvent('basecoat:initialized'));
   };
 
   document.querySelectorAll('.dropdown-menu:not([data-dropdown-menu-initialized])').forEach(initDropdownMenu);

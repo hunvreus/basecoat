@@ -25,6 +25,7 @@
 
     toaster.querySelectorAll('.toast:not([data-toast-initialized])').forEach(initToast);
     toaster.dataset.toasterInitialized = 'true';
+    toaster.dispatchEvent(new CustomEvent('basecoat:initialized'));
   }
 
   function initToast(element) {

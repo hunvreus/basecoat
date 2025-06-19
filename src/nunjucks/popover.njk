@@ -17,6 +17,7 @@
 {% set id = id or ("popover-" + (range(100000, 999999) | random | string)) %}
 
 <div
+  id="{{ id }}"
   class="popover {{ main_attrs.class }}"
   {% for key, value in main_attrs %}
     {% if key != 'class' %}{{ key }}="{{ value }}"{% endif %}
@@ -26,7 +27,7 @@
     id="{{ id }}-trigger"
     type="button"
     aria-expanded="false"
-    aria-controls="{{ id }}"
+    aria-controls="{{ id }}-popover"
     {% for key, value in trigger_attrs %}
       {{ key }}="{{ value }}"
     {% endfor %}
@@ -34,7 +35,7 @@
     {{ trigger | safe }}
   </button>
   <div
-    id="{{ id }}"
+    id="{{ id }}-popover"
     data-popover
     aria-hidden="true"
     {% for key, value in popover_attrs %}

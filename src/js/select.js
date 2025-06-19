@@ -75,6 +75,19 @@
       selectComponent.dispatchEvent(event);
     };
 
+    const selectByValue = (value) => {
+      const option = options.find(opt => opt.dataset.value === value);
+      if (option) {
+        updateValue(option);
+        
+        const event = new CustomEvent('change', {
+          detail: { value: option.dataset.value },
+          bubbles: true
+        });
+        selectComponent.dispatchEvent(event);
+      }
+    };
+
     if (filter) {
       const filterOptions = () => {
         const searchTerm = filter.value.trim().toLowerCase();
@@ -241,7 +254,10 @@
     });
 
     popover.setAttribute('aria-hidden', 'true');
+    
+    selectComponent.selectByValue = selectByValue;
     selectComponent.dataset.selectInitialized = true;
+    selectComponent.dispatchEvent(new CustomEvent('basecoat:initialized'));
   };
 
   document.querySelectorAll('div.select:not([data-select-initialized])').forEach(initSelect);

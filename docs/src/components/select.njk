@@ -186,7 +186,7 @@ toc:
         { type: "item", value: "apple", label: "Apple" },
         { type: "item", value: "banana", label: "Banana" },
         { type: "item", value: "blueberry", label: "Blueberry" },
-        { type: "item", value: "pineapple", label: "Grapes" },
+        { type: "item", value: "grapes", label: "Grapes" },
         { type: "item", value: "pineapple", label: "Pineapple" }
       ]
     }
@@ -226,6 +226,7 @@ toc:
 
 {% set code %}
 {% call select(
+  id="select-with-icons",
   trigger_attrs={'class': 'w-[180px]'}
 ) %}
 <div type="button" role="option" data-value="bar">
@@ -250,3 +251,9 @@ toc:
 {% endset %}
 
 {{ code_preview("select-scrollable", code | prettyHtml) }}
+<script>
+  const select = document.querySelector('#select-with-icons');
+  select.addEventListener('basecoat:initialized', () => {
+    select.selectByValue('pie');
+  });
+</script>

@@ -95,6 +95,7 @@
     updateState();
     updateCurrentPageLinks();
     sidebarComponent.dataset.sidebarInitialized = true;
+    sidebarComponent.dispatchEvent(new CustomEvent('basecoat:initialized'));
   };
 
   document.querySelectorAll('.sidebar:not([data-sidebar-initialized])').forEach(initSidebar);

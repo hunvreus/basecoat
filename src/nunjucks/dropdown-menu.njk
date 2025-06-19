@@ -20,6 +20,7 @@
 {% set id = id or ("dropdown-menu-" + (range(100000, 999999) | random | string)) %}
 
 <div
+  id="{{ id }}"
   class="dropdown-menu {{ main_attrs.class }}"
   {% for key, value in main_attrs %}
     {% if key != 'class' %}{{ key }}="{{ value }}"{% endif %}
@@ -38,7 +39,7 @@
     {{ trigger | safe }}
   </button>
   <div
-    id="{{ id }}"
+    id="{{ id }}-popover"
     data-popover
     aria-hidden="true"
     {% for key, value in popover_attrs %}

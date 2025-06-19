@@ -55,6 +55,7 @@
 {% set default_option = selected_option[0] or first_option[0] or None %}
 
 <div
+  id="{{ id }}"
   class="select {{ main_attrs.class }}"
   {% for key, value in main_attrs %}
     {% if key != 'class' %}{{ key }}="{{ value }}"{% endif %}
@@ -79,7 +80,7 @@
     {% endif %}
   </button>
   <div
-    id="{{ id }}"
+    id="{{ id }}-popover"
     data-popover
     aria-hidden="true"
     {% for key, value in popover_attrs %}

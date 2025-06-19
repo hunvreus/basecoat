@@ -64,6 +64,7 @@
     });
 
     popoverComponent.dataset.popoverInitialized = true;
+    popoverComponent.dispatchEvent(new CustomEvent('basecoat:initialized'));
   };
 
   document.querySelectorAll('.popover:not([data-popover-initialized])').forEach(initPopover);

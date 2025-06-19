@@ -54,6 +54,7 @@
     });
     
     tabsComponent.dataset.tabsInitialized = true;
+    tabsComponent.dispatchEvent(new CustomEvent('basecoat:initialized'));
   };
 
   document.querySelectorAll('.tabs:not([data-tabs-initialized])').forEach(initTabs);
