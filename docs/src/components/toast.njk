@@ -17,8 +17,10 @@ toc:
             id: usage-html-js-3
           - label: HTML structure
             id: usage-html-js-4
-          - label: JavaScript config object
+          - label: JavaScript events
             id: usage-html-js-5
+          - label: Toast config object
+            id: usage-html-js-6
       - label: Jinja and Nunjucks
         id: usage-macro
 ---
@@ -118,7 +120,7 @@ toc:
 {{ code_block(code_toast_html | prettyHtml, "html") }}
 
 <div class="flex flex-wrap gap-2 my-6">
-  <a class="badge-outline" href="#usage-html-js-4">
+  <a class="badge-outline" href="#usage-html-js-5">
     HTML structure
     {% lucide "arrow-right" %}
   </a>
@@ -131,8 +133,8 @@ toc:
 {{ code_block(code_client_side | prettyHtml, "html") }}
 
 <div class="flex flex-wrap gap-2 my-6">
-  <a class="badge-outline" href="#usage-html-js-5">
-    JavaScript config object
+  <a class="badge-outline" href="#usage-html-js-6">
+    Toast config object
     {% lucide "arrow-right" %}
   </a>
 </div>
@@ -176,7 +178,20 @@ toc:
   </dl>
 </section>
 
-<h4 id="usage-html-js-5"><a href="#usage-html-js-5">JavaScript config object</a></h4>
+<h4 id="usage-html-js-5"><a href="#usage-html-js-5">JavaScript events</a></h4>
+
+<section class="prose">
+  <dl>
+    <dt><code>basecoat:initialized</code></dt>
+    <dd>Once the component is fully initialized, it dispatches a custom (non-bubbling) <code>basecoat:initialized</code> event on the <code>toaster</code> element.</dd>
+    <dt><code>basecoat:toast</code></dt>
+    <dd>
+      <p>The <code>toaster</code> listens for <code>basecoat:toast</code> events on <code>document</code> to create toasts. The event's <code>detail</code> object must contain a <code>config</code> object (see <a href="#usage-html-js-6">JavaScript config object</a> below).</p>
+    </dd>
+  </dl>
+</section>
+
+<h4 id="usage-html-js-6"><a href="#usage-html-js-6">Toast config object</a></h4>
 
 <section class="prose">
   <dl>

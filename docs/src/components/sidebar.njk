@@ -15,6 +15,8 @@ toc:
             id: usage-html-js-2
           - label: HTML structure
             id: usage-html-js-3
+          - label: JavaScript events
+            id: usage-html-js-4
       - label: Jinja and Nunjucks
         id: usage-macro
 ---
@@ -82,15 +84,6 @@ toc:
 {% endset %}
 {{ code_block(code_html | prettyHtml, "html") }}
 
-<section class="prose">
-  <p>Any element on the page can toggle, open or close the sidebar by dispatching the <code>basecoat:sidebar</code>. By default, the event will toggle the sidebar, but can be used to open or close if you add an <code>action</code> to the detail:</p>
-</section>
-
-{% set code_trigger %}<button type="button" onclick="document.dispatchEvent(new CustomEvent('basecoat:sidebar'));">Toggle sidebar</button>
-<button type="button" onclick="document.dispatchEvent(new CustomEvent('basecoat:sidebar', { detail: { action: 'open' } }));">Open sidebar</button>
-<button type="button" onclick="document.dispatchEvent(new CustomEvent('basecoat:sidebar', { detail: { action: 'close' } }));">Close sidebar</button>{% endset %}
-{{ code_block(code_trigger | prettyHtml, "html") }}
-
 <h4 id="usage-html-js-3"><a href="#usage-html-js-3">HTML structure</a></h4>
 
 <section class="prose">
@@ -157,6 +150,26 @@ toc:
     <dd>A wrapper for the content of the page.</dd>
     <dt><code class="highlight language-html">&lt;button type="button" onclick="document.dispatchEvent(new CustomEvent('sidebar:toggle'))"&gt;</code></dt>
     <dd>A button to toggle the sidebar. If you want to use multiple sidebars you will need to add unique ids to the sidebars (i.e. <code>&lt;aside class="sidebar" id="{SIDEBAR_ID}"&gt;</code>) and refer to them in the event <code>detail</code> (i.e. <code>document.dispatchEvent(new CustomEvent('sidebar:toggle', { detail: { id: '{SIDEBAR_ID}' } }));</code>).</dd>
+  </dl>
+</section>
+
+<h4 id="usage-html-js-4"><a href="#usage-html-js-4">JavaScript events</a></h4>
+
+<section class="prose">
+  <dl>
+    <dt><code>basecoat:initialized</code></dt>
+    <dd>Once the component is fully initialized, it dispatches a custom (non-bubbling) <code>basecoat:initialized</code> event on itself.</dd>
+    <dt><code>basecoat:sidebar</code></dt>
+    <dd>
+      <p>Sidebars listen for this event on <code>document</code> to open, close or toggle themselves. By default, the event will toggle the sidebar, but can be used to open or close if you add an <code>action</code> to the detail. Additionally, if you have multiple sidebars on the page, you can target a specific sidebar by adding its <code>id</code> to the detail:</p>
+        {% set code_trigger %}<!-- Toggles the sidebar -->
+<button type="button" onclick="document.dispatchEvent(new CustomEvent('basecoat:sidebar'));">Toggle sidebar</button>
+<!-- Opens the `#main-navigation` sidebar -->
+<button type="button" onclick="document.dispatchEvent(new CustomEvent('basecoat:sidebar', { id: 'main-navigation', action: 'close' }));">Close sidebar</button>
+<!-- Closes the sidebar -->
+<button type="button" onclick="document.dispatchEvent(new CustomEvent('basecoat:sidebar', { action: 'close' }));">Close sidebar</button>{% endset %}
+        {{ code_block(code_trigger | prettyHtml, "html") }}
+    </dd>
   </dl>
 </section>
 

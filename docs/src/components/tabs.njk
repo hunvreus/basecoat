@@ -8,6 +8,15 @@ toc:
     children:
       - label: HTML + JavaScript
         id: usage-default
+        children:
+          - label: "Step 1: Include the JavaScript files"
+            id: usage-html-js-1
+          - label: "Step 2: Add your select HTML"
+            id: usage-html-js-2
+          - label: HTML structure
+            id: usage-html-js-3
+          - label: JavaScript events
+            id: usage-html-js-4
       - label: Jinja and Nunjucks
         id: usage-macro
 ---
@@ -127,6 +136,15 @@ toc:
       <dt><code class="highlight language-html">&lt;div role="tabpanel" id="{ PANEL_ID }" aria-labelledby="{ TAB_ID }" tabindex="-1" aria-selected="false"&gt;</code></dt>
       <dd>The tab panel. When active, the <code>aria-selected</code> attribute is set to <code>true</code>.</dd>
     </dl>
+  </dl>
+</section>
+
+<h4 id="usage-html-js-4"><a href="#usage-html-js-4">JavaScript events</a></h4>
+
+<section class="prose">
+  <dl>
+    <dt><code>basecoat:initialized</code></dt>
+    <dd>Once the component is fully initialized, it dispatches a custom (non-bubbling) <code>basecoat:initialized</code> event on itself.</dd>
   </dl>
 </section>
 

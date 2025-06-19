@@ -15,6 +15,8 @@ toc:
             id: usage-html-js-2
           - label: HTML structure
             id: usage-html-js-3
+          - label: JavaScript events
+            id: usage-html-js-4
       - label: Jinja and Nunjucks
         id: usage-macro
 ---
@@ -102,6 +104,17 @@ toc:
     </dd>
     <dt><code class="highlight language-html">&lt;div popover class="popover" id="{ POPOVER_ID }"&gt;</code></dt>
     <dd>As with the <a href="/components/popover">Popover</a> component, you can set up the side and alignment of the popover using the <code>data-side</code> and <code>data-align</code> attributes.</dd>
+  </dl>
+</section>
+
+<h4 id="usage-html-js-4"><a href="#usage-html-js-4">JavaScript events</a></h4>
+
+<section class="prose">
+  <dl>
+    <dt><code>basecoat:initialized</code></dt>
+    <dd>Once the component is fully initialized, it dispatches a custom (non-bubbling) <code>basecoat:initialized</code> event on itself.</dd>
+    <dt><code>basecoat:popover</code></dt>
+    <dd>When the popover opens, the component dispatches a custom (non-bubbling) <code>basecoat:popover</code> event on <code>document</code>. Other popover components (Combobox, Dropdown Menu, Popover and Select) listen for this to close any open popovers.</dd>
   </dl>
 </section>
 

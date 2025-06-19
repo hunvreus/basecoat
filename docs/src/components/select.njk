@@ -17,6 +17,10 @@ toc:
             id: usage-html-js-2
           - label: HTML structure
             id: usage-html-js-3
+          - label: JavaScript events
+            id: usage-html-js-4
+          - label: JavaScript methods
+            id: usage-html-js-5
       - label: Jinja and Nunjucks
         id: usage-macro
   - label: Examples
@@ -156,6 +160,38 @@ toc:
   </dl>
 </section>
 
+<h4 id="usage-html-js-4"><a href="#usage-html-js-4">JavaScript events</a></h4>
+
+<section class="prose">
+  <dl>
+    <dt><code>basecoat:initialized</code></dt>
+    <dd>Once the component is fully initialized, it dispatches a custom (non-bubbling) <code>basecoat:initialized</code> event on itself.</dd>
+    <dt><code>basecoat:popover</code></dt>
+    <dd>When the popover opens, the component dispatches a custom (non-bubbling) <code>basecoat:popover</code> event on <code>document</code>. Other popover components (Combobox, Dropdown Menu, Popover and Select) listen for this to close any open popovers.</dd>
+    <dt><code>change</code></dt>
+    <dd>When the selected value changes, the component dispatches a custom (bubbling) <code>change</code> event on itself, with the selected value in <code>event.detail</code> (e.g. <code>{ detail: { value: "something" }}</code>).</dd>
+  </dl>
+</section>
+
+<h4 id="usage-html-js-5"><a href="#usage-html-js-5">JavaScript methods</a></h4>
+
+<section class="prose">
+  <dl>
+    <dt><code>selectByValue</code></dt>
+    <dd>
+      <p>You can call this method on the component after it is initialized to select an option by value (i.e. the option with the matching <code>data-value</code> attribute):</p>
+
+{% set code_script %}<script>
+  const selectComponent = document.querySelector('#my-select');
+  selectComponent.addEventListener('basecoat:initialized', () => {
+    selectComponent.selectByValue('apple');
+  });
+</script>{% endset %}
+{{ code_block(code_script | prettyHtml, "html") }}
+    </dd>
+  </dl>
+</section>
+
 <h3 id="usage-macro"><a href="#usage-macro">Jinja and Nunjucks</a></h3>
 
 <div class="prose">
@@ -251,9 +287,3 @@ toc:
 {% endset %}
 
 {{ code_preview("select-scrollable", code | prettyHtml) }}
-<script>
-  const select = document.querySelector('#select-with-icons');
-  select.addEventListener('basecoat:initialized', () => {
-    select.selectByValue('pie');
-  });
-</script>
