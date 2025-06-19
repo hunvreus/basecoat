@@ -6,7 +6,7 @@ A collection of modern UI components built with Tailwind CSS that works with any
 
 ## Features
 
-- **Lightweight**: no runtime JS, just CSS and tiny Alpine.js scripts for the more interactive components.
+- **Lightweight**: no runtime JS, just CSS and a tiny bit of vanilla JavaScript for the more interactive components.
 - **Easy to use**: add classes like `btn` or `input` and you're done.
 - **Framework-agnostic**: works with any backend or frontend stack.
 - **Accessible**: components follow accessibility best practices.

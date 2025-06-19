@@ -1,7 +1,7 @@
 export default {
   title: "Basecoat",
   description: "A components library built with Tailwind CSS that works with any web stack.",
-  keywords: ["components", "component library", "component system", "UI", "UI kit", "shadcn", "shadcn/ui", "Tailwind CSS", "Tailwind", "CSS", "HTML", "Jinja", "Nunjucks", "Alpine.js"],
+  keywords: ["components", "component library", "component system", "UI", "UI kit", "shadcn", "shadcn/ui", "Tailwind CSS", "Tailwind", "CSS", "HTML", "Jinja", "Nunjucks", "JS", "JavaScript", "vanilla JS", "vanilla JavaScript"],
   author: {
     name: "Ronan Berder",
     x: "@hunvreus"

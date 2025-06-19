@@ -17,16 +17,8 @@
     "data-keep-mobile-sidebar-open": ""
   },
   popover_attrs={
-    "data-side": "right",
-    "data-align": "end",
-    "class": "w-80",
-    "x-init": "
-      if (window.innerWidth < 768) {
-        $el.setAttribute('data-side', 'top');
-        $el.setAttribute('data-align', 'start');
-        $el.classList.add('w-[271px]');
-      }
-    "
+    "data-side": "top",
+    "class": "w-[271px] md:w-[239px]"
   }
 ) %}
 <div class="grid gap-4">

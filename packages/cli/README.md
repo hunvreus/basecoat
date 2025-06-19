@@ -8,7 +8,6 @@ This package provides a Command Line Interface (CLI) to help you quickly scaffol
 - For the components to function correctly, your project should have:
   - [Tailwind CSS](https://tailwindcss.com/docs/installation) installed and configured.
   - The `basecoat-css` package installed and imported (or `basecoat.css` manually added).
-  - [Alpine.js](https://alpinejs.dev/docs/installation) installed and initialized, as Basecoat components rely on it for interactivity.
 
 ## Usage
 

@@ -4,8 +4,7 @@
 
   @param id {string} [optional] [default="toaster"] - Unique identifier for the toaster container.
   @param toasts {array} [optional] - An array of toast objects to render initially. See the <code>toast()</code> macro for more details.
-  @param main_attrs {object} [optional] - Additional HTML attributes for the main toaster container div.
-  @param is_fragment {boolean} [optional] [default=false] - If true, renders only the toast elements with hx-swap-oob="beforeend", suitable for htmx responses. Skips script and template inclusion.
+  @param attrs {object} [optional] - Additional HTML attributes for the main toaster container div.
 #}
 {% macro toaster(
   id="toaster",
