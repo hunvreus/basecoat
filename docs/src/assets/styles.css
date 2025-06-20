@@ -1062,6 +1062,16 @@
       visibility: visible;
     }
   }
+  .group-\[\.copied\]\:block {
+    &:is(:where(.group):is(.copied) *) {
+      display: block;
+    }
+  }
+  .group-\[\.copied\]\:hidden {
+    &:is(:where(.group):is(.copied) *) {
+      display: none;
+    }
+  }
   .peer-checked\:border-primary {
     &:is(:where(.peer):checked ~ *) {
       border-color: var(--color-primary);

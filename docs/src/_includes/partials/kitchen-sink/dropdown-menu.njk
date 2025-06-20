@@ -76,9 +76,6 @@
           role="menuitemcheckbox"
           aria-checked="true"
           class="group"
-          x-data="{ checked: true }"
-          @click="checked = !checked"
-          :aria-checked="checked"
         >
           {% lucide "check", {
             "class": "invisible group-aria-checked:visible",
@@ -93,9 +90,6 @@
           aria-checked="false"
           class="group"
           aria-disabled="true"
-          x-data="{ checked: false }"
-          @click="checked = !checked"
-          :aria-checked="checked"
         >
           {% lucide "check", {
             "class": "invisible group-aria-checked:visible",
@@ -109,9 +103,6 @@
           role="menuitemcheckbox"
           aria-checked="false"
           class="group"
-          x-data="{ checked: false }"
-          @click="checked = !checked"
-          :aria-checked="checked"
         >
           {% lucide "check", {
             "class": "invisible group-aria-checked:visible",
@@ -129,6 +120,19 @@
         <span class="text-muted-foreground ml-auto text-xs tracking-widest">⇧⌘P</span>
       </div>
       {% endcall %}
+
+      <script>
+        (() => {
+          const dropdownMenu = document.querySelector('#dropdown-menu-checkboxes');
+          const checkboxes = dropdownMenu.querySelectorAll('div[role="menuitemcheckbox"]');
+          checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('click', () => {
+              const isChecked = checkbox.getAttribute('aria-checked') === 'true';
+              checkbox.setAttribute('aria-checked', !isChecked);
+            });
+          });
+        })();
+      </script>
 
       {% set profile_menu %}
         <div class="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
@@ -164,19 +168,18 @@
       {% endset %}
 
       {% call dropdown_menu(
+        id="dropdown-menu-radio-group",
         trigger="Radio Group",
         trigger_attrs={"class": "btn-outline"},
         popover_attrs={"class": "min-w-56"}
       ) %}
-      <div role="group" aria-labelledby="position-options" x-data="{ checked: 'bottom' }">
+      <div role="group" aria-labelledby="position-options">
         <span id="position-options" role="heading">Panel Position</span>
         <hr role="separator">
         <div
           role="menuitemradio"
           aria-checked="false"
           class="group"
-          @click="checked = 'top'"
-          :aria-checked="checked == 'top'"
         >
           <div class="size-4 flex items-center justify-center">
             <div
@@ -190,10 +193,8 @@
         </div>
         <div
           role="menuitemradio"
-          aria-checked="false"
+          aria-checked="true"
           class="group"
-          @click="checked = 'bottom'"
-          :aria-checked="checked == 'bottom'"
         >
           <div class="size-4 flex items-center justify-center">
             <div
@@ -209,8 +210,6 @@
           role="menuitemradio"
           aria-checked="false"
           class="group"
-          @click="checked = 'right'"
-          :aria-checked="checked == 'right'"
         >
           <div class="size-4 flex items-center justify-center">
             <div
@@ -224,6 +223,20 @@
         </div>
       </div>
       {% endcall %}
+      <script>
+        (() => {
+          const dropdownMenu = document.querySelector('#dropdown-menu-radio-group');
+          const radioButtons = dropdownMenu.querySelectorAll('div[role="menuitemradio"]');
+          radioButtons.forEach(radioButton => {
+            radioButton.addEventListener('click', () => {
+              radioButtons.forEach(radioButton => {
+                radioButton.setAttribute('aria-checked', 'false');
+              });
+              radioButton.setAttribute('aria-checked', 'true');
+            });
+          });
+        })();
+      </script>
 
       {% set trigger %}
         <img alt="@hunvreus" src="https://github.com/hunvreus.png" class="size-8 shrink-0 rounded-full" alt="Ronan Berder"/>

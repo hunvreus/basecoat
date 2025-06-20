@@ -1,28 +1,23 @@
 {% macro code_block(code, language="html", class="my-4") %}
-<div 
-  class="relative {{ class }}"
-  x-data="{ 
-    copied: false, 
-    copy() { 
-      const codeElement = $refs.code;
-      if (!codeElement) return;
-      navigator.clipboard.writeText(codeElement.textContent || '').then(() => {
-        this.copied = true;
-        setTimeout(() => { this.copied = false }, 2000);
+<div class="relative {{ class }}">
+  <pre class="grid text-sm max-h-[650px] overflow-y-auto rounded-xl scrollbar"><code class="language-{{ language }} !bg-muted !p-3.5">{{- code | escape -}}</code></pre>
+  
+  <button 
+    onclick="
+      const button = this;
+      const code = this.parentElement.querySelector('pre code');
+      if (!code) return;
+      navigator.clipboard.writeText(code.textContent || '').then(() => {
+        button.classList.add('copied');
+        setTimeout(() => { button.classList.remove('copied') }, 2000);
       }).catch(err => {
         console.error('Failed to copy text: ', err);
       });
-    } 
-  }"
->
-  <pre x-ref="code" class="grid text-sm max-h-[650px] overflow-y-auto rounded-xl scrollbar"><code class="language-{{ language }} !bg-muted !p-3.5">{{- code | escape -}}</code></pre>
-  
-  <button 
-    @click="copy()" 
-    class="btn-icon-ghost size-8 absolute right-2.5 top-2 text-muted-foreground hover:text-foreground"
+    "
+    class="btn-icon-ghost size-8 absolute right-2.5 top-2 text-muted-foreground hover:text-foreground group"
   >
-    {% lucide "clipboard", {"x-show": "!copied" } %}
-    {% lucide "check", {"x-show": "copied" } %}
+    {% lucide "clipboard", {"class": "group-[.copied]:hidden" } %}
+    {% lucide "check", {"class": "hidden group-[.copied]:block" } %}
   </button>
 </div>
 {% endmacro %}

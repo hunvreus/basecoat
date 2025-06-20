@@ -232,9 +232,15 @@ layout: layouts/layout.njk
               I can't log in.
             </div>
           </section>
-          <footer class="flex items-center gap-2" x-data="{ message: '' }">
-            <input type="text" class="input w-full" placeholder="Type your message here..." x-model="message" />
-            <button type="button" class="btn-icon" :disabled="!message">
+          <footer class="flex items-center gap-2">
+            <input type="text" class="input w-full" placeholder="Type your message here..." oninput="
+              if (this.value) {
+                this.parentElement.querySelector('button').removeAttribute('disabled');
+              } else {
+                this.parentElement.querySelector('button').setAttribute('disabled', 'true');
+              }
+            "/>
+            <button type="button" class="btn-icon" disabled>
               {% lucide "send"%}
             </button>
           </footer>

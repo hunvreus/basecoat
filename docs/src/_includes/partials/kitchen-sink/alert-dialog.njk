@@ -9,8 +9,8 @@
   </header>
   <div class="p-4">
     {% set footer %}
-      <button class="btn-outline" @click="open = false">Cancel</button>
-      <button class="btn-primary" @click="open = false">Continue</button>
+      <button class="btn-outline" onclick="document.getElementById('alert-dialog-demo').close()">Cancel</button>
+      <button class="btn-primary" onclick="document.getElementById('alert-dialog-demo').close()">Continue</button>
     {% endset %}
     {{ dialog(
       id="alert-dialog-demo",

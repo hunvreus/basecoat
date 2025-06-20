@@ -10,8 +10,8 @@
   <div class="p-4">
     <div class="flex flex-wrap items-center gap-4">
       {% set footer %}
-        <button class="btn-outline" @click="open = false">Cancel</button>
-        <button class="btn" @click="open = false">Save changes</button>
+        <button class="btn-outline" onclick="document.getElementById('demo-dialog-edit-profile').close()">Cancel</button>
+        <button class="btn" onclick="document.getElementById('demo-dialog-edit-profile').close()">Save changes</button>
       {% endset %}
       {% call dialog(
         id="demo-dialog-edit-profile",

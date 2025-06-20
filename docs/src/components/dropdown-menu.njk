@@ -267,9 +267,6 @@ toc:
     role="menuitemcheckbox"
     aria-checked="true"
     class="group"
-    x-data="{ checked: true }"
-    @click="checked = !checked"
-    :aria-checked="checked"
   >
     {% lucide "check", {
       "class": "invisible group-aria-checked:visible",
@@ -283,10 +280,7 @@ toc:
     role="menuitemcheckbox"
     aria-checked="false"
     class="group"
-    disabled
-    x-data="{ checked: false }"
-    @click="checked = !checked"
-    :aria-checked="checked"
+    aria-disabled="true"
   >
     {% lucide "check", {
       "class": "invisible group-aria-checked:visible",
@@ -300,9 +294,6 @@ toc:
     role="menuitemcheckbox"
     aria-checked="false"
     class="group"
-    x-data="{ checked: false }"
-    @click="checked = !checked"
-    :aria-checked="checked"
   >
     {% lucide "check", {
       "class": "invisible group-aria-checked:visible",
@@ -319,7 +310,20 @@ toc:
   Logout
   <span class="text-muted-foreground ml-auto text-xs tracking-widest">⇧⌘P</span>
 </div>
-{% endcall %}{% endset %}
+{% endcall %}
+<script>
+(() => {
+  const dropdownMenu = document.querySelector('#dropdown-menu-checkboxes');
+  const checkboxes = dropdownMenu.querySelectorAll('div[role="menuitemcheckbox"]');
+  checkboxes.forEach(checkbox => {
+    checkbox.addEventListener('click', () => {
+      const isChecked = checkbox.getAttribute('aria-checked') === 'true';
+      checkbox.setAttribute('aria-checked', !isChecked);
+    });
+  });
+})();
+</script>
+{% endset %}
 {{ code_preview("dropdown-menu-checkboxes", code | prettyHtml) }}
 
 <h3 id="example-radio-group"><a href="#example-radio-group">Radio Group</a></h3>
@@ -330,15 +334,13 @@ toc:
   trigger_attrs={"class": "btn-outline"},
   popover_attrs={"class": "min-w-56"}
 ) %}
-<div role="group" aria-labelledby="position-options" x-data="{ checked: 'bottom' }">
+<div role="group" aria-labelledby="position-options">
   <span id="position-options" role="heading">Panel Position</span>
   <hr role="separator">
   <div
     role="menuitemradio"
     aria-checked="false"
     class="group"
-    @click="checked = 'top'"
-    :aria-checked="checked == 'top'"
   >
     <div class="size-4 flex items-center justify-center">
       <div
@@ -352,10 +354,8 @@ toc:
   </div>
   <div
     role="menuitemradio"
-    aria-checked="false"
+    aria-checked="true"
     class="group"
-    @click="checked = 'bottom'"
-    :aria-checked="checked == 'bottom'"
   >
     <div class="size-4 flex items-center justify-center">
       <div
@@ -371,8 +371,6 @@ toc:
     role="menuitemradio"
     aria-checked="false"
     class="group"
-    @click="checked = 'right'"
-    :aria-checked="checked == 'right'"
   >
     <div class="size-4 flex items-center justify-center">
       <div
@@ -385,5 +383,20 @@ toc:
     <span class="text-muted-foreground ml-auto text-xs tracking-widest">⌘S</span>
   </div>
 </div>
-{% endcall %}{% endset %}
+{% endcall %}
+<script>
+(() => {
+  const dropdownMenu = document.querySelector('#dropdown-menu-radio-group');
+  const radioButtons = dropdownMenu.querySelectorAll('div[role="menuitemradio"]');
+  radioButtons.forEach(radioButton => {
+    radioButton.addEventListener('click', () => {
+      radioButtons.forEach(radioButton => {
+        radioButton.setAttribute('aria-checked', 'false');
+      });
+      radioButton.setAttribute('aria-checked', 'true');
+    });
+  });
+})();
+</script>
+{% endset %}
 {{ code_preview("dropdown-menu", code | prettyHtml) }}

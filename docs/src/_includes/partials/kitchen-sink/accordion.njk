@@ -7,20 +7,7 @@
   </header>
   <div class="p-4">
     <div class="group grid w-full max-w-xl gap-4">
-      <section
-        x-init
-        @click="
-          const clickedSummary = $event.target.closest('summary');
-          if (!clickedSummary) return;
-          const clickedDetails = clickedSummary.closest('details');
-          if (!clickedDetails) return;
-          $el.querySelectorAll('details').forEach(detailsEl => {
-            if (detailsEl !== clickedDetails) {
-              detailsEl.removeAttribute('open');
-            }
-          });
-        "
-      >
+      <section class="accordion">
         <details class="group border-b last:border-b-0">
           <summary class="w-full focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] transition-all outline-none rounded-md">
             <h2 class="flex flex-1 items-start justify-between gap-4 py-4 text-left text-sm font-medium hover:underline ">
@@ -55,20 +42,7 @@
           </section>
         </details>
       </section>
-      <section
-        x-init
-        @click="
-          const clickedSummary = $event.target.closest('summary');
-          if (!clickedSummary) return;
-          const clickedDetails = clickedSummary.closest('details');
-          if (!clickedDetails) return;
-          $el.querySelectorAll('details').forEach(detailsEl => {
-            if (detailsEl !== clickedDetails) {
-              detailsEl.removeAttribute('open');
-            }
-          });
-        "
-      >
+      <section class="accordion">
         <details class="group border-b last:border-b-0">
           <summary class="w-full focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] transition-all outline-none rounded-md">
             <h2 class="flex flex-1 items-start justify-between gap-4 py-4 text-left text-sm font-medium hover:underline ">
@@ -92,6 +66,24 @@
           </section>
         </details>
       </section>
+      <script>
+        (() => {
+          const accordions = document.querySelectorAll('.accordion');
+          accordions.forEach(accordion => {
+            accordion.addEventListener('click', (event) => {
+              const summary = event.target.closest('summary');
+              if (!summary) return;
+              const details = summary.closest('details');
+              if (!details) return;
+              accordion.querySelectorAll('details').forEach(detailsEl => {
+                if (detailsEl !== details) {
+                  detailsEl.removeAttribute('open');
+                }
+              });
+            });
+          });
+        })();
+      </script>
     </div>
   </div>
 </section>

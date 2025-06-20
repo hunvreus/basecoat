@@ -19,8 +19,8 @@
 </section>
 <script>
   (() => {
-    const sliderEl = document.querySelector('input[type="range"].input');
-    if (!sliderEl) return;
+    const sliders = document.querySelectorAll('input[type="range"].input');
+    if (!sliders) return;
 
     const updateSlider = (el) => {
       const min = parseFloat(el.min || 0);
@@ -30,7 +30,9 @@
       el.style.setProperty('--slider-value', `${percent}%`);
     };
 
-    updateSlider(sliderEl);
-    sliderEl.addEventListener('input', (event) => updateSlider(event.target));
+    sliders.forEach(slider => {
+      updateSlider(slider);
+      slider.addEventListener('input', (event) => updateSlider(event.target));
+    });
   })();
 </script>
