@@ -148,8 +148,8 @@ toc:
     </dd>
     <dt><code class="highlight language-html">&lt;main&gt;</code></dt>
     <dd>A wrapper for the content of the page.</dd>
-    <dt><code class="highlight language-html">&lt;button type="button" onclick="document.dispatchEvent(new CustomEvent('sidebar:toggle'))"&gt;</code></dt>
-    <dd>A button to toggle the sidebar. If you want to use multiple sidebars you will need to add unique ids to the sidebars (i.e. <code>&lt;aside class="sidebar" id="{SIDEBAR_ID}"&gt;</code>) and refer to them in the event <code>detail</code> (i.e. <code>document.dispatchEvent(new CustomEvent('sidebar:toggle', { detail: { id: '{SIDEBAR_ID}' } }));</code>).</dd>
+    <dt><code class="highlight language-html">&lt;button type="button" onclick="document.dispatchEvent(new CustomEvent('basecoat:sidebar'))"&gt;</code></dt>
+    <dd>A button to toggle the sidebar. If you want to use multiple sidebars you will need to add unique ids to the sidebars (i.e. <code>&lt;aside class="sidebar" id="{SIDEBAR_ID}"&gt;</code>) and refer to them in the event <code>detail</code> (i.e. <code>document.dispatchEvent(new CustomEvent('basecoat:sidebar', { detail: { id: '{SIDEBAR_ID}' } }));</code>).</dd>
   </dl>
 </section>
 
