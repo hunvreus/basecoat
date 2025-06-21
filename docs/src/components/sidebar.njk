@@ -165,9 +165,9 @@ toc:
         {% set code_trigger %}<!-- Toggles the sidebar -->
 <button type="button" onclick="document.dispatchEvent(new CustomEvent('basecoat:sidebar'));">Toggle sidebar</button>
 <!-- Opens the `#main-navigation` sidebar -->
-<button type="button" onclick="document.dispatchEvent(new CustomEvent('basecoat:sidebar', { id: 'main-navigation', action: 'close' }));">Close sidebar</button>
+<button type="button" onclick="document.dispatchEvent(new CustomEvent('basecoat:sidebar', { detail: { id: 'main-navigation', action: 'close' } }));">Close sidebar</button>
 <!-- Closes the sidebar -->
-<button type="button" onclick="document.dispatchEvent(new CustomEvent('basecoat:sidebar', { action: 'close' }));">Close sidebar</button>{% endset %}
+<button type="button" onclick="document.dispatchEvent(new CustomEvent('basecoat:sidebar', { detail: { action: 'close' } }));">Close sidebar</button>{% endset %}
         {{ code_block(code_trigger | prettyHtml, "html") }}
     </dd>
   </dl>
