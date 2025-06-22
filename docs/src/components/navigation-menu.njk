@@ -1,0 +1,447 @@
+---
+layout: layouts/page.njk
+title: Navigation Menu
+description: A collection of links for navigating websites.
+toc:
+  - label: Usage
+    id: usage
+  - label: Examples
+    id: examples
+    children:
+      - label: With Content
+        id: with-content
+      - label: Simple Menu
+        id: simple-menu
+      - label: With Grid Layout
+        id: with-grid-layout
+  - label: API
+    id: api
+    children:
+      - label: Parameters
+        id: parameters
+      - label: Events
+        id: events
+      - label: Keyboard Navigation
+        id: keyboard-navigation
+  - label: Accessibility
+    id: accessibility
+---
+
+{% from "macros/code_preview.njk" import code_preview %}
+
+<h2 id="usage">Usage</h2>
+
+<section class="prose">
+  <p>A navigation menu is a collection of links for navigating websites. It supports dropdown content with hover and focus interactions.</p>
+</section>
+
+{% set basicDemo %}<nav class="navigation-menu">
+  <div class="navigation-menu-list">
+    <div class="navigation-menu-item">
+      <button 
+        class="navigation-menu-trigger" 
+        data-state="closed" 
+        aria-expanded="false"
+        aria-haspopup="true"
+      >
+        Getting started
+      </button>
+      <div 
+        class="navigation-menu-content" 
+        data-state="closed" 
+        aria-hidden="true"
+        data-orientation="horizontal"
+        style="display: none;"
+      >
+        <div class="p-4 w-[400px]">
+          <ul class="grid gap-3 p-6 md:w-[400px] md:grid-cols-2 lg:w-[600px] list-none m-0">
+            <li>
+              <a class="navigation-menu-link" href="/docs/primitives/introduction">
+                <div class="text-sm font-medium leading-none">Introduction</div>
+                <p class="navigation-menu-link-description">
+                  Re-usable components built using Radix UI and Tailwind CSS.
+                </p>
+              </a>
+            </li>
+            <li>
+              <a class="navigation-menu-link" href="/docs/primitives/installation">
+                <div class="text-sm font-medium leading-none">Installation</div>
+                <p class="navigation-menu-link-description">
+                  How to install dependencies and structure your app.
+                </p>
+              </a>
+            </li>
+            <li>
+              <a class="navigation-menu-link" href="/docs/primitives/typography">
+                <div class="text-sm font-medium leading-none">Typography</div>
+                <p class="navigation-menu-link-description">
+                  Styles for headings, paragraphs, lists...etc
+                </p>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    
+    <div class="navigation-menu-item">
+      <button 
+        class="navigation-menu-trigger" 
+        data-state="closed" 
+        aria-expanded="false"
+        aria-haspopup="true"
+      >
+        Components
+      </button>
+      <div 
+        class="navigation-menu-content" 
+        data-state="closed" 
+        aria-hidden="true"
+        data-orientation="horizontal"
+        style="display: none;"
+      >
+        <div class="p-4 w-[400px]">
+          <ul class="grid gap-3 p-6 md:w-[400px] md:grid-cols-2 lg:w-[600px] list-none m-0">
+            <li>
+              <a class="navigation-menu-link" href="/docs/primitives/alert-dialog">
+                <div class="text-sm font-medium leading-none">Alert Dialog</div>
+                <p class="navigation-menu-link-description">
+                  A modal dialog that interrupts the user with important content.
+                </p>
+              </a>
+            </li>
+            <li>
+              <a class="navigation-menu-link" href="/docs/primitives/hover-card">
+                <div class="text-sm font-medium leading-none">Hover Card</div>
+                <p class="navigation-menu-link-description">
+                  For sighted users to preview content behind a link.
+                </p>
+              </a>
+            </li>
+            <li>
+              <a class="navigation-menu-link" href="/docs/primitives/progress">
+                <div class="text-sm font-medium leading-none">Progress</div>
+                <p class="navigation-menu-link-description">
+                  Displays an indicator showing the completion progress.
+                </p>
+              </a>
+            </li>
+            <li>
+              <a class="navigation-menu-link" href="/docs/primitives/scroll-area">
+                <div class="text-sm font-medium leading-none">Scroll-area</div>
+                <p class="navigation-menu-link-description">
+                  Augments native scroll functionality for custom, cross-browser styling.
+                </p>
+              </a>
+            </li>
+            <li>
+              <a class="navigation-menu-link" href="/docs/primitives/tabs">
+                <div class="text-sm font-medium leading-none">Tabs</div>
+                <p class="navigation-menu-link-description">
+                  A set of layered sections of content—known as tab panels.
+                </p>
+              </a>
+            </li>
+            <li>
+              <a class="navigation-menu-link" href="/docs/primitives/tooltip">
+                <div class="text-sm font-medium leading-none">Tooltip</div>
+                <p class="navigation-menu-link-description">
+                  A popup that displays information related to an element.
+                </p>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    
+    <div class="navigation-menu-item">
+      <a 
+        class="navigation-menu-trigger" 
+        href="/documentation"
+        data-state="closed"
+      >
+        Documentation
+      </a>
+    </div>
+  </div>
+  
+  <div class="perspective-1000 absolute left-0 top-full flex justify-center">
+    <div 
+      class="navigation-menu-viewport" 
+      data-state="closed"
+      style="--radix-navigation-menu-viewport-width: 0px; --radix-navigation-menu-viewport-height: 0px;"
+    ></div>
+  </div>
+  
+  <div 
+    class="navigation-menu-indicator absolute" 
+    data-state="hidden"
+    style="left: 0px;"
+  ></div>
+</nav>{% endset %}
+
+{{ code_preview("navigation-menu-basic", basicDemo) }}
+
+<h2 id="examples">Examples</h2>
+
+<h3 id="with-content">With Content</h3>
+
+{% set contentDemo %}<nav class="navigation-menu">
+  <div class="navigation-menu-list">
+    <div class="navigation-menu-item">
+      <button 
+        class="navigation-menu-trigger" 
+        data-state="closed" 
+        aria-expanded="false"
+        aria-haspopup="true"
+      >
+        Learn
+      </button>
+      <div 
+        class="navigation-menu-content" 
+        data-state="closed" 
+        aria-hidden="true"
+        data-orientation="horizontal"
+        style="display: none;"
+      >
+        <div class="p-4 md:w-[400px] lg:w-[500px]">
+          <div class="grid gap-3 lg:grid-cols-2">
+            <div class="row-span-3">
+              <a 
+                class="navigation-menu-list-item" 
+                href="/docs/primitives/introduction"
+                title="Introduction"
+              >
+                <div class="mb-2 mt-4 text-lg font-medium">
+                  Introduction
+                </div>
+                <p class="text-sm leading-tight text-muted-foreground">
+                  Get started with our comprehensive documentation and examples.
+                </p>
+              </a>
+            </div>
+            <a class="navigation-menu-link navigation-menu-link-main" href="/docs/installation">
+              <div class="text-sm font-medium leading-none">Installation</div>
+              <p class="navigation-menu-link-description">
+                How to install dependencies and structure your app.
+              </p>
+            </a>
+            <a class="navigation-menu-link navigation-menu-link-main" href="/docs/primitives/typography">
+              <div class="text-sm font-medium leading-none">Typography</div>
+              <p class="navigation-menu-link-description">
+                Styles for headings, paragraphs, lists...etc
+              </p>
+            </a>
+            <a class="navigation-menu-link navigation-menu-link-main" href="/docs/primitives/theming">
+              <div class="text-sm font-medium leading-none">Theming</div>
+              <p class="navigation-menu-link-description">
+                Using CSS variables or Tailwind CSS.
+              </p>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="perspective-1000 absolute left-0 top-full flex justify-center">
+    <div 
+      class="navigation-menu-viewport" 
+      data-state="closed"
+      style="--radix-navigation-menu-viewport-width: 0px; --radix-navigation-menu-viewport-height: 0px;"
+    ></div>
+  </div>
+  
+  <div 
+    class="navigation-menu-indicator absolute" 
+    data-state="hidden"
+    style="left: 0px;"
+  ></div>
+</nav>{% endset %}
+
+{{ code_preview("navigation-menu-content", contentDemo) }}
+
+<h3 id="simple-menu">Simple Menu</h3>
+
+{% set simpleDemo %}<nav class="navigation-menu">
+  <div class="navigation-menu-list">
+    <div class="navigation-menu-item">
+      <a 
+        class="navigation-menu-trigger" 
+        href="/home"
+        data-state="closed"
+      >
+        Home
+      </a>
+    </div>
+    <div class="navigation-menu-item">
+      <a 
+        class="navigation-menu-trigger" 
+        href="/about"
+        data-state="closed"
+      >
+        About
+      </a>
+    </div>
+    <div class="navigation-menu-item">
+      <a 
+        class="navigation-menu-trigger" 
+        href="/services"
+        data-state="closed"
+      >
+        Services
+      </a>
+    </div>
+    <div class="navigation-menu-item">
+      <a 
+        class="navigation-menu-trigger" 
+        href="/contact"
+        data-state="closed"
+      >
+        Contact
+      </a>
+    </div>
+  </div>
+</nav>{% endset %}
+
+{{ code_preview("navigation-menu-simple", simpleDemo) }}
+
+<h3 id="with-grid-layout">With Grid Layout</h3>
+
+{% set gridDemo %}<nav class="navigation-menu">
+  <div class="navigation-menu-list">
+    <div class="navigation-menu-item">
+      <button 
+        class="navigation-menu-trigger" 
+        data-state="closed" 
+        aria-expanded="false"
+        aria-haspopup="true"
+      >
+        Products
+      </button>
+      <div 
+        class="navigation-menu-content" 
+        data-state="closed" 
+        aria-hidden="true"
+        data-orientation="horizontal"
+        style="display: none;"
+      >
+        <div class="p-4 w-[400px]">
+          <ul class="grid gap-3 p-6 md:w-[400px] md:grid-cols-1 list-none m-0">
+            <li>
+              <a class="navigation-menu-link" href="/products/web-development">
+                <div class="text-sm font-medium leading-none">Web Development</div>
+                <p class="navigation-menu-link-description">
+                  Custom websites and web applications built with modern technologies.
+                </p>
+              </a>
+            </li>
+            <li>
+              <a class="navigation-menu-link" href="/products/mobile-apps">
+                <div class="text-sm font-medium leading-none">Mobile Apps</div>
+                <p class="navigation-menu-link-description">
+                  Native and cross-platform mobile applications for iOS and Android.
+                </p>
+              </a>
+            </li>
+            <li>
+              <a class="navigation-menu-link" href="/products/consulting">
+                <div class="text-sm font-medium leading-none">Consulting</div>
+                <p class="navigation-menu-link-description">
+                  Technical consulting and architecture planning services.
+                </p>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="perspective-1000 absolute left-0 top-full flex justify-center">
+    <div 
+      class="navigation-menu-viewport" 
+      data-state="closed"
+      style="--radix-navigation-menu-viewport-width: 0px; --radix-navigation-menu-viewport-height: 0px;"
+    ></div>
+  </div>
+  
+  <div 
+    class="navigation-menu-indicator absolute" 
+    data-state="hidden"
+    style="left: 0px;"
+  ></div>
+</nav>{% endset %}
+
+{{ code_preview("navigation-menu-grid", gridDemo) }}
+
+<h2 id="api">API</h2>
+
+<h3 id="parameters">Parameters</h3>
+
+<section class="prose">
+  <ul>
+    <li><code>items</code> - Array of navigation menu items (required)</li>
+    <li><code>class</code> - Additional CSS classes</li>
+    <li><code>attrs</code> - Additional HTML attributes</li>
+  </ul>
+  
+  <p><strong>Item structure:</strong></p>
+  <ul>
+    <li><code>label</code> - The text to display for the menu item</li>
+    <li><code>href</code> - URL for simple link items</li>
+    <li><code>content</code> - Array of content items for dropdown menus</li>
+    <li><code>grid</code> - Boolean to enable grid layout for content</li>
+  </ul>
+  
+  <p><strong>Content item structure:</strong></p>
+  <ul>
+    <li><code>type</code> - <code>'link'</code> or <code>'feature'</code></li>
+    <li><code>title</code> - Title of the content item</li>
+    <li><code>description</code> - Description text (optional)</li>
+    <li><code>href</code> - URL for the content item</li>
+    <li><code>icon</code> - Icon name (optional)</li>
+  </ul>
+</section>
+
+<h3 id="events">Events</h3>
+
+<section class="prose">
+  <p>The navigation menu component dispatches the following custom events:</p>
+  <ul>
+    <li><code>basecoat:initialized</code> - Fired when the navigation menu is initialized</li>
+    <li><code>basecoat:navigation-menu:open</code> - Fired when a dropdown menu opens
+      <ul>
+        <li><code>detail.trigger</code> - The trigger element</li>
+        <li><code>detail.content</code> - The content element</li>
+      </ul>
+    </li>
+    <li><code>basecoat:navigation-menu:close</code> - Fired when a dropdown menu closes</li>
+  </ul>
+</section>
+
+<h3 id="keyboard-navigation">Keyboard Navigation</h3>
+
+<section class="prose">
+  <ul>
+    <li><strong>Tab</strong> - Moves focus to the next focusable element</li>
+    <li><strong>Shift + Tab</strong> - Moves focus to the previous focusable element</li>
+    <li><strong>Escape</strong> - Closes any open dropdown and returns focus to trigger</li>
+    <li><strong>Arrow Down</strong> - Opens dropdown and moves focus to first item</li>
+    <li><strong>Arrow Left/Right</strong> - Moves focus between menu triggers</li>
+    <li><strong>Enter/Space</strong> - Activates the focused element</li>
+  </ul>
+</section>
+
+<h2 id="accessibility">Accessibility</h2>
+
+<section class="prose">
+  <ul>
+    <li>Uses proper ARIA attributes for screen readers</li>
+    <li>Supports keyboard navigation between menu items</li>
+    <li>Provides focus management for dropdown content</li>
+    <li>Includes descriptive labels and states</li>
+    <li>Follows WAI-ARIA menu patterns</li>
+  </ul>
+</section>

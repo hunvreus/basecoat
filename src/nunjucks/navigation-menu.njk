@@ -1,0 +1,144 @@
+{#
+  Navigation Menu Component
+  
+  Parameters:
+  - items: Array of navigation items
+  - class: Additional CSS classes
+  - attrs: Additional HTML attributes
+  
+  Item structure:
+  {
+    label: "Menu Label",
+    href: "/link", // For simple links
+    content: [ // For dropdown content
+      {
+        type: "link", // "link" or "feature"
+        title: "Item Title",
+        description: "Item description",
+        href: "/item-link",
+        icon: "optional-icon"
+      }
+    ],
+    grid: true // Optional: use grid layout for content
+  }
+#}
+
+{%- macro navigation_menu(items, class="", attrs="") -%}
+<nav class="navigation-menu {{ class }}" {{ attrs | safe }}>
+  <div class="navigation-menu-list">
+    {%- for item in items -%}
+      <div class="navigation-menu-item">
+        {%- if item.content -%}
+          <button 
+            class="navigation-menu-trigger" 
+            data-state="closed" 
+            aria-expanded="false"
+            aria-haspopup="true"
+          >
+            {{ item.label }}
+          </button>
+          <div 
+            class="navigation-menu-content" 
+            data-state="closed" 
+            aria-hidden="true"
+            data-orientation="horizontal"
+            style="display: none;"
+          >
+            <div class="p-4 {% if item.grid %}md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]{% else %}w-[400px]{% endif %}">
+              {%- if item.grid -%}
+                <div class="grid gap-3 lg:grid-cols-2">
+                  {%- for contentItem in item.content -%}
+                    {%- if contentItem.type == "feature" -%}
+                      <div class="row-span-3">
+                        <a 
+                          class="navigation-menu-list-item" 
+                          href="{{ contentItem.href }}"
+                          title="{{ contentItem.title }}"
+                        >
+                          <div class="mb-2 mt-4 text-lg font-medium">
+                            {{ contentItem.title }}
+                          </div>
+                          <p class="text-sm leading-tight text-muted-foreground">
+                            {{ contentItem.description }}
+                          </p>
+                        </a>
+                      </div>
+                    {%- else -%}
+                      <a class="navigation-menu-link navigation-menu-link-main" href="{{ contentItem.href }}">
+                        <div class="text-sm font-medium leading-none">{{ contentItem.title }}</div>
+                        {%- if contentItem.description -%}
+                          <p class="navigation-menu-link-description">
+                            {{ contentItem.description }}
+                          </p>
+                        {%- endif -%}
+                      </a>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </div>
+              {%- else -%}
+                <ul class="grid gap-3 p-6 md:w-[400px] md:grid-cols-2 lg:w-[600px] list-none m-0">
+                  {%- for contentItem in item.content -%}
+                    <li>
+                      <a class="navigation-menu-link" href="{{ contentItem.href }}">
+                        <div class="text-sm font-medium leading-none">{{ contentItem.title }}</div>
+                        {%- if contentItem.description -%}
+                          <p class="navigation-menu-link-description">
+                            {{ contentItem.description }}
+                          </p>
+                        {%- endif -%}
+                      </a>
+                    </li>
+                  {%- endfor -%}
+                </ul>
+              {%- endif -%}
+            </div>
+          </div>
+        {%- else -%}
+          <a 
+            class="navigation-menu-trigger" 
+            href="{{ item.href }}"
+            data-state="closed"
+          >
+            {{ item.label }}
+          </a>
+        {%- endif -%}
+      </div>
+    {%- endfor -%}
+  </div>
+  
+  <div class="perspective-1000 absolute left-0 top-full flex justify-center">
+    <div 
+      class="navigation-menu-viewport" 
+      data-state="closed"
+      style="--radix-navigation-menu-viewport-width: 0px; --radix-navigation-menu-viewport-height: 0px;"
+    ></div>
+  </div>
+  
+  <div 
+    class="navigation-menu-indicator absolute" 
+    data-state="hidden"
+    style="left: 0px;"
+  ></div>
+</nav>
+{%- endmacro -%}
+
+{#
+  Simple navigation menu for basic use cases
+#}
+{%- macro simple_navigation_menu(items, class="", attrs="") -%}
+<nav class="navigation-menu {{ class }}" {{ attrs | safe }}>
+  <div class="navigation-menu-list">
+    {%- for item in items -%}
+      <div class="navigation-menu-item">
+        <a 
+          class="navigation-menu-trigger" 
+          href="{{ item.href }}"
+          data-state="closed"
+        >
+          {{ item.label }}
+        </a>
+      </div>
+    {%- endfor -%}
+  </div>
+</nav>
+{%- endmacro -%}
