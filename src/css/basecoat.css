@@ -1080,3 +1080,90 @@
     }
   }
 }
+
+/* Carousel */
+@layer components {
+  .carousel {
+    @apply relative overflow-hidden;
+    min-height: 2rem;
+    padding: 0 3rem;
+    &[data-orientation='vertical'] {
+      padding: 3rem 0;
+      height: 20rem;
+      width: 100%;
+      max-width: 16rem;
+    }
+  }
+  
+  .carousel-viewport {
+    @apply overflow-hidden;
+    &:has([data-orientation='vertical']) {
+      height: calc(100% - 6rem);
+      margin: 3rem 0;
+    }
+  }
+  
+  .carousel-content {
+    @apply flex transition-transform duration-300 ease-in-out;
+    transform: translateX(0%);
+    &[data-orientation='vertical'] {
+      @apply flex-col h-full;
+      transform: translateY(0%);
+    }
+  }
+  
+  .carousel-item {
+    @apply min-w-0 shrink-0 grow-0 basis-full;
+    &[data-orientation='vertical'] {
+      @apply basis-0 grow shrink-0 flex items-center;
+      min-height: 100%;
+    }
+  }
+  
+  .carousel-previous,
+  .carousel-next {
+    @apply absolute z-10 inline-flex size-8 items-center justify-center rounded-md border border-input bg-background text-foreground shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50;
+    &[data-orientation='vertical'] {
+      @apply left-1/2 -translate-x-1/2;
+    }
+    &:not([data-orientation='vertical']) {
+      @apply top-1/2 -translate-y-1/2;
+    }
+  }
+  
+  .carousel-previous {
+    &[data-orientation='vertical'] {
+      @apply top-0;
+    }
+    &:not([data-orientation='vertical']) {
+      @apply left-0;
+    }
+  }
+  
+  .carousel-next {
+    &[data-orientation='vertical'] {
+      @apply bottom-0;
+    }
+    &:not([data-orientation='vertical']) {
+      @apply right-0;
+    }
+  }
+  
+  .carousel-indicators {
+    @apply flex justify-center gap-2 mt-4;
+    &[data-orientation='vertical'] {
+      @apply flex-col items-center mr-4 mt-0;
+    }
+  }
+  
+  .carousel-indicator {
+    @apply size-2 rounded-full bg-muted transition-colors cursor-pointer hover:bg-muted-foreground/50;
+    &[aria-selected='true'] {
+      @apply bg-foreground;
+    }
+  }
+  
+  .carousel[data-autoplay='true'] .carousel-content {
+    @apply transition-transform duration-500;
+  }
+}

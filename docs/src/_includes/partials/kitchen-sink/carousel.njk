@@ -1,0 +1,52 @@
+<section id="carousel" class="w-full rounded-lg border scroll-mt-14">
+  <header class="border-b px-4 py-3 flex items-center justify-between">
+    <h2 class="text-sm font-medium">Carousel</h2>
+    <a href="/components/carousel" class="text-muted-foreground hover:text-foreground" data-tooltip="See documentation" data-side="left">
+      {% lucide "book-open", { "class": "size-4" } %}
+    </a>
+  </header>
+  <div class="p-4">
+    <div class="flex flex-col items-start gap-6">
+      
+      <!-- Basic Carousel -->
+      <div class="w-full">
+        <h3 class="text-sm font-medium mb-3">Basic</h3>
+        {% set carouselItems = [
+          '<div class="bg-gradient-to-br from-blue-500 to-blue-600 text-white flex items-center justify-center h-32 rounded-lg"><h4 class="text-lg font-semibold">Slide 1</h4></div>',
+          '<div class="bg-gradient-to-br from-green-500 to-green-600 text-white flex items-center justify-center h-32 rounded-lg"><h4 class="text-lg font-semibold">Slide 2</h4></div>',
+          '<div class="bg-gradient-to-br from-purple-500 to-purple-600 text-white flex items-center justify-center h-32 rounded-lg"><h4 class="text-lg font-semibold">Slide 3</h4></div>'
+        ] %}
+        {% set class = 'max-w-md' %}
+        {% include "carousel.njk" %}
+      </div>
+
+      <!-- Autoplay Carousel -->
+      <div class="w-full">
+        <h3 class="text-sm font-medium mb-3">Autoplay</h3>
+        {% set carouselItems = [
+          '<div class="bg-gradient-to-br from-red-500 to-red-600 text-white flex items-center justify-center h-32 rounded-lg"><h4 class="text-lg font-semibold">Auto 1</h4></div>',
+          '<div class="bg-gradient-to-br from-orange-500 to-orange-600 text-white flex items-center justify-center h-32 rounded-lg"><h4 class="text-lg font-semibold">Auto 2</h4></div>',
+          '<div class="bg-gradient-to-br from-yellow-500 to-yellow-600 text-white flex items-center justify-center h-32 rounded-lg"><h4 class="text-lg font-semibold">Auto 3</h4></div>'
+        ] %}
+        {% set autoplay = true %}
+        {% set autoplayDelay = 2500 %}
+        {% set class = 'max-w-md' %}
+        {% include "carousel.njk" %}
+      </div>
+
+      <!-- Vertical Carousel -->
+      <div class="w-full">
+        <h3 class="text-sm font-medium mb-3">Vertical</h3>
+        {% set carouselItems = [
+          '<div class="bg-gradient-to-r from-cyan-500 to-cyan-600 text-white flex items-center justify-center h-24 rounded-lg"><h4 class="text-sm font-semibold">Vertical 1</h4></div>',
+          '<div class="bg-gradient-to-r from-teal-500 to-teal-600 text-white flex items-center justify-center h-24 rounded-lg"><h4 class="text-sm font-semibold">Vertical 2</h4></div>',
+          '<div class="bg-gradient-to-r from-emerald-500 to-emerald-600 text-white flex items-center justify-center h-24 rounded-lg"><h4 class="text-sm font-semibold">Vertical 3</h4></div>'
+        ] %}
+        {% set orientation = 'vertical' %}
+        {% set class = 'max-w-xs h-48' %}
+        {% include "carousel.njk" %}
+      </div>
+
+    </div>
+  </div>
+</section>
