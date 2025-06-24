@@ -5,49 +5,107 @@ description: A component that allows the user to switch between light and dark m
 toc:
   - label: Usage
     id: usage
-  - label: Examples
-    id: examples
     children:
-      - label: Default
-        id: example-default
-      - label: Right
-        id: example-right
-      - label: Bottom + Start
-        id: example-bottom-start
+      - label: HTML + JavaScript
+        id: usage-html-js
+        children:
+          - label: "Step 1: Include the JavaScript script"
+            id: usage-html-js-1
+          - label: "Step 2: Add your switcher"
+            id: usage-html-js-2
+          - label: JavaScript events
+            id: usage-html-js-3
 ---
+
+<div class="alert mb-6">
+  {% lucide "circle-alert" %}
+  <h2>There is no dedicated theme switcher component in Basecoat.</h2>
+  <section><p>Instead, we offer a short JavaScript <code>&lt;script&gt;</code> block you can insert in the <code>&lt;head&gt;</code> of your page.</p></section>
+</div>
+
 
 {% from "macros/code_preview.njk" import code_preview %}
 {% from "macros/code_block.njk" import code_block %}
 
-{% set code %}<button class="btn-outline" data-tooltip="Add to library">Hover</button>{% endset %}
+{% set code %}<button
+  type="button"
+  aria-label="Toggle dark mode"
+  data-tooltip="Toggle dark mode"
+  data-side="bottom"
+  onclick="document.dispatchEvent(new CustomEvent('basecoat:theme'))"
+  class="btn-icon-outline size-8"
+>
+  <span class="hidden dark:block">{% lucide "sun" %}</span>
+  <span class="block dark:hidden">{% lucide "moon" %}</span>
+</button>{% endset %}
 {{ code_preview("button", code) }}
 
-<h2 id="usage">Usage</h2>
+<h2 id="usage"><a href="#usage">Usage</a></h2>
+
+<h3 id="usage-html-js"><a href="#usage-html-js">HTML + JavaScript</a></h3>
+
+<h4 id="usage-html-js-1"><a href="#usage-html-js-1">Step 1: Include the JavaScript script</a></h4>
 
 <section class="prose">
-  <p>On any element, set the value of the <code>data-tooltip</code> attribute to the text you want to display in the tooltip. Additionally, you can set:</p>
-  <ul>
-    <li><code>data-side</code> attribute to <code>top</code>, <code>bottom</code>, <code>left</code>, or <code>right</code> to change the side of the tooltip.</li>
-    <li><code>data-align</code> attribute to <code>start</code>, <code>center</code>, or <code>end</code> to change the alignment of the tooltip.</li>
-  </ul>
+  <p>Insert the following JavaScript block right at the beginning of the <code>&lt;head&gt;</code> your page. We do this instead of using a separate file to ensure the theme is defined before the page loads, avoiding a flash of unstyled or mist-styled content.</p>
 </section>
 
-{% set code %}<button class="btn-outline" data-tooltip="Tooltip text" data-side="bottom" data-align="center">Bottom left</button>{% endset %}
+{% set code %}<script>
+  (() => {
+    try {
+      const stored = localStorage.getItem('themeMode');
+      if (stored ? stored === 'dark'
+                  : matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.documentElement.classList.add('dark');
+      }
+    } catch (_) {}
+
+    const apply = dark => {
+      document.documentElement.classList.toggle('dark', dark);
+      try { localStorage.setItem('themeMode', dark ? 'dark' : 'light'); } catch (_) {}
+    };
+
+    document.addEventListener('basecoat:theme', (event) => {
+      const mode = event.detail?.mode;
+      apply(mode === 'dark' ? true
+            : mode === 'light' ? false
+            : !document.documentElement.classList.contains('dark'));
+    });
+  })();
+</script>{% endset %}
 {{ code_block(code) }}
 
-<h2 id="examples"><a href="#examples">Examples</a></h2>
+<h4 id="usage-html-js-2"><a href="#usage-html-js-2">Step 2: Add your switcher</a></h4>
 
-<h3 id="example-default"><a href="#example-default">Default</a></h3>
+<section class="prose">
+  <p>To change the theme, you need to dispatch a <code>basecoat:theme</code> event:</p>
+</section>
 
-{% set code %}<button class="btn-outline" data-tooltip="Default tooltip">Default</button>{% endset %}
-{{ code_preview("button", code) }}
+{% set code %}<button
+  type="button"
+  aria-label="Toggle dark mode"
+  data-tooltip="Toggle dark mode"
+  data-side="bottom"
+  onclick="document.dispatchEvent(new CustomEvent('basecoat:theme'))"
+  class="btn-icon-outline size-8"
+>
+  <span class="hidden dark:block">{% lucide "sun" %}</span>
+  <span class="block dark:hidden">{% lucide "moon" %}</span>
+</button>{% endset %}
+{{ code_block(code) }}
 
-<h3 id="example-right"><a href="#example-right">Right</a></h3>
+<h4 id="usage-html-js-3"><a href="#usage-html-js-3">JavaScript events</a></h4>
 
-{% set code %}<button class="btn-outline" data-tooltip="Right side tooltip" data-side="right">Right</button>{% endset %}
-{{ code_preview("button", code) }}
-
-<h3 id="example-bottom-start"><a href="#example-bottom-start">Bottom + Start</a></h3>
-
-{% set code %}<button class="btn-outline" data-tooltip="Bottom side and start aligned tooltip" data-side="bottom" data-align="start">Bottom + Start</button>{% endset %}
-{{ code_preview("button", code) }}
+<section class="prose">
+  <dl>
+    <dt><code>basecoat:theme</code></dt>
+    <dd>
+      <p>By default, the event will toggle the theme, but you can also add a <code>mode</code> to the detail to set the theme explicitly:</p>
+        {% set code_trigger %}<!-- Toggles the theme -->
+<button type="button" onclick="document.dispatchEvent(new CustomEvent('basecoat:theme'));">Toggle theme</button>
+<!-- Sets the theme to dark -->
+<button type="button" onclick="document.dispatchEvent(new CustomEvent('basecoat:theme', { detail: { mode: 'dark' } }));">Set dark theme</button>{% endset %}
+        {{ code_block(code_trigger | prettyHtml, "html") }}
+    </dd>
+  </dl>
+</section>
