@@ -29,7 +29,7 @@
       setActiveItem(-1);
     };
 
-    const openPopover = () => {
+    const openPopover = (initialSelection = false) => {
       document.dispatchEvent(new CustomEvent('basecoat:popover', {
         detail: { source: dropdownMenuComponent }
       }));
@@ -40,8 +40,13 @@
         !item.hasAttribute('disabled') && 
         item.getAttribute('aria-disabled') !== 'true'
       );
-      if (menuItems.length > 0) {
-        setActiveItem(0);
+      
+      if (menuItems.length > 0 && initialSelection) {
+        if (initialSelection === 'first') {
+          setActiveItem(0);
+        } else if (initialSelection === 'last') {
+          setActiveItem(menuItems.length - 1);
+        }
       }
     };
 
@@ -64,7 +69,7 @@
       if (isExpanded) {
         closePopover();
       } else {
-        openPopover();
+        openPopover(false);
       }
     });
 
@@ -77,9 +82,15 @@
       }
       
       if (!isExpanded) {
-        if (['ArrowDown', 'ArrowUp', 'Enter', ' '].includes(event.key)) {
+        if (['Enter', ' '].includes(event.key)) {
           event.preventDefault();
-          openPopover();
+          openPopover(false);
+        } else if (event.key === 'ArrowDown') {
+          event.preventDefault();
+          openPopover('first');
+        } else if (event.key === 'ArrowUp') {
+          event.preventDefault();
+          openPopover('last');
         }
         return;
       }
@@ -91,11 +102,11 @@
       switch (event.key) {
         case 'ArrowDown':
           event.preventDefault();
-          nextIndex = Math.min(activeIndex + 1, menuItems.length - 1);
+          nextIndex = activeIndex === -1 ? 0 : Math.min(activeIndex + 1, menuItems.length - 1);
           break;
         case 'ArrowUp':
           event.preventDefault();
-          nextIndex = Math.max(activeIndex - 1, 0);
+          nextIndex = activeIndex === -1 ? menuItems.length - 1 : Math.max(activeIndex - 1, 0);
           break;
         case 'Home':
           event.preventDefault();
@@ -116,6 +127,20 @@
       if (nextIndex !== activeIndex) {
         setActiveItem(nextIndex);
       }
+    });
+
+    menu.addEventListener('mousemove', (event) => {
+      const menuItem = event.target.closest('[role^="menuitem"]');
+      if (menuItem && menuItems.includes(menuItem)) {
+        const index = menuItems.indexOf(menuItem);
+        if (index !== activeIndex) {
+          setActiveItem(index);
+        }
+      }
+    });
+
+    menu.addEventListener('mouseleave', () => {
+      setActiveItem(-1);
     });
 
     menu.addEventListener('click', (event) => {

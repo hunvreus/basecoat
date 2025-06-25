@@ -20,6 +20,26 @@
     let visibleOptions = [...options];
     let activeIndex = -1;
 
+    const setActiveOption = (index) => {
+      if (activeIndex > -1 && options[activeIndex]) {
+        options[activeIndex].classList.remove('active');
+      }
+      
+      activeIndex = index;
+      
+      if (activeIndex > -1) {
+        const activeOption = options[activeIndex];
+        activeOption.classList.add('active');
+        if (activeOption.id) {
+          trigger.setAttribute('aria-activedescendant', activeOption.id);
+        } else {
+          trigger.removeAttribute('aria-activedescendant');
+        }
+      } else {
+        trigger.removeAttribute('aria-activedescendant');
+      }
+    };
+
     const hasTransition = () => {
       const style = getComputedStyle(popover);
       return parseFloat(style.transitionDuration) > 0 || parseFloat(style.transitionDelay) > 0;
@@ -54,9 +74,7 @@
       if (focusOnTrigger) trigger.focus();
       popover.setAttribute('aria-hidden', 'true');
       trigger.setAttribute('aria-expanded', 'false');
-      trigger.removeAttribute('aria-activedescendant');
-      if (activeIndex > -1) options[activeIndex]?.classList.remove('active');
-      activeIndex = -1;
+      setActiveOption(-1);
     }
 
     const selectOption = (option) => {
@@ -92,11 +110,7 @@
       const filterOptions = () => {
         const searchTerm = filter.value.trim().toLowerCase();
         
-        if (activeIndex > -1) {
-          options[activeIndex].classList.remove('active');
-          trigger.removeAttribute('aria-activedescendant');
-          activeIndex = -1;
-        }
+        setActiveOption(-1);
 
         visibleOptions = [];
         options.forEach(option => {
@@ -173,20 +187,30 @@
       }
 
       if (nextVisibleIndex !== currentVisibleIndex) {
-        if (currentVisibleIndex > -1) {
-          visibleOptions[currentVisibleIndex].classList.remove('active');
-        }
-        
         const newActiveOption = visibleOptions[nextVisibleIndex];
-        newActiveOption.classList.add('active');
-        activeIndex = options.indexOf(newActiveOption);
-        
-        if (newActiveOption.id) {
-          trigger.setAttribute('aria-activedescendant', newActiveOption.id);
-        }
+        setActiveOption(options.indexOf(newActiveOption));
         newActiveOption.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
       }
     };
+
+    listbox.addEventListener('mousemove', (event) => {
+      const option = event.target.closest('[role="option"]');
+      if (option && visibleOptions.includes(option)) {
+        const index = options.indexOf(option);
+        if (index !== activeIndex) {
+          setActiveOption(index);
+        }
+      }
+    });
+
+    listbox.addEventListener('mouseleave', () => {
+      const selectedOption = listbox.querySelector('[role="option"][aria-selected="true"]');
+      if (selectedOption) {
+        setActiveOption(options.indexOf(selectedOption));
+      } else {
+        setActiveOption(-1);
+      }
+    });
 
     trigger.addEventListener('keydown', handleKeyNavigation);
     if (filter) {
@@ -213,14 +237,7 @@
       
       const selectedOption = listbox.querySelector('[role="option"][aria-selected="true"]');
       if (selectedOption) {
-        if (activeIndex > -1) {
-          options[activeIndex]?.classList.remove('active');
-        }
-        activeIndex = options.indexOf(selectedOption);
-        selectedOption.classList.add('active');
-        if (selectedOption.id) {
-          trigger.setAttribute('aria-activedescendant', selectedOption.id);
-        }
+        setActiveOption(options.indexOf(selectedOption));
         selectedOption.scrollIntoView({ block: 'nearest' });
       }
     };
