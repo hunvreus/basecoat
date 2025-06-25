@@ -3283,7 +3283,7 @@
         content: var(--tw-content);
       }
     }
-    &:not([data-select-idnitialized]) [data-popover] [role='option'] {
+    &:not([data-select-initialized]) [data-popover] [role='option'] {
       &:hover {
         @media (hover: hover) {
           background-color: var(--color-accent);
