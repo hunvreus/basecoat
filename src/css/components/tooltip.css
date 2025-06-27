@@ -1,0 +1,56 @@
+/* Tooltip */
+@layer components {
+  [data-tooltip] {
+    @apply relative;
+
+    &:before {
+      @apply absolute content-[attr(data-tooltip)] bg-primary text-primary-foreground z-50 truncate max-w-xs w-fit rounded-md px-3 py-1.5 text-xs invisible opacity-0 scale-95 transition-all pointer-events-none;
+    }
+    &:hover:before {
+      @apply visible opacity-100 scale-100;
+    }
+    &:focus-visible:not(:hover):before {
+      @apply hidden;
+    }
+    &:not([data-side]),
+    &[data-side='top'] {
+    @apply before:bottom-full before:mb-1.5 before:translate-y-2 hover:before:translate-y-0 ;
+    }
+    &[data-side='bottom'] {
+      @apply before:top-full before:mt-1.5 before:-translate-y-2 hover:before:translate-y-0 ;
+    }
+    &:not([data-side]),
+    &[data-side='top'],
+    &[data-side='bottom'] {
+      &[data-align='start'] {
+        @apply before:left-0;
+      }
+      &[data-align='end'] {
+        @apply before:right-0;
+      }
+      &:not([data-align]),
+      &[data-align='center'] {
+        @apply before:left-1/2 before:-translate-x-1/2; 
+      }
+    }
+    &[data-side='left'] {
+      @apply before:right-full before:mr-1.5 before:translate-x-2 hover:before:translate-x-0;
+    }
+    &[data-side='right'] {
+      @apply before:left-full before:ml-1.5 before:-translate-x-2 hover:before:translate-x-0;
+    }
+    &[data-side='left'],
+    &[data-side='right'] {
+      &[data-align='start'] {
+        @apply before:top-0;
+      }
+      &[data-align='end'] {
+        @apply before:bottom-0;
+      }
+      &:not([data-align]),
+      &[data-align='center'] {
+        @apply before:top-1/2 before:-translate-y-1/2;
+      }
+    }
+  }
+}

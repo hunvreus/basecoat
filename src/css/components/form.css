@@ -1,0 +1,8 @@
+@import "./form/label.css";
+@import "./form/input.css";
+@import "./form/textarea.css";
+@import "./form/select.css";
+@import "./form/radio.css";
+@import "./form/checkbox.css";
+@import "./form/switch.css";
+@import "./form/range.css";

@@ -1,0 +1,48 @@
+/* Range */
+@layer components {
+  .form input[type='range'],
+  .input[type='range'] {
+    @apply appearance-none flex items-center p-0 outline-none;
+    --slider-value: 20%;
+
+    &:hover,
+    &:focus-visible {
+      &::-webkit-slider-thumb {
+        @apply ring-4;
+      }
+      &::-moz-range-thumb {
+        @apply ring-4;
+      }
+      &::-ms-thumb {
+        @apply ring-4;
+      }
+    }
+
+    &::-webkit-slider-thumb {
+      @apply appearance-none border-primary bg-background ring-ring/50 block size-4 shrink-0 rounded-full border shadow-sm -mt-1.25;
+    }
+    &::-webkit-slider-runnable-track {
+      @apply appearance-none rounded-full h-1.5 w-full;
+      background: linear-gradient(to right, var(--primary) var(--slider-value), var(--muted) var(--slider-value));
+    }    
+    &::-moz-range-thumb {
+      @apply appearance-none border-primary bg-background ring-ring/50 block size-4 shrink-0 rounded-full border shadow-sm -mt-1.25;
+    }
+    &::-moz-range-track {
+      @apply appearance-none rounded-full h-1.5 w-full;
+      background: linear-gradient(to right, var(--primary) var(--slider-value), var(--muted) var(--slider-value));
+    }
+    &::-ms-thumb {
+      @apply appearance-none border-primary bg-background ring-ring/50 block size-4 shrink-0 rounded-full border shadow-sm -mt-1.25;
+    }
+    &::-ms-track {
+      @apply appearance-none rounded-full h-1.5 w-full;
+    }
+    &::-ms-fill-lower {
+      @apply bg-primary rounded-full;
+    }
+    &::-ms-fill-upper {
+      @apply bg-muted rounded-full;
+    }
+  }
+}
