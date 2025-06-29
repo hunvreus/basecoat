@@ -1,0 +1,423 @@
+---
+layout: layouts/page.njk
+title: Carousel
+description: A carousel component for cycling through elements like images or cards.
+toc:
+  - label: Usage
+    id: usage
+  - label: Variants
+    id: variants
+    children:
+      - label: Vertical Orientation
+        id: vertical-orientation
+      - label: Autoplay
+        id: autoplay
+      - label: Without Navigation
+        id: without-navigation
+      - label: Without Indicators
+        id: without-indicators
+      - label: Custom Size
+        id: custom-size
+  - label: API
+    id: api
+    children:
+      - label: Parameters
+        id: parameters
+      - label: Events
+        id: events
+      - label: Keyboard Navigation
+        id: keyboard-navigation
+      - label: Touch Support
+        id: touch-support
+  - label: Accessibility
+    id: accessibility
+---
+
+{% from "macros/code_preview.njk" import code_preview %}
+
+<h2 id="usage">Usage</h2>
+
+<section class="prose">
+  <p>A carousel is a rotating set of images, rotation stops on keyboard focus on carousel tab controls or hovering the mouse pointer over images.</p>
+</section>
+
+{% set carousel_demo %}<div class="carousel" data-orientation="horizontal" aria-label="Carousel" tabindex="0">
+  <div class="carousel-viewport">
+    <div class="carousel-content" data-orientation="horizontal">
+      <div class="carousel-item" data-orientation="horizontal">
+        <div class="bg-muted border border-border flex items-center justify-center h-48 rounded-lg">
+          <h3 class="text-2xl font-semibold text-muted-foreground">Slide 1</h3>
+        </div>
+      </div>
+      <div class="carousel-item" data-orientation="horizontal">
+        <div class="bg-accent border border-border flex items-center justify-center h-48 rounded-lg">
+          <h3 class="text-2xl font-semibold text-accent-foreground">Slide 2</h3>
+        </div>
+      </div>
+      <div class="carousel-item" data-orientation="horizontal">
+        <div class="bg-card border border-border flex items-center justify-center h-48 rounded-lg">
+          <h3 class="text-2xl font-semibold text-card-foreground">Slide 3</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <button class="carousel-previous" data-orientation="horizontal" aria-label="Previous slide" type="button">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m15 18-6-6 6-6"/>
+    </svg>
+    <span class="sr-only">Previous slide</span>
+  </button>
+  
+  <button class="carousel-next" data-orientation="horizontal" aria-label="Next slide" type="button">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m9 18 6-6-6-6"/>
+    </svg>
+    <span class="sr-only">Next slide</span>
+  </button>
+  
+  <div class="carousel-indicators" data-orientation="horizontal">
+    <button class="carousel-indicator" aria-label="Go to slide 1" aria-selected="true" type="button">
+      <span class="sr-only">Slide 1</span>
+    </button>
+    <button class="carousel-indicator" aria-label="Go to slide 2" aria-selected="false" type="button">
+      <span class="sr-only">Slide 2</span>
+    </button>
+    <button class="carousel-indicator" aria-label="Go to slide 3" aria-selected="false" type="button">
+      <span class="sr-only">Slide 3</span>
+    </button>
+  </div>
+</div>{% endset %}
+
+{% set carouselCode %}<div class="carousel" aria-label="Carousel" tabindex="0">
+  <div class="carousel-viewport">
+    <div class="carousel-content">
+      <div class="carousel-item">
+        <div class="bg-muted flex items-center justify-center h-48 rounded-lg">
+          <h3 class="text-2xl font-semibold">Slide 1</h3>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <div class="bg-muted flex items-center justify-center h-48 rounded-lg">
+          <h3 class="text-2xl font-semibold">Slide 2</h3>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <div class="bg-muted flex items-center justify-center h-48 rounded-lg">
+          <h3 class="text-2xl font-semibold">Slide 3</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Navigation buttons -->
+  <button class="carousel-previous" aria-label="Previous slide" type="button">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m15 18-6-6 6-6"/>
+    </svg>
+  </button>
+  
+  <button class="carousel-next" aria-label="Next slide" type="button">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m9 18 6-6-6-6"/>
+    </svg>
+  </button>
+  
+  <!-- Indicators -->
+  <div class="carousel-indicators">
+    <button class="carousel-indicator" aria-label="Go to slide 1" aria-selected="true" type="button"></button>
+    <button class="carousel-indicator" aria-label="Go to slide 2" aria-selected="false" type="button"></button>
+    <button class="carousel-indicator" aria-label="Go to slide 3" aria-selected="false" type="button"></button>
+  </div>
+</div>{% endset %}
+
+{{ code_preview("carousel-basic", carousel_demo) }}
+
+<h2 id="variants">Variants</h2>
+
+<h3 id="vertical-orientation">Vertical Orientation</h3>
+
+{% set verticalDemo %}<div class="carousel max-w-md h-80" data-orientation="vertical" aria-label="Vertical Carousel" tabindex="0">
+  <div class="carousel-viewport">
+    <div class="carousel-content" data-orientation="vertical">
+      <div class="carousel-item" data-orientation="vertical">
+        <div class="bg-muted border border-border flex items-center justify-center h-32 rounded-lg">
+          <h3 class="text-xl font-semibold text-muted-foreground">Slide 1</h3>
+        </div>
+      </div>
+      <div class="carousel-item" data-orientation="vertical">
+        <div class="bg-accent border border-border flex items-center justify-center h-32 rounded-lg">
+          <h3 class="text-xl font-semibold text-accent-foreground">Slide 2</h3>
+        </div>
+      </div>
+      <div class="carousel-item" data-orientation="vertical">
+        <div class="bg-card border border-border flex items-center justify-center h-32 rounded-lg">
+          <h3 class="text-xl font-semibold text-card-foreground">Slide 3</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <button class="carousel-previous" data-orientation="vertical" aria-label="Previous slide" type="button">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m18 15-6-6-6 6"/>
+    </svg>
+    <span class="sr-only">Previous slide</span>
+  </button>
+  
+  <button class="carousel-next" data-orientation="vertical" aria-label="Next slide" type="button">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m6 9 6 6 6-6"/>
+    </svg>
+    <span class="sr-only">Next slide</span>
+  </button>
+  
+</div>{% endset %}
+
+{{ code_preview("carousel-vertical", verticalDemo) }}
+
+<h3 id="autoplay">Autoplay</h3>
+
+{% set autoplayDemo %}<div class="carousel" data-orientation="horizontal" data-autoplay="true" data-autoplay-delay="2000" aria-label="Autoplay Carousel" tabindex="0">
+  <div class="carousel-viewport">
+    <div class="carousel-content" data-orientation="horizontal">
+      <div class="carousel-item" data-orientation="horizontal">
+        <div class="bg-muted border border-border flex items-center justify-center h-48 rounded-lg">
+          <h3 class="text-2xl font-semibold text-muted-foreground">Auto 1</h3>
+        </div>
+      </div>
+      <div class="carousel-item" data-orientation="horizontal">
+        <div class="bg-accent border border-border flex items-center justify-center h-48 rounded-lg">
+          <h3 class="text-2xl font-semibold text-accent-foreground">Auto 2</h3>
+        </div>
+      </div>
+      <div class="carousel-item" data-orientation="horizontal">
+        <div class="bg-card border border-border flex items-center justify-center h-48 rounded-lg">
+          <h3 class="text-2xl font-semibold text-card-foreground">Auto 3</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <button class="carousel-previous" data-orientation="horizontal" aria-label="Previous slide" type="button">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m15 18-6-6 6-6"/>
+    </svg>
+    <span class="sr-only">Previous slide</span>
+  </button>
+  
+  <button class="carousel-next" data-orientation="horizontal" aria-label="Next slide" type="button">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m9 18 6-6-6-6"/>
+    </svg>
+    <span class="sr-only">Next slide</span>
+  </button>
+  
+  <div class="carousel-indicators" data-orientation="horizontal">
+    <button class="carousel-indicator" aria-label="Go to slide 1" aria-selected="true" type="button">
+      <span class="sr-only">Slide 1</span>
+    </button>
+    <button class="carousel-indicator" aria-label="Go to slide 2" aria-selected="false" type="button">
+      <span class="sr-only">Slide 2</span>
+    </button>
+    <button class="carousel-indicator" aria-label="Go to slide 3" aria-selected="false" type="button">
+      <span class="sr-only">Slide 3</span>
+    </button>
+  </div>
+</div>{% endset %}
+
+{{ code_preview("carousel-autoplay", autoplayDemo) }}
+
+<h3 id="without-navigation">Without Navigation</h3>
+
+{% set noNavDemo %}<div class="carousel" data-orientation="horizontal" aria-label="Carousel without navigation" tabindex="0">
+  <div class="carousel-viewport">
+    <div class="carousel-content" data-orientation="horizontal">
+      <div class="carousel-item" data-orientation="horizontal">
+        <div class="bg-muted border border-border flex items-center justify-center h-48 rounded-lg">
+          <h3 class="text-2xl font-semibold text-muted-foreground">Slide 1</h3>
+        </div>
+      </div>
+      <div class="carousel-item" data-orientation="horizontal">
+        <div class="bg-accent border border-border flex items-center justify-center h-48 rounded-lg">
+          <h3 class="text-2xl font-semibold text-accent-foreground">Slide 2</h3>
+        </div>
+      </div>
+      <div class="carousel-item" data-orientation="horizontal">
+        <div class="bg-card border border-border flex items-center justify-center h-48 rounded-lg">
+          <h3 class="text-2xl font-semibold text-card-foreground">Slide 3</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="carousel-indicators" data-orientation="horizontal">
+    <button class="carousel-indicator" aria-label="Go to slide 1" aria-selected="true" type="button">
+      <span class="sr-only">Slide 1</span>
+    </button>
+    <button class="carousel-indicator" aria-label="Go to slide 2" aria-selected="false" type="button">
+      <span class="sr-only">Slide 2</span>
+    </button>
+    <button class="carousel-indicator" aria-label="Go to slide 3" aria-selected="false" type="button">
+      <span class="sr-only">Slide 3</span>
+    </button>
+  </div>
+</div>{% endset %}
+
+{{ code_preview("carousel-no-nav", noNavDemo) }}
+
+<h3 id="without-indicators">Without Indicators</h3>
+
+{% set noIndicatorsDemo %}<div class="carousel" data-orientation="horizontal" aria-label="Carousel without indicators" tabindex="0">
+  <div class="carousel-viewport">
+    <div class="carousel-content" data-orientation="horizontal">
+      <div class="carousel-item" data-orientation="horizontal">
+        <div class="bg-muted border border-border flex items-center justify-center h-48 rounded-lg">
+          <h3 class="text-2xl font-semibold text-muted-foreground">Slide 1</h3>
+        </div>
+      </div>
+      <div class="carousel-item" data-orientation="horizontal">
+        <div class="bg-accent border border-border flex items-center justify-center h-48 rounded-lg">
+          <h3 class="text-2xl font-semibold text-accent-foreground">Slide 2</h3>
+        </div>
+      </div>
+      <div class="carousel-item" data-orientation="horizontal">
+        <div class="bg-card border border-border flex items-center justify-center h-48 rounded-lg">
+          <h3 class="text-2xl font-semibold text-card-foreground">Slide 3</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <button class="carousel-previous" data-orientation="horizontal" aria-label="Previous slide" type="button">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m15 18-6-6 6-6"/>
+    </svg>
+    <span class="sr-only">Previous slide</span>
+  </button>
+  
+  <button class="carousel-next" data-orientation="horizontal" aria-label="Next slide" type="button">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m9 18 6-6-6-6"/>
+    </svg>
+    <span class="sr-only">Next slide</span>
+  </button>
+</div>{% endset %}
+
+{{ code_preview("carousel-no-indicators", noIndicatorsDemo) }}
+
+<h3 id="custom-size">Custom Size</h3>
+
+{% set customSizeDemo %}<div class="carousel max-w-4xl" data-orientation="horizontal" aria-label="Large Carousel" tabindex="0">
+  <div class="carousel-viewport">
+    <div class="carousel-content" data-orientation="horizontal">
+      <div class="carousel-item" data-orientation="horizontal">
+        <div class="bg-muted border border-border flex items-center justify-center h-64 rounded-lg">
+          <h3 class="text-3xl font-semibold text-muted-foreground">Large Slide 1</h3>
+        </div>
+      </div>
+      <div class="carousel-item" data-orientation="horizontal">
+        <div class="bg-accent border border-border flex items-center justify-center h-64 rounded-lg">
+          <h3 class="text-3xl font-semibold text-accent-foreground">Large Slide 2</h3>
+        </div>
+      </div>
+      <div class="carousel-item" data-orientation="horizontal">
+        <div class="bg-card border border-border flex items-center justify-center h-64 rounded-lg">
+          <h3 class="text-3xl font-semibold text-card-foreground">Large Slide 3</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <button class="carousel-previous" data-orientation="horizontal" aria-label="Previous slide" type="button">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m15 18-6-6 6-6"/>
+    </svg>
+    <span class="sr-only">Previous slide</span>
+  </button>
+  
+  <button class="carousel-next" data-orientation="horizontal" aria-label="Next slide" type="button">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m9 18 6-6-6-6"/>
+    </svg>
+    <span class="sr-only">Next slide</span>
+  </button>
+  
+  <div class="carousel-indicators" data-orientation="horizontal">
+    <button class="carousel-indicator" aria-label="Go to slide 1" aria-selected="true" type="button">
+      <span class="sr-only">Slide 1</span>
+    </button>
+    <button class="carousel-indicator" aria-label="Go to slide 2" aria-selected="false" type="button">
+      <span class="sr-only">Slide 2</span>
+    </button>
+    <button class="carousel-indicator" aria-label="Go to slide 3" aria-selected="false" type="button">
+      <span class="sr-only">Slide 3</span>
+    </button>
+  </div>
+</div>{% endset %}
+
+{{ code_preview("carousel-custom-size", customSizeDemo, "max-w-4xl") }}
+
+<h2 id="api">API</h2>
+
+<h3 id="parameters">Parameters</h3>
+
+<section class="prose">
+  <ul>
+    <li><code>items</code> - Array of carousel items (required)</li>
+    <li><code>orientation</code> - <code>'horizontal'</code> (default) or <code>'vertical'</code></li>
+    <li><code>autoplay</code> - Boolean to enable autoplay (default: <code>false</code>)</li>
+    <li><code>autoplayDelay</code> - Delay between slides in milliseconds (default: <code>3000</code>)</li>
+    <li><code>showNavigation</code> - Boolean to show navigation buttons (default: <code>true</code>)</li>
+    <li><code>showIndicators</code> - Boolean to show indicators (default: <code>true</code>)</li>
+    <li><code>ariaLabel</code> - ARIA label for the carousel (default: <code>'Carousel'</code>)</li>
+    <li><code>class</code> - Additional CSS classes</li>
+    <li><code>attrs</code> - Additional HTML attributes</li>
+  </ul>
+</section>
+
+<h3 id="events">Events</h3>
+
+<section class="prose">
+  <p>The carousel component dispatches the following custom events:</p>
+  <ul>
+    <li><code>basecoat:initialized</code> - Fired when the carousel is initialized</li>
+    <li><code>basecoat:carousel:change</code> - Fired when the current slide changes
+      <ul>
+        <li><code>detail.currentIndex</code> - The index of the current slide</li>
+        <li><code>detail.currentItem</code> - The current slide element</li>
+      </ul>
+    </li>
+  </ul>
+</section>
+
+<h3 id="keyboard-navigation">Keyboard Navigation</h3>
+
+<section class="prose">
+  <ul>
+    <li><strong>Arrow Left/Right</strong> - Navigate between slides (horizontal orientation)</li>
+    <li><strong>Arrow Up/Down</strong> - Navigate between slides (vertical orientation)</li>
+    <li><strong>Home</strong> - Go to first slide</li>
+    <li><strong>End</strong> - Go to last slide</li>
+  </ul>
+</section>
+
+<h3 id="touch-support">Touch Support</h3>
+
+<section class="prose">
+  <ul>
+    <li><strong>Swipe Left/Right</strong> - Navigate between slides (horizontal orientation)</li>
+    <li><strong>Swipe Up/Down</strong> - Navigate between slides (vertical orientation)</li>
+  </ul>
+</section>
+
+<h2 id="accessibility">Accessibility</h2>
+
+<section class="prose">
+  <ul>
+    <li>Uses proper ARIA attributes for screen readers</li>
+    <li>Supports keyboard navigation</li>
+    <li>Provides descriptive labels for navigation buttons</li>
+    <li>Indicates current slide state to assistive technologies</li>
+  </ul>
+</section>

@@ -1,0 +1,135 @@
+<section>
+  <h2 id="navigation-menu">Navigation Menu</h2>
+  
+  <div class="space-y-4">
+    <nav class="navigation-menu">
+      <div class="navigation-menu-list">
+        <div class="navigation-menu-item">
+          <button 
+            class="navigation-menu-trigger" 
+            data-state="closed" 
+            aria-expanded="false"
+            aria-haspopup="true"
+          >
+            Getting started
+          </button>
+          <div 
+            class="navigation-menu-content" 
+            data-state="closed" 
+            aria-hidden="true"
+            data-orientation="horizontal"
+            style="display: none;"
+          >
+            <div class="p-4 w-[400px]">
+              <ul class="grid gap-3 p-6 md:w-[400px] md:grid-cols-2 lg:w-[600px] list-none m-0">
+                <li>
+                  <a class="navigation-menu-link" href="/docs/primitives/introduction">
+                    <div class="text-sm font-medium leading-none">Introduction</div>
+                    <p class="navigation-menu-link-description">
+                      Re-usable components built using modern CSS.
+                    </p>
+                  </a>
+                </li>
+                <li>
+                  <a class="navigation-menu-link" href="/docs/primitives/installation">
+                    <div class="text-sm font-medium leading-none">Installation</div>
+                    <p class="navigation-menu-link-description">
+                      How to install dependencies and structure your app.
+                    </p>
+                  </a>
+                </li>
+                <li>
+                  <a class="navigation-menu-link" href="/docs/primitives/typography">
+                    <div class="text-sm font-medium leading-none">Typography</div>
+                    <p class="navigation-menu-link-description">
+                      Styles for headings, paragraphs, lists...etc
+                    </p>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+        <div class="navigation-menu-item">
+          <button 
+            class="navigation-menu-trigger" 
+            data-state="closed" 
+            aria-expanded="false"
+            aria-haspopup="true"
+          >
+            Components
+          </button>
+          <div 
+            class="navigation-menu-content" 
+            data-state="closed" 
+            aria-hidden="true"
+            data-orientation="horizontal"
+            style="display: none;"
+          >
+            <div class="p-4 w-[400px]">
+              <ul class="grid gap-3 p-6 md:w-[400px] md:grid-cols-2 lg:w-[600px] list-none m-0">
+                <li>
+                  <a class="navigation-menu-link" href="/components/alert-dialog">
+                    <div class="text-sm font-medium leading-none">Alert Dialog</div>
+                    <p class="navigation-menu-link-description">
+                      A modal dialog that interrupts the user with important content.
+                    </p>
+                  </a>
+                </li>
+                <li>
+                  <a class="navigation-menu-link" href="/components/button">
+                    <div class="text-sm font-medium leading-none">Button</div>
+                    <p class="navigation-menu-link-description">
+                      Displays a button or a component that looks like a button.
+                    </p>
+                  </a>
+                </li>
+                <li>
+                  <a class="navigation-menu-link" href="/components/carousel">
+                    <div class="text-sm font-medium leading-none">Carousel</div>
+                    <p class="navigation-menu-link-description">
+                      A carousel component for cycling through elements.
+                    </p>
+                  </a>
+                </li>
+                <li>
+                  <a class="navigation-menu-link" href="/components/navigation-menu">
+                    <div class="text-sm font-medium leading-none">Navigation Menu</div>
+                    <p class="navigation-menu-link-description">
+                      A collection of links for navigating websites.
+                    </p>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+        <div class="navigation-menu-item">
+          <a 
+            class="navigation-menu-trigger" 
+            href="/documentation"
+            data-state="closed"
+          >
+            Documentation
+          </a>
+        </div>
+      </div>
+      
+      <div class="perspective-1000 absolute left-0 top-full flex justify-center">
+        <div 
+          class="navigation-menu-viewport" 
+          data-state="closed"
+          style="--radix-navigation-menu-viewport-width: 0px; --radix-navigation-menu-viewport-height: 0px;"
+        ></div>
+      </div>
+      
+      <div 
+        class="navigation-menu-indicator absolute" 
+        data-state="hidden"
+        style="left: 0px;"
+      ></div>
+    </nav>
+  </div>
+</section>

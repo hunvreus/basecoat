@@ -1,0 +1,90 @@
+{#-
+  Carousel component for Basecoat
+  
+  Parameters:
+  - items: Array of carousel items
+  - orientation: 'horizontal' (default) or 'vertical'
+  - autoplay: boolean (default: false)
+  - autoplayDelay: number in milliseconds (default: 3000)
+  - showNavigation: boolean (default: true)
+  - showIndicators: boolean (default: true)
+  - ariaLabel: string (default: 'Carousel')
+  - class: additional CSS classes
+  - attrs: additional HTML attributes
+-#}
+
+{%- set orientation = orientation or 'horizontal' -%}
+{%- set autoplay = autoplay or false -%}
+{%- set autoplayDelay = autoplayDelay or 3000 -%}
+{%- set showNavigation = showNavigation if showNavigation is defined else true -%}
+{%- set showIndicators = showIndicators if showIndicators is defined else true -%}
+{%- set ariaLabel = ariaLabel or 'Carousel' -%}
+
+<div class="carousel{{ ' ' + class if class }}"
+     data-orientation="{{ orientation }}"
+     {% if autoplay %}data-autoplay="true" data-autoplay-delay="{{ autoplayDelay }}"{% endif %}
+     aria-label="{{ ariaLabel }}"
+     tabindex="0"
+     {{ attrs | safe if attrs }}>
+  
+  <div class="carousel-viewport">
+    <div class="carousel-content" data-orientation="{{ orientation }}">
+      {% for item in items %}
+        <div class="carousel-item" data-orientation="{{ orientation }}">
+          {% if item.content %}
+            {{ item.content | safe }}
+          {% else %}
+            {{ item | safe }}
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+  
+  {% if showNavigation and items|length > 1 %}
+    <button class="carousel-previous" 
+            data-orientation="{{ orientation }}"
+            aria-label="Previous slide"
+            type="button">
+      {% if orientation == 'vertical' %}
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m18 15-6-6-6 6"/>
+        </svg>
+      {% else %}
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m15 18-6-6 6-6"/>
+        </svg>
+      {% endif %}
+      <span class="sr-only">Previous slide</span>
+    </button>
+    
+    <button class="carousel-next" 
+            data-orientation="{{ orientation }}"
+            aria-label="Next slide"
+            type="button">
+      {% if orientation == 'vertical' %}
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m6 9 6 6 6-6"/>
+        </svg>
+      {% else %}
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m9 18 6-6-6-6"/>
+        </svg>
+      {% endif %}
+      <span class="sr-only">Next slide</span>
+    </button>
+  {% endif %}
+  
+  {% if showIndicators and items|length > 1 %}
+    <div class="carousel-indicators" data-orientation="{{ orientation }}">
+      {% for item in items %}
+        <button class="carousel-indicator" 
+                aria-label="Go to slide {{ loop.index }}"
+                aria-selected="{% if loop.first %}true{% else %}false{% endif %}"
+                type="button">
+          <span class="sr-only">Slide {{ loop.index }}</span>
+        </button>
+      {% endfor %}
+    </div>
+  {% endif %}
+</div>
