@@ -1,2 +1,2 @@
-@import "tailwindcss";
+@import "tailwindcss" source(none);
 @import "./basecoat.css";
