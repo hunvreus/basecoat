@@ -1,5 +1,6 @@
 # Contributing to Basecoat
 
+- Support development by sponsoring the author: https://github.com/sponsors/hunvreus
 - Submit pull requests (PRs) against the `development` branch, not `main`.
 - For branches, we have:
   - `main` is our production and default branch. This is what we deploy to https://basecoatui.com and publish to https://www.npmjs.com/package/basecoat-css and https://www.npmjs.com/package/basecoat-cli.
