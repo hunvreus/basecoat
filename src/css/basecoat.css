@@ -193,7 +193,6 @@
   .btn-ghost,
   .btn-link,
   .btn-destructive,
-  .btn-input,
   .btn-sm,
   .btn-sm-primary,
   .btn-sm-secondary,
@@ -201,7 +200,6 @@
   .btn-sm-ghost,
   .btn-sm-link,
   .btn-sm-destructive,
-  .btn-sm-input,
   .btn-lg,
   .btn-lg-primary,
   .btn-lg-secondary,
@@ -209,7 +207,6 @@
   .btn-lg-ghost,
   .btn-lg-link,
   .btn-lg-destructive,
-  .btn-lg-input,
   .btn-icon,
   .btn-icon-primary,
   .btn-icon-secondary,
@@ -217,7 +214,6 @@
   .btn-icon-ghost,
   .btn-icon-link,
   .btn-icon-destructive,
-  .btn-icon-input,
   .btn-sm-icon,
   .btn-sm-icon-primary,
   .btn-sm-icon-secondary,
@@ -225,15 +221,13 @@
   .btn-sm-icon-ghost,
   .btn-sm-icon-link,
   .btn-sm-icon-destructive,
-  .btn-sm-icon-input,
   .btn-lg-icon,
   .btn-lg-icon-primary,
   .btn-lg-icon-secondary,
   .btn-lg-icon-outline,
   .btn-lg-icon-ghost,
   .btn-lg-icon-link,
-  .btn-lg-icon-destructive,
-  .btn-lg-icon-input {
+  .btn-lg-icon-destructive {
     @apply inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive cursor-pointer rounded-md;
   }
   .btn,
@@ -242,8 +236,7 @@
   .btn-outline,
   .btn-ghost,
   .btn-link,
-  .btn-destructive,
-  .btn-input {
+  .btn-destructive {
     @apply gap-2 h-9 px-4 py-2 has-[>svg]:px-3;
   }
   .btn-icon,
@@ -252,8 +245,7 @@
   .btn-icon-outline,
   .btn-icon-ghost,
   .btn-icon-link,
-  .btn-icon-destructive,
-  .btn-icon-input {
+  .btn-icon-destructive {
     @apply size-9;
   }
   .btn-sm,
@@ -262,8 +254,7 @@
   .btn-sm-outline,
   .btn-sm-ghost,
   .btn-sm-link,
-  .btn-sm-destructive,
-  .btn-sm-input {
+  .btn-sm-destructive {
     @apply gap-1.5 h-8 px-3 has-[>svg]:px-2.5;
   }
   .btn-sm-icon,
@@ -272,8 +263,7 @@
   .btn-sm-icon-outline,
   .btn-sm-icon-ghost,
   .btn-sm-icon-link,
-  .btn-sm-icon-destructive,
-  .btn-sm-icon-input {
+  .btn-sm-icon-destructive {
     @apply size-8;
   }
   .btn-lg,
@@ -282,8 +272,7 @@
   .btn-lg-outline,
   .btn-lg-ghost,
   .btn-lg-link,
-  .btn-lg-destructive,
-  .btn-lg-input {
+  .btn-lg-destructive {
     @apply gap-2 h-10 px-6 has-[>svg]:px-4;
   }
   .btn-lg-icon,
@@ -292,8 +281,7 @@
   .btn-lg-icon-outline,
   .btn-lg-icon-ghost,
   .btn-lg-icon-link,
-  .btn-lg-icon-destructive,
-  .btn-lg-icon-input {
+  .btn-lg-icon-destructive {
     @apply size-10;
   }
   .btn,
@@ -370,18 +358,6 @@
     &:hover,
     &[aria-pressed='true'] {
       @apply bg-destructive/90 dark:bg-destructive/50;
-    }
-  }
-  .btn-input,
-  .btn-sm-input,
-  .btn-lg-input,
-  .btn-icon-input,
-  .btn-sm-icon-input,
-  .btn-lg-icon-input {
-    @apply border shadow-xs bg-input-background;
-    &:hover,
-    &[aria-pressed='true'] {
-      @apply bg-input-background text-foreground dark:bg-input/50;
     }
   }
 }
