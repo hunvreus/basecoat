@@ -88,7 +88,6 @@
     --color-destructive: var(--destructive);
     --color-border: var(--border);
     --color-input: var(--input);
-    --color-input-background: var(--input-background);
     --color-ring: var(--ring);
     --color-sidebar: var(--sidebar);
     --color-sidebar-foreground: var(--sidebar-foreground);
@@ -554,6 +553,9 @@
   .flex-1 {
     flex: 1;
   }
+  .flex-shrink {
+    flex-shrink: 1;
+  }
   .shrink-0 {
     flex-shrink: 0;
   }
@@ -568,6 +570,9 @@
   .translate-y-0\.5 {
     --tw-translate-y: calc(var(--spacing) * 0.5);
     translate: var(--tw-translate-x) var(--tw-translate-y);
+  }
+  .transform {
+    transform: var(--tw-rotate-x,) var(--tw-rotate-y,) var(--tw-rotate-z,) var(--tw-skew-x,) var(--tw-skew-y,);
   }
   .animate-pulse {
     animation: var(--animate-pulse);
@@ -1018,6 +1023,11 @@
   }
   .filter {
     filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
+  }
+  .transition {
+    transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter;
+    transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
+    transition-duration: var(--tw-duration, var(--default-transition-duration));
   }
   .transition-all {
     transition-property: all;
@@ -1644,7 +1654,6 @@
   --destructive: oklch(0.577 0.245 27.325);
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
-  --input-background: transparent;
   --ring: oklch(0.708 0 0);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
@@ -1687,7 +1696,6 @@
   --destructive: oklch(0.704 0.191 22.216);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
-  --input-background: oklch(1 0 0 / 5%);
   --ring: oklch(0.556 0 0);
   --chart-1: oklch(0.488 0.243 264.376);
   --chart-2: oklch(0.696 0.17 162.48);
@@ -2293,7 +2301,10 @@
       }
     }
     &:is(.dark *) {
-      background-color: var(--color-input-background);
+      background-color: var(--color-input);
+      @supports (color: color-mix(in lab, red, red)) {
+        background-color: color-mix(in oklab, var(--color-input) 30%, transparent);
+      }
     }
     &:is(.dark *) {
       &:checked {
@@ -2630,7 +2641,7 @@
     border-style: var(--tw-border-style);
     border-width: 1px;
     border-color: var(--color-input);
-    background-color: var(--color-input-background);
+    background-color: transparent;
     padding-inline: calc(var(--spacing) * 3);
     padding-block: calc(var(--spacing) * 1);
     font-size: var(--text-base);
@@ -2693,6 +2704,12 @@
     @media (width >= 48rem) {
       font-size: var(--text-sm);
       line-height: var(--tw-leading, var(--text-sm--line-height));
+    }
+    &:is(.dark *) {
+      background-color: var(--color-input);
+      @supports (color: color-mix(in lab, red, red)) {
+        background-color: color-mix(in oklab, var(--color-input) 30%, transparent);
+      }
     }
     &:focus-visible {
       border-color: var(--color-ring);
@@ -3052,7 +3069,7 @@
     border-style: var(--tw-border-style);
     border-width: 1px;
     border-color: var(--color-input);
-    background-color: var(--color-input-background);
+    background-color: transparent;
     padding-block: calc(var(--spacing) * 2);
     padding-right: calc(var(--spacing) * 9);
     padding-left: calc(var(--spacing) * 3);
@@ -3092,6 +3109,12 @@
       --tw-ring-color: var(--color-destructive);
       @supports (color: color-mix(in lab, red, red)) {
         --tw-ring-color: color-mix(in oklab, var(--color-destructive) 20%, transparent);
+      }
+    }
+    &:is(.dark *) {
+      background-color: var(--color-input);
+      @supports (color: color-mix(in lab, red, red)) {
+        background-color: color-mix(in oklab, var(--color-input) 30%, transparent);
       }
     }
     &:is(.dark *) {
@@ -3945,7 +3968,7 @@
     border-style: var(--tw-border-style);
     border-width: 1px;
     border-color: var(--color-input);
-    background-color: var(--color-input-background);
+    background-color: transparent;
     padding-inline: calc(var(--spacing) * 3);
     padding-block: calc(var(--spacing) * 2);
     font-size: var(--text-base);
@@ -3991,6 +4014,12 @@
     @media (width >= 48rem) {
       font-size: var(--text-sm);
       line-height: var(--tw-leading, var(--text-sm--line-height));
+    }
+    &:is(.dark *) {
+      background-color: var(--color-input);
+      @supports (color: color-mix(in lab, red, red)) {
+        background-color: color-mix(in oklab, var(--color-input) 30%, transparent);
+      }
     }
     &:is(.dark *) {
       &[aria-invalid="true"] {
@@ -4581,7 +4610,6 @@ code.hljs {
     --destructive-foreground: oklch(1.00 0 0);
     --border: oklch(0.88 0.01 97.36);
     --input: oklch(0.76 0.02 98.35);
-    --input-background: oklch(1 0 0);
     --ring: oklch(0.59 0.17 253.06);
     --chart-1: oklch(0.56 0.13 43.00);
     --chart-2: oklch(0.69 0.16 290.41);
@@ -4628,7 +4656,6 @@ code.hljs {
     --destructive-foreground: oklch(1.00 0 0);
     --border: oklch(0.36 0.01 106.89);
     --input: oklch(0.43 0.01 100.22);
-    --input-background: oklch(0.43 0.01 100.22 / 30%);
     --ring: oklch(0.59 0.17 253.06);
     --chart-1: oklch(0.56 0.13 43.00);
     --chart-2: oklch(0.69 0.16 290.41);
@@ -4677,7 +4704,6 @@ code.hljs {
     --destructive-foreground: oklch(0 0 0);
     --border: oklch(0.43 0 0);
     --input: oklch(0.43 0 0);
-    --input-background: oklch(1 0 0 / 60%);
     --ring: oklch(0.50 0.19 27.48);
     --chart-1: oklch(0.50 0.19 27.48);
     --chart-2: oklch(0.50 0.09 126.19);
@@ -4724,7 +4750,6 @@ code.hljs {
     --destructive-foreground: oklch(0 0 0);
     --border: oklch(0.41 0 0);
     --input: oklch(0.41 0 0);
-    --input-background: oklch(0.41 0 0 / 30%);
     --ring: oklch(0.61 0.21 27.03);
     --chart-1: oklch(0.61 0.21 27.03);
     --chart-2: oklch(0.64 0.15 133.01);
@@ -4773,7 +4798,6 @@ code.hljs {
     --destructive-foreground: oklch(0.99 0.00 17.21);
     --border: oklch(0.90 0 0);
     --input: oklch(0.90 0 0);
-    --input-background: oklch(1 0 0);
     --ring: oklch(0.83 0.13 160.91);
     --chart-1: oklch(0.83 0.13 160.91);
     --chart-2: oklch(0.62 0.19 259.81);
@@ -4821,7 +4845,6 @@ code.hljs {
     --destructive-foreground: oklch(0.94 0.00 34.31);
     --border: oklch(0.28 0 0);
     --input: oklch(0.28 0 0);
-    --input-background: oklch(0.28 0 0 / 30%);
     --ring: oklch(0.80 0.18 151.71);
     --chart-1: oklch(0.80 0.18 151.71);
     --chart-2: oklch(0.71 0.14 254.62);
@@ -4867,6 +4890,26 @@ code.hljs {
   syntax: "*";
   inherits: false;
   initial-value: 0;
+}
+@property --tw-rotate-x {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-rotate-y {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-rotate-z {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-skew-x {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-skew-y {
+  syntax: "*";
+  inherits: false;
 }
 @property --tw-space-y-reverse {
   syntax: "*";
@@ -5082,6 +5125,11 @@ code.hljs {
       --tw-translate-x: 0;
       --tw-translate-y: 0;
       --tw-translate-z: 0;
+      --tw-rotate-x: initial;
+      --tw-rotate-y: initial;
+      --tw-rotate-z: initial;
+      --tw-skew-x: initial;
+      --tw-skew-y: initial;
       --tw-space-y-reverse: 0;
       --tw-space-x-reverse: 0;
       --tw-border-style: solid;
