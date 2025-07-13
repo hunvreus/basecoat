@@ -14,6 +14,8 @@ toc:
         id: install-npm-basecoat
       - label: Import basecoat in your CSS
         id: install-npm-import
+      - label: (Optional) Import specific components
+        id: install-npm-import-css-components-optional
       - label: (Optional) Add JavaScript files
         id: install-npm-js
       - label: That's it
@@ -87,6 +89,14 @@ toc:
     <h3 class="mb-4 scroll-m-20 font-semibold tracking-tight" id="install-npm-import"><a href="#install-npm-import">Import basecoat in your CSS</a></h3>
     {% set code %}@import "tailwindcss";
 @import "basecoat-css";{% endset %}
+    {{ code_block(code, "css") }}
+  </li>
+  <li class="step mt-8">
+    <h3 class="mb-4 scroll-m-20 font-semibold tracking-tight" id="install-npm-import-css-components-optional"><a href="#install-npm-import-css-components-optional">(Optional) Import specific components</a></h3>
+    {% set code %}@import "tailwindcss";
+@import "basecoat-css/base";
+@import "basecoat-css/components/form";
+@import "basecoat-css/components/alert";{% endset %}
     {{ code_block(code, "css") }}
   </li>
   <li class="step mt-8">
