@@ -51,6 +51,12 @@
         input.value = option.dataset.value;
         listbox.querySelector('[role="option"][aria-selected="true"]')?.removeAttribute('aria-selected');
         option.setAttribute('aria-selected', 'true');
+        
+        const event = new CustomEvent('change', {
+          detail: { value: option.dataset.value },
+          bubbles: true
+        });
+        selectComponent.dispatchEvent(event);
       }
     };
 
@@ -88,14 +94,6 @@
       }
       
       closePopover();
-      
-      if (newValue !== oldValue) {
-        const event = new CustomEvent('change', {
-          detail: { value: newValue },
-          bubbles: true
-        });
-        selectComponent.dispatchEvent(event);
-      }
     };
 
     const selectByValue = (value) => {

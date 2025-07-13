@@ -1,71 +1,39 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anchor Positioning Test (Top, End)</title>
-    <script type="module">
-        if (!("anchorName" in document.documentElement.style)) {
-            console.log("Loading CSS anchor positioning polyfill...");
-            import("https://unpkg.com/@oddbird/css-anchor-positioning");
-        }
-    </script>
-    <style>
-        body {
-            font-family: sans-serif;
-            display: grid;
-            place-items: center;
-            height: 100vh;
-            margin: 0;
-            background: #222;
-            color: #eee;
-        }
+---
+layout: layouts/layout.njk
+---
 
-        button {
-            padding: 0.5em 1em;
-            font-size: 1rem;
-            border-radius: 6px;
-            border: 1px solid #888;
-            background: #444;
-            color: #eee;
-            cursor: pointer;
-        }
-
-        [popover] {
-            border: 1px solid #888;
-            border-radius: 6px;
-            background: #333;
-            color: #eee;
-            padding: 1em;
-            margin: 0;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-        }
-
-        /* The core anchor positioning logic */
-        #my-popover {
-            position: absolute;
-            inset: auto; /* Required to override default popover centering */
-            bottom: anchor(top);   /* Position bottom of popover to top of anchor */
-            right: anchor(right);  /* Align right edge of popover with right edge of anchor */
-            margin-bottom: 8px;    /* A little space between popover and button */
-        }
-    </style>
-</head>
-<body>
-
-    <button 
-        popovertarget="my-popover" 
-        id="my-anchor-button" 
-        style="anchor-name: --my-anchor;">
-        Click Me
-    </button>
-
-    <div 
-        popover 
-        id="my-popover" 
-        style="position-anchor: --my-anchor;">
-        I should be anchored above the button, aligned to the right.
-    </div>
-
-</body>
-</html>
+{% from "dialog.njk" import dialog %}
+{% set footer %}
+<button class="btn-outline" onclick="this.closest('dialog').close()">Cancel</button>
+<button class="btn" onclick="this.closest('dialog').close()">Save changes</button>
+{% endset %}
+{% call dialog(
+id="demo-dialog-edit-profile",
+title="Edit profile",
+description="Make changes to your profile here. Click save when you're done.",
+trigger="Edit Profile",
+trigger_attrs={"class": "btn-outline"},
+dialog_attrs={"class": "w-full sm:max-w-[425px] max-h-[612px]"},
+footer=footer
+) %}
+<form class="flex-col gap-4">
+{% from "select.njk" import select %}
+{{ select(
+  trigger_attrs={"class": "w-[180px]"},
+  is_combobox=true,
+  items=[
+    {
+      type: "group",
+      label: "Fruits",
+      items: [
+        { type: "item", value: "apple", label: "Apple" },
+        { type: "item", value: "banana", label: "Banana" },
+        { type: "item", value: "blueberry", label: "Blueberry" },
+        { type: "item", value: "pineapple", label: "Grapes" },
+        { type: "item", value: "pineapple", label: "Pineapple" }
+      ]
+    }
+  ]
+) }}
+</form>
+{% endcall %}

@@ -48,12 +48,12 @@
   class="dialog {{ dialog_attrs.class }}"
   aria-labelledby="{{ id }}-title"
   {% if description %}aria-describedby="{{ id }}-description"{% endif %}
-  {% if close_on_overlay_click %}onclick="this.close()"{% endif %}
+  {% if close_on_overlay_click %}onclick="if (event.target === this) this.close()"{% endif %}
   {% for key, value in dialog_attrs %}
     {% if key != 'class' %}{{ key }}="{{ value }}"{% endif %}
   {% endfor %}
 >
-  <article {% if close_on_overlay_click %}onclick="event.stopPropagation()"{% endif %}>
+  <article>
     {% if title or description %}
       <header
         {% for key, value in header_attrs %}

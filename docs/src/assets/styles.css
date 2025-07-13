@@ -4134,7 +4134,7 @@
       pointer-events: none;
       visibility: hidden;
       position: absolute;
-      z-index: 50;
+      z-index: 60;
       width: fit-content;
       max-width: var(--container-xs);
       --tw-scale-x: 95%;
