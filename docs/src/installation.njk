@@ -5,6 +5,11 @@ description: How to install and use Basecoat in your app.
 toc:
   - label: Install using the CDN
     id: install-cdn
+    children:
+      - label: Install all components
+        id: install-cdn-all
+      - label: Install specific components
+        id: install-cdn-specific
   - label: Installing using NPM
     id: install-npm
     children:
@@ -43,7 +48,7 @@ toc:
 <script src="https://cdn.jsdelivr.net/npm/basecoat-css@{{ pkg.version }}/dist/js/all.min.js" defer></script>{% endset %}
 {{ code_block(code, "html") }}
 
-<h3 id="install-cdn-all"><a href="#install-cdn-all">Install specific components</a></h3>
+<h3 id="install-cdn-specific"><a href="#install-cdn-specific">Install specific components</a></h3>
 
 <section class="prose">
   <p>While the JavaScript file for all components is small (around 3kB gzipped), you can cherry-pick the components you need as instructed in the component's page (<a href="/components/dropdown-menu">Dropdown Menu</a>, <a href="/components/popover">Popover</a>, <a href="/components/select">Select</a>, <a href="/components/sidebar">Sidebar</a>, <a href="/components/tabs">Tabs</a> and <a href="/components/toast">Toast</a>). For example, to add the <a href="/components/dropdown-menu">Dropdown Menu</a> component, add the following to the <code>&lt;head&gt;</code> of your HTML file:</p>
@@ -140,7 +145,7 @@ import 'basecoat-css/tabs';{% endraw %}{% endset %}
     
   <ul>
     <li><b>CDN</b>: you either <a href="#install-cdn-all">add the code for all of the components</a> to the <code>&lt;head&gt;</code> of your HTML file, or just the file for the component you want to use as instructed on the component's page.</li>
-    <li><b>Local file</b>: you download the script as a separate file and include it in your project (<a href="#install-cli">or let the CLI do it for you</a>). Once again, you have the choice to include the fiel for all components at once (<a><code>all.min.js</code> or <code>all.js</code>).</p>
+    <li><b>Local file</b>: you download the script as a separate file and include it in your project (<a href="#install-cli">or let the CLI do it for you</a>). Once again, you have the choice to include the file for all components at once (<a><code>all.min.js</code> or <code>all.js</code>).</p>
   </ul>
 </div>
 
