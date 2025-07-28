@@ -57,20 +57,7 @@
     tabsComponent.dispatchEvent(new CustomEvent('basecoat:initialized'));
   };
 
-  document.querySelectorAll('.tabs:not([data-tabs-initialized])').forEach(initTabs);
-
-  const observer = new MutationObserver((mutations) => {
-    mutations.forEach((mutation) => {
-      mutation.addedNodes.forEach((node) => {
-        if (node.nodeType === Node.ELEMENT_NODE) {
-          if (node.matches('.tabs:not([data-tabs-initialized])')) {
-            initTabs(node);
-          }
-          node.querySelectorAll('.tabs:not([data-tabs-initialized])').forEach(initTabs);
-        }
-      });
-    });
-  });
-
-  observer.observe(document.body, { childList: true, subtree: true });
+  if (window.basecoat) {
+    window.basecoat.register('tabs', '.tabs:not([data-tabs-initialized])', initTabs);
+  }
 })();

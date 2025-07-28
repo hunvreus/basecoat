@@ -165,19 +165,7 @@
     dropdownMenuComponent.dispatchEvent(new CustomEvent('basecoat:initialized'));
   };
 
-  document.querySelectorAll('.dropdown-menu:not([data-dropdown-menu-initialized])').forEach(initDropdownMenu);
-
-  const observer = new MutationObserver((mutations) => {
-    mutations.forEach((mutation) => {
-      mutation.addedNodes.forEach((node) => {
-        if (node.nodeType !== Node.ELEMENT_NODE) return;
-        if (node.matches('.dropdown-menu:not([data-dropdown-menu-initialized])')) {
-          initDropdownMenu(node);
-        }
-        node.querySelectorAll('.dropdown-menu:not([data-dropdown-menu-initialized])').forEach(initDropdownMenu);
-      });
-    });
-  });
-  
-  observer.observe(document.body, { childList: true, subtree: true });
+  if (window.basecoat) {
+    window.basecoat.register('dropdown-menu', '.dropdown-menu:not([data-dropdown-menu-initialized])', initDropdownMenu);
+  }
 })();

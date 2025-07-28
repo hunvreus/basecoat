@@ -85,8 +85,8 @@ toc:
             <dd>For the content.</dd>
             <dt><code class="highlight language-html">&lt;footer&gt;</code> <span class="badge-secondary">Optional</span></dt>
             <dd>Usually contains actions.</dd>
-            <dt><code class="highlight language-html">&lt;form method="dialog"&gt;</code> <span class="badge-secondary">Optional</span></dt>
-            <dd>A form that contains a single button to close the dialog.</dd>
+            <dt><code class="highlight language-html">&lt;button type="button" onclick="this.closest('dialog').close()"&gt;</code> <span class="badge-secondary">Optional</span></dt>
+            <dd>A button to close the dialog. Alternatively, you can wrap a button in a <code>&lt;form method="dialog"&gt;</code> element.</dd>
           </dl>
         </dd>
       </dl>

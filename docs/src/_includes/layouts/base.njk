@@ -69,6 +69,7 @@
   {# CSS #}
   <link rel="stylesheet" href="/assets/styles.css">
   {# JS #}
+  <script src="/assets/js/basecoat.js" defer></script>
   <script src="/assets/js/dropdown-menu.js" defer></script>
   <script src="/assets/js/popover.js" defer></script>
   <script src="/assets/js/select.js" defer></script>
@@ -93,6 +94,12 @@
       document.addEventListener('DOMContentLoaded', highlight);
       document.addEventListener('htmx:afterSwap', highlight);
     }
+  </script>
+  <script>
+    document.addEventListener('htmx:historyRestore', () => {
+      if (window.basecoat) window.basecoat.initAll();
+      if (window.Alpine) Alpine.initTree(document.body);
+    });
   </script>
   {% if head %}{{ head | safe }}{% endif %}
 </head>

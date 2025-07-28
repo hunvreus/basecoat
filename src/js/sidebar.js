@@ -98,20 +98,7 @@
     sidebarComponent.dispatchEvent(new CustomEvent('basecoat:initialized'));
   };
 
-  document.querySelectorAll('.sidebar:not([data-sidebar-initialized])').forEach(initSidebar);
-
-  const observer = new MutationObserver((mutations) => {
-    mutations.forEach((mutation) => {
-      mutation.addedNodes.forEach((node) => {
-        if (node.nodeType === Node.ELEMENT_NODE) {
-          if (node.matches('.sidebar:not([data-sidebar-initialized])')) {
-            initSidebar(node);
-          }
-          node.querySelectorAll('.sidebar:not([data-sidebar-initialized])').forEach(initSidebar);
-        }
-      });
-    });
-  });
-
-  observer.observe(document.body, { childList: true, subtree: true });
+  if (window.basecoat) {
+    window.basecoat.register('sidebar', '.sidebar:not([data-sidebar-initialized])', initSidebar);
+  }
 })();

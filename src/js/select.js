@@ -272,20 +272,7 @@
     selectComponent.dispatchEvent(new CustomEvent('basecoat:initialized'));
   };
 
-  document.querySelectorAll('div.select:not([data-select-initialized])').forEach(initSelect);
-
-  const observer = new MutationObserver((mutations) => {
-    mutations.forEach((mutation) => {
-      mutation.addedNodes.forEach((node) => {
-        if (node.nodeType === Node.ELEMENT_NODE) {
-          if (node.matches('div.select:not([data-select-initialized])')) {
-            initSelect(node);
-          }
-          node.querySelectorAll('div.select:not([data-select-initialized])').forEach(initSelect);
-        }
-      });
-    });
-  });
-  
-  observer.observe(document.body, { childList: true, subtree: true });
+  if (window.basecoat) {
+    window.basecoat.register('select', 'div.select:not([data-select-initialized])', initSelect);
+  }
 })();

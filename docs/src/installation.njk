@@ -50,6 +50,7 @@ toc:
 </section>
 
 {% set code %}<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@{{ pkg.version }}/dist/basecoat.cdn.min.css">
+<script src="https://cdn.jsdelivr.net/npm/basecoat-css@{{ pkg.version }}/dist/js/basecoat.min.js" defer></script> <!-- Only needed once to register and initialize components -->
 <script src="https://cdn.jsdelivr.net/npm/basecoat-css@{{ pkg.version }}/dist/js/dropdown-menu.min.js" defer></script>{% endset %}
 {{ code_block(code, "html") }}
 
@@ -112,9 +113,10 @@ import 'basecoat-css/tabs';{% endraw %}{% endset %}
     {% set code %}npx copyfiles -u 1 "node_modules/basecoat-css/dist/js/**/*" public/js/basecoat{% endset %}
     {{ code_block(code, "bash") }}
     <div class="prose">
-      <p>Then reference the script you need:</p>
+      <p>Then reference the script you need as well as the <code>basecoat.min.js</code> file (used to register and initialize components):</p>
     </div>
-    {% set code %}<script src="/js/basecoat/tabs.min.js" defer></script>{% endset %}
+    {% set code %}<script src="/js/basecoat/basecoat.min.js" defer></script>
+<script src="/js/basecoat/tabs.min.js" defer></script>{% endset %}
     {{ code_block(code, "html") }}
     <div class="prose">
       <p>See each component page for the minimal script required.</p>

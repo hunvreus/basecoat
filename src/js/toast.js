@@ -164,9 +164,6 @@
     return template.content.firstChild;
   }
 
-  const initialToaster = document.getElementById('toaster');
-  if (initialToaster) initToaster(initialToaster);
-
   document.addEventListener('basecoat:toast', (event) => {
     if (!toaster) {
       console.error('Cannot create toast: toaster container not found on page.');
@@ -177,21 +174,8 @@
     toaster.appendChild(toastElement);
   });
 
-  const observer = new MutationObserver((mutations) => {
-    mutations.forEach((mutation) => {
-      mutation.addedNodes.forEach((node) => {
-        if (node.nodeType !== Node.ELEMENT_NODE) return;
-        
-        if (node.matches('#toaster')) {
-          initToaster(node);
-        }
-
-        if (toaster && node.matches('.toast:not([data-toast-initialized])')) {
-          initToast(node);
-        }
-      });
-    });
-  });
-
-  observer.observe(document.body, { childList: true, subtree: true });
+  if (window.basecoat) {
+    window.basecoat.register('toaster', '#toaster:not([data-toaster-initialized])', initToaster);
+    window.basecoat.register('toast', '.toast:not([data-toast-initialized])', initToast);
+  }
 })();

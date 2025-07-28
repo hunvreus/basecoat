@@ -67,19 +67,7 @@
     popoverComponent.dispatchEvent(new CustomEvent('basecoat:initialized'));
   };
 
-  document.querySelectorAll('.popover:not([data-popover-initialized])').forEach(initPopover);
-
-  const observer = new MutationObserver((mutations) => {
-    mutations.forEach((mutation) => {
-      mutation.addedNodes.forEach((node) => {
-        if (node.nodeType !== Node.ELEMENT_NODE) return;
-        if (node.matches('.popover:not([data-popover-initialized])')) {
-          initPopover(node);
-        }
-        node.querySelectorAll('.popover:not([data-popover-initialized])').forEach(initPopover);
-      });
-    });
-  });
-  
-  observer.observe(document.body, { childList: true, subtree: true });
+  if (window.basecoat) {
+    window.basecoat.register('popover', '.popover:not([data-popover-initialized])', initPopover);
+  }
 })();

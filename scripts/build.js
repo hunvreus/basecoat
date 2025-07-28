@@ -121,7 +121,7 @@ async function build() {
 
   // Create combined component files
   console.log('Creating combined component files...');
-  const componentsToCombine = ['dropdown-menu.js', 'popover.js', 'select.js', 'sidebar.js', 'tabs.js', 'toast.js'];
+  const componentsToCombine = ['basecoat.js', 'dropdown-menu.js', 'popover.js', 'select.js', 'sidebar.js', 'tabs.js', 'toast.js'];
   const componentPaths = componentsToCombine.map(f => path.join(srcJsDir, f));
 
   // Create non-minified bundle
