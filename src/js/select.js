@@ -45,18 +45,20 @@
       return parseFloat(style.transitionDuration) > 0 || parseFloat(style.transitionDelay) > 0;
     };
 
-    const updateValue = (option) => {
+    const updateValue = (option, triggerEvent = true) => {
       if (option) {
         selectedLabel.innerHTML = option.dataset.label || option.innerHTML;
         input.value = option.dataset.value;
         listbox.querySelector('[role="option"][aria-selected="true"]')?.removeAttribute('aria-selected');
         option.setAttribute('aria-selected', 'true');
         
-        const event = new CustomEvent('change', {
-          detail: { value: option.dataset.value },
-          bubbles: true
-        });
-        selectComponent.dispatchEvent(event);
+        if (triggerEvent) {
+          const event = new CustomEvent('change', {
+            detail: { value: option.dataset.value },
+            bubbles: true
+          });
+          selectComponent.dispatchEvent(event);
+        }
       }
     };
 
@@ -124,7 +126,7 @@
     let initialOption = options.find(opt => opt.dataset.value === input.value);
     if (!initialOption && options.length > 0) initialOption = options[0];
 
-    updateValue(initialOption);
+    updateValue(initialOption, false);
 
     const handleKeyNavigation = (event) => {
       const isPopoverOpen = popover.getAttribute('aria-hidden') === 'false';
