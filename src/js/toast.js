@@ -99,7 +99,7 @@
     clearTimeout(state.timeoutId);
     toasts.delete(element);
     
-    if (document.activeElement) document.activeElement.blur();
+    if (element.contains(document.activeElement)) document.activeElement.blur();
     element.setAttribute('aria-hidden', 'true');
     element.addEventListener('transitionend', () => element.remove(), { once: true });
   }
