@@ -1005,7 +1005,7 @@
             @apply font-medium tracking-tight;
           }
           p {
-            @apply text-muted-foreground;
+            @apply text-muted-foreground break-all;
           }
         }
         footer {

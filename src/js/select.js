@@ -124,7 +124,10 @@
     }
 
     let initialOption = options.find(opt => opt.dataset.value === input.value);
-    if (!initialOption && options.length > 0) initialOption = options[0];
+    
+    if (!initialOption) {
+      initialOption = options.find(opt => opt.dataset.value !== undefined) ?? options[0];
+    }
 
     updateValue(initialOption, false);
 

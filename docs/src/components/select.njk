@@ -240,7 +240,7 @@ toc:
   listbox_attrs={"class": "scrollbar overflow-y-auto max-h-64"}
 ) %}
 {% for i in range(0, 99) %}
-<div role="option" data-value="item-{{ i }}">Item {{ i }}</div>
+<div role="option" {% if i > 0 %}data-value="item-{{ i }}"{% endif %}>Item {{ i }}</div>
 {% endfor %}
 {% endcall %}
 {% endset %}

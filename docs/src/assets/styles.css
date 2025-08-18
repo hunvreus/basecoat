@@ -4089,6 +4089,7 @@
             letter-spacing: var(--tracking-tight);
           }
           p {
+            word-break: break-all;
             color: var(--color-muted-foreground);
           }
         }
