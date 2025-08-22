@@ -39,6 +39,7 @@
   },
   "homepage": "https://basecoatui.com/installation#install-npm",
   "exports": {
+    "./package.json": "./package.json",
     ".": "./dist/basecoat.css",
     "./css": "./dist/basecoat.css",
     "./all": "./dist/js/all.js",
@@ -55,6 +56,73 @@
     "./tabs.min": "./dist/js/tabs.min.js",
     "./toast": "./dist/js/toast.js",
     "./toast.min": "./dist/js/toast.min.js",
-    "./package.json": "./package.json"
+    "./all.css": "./dist/basecoat.all.css",
+    "./base": "./dist/base/base.css",
+    "./components/accordion": {
+      "style": "./dist/components/accordion.css"
+    },
+    "./components/alert": {
+      "style": "./dist/components/alert.css"
+    },
+    "./components/badge": {
+      "style": "./dist/components/badge.css"
+    },
+    "./components/button": {
+      "style": "./dist/components/button.css"
+    },
+    "./components/card": {
+      "style": "./dist/components/card.css"
+    },
+    "./components/dialog": {
+      "style": "./dist/components/dialog.css"
+    },
+    "./components/dropdown-menu": {
+      "style": "./dist/components/dropdown-menu.css"
+    },
+    "./components/form/checkbox": {
+      "style": "./dist/components/form/checkbox.css"
+    },
+    "./components/form/input": {
+      "style": "./dist/components/form/input.css"
+    },
+    "./components/form/label": {
+      "style": "./dist/components/form/label.css"
+    },
+    "./components/form/radio": {
+      "style": "./dist/components/form/radio.css"
+    },
+    "./components/form/range": {
+      "style": "./dist/components/form/range.css"
+    },
+    "./components/form/select": {
+      "style": "./dist/components/form/select.css"
+    },
+    "./components/form/switch": {
+      "style": "./dist/components/form/switch.css"
+    },
+    "./components/form/textarea": {
+      "style": "./dist/components/form/textarea.css"
+    },
+    "./components/form": {
+      "style": "./dist/components/form.css"
+    },
+    "./components/popover": {
+      "style": "./dist/components/popover.css"
+    },
+    "./components/sidebar": {
+      "style": "./dist/components/sidebar.css"
+    },
+    "./components/table": {
+      "style": "./dist/components/table.css"
+    },
+    "./components/tabs": {
+      "style": "./dist/components/tabs.css"
+    },
+    "./components/toast": {
+      "style": "./dist/components/toast.css"
+    },
+    "./components/tooltip": {
+      "style": "./dist/components/tooltip.css"
+    }
   }
 }
