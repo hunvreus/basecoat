@@ -40,7 +40,7 @@
     {{ key }}="{{ value }}"
   {% endfor %}
 >
-  {{ trigger }} 
+  {{ trigger | safe }}
 </button>
 {% endif %}
 <dialog
