@@ -1,0 +1,121 @@
+{#
+  Renders a command menu component with search and keyboard navigation.
+
+  @param id {string} [optional] - Unique identifier for the command component.
+  @param items {array} [optional] - Array of items to render (alternative to using caller).
+  @param placeholder {string} [optional] [default="Type a command or search..."] - Placeholder text for the search input.
+  @param empty_text {string} [optional] [default="No results found."] - Text displayed when no results match the search.
+  @param main_attrs {object} [optional] - Additional HTML attributes for the main container div.
+  @param dialog_attrs {object} [optional] - Additional HTML attributes for the dialog element.
+  @param input_attrs {object} [optional] - Additional HTML attributes for the search input.
+  @param listbox_attrs {object} [optional] - Additional HTML attributes for the listbox div.
+  @param open {boolean} [optional] [default=false] - Whether the command menu should be open initially.
+#}
+{% macro command(
+  id=None,
+  items=None,
+  placeholder="Type a command or search...",
+  empty_text="No results found.",
+  main_attrs={},
+  dialog_attrs={},
+  input_attrs={},
+  listbox_attrs={},
+  open=false
+) %}
+{% set id = id or ("command-" + (range(100000, 999999) | random | string)) %}
+<dialog
+  id="{{ id }}"
+  class="command {{ dialog_attrs.class }}"
+  aria-label="Command menu"
+  {% if open %}open{% endif %}
+  onclick="if (event.target === this) this.close()"
+  {% for key, value in dialog_attrs %}
+    {% if key != 'class' %}{{ key }}="{{ value }}"{% endif %}
+  {% endfor %}
+  {% for key, value in main_attrs %}
+    {% if key != 'class' %}{{ key }}="{{ value }}"{% endif %}
+  {% endfor %}
+>
+  <article>
+    <header>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search-icon lucide-search"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      <input
+        type="text"
+        id="{{ id }}-input"
+        placeholder="{{ placeholder }}"
+        autocomplete="off"
+        autocorrect="off"
+        spellcheck="false"
+        aria-autocomplete="list"
+        role="combobox"
+        aria-expanded="true"
+        aria-controls="{{ id }}-listbox"
+        {% for key, value in input_attrs %}
+          {{ key }}="{{ value }}"
+        {% endfor %}
+      >
+    </header>
+    <div
+      role="listbox"
+      id="{{ id }}-listbox"
+      aria-orientation="vertical"
+      data-empty="{{ empty_text }}"
+      class="scrollbar {{ listbox_attrs.class }}"
+      {% for key, value in listbox_attrs %}
+        {% if key != 'class' %}{{ key }}="{{ value }}"{% endif %}
+      {% endfor %}
+    >
+      {% if items and items.length > 0 %}
+        {{ render_command_items(items, id ~ "-items" if id else "items") }}
+      {% else %}
+        {{ caller() if caller }}
+      {% endif %}
+    </div>
+  </article>
+</dialog>
+{% endmacro %}
+
+{# 
+  Renders a list of items for the command component.
+
+  @param items {array} - The array of items to render.
+  @param parent_id_prefix {string} [optional] - The prefix for the item id.
+#}
+{% macro render_command_items(items, parent_id_prefix="items") %}
+  {% for item in items %}
+    {% set item_id = parent_id_prefix ~ "-" ~ loop.index %}
+    {% if item.type == "group" %}
+      {% set group_label_id = item.id if item.id else "group-label-" + item_id %}
+      <div
+        role="group"
+        aria-labelledby="{{ group_label_id }}"
+        {% if item.attrs %}
+          {% for key, value in item.attrs %}
+            {{ key }}="{{ value }}"
+          {% endfor %}
+        {% endif %}
+      >
+        <span role="heading" id="{{ group_label_id }}">{{ item.label }}</span>
+        {{ render_command_items(item.items, item_id) if item.items }}
+      </div>
+    {% elif item.type == "separator" %}
+      <hr role="separator" />
+    {% elif item.type == "item" or not item.type %}
+      <div
+        id="{{ item_id }}"
+        role="option"
+        data-value="{{ item.value }}"
+        {% if item.keywords %}data-keywords="{{ item.keywords }}"{% endif %}
+        {% if item.label %}data-label="{{ item.label }}"{% endif %}
+        {% if item.attrs %}
+          {% for key, value in item.attrs %}
+            {{ key }}="{{ value }}"
+          {% endfor %}
+        {% endif %}
+      >
+        {{ item.content | safe if item.content else item.label }}
+      </div>
+    {% endif %}
+  {% endfor %}
+{% endmacro %}
+

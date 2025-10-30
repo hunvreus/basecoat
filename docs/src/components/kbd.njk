@@ -1,0 +1,68 @@
+---
+layout: layouts/page.njk
+title: Kbd
+description: Used to display textual user input from keyboard.
+toc:
+  - label: Usage
+    id: usage
+  - label: Examples
+    id: examples
+    children:
+      - label: Group
+        id: example-group
+      - label: Button
+        id: example-button
+---
+
+{% from "macros/code_preview.njk" import code_preview %}
+{% from "macros/code_block.njk" import code_block %}
+
+{% set code_html %}
+<div class="flex flex-col items-center gap-4">
+  <span class="inline-flex items-center gap-1">
+    <kbd>⌘</kbd>
+    <kbd>⇧</kbd>
+    <kbd>⌥</kbd>
+    <kbd>⌃</kbd>
+  </span>
+  <span class="inline-flex items-center gap-1">
+    <kbd>Ctrl</kbd>
+    <span>+</span>
+    <kbd>B</kbd>
+  </span>
+</div>
+{% endset %}
+
+{{ code_preview("kbd", code_html | prettyHtml) }}
+
+<h2 id="usage"><a href="#usage">Usage</a></h2>
+
+{{ code_block(code_html | prettyHtml, "html") }}
+
+<h2 id="examples"><a href="#examples">Examples</a></h2>
+
+<h3 id="example-group"><a href="#example-group">Group</a></h3>
+
+{% set group_html %}
+<p class="text-muted-foreground text-sm">
+  Use
+  <span class="inline-flex items-center gap-1">
+    <kbd>Ctrl + B</kbd>
+    <kbd>Ctrl + K</kbd>
+  </span>
+  to open the command palette
+</p>
+{% endset %}
+
+{{ code_preview("kbd-group", group_html | prettyHtml) }}
+
+<h3 id="example-button"><a href="#example-button">Button</a></h3>
+
+{% set button_html %}
+<div class="flex flex-wrap items-center gap-x-4">
+  <button class="btn-sm-outline pr-2">Accept <kbd>⏎</kbd></button>
+  <button class="btn-sm-outline pr-2">Cancel <kbd>Esc</kbd></button>
+</div>
+{% endset %}
+
+{{ code_preview("kbd-button", button_html | prettyHtml) }}
