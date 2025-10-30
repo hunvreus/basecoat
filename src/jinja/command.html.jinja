@@ -1,15 +1,13 @@
 {#
-  Renders a command menu component with search and keyboard navigation.
+  Renders a standalone command menu component with search and keyboard navigation.
 
   @param id {string} [optional] - Unique identifier for the command component.
   @param items {array} [optional] - Array of items to render (alternative to using caller).
   @param placeholder {string} [optional] [default="Type a command or search..."] - Placeholder text for the search input.
   @param empty_text {string} [optional] [default="No results found."] - Text displayed when no results match the search.
   @param main_attrs {object} [optional] - Additional HTML attributes for the main container div.
-  @param dialog_attrs {object} [optional] - Additional HTML attributes for the dialog element.
   @param input_attrs {object} [optional] - Additional HTML attributes for the search input.
   @param listbox_attrs {object} [optional] - Additional HTML attributes for the listbox div.
-  @param open {boolean} [optional] [default=False] - Whether the command menu should be open initially.
 #}
 {% macro command(
   id=None,
@@ -17,26 +15,90 @@
   placeholder="Type a command or search...",
   empty_text="No results found.",
   main_attrs={},
+  input_attrs={},
+  listbox_attrs={}
+) %}
+{% set id = id or ("command-" ~ range(100000, 999999) | random | string) %}
+<div
+  id="{{ id }}"
+  class="command {{ main_attrs.class }}"
+  aria-label="Command menu"
+  {% for key, value in main_attrs.items() %}
+    {% if key != 'class' %}{{ key }}="{{ value }}"{% endif %}
+  {% endfor %}
+>
+  <header>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search-icon lucide-search"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+    <input
+      type="text"
+      id="{{ id }}-input"
+      placeholder="{{ placeholder }}"
+      autocomplete="off"
+      autocorrect="off"
+      spellcheck="false"
+      aria-autocomplete="list"
+      role="combobox"
+      aria-expanded="true"
+      aria-controls="{{ id }}-listbox"
+      {% for key, value in input_attrs.items() %}
+        {{ key }}="{{ value }}"
+      {% endfor %}
+    >
+  </header>
+  <div
+    role="listbox"
+    id="{{ id }}-listbox"
+    aria-orientation="vertical"
+    data-empty="{{ empty_text }}"
+    class="scrollbar {{ listbox_attrs.class }}"
+    {% for key, value in listbox_attrs.items() %}
+      {% if key != 'class' %}{{ key }}="{{ value }}"{% endif %}
+    {% endfor %}
+  >
+    {% if items and items|length > 0 %}
+      {{ render_command_items(items, id ~ "-items" if id else "items") }}
+    {% else %}
+      {{ caller() if caller }}
+    {% endif %}
+  </div>
+</div>
+{% endmacro %}
+
+{#
+  Renders a command dialog (modal command palette).
+
+  @param id {string} [optional] - Unique identifier for the command dialog.
+  @param items {array} [optional] - Array of items to render (alternative to using caller).
+  @param placeholder {string} [optional] [default="Type a command or search..."] - Placeholder text for the search input.
+  @param empty_text {string} [optional] [default="No results found."] - Text displayed when no results match the search.
+  @param dialog_attrs {object} [optional] - Additional HTML attributes for the dialog element.
+  @param input_attrs {object} [optional] - Additional HTML attributes for the search input.
+  @param listbox_attrs {object} [optional] - Additional HTML attributes for the listbox div.
+  @param open {boolean} [optional] [default=False] - Whether the command dialog should be open initially.
+#}
+{% macro command_dialog(
+  id=None,
+  items=None,
+  placeholder="Type a command or search...",
+  empty_text="No results found.",
   dialog_attrs={},
   input_attrs={},
   listbox_attrs={},
   open=False
 ) %}
-{% set id = id or ("command-" ~ range(100000, 999999) | random | string) %}
+{% set id = id or ("command-dialog-" ~ range(100000, 999999) | random | string) %}
 <dialog
   id="{{ id }}"
-  class="command {{ dialog_attrs.class }}"
+  class="dialog command-dialog {{ dialog_attrs.class }}"
   aria-label="Command menu"
   {% if open %}open{% endif %}
   onclick="if (event.target === this) this.close()"
   {% for key, value in dialog_attrs.items() %}
     {% if key != 'class' %}{{ key }}="{{ value }}"{% endif %}
   {% endfor %}
-  {% for key, value in main_attrs.items() %}
-    {% if key != 'class' %}{{ key }}="{{ value }}"{% endif %}
-  {% endfor %}
 >
-    <article>
+  <article>
+    <div class="command">
       <header>
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search-icon lucide-search"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
         <input
@@ -71,7 +133,11 @@
           {{ caller() if caller }}
         {% endif %}
       </div>
-    </article>
+    </div>
+    <button type="button" aria-label="Close dialog" onclick="this.closest('dialog').close()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+    </button>
+  </article>
 </dialog>
 {% endmacro %}
 
@@ -107,6 +173,7 @@
         data-value="{{ item.value }}"
         {% if item.keywords %}data-keywords="{{ item.keywords }}"{% endif %}
         {% if item.label %}data-label="{{ item.label }}"{% endif %}
+        {% if item.disabled %}aria-disabled="true"{% endif %}
         {% if item.attrs %}
           {% for key, value in item.attrs.items() %}
             {{ key }}="{{ value }}"
@@ -118,4 +185,3 @@
     {% endif %}
   {% endfor %}
 {% endmacro %}
-

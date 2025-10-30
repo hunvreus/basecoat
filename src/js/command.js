@@ -1,13 +1,13 @@
 (() => {
-  const initCommand = (dialog) => {
-    const input = dialog.querySelector('header input');
-    const listbox = dialog.querySelector('[role="listbox"]');
+  const initCommand = (container) => {
+    const input = container.querySelector('header input');
+    const listbox = container.querySelector('[role="listbox"]');
 
     if (!input || !listbox) {
       const missing = [];
       if (!input) missing.push('input');
       if (!listbox) missing.push('listbox');
-      console.error(`Command component initialization failed. Missing element(s): ${missing.join(', ')}`, dialog);
+      console.error(`Command component initialization failed. Missing element(s): ${missing.join(', ')}`, container);
       return;
     }
 
@@ -51,7 +51,10 @@
         }
       });
 
-      // empty state handled via CSS on [role="listbox"][data-empty]
+      if (visibleOptions.length > 0) {
+        setActiveOption(options.indexOf(visibleOptions[0]));
+        visibleOptions[0].scrollIntoView({ block: 'nearest' });
+      }
     };
 
     const selectOption = (option) => {
@@ -61,9 +64,7 @@
         detail: { value: option.dataset.value },
         bubbles: true
       });
-      dialog.dispatchEvent(event);
-
-      dialog.close();
+      container.dispatchEvent(event);
     };
 
     input.addEventListener('input', filterOptions);
@@ -92,13 +93,13 @@
         case 'ArrowDown':
           if (currentVisibleIndex < visibleOptions.length - 1) {
             nextVisibleIndex = currentVisibleIndex + 1;
-          } else if (currentVisibleIndex === -1) {
-            nextVisibleIndex = 0;
           }
           break;
         case 'ArrowUp':
           if (currentVisibleIndex > 0) {
             nextVisibleIndex = currentVisibleIndex - 1;
+          } else if (currentVisibleIndex === -1) {
+            nextVisibleIndex = 0;
           }
           break;
         case 'Home':
@@ -109,7 +110,7 @@
           break;
       }
 
-      if (nextVisibleIndex !== currentVisibleIndex && nextVisibleIndex >= 0) {
+      if (nextVisibleIndex !== currentVisibleIndex) {
         const newActiveOption = visibleOptions[nextVisibleIndex];
         setActiveOption(options.indexOf(newActiveOption));
         newActiveOption.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
@@ -127,7 +128,11 @@
     });
 
     listbox.addEventListener('mouseleave', () => {
-      setActiveOption(-1);
+      if (visibleOptions.length > 0) {
+        setActiveOption(options.indexOf(visibleOptions[0]));
+      } else {
+        setActiveOption(-1);
+      }
     });
 
     listbox.addEventListener('click', (event) => {
@@ -139,32 +144,14 @@
 
     input.addEventListener('keydown', handleKeyNavigation);
 
-    dialog.addEventListener('close', () => {
-      input.value = '';
-      visibleOptions = [...options];
-      options.forEach(opt => opt.setAttribute('aria-hidden', 'false'));
-      setActiveOption(-1);
-    });
-
-    dialog.dataset.commandInitialized = true;
-    dialog.dispatchEvent(new CustomEvent('basecoat:initialized'));
-  };
-
-  document.addEventListener('keydown', (event) => {
-    if ((event.metaKey || event.ctrlKey) && event.key === 'k') {
-      event.preventDefault();
-      const firstCommand = document.querySelector('.command');
-      if (firstCommand) {
-        if (firstCommand.open) {
-          firstCommand.close();
-        } else {
-          firstCommand.showModal();
-          const input = firstCommand.querySelector('header input');
-          if (input) input.focus();
-        }
-      }
+    if (visibleOptions.length > 0) {
+      setActiveOption(options.indexOf(visibleOptions[0]));
+      visibleOptions[0].scrollIntoView({ block: 'nearest' });
     }
-  });
+
+    container.dataset.commandInitialized = true;
+    container.dispatchEvent(new CustomEvent('basecoat:initialized'));
+  };
 
   if (window.basecoat) {
     window.basecoat.register('command', '.command:not([data-command-initialized])', initCommand);

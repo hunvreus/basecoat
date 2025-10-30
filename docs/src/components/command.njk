@@ -1,295 +1,121 @@
 ---
 layout: layouts/page.njk
 title: Command
-description: Fast, composable command menu for quick navigation and actions. Triggered with ⌘K or Ctrl+K.
+description: Fast, composable command menu for quick navigation and actions.
 toc:
   - label: Usage
     id: usage
-    children:
-      - label: HTML + JavaScript
-        id: usage-html-js
-        children:
-          - label: "Step 1: Include the JavaScript files"
-            id: usage-html-js-1
-          - label: "Step 2: Add your command HTML"
-            id: usage-html-js-2
-          - label: HTML structure
-            id: usage-html-js-3
-          - label: JavaScript events
-            id: usage-html-js-4
-          - label: JavaScript methods
-            id: usage-html-js-5
-      - label: Jinja and Nunjucks
-        id: usage-macro
   - label: Examples
     id: examples
     children:
-      - label: With groups
-        id: example-groups
+      - label: Dialog
+        id: example-dialog
 ---
 
 {% from "macros/code_preview.njk" import code_preview %}
 {% from "macros/code_block.njk" import code_block %}
-{% from "command.njk" import command %}
+{% from "command.njk" import command, command_dialog %}
 
-{% set code_html %}
+{% macro command_items(suggestions_id="suggestions", settings_id="settings") %}
+<div role="group" aria-labelledby="{{ suggestions_id }}">
+  <span role="heading" id="{{ suggestions_id }}">Suggestions</span>
+  <div role="option" data-value="calendar">
+    {% lucide "calendar" %}
+    <span>Calendar</span>
+  </div>
+  <div role="option" data-value="search-emoji">
+    {% lucide "smile" %}
+    <span>Search Emoji</span>
+  </div>
+  <div role="option" data-value="calculator" aria-disabled="true">
+    {% lucide "calculator" %}
+    <span>Calculator</span>
+  </div>
+</div>
+<hr role="separator" />
+<div role="group" aria-labelledby="{{ settings_id }}">
+  <span role="heading" id="{{ settings_id }}">Settings</span>
+  <div role="option" data-value="profile">
+    {% lucide "user" %}
+    <span>Profile</span>
+    <kbd class="ml-auto text-muted-foreground bg-transparent tracking-widest">⌘P</kbd>
+  </div>
+  <div role="option" data-value="billing">
+    {% lucide "credit-card" %}
+    <span>Billing</span>
+    <kbd class="ml-auto text-muted-foreground bg-transparent tracking-widest">⌘B</kbd>
+  </div>
+  <div role="option" data-value="settings">
+    {% lucide "settings" %}
+    <span>Settings</span>
+    <kbd class="ml-auto text-muted-foreground bg-transparent tracking-widest">⌘S</kbd>
+  </div>
+</div>
+{% endmacro %}
+
+{% set code_standalone %}
 {% call command(
-  id="demo-command",
-  placeholder="Type a command or search...",
-  empty_text="No results found."
+  id="demo-command-standalone",
+  main_attrs={ "class": "rounded-lg border shadow-md" }
 ) %}
-  <div role="option" data-value="calendar" id="cmd-calendar">
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar-icon lucide-calendar"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>
-    Calendar
-  </div>
-  <div role="option" data-value="emoji" id="cmd-emoji">
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-smile-icon lucide-smile"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" x2="9.01" y1="9" y2="9"/><line x1="15" x2="15.01" y1="9" y2="9"/></svg>
-    Search Emoji
-  </div>
-  <div role="option" data-value="calculator" id="cmd-calculator">
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calculator-icon lucide-calculator"><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16" y1="14" y2="18"/><path d="M16 10h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/><path d="M12 14h.01"/><path d="M8 14h.01"/><path d="M12 18h.01"/><path d="M8 18h.01"/></svg>
-    Calculator
-  </div>
+{{ command_items("suggestions", "settings") }}
 {% endcall %}
 {% endset %}
 
-{{ code_preview("command", code_html | prettyHtml) }}
-
-<section class="prose">
-  <p>Press <kbd class="inline-flex items-center justify-center rounded border px-1.5 py-0.5 text-xs font-medium bg-muted text-muted-foreground">⌘K</kbd> (or <kbd class="inline-flex items-center justify-center rounded border px-1.5 py-0.5 text-xs font-medium bg-muted text-muted-foreground">Ctrl+K</kbd> on Windows/Linux) to open the command menu.</p>
-</section>
+{{ code_preview("command-standalone", code_standalone | prettyHtml, class=" w-full max-w-[450px]") }}
 
 <h2 id="usage"><a href="#usage">Usage</a></h2>
 
-<h3 id="usage-html-js"><a href="#usage-html-js">HTML + JavaScript</a></h3>
-
-<h4 id="usage-html-js-1"><a href="#usage-html-js-1">Step 1: Include the JavaScript files</a></h4>
-
-<section class="prose">
-  <p>You can either <a href="/installation/#install-cdn-all">include the JavaScript file for all the components</a>, or just the one for this component by adding this to the <code>&lt;head&gt;</code> of your page:</p>
-</section>
-
-{% set code_script %}<script src="https://cdn.jsdelivr.net/npm/basecoat-css@{{ pkg.version }}/dist/js/basecoat.min.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/basecoat-css@{{ pkg.version }}/dist/js/command.min.js" defer></script>{% endset %}
-{{ code_block(code_script | prettyHtml, "html") }}
-
-<div class="flex flex-wrap gap-2 my-6">
-  <a class="badge-outline" href="/installation/#install-js">
-    Components with JavaScript
-    {% lucide "arrow-right" %}
-  </a>
-  <a class="badge-outline" href="/installation/#install-cli">
-    Use the CLI
-    {% lucide "arrow-right" %}
-  </a>
-  <a class="badge-outline" href="https://github.com/hunvreus/basecoat/blob/main/src/js/command.js" target="_blank">
-    command.js
-    {% lucide "arrow-right" %}
-  </a>
-</div>
-
-<h4 id="usage-html-js-2"><a href="#usage-html-js-2">Step 2: Add your command HTML</a></h4>
-
-{{ code_block(code_html | prettyHtml, "html") }}
-
-<h4 id="usage-html-js-3"><a href="#usage-html-js-3">HTML structure</a></h4>
-
-<section class="prose">
-  <dl>
-    <dt><code class="highlight language-html">&lt;div class="command"&gt;</code></dt>
-    <dd>Wraps around the entire component.
-      <dl>
-        <dt><code class="highlight language-html">&lt;dialog class="command"&gt;</code></dt>
-        <dd>The native dialog element that creates the modal backdrop and handles focus trapping. Automatically opens with ⌘K/Ctrl+K keyboard shortcut.
-          <dl>
-            <dt><code class="highlight language-html">&lt;article&gt;</code></dt>
-            <dd>Contains the command menu content.
-              <dl>
-                <dt><code class="highlight language-html">&lt;header&gt;</code></dt>
-                <dd>Contains the search input with icon:
-                  <dl>
-                    <dt><code class="highlight language-html">&lt;input type="text" role="combobox"&gt;</code></dt>
-                    <dd>The search input that filters commands. Attributes:
-                      <ul>
-                        <li><code>placeholder</code>: Placeholder text</li>
-                        <li><code>aria-autocomplete="list"</code>: Indicates autocomplete behavior</li>
-                        <li><code>aria-expanded="true"</code>: Listbox is always visible</li>
-                        <li><code>aria-controls="{ LISTBOX_ID }"</code>: Points to the listbox id</li>
-                        <li><code>aria-activedescendant="{ OPTION_ID }"</code>: Points to the active option id</li>
-                      </ul>
-                    </dd>
-                  </dl>
-                </dd>
-                <dt><code class="highlight language-html">&lt;div role="listbox"&gt;</code></dt>
-                <dd>The listbox containing the command options. Supports groups, separators, and headings:
-                  <dl>
-                    <dt><code class="highlight language-html">&lt;div role="option" data-value="{ VALUE }"&gt;</code></dt>
-                    <dd>Command option that can be selected. Must have:
-                      <ul>
-                        <li><code>data-value</code>: Unique value for the command</li>
-                        <li><code>data-keywords</code> <span class="badge-secondary">Optional</span>: Additional search keywords (comma-separated)</li>
-                        <li><code>data-label</code> <span class="badge-secondary">Optional</span>: Alternative label for filtering (defaults to text content)</li>
-                        <li><code>id</code> <span class="badge-secondary">Optional</span>: For <code>aria-activedescendant</code></li>
-                      </ul>
-                    </dd>
-                    <dt><code class="highlight language-html">&lt;div role="group"&gt;</code> <span class="badge-secondary">Optional</span></dt>
-                    <dd>Groups related commands together. Can have <code>aria-labelledby</code> pointing to a heading.</dd>
-                    <dt><code class="highlight language-html">&lt;span role="heading"&gt;</code> <span class="badge-secondary">Optional</span></dt>
-                    <dd>Group heading. Should have an <code>id</code> if referenced by <code>aria-labelledby</code>.</dd>
-                    <dt><code class="highlight language-html">&lt;hr role="separator"&gt;</code> <span class="badge-secondary">Optional</span></dt>
-                    <dd>Visual separator between groups.</dd>
-                  </dl>
-                </dd>
-                <dt><code class="highlight language-html">&lt;footer&gt;</code></dt>
-                <dd>Empty state message, shown when no results match the search.</dd>
-              </dl>
-            </dd>
-          </dl>
-        </dd>
-      </dl>
-    </dd>
-  </dl>
-</section>
-
-<h4 id="usage-html-js-4"><a href="#usage-html-js-4">JavaScript events</a></h4>
-
-<section class="prose">
-  <dl>
-    <dt><code>basecoat:initialized</code></dt>
-    <dd>Once the component is fully initialized, it dispatches a custom (non-bubbling) <code>basecoat:initialized</code> event on itself.</dd>
-    <dt><code>command:select</code></dt>
-    <dd>When a command is selected (via click or Enter key), the component dispatches a custom (bubbling) <code>command:select</code> event on itself, with the selected value in <code>event.detail</code> (e.g. <code>{detail: {value: "calendar"}}</code>).</dd>
-  </dl>
-</section>
-
-{% set code_event %}
-<script>
-  const commandComponent = document.querySelector('#my-command');
-  commandComponent.addEventListener('command:select', (event) => {
-    console.log('Selected command:', event.detail.value);
-    
-    switch (event.detail.value) {
-      case 'calendar':
-        window.location.href = '/calendar';
-        break;
-      case 'settings':
-        window.location.href = '/settings';
-        break;
-    }
-  });
-</script>
-{% endset %}
-{{ code_block(code_event | prettyHtml, "html") }}
-
-<h4 id="usage-html-js-5"><a href="#usage-html-js-5">JavaScript methods</a></h4>
-
-<section class="prose">
-  <p>The command component uses the native <code>&lt;dialog&gt;</code> element, so you can use the standard dialog methods:</p>
-  <dl>
-    <dt><code>showModal()</code></dt>
-    <dd>Opens the command menu as a modal dialog:</dd>
-  </dl>
-</section>
-
-{% set code_open %}
-<script>
-  const commandDialog = document.querySelector('#my-command');
-  commandDialog.showModal();
-</script>
-{% endset %}
-{{ code_block(code_open | prettyHtml, "html") }}
-
-<section class="prose">
-  <dl>
-    <dt><code>close()</code></dt>
-    <dd>Closes the command menu:</dd>
-  </dl>
-</section>
-
-{% set code_close %}
-<script>
-  const commandDialog = document.querySelector('#my-command');
-  commandDialog.close();
-</script>
-{% endset %}
-{{ code_block(code_close | prettyHtml, "html") }}
-
-<h3 id="usage-macro"><a href="#usage-macro">Jinja and Nunjucks</a></h3>
-
-<div class="prose">
-  <p>You can use the <code class="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-xs">command()</code> Nunjucks or Jinja macro for this component.</p>
-</div>
-
-<div class="flex flex-wrap gap-2 my-6">
-  <a class="badge-outline" href="/installation/#install-macros" target="_blank">
-    Use Nunjucks or Jinja macros
-    {% lucide "arrow-right" %}
-  </a>
-  <a class="badge-outline" href="https://github.com/hunvreus/basecoat/blob/main/src/jinja/command.html.jinja" target="_blank">
-    Jinja macro
-    {% lucide "arrow-right" %}
-  </a>
-  <a class="badge-outline" href="https://github.com/hunvreus/basecoat/blob/main/src/nunjucks/command.njk" target="_blank">
-    Nunjucks macro
-    {% lucide "arrow-right" %}
-  </a>
-</div>
-
-{% set raw_code %}{% raw %}{% call command(
-  id="my-command",
-  placeholder="Type a command or search..."
-) %}
-  <div role="option" data-value="calendar">Calendar</div>
-  <div role="option" data-value="emoji">Search Emoji</div>
-  <div role="option" data-value="calculator">Calculator</div>
-{% endcall %}{% endraw %}{% endset %}
-{{ code_block(raw_code, "jinja") }}
+{{ code_block(code_standalone | prettyHtml, "html") }}
 
 <h2 id="examples"><a href="#examples">Examples</a></h2>
 
-<h3 id="example-groups"><a href="#example-groups">With groups</a></h3>
-
-{% set code_groups %}
-{% call command(
-  id="demo-command-groups",
-  placeholder="Type a command or search..."
-) %}
-  <div role="group" aria-labelledby="group-suggestions">
-    <span role="heading" id="group-suggestions">Suggestions</span>
-    <div role="option" data-value="calendar" data-keywords="events,schedule">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar-icon lucide-calendar"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>
-      Calendar
-    </div>
-    <div role="option" data-value="emoji" data-keywords="icons,faces">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-smile-icon lucide-smile"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" x2="9.01" y1="9" y2="9"/><line x1="15" x2="15.01" y1="9" y2="9"/></svg>
-      Search Emoji
-    </div>
-    <div role="option" data-value="calculator" data-keywords="math,numbers">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calculator-icon lucide-calculator"><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16" y1="14" y2="18"/><path d="M16 10h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/><path d="M12 14h.01"/><path d="M8 14h.01"/><path d="M12 18h.01"/><path d="M8 18h.01"/></svg>
-      Calculator
-    </div>
-  </div>
-  <hr role="separator">
-  <div role="group" aria-labelledby="group-settings">
-    <span role="heading" id="group-settings">Settings</span>
-    <div role="option" data-value="profile" data-keywords="account,user">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-icon lucide-user"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-      Profile
-    </div>
-    <div role="option" data-value="billing" data-keywords="payment,subscription">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-credit-card-icon lucide-credit-card"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
-      Billing
-    </div>
-    <div role="option" data-value="settings" data-keywords="config,preferences">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings-icon lucide-settings"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
-      Settings
-    </div>
-  </div>
-{% endcall %}
-{% endset %}
-{{ code_preview("command-groups", code_groups | prettyHtml) }}
+<h3 id="example-dialog"><a href="#example-dialog">Dialog</a></h3>
 
 <section class="prose">
-  <p>This example includes <code>data-keywords</code> attributes for better search matching. Try searching for "payment" to see the Billing option appear.</p>
+  <p>Press <kbd>⌘</kbd><kbd>J</kbd></p>
 </section>
 
+{% set code_dialog %}
+<button
+  type="button"
+  class="btn-outline"
+  onclick="document.getElementById('demo-command-dialog').showModal()"
+>
+  Open command menu
+  <kbd>⌘ J</kbd>
+</button>
+
+{% call command_dialog(id="demo-command-dialog") %}
+{{ command_items("cmd-suggestions", "cmd-settings") }}
+{% endcall %}
+
+<script>
+  document.addEventListener('keydown', (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'j') {
+      e.preventDefault();
+      const dialog = document.getElementById('demo-command-dialog');
+      if (dialog.open) {
+        dialog.close();
+      } else {
+        dialog.showModal();
+        dialog.querySelector('header input')?.focus();
+      }
+    }
+  });
+
+  const cmdDialog = document.getElementById('demo-command-dialog');
+  cmdDialog?.addEventListener('command:select', (e) => {
+    console.log('Selected command:', e.detail.value);
+    cmdDialog.close();
+  });
+</script>
+{% endset %}
+
+{{ code_preview("command-dialog", code_dialog | prettyHtml) }}
+
+<section class="prose">
+  <p>To show the command menu in a dialog, use the <code>command_dialog</code> macro.</p>
+</section>
+
+{{ code_block(code_dialog | prettyHtml, "html") }}
