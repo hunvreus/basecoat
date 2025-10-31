@@ -1,0 +1,245 @@
+---
+layout: layouts/page.njk
+title: Button Group
+description: A container that groups related buttons together with consistent styling.
+toc:
+  - label: Usage
+    id: usage
+  - label: Examples
+    id: examples
+    children:
+      - label: Orientation
+        id: example-orientation
+      - label: Nested
+        id: example-nested
+      - label: Separator
+        id: example-separator
+      - label: Dropdown Menu
+        id: example-dropdown-menu
+      - label: Popover
+        id: example-popover
+---
+
+{% from "dropdown-menu.njk" import dropdown_menu %}
+{% from "popover.njk" import popover %}
+{% from "macros/code_preview.njk" import code_preview %}
+{% from "macros/code_block.njk" import code_block %}
+
+{% set code_default %}
+<div class="flex w-fit items-stretch gap-2">
+  <button class="btn-icon-outline" aria-label="Go Back">{% lucide "arrow-left" %}</button>
+  
+  <div role="group" class="button-group">
+    <button class="btn-outline">Archive</button>
+    <button class="btn-outline">Report</button>
+  </div>
+
+  <div role="group" class="button-group">
+    <button class="btn-outline">Snooze</button>
+    {% set trigger %}
+      {% lucide "ellipsis" %}
+    {% endset %}
+    {% call dropdown_menu(
+      trigger=trigger,
+      trigger_attrs={"class": "btn-icon-outline"},
+      popover_attrs={"data-align": "end"}
+    ) %}
+      <div role="menuitem">
+        {% lucide "mail-check" %}
+        Mark as Read
+      </div>
+      <div role="menuitem">
+        {% lucide "archive" %}
+        Archive
+      </div>
+      <hr role="separator">
+      <div role="menuitem">
+        {% lucide "clock" %}
+        Snooze
+      </div>
+      <div role="menuitem">
+        {% lucide "calendar" %}
+        Add to Calendar
+      </div>
+      <div role="menuitem">
+        {% lucide "list-filter-plus" %}
+        Add to List
+      </div>
+      <hr role="separator">
+      <div role="menuitem" class="text-destructive hover:bg-destructive/10 dark:hover:bg-destructive/20 focus:bg-destructive/10 dark:focus:bg-destructive/20 focus:text-destructive [&_svg]:!text-destructive">
+        {% lucide "trash-2" %}
+        Trash
+      </div>
+    {% endcall %}
+</div>
+{% endset %}
+
+{{ code_preview("button-group-default", code_default | prettyHtml) }}
+
+<h2 id="usage"><a href="#usage">Usage</a></h2>
+
+{{ code_block(code_default | prettyHtml, "html") }}
+
+<h2 id="examples"><a href="#examples">Examples</a></h2>
+
+<h3 id="example-orientation"><a href="#example-orientation">Orientation</a></h3>
+
+<section class="prose">
+  <p>Use <code>data-orientation="vertical"</code> to stack buttons vertically.</p>
+</section>
+
+{% set code_orientation %}
+<div role="group" class="button-group" data-orientation="vertical">
+  <button class="btn-icon-outline" aria-label="Zoom in">
+    {% lucide "plus" %}
+  </button>
+  <button class="btn-icon-outline" aria-label="Zoom out">
+    {% lucide "minus" %}
+  </button>
+</div>
+{% endset %}
+
+{{ code_preview("button-group-orientation", code_orientation | prettyHtml) }}
+
+<h3 id="example-size"><a href="#example-size">Size</a></h3>
+
+{% set code_size %}
+<div class="flex flex-col items-start gap-8">
+  <div role="group" class="button-group">
+    <button class="btn-sm-outline">Small</button>
+    <button class="btn-sm-outline">Button</button>
+    <button class="btn-sm-outline">Group</button>
+    <button class="btn-sm-icon-outline">{% lucide "plus" %}</button>
+  </div>
+  <div role="group" class="button-group">
+    <button class="btn-outline">Default</button>
+    <button class="btn-outline">Button</button>
+    <button class="btn-outline">Group</button>
+    <button class="btn-icon-outline">{% lucide "plus" %}</button>
+  </div>
+  <div role="group" class="button-group">
+    <button class="btn-lg-outline">Small</button>
+    <button class="btn-lg-outline">Button</button>
+    <button class="btn-lg-outline">Group</button>
+    <button class="btn-lg-icon-outline">{% lucide "plus" %}</button>
+  </div>
+</div>
+{% endset %}
+
+{{ code_preview("button-group-size", code_size | prettyHtml) }}
+
+<h3 id="example-nested"><a href="#example-nested">Nested</a></h3>
+
+{% set code_nested %}
+<div role="group" aria-label="Pagination controls" class="flex w-fit items-stretch gap-2">
+  <div role="group" class="button-group">
+    <button class="btn-sm-outline">1</button>
+    <button class="btn-sm-outline">2</button>
+    <button class="btn-sm-outline">3</button>
+    <button class="btn-sm-outline">4</button>
+    <button class="btn-sm-outline">5</button>
+  </div>
+  <div role="group" class="button-group">
+    <button class="btn-sm-icon-outline" aria-label="Previous page">
+      {% lucide "chevron-left" %}
+    </button>
+    <button class="btn-sm-icon-outline" aria-label="Next page">
+      {% lucide "chevron-right" %}
+    </button>
+  </div>
+</div>
+{% endset %}
+
+{{ code_preview("button-group-nested", code_nested | prettyHtml) }}
+
+<h3 id="example-separator"><a href="#example-separator">Separator</a></h3>
+
+<section class="prose">
+  <p>Use <code>&lt;hr role="separator"&gt;</code> to visually divide buttons within a group.</p>
+</section>
+
+{% set code_separator %}
+<div role="group" class="button-group">
+  <button class="btn-secondary">Copy</button>
+  <hr role="separator">
+  <button class="btn-secondary">Paste</button>
+</div>
+{% endset %}
+
+{{ code_preview("button-group-separator", code_separator | prettyHtml) }}
+
+<h3 id="example-dropdown-menu"><a href="#example-dropdown-menu">Dropdown Menu</a></h3>
+
+{% set code_dropdown_menu %}
+<div role="group" class="button-group">
+  <button class="btn-outline">Follow</button>
+  {% set trigger %}
+    {% lucide "chevron-down" %}
+  {% endset %}
+  {% call dropdown_menu(
+    trigger=trigger,
+    trigger_attrs={"class": "btn-icon-outline"},
+    popover_attrs={"data-align": "end"}
+  ) %}
+    <div role="menuitem">
+      {% lucide "volume-off" %}
+      Mute Conversation
+    </div>
+    <div role="menuitem">
+      {% lucide "check" %}
+      Mark as Read
+    </div>
+    <div role="menuitem">
+      {% lucide "triangle-alert" %}
+      Report Conversation
+    </div>
+    <div role="menuitem">
+      {% lucide "user-round-x" %}
+      Block User
+    </div>
+    <div role="menuitem">
+      {% lucide "share" %}
+      Share Conversation
+    </div>
+    <div role="menuitem">
+      {% lucide "copy" %}
+      Copy Conversation
+    </div>
+    <hr role="separator">
+    <div role="menuitem" class="text-destructive hover:bg-destructive/10 dark:hover:bg-destructive/20 focus:bg-destructive/10 dark:focus:bg-destructive/20 focus:text-destructive [&_svg]:!text-destructive">
+      {% lucide "trash-2" %}
+      Delete Conversation
+    </div>
+  {% endcall %}
+</div>
+{% endset %}
+
+{{ code_preview("button-group-dropdown-menu", code_dropdown_menu | prettyHtml) }}
+
+<h3 id="example-nested"><a href="#example-nested">Popover</a></h3>
+
+{% set code_popover %}
+<div role="group" class="button-group">
+  <button class="btn-outline">
+    {% lucide "bot" %}
+    Copilot
+  </button>
+  {% call popover(
+    trigger=trigger,
+    trigger_attrs={"class": "btn-icon-outline"},
+    popover_attrs={"class": "w-72 p-0", "data-align": "end"}
+  ) %}
+    <header class="px-4 py-3 text-sm font-medium border-b">Agent Tasks</header>
+    <section class="p-4 text-sm space-y-2">
+      <textarea class="textarea w-full mb-4" placeholder="Describe your taks in natural language"></textarea>
+      <p class="font-medium">Start a new task with Copilot</p>
+      <p class="text-muted-foreground">
+        Describe your task in natural language. Copilot will work in the
+        background and open a pull request for your review.
+      </p>
+    </section>
+  {% endcall %}
+</div>
+{% endset %}
+
+{{ code_preview("button-group-popover", code_popover | prettyHtml) }}

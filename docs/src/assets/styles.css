@@ -505,6 +505,9 @@
   .w-\[271px\] {
     width: 271px;
   }
+  .w-fit {
+    width: fit-content;
+  }
   .w-full {
     width: 100%;
   }
@@ -621,6 +624,9 @@
   }
   .items-start {
     align-items: flex-start;
+  }
+  .items-stretch {
+    align-items: stretch;
   }
   .justify-between {
     justify-content: space-between;
@@ -816,6 +822,9 @@
   }
   .\!p-3\.5 {
     padding: calc(var(--spacing) * 3.5) !important;
+  }
+  .p-0 {
+    padding: calc(var(--spacing) * 0);
   }
   .p-1 {
     padding: calc(var(--spacing) * 1);
@@ -1844,6 +1853,149 @@
   }
 }
 @layer components {
+  .badge, .badge-primary, .badge-secondary, .badge-destructive, .badge-outline {
+    display: inline-flex;
+    width: fit-content;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    gap: calc(var(--spacing) * 1);
+    overflow: hidden;
+    border-radius: var(--radius-md);
+    border-style: var(--tw-border-style);
+    border-width: 1px;
+    padding-inline: calc(var(--spacing) * 2);
+    padding-block: calc(var(--spacing) * 0.5);
+    font-size: var(--text-xs);
+    line-height: var(--tw-leading, var(--text-xs--line-height));
+    --tw-font-weight: var(--font-weight-medium);
+    font-weight: var(--font-weight-medium);
+    white-space: nowrap;
+    transition-property: color,box-shadow;
+    transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
+    transition-duration: var(--tw-duration, var(--default-transition-duration));
+    &:focus-visible {
+      border-color: var(--color-ring);
+    }
+    &:focus-visible {
+      --tw-ring-shadow: var(--tw-ring-inset,) 0 0 0 calc(3px + var(--tw-ring-offset-width)) var(--tw-ring-color, currentcolor);
+      box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+    }
+    &:focus-visible {
+      --tw-ring-color: var(--color-ring);
+      @supports (color: color-mix(in lab, red, red)) {
+        --tw-ring-color: color-mix(in oklab, var(--color-ring) 50%, transparent);
+      }
+    }
+    &[aria-invalid="true"] {
+      border-color: var(--color-destructive);
+    }
+    &[aria-invalid="true"] {
+      --tw-ring-color: var(--color-destructive);
+      @supports (color: color-mix(in lab, red, red)) {
+        --tw-ring-color: color-mix(in oklab, var(--color-destructive) 20%, transparent);
+      }
+    }
+    &:is(.dark *) {
+      &[aria-invalid="true"] {
+        --tw-ring-color: var(--color-destructive);
+        @supports (color: color-mix(in lab, red, red)) {
+          --tw-ring-color: color-mix(in oklab, var(--color-destructive) 40%, transparent);
+        }
+      }
+    }
+    &>svg {
+      pointer-events: none;
+    }
+    &>svg {
+      width: calc(var(--spacing) * 3);
+      height: calc(var(--spacing) * 3);
+    }
+  }
+  .badge, .badge-primary {
+    border-color: transparent;
+    background-color: var(--color-primary);
+    color: var(--color-primary-foreground);
+    a& {
+      &:hover {
+        @media (hover: hover) {
+          background-color: var(--color-primary);
+          @supports (color: color-mix(in lab, red, red)) {
+            background-color: color-mix(in oklab, var(--color-primary) 90%, transparent);
+          }
+        }
+      }
+    }
+  }
+  .badge-secondary {
+    border-color: transparent;
+    background-color: var(--color-secondary);
+    color: var(--color-secondary-foreground);
+    a& {
+      &:hover {
+        @media (hover: hover) {
+          background-color: var(--color-secondary);
+          @supports (color: color-mix(in lab, red, red)) {
+            background-color: color-mix(in oklab, var(--color-secondary) 90%, transparent);
+          }
+        }
+      }
+    }
+  }
+  .badge-destructive {
+    border-color: transparent;
+    background-color: var(--color-destructive);
+    color: var(--color-white);
+    &:focus-visible {
+      --tw-ring-color: var(--color-destructive);
+      @supports (color: color-mix(in lab, red, red)) {
+        --tw-ring-color: color-mix(in oklab, var(--color-destructive) 20%, transparent);
+      }
+    }
+    &:is(.dark *) {
+      background-color: var(--color-destructive);
+      @supports (color: color-mix(in lab, red, red)) {
+        background-color: color-mix(in oklab, var(--color-destructive) 60%, transparent);
+      }
+    }
+    &:is(.dark *) {
+      &:focus-visible {
+        --tw-ring-color: var(--color-destructive);
+        @supports (color: color-mix(in lab, red, red)) {
+          --tw-ring-color: color-mix(in oklab, var(--color-destructive) 40%, transparent);
+        }
+      }
+    }
+    a& {
+      &:hover {
+        @media (hover: hover) {
+          background-color: var(--color-destructive);
+          @supports (color: color-mix(in lab, red, red)) {
+            background-color: color-mix(in oklab, var(--color-destructive) 90%, transparent);
+          }
+        }
+      }
+    }
+  }
+  .badge-outline {
+    color: var(--color-foreground);
+    a& {
+      &:hover {
+        @media (hover: hover) {
+          background-color: var(--color-accent);
+        }
+      }
+    }
+    a& {
+      &:hover {
+        @media (hover: hover) {
+          color: var(--color-accent-foreground);
+        }
+      }
+    }
+  }
+}
+@layer components {
   .btn, .btn-primary, .btn-secondary, .btn-outline, .btn-ghost, .btn-link, .btn-destructive, .btn-sm, .btn-sm-primary, .btn-sm-secondary, .btn-sm-outline, .btn-sm-ghost, .btn-sm-link, .btn-sm-destructive, .btn-lg, .btn-lg-primary, .btn-lg-secondary, .btn-lg-outline, .btn-lg-ghost, .btn-lg-link, .btn-lg-destructive, .btn-icon, .btn-icon-primary, .btn-icon-secondary, .btn-icon-outline, .btn-icon-ghost, .btn-icon-link, .btn-icon-destructive, .btn-sm-icon, .btn-sm-icon-primary, .btn-sm-icon-secondary, .btn-sm-icon-outline, .btn-sm-icon-ghost, .btn-sm-icon-link, .btn-sm-icon-destructive, .btn-lg-icon, .btn-lg-icon-primary, .btn-lg-icon-secondary, .btn-lg-icon-outline, .btn-lg-icon-ghost, .btn-lg-icon-link, .btn-lg-icon-destructive {
     display: inline-flex;
     flex-shrink: 0;
@@ -2065,146 +2217,49 @@
     }
   }
 }
-@layer components {
-  .badge, .badge-primary, .badge-secondary, .badge-destructive, .badge-outline {
-    display: inline-flex;
-    width: fit-content;
+.button-group {
+  isolation: isolate;
+  display: inline-flex;
+  > *:hover, > *:focus-visible, > :is(.dropdown-menu, .popover) > button:hover, > :is(.dropdown-menu, .popover) > button:focus-visible {
+    position: relative;
+    z-index: 10;
+  }
+  > hr[role='separator'] {
+    margin: calc(var(--spacing) * 0);
+    height: auto;
+    width: calc(var(--spacing) * 0);
     flex-shrink: 0;
-    align-items: center;
-    justify-content: center;
-    gap: calc(var(--spacing) * 1);
-    overflow: hidden;
-    border-radius: var(--radius-md);
+    align-self: stretch;
     border-style: var(--tw-border-style);
     border-width: 1px;
-    padding-inline: calc(var(--spacing) * 2);
-    padding-block: calc(var(--spacing) * 0.5);
-    font-size: var(--text-xs);
-    line-height: var(--tw-leading, var(--text-xs--line-height));
-    --tw-font-weight: var(--font-weight-medium);
-    font-weight: var(--font-weight-medium);
-    white-space: nowrap;
-    transition-property: color,box-shadow;
-    transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
-    transition-duration: var(--tw-duration, var(--default-transition-duration));
-    &:focus-visible {
-      border-color: var(--color-ring);
+    border-color: var(--color-input);
+  }
+  &:not([data-orientation='vertical']) {
+    > *:not(:first-child), > :is(.dropdown-menu, .popover):not(:first-child) > button {
+      margin-left: -1px;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
     }
-    &:focus-visible {
-      --tw-ring-shadow: var(--tw-ring-inset,) 0 0 0 calc(3px + var(--tw-ring-offset-width)) var(--tw-ring-color, currentcolor);
-      box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
-    }
-    &:focus-visible {
-      --tw-ring-color: var(--color-ring);
-      @supports (color: color-mix(in lab, red, red)) {
-        --tw-ring-color: color-mix(in oklab, var(--color-ring) 50%, transparent);
-      }
-    }
-    &[aria-invalid="true"] {
-      border-color: var(--color-destructive);
-    }
-    &[aria-invalid="true"] {
-      --tw-ring-color: var(--color-destructive);
-      @supports (color: color-mix(in lab, red, red)) {
-        --tw-ring-color: color-mix(in oklab, var(--color-destructive) 20%, transparent);
-      }
-    }
-    &:is(.dark *) {
-      &[aria-invalid="true"] {
-        --tw-ring-color: var(--color-destructive);
-        @supports (color: color-mix(in lab, red, red)) {
-          --tw-ring-color: color-mix(in oklab, var(--color-destructive) 40%, transparent);
-        }
-      }
-    }
-    &>svg {
-      pointer-events: none;
-    }
-    &>svg {
-      width: calc(var(--spacing) * 3);
-      height: calc(var(--spacing) * 3);
+    > *:not(:last-child), > :is(.dropdown-menu, .popover):not(:last-child) > button {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
     }
   }
-  .badge, .badge-primary {
-    border-color: transparent;
-    background-color: var(--color-primary);
-    color: var(--color-primary-foreground);
-    a& {
-      &:hover {
-        @media (hover: hover) {
-          background-color: var(--color-primary);
-          @supports (color: color-mix(in lab, red, red)) {
-            background-color: color-mix(in oklab, var(--color-primary) 90%, transparent);
-          }
-        }
-      }
+  &[data-orientation='vertical'] {
+    flex-direction: column;
+    > hr[role='separator'] {
+      height: 1px;
+      width: auto;
     }
-  }
-  .badge-secondary {
-    border-color: transparent;
-    background-color: var(--color-secondary);
-    color: var(--color-secondary-foreground);
-    a& {
-      &:hover {
-        @media (hover: hover) {
-          background-color: var(--color-secondary);
-          @supports (color: color-mix(in lab, red, red)) {
-            background-color: color-mix(in oklab, var(--color-secondary) 90%, transparent);
-          }
-        }
-      }
+    > *:not(:first-child) {
+      margin-top: -1px;
+      margin-left: calc(var(--spacing) * 0);
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
     }
-  }
-  .badge-destructive {
-    border-color: transparent;
-    background-color: var(--color-destructive);
-    color: var(--color-white);
-    &:focus-visible {
-      --tw-ring-color: var(--color-destructive);
-      @supports (color: color-mix(in lab, red, red)) {
-        --tw-ring-color: color-mix(in oklab, var(--color-destructive) 20%, transparent);
-      }
-    }
-    &:is(.dark *) {
-      background-color: var(--color-destructive);
-      @supports (color: color-mix(in lab, red, red)) {
-        background-color: color-mix(in oklab, var(--color-destructive) 60%, transparent);
-      }
-    }
-    &:is(.dark *) {
-      &:focus-visible {
-        --tw-ring-color: var(--color-destructive);
-        @supports (color: color-mix(in lab, red, red)) {
-          --tw-ring-color: color-mix(in oklab, var(--color-destructive) 40%, transparent);
-        }
-      }
-    }
-    a& {
-      &:hover {
-        @media (hover: hover) {
-          background-color: var(--color-destructive);
-          @supports (color: color-mix(in lab, red, red)) {
-            background-color: color-mix(in oklab, var(--color-destructive) 90%, transparent);
-          }
-        }
-      }
-    }
-  }
-  .badge-outline {
-    color: var(--color-foreground);
-    a& {
-      &:hover {
-        @media (hover: hover) {
-          background-color: var(--color-accent);
-        }
-      }
-    }
-    a& {
-      &:hover {
-        @media (hover: hover) {
-          color: var(--color-accent-foreground);
-        }
-      }
+    > *:not(:last-child) {
+      border-bottom-right-radius: 0;
+      border-bottom-left-radius: 0;
     }
   }
 }

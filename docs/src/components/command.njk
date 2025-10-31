@@ -19,11 +19,11 @@ toc:
 {% macro command_items(suggestions_id="suggestions", settings_id="settings") %}
 <div role="group" aria-labelledby="{{ suggestions_id }}">
   <span role="heading" id="{{ suggestions_id }}">Suggestions</span>
-  <div role="option" data-value="calendar">
+  <div role="option" data-value="calendar" onclick="this.closest('dialog').close()">
     {% lucide "calendar" %}
     <span>Calendar</span>
   </div>
-  <div role="option" data-value="search-emoji">
+  <div role="option" data-value="search-emoji" onclick="this.closest('dialog').close()">
     {% lucide "smile" %}
     <span>Search Emoji</span>
   </div>
@@ -35,17 +35,17 @@ toc:
 <hr role="separator" />
 <div role="group" aria-labelledby="{{ settings_id }}">
   <span role="heading" id="{{ settings_id }}">Settings</span>
-  <div role="option" data-value="profile">
+  <div role="option" data-value="profile" onclick="this.closest('dialog').close()">
     {% lucide "user" %}
     <span>Profile</span>
     <kbd class="ml-auto text-muted-foreground bg-transparent tracking-widest">⌘P</kbd>
   </div>
-  <div role="option" data-value="billing">
+  <div role="option" data-value="billing" onclick="this.closest('dialog').close()">
     {% lucide "credit-card" %}
     <span>Billing</span>
     <kbd class="ml-auto text-muted-foreground bg-transparent tracking-widest">⌘B</kbd>
   </div>
-  <div role="option" data-value="settings">
+  <div role="option" data-value="settings" onclick="this.closest('dialog').close()">
     {% lucide "settings" %}
     <span>Settings</span>
     <kbd class="ml-auto text-muted-foreground bg-transparent tracking-widest">⌘S</kbd>
