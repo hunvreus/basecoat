@@ -63,6 +63,24 @@ async function copyDirRecursive(src, dest) {
   }
 }
 
+// Recursively adds CSS component exports
+async function collectComponentCssExports(srcDir, exportsMap, relativePath = '') {
+  const entries = await fs.readdir(srcDir, { withFileTypes: true });
+
+  for (const entry of entries) {
+    const entryPath = path.join(srcDir, entry.name);
+    const subPath = path.posix.join(relativePath, entry.name);
+
+    if (entry.isDirectory()) {
+      await collectComponentCssExports(entryPath, exportsMap, subPath);
+    } else if (entry.name.endsWith('.css')) {
+      const exportKey = `./components/${subPath.replace(/\.css$/, '')}`;
+      const stylePath = `./dist/components/${subPath}`;
+      exportsMap[exportKey] = { style: stylePath };
+    }
+  }
+}
+
 // Main build function to prepare packages for publishing.
 async function build() {
   console.log('Starting build process...');
@@ -160,6 +178,61 @@ async function build() {
   console.log(`Generated non-minified CSS: ${cssDistCdnPath}`);
   await execPromise(`npx tailwindcss -i "${cdnCssSrc}" -o "${cssDistCdnMinPath}" --minify`);
   console.log(`Generated minified CSS: ${cssDistCdnMinPath}`);
+
+  // Copy basecoat.all.css
+  await fs.copyFile(path.join(srcCssDir, 'basecoat.all.css'), path.join(cssDistDir, 'basecoat.all.css'));
+  console.log(`Copied basecoat.all.css to ${cssDistDir}`);
+
+  // Copy base/base.css
+  const baseSrcDir = path.join(srcCssDir, 'base');
+  const baseDistDir = path.join(cssDistDir, 'base');
+  await ensureDir(baseDistDir);
+  await fs.copyFile(path.join(baseSrcDir, 'base.css'), path.join(baseDistDir, 'base.css'));
+  console.log(`Copied base/base.css to ${cssDistDir}`);
+
+    // Copy components
+  console.log('Copying individual CSS components...');
+  const componentsSrcDir = path.join(srcCssDir, 'components');
+  const componentsDistDir = path.join(cssDistDir, 'components');
+  await copyDirRecursive(componentsSrcDir, componentsDistDir);
+  console.log(`Copied component CSS files to ${componentsDistDir}`);
+
+  // Read package.json
+  const cssPackageJsonPath = path.join(cssPackageDir, 'package.json');
+  const cssPackageJson = JSON.parse(await fs.readFile(cssPackageJsonPath, 'utf-8'));
+
+  // Base exports
+  const exportsMap = {
+    "./package.json": "./package.json",
+    ".": "./dist/basecoat.css",
+    "./css": "./dist/basecoat.css",
+    "./all": "./dist/js/all.js",
+    "./all.min": "./dist/js/all.min.js",
+    "./dropdown-menu": "./dist/js/dropdown-menu.js",
+    "./dropdown-menu.min": "./dist/js/dropdown-menu.min.js",
+    "./popover": "./dist/js/popover.js",
+    "./popover.min": "./dist/js/popover.min.js",
+    "./select": "./dist/js/select.js",
+    "./select.min": "./dist/js/select.min.js",
+    "./sidebar": "./dist/js/sidebar.js",
+    "./sidebar.min": "./dist/js/sidebar.min.js",
+    "./tabs": "./dist/js/tabs.js",
+    "./tabs.min": "./dist/js/tabs.min.js",
+    "./toast": "./dist/js/toast.js",
+    "./toast.min": "./dist/js/toast.min.js",
+
+    "./all.css": "./dist/basecoat.all.css",
+    "./base": "./dist/base/base.css"
+  };
+
+  // Add dynamic component exports
+  await collectComponentCssExports(componentsSrcDir, exportsMap);
+
+  // Write updated package.json
+  cssPackageJson.exports = exportsMap;
+  await fs.writeFile(cssPackageJsonPath, JSON.stringify(cssPackageJson, null, 2));
+  console.log('Updated package.json with dynamic CSS component exports.');
+
 
   console.log('Build process finished successfully!');
 }
