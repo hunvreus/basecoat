@@ -21,8 +21,7 @@
     "css",
     "html",
     "jinja",
-    "nunjucks",
-    "alpinejs"
+    "nunjucks"
   ],
   "license": "MIT",
   "repository": {

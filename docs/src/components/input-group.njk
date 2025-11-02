@@ -1,0 +1,247 @@
+---
+layout: layouts/page.njk
+title: Input Group
+description: Display additional information or actions alongside inputs using simple HTML patterns.
+toc:
+  - label: Usage
+    id: usage
+  - label: Examples
+    id: examples
+    children:
+      - label: Icon Prefix
+        id: example-icon-prefix
+      - label: Icon Suffix
+        id: example-icon-suffix
+      - label: Text Prefix/Suffix
+        id: example-text
+      - label: Button Suffix
+        id: example-button
+      - label: Multiple Elements
+        id: example-multiple
+      - label: Textarea
+        id: example-textarea
+---
+
+{% from "macros/code_preview.njk" import code_preview %}
+{% from "macros/code_block.njk" import code_block %}
+
+{% set code_default %}
+<div class="relative">
+  <input type="text" class="input pl-10" placeholder="Search...">
+  <div class="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none text-muted-foreground">
+    {% lucide "search" %}
+  </div>
+</div>
+{% endset %}
+
+{{ code_preview("input-group-default", code_default) }}
+
+<h2 id="usage"><a href="#usage">Usage</a></h2>
+
+<section class="prose">
+  <p>Input groups are achieved through composition using relative positioning and Tailwind utilities. No special component needed - just wrap your input with a positioned container and add your icons, text, or buttons.</p>
+  <p><strong>Key patterns:</strong></p>
+  <ul>
+    <li>Use <code>relative</code> wrapper around input</li>
+    <li>Position content with <code>absolute</code> + <code>top-1/2 -translate-y-1/2</code></li>
+    <li>Add padding to input (<code>pl-*</code> or <code>pr-*</code>) to make room for content</li>
+    <li>Use <code>pointer-events-none</code> for decorative icons</li>
+  </ul>
+</section>
+
+{{ code_block(code_default) }}
+
+<h2 id="examples"><a href="#examples">Examples</a></h2>
+
+<h3 id="example-icon-prefix"><a href="#example-icon-prefix">Icon Prefix</a></h3>
+
+<section class="prose">
+  <p>Add an icon at the start of the input field.</p>
+</section>
+
+{% set code_icon_prefix %}
+<div class="flex flex-col gap-4 w-full max-w-sm">
+  <div class="relative">
+    <input type="text" class="input pl-10" placeholder="Search...">
+    <div class="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none text-muted-foreground">
+      {% lucide "search" %}
+    </div>
+  </div>
+  
+  <div class="relative">
+    <input type="email" class="input pl-10" placeholder="Email">
+    <div class="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none text-muted-foreground">
+      {% lucide "mail" %}
+    </div>
+  </div>
+</div>
+{% endset %}
+
+{{ code_preview("input-group-icon-prefix", code_icon_prefix) }}
+
+<h3 id="example-icon-suffix"><a href="#example-icon-suffix">Icon Suffix</a></h3>
+
+<section class="prose">
+  <p>Add an icon at the end of the input field.</p>
+</section>
+
+{% set code_icon_suffix %}
+<div class="flex flex-col gap-4 w-full max-w-sm">
+  <div class="relative">
+    <input type="text" class="input pr-10" placeholder="Username">
+    <div class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-green-500">
+      {% lucide "check" %}
+    </div>
+  </div>
+  
+  <div class="relative">
+    <input type="text" class="input pr-16" placeholder="Card number">
+    <div class="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1 pointer-events-none text-muted-foreground">
+      {% lucide "credit-card" %}
+      {% lucide "info" %}
+    </div>
+  </div>
+</div>
+{% endset %}
+
+{{ code_preview("input-group-icon-suffix", code_icon_suffix) }}
+
+<h3 id="example-text"><a href="#example-text">Text Prefix/Suffix</a></h3>
+
+<section class="prose">
+  <p>Display text before or after the input value.</p>
+</section>
+
+{% set code_text %}
+<div class="flex flex-col gap-4 w-full max-w-sm">
+  <div class="relative">
+    <input type="text" class="input pl-12 pr-16" placeholder="0.00">
+    <div class="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none text-muted-foreground text-sm">
+      $
+    </div>
+    <div class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-muted-foreground text-sm">
+      USD
+    </div>
+  </div>
+  
+  <div class="relative">
+    <input type="text" class="input pl-20" placeholder="example.com">
+    <div class="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none text-muted-foreground text-sm">
+      https://
+    </div>
+  </div>
+  
+  <div class="relative">
+    <input type="text" class="input pr-32" placeholder="username">
+    <div class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-muted-foreground text-sm">
+      @company.com
+    </div>
+  </div>
+</div>
+{% endset %}
+
+{{ code_preview("input-group-text", code_text) }}
+
+<h3 id="example-button"><a href="#example-button">Button Suffix</a></h3>
+
+<section class="prose">
+  <p>Add interactive buttons inside the input.</p>
+</section>
+
+{% set code_button %}
+<div class="flex flex-col gap-4 w-full max-w-sm">
+  <div class="relative">
+    <input type="text" class="input pr-10" placeholder="Search...">
+    <button type="button" class="absolute right-1 top-1/2 -translate-y-1/2 btn-icon-sm-ghost">
+      {% lucide "search" %}
+    </button>
+  </div>
+  
+  <div class="relative">
+    <input type="password" class="input pr-10" placeholder="Password">
+    <button type="button" class="absolute right-1 top-1/2 -translate-y-1/2 btn-icon-sm-ghost">
+      {% lucide "eye" %}
+    </button>
+  </div>
+  
+  <div class="relative">
+    <input type="text" class="input pr-10" value="https://example.com/page">
+    <button type="button" class="absolute right-1 top-1/2 -translate-y-1/2 btn-icon-sm-ghost">
+      {% lucide "copy" %}
+    </button>
+  </div>
+</div>
+{% endset %}
+
+{{ code_preview("input-group-button", code_button) }}
+
+<h3 id="example-multiple"><a href="#example-multiple">Multiple Elements</a></h3>
+
+<section class="prose">
+  <p>Combine multiple icons, text, and buttons.</p>
+</section>
+
+{% set code_multiple %}
+<div class="flex flex-col gap-4 w-full max-w-sm">
+  <div class="relative">
+    <input type="text" class="input pl-10 pr-20" placeholder="Search...">
+    <div class="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none text-muted-foreground">
+      {% lucide "search" %}
+    </div>
+    <div class="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1.5">
+      <span class="text-xs text-muted-foreground pointer-events-none">⌘K</span>
+    </div>
+  </div>
+  
+  <div class="relative">
+    <input type="text" class="input pl-20 pr-10" placeholder="example.com">
+    <div class="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none text-muted-foreground text-sm">
+      https://
+    </div>
+    <button type="button" class="absolute right-1 top-1/2 -translate-y-1/2 btn-icon-sm-ghost">
+      {% lucide "info" %}
+    </button>
+  </div>
+</div>
+{% endset %}
+
+{{ code_preview("input-group-multiple", code_multiple) }}
+
+<h3 id="example-textarea"><a href="#example-textarea">Textarea</a></h3>
+
+<section class="prose">
+  <p>Add buttons to textareas for actions like submit.</p>
+</section>
+
+{% set code_textarea %}
+<div class="flex flex-col gap-4 w-full max-w-sm">
+  <div class="relative">
+    <textarea class="textarea pr-10 min-h-24" placeholder="Enter your message..."></textarea>
+    <button type="button" class="absolute right-2 bottom-2 btn-icon-sm">
+      {% lucide "send" %}
+    </button>
+  </div>
+  
+  <div class="relative">
+    <textarea class="textarea pb-10 min-h-32" placeholder="Type something..."></textarea>
+    <div class="absolute bottom-3 left-3 right-3 flex items-center justify-between gap-2">
+      <span class="text-xs text-muted-foreground">120 characters left</span>
+      <button type="button" class="btn-sm">Submit</button>
+    </div>
+  </div>
+</div>
+{% endset %}
+
+{{ code_preview("input-group-textarea", code_textarea) }}
+
+<h2 id="accessibility"><a href="#accessibility">Accessibility</a></h2>
+
+<section class="prose">
+  <ul>
+    <li>Use <code>pointer-events-none</code> for decorative icons that shouldn't be interactive</li>
+    <li>Ensure buttons have proper <code>aria-label</code> or visible text</li>
+    <li>Maintain sufficient padding so text doesn't overlap with icons/buttons</li>
+    <li>Use semantic button types (<code>type="button"</code> vs <code>type="submit"</code>)</li>
+  </ul>
+</section>
+

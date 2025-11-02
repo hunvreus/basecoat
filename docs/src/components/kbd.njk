@@ -37,7 +37,15 @@ toc:
 
 <h2 id="usage"><a href="#usage">Usage</a></h2>
 
-{{ code_block(code_html | prettyHtml, "html") }}
+<section class="prose">
+  <p>Simply use the <code>&lt;kbd&gt;</code> element:</p>
+</section>
+
+{% set code_simple %}
+<kbd>⌘K</kbd>
+{% endset %}
+
+{{ code_block(code_simple | prettyHtml, "html") }}
 
 <h2 id="examples"><a href="#examples">Examples</a></h2>
 

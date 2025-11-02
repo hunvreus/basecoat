@@ -27,7 +27,7 @@
       @apply font-medium underline underline-offset-4;
     }
     code:not(pre > code) {
-      @apply relative rounded-md bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm;
+      @apply relative rounded-md bg-muted/50 px-[0.3rem] py-[0.2rem] font-mono text-sm;
     }
     blockquote {
       @apply border-l-4 border-border pl-4;

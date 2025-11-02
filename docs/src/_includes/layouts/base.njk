@@ -99,7 +99,6 @@
   <script>
     document.addEventListener('htmx:historyRestore', () => {
       if (window.basecoat) window.basecoat.initAll();
-      if (window.Alpine) Alpine.initTree(document.body);
     });
   </script>
   {% if head %}{{ head | safe }}{% endif %}

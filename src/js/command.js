@@ -1,32 +1,36 @@
 (() => {
   const initCommand = (container) => {
     const input = container.querySelector('header input');
-    const listbox = container.querySelector('[role="listbox"]');
+    const menu = container.querySelector('[role="menu"]');
 
-    if (!input || !listbox) {
+    if (!input || !menu) {
       const missing = [];
       if (!input) missing.push('input');
-      if (!listbox) missing.push('listbox');
+      if (!menu) missing.push('menu');
       console.error(`Command component initialization failed. Missing element(s): ${missing.join(', ')}`, container);
       return;
     }
 
-    const options = Array.from(listbox.querySelectorAll('[role="option"]'));
-    let visibleOptions = [...options];
+    const allMenuItems = Array.from(menu.querySelectorAll('[role="menuitem"]'));
+    const menuItems = allMenuItems.filter(item => 
+      !item.hasAttribute('disabled') && 
+      item.getAttribute('aria-disabled') !== 'true'
+    );
+    let visibleMenuItems = [...menuItems];
     let activeIndex = -1;
 
-    const setActiveOption = (index) => {
-      if (activeIndex > -1 && options[activeIndex]) {
-        options[activeIndex].classList.remove('active');
+    const setActiveItem = (index) => {
+      if (activeIndex > -1 && menuItems[activeIndex]) {
+        menuItems[activeIndex].classList.remove('active');
       }
 
       activeIndex = index;
 
       if (activeIndex > -1) {
-        const activeOption = options[activeIndex];
-        activeOption.classList.add('active');
-        if (activeOption.id) {
-          input.setAttribute('aria-activedescendant', activeOption.id);
+        const activeItem = menuItems[activeIndex];
+        activeItem.classList.add('active');
+        if (activeItem.id) {
+          input.setAttribute('aria-activedescendant', activeItem.id);
         } else {
           input.removeAttribute('aria-activedescendant');
         }
@@ -35,39 +39,29 @@
       }
     };
 
-    const filterOptions = () => {
+    const filterMenuItems = () => {
       const searchTerm = input.value.trim().toLowerCase();
 
-      setActiveOption(-1);
+      setActiveItem(-1);
 
-      visibleOptions = [];
-      options.forEach(option => {
-        const optionText = (option.dataset.label || option.textContent).trim().toLowerCase();
-        const keywords = (option.dataset.keywords || '').toLowerCase();
-        const matches = optionText.includes(searchTerm) || keywords.includes(searchTerm);
-        option.setAttribute('aria-hidden', String(!matches));
-        if (matches) {
-          visibleOptions.push(option);
+      visibleMenuItems = [];
+      allMenuItems.forEach(item => {
+        const itemText = (item.dataset.label || item.textContent).trim().toLowerCase();
+        const keywords = (item.dataset.keywords || '').toLowerCase();
+        const matches = itemText.includes(searchTerm) || keywords.includes(searchTerm);
+        item.setAttribute('aria-hidden', String(!matches));
+        if (matches && menuItems.includes(item)) {
+          visibleMenuItems.push(item);
         }
       });
 
-      if (visibleOptions.length > 0) {
-        setActiveOption(options.indexOf(visibleOptions[0]));
-        visibleOptions[0].scrollIntoView({ block: 'nearest' });
+      if (visibleMenuItems.length > 0) {
+        setActiveItem(menuItems.indexOf(visibleMenuItems[0]));
+        visibleMenuItems[0].scrollIntoView({ block: 'nearest' });
       }
     };
 
-    const selectOption = (option) => {
-      if (!option) return;
-
-      const event = new CustomEvent('command:select', {
-        detail: { value: option.dataset.value },
-        bubbles: true
-      });
-      container.dispatchEvent(event);
-    };
-
-    input.addEventListener('input', filterOptions);
+    input.addEventListener('input', filterMenuItems);
 
     const handleKeyNavigation = (event) => {
       if (!['ArrowDown', 'ArrowUp', 'Enter', 'Home', 'End'].includes(event.key)) {
@@ -77,21 +71,21 @@
       if (event.key === 'Enter') {
         event.preventDefault();
         if (activeIndex > -1) {
-          selectOption(options[activeIndex]);
+          menuItems[activeIndex]?.click();
         }
         return;
       }
 
-      if (visibleOptions.length === 0) return;
+      if (visibleMenuItems.length === 0) return;
 
       event.preventDefault();
 
-      const currentVisibleIndex = activeIndex > -1 ? visibleOptions.indexOf(options[activeIndex]) : -1;
+      const currentVisibleIndex = activeIndex > -1 ? visibleMenuItems.indexOf(menuItems[activeIndex]) : -1;
       let nextVisibleIndex = currentVisibleIndex;
 
       switch (event.key) {
         case 'ArrowDown':
-          if (currentVisibleIndex < visibleOptions.length - 1) {
+          if (currentVisibleIndex < visibleMenuItems.length - 1) {
             nextVisibleIndex = currentVisibleIndex + 1;
           }
           break;
@@ -106,47 +100,42 @@
           nextVisibleIndex = 0;
           break;
         case 'End':
-          nextVisibleIndex = visibleOptions.length - 1;
+          nextVisibleIndex = visibleMenuItems.length - 1;
           break;
       }
 
       if (nextVisibleIndex !== currentVisibleIndex) {
-        const newActiveOption = visibleOptions[nextVisibleIndex];
-        setActiveOption(options.indexOf(newActiveOption));
-        newActiveOption.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+        const newActiveItem = visibleMenuItems[nextVisibleIndex];
+        setActiveItem(menuItems.indexOf(newActiveItem));
+        newActiveItem.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
       }
     };
 
-    listbox.addEventListener('mousemove', (event) => {
-      const option = event.target.closest('[role="option"]');
-      if (option && visibleOptions.includes(option)) {
-        const index = options.indexOf(option);
+    menu.addEventListener('mousemove', (event) => {
+      const menuItem = event.target.closest('[role="menuitem"]');
+      if (menuItem && visibleMenuItems.includes(menuItem)) {
+        const index = menuItems.indexOf(menuItem);
         if (index !== activeIndex) {
-          setActiveOption(index);
+          setActiveItem(index);
         }
       }
     });
 
-    listbox.addEventListener('mouseleave', () => {
-      if (visibleOptions.length > 0) {
-        setActiveOption(options.indexOf(visibleOptions[0]));
-      } else {
-        setActiveOption(-1);
-      }
-    });
-
-    listbox.addEventListener('click', (event) => {
-      const clickedOption = event.target.closest('[role="option"]');
-      if (clickedOption && visibleOptions.includes(clickedOption)) {
-        selectOption(clickedOption);
+    menu.addEventListener('click', (event) => {
+      const clickedItem = event.target.closest('[role="menuitem"]');
+      if (clickedItem && visibleMenuItems.includes(clickedItem)) {
+        const dialog = container.closest('dialog.command-dialog');
+        if (dialog && !clickedItem.hasAttribute('data-keep-command-open')) {
+          dialog.close();
+        }
       }
     });
 
     input.addEventListener('keydown', handleKeyNavigation);
 
-    if (visibleOptions.length > 0) {
-      setActiveOption(options.indexOf(visibleOptions[0]));
-      visibleOptions[0].scrollIntoView({ block: 'nearest' });
+    if (visibleMenuItems.length > 0) {
+      setActiveItem(menuItems.indexOf(visibleMenuItems[0]));
+      visibleMenuItems[0].scrollIntoView({ block: 'nearest' });
     }
 
     container.dataset.commandInitialized = true;

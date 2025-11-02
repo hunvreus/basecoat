@@ -30,8 +30,7 @@
     "css",
     "html",
     "jinja",
-    "nunjucks",
-    "alpinejs"
+    "nunjucks"
   ],
   "repository": {
     "type": "git",

@@ -7,7 +7,7 @@
   @param empty_text {string} [optional] [default="No results found."] - Text displayed when no results match the search.
   @param main_attrs {object} [optional] - Additional HTML attributes for the main container div.
   @param input_attrs {object} [optional] - Additional HTML attributes for the search input.
-  @param listbox_attrs {object} [optional] - Additional HTML attributes for the listbox div.
+  @param menu_attrs {object} [optional] - Additional HTML attributes for the menu div.
 #}
 {% macro command(
   id=None,
@@ -16,7 +16,7 @@
   empty_text="No results found.",
   main_attrs={},
   input_attrs={},
-  listbox_attrs={}
+  menu_attrs={}
 ) %}
 {% set id = id or ("command-" ~ range(100000, 999999) | random | string) %}
 <div
@@ -39,19 +39,19 @@
       aria-autocomplete="list"
       role="combobox"
       aria-expanded="true"
-      aria-controls="{{ id }}-listbox"
+      aria-controls="{{ id }}-menu"
       {% for key, value in input_attrs.items() %}
         {{ key }}="{{ value }}"
       {% endfor %}
     >
   </header>
   <div
-    role="listbox"
-    id="{{ id }}-listbox"
+    role="menu"
+    id="{{ id }}-menu"
     aria-orientation="vertical"
     data-empty="{{ empty_text }}"
-    class="scrollbar {{ listbox_attrs.class }}"
-    {% for key, value in listbox_attrs.items() %}
+    class="scrollbar {{ menu_attrs.class }}"
+    {% for key, value in menu_attrs.items() %}
       {% if key != 'class' %}{{ key }}="{{ value }}"{% endif %}
     {% endfor %}
   >
@@ -73,7 +73,7 @@
   @param empty_text {string} [optional] [default="No results found."] - Text displayed when no results match the search.
   @param dialog_attrs {object} [optional] - Additional HTML attributes for the dialog element.
   @param input_attrs {object} [optional] - Additional HTML attributes for the search input.
-  @param listbox_attrs {object} [optional] - Additional HTML attributes for the listbox div.
+  @param menu_attrs {object} [optional] - Additional HTML attributes for the menu div.
   @param open {boolean} [optional] [default=False] - Whether the command dialog should be open initially.
 #}
 {% macro command_dialog(
@@ -83,7 +83,7 @@
   empty_text="No results found.",
   dialog_attrs={},
   input_attrs={},
-  listbox_attrs={},
+  menu_attrs={},
   open=False
 ) %}
 {% set id = id or ("command-dialog-" ~ range(100000, 999999) | random | string) %}
@@ -97,54 +97,56 @@
     {% if key != 'class' %}{{ key }}="{{ value }}"{% endif %}
   {% endfor %}
 >
-  <article>
-    <div class="command">
-      <header>
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search-icon lucide-search"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-        <input
-          type="text"
-          id="{{ id }}-input"
-          placeholder="{{ placeholder }}"
-          autocomplete="off"
-          autocorrect="off"
-          spellcheck="false"
-          aria-autocomplete="list"
-          role="combobox"
-          aria-expanded="true"
-          aria-controls="{{ id }}-listbox"
-          {% for key, value in input_attrs.items() %}
-            {{ key }}="{{ value }}"
-          {% endfor %}
-        >
-      </header>
-      <div
-        role="listbox"
-        id="{{ id }}-listbox"
-        aria-orientation="vertical"
-        data-empty="{{ empty_text }}"
-        class="scrollbar {{ listbox_attrs.class }}"
-        {% for key, value in listbox_attrs.items() %}
-          {% if key != 'class' %}{{ key }}="{{ value }}"{% endif %}
+  <div class="command">
+    <header>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search-icon lucide-search"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      <input
+        type="text"
+        id="{{ id }}-input"
+        placeholder="{{ placeholder }}"
+        autocomplete="off"
+        autocorrect="off"
+        spellcheck="false"
+        aria-autocomplete="list"
+        role="combobox"
+        aria-expanded="true"
+        aria-controls="{{ id }}-menu"
+        {% for key, value in input_attrs.items() %}
+          {{ key }}="{{ value }}"
         {% endfor %}
       >
-        {% if items and items|length > 0 %}
-          {{ render_command_items(items, id ~ "-items" if id else "items") }}
-        {% else %}
-          {{ caller() if caller }}
-        {% endif %}
-      </div>
+    </header>
+    <div
+      role="menu"
+      id="{{ id }}-menu"
+      aria-orientation="vertical"
+      data-empty="{{ empty_text }}"
+      class="scrollbar {{ menu_attrs.class }}"
+      {% for key, value in menu_attrs.items() %}
+        {% if key != 'class' %}{{ key }}="{{ value }}"{% endif %}
+      {% endfor %}
+    >
+      {% if items and items|length > 0 %}
+        {{ render_command_items(items, id ~ "-items" if id else "items") }}
+      {% else %}
+        {{ caller() if caller }}
+      {% endif %}
     </div>
     <button type="button" aria-label="Close dialog" onclick="this.closest('dialog').close()">
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
     </button>
-  </article>
+  </div>
 </dialog>
 {% endmacro %}
 
 {# 
   Renders a list of items for the command component.
 
-  @param items {array} - The array of items to render.
+  @param items {array} - Array of items to render. Each item can be:
+    - { type: "item", label: "Text", content: "HTML", keywords: "search terms", disabled: true, attrs: {} }
+    - { type: "group", label: "Group Title", items: [...] }
+    - { type: "separator" }
+    Note: Use attrs to add data-label for alternative search text if needed.
   @param parent_id_prefix {string} [optional] - The prefix for the item id.
 #}
 {% macro render_command_items(items, parent_id_prefix="items") %}
@@ -169,10 +171,8 @@
     {% elif item.type == "item" or not item.type %}
       <div
         id="{{ item_id }}"
-        role="option"
-        data-value="{{ item.value }}"
+        role="menuitem"
         {% if item.keywords %}data-keywords="{{ item.keywords }}"{% endif %}
-        {% if item.label %}data-label="{{ item.label }}"{% endif %}
         {% if item.disabled %}aria-disabled="true"{% endif %}
         {% if item.attrs %}
           {% for key, value in item.attrs.items() %}

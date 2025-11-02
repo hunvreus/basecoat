@@ -1,0 +1,316 @@
+---
+layout: layouts/page.njk
+title: Field
+description: Combine labels, controls, and help text to compose accessible form fields.
+toc:
+  - label: Usage
+    id: usage
+  - label: Examples
+    id: examples
+    children:
+      - label: Input
+        id: example-input
+      - label: Textarea
+        id: example-textarea
+      - label: Select
+        id: example-select
+      - label: Fieldset
+        id: example-fieldset
+      - label: Checkbox
+        id: example-checkbox
+      - label: Radio Group
+        id: example-radio
+      - label: Switch
+        id: example-switch
+---
+
+{% from "macros/code_preview.njk" import code_preview %}
+{% from "macros/code_block.njk" import code_block %}
+
+{% set code_demo %}
+<form class="w-full max-w-md space-y-6">
+  <fieldset class="fieldset" aria-describedby="payment-desc">
+    <legend>Payment Method</legend>
+    <p id="payment-desc" class="description">All transactions are secure and encrypted</p>
+    
+    <div role="group" class="field">
+      <label for="card-name">Name on Card</label>
+      <input id="card-name" type="text" placeholder="Evil Rabbit" required>
+    </div>
+    
+    <div role="group" class="field">
+      <label for="card-number">Card Number</label>
+      <input id="card-number" type="text" placeholder="1234 5678 9012 3456" aria-describedby="card-number-desc" required>
+      <p id="card-number-desc" class="description">Enter your 16-digit card number</p>
+    </div>
+    
+    <div class="grid grid-cols-3 gap-4">
+      <div role="group" class="field">
+        <label for="exp-month">Month</label>
+        <select id="exp-month" class="select">
+          <option value="">MM</option>
+          <option value="01">01</option>
+          <option value="02">02</option>
+          <option value="03">03</option>
+          <option value="04">04</option>
+          <option value="05">05</option>
+          <option value="06">06</option>
+          <option value="07">07</option>
+          <option value="08">08</option>
+          <option value="09">09</option>
+          <option value="10">10</option>
+          <option value="11">11</option>
+          <option value="12">12</option>
+        </select>
+      </div>
+      <div role="group" class="field">
+        <label for="exp-year">Year</label>
+        <select id="exp-year" class="select">
+          <option value="">YYYY</option>
+          <option value="2024">2024</option>
+          <option value="2025">2025</option>
+          <option value="2026">2026</option>
+          <option value="2027">2027</option>
+          <option value="2028">2028</option>
+          <option value="2029">2029</option>
+        </select>
+      </div>
+      <div role="group" class="field">
+        <label for="cvv">CVV</label>
+        <input id="cvv" type="text" placeholder="123" required>
+      </div>
+    </div>
+  </fieldset>
+
+  <hr role="separator" class="my-6 border-border">
+  
+  <fieldset class="fieldset" aria-describedby="billing-desc">
+    <legend>Billing Address</legend>
+    <p id="billing-desc" class="description">The billing address associated with your payment method</p>
+    
+    <div class="flex items-center gap-3">
+      <input type="checkbox" id="same-as-shipping" checked>
+      <label for="same-as-shipping" class="font-normal">Same as shipping address</label>
+    </div>
+  </fieldset>
+  
+  <fieldset class="fieldset">
+    <div role="group" class="field">
+      <label for="comments">Comments</label>
+      <textarea id="comments" placeholder="Add any additional comments" rows="3"></textarea>
+    </div>
+  </fieldset>
+  
+  <div class="flex gap-2">
+    <button type="submit" class="btn">Submit</button>
+    <button type="button" class="btn-outline">Cancel</button>
+  </div>
+</form>
+{% endset %}
+
+{{ code_preview("field-demo", code_demo) }}
+
+<h2 id="usage"><a href="#usage">Usage</a></h2>
+
+<section class="prose">
+  <p>Field provides semantic HTML patterns for accessible forms:</p>
+  <ul>
+    <li><code>&lt;fieldset&gt;</code> and <code>&lt;legend&gt;</code> for grouping related fields</li>
+    <li><code>role="group"</code> with <code>.field</code> class for individual fields</li>
+    <li><code>.description</code> class for helper text</li>
+    <li><code>.error</code> class with <code>role="alert"</code> for error messages</li>
+    <li><code>aria-describedby</code> to associate descriptions and errors with inputs</li>
+  </ul>
+</section>
+
+{{ code_block(code) }}
+
+<h2 id="examples"><a href="#examples">Examples</a></h2>
+
+<h3 id="example-input"><a href="#example-input">Input</a></h3>
+
+{% set code_input %}
+<div class="grid gap-6 w-full max-w-md">
+  <div role="group" class="field">
+    <label for="username">Username</label>
+    <input id="username" type="text" placeholder="evilrabbit" aria-describedby="username-desc">
+    <p id="username-desc" class="description">Choose a unique username for your account</p>
+  </div>
+
+  <div role="group" class="field">
+    <label for="password">Password</label>
+    <input id="password" type="password" placeholder="••••••••" aria-invalid="true" aria-describedby="password-desc password-error">
+    <p id="password-desc" class="description">Must be at least 8 characters</p>
+    <p id="password-error" class="error" role="alert">Password is too short</p>
+  </div>
+</div>
+{% endset %}
+
+{{ code_preview("field-input", code_input) }}
+
+<h3 id="example-textarea"><a href="#example-textarea">Textarea</a></h3>
+
+{% set code_textarea %}
+<div role="group" class="field w-full max-w-md">
+  <label for="bio">Bio</label>
+  <textarea id="bio" rows="4" placeholder="Tell us about yourself" aria-describedby="bio-desc"></textarea>
+  <p id="bio-desc" class="description">Brief description for your profile (max 200 characters)</p>
+</div>
+{% endset %}
+
+{{ code_preview("field-textarea", code_textarea) }}
+
+<h3 id="example-select"><a href="#example-select">Select</a></h3>
+
+{% set code_select %}
+<div role="group" class="field w-full max-w-md">
+  <label for="country">Country</label>
+  <select id="country" class="select" aria-describedby="country-desc">
+    <option value="">Select a country</option>
+    <option value="us">United States</option>
+    <option value="uk">United Kingdom</option>
+    <option value="ca">Canada</option>
+    <option value="au">Australia</option>
+  </select>
+  <p id="country-desc" class="description">Choose your country of residence</p>
+</div>
+{% endset %}
+
+{{ code_preview("field-select", code_select) }}
+
+<h3 id="example-fieldset"><a href="#example-fieldset">Fieldset</a></h3>
+
+<section class="prose">
+  <p>Group related fields with <code>&lt;fieldset class="fieldset"&gt;</code> and <code>&lt;legend&gt;</code>.</p>
+</section>
+
+{% set code_fieldset %}
+<form class="w-full max-w-md">
+  <fieldset class="fieldset" aria-describedby="profile-desc">
+    <legend>Profile</legend>
+    <p id="profile-desc" class="description">This information will be displayed on your profile</p>
+    
+    <div role="group" class="field">
+      <label for="full-name">Full name</label>
+      <input id="full-name" type="text" placeholder="Evil Rabbit" aria-describedby="name-desc">
+      <p id="name-desc" class="description">Your first and last name</p>
+    </div>
+    
+    <div role="group" class="field">
+      <label for="display-name">Username</label>
+      <input id="display-name" type="text" placeholder="@evilrabbit" aria-invalid="true" aria-describedby="username-error">
+      <p id="username-error" class="error" role="alert">Choose another username</p>
+    </div>
+    
+    <div class="flex items-center gap-3">
+      <input type="checkbox" id="newsletter">
+      <label for="newsletter" class="font-normal">Subscribe to the newsletter</label>
+    </div>
+  </fieldset>
+  
+  <button type="submit" class="btn mt-4">Save changes</button>
+</form>
+{% endset %}
+
+{{ code_preview("field-fieldset", code_fieldset) }}
+
+<h3 id="example-checkbox"><a href="#example-checkbox">Checkbox</a></h3>
+
+{% set code_checkbox %}
+<fieldset class="fieldset w-full max-w-md" aria-describedby="tasks-desc">
+  <legend>Tasks</legend>
+  <p id="tasks-desc" class="description">Select the tasks you want to receive updates for</p>
+  
+  <div class="flex flex-col gap-3">
+    <div class="flex items-center gap-3">
+      <input type="checkbox" id="push-notifications" checked>
+      <label for="push-notifications" class="font-normal">Push notifications</label>
+    </div>
+    <div class="flex items-center gap-3">
+      <input type="checkbox" id="email-notifications" checked>
+      <label for="email-notifications" class="font-normal">Email notifications</label>
+    </div>
+    <div class="flex items-center gap-3">
+      <input type="checkbox" id="sms-notifications">
+      <label for="sms-notifications" class="font-normal">SMS notifications</label>
+    </div>
+  </div>
+</fieldset>
+{% endset %}
+
+{{ code_preview("field-checkbox", code_checkbox) }}
+
+<h3 id="example-radio"><a href="#example-radio">Radio Group</a></h3>
+
+{% set code_radio %}
+<fieldset class="fieldset w-full max-w-md" aria-describedby="notify-desc">
+  <legend>Notify me about</legend>
+  <p id="notify-desc" class="description">Choose which notifications you want to receive</p>
+  
+  <div class="flex flex-col gap-3">
+    <div class="flex items-center gap-3">
+      <input type="radio" id="notify-all" name="notifications" checked>
+      <label for="notify-all" class="font-normal">All new messages</label>
+    </div>
+    <div class="flex items-center gap-3">
+      <input type="radio" id="notify-direct" name="notifications">
+      <label for="notify-direct" class="font-normal">Direct messages and mentions</label>
+    </div>
+    <div class="flex items-center gap-3">
+      <input type="radio" id="notify-none" name="notifications">
+      <label for="notify-none" class="font-normal">Nothing</label>
+    </div>
+  </div>
+</fieldset>
+{% endset %}
+
+{{ code_preview("field-radio", code_radio) }}
+
+<h3 id="example-switch"><a href="#example-switch">Switch</a></h3>
+
+<section class="prose">
+  <p>Use horizontal layout for switches by wrapping in a flex container.</p>
+</section>
+
+{% set code_switch %}
+<fieldset class="fieldset w-full max-w-md">
+  <legend>Notifications</legend>
+  <p class="description">Configure how you receive notifications</p>
+  
+  <div class="flex flex-col gap-4">
+    <div class="flex items-center justify-between">
+      <div>
+        <label for="marketing" class="font-medium">Marketing emails</label>
+        <p class="description text-sm">Receive emails about new products and features</p>
+      </div>
+      <input type="checkbox" id="marketing" class="toggle" checked>
+    </div>
+    
+    <div class="flex items-center justify-between">
+      <div>
+        <label for="security" class="font-medium">Security emails</label>
+        <p class="description text-sm">Receive emails about account security</p>
+      </div>
+      <input type="checkbox" id="security" class="toggle" checked>
+    </div>
+  </div>
+</fieldset>
+{% endset %}
+
+{{ code_preview("field-switch", code_switch) }}
+
+<h2 id="accessibility"><a href="#accessibility">Accessibility</a></h2>
+
+<section class="prose">
+  <ul>
+    <li>Always use <code>&lt;label&gt;</code> elements with <code>for</code> attribute matching input <code>id</code></li>
+    <li>Associate helper text and errors using <code>aria-describedby</code> on the input</li>
+    <li>Use <code>aria-invalid="true"</code> on inputs with errors</li>
+    <li>Use <code>role="alert"</code> on error messages for screen reader announcements</li>
+    <li>Group related fields with <code>&lt;fieldset&gt;</code> and <code>&lt;legend&gt;</code></li>
+    <li>Use <code>role="group"</code> for individual field wrappers</li>
+  </ul>
+</section>
+
+
+

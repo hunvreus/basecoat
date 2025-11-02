@@ -8,7 +8,7 @@
   @param footer {string} [optional] - HTML content for the dialog footer.
   @param main_attrs {object} [optional] - Additional HTML attributes for the main container div.
   @param trigger_attrs {object} [optional] - Additional HTML attributes for the trigger button.
-  @param dialog_attrs {object} [optional] - Additional HTML attributes for the dialog content article.
+  @param dialog_attrs {object} [optional] - Additional HTML attributes for the dialog content container.
   @param header_attrs {object} [optional] - Additional HTML attributes for the dialog header.
   @param body_attrs {object} [optional] - Additional HTML attributes for the dialog body section.
   @param footer_attrs {object} [optional] - Additional HTML attributes for the dialog footer.
@@ -53,7 +53,7 @@
     {% if key != 'class' %}{{ key }}="{{ value }}"{% endif %}
   {% endfor %}
 >
-  <article>
+  <div>
     {% if title or description %}
       <header
         {% for key, value in header_attrs %}
@@ -89,6 +89,6 @@
       </button>
       </form>
     {% endif %}
-  </article>
+  </div>
 </dialog>
 {% endmacro %}

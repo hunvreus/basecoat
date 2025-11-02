@@ -78,7 +78,15 @@ toc:
 
 <h2 id="usage"><a href="#usage">Usage</a></h2>
 
-{{ code_block(code_default | prettyHtml, "html") }}
+<p class="prose">Simply wrap buttons you want to group together in a <code>&lt;div role="group" class="button-group"&gt;</code> element. You can also use the <code>data-orientation="vertical"</code> attribute to stack buttons vertically. You can also group buttons with <a href="#example-dropdown-menu">dropdown menus</a> or <a href="#example-popover">popovers</a> (provided the trigger is a button). Finally, you can use a <a href="#example-separator">separator</a> to visually divide buttons within a group (for secondary buttons for example).</p>
+
+{% set code_simple %}  
+<div role="group" class="button-group">
+  <button class="btn-outline">Archive</button>
+  <button class="btn-outline">Report</button>
+</div>
+{% endset %}
+{{ code_block(code_simple | prettyHtml, "html") }}
 
 <h2 id="examples"><a href="#examples">Examples</a></h2>
 
@@ -216,7 +224,7 @@ toc:
 
 {{ code_preview("button-group-dropdown-menu", code_dropdown_menu | prettyHtml) }}
 
-<h3 id="example-nested"><a href="#example-nested">Popover</a></h3>
+<h3 id="example-popover"><a href="#example-popover">Popover</a></h3>
 
 {% set code_popover %}
 <div role="group" class="button-group">

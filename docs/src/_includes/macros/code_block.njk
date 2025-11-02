@@ -1,6 +1,6 @@
 {% macro code_block(code, language="html", class="my-4") %}
 <div class="relative {{ class }}">
-  <pre class="grid text-sm max-h-[650px] overflow-y-auto rounded-xl scrollbar"><code class="language-{{ language }} !bg-muted !p-3.5">{{- code | escape -}}</code></pre>
+  <pre class="grid text-sm max-h-[650px] overflow-y-auto rounded-xl scrollbar"><code class="language-{{ language }} !bg-muted/40 !p-3.5">{{- code | escape -}}</code></pre>
   
   <button 
     onclick="

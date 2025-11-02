@@ -5,6 +5,20 @@ description: Fast, composable command menu for quick navigation and actions.
 toc:
   - label: Usage
     id: usage
+    children:
+      - label: HTML + JavaScript
+        id: usage-html-js
+        children:
+          - label: "Step 1: Include the JavaScript files"
+            id: usage-html-js-1
+          - label: "Step 2: Add your command HTML"
+            id: usage-html-js-2
+          - label: HTML structure
+            id: usage-html-js-3
+          - label: JavaScript events
+            id: usage-html-js-4
+      - label: Jinja and Nunjucks
+        id: usage-macro
   - label: Examples
     id: examples
     children:
@@ -19,15 +33,15 @@ toc:
 {% macro command_items(suggestions_id="suggestions", settings_id="settings") %}
 <div role="group" aria-labelledby="{{ suggestions_id }}">
   <span role="heading" id="{{ suggestions_id }}">Suggestions</span>
-  <div role="option" data-value="calendar" onclick="this.closest('dialog').close()">
+  <div role="menuitem" data-value="calendar" onclick="console.log('Open calendar')">
     {% lucide "calendar" %}
     <span>Calendar</span>
   </div>
-  <div role="option" data-value="search-emoji" onclick="this.closest('dialog').close()">
+  <div role="menuitem" data-value="search-emoji" onclick="console.log('Search emoji')">
     {% lucide "smile" %}
     <span>Search Emoji</span>
   </div>
-  <div role="option" data-value="calculator" aria-disabled="true">
+  <div role="menuitem" data-value="calculator" aria-disabled="true">
     {% lucide "calculator" %}
     <span>Calculator</span>
   </div>
@@ -35,17 +49,17 @@ toc:
 <hr role="separator" />
 <div role="group" aria-labelledby="{{ settings_id }}">
   <span role="heading" id="{{ settings_id }}">Settings</span>
-  <div role="option" data-value="profile" onclick="this.closest('dialog').close()">
+  <div role="menuitem" data-value="profile" onclick="console.log('Open profile')">
     {% lucide "user" %}
     <span>Profile</span>
     <kbd class="ml-auto text-muted-foreground bg-transparent tracking-widest">⌘P</kbd>
   </div>
-  <div role="option" data-value="billing" onclick="this.closest('dialog').close()">
+  <div role="menuitem" data-value="billing" onclick="console.log('Open billing')">
     {% lucide "credit-card" %}
     <span>Billing</span>
     <kbd class="ml-auto text-muted-foreground bg-transparent tracking-widest">⌘B</kbd>
   </div>
-  <div role="option" data-value="settings" onclick="this.closest('dialog').close()">
+  <div role="menuitem" data-value="settings" onclick="console.log('Open settings')">
     {% lucide "settings" %}
     <span>Settings</span>
     <kbd class="ml-auto text-muted-foreground bg-transparent tracking-widest">⌘S</kbd>
@@ -66,14 +80,152 @@ toc:
 
 <h2 id="usage"><a href="#usage">Usage</a></h2>
 
+<h3 id="usage-html-js"><a href="#usage-html-js">HTML + JavaScript</a></h3>
+
+<h4 id="usage-html-js-1"><a href="#usage-html-js-1">Step 1: Include the JavaScript files</a></h4>
+
+<section class="prose">
+  <p>You can either <a href="/installation/#install-cdn-all">include the JavaScript file for all the components</a>, or just the one for this component by adding this to the <code>&lt;head&gt;</code> of your page:</p>
+</section>
+
+{% set code_script %}<script src="https://cdn.jsdelivr.net/npm/basecoat-css@{{ pkg.version }}/dist/js/basecoat.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/basecoat-css@{{ pkg.version }}/dist/js/command.min.js" defer></script>{% endset %}
+{{ code_block(code_script | prettyHtml, "html") }}
+
+<div class="flex flex-wrap gap-2 my-6">
+  <a class="badge-outline" href="/installation/#install-js">
+    Components with JavaScript
+    {% lucide "arrow-right" %}
+  </a>
+  <a class="badge-outline" href="/installation/#install-cli">
+    Use the CLI
+    {% lucide "arrow-right" %}
+  </a>
+  <a class="badge-outline" href="https://github.com/hunvreus/basecoat/blob/main/src/js/command.js" target="_blank">
+    command.js
+    {% lucide "arrow-right" %}
+  </a>
+</div>
+
+<h4 id="usage-html-js-2"><a href="#usage-html-js-2">Step 2: Add your command HTML</a></h4>
+
+<section class="prose">
+  <p>You can use the command menu standalone:</p>
+</section>
+
 {{ code_block(code_standalone | prettyHtml, "html") }}
+
+<section class="prose">
+  <p>Wrap the command menu in a <code>&lt;dialog class="command-dialog"&gt;</code> to display in a dialog:</p>
+</section>
+
+{% set code_dialog %}
+<dialog class="command-dialog" aria-label="Command menu">
+  <div class="command">
+    <!-- Regular command content: header, menu, etc. -->
+  </div>
+</dialog>
+{% endset %}
+
+{{ code_block(code_dialog | prettyHtml, "html") }}
+
+<h4 id="usage-html-js-3"><a href="#usage-html-js-3">HTML structure</a></h4>
+
+<section class="prose">
+  <dl>
+    <dt><code class="highlight language-html">&lt;dialog class="command-dialog"&gt;</code> <span class="badge-secondary">Optional</span></dt>
+    <dd>For dialog variant, wraps a <code>&lt;div class="command"&gt;</code> to display as a modal. Uses native <code>&lt;dialog&gt;</code> behavior and requires <code>aria-label</code> or <code>aria-labelledby</code> for accessibility.
+      <dl>
+        <dt><code class="highlight language-html">&lt;div class="command"&gt;</code></dt>
+        <dd>Wraps around the entire command component. Can be used standalone or inside a dialog.
+          <dl>
+            <dt><code class="highlight language-html">&lt;header&gt;</code></dt>
+            <dd>Contains the search input to filter command options.
+              <dl>
+                <dt><code class="highlight language-html">&lt;input type="text"&gt;</code></dt>
+                <dd>The search input. Should have:
+                  <ul>
+                    <li><code>role="combobox"</code>: indicates the input controls a menu with filtering</li>
+                    <li><code>aria-expanded="true"</code>: the menu is always expanded</li>
+                    <li><code>aria-controls="{ MENU_ID }"</code>: points to the menu's id</li>
+                  </ul>
+                </dd>
+              </dl>
+            </dd>
+            <dt><code class="highlight language-html">&lt;div role="menu"&gt;</code></dt>
+            <dd>The menu containing the command items. Should have <code>id="{ MENU_ID }"</code> refered to by the input's <code>aria-controls</code> attribute.
+              <dl>
+                <dt><code class="highlight language-html">&lt;div role="menuitem"&gt;</code></dt>
+                <dd>Command item that triggers an action when clicked. In a command-dialog, clicking a menuitem automatically closes the dialog unless the <code>data-keep-command-open</code> attribute is present. Optional attributes:
+                  <ul>
+                    <li><code>data-label</code>: custom label for filtering (if different from text content)</li>
+                    <li><code>data-keywords</code>: additional keywords for enhanced filtering</li>
+                    <li><code>aria-disabled="true"</code>: marks item as disabled (excluded from keyboard navigation and filtering)</li>
+                  </ul>
+                </dd>
+                <dt><code class="highlight language-html">&lt;hr role="separator"&gt;</code> <span class="badge-secondary">Optional</span></dt>
+                <dd>Separator between groups/items. Hidden when filtering is active.</dd>
+                <dt><code class="highlight language-html">&lt;div role="group"&gt;</code> <span class="badge-secondary">Optional</span></dt>
+                <dd>Group of items, can have <code>aria-labelledby</code> attribute to link to a heading.</dd>
+                <dt><code class="highlight language-html">&lt;span role="heading"&gt;</code></dt>
+                <dd>Group heading, must have an <code>id</code> attribute if you use the <code>aria-labelledby</code> attribute on the group.</dd>
+              </dl>
+            </dd>
+          </dl>
+        </dd>
+      </dl>
+    </dd>
+  </dl>
+</section>
+
+<h4 id="usage-html-js-4"><a href="#usage-html-js-4">JavaScript events</a></h4>
+
+<section class="prose">
+  <dl>
+    <dt><code>basecoat:initialized</code></dt>
+    <dd>Once the component is fully initialized, it dispatches a custom (non-bubbling) <code>basecoat:initialized</code> event on itself.</dd>
+  </dl>
+</section>
+
+<h3 id="usage-macro"><a href="#usage-macro">Jinja and Nunjucks</a></h3>
+
+<div class="prose">
+  <p>You can use the <code class="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-xs">command()</code> or <code class="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-xs">command_dialog()</code> Nunjucks or Jinja macros for this component.</p>
+</div>
+
+<div class="flex flex-wrap gap-2 my-6">
+  <a class="badge-outline" href="/installation/#install-macros" target="_blank">
+    Use Nunjucks or Jinja macros
+    {% lucide "arrow-right" %}
+  </a>
+  <a class="badge-outline" href="https://github.com/hunvreus/basecoat/blob/main/src/jinja/command.html.jinja" target="_blank">
+    Jinja macro
+    {% lucide "arrow-right" %}
+  </a>
+  <a class="badge-outline" href="https://github.com/hunvreus/basecoat/blob/main/src/nunjucks/command.njk" target="_blank">
+    Nunjucks macro
+    {% lucide "arrow-right" %}
+  </a>
+</div>
+
+{% set raw_code %}{% raw %}{% call command() %}
+  <div role="menuitem" data-value="calendar">
+    <svg>...</svg>
+    <span>Calendar</span>
+  </div>
+  <div role="menuitem" data-value="settings">
+    <svg>...</svg>
+    <span>Settings</span>
+  </div>
+{% endcall %}{% endraw %}{% endset %}
+{{ code_block(raw_code, "jinja") }}
 
 <h2 id="examples"><a href="#examples">Examples</a></h2>
 
 <h3 id="example-dialog"><a href="#example-dialog">Dialog</a></h3>
 
 <section class="prose">
-  <p>Press <kbd>⌘</kbd><kbd>J</kbd></p>
+  <p>You can use some simple JavaScript to open the command menu with a keyboard shortcut (in this case <kbd>⌘J</kbd>).</p>
 </section>
 
 {% set code_dialog %}
@@ -83,7 +235,7 @@ toc:
   onclick="document.getElementById('demo-command-dialog').showModal()"
 >
   Open command menu
-  <kbd>⌘ J</kbd>
+  <kbd>⌘J</kbd>
 </button>
 
 {% call command_dialog(id="demo-command-dialog") %}
@@ -103,19 +255,7 @@ toc:
       }
     }
   });
-
-  const cmdDialog = document.getElementById('demo-command-dialog');
-  cmdDialog?.addEventListener('command:select', (e) => {
-    console.log('Selected command:', e.detail.value);
-    cmdDialog.close();
-  });
 </script>
 {% endset %}
 
 {{ code_preview("command-dialog", code_dialog | prettyHtml) }}
-
-<section class="prose">
-  <p>To show the command menu in a dialog, use the <code>command_dialog</code> macro.</p>
-</section>
-
-{{ code_block(code_dialog | prettyHtml, "html") }}

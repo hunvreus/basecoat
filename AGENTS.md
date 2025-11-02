@@ -38,6 +38,24 @@ Basecoat is a vanilla JavaScript/HTML/CSS port of shadcn/ui components. It reuse
 - Filenames for assets: kebab-case (e.g., `dropdown-menu.js`, `basecoat.cdn.css`).
 - JS naming: `camelCase` for vars/functions; `PascalCase` for DOM classes and exported component names when applicable.
 
+## Design Principles
+
+- **Minimal code**: Prefer native HTML elements and browser behavior over JavaScript abstractions
+- **Accessibility-first**: Semantic HTML, proper ARIA attributes, keyboard navigation
+- **CSS patterns**:
+  - Use `border` for lines/separators (not `background` on `<hr>`)
+  - Use `:is()` and `:has()` for compact selectors
+  - Use `isolation: isolate` to contain z-index stacking contexts
+  - Use `data-*` attributes for styling states, `aria-*` for accessibility semantics
+- **Component patterns**:
+  - Dialog variants use wrapper classes (e.g., `.command-dialog` wraps `.command`)
+  - JavaScript components register with `window.basecoat.register()`
+  - Emit custom events for user actions (e.g., `command:select`)
+  - Filter disabled options (`aria-disabled="true"`) from all interactions
+- **When NOT to create a component**:
+  - If it's just composition of existing elements (users can do it with standard HTML/Tailwind)
+  - If behavior is fully native (e.g., fieldset, legend)
+
 ## Common tasks
 
 - Update a component's CSS/JS: Edit `src/css/basecoat.css` and/or `src/js/*.js`.

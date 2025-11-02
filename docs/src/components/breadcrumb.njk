@@ -13,7 +13,7 @@ toc:
 
 <div class="alert mb-6">
   {% lucide "circle-alert" %}
-  <h2>There is no dedicated breadcrumb component in Basecoat.</h2>
+  <h2>There is no dedicated Breadcrumb component in Basecoat.</h2>
 </div>
 
 {% set code_html %}
@@ -54,7 +54,18 @@ toc:
 <h2 id="usage"><a href="#usage">Usage</a></h2>
 
 <section class="prose">
-  <p>This example uses some simple Tailwind CSS styles along with the <a href="/components/dropdown-menu">Dropdown Menu</a> component (which may require JavaScript).</p>
+  <p>You can style an ordered list of links combined with chevron icons as show below. The example above demonstrates a more complex use case using the <a href="/components/dropdown-menu">Dropdown Menu</a> component.</p>
 </section>
 
-{{ code_block(code_html | prettyHtml, class="") }}
+{% set code_simple %}
+<ol class="text-muted-foreground flex flex-wrap items-center gap-1.5 text-sm break-words sm:gap-2.5">
+  <li class="inline-flex items-center gap-1.5">
+    <a href="#" class="hover:text-foreground transition-colors">Home</a>
+  </li>
+  <li>{% lucide "chevron-right", { "class": "size-3.5" } %}</li>
+  <li class="inline-flex items-center gap-1.5">
+    <a href="#" class="hover:text-foreground transition-colors">Components</a>
+  </li>
+</ol>
+{% endset %}
+{{ code_block(code_simple | prettyHtml, "html") }}
