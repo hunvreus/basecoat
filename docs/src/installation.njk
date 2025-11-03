@@ -29,8 +29,12 @@ toc:
     id: install-cli
   - label: Use Nunjucks or Jinja macros
     id: install-macros
+  - label: Icons
+    id: install-icons
   - label: Theming
     id: install-theming
+  - label: Customization
+    id: install-customization
 ---
 
 {% from "macros/code_block.njk" import code_block %}
@@ -191,6 +195,33 @@ import 'basecoat-css/tabs';{% endraw %}{% endset %}
 </div>
 {% endcall %}{% endraw %}{% endset %}
   {{ code_block(code, "jinja") }}
+
+<h2 id="install-icons"><a href="#install-icons">Icons</a></h2>
+
+<div class="prose">
+  <p>Basecoat uses <a href="https://lucide.dev" target="_blank">Lucide icons</a>. You have three options:</p>
+  
+  <ul>
+    <li><b>Copy SVG code</b>: Visit <a href="https://lucide.dev/icons" target="_blank">lucide.dev/icons</a>, click any icon to copy the SVG, and paste it directly in your HTML. Best for simple projects or occasional icon usage.</li>
+    <li><b>Install lucide</b>: Follow the <a href="https://lucide.dev/guide/installation" target="_blank">installation guide</a> to install the <code>lucide</code> package and dynamically render icons. Best for projects that need many icons or want tree-shaking.</li>
+    <li><b>Use framework packages</b>: Browse <a href="https://lucide.dev/packages" target="_blank">framework-specific packages</a> (React, Vue, Angular, etc.) for component-based icon usage. Best if you're using a supported framework.</li>
+  </ul>
+</div>
+
+<div class="flex flex-wrap gap-2 my-6">
+  <a class="badge-outline" href="https://lucide.dev" target="_blank">
+    Browse icons
+    {% lucide "arrow-right" %}
+  </a>
+  <a class="badge-outline" href="https://lucide.dev/guide/installation" target="_blank">
+    Installation guide
+    {% lucide "arrow-right" %}
+  </a>
+  <a class="badge-outline" href="https://lucide.dev/packages" target="_blank">
+    Packages
+    {% lucide "arrow-right" %}
+  </a>
+</div>
 
 <h2 id="install-theming"><a href="#install-theming">Theming</a></h2>
 
