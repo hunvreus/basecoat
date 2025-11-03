@@ -5,9 +5,6 @@ description: Display empty states with icons, titles, descriptions, and actions.
 toc:
   - label: Usage
     id: usage
-    children:
-      - label: HTML structure
-        id: html-structure
   - label: Examples
     id: examples
     children:
@@ -58,57 +55,8 @@ toc:
 <h2 id="usage"><a href="#usage">Usage</a></h2>
 
 <section class="prose">
-  <p>The example simply uses Tailwind utility classes to create an empty state layout.</p>
-</section>
-
-{{ code_block(code_default) }}
-
-<h3 id="html-structure"><a href="#html-structure">HTML structure</a></h3>
-
-<section class="prose">
-  <dl>
-    <dt><code class="highlight language-html">&lt;div&gt;</code></dt>
-    <dd>Main container with centered layout utilities:
-      <ul>
-        <li><code>flex flex-col items-center justify-center</code>: centers content</li>
-        <li><code>gap-6</code>: spacing between sections</li>
-        <li><code>p-6 md:p-12</code>: responsive padding</li>
-        <li><code>text-center text-balance</code>: centered text with better wrapping</li>
-      </ul>
-      <dl>
-        <dt><code class="highlight language-html">&lt;header&gt;</code></dt>
-        <dd>Header section containing the icon/avatar, title, and description:
-          <ul>
-            <li><code>max-w-sm</code>: constrains width for readability</li>
-            <li><code>gap-2</code> or <code>gap-3</code>: spacing between elements</li>
-          </ul>
-          <dl>
-            <dt><code class="highlight language-html">&lt;div&gt;</code> <span class="badge-secondary">Optional</span></dt>
-            <dd>Media container for icon or avatar:
-              <ul>
-                <li>For icons: <code>bg-muted text-foreground size-10 rounded-lg</code></li>
-                <li>For avatars: <code>size-12 rounded-full grayscale</code></li>
-                <li>For avatar groups: <code>flex -space-x-2</code> with ring utilities</li>
-              </ul>
-            </dd>
-            <dt><code class="highlight language-html">&lt;h3&gt;</code></dt>
-            <dd>Title with <code>text-lg font-medium tracking-tight</code></dd>
-            <dt><code class="highlight language-html">&lt;p&gt;</code></dt>
-            <dd>Description with <code>text-muted-foreground text-sm/relaxed</code></dd>
-          </dl>
-        </dd>
-        <dt><code class="highlight language-html">&lt;section&gt;</code> <span class="badge-secondary">Optional</span></dt>
-        <dd>Content area for actions (buttons, inputs, etc.):
-          <ul>
-            <li><code>max-w-sm</code> or <code>max-w-md</code>: constrains width</li>
-            <li><code>flex flex-col items-center gap-3</code>: vertical layout with spacing</li>
-          </ul>
-        </dd>
-        <dt><code class="highlight language-html">&lt;a&gt;</code> or other elements <span class="badge-secondary">Optional</span></dt>
-        <dd>Additional links or actions outside the main content section</dd>
-      </dl>
-    </dd>
-  </dl>
+  <p>Empty states are pure HTML composition using Tailwind utility classes. Use flex layout utilities to center content, and compose with semantic elements like <code>&lt;header&gt;</code>, <code>&lt;h3&gt;</code>, <code>&lt;p&gt;</code>, and <code>&lt;button&gt;</code>.</p>
+  <p>Browse the examples below and copy the pattern that fits your needs.</p>
 </section>
 
 <h2 id="examples"><a href="#examples">Examples</a></h2>
@@ -186,7 +134,7 @@ toc:
 <h3 id="example-input-group"><a href="#example-input-group">Input Group</a></h3>
 
 {% set code_input_group %}
-<div class="flex min-w-0 flex-1 flex-col items-center justify-center gap-6 rounded-lg border-dashed p-6 text-center text-balance md:p-12 text-neutral-800 dark:text-neutral-300">
+<div class="flex min-w-0 flex-1 flex-col items-center justify-center gap-6 rounded-lg p-6 text-center text-balance md:p-12 text-neutral-800 dark:text-neutral-300">
   <header class="flex max-w-sm flex-col items-center gap-3 text-center">
     <h3 class="text-lg font-semibold tracking-tight">404 - Not Found</h3>
     <p class="text-muted-foreground text-sm/relaxed">

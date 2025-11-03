@@ -173,8 +173,19 @@ toc:
 <div class="grid gap-6">
   <div class="relative">
     <input type="text" readonly class="input pr-9" value="https://x.com/hunvreus">
-    <button class="absolute right-1.5 top-1/2 -translate-y-1/2 btn-icon-ghost text-muted-foreground hover:text-accent-foreground size-6">{% lucide "copy" %}</button>
+    <button 
+      data-copied="false"
+      onclick="
+        this.dataset.copied = 'true';
+        setTimeout(() => this.dataset.copied = 'false', 2000);
+      "
+      class="group absolute right-1.5 top-1/2 -translate-y-1/2 btn-icon-ghost text-muted-foreground hover:text-accent-foreground size-6"
+    >
+      {% lucide "copy", { "class": "group-data-[copied=true]:hidden" } %}
+      {% lucide "check", { "class": "hidden group-data-[copied=true]:block" } %}
+    </button>
   </div>
+  
 
   <div class="relative">
     <input type="text" class="input pl-21 pr-9 rounded-full">
@@ -264,15 +275,15 @@ toc:
 <div class="grid gap-6">
   <div class="relative">
     <input type="text" class="input pr-9" placeholder="Searching..." disabled>
-    <div class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-muted-foreground [&>svg]:size-4 animate-spin opacity-50">
-      {% lucide "loader-circle" %}
+    <div class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-muted-foreground [&>svg]:size-4 opacity-50">
+      {% lucide "loader-circle", { "class": "animate-spin" } %}
     </div>
   </div>
   
   <div class="relative">
     <input type="text" class="input pl-9" placeholder="Processing..." disabled>
-    <div class="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none text-muted-foreground [&>svg]:size-4 animate-spin opacity-50">
-      {% lucide "loader-circle" %}
+    <div class="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none text-muted-foreground [&>svg]:size-4 opacity-50">
+      {% lucide "loader-circle", { "class": "animate-spin" } %}
     </div>
   </div>
 
@@ -280,16 +291,16 @@ toc:
     <input type="text" class="input pr-24" placeholder="Saving changes..." disabled>
     <div class="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-2 text-sm text-muted-foreground opacity-50">
       <div>Saving...</div>
-      <div class="[&>svg]:size-4 animate-spin">
-        {% lucide "loader-circle" %}
+      <div class="[&>svg]:size-4">
+        {% lucide "loader-circle", { "class": "animate-spin" } %}
       </div>
     </div>
   </div>
 
   <div class="relative">
     <input type="text" class="input pl-9 pr-26" placeholder="Refreshing data..." disabled>
-    <div class="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none text-muted-foreground [&>svg]:size-4 animate-spin opacity-50">
-      {% lucide "loader" %}
+    <div class="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none text-muted-foreground [&>svg]:size-4 opacity-50">
+      {% lucide "loader-circle", { "class": "animate-spin" } %}
     </div>
     <div class="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-2 text-sm text-muted-foreground opacity-50">
       Please wait...
