@@ -3,6 +3,8 @@ layout: layouts/page.njk
 title: Item
 description: A versatile component that you can use to display any content.
 toc:
+  - label: Usage
+    id: usage
   - label: Examples
     id: examples
     children:
@@ -57,6 +59,13 @@ toc:
 {% endset %}
 
 {{ code_preview("item-basic", code_basic | prettyHtml, class="w-full max-w-md") }}
+
+<h2 id="usage"><a href="#usage">Usage</a></h2>
+
+<section class="prose">
+  <p>Items are pure HTML composition using Tailwind utility classes. Use semantic elements like <code>&lt;article&gt;</code> or <code>&lt;a&gt;</code>, apply flex layout, and compose with standard HTML elements like <code>&lt;h3&gt;</code>, <code>&lt;p&gt;</code>, <code>&lt;img&gt;</code>, or <code>&lt;button&gt;</code>.</p>
+  <p>Browse the examples below and copy the pattern that fits your needs.</p>
+</section>
 
 <h2 id="examples"><a href="#examples">Examples</a></h2>
 

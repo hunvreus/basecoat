@@ -29,9 +29,9 @@ toc:
 
 {% set code_demo %}
 <form class="w-full max-w-md space-y-6">
-  <fieldset class="fieldset" aria-describedby="payment-desc">
+  <fieldset class="fieldset">
     <legend>Payment Method</legend>
-    <p id="payment-desc" class="description">All transactions are secure and encrypted</p>
+    <p>All transactions are secure and encrypted</p>
     
     <div role="group" class="field">
       <label for="card-name">Name on Card</label>
@@ -47,7 +47,7 @@ toc:
     <div class="grid grid-cols-3 gap-4">
       <div role="group" class="field">
         <label for="exp-month">Month</label>
-        <select id="exp-month" class="select">
+        <select id="exp-month" class="select w-full">
           <option value="">MM</option>
           <option value="01">01</option>
           <option value="02">02</option>
@@ -65,7 +65,7 @@ toc:
       </div>
       <div role="group" class="field">
         <label for="exp-year">Year</label>
-        <select id="exp-year" class="select">
+        <select id="exp-year" class="select w-full">
           <option value="">YYYY</option>
           <option value="2024">2024</option>
           <option value="2025">2025</option>
@@ -84,13 +84,15 @@ toc:
 
   <hr role="separator" class="my-6 border-border">
   
-  <fieldset class="fieldset" aria-describedby="billing-desc">
+  <fieldset class="fieldset">
     <legend>Billing Address</legend>
-    <p id="billing-desc" class="description">The billing address associated with your payment method</p>
+    <p>The billing address associated with your payment method</p>
     
-    <div class="flex items-center gap-3">
-      <input type="checkbox" id="same-as-shipping" checked>
-      <label for="same-as-shipping" class="font-normal">Same as shipping address</label>
+    <div role="group" class="field">
+      <label for="same-as-shipping" class="gap-3">
+        <input type="checkbox" id="same-as-shipping" checked>
+        Same as shipping address
+      </label>
     </div>
   </fieldset>
   
@@ -101,7 +103,7 @@ toc:
     </div>
   </fieldset>
   
-  <div class="flex gap-2">
+  <div class="flex gap-3">
     <button type="submit" class="btn">Submit</button>
     <button type="button" class="btn-outline">Cancel</button>
   </div>
@@ -116,10 +118,10 @@ toc:
   <p>Field provides semantic HTML patterns for accessible forms:</p>
   <ul>
     <li><code>&lt;fieldset&gt;</code> and <code>&lt;legend&gt;</code> for grouping related fields</li>
-    <li><code>role="group"</code> with <code>.field</code> class for individual fields</li>
-    <li><code>.description</code> class for helper text</li>
+    <li><code>&lt;p&gt;</code> after <code>&lt;legend&gt;</code> is automatically styled as description text</li>
+    <li><code>role="group"</code> with <code>.field</code> class for individual field containers</li>
+    <li><code>.description</code> class for field-level helper text (requires <code>aria-describedby</code>)</li>
     <li><code>.error</code> class with <code>role="alert"</code> for error messages</li>
-    <li><code>aria-describedby</code> to associate descriptions and errors with inputs</li>
   </ul>
 </section>
 
@@ -130,53 +132,91 @@ toc:
 <h3 id="example-input"><a href="#example-input">Input</a></h3>
 
 {% set code_input %}
-<div class="grid gap-6 w-full max-w-md">
+<div class="grid gap-6">
   <div role="group" class="field">
     <label for="username">Username</label>
     <input id="username" type="text" placeholder="evilrabbit" aria-describedby="username-desc">
-    <p id="username-desc" class="description">Choose a unique username for your account</p>
+    <p id="username-desc" class="description">Choose a unique username for your account.</p>
   </div>
 
   <div role="group" class="field">
     <label for="password">Password</label>
-    <input id="password" type="password" placeholder="••••••••" aria-invalid="true" aria-describedby="password-desc password-error">
-    <p id="password-desc" class="description">Must be at least 8 characters</p>
-    <p id="password-error" class="error" role="alert">Password is too short</p>
+    <p id="password-desc" class="description">Must be at least 8 characters long.</p>
+    <input id="password" type="password" placeholder="••••••••" aria-describedby="password-desc">
   </div>
 </div>
 {% endset %}
 
-{{ code_preview("field-input", code_input) }}
+{{ code_preview("field-input", code_input, class="w-full max-w-md") }}
 
 <h3 id="example-textarea"><a href="#example-textarea">Textarea</a></h3>
 
 {% set code_textarea %}
-<div role="group" class="field w-full max-w-md">
-  <label for="bio">Bio</label>
-  <textarea id="bio" rows="4" placeholder="Tell us about yourself" aria-describedby="bio-desc"></textarea>
-  <p id="bio-desc" class="description">Brief description for your profile (max 200 characters)</p>
+<div role="group" class="field">
+  <label for="bio">Feedback</label>
+  <textarea id="bio" rows="4" placeholder="Your feedback helps us improve..." aria-describedby="bio-desc"></textarea>
+  <p id="bio-desc" class="description">Share your thoughts about our service.</p>
 </div>
 {% endset %}
 
-{{ code_preview("field-textarea", code_textarea) }}
+{{ code_preview("field-textarea", code_textarea, class="w-full max-w-md") }}
 
 <h3 id="example-select"><a href="#example-select">Select</a></h3>
 
 {% set code_select %}
-<div role="group" class="field w-full max-w-md">
-  <label for="country">Country</label>
-  <select id="country" class="select" aria-describedby="country-desc">
-    <option value="">Select a country</option>
-    <option value="us">United States</option>
-    <option value="uk">United Kingdom</option>
-    <option value="ca">Canada</option>
-    <option value="au">Australia</option>
+<div role="group" class="field">
+  <label for="country">Department</label>
+  <select id="country" class="select w-full" aria-describedby="country-desc">
+    <option value="">Choose department</option>
+    <option value="engineering">Engineering</option>
+    <option value="design">Design</option>
+    <option value="marketing">Marketing</option>
+    <option value="sales">Sales</option>
+    <option value="support">Customer Support</option>
+    <option value="hr">Human Resources</option>
+    <option value="finance">Finance</option>
+    <option value="operations">Operations</option>
   </select>
-  <p id="country-desc" class="description">Choose your country of residence</p>
+  <p id="country-desc" class="description">Select your department or area of work.</p>
 </div>
 {% endset %}
 
-{{ code_preview("field-select", code_select) }}
+{{ code_preview("field-select", code_select, class="w-full max-w-md") }}
+
+<h3 id="example-slider"><a href="#example-slider">Slider</a></h3>
+
+{% set code %}
+<div role="group" class="field">
+  <label for="price-range">Price</label>
+  <p id="price-range-desc" class="description">Set your budget: $<span id="price-range-value">150</span></p>
+  <input id="price-range" type="range" min="0" max="500" value="150">
+</div>
+<script>
+  (() => {
+    const sliders = document.querySelectorAll('input[type="range"]');
+    if (!sliders) return;
+
+    const updateSlider = (el) => {
+      const min = parseFloat(el.min || 0);
+      const max = parseFloat(el.max || 100);
+      const value = parseFloat(el.value);
+      const percent = (max === min) ? 0 : ((value - min) / (max - min)) * 100;
+      el.style.setProperty('--slider-value', `${percent}%`);
+    };
+
+    sliders.forEach(slider => {
+      updateSlider(slider);
+      slider.addEventListener('input', (event) => updateSlider(event.target));
+    });
+
+    const priceSlider = document.getElementById('price-range');
+    const priceValue = document.getElementById('price-range-value');
+
+    priceSlider.addEventListener('input', (event) => priceValue.innerHTML = event.target.value);
+  })();
+</script>
+{% endset %}
+{{ code_preview("slider", code, "w-full max-w-sm") }}
 
 <h3 id="example-fieldset"><a href="#example-fieldset">Fieldset</a></h3>
 
@@ -186,9 +226,9 @@ toc:
 
 {% set code_fieldset %}
 <form class="w-full max-w-md">
-  <fieldset class="fieldset" aria-describedby="profile-desc">
+  <fieldset class="fieldset">
     <legend>Profile</legend>
-    <p id="profile-desc" class="description">This information will be displayed on your profile</p>
+    <p>This information will be displayed on your profile</p>
     
     <div role="group" class="field">
       <label for="full-name">Full name</label>
@@ -217,54 +257,84 @@ toc:
 <h3 id="example-checkbox"><a href="#example-checkbox">Checkbox</a></h3>
 
 {% set code_checkbox %}
-<fieldset class="fieldset w-full max-w-md" aria-describedby="tasks-desc">
-  <legend>Tasks</legend>
-  <p id="tasks-desc" class="description">Select the tasks you want to receive updates for</p>
+<fieldset class="fieldset">
+  <legend>Show these items on the desktop</legend>
+  <p>Select the items you want to show on the desktop.</p>
   
   <div class="flex flex-col gap-3">
-    <div class="flex items-center gap-3">
-      <input type="checkbox" id="push-notifications" checked>
-      <label for="push-notifications" class="font-normal">Push notifications</label>
+    <div class="field">
+      <label class="gap-3">
+        <input type="checkbox">
+        Hard disks
+      </label>
     </div>
-    <div class="flex items-center gap-3">
-      <input type="checkbox" id="email-notifications" checked>
-      <label for="email-notifications" class="font-normal">Email notifications</label>
+    <div class="field">
+      <label class="gap-3">
+        <input type="checkbox">
+        External disks
+      </label>
     </div>
-    <div class="flex items-center gap-3">
-      <input type="checkbox" id="sms-notifications">
-      <label for="sms-notifications" class="font-normal">SMS notifications</label>
+    <div class="field">
+      <label class="gap-3">
+        <input type="checkbox">
+        CDs, DVDs and iPods
+      </label>
+    </div>
+    <div class="field">
+      <label class="gap-3">
+        <input type="checkbox">
+        Connected servers
+      </label>
+    </div>
+  </div>
+
+  <hr role="separator">
+
+  <div class="field">
+    <div class="flex w-full gap-3 flex-row items-center">
+      <input id="sync-desktop-documents" type="checkbox" checked class="input self-start">
+      <div class="flex flex-1 flex-col gap-1.5 leading-snug">
+        <label for="sync-desktop-documents">Sync Desktop & Documents folders</label>
+        <p class="description">Your Desktop & Documents folders are being synced with iCloud Drive. You can access them from other devices.</p>
+      </div>
     </div>
   </div>
 </fieldset>
 {% endset %}
 
-{{ code_preview("field-checkbox", code_checkbox) }}
+{{ code_preview("field-checkbox", code_checkbox, class="w-full max-w-md") }}
 
 <h3 id="example-radio"><a href="#example-radio">Radio Group</a></h3>
 
 {% set code_radio %}
-<fieldset class="fieldset w-full max-w-md" aria-describedby="notify-desc">
-  <legend>Notify me about</legend>
-  <p id="notify-desc" class="description">Choose which notifications you want to receive</p>
+<fieldset class="fieldset">
+  <legend>Subscription plan</legend>
+  <p>Yearly and lifetime plans offer significant savings.</p>
   
-  <div class="flex flex-col gap-3">
-    <div class="flex items-center gap-3">
-      <input type="radio" id="notify-all" name="notifications" checked>
-      <label for="notify-all" class="font-normal">All new messages</label>
+  <div role="radiogroup" class="grid gap-3">
+    <div class="field">
+      <label class="gap-3">
+        <input type="radio" name="subscription-plan" checked>
+        Monthly ($9.99/month)
+      </label>
     </div>
-    <div class="flex items-center gap-3">
-      <input type="radio" id="notify-direct" name="notifications">
-      <label for="notify-direct" class="font-normal">Direct messages and mentions</label>
+    <div class="field">
+      <label class="gap-3">
+        <input type="radio" name="subscription-plan">
+        Yearly ($99.99/year)
+      </label>
     </div>
-    <div class="flex items-center gap-3">
-      <input type="radio" id="notify-none" name="notifications">
-      <label for="notify-none" class="font-normal">Nothing</label>
+    <div class="field">
+      <label class="gap-3">
+        <input type="radio" name="subscription-plan">
+        Lifetime ($299.99)
+      </label>
     </div>
   </div>
 </fieldset>
 {% endset %}
 
-{{ code_preview("field-radio", code_radio) }}
+{{ code_preview("field-radio", code_radio, class="w-full max-w-md") }}
 
 <h3 id="example-switch"><a href="#example-switch">Switch</a></h3>
 
@@ -273,44 +343,43 @@ toc:
 </section>
 
 {% set code_switch %}
-<fieldset class="fieldset w-full max-w-md">
-  <legend>Notifications</legend>
-  <p class="description">Configure how you receive notifications</p>
-  
-  <div class="flex flex-col gap-4">
-    <div class="flex items-center justify-between">
-      <div>
-        <label for="marketing" class="font-medium">Marketing emails</label>
-        <p class="description text-sm">Receive emails about new products and features</p>
-      </div>
-      <input type="checkbox" id="marketing" class="toggle" checked>
-    </div>
-    
-    <div class="flex items-center justify-between">
-      <div>
-        <label for="security" class="font-medium">Security emails</label>
-        <p class="description text-sm">Receive emails about account security</p>
-      </div>
-      <input type="checkbox" id="security" class="toggle" checked>
-    </div>
+<div role="group" class="field flex-row">
+  <div class="flex flex-1 flex-col gap-1.5 leading-snug">
+    <label for="multi-factor-authentication">Multi-factor authentication</label>
+    <p class="description">Enable multi-factor authentication. If you do not have a two-factor device, you can use a one-time code sent to your email.</p>
   </div>
-</fieldset>
+  <input id="multi-factor-authentication" type="checkbox" role="switch">
+</div>
 {% endset %}
 
-{{ code_preview("field-switch", code_switch) }}
+{{ code_preview("field-switch", code_switch, class="w-full max-w-md") }}
 
-<h2 id="accessibility"><a href="#accessibility">Accessibility</a></h2>
+<h3 id="example-choice-card"><a href="#example-choice-card">Choice Card</a></h3>
 
-<section class="prose">
-  <ul>
-    <li>Always use <code>&lt;label&gt;</code> elements with <code>for</code> attribute matching input <code>id</code></li>
-    <li>Associate helper text and errors using <code>aria-describedby</code> on the input</li>
-    <li>Use <code>aria-invalid="true"</code> on inputs with errors</li>
-    <li>Use <code>role="alert"</code> on error messages for screen reader announcements</li>
-    <li>Group related fields with <code>&lt;fieldset&gt;</code> and <code>&lt;legend&gt;</code></li>
-    <li>Use <code>role="group"</code> for individual field wrappers</li>
-  </ul>
-</section>
+{% set code_choice_card %}
+<fieldset class="fieldset">
+  <legend class="text-sm">Compute Environment</legend>
+  <p>Select the compute environment for your cluster.</p>
 
+  <div role="group" class="field">
+    <label class="flex gap-3 border border-transparent rounded-md p-4 has-[:checked]:border-primary has-[:checked]:bg-primary/5 dark:has-[:checked]:bg-primary/10">
+      <div class="flex flex-1 flex-col gap-1.5 leading-snug">
+        <h3>Kubernetes</h3>
+        <p class="description text-">Run GPU workloads on a K8s configured cluster.</p>
+      </div>
+      <input id="choice-card" type="radio" name="choice-card" class="self-start" checked>
+    </label>
+  </div>
+  <div role="group" class="field">
+    <label class="flex gap-3 border border-transparent rounded-md p-4 has-[:checked]:border-primary has-[:checked]:bg-primary/5 dark:has-[:checked]:bg-primary/10">
+      <div class="flex flex-1 flex-col gap-1.5 leading-snug">
+        <h3>Virtual Machine</h3>
+        <p class="description text-">Access a VM configured cluster to run GPU workloads.</p>
+      </div>
+      <input id="choice-card" type="radio" name="choice-card" class="self-start">
+    </label>
+  </div>
+</div>
+{% endset %}
 
-
+{{ code_preview("field-choice-card", code_choice_card, class="w-full max-w-md") }}

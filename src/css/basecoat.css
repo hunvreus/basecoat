@@ -693,10 +693,10 @@
 
     > legend {
       @apply text-base font-medium mb-3;
-    }
 
-    > .description {
-      @apply text-sm text-muted-foreground;
+      & + p {
+        @apply text-sm text-muted-foreground;
+      }
     }
   }
   .field {
