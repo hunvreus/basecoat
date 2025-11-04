@@ -25,7 +25,25 @@ toc:
 {% from "macros/code_preview.njk" import code_preview %}
 {% from "macros/code_block.njk" import code_block %}
 
-{% set code %}<span class="badge">Badge</span>{% endset %}
+{% set code %}
+<div class="flex flex-col items-center gap-2">
+  <div class="flex w-full flex-wrap gap-2">
+    <span class="badge">Badge</span>
+    <span class="badge-secondary">Secondary</span>
+    <span class="badge-destructive">Destructive</span>
+    <span class="badge-outline">Outline</span>
+  </div>
+  <div class="flex w-full flex-wrap gap-2">
+    <span class="badge-secondary bg-blue-500 text-white dark:bg-blue-600">
+      {% lucide "badge-check" %}
+      Verified
+    </span>
+    <span class="badge rounded-full h-5 min-w-5 px-1 font-mono tabular-nums">8</span>
+    <span class="badge-destructive rounded-full h-5 min-w-5 px-1 font-mono tabular-nums">99</span>
+    <span class="badge-outline rounded-full h-5 min-w-5 px-1 font-mono tabular-nums">20+</span>
+  </div>
+</div>
+{% endset %}
 {{ code_preview("badge", code) }}
 
 <h2 id="usage"><a href="#usage">Usage</a></h2>

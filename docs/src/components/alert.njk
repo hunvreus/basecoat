@@ -19,20 +19,48 @@ toc:
 {% from "macros/code_preview.njk" import code_preview %}
 {% from "macros/code_block.njk" import code_block %}
 
-{% set code %}<div class="alert">
-  {% lucide "circle-check" %}
-  <h2>Success! Your changes have been saved</h2>
-  <section>This is an alert with icon, title and description.</section>
-</div>{% endset %}
-{{ code_preview("alert", code) }}
+{% set code %}
+<div class="grid w-full max-w-xl items-start gap-4">
+  <div class="alert">
+    {% lucide "circle-check" %}
+    <h2>Success! Your changes have been saved</h2>
+    <section>This is an alert with icon, title and description.</section>
+  </div>
+  <div class="alert">
+    {% lucide "popcorn" %}
+    <h2>This Alert has a title and an icon. No description.</h2>
+    <section>This is an alert with icon, title and description.</section>
+  </div>
+  <div class="alert-destructive">
+    {% lucide "circle-check" %}
+    <h2>Unable to process your payment.</h2>
+    <section>
+      <p>Please verify your billing information and try again.</p>
+      <ul class="list-inside list-disc text-sm">
+        <li>Check your card details</li>
+        <li>Ensure sufficient funds</li>
+        <li>Verify billing address</li>
+      </ul>
+    </section>
+  </div>
+</div>
+{% endset %}
+{{ code_preview("alert", code | prettyHtml) }}
 
 <h2 id="usage">Usage</h2>
 
 <section class="prose">
-  <p>You can use one of the two classes: <code>alert</code> or <code>alert-dialog</code>.</p>
+  <p>Use the <code>alert</code> or <code>alert-destructive</code>.</p>
 </section>
 
-{{ code_block(code) }}
+{% set code_simple %}
+<div class="alert">
+  {% lucide "circle-check" %}
+  <h2>Success! Your changes have been saved</h2>
+  <section>This is an alert with icon, title and description.</section>
+</div>
+{% endset %}
+{{ code_block(code_simple | prettyHtml) }}
 
 <section class="prose">
   <p>The component has the following HTML structure:</p>

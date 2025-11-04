@@ -384,7 +384,7 @@
   @apply inline-flex w-fit items-stretch isolate;
   
   > *:focus-visible,
-  > :is(.dropdown-menu, .popover) > button:focus-visible {
+  > :is(.dropdown-menu, .popover, .select) > button:focus-visible {
     @apply relative z-10;
   }
 
@@ -394,11 +394,11 @@
 
   &:not([data-orientation='vertical']) {
     > *:not(:first-child),
-    > :is(.dropdown-menu, .popover):not(:first-child) > button {
+    > :is(.dropdown-menu, .popover, .select):not(:first-child) > button {
       @apply rounded-l-none border-l-0;
     }
     > *:not(:last-child),
-    > :is(.dropdown-menu, .popover):not(:last-child) > button {
+    > :is(.dropdown-menu, .popover, .select):not(:last-child) > button {
       @apply rounded-r-none;
     }
   }  
@@ -409,10 +409,12 @@
       @apply w-auto h-px;
     }
     
-    > *:not(:first-child) {
+    > *:not(:first-child),
+    > :is(.dropdown-menu, .popover, .select):not(:first-child) > button {
       @apply rounded-t-none border-t-0;
     }
-    > *:not(:last-child) {
+    > *:not(:last-child),
+    > :is(.dropdown-menu, .popover, .select):not(:last-child) > button {
       @apply rounded-b-none;
     }
   }

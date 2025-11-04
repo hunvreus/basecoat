@@ -16,21 +16,23 @@ toc:
 </div>
 
 {% set code %}
-  <div class="flex flex-row flex-wrap items-center gap-12">
-    <img class="size-8 shrink-0 object-cover rounded-full" alt="@hunvreus" src="https://github.com/hunvreus.png">
-    <img class="size-8 shrink-0 object-cover rounded-lg" alt="@shadcn" src="https://github.com/shadcn.png">
-    <div class="flex -space-x-2 [&_img]:ring-background [&_img]:ring-2 [&_img]:grayscale [&_img]:size-8 [&_img]:shrink-0 [&_img]:object-cover [&_img]:rounded-full">
-      <img alt="@hunvreus" src="https://github.com/hunvreus.png">
-      <img alt="@shadcn" src="https://github.com/shadcn.png">
-      <img alt="@adamwathan" src="https://github.com/adamwathan.png">
-    </div>
+<div class="flex flex-row flex-wrap items-center gap-12">
+  <img class="size-8 shrink-0 object-cover rounded-full" alt="@hunvreus" src="https://github.com/hunvreus.png">
+  <img class="size-8 shrink-0 object-cover rounded-lg" alt="@shadcn" src="https://github.com/shadcn.png">
+  <div class="flex -space-x-2 [&_img]:ring-background [&_img]:ring-2 [&_img]:grayscale [&_img]:size-8 [&_img]:shrink-0 [&_img]:object-cover [&_img]:rounded-full">
+    <img alt="@hunvreus" src="https://github.com/hunvreus.png">
+    <img alt="@shadcn" src="https://github.com/shadcn.png">
+    <img alt="@adamwathan" src="https://github.com/adamwathan.png">
   </div>
+</div>
 {% endset %}
-{{ code_preview("avatar", code, "max-w-md") }}
+{{ code_preview("avatar", code | prettyHtml, "w-full max-w-md") }}
 
 <h2 id="usage"><a href="#usage">Usage</a></h2>
 
-<p class="prose">To make an avatar, simply apply Tailwind utility classes directly to an <code>&lt;img&gt;</code> element:</p>
+<section class="prose">
+  <p>Avatars are just <code>&lt;img&gt;</code> elements styled with Tailwind utility classes.</p>
+</section>
 
 {% set code_simple %}
   <img class="size-8 shrink-0 object-cover rounded-full" alt="@hunvreus" src="https://github.com/hunvreus.png">

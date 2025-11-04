@@ -14,28 +14,33 @@ toc:
         id: example-nested
       - label: Separator
         id: example-separator
+      - label: Input
+        id: example-input
       - label: Dropdown Menu
         id: example-dropdown-menu
+      - label: Select
+        id: example-select
       - label: Popover
         id: example-popover
 ---
 
 {% from "dropdown-menu.njk" import dropdown_menu %}
 {% from "popover.njk" import popover %}
+{% from "select.njk" import select %}
 {% from "macros/code_preview.njk" import code_preview %}
 {% from "macros/code_block.njk" import code_block %}
 
 {% set code_default %}
 <div class="flex w-fit items-stretch gap-2">
-  <button class="btn-icon-outline" aria-label="Go Back">{% lucide "arrow-left" %}</button>
+  <button type="button" class="btn-icon-outline" aria-label="Go Back">{% lucide "arrow-left" %}</button>
   
   <div role="group" class="button-group">
-    <button class="btn-outline">Archive</button>
-    <button class="btn-outline">Report</button>
+    <button type="button" class="btn-outline">Archive</button>
+    <button type="button" class="btn-outline">Report</button>
   </div>
 
   <div role="group" class="button-group">
-    <button class="btn-outline">Snooze</button>
+    <button type="button" class="btn-outline">Snooze</button>
     {% set trigger %}
       {% lucide "ellipsis" %}
     {% endset %}
@@ -82,8 +87,8 @@ toc:
 
 {% set code_simple %}  
 <div role="group" class="button-group">
-  <button class="btn-outline">Archive</button>
-  <button class="btn-outline">Report</button>
+  <button type="button" class="btn-outline">Archive</button>
+  <button type="button" class="btn-outline">Report</button>
 </div>
 {% endset %}
 {{ code_block(code_simple | prettyHtml, "html") }}
@@ -98,10 +103,10 @@ toc:
 
 {% set code_orientation %}
 <div role="group" class="button-group" data-orientation="vertical">
-  <button class="btn-icon-outline" aria-label="Zoom in">
+  <button type="button" class="btn-icon-outline" aria-label="Zoom in">
     {% lucide "plus" %}
   </button>
-  <button class="btn-icon-outline" aria-label="Zoom out">
+  <button type="button" class="btn-icon-outline" aria-label="Zoom out">
     {% lucide "minus" %}
   </button>
 </div>
@@ -114,22 +119,22 @@ toc:
 {% set code_size %}
 <div class="flex flex-col items-start gap-8">
   <div role="group" class="button-group">
-    <button class="btn-sm-outline">Small</button>
-    <button class="btn-sm-outline">Button</button>
-    <button class="btn-sm-outline">Group</button>
-    <button class="btn-sm-icon-outline">{% lucide "plus" %}</button>
+    <button type="button" class="btn-sm-outline">Small</button>
+    <button type="button" class="btn-sm-outline">Button</button>
+    <button type="button" class="btn-sm-outline">Group</button>
+    <button type="button" class="btn-sm-icon-outline">{% lucide "plus" %}</button>
   </div>
   <div role="group" class="button-group">
-    <button class="btn-outline">Default</button>
-    <button class="btn-outline">Button</button>
-    <button class="btn-outline">Group</button>
-    <button class="btn-icon-outline">{% lucide "plus" %}</button>
+    <button type="button" class="btn-outline">Default</button>
+    <button type="button" class="btn-outline">Button</button>
+    <button type="button" class="btn-outline">Group</button>
+    <button type="button" class="btn-icon-outline">{% lucide "plus" %}</button>
   </div>
   <div role="group" class="button-group">
-    <button class="btn-lg-outline">Small</button>
-    <button class="btn-lg-outline">Button</button>
-    <button class="btn-lg-outline">Group</button>
-    <button class="btn-lg-icon-outline">{% lucide "plus" %}</button>
+    <button type="button" class="btn-lg-outline">Small</button>
+    <button type="button" class="btn-lg-outline">Button</button>
+    <button type="button" class="btn-lg-outline">Group</button>
+    <button type="button" class="btn-lg-icon-outline">{% lucide "plus" %}</button>
   </div>
 </div>
 {% endset %}
@@ -141,17 +146,17 @@ toc:
 {% set code_nested %}
 <div role="group" aria-label="Pagination controls" class="flex w-fit items-stretch gap-2">
   <div role="group" class="button-group">
-    <button class="btn-sm-outline">1</button>
-    <button class="btn-sm-outline">2</button>
-    <button class="btn-sm-outline">3</button>
-    <button class="btn-sm-outline">4</button>
-    <button class="btn-sm-outline">5</button>
+    <button type="button" class="btn-sm-outline">1</button>
+    <button type="button" class="btn-sm-outline">2</button>
+    <button type="button" class="btn-sm-outline">3</button>
+    <button type="button" class="btn-sm-outline">4</button>
+    <button type="button" class="btn-sm-outline">5</button>
   </div>
   <div role="group" class="button-group">
-    <button class="btn-sm-icon-outline" aria-label="Previous page">
+    <button type="button" class="btn-sm-icon-outline" aria-label="Previous page">
       {% lucide "chevron-left" %}
     </button>
-    <button class="btn-sm-icon-outline" aria-label="Next page">
+    <button type="button" class="btn-sm-icon-outline" aria-label="Next page">
       {% lucide "chevron-right" %}
     </button>
   </div>
@@ -168,19 +173,32 @@ toc:
 
 {% set code_separator %}
 <div role="group" class="button-group">
-  <button class="btn-secondary">Copy</button>
+  <button type="button" class="btn-secondary">Copy</button>
   <hr role="separator">
-  <button class="btn-secondary">Paste</button>
+  <button type="button" class="btn-secondary">Paste</button>
 </div>
 {% endset %}
 
 {{ code_preview("button-group-separator", code_separator | prettyHtml) }}
 
+
+<h3 id="example-input"><a href="#example-input">Input</a></h3>
+
+{% set code_input %}
+<div class="button-group">
+  <input type="text" class="input" placeholder="Search...">
+  <button type="button" class="btn-icon-outline">{% lucide "search" %}</button>
+</div>
+{% endset %}
+
+{{ code_preview("button-group-input", code_input | prettyHtml) }}
+
+
 <h3 id="example-dropdown-menu"><a href="#example-dropdown-menu">Dropdown Menu</a></h3>
 
 {% set code_dropdown_menu %}
 <div role="group" class="button-group">
-  <button class="btn-outline">Follow</button>
+  <button type="button" class="btn-outline">Follow</button>
   {% set trigger %}
     {% lucide "chevron-down" %}
   {% endset %}
@@ -224,11 +242,30 @@ toc:
 
 {{ code_preview("button-group-dropdown-menu", code_dropdown_menu | prettyHtml) }}
 
+<h3 id="example-select"><a href="#example-select">Select</a></h3>
+
+{% set code_select %}
+<div class="flex w-fit items-stretch gap-2">
+  <div class="button-group">
+    {% call select(trigger_attrs={"class": "[&_[data-name]]:hidden"}) %}
+      <div role="option" data-value="$">$ <span class="text-muted-foreground" data-name>US Dollar</span></div>
+      <div role="option" data-value="€">€ <span class="text-muted-foreground" data-name>Euro</span></div>
+      <div role="option" data-value="£">£ <span class="text-muted-foreground" data-name>British Pound</span></div>
+    {% endcall %}
+    <input type="text" class="input" placeholder="10.00">
+  </div>
+
+  <button type="button" class="btn-icon-outline">{% lucide "arrow-right" %}</button>
+</div>
+{% endset %}
+
+{{ code_preview("button-group-select", code_select | prettyHtml) }}
+
 <h3 id="example-popover"><a href="#example-popover">Popover</a></h3>
 
 {% set code_popover %}
 <div role="group" class="button-group">
-  <button class="btn-outline">
+  <button type="button" class="btn-outline">
     {% lucide "bot" %}
     Copilot
   </button>
