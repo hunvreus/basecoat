@@ -203,13 +203,12 @@ toc:
     <p class="text-muted-foreground line-clamp-2 text-sm leading-normal font-normal text-balance [&>a:hover]:text-primary [&>a]:underline [&>a]:underline-offset-4">129 MB / 1000 MB</p>
   </div>
   <button class="btn-sm-outline self-start">Cancel</button>
-  <footer class="w-full">
+  <footer class="flex basis-full items-center justify-between gap-2">
     <div class="bg-primary/20 relative h-2 w-full overflow-hidden rounded-full">
-        <div id="demo-progress" class="bg-primary h-full w-full flex-1 transition-all" style="width: 13%"></div>
+      <div id="demo-progress" class="bg-primary h-full w-full flex-1 transition-all" style="width: 13%"></div>
     </div>
   </footer>
 </article>
 {% endset %}
 
 {{ code_preview("spinner-item", code_item, class="w-full max-w-md") }}
-

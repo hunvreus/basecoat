@@ -695,10 +695,6 @@
 
     > legend {
       @apply text-base font-medium mb-3;
-
-      & + p {
-        @apply -mt-1.5;
-      }
     }
   }
   .field {
@@ -718,10 +714,21 @@
     section {
       @apply flex flex-1 flex-col gap-1.5 leading-snug;
     }
+
+    &[data-orientation='horizontal'] {
+      @apply flex-row items-center [&>label]:flex-auto has-[>section]:items-start has-[>section]:[&>[type=checkbox],[type=radio]]:mt-px [&_p]:text-balance;
+    }
   }
   .fieldset legend + p,
-  .field p {
-    @apply text-muted-foreground text-sm leading-normal font-normal last:mt-0 nth-last-2:-mt-1 [&>a:hover]:text-primary [&>a]:underline [&>a]:underline-offset-4;
+  .field > p,
+  .field section > p {
+    @apply text-muted-foreground text-sm leading-normal font-normal [&>a:hover]:text-primary [&>a]:underline [&>a]:underline-offset-4;
+  }
+  .fieldset legend + p {
+    @apply -mt-1.5;
+  }
+  .field > p {
+    @apply last:mt-0 nth-last-2:-mt-1;
   }
 }
 

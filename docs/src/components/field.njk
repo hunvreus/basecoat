@@ -22,15 +22,12 @@ toc:
         id: example-radio
       - label: Switch
         id: example-switch
+      - label: Responsive Layout
+        id: example-responsive
 ---
 
 {% from "macros/code_preview.njk" import code_preview %}
 {% from "macros/code_block.njk" import code_block %}
-
-<div class="alert-destructive">
-  {% lucide "triangle-alert"%}
-  <h2>This component is still under development, API may change.</h2>
-</div>
 
 {% set code_demo %}
 <form class="w-full max-w-md space-y-6">
@@ -129,7 +126,7 @@ toc:
   <p><strong>Fields</strong> have the following HTML structure:</p>
   <dl>
     <dt><code class="highlight language-html">&lt;div role="group" class="field"&gt;</code></dt>
-    <dd>Field container.
+    <dd>Field container. Add <code>data-orientation="horizontal"</code> to align controls horizontally. For responsive layouts, use standard Tailwind responsive classes.
       <dl>
         <dt><code class="highlight language-html">&lt;label&gt;</code></dt>
         <dd>Label for the input.</dd>
@@ -139,6 +136,8 @@ toc:
         <dd>Helper text. Use <code>aria-describedby</code> on the input to reference this element's <code>id</code>.</dd>
         <dt><code class="highlight language-html">&lt;p role="alert"&gt;</code> <span class="badge-secondary">Optional</span></dt>
         <dd>Error message. Use <code>aria-describedby</code> on the input and <code>aria-invalid="true"</code> to reference this element's <code>id</code>.</dd>
+        <dt><code class="highlight language-html">&lt;section&gt;</code> <span class="badge-secondary">Optional</span></dt>
+        <dd>Wraps label and description when the label sits beside the input (e.g. <code>data-orientation="horizontal"</code>). Not required if you have no description.</dd>
       </dl>
     </dd>
   </dl>
@@ -321,14 +320,14 @@ toc:
 
   <hr role="separator">
 
-  <div class="field">
-    <div class="flex w-full gap-3 flex-row items-center">
+  <div class="field" data-orientation="horizontal">
+    {# <div class="flex w-full items-center gap-3"> #}
       <input id="sync-desktop-documents" type="checkbox" checked class="input self-start">
       <section>
         <label for="sync-desktop-documents">Sync Desktop & Documents folders</label>
         <p>Your Desktop & Documents folders are being synced with iCloud Drive. You can access them from other devices.</p>
       </section>
-    </div>
+    {# </div> #}
   </div>
 </fieldset>
 {% endset %}
@@ -370,11 +369,11 @@ toc:
 <h3 id="example-switch"><a href="#example-switch">Switch</a></h3>
 
 <section class="prose">
-  <p>Use horizontal layout for switches by wrapping in a flex container.</p>
+  <p>Set <code>data-orientation="horizontal"</code> on <code>.field</code> to align labels and controls side-by-side.</p>
 </section>
 
 {% set code_switch %}
-<div role="group" class="field flex-row">
+<div role="group" class="field" data-orientation="horizontal">
   <section>
     <label for="multi-factor-authentication">Multi-factor authentication</label>
     <p>Enable multi-factor authentication. If you do not have a two-factor device, you can use a one-time code sent to your email.</p>
@@ -410,7 +409,51 @@ toc:
       <input id="choice-card" type="radio" name="choice-card" class="self-start">
     </label>
   </div>
-</div>
+</fieldset>
 {% endset %}
 
 {{ code_preview("field-choice-card", code_choice_card, class="w-full max-w-md") }}
+
+<h3 id="example-responsive"><a href="#example-responsive">Responsive Layout</a></h3>
+
+<section class="prose">
+  <p>For responsive layouts, use standard Tailwind responsive classes directly on <code>.field</code>. This example stacks vertically on mobile and switches to horizontal at the <code>md</code> breakpoint.</p>
+</section>
+
+{% set code_responsive %}
+<fieldset class="fieldset">
+  <legend>Profile</legend>
+  <p>Keep your profile details up to date.</p>
+
+  <hr role="separator">  
+
+  <div class="flex flex-col gap-7">
+    <div role="group" class="field flex-col md:flex-row md:items-center">
+      <section class="md:flex-auto">
+        <label for="profile-name">Name</label>
+        <p id="profile-name-desc">Provide your full name for identification.</p>
+      </section>
+      <input id="profile-name" type="text" placeholder="Evil Rabbit" aria-describedby="profile-name-desc" class="md:w-auto md:min-w-80">
+    </div>
+
+    <hr role="separator">
+
+    <div role="group" class="field flex-col md:flex-row md:items-start">
+      <section class="md:flex-auto">
+        <label for="profile-bio">Message</label>
+        <p id="profile-bio-desc">You can write your message here. Keep it short, preferably under 100 characters.</p>
+      </section>
+      <textarea id="profile-bio" rows="3" placeholder="Hello, world!" aria-describedby="profile-bio-desc" class="md:w-auto md:min-w-80"></textarea>
+    </div>
+
+    <hr role="separator">
+
+    <div role="group" class="field flex-col md:flex-row md:items-center">
+      <button type="submit" class="btn md:w-auto">Submit</button>
+      <button type="button" class="btn-outline md:w-auto">Cancel</button>
+    </div>
+  </div>
+</fieldset>
+{% endset %}
+
+{{ code_preview("field-responsive", code_responsive, class="w-full max-w-3xl") }}

@@ -1,6 +1,6 @@
 {
   "name": "basecoat-css",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "Tailwind CSS for Basecoat components",
   "author": {
     "name": "hunvreus",
@@ -26,8 +26,7 @@
     "css",
     "html",
     "jinja",
-    "nunjucks",
-    "alpinejs"
+    "nunjucks"
   ],
   "repository": {
     "type": "git",
@@ -43,6 +42,8 @@
     "./css": "./dist/basecoat.css",
     "./all": "./dist/js/all.js",
     "./all.min": "./dist/js/all.min.js",
+    "./command": "./dist/js/command.js",
+    "./command.min": "./dist/js/command.min.js",
     "./dropdown-menu": "./dist/js/dropdown-menu.js",
     "./dropdown-menu.min": "./dist/js/dropdown-menu.min.js",
     "./popover": "./dist/js/popover.js",
