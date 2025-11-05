@@ -1,5 +1,6 @@
 .*
 !.gitignore
+!.gitattributes
 !.eleventy.js
 
 _site/
