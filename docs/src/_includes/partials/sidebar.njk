@@ -61,6 +61,14 @@
   "hx-swap": "outerHTML"
 } %}
 
+{% set new_link_attrs = {
+  "hx-boost": "true",
+  "hx-select": "#content",
+  "hx-target": "#content",
+  "hx-swap": "outerHTML",
+  "data-new-link": "true"
+} %}
+
 {% set icon_home %}{% lucide "house" %}{% endset %}
 {% set icon_info %}{% lucide "info" %}{% endset %}
 {% set icon_square_terminal %}{% lucide "square-terminal" %}{% endset %}
@@ -86,21 +94,30 @@
     { label: "Badge", url: "/components/badge", attrs: link_attrs },
     { label: "Breadcrumb", url: "/components/breadcrumb", attrs: link_attrs },
     { label: "Button", url: "/components/button", attrs: link_attrs },
+    { label: "Button Group", url: "/components/button-group", attrs: new_link_attrs },
     { label: "Card", url: "/components/card", attrs: link_attrs },
     { label: "Checkbox", url: "/components/checkbox", attrs: link_attrs },
+    { label: "Command", url: "/components/command", attrs: new_link_attrs },
     { label: "Combobox", url: "/components/combobox", attrs: link_attrs },
     { label: "Dialog", url: "/components/dialog", attrs: link_attrs },
     { label: "Dropdown Menu", url: "/components/dropdown-menu", attrs: link_attrs },
+    { label: "Empty", url: "/components/empty", attrs: new_link_attrs },
+    { label: "Field", url: "/components/field", attrs: new_link_attrs },
     { label: "Form", url: "/components/form", attrs: link_attrs },
     { label: "Input", url: "/components/input", attrs: link_attrs },
+    { label: "Input Group", url: "/components/input-group", attrs: new_link_attrs },
+    { label: "Item", url: "/components/item", attrs: new_link_attrs },
+    { label: "Kbd", url: "/components/kbd", attrs: new_link_attrs },
     { label: "Label", url: "/components/label", attrs: link_attrs },
     { label: "Pagination", url: "/components/pagination", attrs: link_attrs },
     { label: "Popover", url: "/components/popover", attrs: link_attrs },
+    { label: "Progress", url: "/components/progress", attrs: new_link_attrs },
     { label: "Radio Group", url: "/components/radio-group", attrs: link_attrs },
     { label: "Select", url: "/components/select", attrs: link_attrs },
-    { label: "Skeleton", url: "/components/skeleton", attrs: link_attrs },
     { label: "Sidebar", url: "/components/sidebar", attrs: link_attrs },
+    { label: "Skeleton", url: "/components/skeleton", attrs: link_attrs },
     { label: "Slider", url: "/components/slider", attrs: link_attrs },
+    { label: "Spinner", url: "/components/spinner", attrs: new_link_attrs },
     { label: "Switch", url: "/components/switch", attrs: link_attrs },
     { label: "Table", url: "/components/table", attrs: link_attrs },
     { label: "Tabs", url: "/components/tabs", attrs: link_attrs },
@@ -117,6 +134,6 @@
   label="Sidebar navigation",
   header=header,
   footer=footer,
-  content_attrs={ "class": "scrollbar" },
+  content_attrs={ "class": "scrollbar [&_[data-new-link]::after]:content-['New'] [&_[data-new-link]::after]:ml-auto [&_[data-new-link]::after]:text-xs [&_[data-new-link]::after]:font-medium [&_[data-new-link]::after]:bg-sidebar-primary [&_[data-new-link]::after]:text-sidebar-primary-foreground [&_[data-new-link]::after]:px-2 [&_[data-new-link]::after]:py-0.5 [&_[data-new-link]::after]:rounded-md" },
   menu=menu
 ) }}

@@ -1,0 +1,372 @@
+---
+layout: layouts/page.njk
+title: Input Group
+description: Display additional information or actions to an input or textarea.
+toc:
+  - label: Usage
+    id: usage
+  - label: Examples
+    id: examples
+    children:
+      - label: Icon
+        id: example-icon
+      - label: Text
+        id: example-text
+      - label: Button
+        id: example-button
+      - label: Tooltip
+        id: example-tooltip
+      - label: Textarea
+        id: example-textarea
+      - label: Spinner
+        id: example-spinner
+      - label: Dropdown
+        id: example-dropdown
+      - label: Group
+        id: example-group
+---
+
+{% from "macros/code_preview.njk" import code_preview %}
+{% from "macros/code_block.njk" import code_block %}
+{% from "dropdown-menu.njk" import dropdown_menu %}
+{% from "popover.njk" import popover %}
+
+<div class="alert mb-6">
+  {% lucide "circle-alert" %}
+  <h2>There is no dedicated Input Group component in Basecoat.</h2>
+</div>
+
+{% set code_default %}
+<div class="grid gap-6">
+  <div class="relative">
+    <input type="text" class="input pl-9 pr-20" placeholder="Search...">
+    <div class="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none text-muted-foreground [&>svg]:size-4">
+      {% lucide "search" %}
+    </div>
+    <div class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-muted-foreground text-sm">12 results</div>
+  </div>
+
+  <div class="relative">
+    <input type="text" class="input pl-15 pr-9" placeholder="example.com">
+    <div class="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none text-muted-foreground text-sm">https://</div>
+    <div class="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground [&>svg]:size-4" data-tooltip="This is content in a tooltip.">{% lucide "info" %}</div>
+  </div>
+
+  <div class="relative">
+    <textarea class="textarea pr-10 min-h-27 pb-12" placeholder="Ask, Search or Chat..."></textarea>
+    <footer role="group" class="absolute bottom-0 px-3 pb-3 pt-1.5 flex items-center w-full gap-2">
+      <button type="button" class="btn-icon-outline rounded-full size-6 text-muted-foreground hover:text-accent-foreground">
+        {% lucide "plus" %}
+      </button>
+      {{ dropdown_menu(
+        id="demo-dropdown-menu",
+        trigger="Auto",
+        trigger_attrs={"class": "btn-sm-ghost text-muted-foreground hover:text-accent-foreground h-6 p-2"},
+        popover_attrs={"data-side": "top", "class": "min-w-32"},
+        items=[
+          { type: "item", label: "Auto" },
+          { type: "item", label: "Agent" },
+          { type: "item", label: "Manual" }
+        ]
+      ) }}
+      <div class="text-muted-foreground text-sm ml-auto">52% used</div>
+      <hr class="w-0 h-4 border-r border-border shrink-0 m-0">
+      <button type="button" class="btn-icon rounded-full size-6 bg-muted-foreground hover:bg-foreground" disabled>
+        {% lucide "arrow-up" %}
+      </button>
+    </footer>
+  </div>
+
+  <div class="relative">
+    <input type="text" class="input pr-9" placeholder="@shadcn">
+    <div class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none bg-primary text-primary-foreground flex size-4 items-center justify-center rounded-full [&>svg]:size-3">{% lucide "check" %}</div>
+  </div>
+</div>
+{% endset %}
+
+{{ code_preview("input-group-default", code_default, class="w-full max-w-sm") }}
+
+<h2 id="usage"><a href="#usage">Usage</a></h2>
+
+<section class="prose">
+  <p>Input groups are pure HTML composition using Tailwind utility classes. There is no dedicated component: use <code>relative</code> positioning on a wrapper, add your content with <code>absolute</code> positioning, and adjust input padding to make room.</p>
+  <p>Browse the examples below and copy the pattern that fits your needs.</p>
+</section>
+
+<h2 id="examples"><a href="#examples">Examples</a></h2>
+
+<h3 id="example-icon"><a href="#example-icon">Icon</a></h3>
+
+{% set code_icon %}
+<div class="grid gap-6">
+  <div class="relative">
+    <input type="text" class="input pl-9" placeholder="Search...">
+    <div class="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none text-muted-foreground [&>svg]:size-4">
+      {% lucide "search" %}
+    </div>
+  </div>
+
+  <div class="relative">
+    <input type="email" class="input pl-9" placeholder="Enter your email">
+    <div class="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none text-muted-foreground [&>svg]:size-4">
+      {% lucide "mail" %}
+    </div>
+  </div>
+
+  <div class="relative">
+    <input type="text" class="input px-9" placeholder="Card number">
+    <div class="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none text-muted-foreground [&>svg]:size-4">
+      {% lucide "credit-card" %}
+    </div>
+    <div class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-muted-foreground [&>svg]:size-4">
+      {% lucide "check" %}
+    </div>
+  </div>
+
+  <div class="relative">
+    <input type="text" class="input pr-16" placeholder="Card number">
+    <div class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-muted-foreground [&>svg]:size-4 flex items-center gap-2">
+      {% lucide "star" %}
+      {% lucide "info" %}
+    </div>
+  </div>
+</div>
+{% endset %}
+
+{{ code_preview("input-group-icon-prefix", code_icon, class="w-full max-w-sm") }}
+
+<h3 id="example-text"><a href="#example-text">Text</a></h3>
+
+{% set code_text %}
+<div class="grid gap-6">
+  <div class="relative">
+    <input type="text" class="input pl-7 pr-12" placeholder="0.00">
+    <div class="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none text-muted-foreground text-sm">$</div>
+    <div class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-muted-foreground text-sm">USD</div>
+  </div>
+
+  <div class="relative">
+    <input type="text" class="input pl-15 pr-12" placeholder="example.com">
+    <div class="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none text-muted-foreground text-sm">https://</div>
+    <div class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-muted-foreground text-sm">.com</div>
+  </div>
+
+  <div class="relative">
+    <input type="text" class="input pr-30" placeholder="Enter your username">
+    <div class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-muted-foreground text-sm">@company.com</div>
+  </div>
+
+  <div class="relative">
+    <textarea class="textarea pr-10 min-h-25 pb-12" placeholder="Enter your message"></textarea>
+    <footer role="group" class="absolute bottom-0 px-3 pb-3 pt-1.5 flex items-center w-full gap-2">
+      <div class="text-muted-foreground text-sm">120 characters left</div>
+    </footer>
+  </div>
+</div>
+{% endset %}
+
+{{ code_preview("input-group-text", code_text, class="w-full max-w-sm") }}
+
+<h3 id="example-button"><a href="#example-button">Button</a></h3>
+
+{% set code_button %}
+<div class="grid gap-6">
+  <div class="relative">
+    <input type="text" readonly class="input pr-9" value="https://x.com/hunvreus">
+    <button 
+      data-copied="false"
+      onclick="
+        this.dataset.copied = 'true';
+        setTimeout(() => this.dataset.copied = 'false', 2000);
+      "
+      class="group absolute right-1.5 top-1/2 -translate-y-1/2 btn-icon-ghost text-muted-foreground hover:text-accent-foreground size-6"
+    >
+      {% lucide "copy", { "class": "group-data-[copied=true]:hidden" } %}
+      {% lucide "check", { "class": "hidden group-data-[copied=true]:block" } %}
+    </button>
+  </div>
+  
+
+  <div class="relative">
+    <input type="text" class="input pl-21 pr-9 rounded-full">
+    <button
+      aria-pressed="false" 
+      onclick="this.ariaPressed = this.ariaPressed === 'true' ? 'false' : 'true'"
+      class="absolute right-1.5 top-1/2 -translate-y-1/2 btn-icon-ghost text-muted-foreground hover:text-accent-foreground size-6 rounded-full aria-pressed:bg-transparent aria-pressed:hover:bg-accent dark:aria-pressed:hover:bg-accent/50 aria-pressed:text-blue-600 aria-pressed:[&>svg]:fill-blue-600"
+    >{% lucide "star" %}</button>
+    <div class="absolute left-1.5 top-1/2 -translate-y-1/2 flex items-center gap-1 z-10">
+      {% set trigger %}
+        {% lucide "info" %}
+      {% endset %}
+      {% call popover(
+        trigger=trigger,
+        trigger_attrs={"class": "btn-sm-icon-ghost rounded-full size-6"},
+        popover_attrs={"class": "max-w-72"}
+      ) %}
+        <h3 class="font-medium mb-1">Your connection is not secure.</h3>
+        <p>You should not enter any sensitive information on this site.</p>
+      {% endcall %}
+      <div class="text-muted-foreground text-sm pointer-events-none">https://</div>
+    </div>
+  </div>
+
+  <div class="relative">
+    <input type="text" readonly class="input pr-9" placeholder="Type to search...">
+    <button type="button" class="absolute right-1.5 top-1/2 -translate-y-1/2 btn-secondary h-6 p-2 rounded">Search</button>
+  </div>
+</div>
+{% endset %}
+
+{{ code_preview("input-group-button", code_button, class="w-full max-w-sm") }}
+
+<h3 id="example-tooltip"><a href="#example-tooltip">Tooltip</a></h3>
+
+{% set code_tooltip %}
+<div class="grid gap-6">
+  <div class="relative">
+    <input type="password" class="input pr-9" placeholder="Enter password">
+    <div class="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground [&>svg]:size-4" data-tooltip="Password must be at least 8 characters long.">{% lucide "info" %}</div>
+  </div>
+
+  <div class="relative">
+    <input type="email" class="input pr-9" placeholder="Your email address">
+    <div class="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground [&>svg]:size-4" data-tooltip="We'll use this to send your notifications.">{% lucide "circle-help" %}</div>
+  </div>
+
+  <div class="relative">
+    <input type="email" class="input pl-9" placeholder="Your email address">
+    <div class="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground [&>svg]:size-4" data-tooltip="Click for help with API keys." data-side="left">{% lucide "circle-help" %}</div>
+  </div>
+</div>
+{% endset %}
+
+{{ code_preview("input-group-tooltip", code_tooltip, class="w-full max-w-sm") }}
+
+<h3 id="example-textarea"><a href="#example-textarea">Textarea</a></h3>
+
+{% set code_textarea %}
+<div class="relative">
+  <textarea class="textarea pt-15 pb-17 min-h-77" placeholder="console.log('Hello, world!')."></textarea>
+  <header class="absolute top-0 flex items-center w-full gap-2 p-3 border-b">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-brand-javascript size-4 text-muted-foreground"><path d="M20 4l-2 14.5l-6 2l-6 -2l-2 -14.5z"></path><path d="M7.5 8h3v8l-2 -1"></path><path d="M16.5 8h-2.5a.5 .5 0 0 0 -.5 .5v3a.5 .5 0 0 0 .5 .5h1.423a.5 .5 0 0 1 .495 .57l-.418 2.93l-2 .5"></path></svg>
+    <span class="font-mono text-sm text-muted-foreground mr-auto">script.js</span>
+    <button class="btn-sm-icon-ghost text-muted-foreground hover:text-accent-foreground size-6">
+      {% lucide "refresh-ccw" %}
+    </button>
+    <button class="btn-sm-icon-ghost text-muted-foreground hover:text-accent-foreground size-6">
+      {% lucide "copy" %}
+    </button>
+  </header>
+  <footer class="absolute bottom-0 flex items-center w-full gap-2 p-3 border-t">
+    <span class="text-sm text-muted-foreground mr-auto">Line 1, Column 1</span>
+    <button type="button" class="btn-sm">
+      Run
+      {% lucide "corner-down-left" %}
+    </button>
+  </footer>
+</div>
+{% endset %}
+
+{{ code_preview("input-group-textarea", code_textarea, class="w-full max-w-md") }}
+
+<h3 id="example-spinner"><a href="#example-spinner">Spinner</a></h3>
+
+{% set code_spinner %}
+<div class="grid gap-6">
+  <div class="relative">
+    <input type="text" class="input pr-9" placeholder="Searching..." disabled>
+    <div class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-muted-foreground [&>svg]:size-4 opacity-50">
+      {% lucide "loader-circle", { "class": "animate-spin" } %}
+    </div>
+  </div>
+  
+  <div class="relative">
+    <input type="text" class="input pl-9" placeholder="Processing..." disabled>
+    <div class="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none text-muted-foreground [&>svg]:size-4 opacity-50">
+      {% lucide "loader-circle", { "class": "animate-spin" } %}
+    </div>
+  </div>
+
+  <div class="relative">
+    <input type="text" class="input pr-24" placeholder="Saving changes..." disabled>
+    <div class="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-2 text-sm text-muted-foreground opacity-50">
+      <div>Saving...</div>
+      <div class="[&>svg]:size-4">
+        {% lucide "loader-circle", { "class": "animate-spin" } %}
+      </div>
+    </div>
+  </div>
+
+  <div class="relative">
+    <input type="text" class="input pl-9 pr-26" placeholder="Refreshing data..." disabled>
+    <div class="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none text-muted-foreground [&>svg]:size-4 opacity-50">
+      {% lucide "loader", { "class": "animate-spin" } %}
+    </div>
+    <div class="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-2 text-sm text-muted-foreground opacity-50">
+      Please wait...
+    </div>
+  </div>
+</div>
+{% endset %}
+
+{{ code_preview("input-group-spinner", code_spinner, class="w-full max-w-md") }}
+
+<h3 id="example-dropdown"><a href="#example-dropdown">Dropdown</a></h3>
+
+{% set code_dropdown %}
+<div class="grid gap-6">
+  <div class="relative">
+    <input type="text" class="input pr-9" placeholder="Enter file name">
+    {% set trigger %}
+      {% lucide "ellipsis" %}
+    {% endset %}
+    {{ dropdown_menu(
+      main_attrs={"class": "absolute right-1.5 top-1/2 -translate-y-1/2 z-10"},
+      trigger=trigger,
+      trigger_attrs={"class": "btn-sm-icon-ghost text-muted-foreground hover:text-accent-foreground size-6"},
+      popover_attrs={"data-align": "end", "class": "min-w-32"},
+      items=[
+        { type: "item", label: "Settings" },
+        { type: "item", label: "Copy path" },
+        { type: "item", label: "Open location" }
+      ]
+    ) }}
+  </div>
+
+  <div class="relative">
+    <input type="text" class="input pr-30" placeholder="Enter search query">
+    {% set trigger %}
+      Search in...
+      {% lucide "chevron-down", { "class": "size-3" } %}
+    {% endset %}
+    {{ dropdown_menu(
+      main_attrs={"class": "absolute right-1.5 top-1/2 -translate-y-1/2"},
+      trigger=trigger,
+      trigger_attrs={"class": "btn-sm-ghost text-muted-foreground hover:text-accent-foreground p-2 h-6"},
+      popover_attrs={"data-align": "end", "class": "min-w-32"},
+      items=[
+        { type: "item", label: "Documentation" },
+        { type: "item", label: "Blog Posts" },
+        { type: "item", label: "Changelog" }
+      ]
+    ) }}
+  </div>
+</div>
+{% endset %}
+
+{{ code_preview("input-group-dropdown", code_dropdown, class="w-full max-w-sm") }}
+
+<h3 id="example-group"><a href="#example-group">Group</a></h3>
+
+{% set code_group %}
+<div class="flex w-fit items-stretch">
+  <label for="url" class="text-sm flex items-center bg-muted border border-r-0 px-4 rounded-l-md shadow-xs">https://</label>
+  <div class="relative">
+    <input type="text" class="input pr-9 rounded-none">
+    <div class="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground [&>svg]:size-4">{% lucide "link-2" %}</div>
+  </div>
+  <div class="text-sm flex items-center bg-muted border border-l-0 px-4 rounded-r-md shadow-xs">.com</div>
+</div>
+{% endset %}
+
+{{ code_preview("input-group-group", code_group, class="w-full max-w-sm") }}

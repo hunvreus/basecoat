@@ -16,7 +16,8 @@
       return;
     }
     
-    const options = Array.from(listbox.querySelectorAll('[role="option"]'));
+    const allOptions = Array.from(listbox.querySelectorAll('[role="option"]'));
+    const options = allOptions.filter(opt => opt.getAttribute('aria-disabled') !== 'true');
     let visibleOptions = [...options];
     let activeIndex = -1;
 
@@ -69,7 +70,7 @@
         const resetFilter = () => {
           filter.value = '';
           visibleOptions = [...options];
-          options.forEach(opt => opt.setAttribute('aria-hidden', 'false'));
+          allOptions.forEach(opt => opt.setAttribute('aria-hidden', 'false'));
         };
         
         if (hasTransition()) {
@@ -110,11 +111,11 @@
         setActiveOption(-1);
 
         visibleOptions = [];
-        options.forEach(option => {
+        allOptions.forEach(option => {
           const optionText = (option.dataset.label || option.textContent).trim().toLowerCase();
           const matches = optionText.includes(searchTerm);
           option.setAttribute('aria-hidden', String(!matches));
-          if (matches) {
+          if (matches && options.includes(option)) {
             visibleOptions.push(option);
           }
         });

@@ -1,0 +1,214 @@
+---
+layout: layouts/page.njk
+title: Spinner
+description: An indicator that can be used to show a loading state.
+toc:
+  - label: Usage
+    id: usage
+  - label: Examples
+    id: examples
+    children:
+      - label: Size
+        id: example-size
+      - label: Color
+        id: example-color
+      - label: Button
+        id: example-button
+      - label: Badge
+        id: example-badge
+      - label: Input Group
+        id: example-input-group
+      - label: Empty
+        id: example-empty
+      - label: Item
+        id: example-item
+---
+
+{% from "macros/code_preview.njk" import code_preview %}
+{% from "macros/code_block.njk" import code_block %}
+
+<div class="alert mb-6">
+  {% lucide "circle-alert" %}
+  <h2>There is no dedicated Spinner component in Basecoat.</h2>
+</div>
+
+{% set code_default %}
+<article class="group/item flex items-center border text-sm rounded-md transition-colors flex-wrap outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] border-transparent bg-muted/50 p-4 gap-4">
+  <div class="flex shrink-0 items-center justify-center [&_svg]:pointer-events-none [&_svg]:size-4">
+    {% lucide "loader-circle", { "role": "status", "aria-label": "Loading", "class": "animate-spin" } %}
+  </div>
+  <div class="flex flex-1 flex-col gap-1">
+    <h3 class="flex w-fit items-center gap-2 text-sm leading-snug font-medium line-clamp-1">Processing payment...</h3>
+  </div>
+  <div class="flex flex-col gap-1 flex-none text-center">
+    <p class="text-muted-foreground line-clamp-2 text-sm leading-normal font-normal text-balance [&>a:hover]:text-primary [&>a]:underline [&>a]:underline-offset-4">$100.00</p>
+  </div>
+</article>
+{% endset %}
+
+{{ code_preview("spinner-default", code_default, class="w-full max-w-xs") }}
+
+<h2 id="usage"><a href="#usage">Usage</a></h2>
+
+<section class="prose">
+  <p>Spinners are pure HTML using the <code>loader-circle</code> Lucide icon with the <code>animate-spin</code> Tailwind utility. Add <code>role="status"</code> and <code>aria-label="Loading"</code> for accessibility.</p>
+  <p>Browse the examples below and copy the pattern that fits your needs.</p>
+</section>
+
+<h2 id="examples"><a href="#examples">Examples</a></h2>
+
+<h3 id="example-size"><a href="#example-size">Size</a></h3>
+
+<section class="prose">
+  <p>Use the <code>size-*</code> utility class to change the size of the spinner.</p>
+</section>
+
+{% set code_size %}
+<div class="flex items-center gap-6">
+  {% lucide "loader-circle", { "role": "status", "aria-label": "Loading", "class": "size-3 animate-spin" } %}
+  {% lucide "loader-circle", { "role": "status", "aria-label": "Loading", "class": "size-4 animate-spin" } %}
+  {% lucide "loader-circle", { "role": "status", "aria-label": "Loading", "class": "size-6 animate-spin" } %}
+  {% lucide "loader-circle", { "role": "status", "aria-label": "Loading", "class": "size-8 animate-spin" } %}
+</div>
+{% endset %}
+
+{{ code_preview("spinner-size", code_size) }}
+
+<h3 id="example-color"><a href="#example-color">Color</a></h3>
+
+<section class="prose">
+  <p>Use the <code>text-*</code> utility class to change the color of the spinner.</p>
+</section>
+
+{% set code_color %}
+<div class="flex items-center gap-6">
+  {% lucide "loader-circle", { "role": "status", "aria-label": "Loading", "class": "size-6 animate-spin text-red-500" } %}
+  {% lucide "loader-circle", { "role": "status", "aria-label": "Loading", "class": "size-6 animate-spin text-green-500" } %}
+  {% lucide "loader-circle", { "role": "status", "aria-label": "Loading", "class": "size-6 animate-spin text-blue-500" } %}
+  {% lucide "loader-circle", { "role": "status", "aria-label": "Loading", "class": "size-6 animate-spin text-yellow-500" } %}
+  {% lucide "loader-circle", { "role": "status", "aria-label": "Loading", "class": "size-6 animate-spin text-purple-500" } %}
+</div>
+{% endset %}
+
+{{ code_preview("spinner-color", code_color) }}
+
+<h3 id="example-button"><a href="#example-button">Button</a></h3>
+
+<section class="prose">
+  <p>Add a spinner to a button to indicate a loading state.</p>
+</section>
+
+{% set code_button %}
+<div class="flex flex-col items-center gap-4">
+  <button class="btn-sm" disabled>
+    {% lucide "loader-circle", { "role": "status", "aria-label": "Loading", "class": "animate-spin" } %}
+    Loading...
+  </button>
+  <button class="btn-sm-outline" disabled>
+    {% lucide "loader-circle", { "role": "status", "aria-label": "Loading", "class": "animate-spin" } %}
+    Please wait
+  </button>
+  <button class="btn-sm-secondary" disabled>
+    {% lucide "loader-circle", { "role": "status", "aria-label": "Loading", "class": "animate-spin" } %}
+    Processing
+  </button>
+</div>
+{% endset %}
+
+{{ code_preview("spinner-button", code_button) }}
+
+<h3 id="example-badge"><a href="#example-badge">Badge</a></h3>
+
+{% set code_badge %}
+<div class="flex items-center gap-4">
+  <span class="badge">
+    {% lucide "loader-circle", { "role": "status", "aria-label": "Loading", "class": "animate-spin" } %}
+    Syncing
+  </span>
+  <span class="badge-secondary">
+    {% lucide "loader-circle", { "role": "status", "aria-label": "Loading", "class": "animate-spin" } %}
+    Updating
+  </span>
+  <span class="badge-outline">
+    {% lucide "loader-circle", { "role": "status", "aria-label": "Loading", "class": "animate-spin" } %}
+    Processing
+  </span>
+</div>
+{% endset %}
+
+{{ code_preview("spinner-badge", code_badge) }}
+
+<h3 id="example-input-group"><a href="#example-input-group">Input Group</a></h3>
+
+<section class="prose">
+  <p>Input groups can have spinners positioned inside them.</p>
+</section>
+
+{% set code_input_group %}
+<div class="flex w-full max-w-md flex-col gap-4">
+  <div class="relative">
+    <input type="text" class="input pr-9" placeholder="Send a message..." disabled>
+    <div class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-muted-foreground [&>svg]:size-4">
+      {% lucide "loader-circle", { "role": "status", "aria-label": "Loading", "class": "animate-spin" } %}
+    </div>
+  </div>
+
+  <div class="relative">
+    <textarea class="textarea pr-10 min-h-27 pb-12" placeholder="Send a message..." disabled></textarea>
+    <footer role="group" class="absolute bottom-0 px-3 pb-3 pt-1.5 flex items-center w-full gap-2">
+      {% lucide "loader-circle", { "role": "status", "aria-label": "Loading", "class": "size-4 animate-spin text-muted-foreground" } %}
+      <span class="text-sm text-muted-foreground">Validating...</span>
+      <button type="button" class="btn-sm-icon h-6 w-7.5 ml-auto rounded">
+        {% lucide "arrow-up" %}
+      </button>
+    </footer>
+  </div>
+</div>
+{% endset %}
+
+{{ code_preview("spinner-input-group", code_input_group, class="w-full max-w-md") }}
+
+<h3 id="example-empty"><a href="#example-empty">Empty</a></h3>
+
+<section class="prose">
+  <p>Use a spinner in empty states to indicate a loading or processing state.</p>
+</section>
+
+{% set code_empty %}
+<div class="flex min-w-0 flex-1 flex-col items-center justify-center gap-6 rounded-lg p-6 text-center text-balance md:p-12 text-neutral-800 dark:text-neutral-300">
+  <header class="flex max-w-sm flex-col items-center gap-3 text-center">
+    <div class="mb-2 bg-muted text-foreground flex size-10 shrink-0 items-center justify-center rounded-lg [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-6">
+      {% lucide "loader-circle", { "role": "status", "aria-label": "Loading", "class": "animate-spin size-4" } %}
+    </div>
+    <h3 class="text-lg font-semibold tracking-tight">Processing your request</h3>
+    <p class="text-muted-foreground text-sm/relaxed">Please wait while we process your request. Do not refresh the page.</p>
+  </header>
+  <section class="flex w-full max-w-sm min-w-0 flex-col items-center gap-3">
+    <button class="btn-sm-outline">Cancel</button>
+  </section>
+</div>
+{% endset %}
+
+{{ code_preview("spinner-empty", code_empty) }}
+
+<h3 id="example-item"><a href="#example-item">Item</a></h3>
+
+{% set code_item %}
+<article class="group/item flex items-center border text-sm rounded-md transition-colors [a]:hover:bg-accent/50 [a]:transition-colors duration-100 flex-wrap outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] border-border p-4 gap-4">
+  <div class="flex shrink-0 items-center justify-center gap-2 self-start [&_svg]:pointer-events-none size-8 border rounded-md bg-muted [&_svg:not([class*='size-'])]:size-4">
+    {% lucide "loader-circle", { "role": "status", "aria-label": "Loading", "class": "animate-spin size-4 text-muted-foreground" } %}
+  </div>
+  <div class="flex flex-1 flex-col gap-1">
+    <h3 class="flex w-fit items-center gap-2 text-sm leading-snug font-medium">Downloading...</h3>
+    <p class="text-muted-foreground line-clamp-2 text-sm leading-normal font-normal text-balance [&>a:hover]:text-primary [&>a]:underline [&>a]:underline-offset-4">129 MB / 1000 MB</p>
+  </div>
+  <button class="btn-sm-outline self-start">Cancel</button>
+  <footer class="flex basis-full items-center justify-between gap-2">
+    <div class="bg-primary/20 relative h-2 w-full overflow-hidden rounded-full">
+      <div id="demo-progress" class="bg-primary h-full w-full flex-1 transition-all" style="width: 13%"></div>
+    </div>
+  </footer>
+</article>
+{% endset %}
+
+{{ code_preview("spinner-item", code_item, class="w-full max-w-md") }}

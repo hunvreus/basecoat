@@ -1,0 +1,44 @@
+---
+layout: layouts/page.njk
+title: Progress
+description: Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.
+toc:
+  - label: Usage
+    id: usage
+---
+
+{% from "macros/code_preview.njk" import code_preview %}
+{% from "macros/code_block.njk" import code_block %}
+
+<div class="alert mb-6">
+  {% lucide "circle-alert" %}
+  <h2>There is no dedicated Progress component in Basecoat.</h2>
+</div>
+
+{% set code_default %}
+<div class="bg-primary/20 relative h-2 w-full overflow-hidden rounded-full">
+  <div id="demo-progress" class="bg-primary h-full w-full flex-1 transition-all" style="width: 17%"></div>
+</div>
+<script>
+  setTimeout(() => {
+    document.getElementById('demo-progress').style.width = '66%';
+  }, 500);
+</script>
+{% endset %}
+
+{{ code_preview("progress-default", code_default, class="w-full max-w-sm") }}
+
+<h2 id="usage"><a href="#usage">Usage</a></h2>
+
+<section class="prose">
+  <p>Progress bars are pure HTML composition using Tailwind utility classes. Use a container div for the track and an inner div for the indicator. Set the indicator's width with inline styles or via JavaScript.</p>
+</section>
+
+{% set code_usage %}
+<div class="bg-primary/20 relative h-2 w-full overflow-hidden rounded-full">
+  <div class="bg-primary h-full w-full flex-1 transition-all" style="width: 66%"></div>
+</div>
+{% endset %}
+
+{{ code_block(code_usage) }}
+

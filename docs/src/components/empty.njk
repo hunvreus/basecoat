@@ -1,0 +1,157 @@
+---
+layout: layouts/page.njk
+title: Empty
+description: Display empty states with icons, titles, descriptions, and actions.
+toc:
+  - label: Usage
+    id: usage
+  - label: Examples
+    id: examples
+    children:
+      - label: Outline
+        id: example-outline
+      - label: Avatar
+        id: example-avatar
+      - label: Avatar Group
+        id: example-avatar-group
+      - label: Input Group
+        id: example-input-group
+---
+
+{% from "macros/code_preview.njk" import code_preview %}
+{% from "macros/code_block.njk" import code_block %}
+
+<div class="alert mb-6">
+  {% lucide "circle-alert" %}
+  <h2>There is no dedicated Empty component in Basecoat.</h2>
+</div>
+
+{% set code_default %}
+<div class="flex min-w-0 flex-1 flex-col items-center justify-center gap-6 rounded-lg border-dashed p-6 text-center text-balance md:p-12 text-neutral-800 dark:text-neutral-300">
+  <header class="flex max-w-sm flex-col items-center gap-2 text-center">
+    <div class="mb-2 [&_svg]:pointer-events-none [&_svg]:shrink-0 bg-muted text-foreground flex size-10 shrink-0 items-center justify-center rounded-lg [&_svg:not([class*='size-'])]:size-6">
+      {% lucide "folder-code" %}
+    </div>
+    <h3 class="text-lg font-medium tracking-tight">No Projects Yet</h3>
+    <p class="text-muted-foreground [&>a:hover]:text-primary text-sm/relaxed [&>a]:underline [&>a]:underline-offset-4">
+      You haven't created any projects yet. Get started by creating your first project.
+    </p>
+  </header>
+  <section class="flex w-full max-w-sm min-w-0 flex-col items-center gap-4 text-sm text-balance">
+    <div class="flex gap-2">
+      <button class="btn">Create Project</button>
+      <button class="btn-outline">Import Project</button>
+    </div>
+  </section>
+  <a href="#" class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive underline-offset-4 hover:underline h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5 text-muted-foreground">
+    Learn More
+    {% lucide "arrow-up-right" %}
+  </a>
+</div>
+{% endset %}
+
+{{ code_preview("empty-default", code_default) }}
+
+<h2 id="usage"><a href="#usage">Usage</a></h2>
+
+<section class="prose">
+  <p>Empty states are pure HTML composition using Tailwind utility classes. Use flex layout utilities to center content, and compose with semantic elements like <code>&lt;header&gt;</code>, <code>&lt;h3&gt;</code>, <code>&lt;p&gt;</code>, and <code>&lt;button&gt;</code>.</p>
+  <p>Browse the examples below and copy the pattern that fits your needs.</p>
+</section>
+
+<h2 id="examples"><a href="#examples">Examples</a></h2>
+
+<h3 id="example-outline"><a href="#example-outline">Outline</a></h3>
+
+{% set code_outline %}
+<div class="flex min-w-0 flex-1 flex-col items-center justify-center gap-6 rounded-lg border-dashed p-6 text-center text-balance md:p-12 text-neutral-800 dark:text-neutral-300 border">
+  <header class="flex max-w-sm flex-col items-center gap-3 text-center">
+    <div class="mb-2 bg-muted text-foreground flex size-12 shrink-0 items-center justify-center rounded-lg [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-6">
+      {% lucide "cloud" %}
+    </div>
+    <h3 class="text-lg font-semibold tracking-tight">Cloud Storage Empty</h3>
+    <p class="text-muted-foreground text-sm/relaxed">
+      Upload files to your cloud storage to access them anywhere.
+    </p>
+  </header>
+  <section class="flex w-full max-w-sm min-w-0 flex-col items-center gap-3">
+    <button class="btn-sm-outline">Upload Files</button>
+  </section>
+</div>
+{% endset %}
+
+{{ code_preview("empty-outline", code_outline) }}
+
+<h3 id="example-avatar"><a href="#example-avatar">Avatar</a></h3>
+
+{% set code_avatar %}
+<div class="flex min-w-0 flex-1 flex-col items-center justify-center gap-6 rounded-lg border-dashed p-6 text-center text-balance md:p-12 text-neutral-800 dark:text-neutral-300">
+  <header class="flex max-w-sm flex-col items-center gap-3 text-center">
+    <div class="mb-2 flex items-center justify-center">
+      <img alt="@shadcn" src="https://github.com/shadcn.png" class="grayscale size-12 shrink-0 object-cover rounded-full">
+    </div>
+    <h3 class="text-lg font-semibold tracking-tight">User Offline</h3>
+    <p class="text-muted-foreground text-sm/relaxed">
+      This user is currently offline. You can leave a message to notify them or try again later.
+    </p>
+  </header>
+  <section class="flex w-full max-w-sm min-w-0 flex-col items-center gap-3">
+    <button class="btn-sm">Leave Message</button>
+  </section>
+</div>
+{% endset %}
+
+{{ code_preview("empty-avatar", code_avatar) }}
+
+<h3 id="example-avatar-group"><a href="#example-avatar-group">Avatar Group</a></h3>
+
+{% set code_avatar_group %}
+<div class="flex min-w-0 flex-1 flex-col items-center justify-center gap-6 rounded-lg border-dashed p-6 text-center text-balance md:p-12 text-neutral-800 dark:text-neutral-300">
+  <header class="flex max-w-sm flex-col items-center gap-3 text-center">
+    <div class="mb-2 flex items-center justify-center">
+      <div class="flex -space-x-2 [&amp;_img]:ring-background [&amp;_img]:ring-2 [&amp;_img]:grayscale [&amp;_img]:size-12 [&amp;_img]:shrink-0 [&amp;_img]:object-cover [&amp;_img]:rounded-full">
+        <img alt="@hunvreus" src="https://github.com/hunvreus.png">
+        <img alt="@shadcn" src="https://github.com/shadcn.png">
+        <img alt="@adamwathan" src="https://github.com/adamwathan.png">
+      </div>
+    </div>
+    <h3 class="text-lg font-semibold tracking-tight">No Team Members</h3>
+    <p class="text-muted-foreground text-sm/relaxed">
+      Invite your team to collaborate on this project.
+    </p>
+  </header>
+  <section class="flex w-full max-w-sm min-w-0 flex-col items-center gap-3">
+    <button class="btn-sm inline-flex items-center gap-2">
+      {% lucide "plus" %}
+      Invite Members
+    </button>
+  </section>
+</div>
+{% endset %}
+
+{{ code_preview("empty-avatar-group", code_avatar_group) }}
+
+<h3 id="example-input-group"><a href="#example-input-group">Input Group</a></h3>
+
+{% set code_input_group %}
+<div class="flex min-w-0 flex-1 flex-col items-center justify-center gap-6 rounded-lg p-6 text-center text-balance md:p-12 text-neutral-800 dark:text-neutral-300">
+  <header class="flex max-w-sm flex-col items-center gap-3 text-center">
+    <h3 class="text-lg font-semibold tracking-tight">404 - Not Found</h3>
+    <p class="text-muted-foreground text-sm/relaxed">
+      The page you're looking for doesn't exist. Try searching for what you need below.
+    </p>
+  </header>
+  <section class="flex w-full max-w-md min-w-0 flex-col items-center gap-3">
+    <div class="relative w-3/4">
+      <input type="text" class="input pl-8.5 pr-10" placeholder="Try searching for pages...">
+      {% lucide "search" , { "class": "absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none text-muted-foreground pointer-events-none shrink-0 size-4" } %}
+      <kbd class="kbd absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">/</kbd>
+    </div>
+    <p class="text-muted-foreground text-sm/relaxed [&>a]:underline [&>a]:underline-offset-4 [&>a:hover]:text-primary">
+      Need help? <a href="#">Contact support</a>
+    </p>
+  </section>
+</div>
+{% endset %}
+
+{{ code_preview("empty-input-group", code_input_group) }}

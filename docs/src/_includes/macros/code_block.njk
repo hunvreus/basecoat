@@ -1,6 +1,6 @@
 {% macro code_block(code, language="html", class="my-4") %}
 <div class="relative {{ class }}">
-  <pre class="grid text-sm max-h-[650px] overflow-y-auto rounded-xl scrollbar"><code class="language-{{ language }} !bg-muted !p-3.5">{{- code | escape -}}</code></pre>
+  <pre class="grid text-sm max-h-[650px] overflow-y-auto rounded-xl scrollbar"><code class="language-{{ language }} !bg-muted/40 !p-3.5">{{- code | escape -}}</code></pre>
   
   <button 
     onclick="
@@ -16,7 +16,7 @@
     "
     class="btn-icon-ghost size-8 absolute right-2.5 top-2 text-muted-foreground hover:text-foreground group"
   >
-    {% lucide "clipboard", {"class": "group-[.copied]:hidden" } %}
+    {% lucide "copy", {"class": "group-[.copied]:hidden" } %}
     {% lucide "check", {"class": "hidden group-[.copied]:block" } %}
   </button>
 </div>

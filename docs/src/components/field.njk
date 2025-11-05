@@ -1,0 +1,459 @@
+---
+layout: layouts/page.njk
+title: Field
+description: Combine labels, controls, and help text to compose accessible form fields.
+toc:
+  - label: Usage
+    id: usage
+  - label: Examples
+    id: examples
+    children:
+      - label: Input
+        id: example-input
+      - label: Textarea
+        id: example-textarea
+      - label: Select
+        id: example-select
+      - label: Fieldset
+        id: example-fieldset
+      - label: Checkbox
+        id: example-checkbox
+      - label: Radio Group
+        id: example-radio
+      - label: Switch
+        id: example-switch
+      - label: Responsive Layout
+        id: example-responsive
+---
+
+{% from "macros/code_preview.njk" import code_preview %}
+{% from "macros/code_block.njk" import code_block %}
+
+{% set code_demo %}
+<form class="w-full max-w-md space-y-6">
+  <fieldset class="fieldset">
+    <legend>Payment Method</legend>
+    <p>All transactions are secure and encrypted</p>
+    
+    <div role="group" class="field">
+      <label for="card-name">Name on Card</label>
+      <input id="card-name" type="text" placeholder="Evil Rabbit" required>
+    </div>
+    
+    <div role="group" class="field">
+      <label for="card-number">Card Number</label>
+      <input id="card-number" type="text" placeholder="1234 5678 9012 3456" aria-describedby="card-number-desc" required>
+      <p id="card-number-desc">Enter your 16-digit card number</p>
+    </div>
+    
+    <div class="grid grid-cols-3 gap-4">
+      <div role="group" class="field">
+        <label for="exp-month">Month</label>
+        <select id="exp-month" class="select w-full">
+          <option value="">MM</option>
+          <option value="01">01</option>
+          <option value="02">02</option>
+          <option value="03">03</option>
+          <option value="04">04</option>
+          <option value="05">05</option>
+          <option value="06">06</option>
+          <option value="07">07</option>
+          <option value="08">08</option>
+          <option value="09">09</option>
+          <option value="10">10</option>
+          <option value="11">11</option>
+          <option value="12">12</option>
+        </select>
+      </div>
+      <div role="group" class="field">
+        <label for="exp-year">Year</label>
+        <select id="exp-year" class="select w-full">
+          <option value="">YYYY</option>
+          <option value="2024">2024</option>
+          <option value="2025">2025</option>
+          <option value="2026">2026</option>
+          <option value="2027">2027</option>
+          <option value="2028">2028</option>
+          <option value="2029">2029</option>
+        </select>
+      </div>
+      <div role="group" class="field">
+        <label for="cvv">CVV</label>
+        <input id="cvv" type="text" placeholder="123" required>
+      </div>
+    </div>
+  </fieldset>
+
+  <hr role="separator" class="my-6 border-border">
+  
+  <fieldset class="fieldset">
+    <legend>Billing Address</legend>
+    <p>The billing address associated with your payment method</p>
+    
+    <div role="group" class="field">
+      <label for="same-as-shipping" class="gap-3">
+        <input type="checkbox" id="same-as-shipping" checked>
+        Same as shipping address
+      </label>
+    </div>
+  </fieldset>
+  
+  <fieldset class="fieldset">
+    <div role="group" class="field">
+      <label for="comments">Comments</label>
+      <textarea id="comments" placeholder="Add any additional comments" rows="3"></textarea>
+    </div>
+  </fieldset>
+  
+  <div class="flex gap-3">
+    <button type="submit" class="btn">Submit</button>
+    <button type="button" class="btn-outline">Cancel</button>
+  </div>
+</form>
+{% endset %}
+
+{{ code_preview("field-demo", code_demo) }}
+
+<h2 id="usage"><a href="#usage">Usage</a></h2>
+
+<section class="prose">
+  <p>Field uses semantic HTML with minimal classes. Two main patterns can be used independently or composed together:</p>
+  <ul>
+    <li><code>&lt;div role="group" class="field"&gt;</code> for individual field containers (label, input, helper text, errors)</li>
+    <li><code>&lt;fieldset class="fieldset"&gt;</code> for grouping multiple related fields together</li>
+  </ul>
+  <p>Elements inside these containers are styled automatically based on their purpose. Use <code>aria-describedby</code> to connect helper text and errors to inputs for accessibility.</p>
+  <p><strong>Fields</strong> have the following HTML structure:</p>
+  <dl>
+    <dt><code class="highlight language-html">&lt;div role="group" class="field"&gt;</code></dt>
+    <dd>Field container. Add <code>data-orientation="horizontal"</code> to align controls horizontally. For responsive layouts, use standard Tailwind responsive classes.
+      <dl>
+        <dt><code class="highlight language-html">&lt;label&gt;</code></dt>
+        <dd>Label for the input.</dd>
+        <dt><code class="highlight language-html">&lt;input&gt;</code>, <code>&lt;select&gt;</code> or <code>&lt;textarea&gt;</code></dt>
+        <dd>Form input.</dd>
+        <dt><code class="highlight language-html">&lt;p&gt;</code> <span class="badge-secondary">Optional</span></dt>
+        <dd>Helper text. Use <code>aria-describedby</code> on the input to reference this element's <code>id</code>.</dd>
+        <dt><code class="highlight language-html">&lt;p role="alert"&gt;</code> <span class="badge-secondary">Optional</span></dt>
+        <dd>Error message. Use <code>aria-describedby</code> on the input and <code>aria-invalid="true"</code> to reference this element's <code>id</code>.</dd>
+        <dt><code class="highlight language-html">&lt;section&gt;</code> <span class="badge-secondary">Optional</span></dt>
+        <dd>Wraps label and description when the label sits beside the input (e.g. <code>data-orientation="horizontal"</code>). Not required if you have no description.</dd>
+      </dl>
+    </dd>
+  </dl>
+  <p><strong>Fieldsets</strong> have the following HTML structure:</p>
+  <dl>
+    <dt><code class="highlight language-html">&lt;fieldset class="fieldset"&gt;</code></dt>
+    <dd>Container for grouping related fields.
+      <dl>
+        <dt><code class="highlight language-html">&lt;legend&gt;</code></dt>
+        <dd>Heading for the fieldset.</dd>
+        <dt><code class="highlight language-html">&lt;p&gt;</code> <span class="badge-secondary">Optional</span></dt>
+        <dd>Description text. When placed directly after <code>&lt;legend&gt;</code>, automatically styled as muted text.</dd>
+        <dt><code class="highlight language-html">&lt;div role="group" class="field"&gt;</code> <span class="badge-secondary">Optional</span></dt>
+        <dd>Individual field containers (see structure above). You can include multiple <code>.field</code> elements, or place form controls directly in the fieldset.</dd>
+      </dl>
+    </dd>
+  </dl>
+</section>
+
+<h2 id="examples"><a href="#examples">Examples</a></h2>
+
+<h3 id="example-input"><a href="#example-input">Input</a></h3>
+
+{% set code_input %}
+<div class="grid gap-6">
+  <div role="group" class="field">
+    <label for="username">Username</label>
+    <input id="username" type="text" placeholder="evilrabbit" aria-describedby="username-desc">
+    <p id="username-desc">Choose a unique username for your account.</p>
+  </div>
+
+  <div role="group" class="field">
+    <label for="password">Password</label>
+    <p id="password-desc">Must be at least 8 characters long.</p>
+    <input id="password" type="password" placeholder="••••••••" aria-describedby="password-desc">
+  </div>
+</div>
+{% endset %}
+
+{{ code_preview("field-input", code_input, class="w-full max-w-md") }}
+
+<h3 id="example-textarea"><a href="#example-textarea">Textarea</a></h3>
+
+{% set code_textarea %}
+<div role="group" class="field">
+  <label for="bio">Feedback</label>
+  <textarea id="bio" rows="4" placeholder="Your feedback helps us improve..." aria-describedby="bio-desc"></textarea>
+  <p id="bio-desc">Share your thoughts about our service.</p>
+</div>
+{% endset %}
+
+{{ code_preview("field-textarea", code_textarea, class="w-full max-w-md") }}
+
+<h3 id="example-select"><a href="#example-select">Select</a></h3>
+
+{% set code_select %}
+<div role="group" class="field">
+  <label for="country">Department</label>
+  <select id="country" class="select w-full" aria-describedby="country-desc">
+    <option value="">Choose department</option>
+    <option value="engineering">Engineering</option>
+    <option value="design">Design</option>
+    <option value="marketing">Marketing</option>
+    <option value="sales">Sales</option>
+    <option value="support">Customer Support</option>
+    <option value="hr">Human Resources</option>
+    <option value="finance">Finance</option>
+    <option value="operations">Operations</option>
+  </select>
+  <p id="country-desc">Select your department or area of work.</p>
+</div>
+{% endset %}
+
+{{ code_preview("field-select", code_select, class="w-full max-w-md") }}
+
+<h3 id="example-slider"><a href="#example-slider">Slider</a></h3>
+
+{% set code %}
+<div role="group" class="field">
+  <label for="price-range">Price</label>
+  <p id="price-range-desc">Set your budget: $<span id="price-range-value">150</span></p>
+  <input id="price-range" type="range" min="0" max="500" value="150">
+</div>
+<script>
+  (() => {
+    const sliders = document.querySelectorAll('input[type="range"]');
+    if (!sliders) return;
+
+    const updateSlider = (el) => {
+      const min = parseFloat(el.min || 0);
+      const max = parseFloat(el.max || 100);
+      const value = parseFloat(el.value);
+      const percent = (max === min) ? 0 : ((value - min) / (max - min)) * 100;
+      el.style.setProperty('--slider-value', `${percent}%`);
+    };
+
+    sliders.forEach(slider => {
+      updateSlider(slider);
+      slider.addEventListener('input', (event) => updateSlider(event.target));
+    });
+
+    const priceSlider = document.getElementById('price-range');
+    const priceValue = document.getElementById('price-range-value');
+
+    priceSlider.addEventListener('input', (event) => priceValue.innerHTML = event.target.value);
+  })();
+</script>
+{% endset %}
+{{ code_preview("slider", code, "w-full max-w-sm") }}
+
+<h3 id="example-fieldset"><a href="#example-fieldset">Fieldset</a></h3>
+
+<section class="prose">
+  <p>Group related fields with <code>&lt;fieldset class="fieldset"&gt;</code> and <code>&lt;legend&gt;</code>.</p>
+</section>
+
+{% set code_fieldset %}
+<form class="w-full max-w-md">
+  <fieldset class="fieldset">
+    <legend>Profile</legend>
+    <p>This information will be displayed on your profile</p>
+    
+    <div role="group" class="field">
+      <label for="full-name">Full name</label>
+      <input id="full-name" type="text" placeholder="Evil Rabbit" aria-describedby="name-desc">
+      <p id="name-desc">Your first and last name</p>
+    </div>
+    
+    <div role="group" class="field">
+      <label for="display-name">Username</label>
+      <input id="display-name" type="text" placeholder="@evilrabbit" aria-invalid="true" aria-describedby="username-error">
+      <p id="username-error" role="alert">Username is already taken</p>
+    </div>
+    
+    <div class="flex items-center gap-3">
+      <input type="checkbox" id="newsletter">
+      <label for="newsletter" class="font-normal">Subscribe to the newsletter</label>
+    </div>
+  </fieldset>
+  
+  <button type="submit" class="btn mt-4">Save changes</button>
+</form>
+{% endset %}
+
+{{ code_preview("field-fieldset", code_fieldset) }}
+
+<h3 id="example-checkbox"><a href="#example-checkbox">Checkbox</a></h3>
+
+{% set code_checkbox %}
+<fieldset class="fieldset">
+  <legend>Show these items on the desktop</legend>
+  <p>Select the items you want to show on the desktop.</p>
+  
+  <div class="flex flex-col gap-3">
+    <div class="field">
+      <label class="gap-3">
+        <input type="checkbox">
+        Hard disks
+      </label>
+    </div>
+    <div class="field">
+      <label class="gap-3">
+        <input type="checkbox">
+        External disks
+      </label>
+    </div>
+    <div class="field">
+      <label class="gap-3">
+        <input type="checkbox">
+        CDs, DVDs and iPods
+      </label>
+    </div>
+    <div class="field">
+      <label class="gap-3">
+        <input type="checkbox">
+        Connected servers
+      </label>
+    </div>
+  </div>
+
+  <hr role="separator">
+
+  <div class="field" data-orientation="horizontal">
+    {# <div class="flex w-full items-center gap-3"> #}
+      <input id="sync-desktop-documents" type="checkbox" checked class="input self-start">
+      <section>
+        <label for="sync-desktop-documents">Sync Desktop & Documents folders</label>
+        <p>Your Desktop & Documents folders are being synced with iCloud Drive. You can access them from other devices.</p>
+      </section>
+    {# </div> #}
+  </div>
+</fieldset>
+{% endset %}
+
+{{ code_preview("field-checkbox", code_checkbox, class="w-full max-w-md") }}
+
+<h3 id="example-radio"><a href="#example-radio">Radio Group</a></h3>
+
+{% set code_radio %}
+<fieldset class="fieldset">
+  <legend>Subscription plan</legend>
+  <p>Yearly and lifetime plans offer significant savings.</p>
+  
+  <div role="radiogroup" class="grid gap-3">
+    <div class="field">
+      <label class="gap-3">
+        <input type="radio" name="subscription-plan" checked>
+        Monthly ($9.99/month)
+      </label>
+    </div>
+    <div class="field">
+      <label class="gap-3">
+        <input type="radio" name="subscription-plan">
+        Yearly ($99.99/year)
+      </label>
+    </div>
+    <div class="field">
+      <label class="gap-3">
+        <input type="radio" name="subscription-plan">
+        Lifetime ($299.99)
+      </label>
+    </div>
+  </div>
+</fieldset>
+{% endset %}
+
+{{ code_preview("field-radio", code_radio, class="w-full max-w-md") }}
+
+<h3 id="example-switch"><a href="#example-switch">Switch</a></h3>
+
+<section class="prose">
+  <p>Set <code>data-orientation="horizontal"</code> on <code>.field</code> to align labels and controls side-by-side.</p>
+</section>
+
+{% set code_switch %}
+<div role="group" class="field" data-orientation="horizontal">
+  <section>
+    <label for="multi-factor-authentication">Multi-factor authentication</label>
+    <p>Enable multi-factor authentication. If you do not have a two-factor device, you can use a one-time code sent to your email.</p>
+  </section>
+  <input id="multi-factor-authentication" type="checkbox" role="switch">
+</div>
+{% endset %}
+
+{{ code_preview("field-switch", code_switch, class="w-full max-w-md") }}
+
+<h3 id="example-choice-card"><a href="#example-choice-card">Choice Card</a></h3>
+
+{% set code_choice_card %}
+<fieldset class="fieldset">
+  <legend class="text-sm">Compute Environment</legend>
+  <p>Select the compute environment for your cluster.</p>
+
+  <div role="group" class="field">
+    <label class="flex gap-3 border rounded-md p-4 has-[:checked]:border-primary has-[:checked]:bg-primary/5 dark:has-[:checked]:bg-primary/10">
+      <section>
+        <h3>Kubernetes</h3>
+        <p>Run GPU workloads on a K8s configured cluster.</p>
+      </section>
+      <input id="choice-card" type="radio" name="choice-card" class="self-start" checked>
+    </label>
+  </div>
+  <div role="group" class="field">
+    <label class="flex gap-3 border rounded-md p-4 has-[:checked]:border-primary has-[:checked]:bg-primary/5 dark:has-[:checked]:bg-primary/10">
+      <section>
+        <h3>Virtual Machine</h3>
+        <p>Access a VM configured cluster to run GPU workloads.</p>
+      </section>
+      <input id="choice-card" type="radio" name="choice-card" class="self-start">
+    </label>
+  </div>
+</fieldset>
+{% endset %}
+
+{{ code_preview("field-choice-card", code_choice_card, class="w-full max-w-md") }}
+
+<h3 id="example-responsive"><a href="#example-responsive">Responsive Layout</a></h3>
+
+<section class="prose">
+  <p>For responsive layouts, use standard Tailwind responsive classes directly on <code>.field</code>. This example stacks vertically on mobile and switches to horizontal at the <code>md</code> breakpoint.</p>
+</section>
+
+{% set code_responsive %}
+<fieldset class="fieldset">
+  <legend>Profile</legend>
+  <p>Keep your profile details up to date.</p>
+
+  <hr role="separator">  
+
+  <div class="flex flex-col gap-7">
+    <div role="group" class="field flex-col md:flex-row md:items-center">
+      <section class="md:flex-auto">
+        <label for="profile-name">Name</label>
+        <p id="profile-name-desc">Provide your full name for identification.</p>
+      </section>
+      <input id="profile-name" type="text" placeholder="Evil Rabbit" aria-describedby="profile-name-desc" class="md:w-auto md:min-w-80">
+    </div>
+
+    <hr role="separator">
+
+    <div role="group" class="field flex-col md:flex-row md:items-start">
+      <section class="md:flex-auto">
+        <label for="profile-bio">Message</label>
+        <p id="profile-bio-desc">You can write your message here. Keep it short, preferably under 100 characters.</p>
+      </section>
+      <textarea id="profile-bio" rows="3" placeholder="Hello, world!" aria-describedby="profile-bio-desc" class="md:w-auto md:min-w-80"></textarea>
+    </div>
+
+    <hr role="separator">
+
+    <div role="group" class="field flex-col md:flex-row md:items-center">
+      <button type="submit" class="btn md:w-auto">Submit</button>
+      <button type="button" class="btn-outline md:w-auto">Cancel</button>
+    </div>
+  </div>
+</fieldset>
+{% endset %}
+
+{{ code_preview("field-responsive", code_responsive, class="w-full max-w-3xl") }}

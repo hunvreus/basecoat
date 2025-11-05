@@ -1,6 +1,6 @@
 {
   "name": "basecoat",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "shadcn/ui for the rest of us",
   "author": "hunvreus",
   "type": "module",
@@ -21,8 +21,7 @@
     "css",
     "html",
     "jinja",
-    "nunjucks",
-    "alpinejs"
+    "nunjucks"
   ],
   "license": "MIT",
   "repository": {

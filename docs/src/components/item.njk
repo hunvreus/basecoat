@@ -1,0 +1,320 @@
+---
+layout: layouts/page.njk
+title: Item
+description: A versatile component that you can use to display any content.
+toc:
+  - label: Usage
+    id: usage
+  - label: Examples
+    id: examples
+    children:
+      - label: Variants
+        id: example-variants
+      - label: Size
+        id: example-size
+      - label: Icon
+        id: example-icon
+      - label: Avatar
+        id: example-avatar
+      - label: Image
+        id: example-image
+      - label: Group
+        id: example-group
+      - label: Header
+        id: example-header
+      - label: Link
+        id: example-link
+---
+
+{% from "macros/code_block.njk" import code_block %}
+{% from "macros/code_preview.njk" import code_preview %}
+
+<div class="alert mb-6">
+  {% lucide "circle-alert" %}
+  <h2>There is no dedicated Item component in Basecoat.</h2>
+</div>
+
+{% set code_basic %}
+<div class="flex flex-col gap-6">
+  <article class="group/item flex items-center border text-sm rounded-md transition-colors [a]:hover:bg-accent/50 [a]:transition-colors duration-100 flex-wrap outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] border-border p-4 gap-4">
+    <div class="flex flex-1 flex-col gap-1">
+      <h3 class="flex w-fit items-center gap-2 text-sm leading-snug font-medium">Basic Item</h3>
+      <p class="text-muted-foreground line-clamp-2 text-sm leading-normal font-normal text-balance [&>a:hover]:text-primary [&>a]:underline [&>a]:underline-offset-4">A simple item with title and description.</p>
+    </div>
+    <button class="btn-sm-outline">Action</button>
+  </article>
+
+  <a href="#" class="group/item flex items-center border text-sm rounded-md transition-colors [a]:hover:bg-accent/50 [a]:transition-colors duration-100 flex-wrap outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] border-border py-3 px-4 gap-2.5">
+    <div class="flex shrink-0 items-center justify-center gap-2 [&_svg]:pointer-events-none bg-transparent [&_svg]:size-5">
+      {% lucide "badge-check" %}
+    </div>
+    <div class="flex flex-1 flex-col gap-1">
+      <h3 class="flex w-fit items-center gap-2 text-sm leading-snug font-medium">Your profile has been verified.</h3>
+    </div>
+    <div class="flex items-center gap-2 [&_svg]:size-4">
+      {% lucide "chevron-right" %}
+    </div>
+  </a>
+</div>
+{% endset %}
+
+{{ code_preview("item-basic", code_basic | prettyHtml, class="w-full max-w-md") }}
+
+<h2 id="usage"><a href="#usage">Usage</a></h2>
+
+<section class="prose">
+  <p>Items are pure HTML composition using Tailwind utility classes. Use semantic elements like <code>&lt;article&gt;</code> or <code>&lt;a&gt;</code>, apply flex layout, and compose with standard HTML elements like <code>&lt;h3&gt;</code>, <code>&lt;p&gt;</code>, <code>&lt;img&gt;</code>, or <code>&lt;button&gt;</code>.</p>
+  <p>Browse the examples below and copy the pattern that fits your needs.</p>
+</section>
+
+<h2 id="examples"><a href="#examples">Examples</a></h2>
+
+<h3 id="example-variants"><a href="#example-variants">Variants</a></h3>
+
+{% set code_variants %}
+<div class="flex flex-col gap-6">
+  <article class="group/item flex items-center border text-sm rounded-md transition-colors [a]:hover:bg-accent/50 [a]:transition-colors duration-100 flex-wrap outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] border-transparent p-4 gap-4">
+    <div class="flex flex-1 flex-col gap-1">
+      <h3 class="flex w-fit items-center gap-2 text-sm leading-snug font-medium">Default Variant</h3>
+      <p class="text-muted-foreground line-clamp-2 text-sm leading-normal font-normal text-balance [&>a:hover]:text-primary [&>a]:underline [&>a]:underline-offset-4">Standard styling with subtle background and borders.</p>
+    </div>
+    <button class="btn-sm-outline">Open</button>
+  </article>
+
+  <article class="group/item flex items-center border text-sm rounded-md transition-colors [a]:hover:bg-accent/50 [a]:transition-colors duration-100 flex-wrap outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] border-border p-4 gap-4">
+    <div class="flex flex-1 flex-col gap-1">
+      <h3 class="flex w-fit items-center gap-2 text-sm leading-snug font-medium">Outline Variant</h3>
+      <p class="text-muted-foreground line-clamp-2 text-sm leading-normal font-normal text-balance [&>a:hover]:text-primary [&>a]:underline [&>a]:underline-offset-4">Outlined style with clear borders and transparent background.</p>
+    </div>
+    <button class="btn-sm-outline">Open</button>
+  </article>
+
+  <article class="group/item flex items-center border text-sm rounded-md transition-colors [a]:hover:bg-accent/50 [a]:transition-colors duration-100 flex-wrap outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] border-transparent bg-muted/50 p-4 gap-4">
+    <div class="flex flex-1 flex-col gap-1">
+      <h3 class="flex w-fit items-center gap-2 text-sm leading-snug font-medium">Muted Variant</h3>
+      <p class="text-muted-foreground line-clamp-2 text-sm leading-normal font-normal text-balance [&>a:hover]:text-primary [&>a]:underline [&>a]:underline-offset-4">Subdued appearance with muted colors for secondary content.</p>
+    </div>
+    <button class="btn-sm-outline">Open</button>
+  </article>
+</div>
+{% endset %}
+
+{{ code_preview("item-variants", code_variants) }}
+
+<h3 id="example-size"><a href="#example-size">Size</a></h3>
+
+<section class="prose">
+  <p>Use different padding and gap sizes for compact or spacious layouts.</p>
+</section>
+
+{{ code_preview("item-size", code_basic) }}
+
+<h3 id="example-icon"><a href="#example-icon">Icon</a></h3>
+
+{% set code_icon %}
+<article class="group/item flex items-center border text-sm rounded-md transition-colors [a]:hover:bg-accent/50 [a]:transition-colors duration-100 flex-wrap outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] border-border p-4 gap-4">
+  <div class="flex shrink-0 items-center justify-center gap-2 self-start [&_svg]:pointer-events-none size-8 border rounded-sm bg-muted [&_svg:not([class*='size-'])]:size-4">
+    {% lucide "shield-alert" %}
+  </div>
+  <div class="flex flex-1 flex-col gap-1">
+    <h3 class="flex w-fit items-center gap-2 text-sm leading-snug font-medium">Security Alert</h3>
+    <p class="text-muted-foreground line-clamp-2 text-sm leading-normal font-normal text-balance [&>a:hover]:text-primary [&>a]:underline [&>a]:underline-offset-4">New login detected from unknown device.</p>
+  </div>
+  <button class="btn-sm-outline">Review</button>
+</article>
+{% endset %}
+
+{{ code_preview("item-icon", code_icon, class="max-w-lg") }}
+
+
+<h3 id="example-avatar"><a href="#example-avatar">Avatar</a></h3>
+
+{% set code_avatar %}
+<div class="flex flex-col gap-6">
+  <article class="group/item flex items-center border text-sm rounded-md transition-colors [a]:hover:bg-accent/50 [a]:transition-colors duration-100 flex-wrap outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] border-border p-4 gap-4">
+    <img src="https://github.com/hunvreus.png" alt="hunvreus" class="size-10 rounded-full object-cover">
+    <div class="flex flex-1 flex-col gap-1">
+      <h3 class="flex w-fit items-center gap-2 text-sm leading-snug font-medium">hunvreus</h3>
+      <p class="text-muted-foreground line-clamp-2 text-sm leading-normal font-normal text-balance [&>a:hover]:text-primary [&>a]:underline [&>a]:underline-offset-4">Last seen 5 months ago</p>
+    </div>
+    <button class="btn-icon-outline rounded-full">
+      {% lucide "plus" %}
+    </button>
+  </article>
+
+  <article class="group/item flex items-center border text-sm rounded-md transition-colors [a]:hover:bg-accent/50 [a]:transition-colors duration-100 flex-wrap outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] border-border p-4 gap-4">
+    <div class="flex -space-x-2 [&_img]:ring-background [&_img]:ring-2 [&_img]:grayscale [&_img]:size-8 [&_img]:shrink-0 [&_img]:object-cover [&_img]:rounded-full self-start">
+      <img alt="@hunvreus" src="https://github.com/hunvreus.png">
+      <img alt="@shadcn" src="https://github.com/shadcn.png">
+      <img alt="@adamwathan" src="https://github.com/adamwathan.png">
+    </div>
+    <div class="flex flex-1 flex-col gap-1">
+      <h3 class="flex w-fit items-center gap-2 text-sm leading-snug font-medium">No Team Members</h3>
+      <p class="text-muted-foreground line-clamp-2 text-sm leading-normal font-normal text-balance [&>a:hover]:text-primary [&>a]:underline [&>a]:underline-offset-4">Invite your team to collaborate on this project.</p>
+    </div>
+    <button class="btn-outline">
+      Invite
+    </button>
+  </article>
+</div>
+{% endset %}
+
+{{ code_preview("item-avatar", code_avatar, class="w-full max-w-lg") }}
+
+<h3 id="example-image"><a href="#example-image">Image</a></h3>
+
+{% set code_image %}
+<div class="flex flex-col gap-6 w-full max-w-md">
+  <a href="#" class="group/item flex items-center border text-sm rounded-md transition-colors [a]:hover:bg-accent/50 [a]:transition-colors duration-100 flex-wrap outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] border-border p-4 gap-4">
+    <img src="https://avatar.vercel.sh/example_1" alt="Midnight City Lights" class="grayscale size-10 rounded-sm object-cover">
+
+    <div class="flex flex-1 flex-col gap-1">
+      <h3 class="w-fit items-center gap-2 text-sm leading-snug font-medium line-clamp-1">Midnight City Lights - <span class="text-muted-foreground">Electric Nights</span></h3>
+      <p class="text-muted-foreground line-clamp-2 text-sm leading-normal font-normal text-balance [&>a:hover]:text-primary [&>a]:underline [&>a]:underline-offset-4">Neon Dreams</p>
+    </div>
+    
+    <div class="flex flex-col gap-1 flex-none text-center">
+      <p class="text-muted-foreground line-clamp-2 text-sm leading-normal font-normal text-balance [&>a:hover]:text-primary [&>a]:underline [&>a]:underline-offset-4">3:45</p>
+    </div>
+  </a>
+
+  <a href="#" class="group/item flex items-center border text-sm rounded-md transition-colors [a]:hover:bg-accent/50 [a]:transition-colors duration-100 flex-wrap outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] border-border p-4 gap-4">
+    <img src="https://avatar.vercel.sh/example_2" alt="Midnight City Lights" class="grayscale size-10 rounded-sm object-cover">
+
+    <div class="flex flex-1 flex-col gap-1">
+      <h3 class="w-fit items-center gap-2 text-sm leading-snug font-medium line-clamp-1">Coffee Shop Conversations - <span class="text-muted-foreground">Urban Stories</span></h3>
+      <p class="text-muted-foreground line-clamp-2 text-sm leading-normal font-normal text-balance [&>a:hover]:text-primary [&>a]:underline [&>a]:underline-offset-4">The Morning Brew</p>
+    </div>
+    
+    <div class="flex flex-col gap-1 flex-none text-center">
+      <p class="text-muted-foreground line-clamp-2 text-sm leading-normal font-normal text-balance [&>a:hover]:text-primary [&>a]:underline [&>a]:underline-offset-4">4:05</p>
+    </div>
+  </a>
+
+  <a href="#" class="group/item flex items-center border text-sm rounded-md transition-colors [a]:hover:bg-accent/50 [a]:transition-colors duration-100 flex-wrap outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] border-border p-4 gap-4">
+    <img src="https://avatar.vercel.sh/example_3" alt="Midnight City Lights" class="grayscale size-10 rounded-sm object-cover">
+
+    <div class="flex flex-1 flex-col gap-1">
+      <h3 class="w-fit items-center gap-2 text-sm leading-snug font-medium line-clamp-1">Digital Rain - <span class="text-muted-foreground">Binary Beats</span></h3>
+      <p class="text-muted-foreground line-clamp-2 text-sm leading-normal font-normal text-balance [&>a:hover]:text-primary [&>a]:underline [&>a]:underline-offset-4">Cyber Symphony</p>
+    </div>
+    
+    <div class="flex flex-col gap-1 flex-none text-center">
+      <p class="text-muted-foreground line-clamp-2 text-sm leading-normal font-normal text-balance [&>a:hover]:text-primary [&>a]:underline [&>a]:underline-offset-4">3:30</p>
+    </div>
+  </a>
+</div>
+{% endset %}
+
+{{ code_preview("item-image", code_image) }}
+
+
+<h3 id="example-group"><a href="#example-group">Group</a></h3>
+
+{% set code_group %}
+<div class="flex flex-col">
+  <article class="group/item flex items-center border text-sm rounded-md transition-colors [a]:hover:bg-accent/50 [a]:transition-colors duration-100 flex-wrap outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] border-transparent p-4 gap-4">
+    <img src="https://github.com/hunvreus.png" alt="Ronan Berder" class="grayscale size-10 rounded-full object-cover">
+    <div class="flex flex-1 flex-col gap-1">
+      <h3 class="flex w-fit items-center gap-2 text-sm leading-snug font-medium">hunvreus</h3>
+      <p class="text-muted-foreground line-clamp-2 text-sm leading-normal font-normal text-balance [&>a:hover]:text-primary [&>a]:underline [&>a]:underline-offset-4">hunvreus@gmail.com</p>
+    </div>
+    <button class="btn-icon-outline rounded-full">
+      {% lucide "plus" %}
+    </button>
+  </article>
+
+  <hr role="separator" class="border-border">
+
+  <article class="group/item flex items-center border text-sm rounded-md transition-colors [a]:hover:bg-accent/50 [a]:transition-colors duration-100 flex-wrap outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] border-transparent p-4 gap-4">
+    <img src="https://github.com/shadcn.png" alt="shadcn" class="grayscale size-10 rounded-full object-cover">
+    <div class="flex flex-1 flex-col gap-1">
+      <h3 class="flex w-fit items-center gap-2 text-sm leading-snug font-medium">shadcn</h3>
+      <p class="text-muted-foreground line-clamp-2 text-sm leading-normal font-normal text-balance [&>a:hover]:text-primary [&>a]:underline [&>a]:underline-offset-4">shadcn@vercel.com</p>
+    </div>
+    <button class="btn-icon-outline rounded-full">
+      {% lucide "plus" %}
+    </button>
+  </article>
+
+  <hr role="separator" class="border-border">
+
+  <article class="group/item flex items-center border text-sm rounded-md transition-colors [a]:hover:bg-accent/50 [a]:transition-colors duration-100 flex-wrap outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] border-transparent p-4 gap-4">
+    <img src="https://github.com/adamwathan.png" alt="Adam Wathan" class="grayscale size-10 rounded-full object-cover">
+    <div class="flex flex-1 flex-col gap-1">
+      <h3 class="flex w-fit items-center gap-2 text-sm leading-snug font-medium">adamwathan</h3>
+      <p class="text-muted-foreground line-clamp-2 text-sm leading-normal font-normal text-balance [&>a:hover]:text-primary [&>a]:underline [&>a]:underline-offset-4">adam.wathan@gmail.com</p>
+    </div>
+    <button class="btn-icon-outline rounded-full">
+      {% lucide "plus" %}
+    </button>
+  </article>
+</div>
+{% endset %}
+
+{{ code_preview("item-group", code_group, class="w-full max-w-md") }}
+
+
+<h3 id="example-header"><a href="#example-header">Header</a></h3>
+
+{% set code_header %}
+<div class="flex-col grid grid-cols-3 gap-4">
+  <article class="group/item flex items-center border text-sm rounded-md transition-colors [a]:hover:bg-accent/50 [a]:transition-colors duration-100 flex-wrap outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] border-border p-4 gap-4">
+    <img alt="v0-1.5-sm" loading="lazy" class="grayscale aspect-square w-full rounded-sm object-cover flex-basis" src="https://avatar.vercel.sh/v0-1.5-sm">  
+    <div class="flex flex-1 flex-col gap-1">
+      <h3 class="flex w-fit items-center gap-2 text-sm leading-snug font-medium">v0-1.5-sm</h3>
+      <p class="text-muted-foreground line-clamp-2 text-sm leading-normal font-normal text-balance [&>a:hover]:text-primary [&>a]:underline [&>a]:underline-offset-4">Everyday tasks and UI generation.</p>
+    </div>
+  </article>
+
+  <article class="group/item flex items-center border text-sm rounded-md transition-colors [a]:hover:bg-accent/50 [a]:transition-colors duration-100 flex-wrap outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] border-border p-4 gap-4">
+    <img alt="v0-1.5-lg" loading="lazy" class="grayscale aspect-square w-full rounded-sm object-cover flex-basis" src="https://avatar.vercel.sh/v0-1.5-lg">  
+    <div class="flex flex-1 flex-col gap-1">
+      <h3 class="flex w-fit items-center gap-2 text-sm leading-snug font-medium">v0-1.5-lg</h3>
+      <p class="text-muted-foreground line-clamp-2 text-sm leading-normal font-normal text-balance [&>a:hover]:text-primary [&>a]:underline [&>a]:underline-offset-4">Advanced thinking or reasoning.</p>
+    </div>
+  </article>
+  
+  <article class="group/item flex items-center border text-sm rounded-md transition-colors [a]:hover:bg-accent/50 [a]:transition-colors duration-100 flex-wrap outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] border-border p-4 gap-4">
+    <img alt="v0-2.0-mini" loading="lazy" class="grayscale aspect-square w-full rounded-sm object-cover flex-basis" src="https://avatar.vercel.sh/v0-2.0-mini">  
+    <div class="flex flex-1 flex-col gap-1">
+      <h3 class="flex w-fit items-center gap-2 text-sm leading-snug font-medium">v0-2.0-mini</h3>
+      <p class="text-muted-foreground line-clamp-2 text-sm leading-normal font-normal text-balance [&>a:hover]:text-primary [&>a]:underline [&>a]:underline-offset-4">Open Source model for everyone.</p>
+    </div>
+  </article>
+</div>
+{% endset %}
+
+{{ code_preview("item-header", code_header) }}
+
+<h3 id="example-link"><a href="#example-link">Link</a></h3>
+
+<section class="prose">
+  <p>Items can be rendered as links by using an <code>&lt;a&gt;</code> element. Hover and focus states are applied automatically.</p>
+</section>
+
+{% set code_link %}
+<div class="flex flex-col gap-6">
+  <a href="#" class="group/item flex items-center border text-sm rounded-md transition-colors [a]:hover:bg-accent/50 [a]:transition-colors duration-100 flex-wrap outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] border-transparent p-4 gap-4">
+    <div class="flex flex-1 flex-col gap-1">
+      <h3 class="flex w-fit items-center gap-2 text-sm leading-snug font-medium">Visit our documentation</h3>
+      <p class="text-muted-foreground line-clamp-2 text-sm leading-normal font-normal text-balance [&>a:hover]:text-primary [&>a]:underline [&>a]:underline-offset-4">Learn how to get started with our components.</p>
+    </div>
+    <div class="flex items-center gap-2 [&_svg]:size-4">
+      {% lucide "chevron-right" %}
+    </div>
+  </a>
+
+  <a href="#" class="group/item flex items-center border text-sm rounded-md transition-colors [a]:hover:bg-accent/50 [a]:transition-colors duration-100 flex-wrap outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] border-border p-4 gap-4">
+    <div class="flex flex-1 flex-col gap-1">
+      <h3 class="flex w-fit items-center gap-2 text-sm leading-snug font-medium">External resource</h3>
+      <p class="text-muted-foreground line-clamp-2 text-sm leading-normal font-normal text-balance [&>a:hover]:text-primary [&>a]:underline [&>a]:underline-offset-4">Opens in a new tab with security attributes.</p>
+    </div>
+    <div class="flex items-center gap-2 [&_svg]:size-4">
+      {% lucide "external-link" %}
+    </div>
+  </a>
+</div>
+{% endset %}
+
+{{ code_preview("item-link", code_link, class="w-full max-w-md") }}
