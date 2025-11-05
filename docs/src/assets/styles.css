@@ -2372,7 +2372,7 @@
     &>svg {
       color: currentcolor;
     }
-    h2 {
+    h2, h3 {
       grid-column-start: 2;
       overflow: hidden;
       display: -webkit-box;
