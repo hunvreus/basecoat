@@ -1,58 +1,48 @@
 {#
-  Renders a dialog component with optional trigger, header, body, and footer.
+Renders a dialog component with optional trigger, header, body, and footer.
 
-  @param id {string} - Unique identifier for the dialog component.
-  @param trigger {string} [optional] - Text or HTML for the button that triggers the dialog.
-  @param title {string} [optional] - Title text displayed in the dialog header.
-  @param description {string} [optional] - Description text displayed below the title.
-  @param footer {string} [optional] - HTML content for the dialog footer.
-  @param main_attrs {object} [optional] - Additional HTML attributes for the main container div.
-  @param trigger_attrs {object} [optional] - Additional HTML attributes for the trigger button.
-  @param dialog_attrs {object} [optional] - Additional HTML attributes for the dialog content container.
-  @param header_attrs {object} [optional] - Additional HTML attributes for the dialog header.
-  @param body_attrs {object} [optional] - Additional HTML attributes for the dialog body section.
-  @param footer_attrs {object} [optional] - Additional HTML attributes for the dialog footer.
-  @param open {boolean} [optional] [default=false] - Whether the dialog should be open initially.
-  @param close_button {boolean} [optional] [default=true] - Whether to include a close button.
-  @param close_on_overlay_click {boolean} [optional] [default=true] - Whether clicking the overlay closes the dialog.
+@param id {string} - Unique identifier for the dialog component.
+@param trigger {string} [optional] - Text or HTML for the button that triggers the dialog.
+@param title {string} [optional] - Title text displayed in the dialog header.
+@param description {string} [optional] - Description text displayed below the title.
+@param footer {string} [optional] - HTML content for the dialog footer.
+@param main_attrs {object} [optional] - Additional HTML attributes for the main container div.
+@param trigger_attrs {object} [optional] - Additional HTML attributes for the trigger button.
+@param dialog_attrs {object} [optional] - Additional HTML attributes for the dialog content container.
+@param header_attrs {object} [optional] - Additional HTML attributes for the dialog header.
+@param body_attrs {object} [optional] - Additional HTML attributes for the dialog body section.
+@param footer_attrs {object} [optional] - Additional HTML attributes for the dialog footer.
+@param open {boolean} [optional] [default=false] - Whether the dialog should be open initially.
+@param close_button {boolean} [optional] [default=true] - Whether to include a close button.
+@param close_on_overlay_click {boolean} [optional] [default=true] - Whether clicking the overlay closes the dialog.
 #}
 {% macro dialog(
-  id=None,
-  trigger=None,
-  title=None,
-  description=None,
-  footer=None,
-  dialog_attrs={},
-  trigger_attrs={},
-  header_attrs={},
-  body_attrs={},
-  footer_attrs={},
-  open=false,
-  close_button=true,
-  close_on_overlay_click=true
+id=None,
+trigger=None,
+title=None,
+description=None,
+footer=None,
+dialog_attrs={},
+trigger_attrs={},
+header_attrs={},
+body_attrs={},
+footer_attrs={},
+open=false,
+close_button=true,
+close_on_overlay_click=true
 ) %}
 {% set id = id or ("dialog-" + (range(100000, 999999) | random | string)) %}
 {% if trigger %}
-<button
-  type="button"
-  onclick="document.getElementById('{{ id }}').showModal()"
-  {% for key, value in trigger_attrs.items() %}
-    {{ key }}="{{ value }}"
-  {% endfor %}
->
-  {{ trigger }} 
+<button type="button" onclick="document.getElementById('{{ id }}').showModal()" {% for key, value in
+  trigger_attrs.items() %} {{ key }}="{{ value }}" {% endfor %}>
+  {{ trigger }}
 </button>
 {% endif %}
-<dialog
-  id="{{ id }}"
-  class="dialog {{ dialog_attrs.class }}"
-  aria-labelledby="{{ id }}-title"
-  {% if description %}aria-describedby="{{ id }}-description"{% endif %}
-  {% if close_on_overlay_click %}onclick="if (event.target === this) this.close()"{% endif %}
-  {% for key, value in dialog_attrs.items() %}
-    {% if key != 'class' %}{{ key }}="{{ value }}"{% endif %}
-  {% endfor %}
->
+<dialog id="{{ id }}" class="dialog {{ dialog_attrs.class }}" aria-labelledby="{{ id }}-title" {% if description
+  %}aria-describedby="{{ id }}-description" {% endif %} {% if close_on_overlay_click
+  %}onmousedown="this.dataset.backdropClick = (event.target === this)"
+  onclick="if (event.target === this && this.dataset.backdropClick === 'true') this.close()" {% endif %} {% for key,
+  value in dialog_attrs.items() %} {% if key !='class' %}{{ key }}="{{ value }}" {% endif %} {% endfor %}>
   <div>
     {% if title or description %}
       <header
