@@ -112,7 +112,8 @@ toc:
     <div class="prose">
       <p>Or cherry-pick specific components, for example:</p>
     </div>
-    {% set code %}{% raw %}import 'basecoat-css/popover';
+    {% set code %}{% raw %}import 'basecoat-css/basecoat';
+import 'basecoat-css/popover';
 import 'basecoat-css/tabs';{% endraw %}{% endset %}
     {{ code_block(code, "js") }}
     <div class="prose">

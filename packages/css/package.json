@@ -40,6 +40,8 @@
   "exports": {
     ".": "./dist/basecoat.css",
     "./css": "./dist/basecoat.css",
+    "./basecoat": "./dist/js/basecoat.js",
+    "./basecoat.min": "./dist/js/basecoat.min.js",
     "./all": "./dist/js/all.js",
     "./all.min": "./dist/js/all.min.js",
     "./command": "./dist/js/command.js",
