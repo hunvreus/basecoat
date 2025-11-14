@@ -5,6 +5,8 @@
   @param id {string} [optional] [default="toaster"] - Unique identifier for the toaster container.
   @param toasts {array} [optional] - An array of toast objects to render initially. See the <code>toast()</code> macro for more details.
   @param attrs {object} [optional] - Additional HTML attributes for the main toaster container div.
+  
+  Supports caller() for custom toast markup.
 #}
 {% macro toaster(
   id="toaster",
@@ -24,9 +26,11 @@
     title=item.title,
     description=item.description,
     action=item.action,
-    cancel=item.cancel
+    cancel=item.cancel,
+    attrs=item.attrs
   ) }}
 {% endfor %}
+{{ caller() if caller }}
 </div>
 {% endmacro %}
 
@@ -44,20 +48,25 @@
     - label {string}: Button text.
     - onclick {string}: JavaScript code to execute on click.
     - url {string}: URL for an anchor link button.
+  @param attrs {object} [optional] - Additional HTML attributes for the toast div.
 #}
 {% macro toast(
   category="success",
   title="",
   description="",
   action=None,
-  cancel=None
+  cancel=None,
+  attrs={}
 ) %}
 <div
-  class="toast"
+  class="toast {{ attrs.class }}"
   role="{{ 'alert' if category == 'error' else 'status' }}"
   aria-atomic="true"
   aria-hidden="false"
   {% if category %}data-category="{{ category }}"{% endif %}
+  {% for key, value in attrs %}
+    {% if key != 'class' %}{{ key }}="{{ value }}"{% endif %}
+  {% endfor %}
 >
   <div class="toast-content">
     {% if category in ["error", "success", "info", "warning"] %}

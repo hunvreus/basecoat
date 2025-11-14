@@ -1,0 +1,506 @@
+Basecoat – LLMs Guide
+
+About
+- Basecoat is a Tailwind‑first component library using semantic HTML and small vanilla JS for interactivity. No React required. Framework‑agnostic.
+
+Install
+- Tailwind project: `npm i basecoat-css`
+- In CSS: `@import "tailwindcss";` then `@import "basecoat-css";`
+
+CDN
+- CSS: `<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@latest/dist/basecoat.cdn.min.css">`
+- JS (all): `<script src="https://cdn.jsdelivr.net/npm/basecoat-css@latest/dist/js/all.min.js" defer></script>`
+- JS (per component): include `basecoat.min.js` then `tabs.min.js`, `select.min.js`, etc.
+
+JavaScript
+- Auto‑init on `DOMContentLoaded`; observes DOM for new nodes.
+- Manual: `window.basecoat.init('<name>')` or `window.basecoat.initAll()`.
+- Packages to import with ESM: `import 'basecoat-css/all'` or `import 'basecoat-css/tabs'`.
+
+Usage
+- CSS‑only components: use classes like `btn`, `card`, `input`, etc.
+- JS components: include the JS and use required roles/attributes (see below).
+
+Theming
+- Tailwind projects can override design tokens (e.g., `primary`, `muted-foreground`).
+- Without Tailwind, use CDN CSS and add overrides after the link tag.
+
+Common pitfalls
+- Do not invent class names; use documented classes only.
+- The package name is `basecoat-css` (not `basecoat`, not `@basecoat/css`).
+- Interactive components require specific roles/attributes; include them.
+- Basecoat is framework‑agnostic; do not mention React/Radix dependencies.
+
+Components
+- Button (CSS): `.btn`, variants like `.btn-secondary`, sizes `.btn-sm`, `.btn-lg`.
+- Button Group (CSS): `.button-group` to group adjacent buttons; supports horizontal/vertical.
+- Input (CSS): `.input` for text inputs; pairs with `.label` and `.field` patterns.
+- Textarea (CSS): `.textarea` styled multiline input.
+- Label (CSS): `.label` for associated form labels.
+- Field (CSS): `.field` wrapper for label, input, hint, error.
+- Form (CSS): `.form` patterns for layout and validation styling.
+- Checkbox (CSS): styled native checkbox; use `input[type='checkbox']`.
+- Radio Group (CSS): `.radio-group` pattern using native radios.
+- Switch (CSS): styled checkbox with `role="switch"` if needed.
+- Select (JS): `.select` custom select; trigger button + popover + `[role=listbox]` and `[role=option]`. Dispatches `change` with `detail.value`.
+- Combobox (JS): `.combobox` typeahead; similar roles to Select.
+- Command (JS): `.command` with search input and `[role=menu]`/`[role=menuitem]`; keyboard nav.
+- Tabs (JS): `.tabs` with `[role=tablist]`, `[role=tab]`, `aria-controls` panels; arrow keys switch.
+- Popover (JS): `.popover` wraps a button and `[data-popover]` content; toggles `aria-hidden`.
+- Dropdown Menu (JS): `.dropdown-menu` trigger + menu with `[role=menu]`/`[role=menuitem]`.
+- Dialog (CSS/Native): `<dialog>` styled; `.command-dialog` variant wraps `.command`.
+- Alert Dialog (CSS/Native): confirm/cancel flow using `<dialog>` semantics.
+- Drawer (CSS/Native): off‑canvas using `<dialog>`/popover; class names documented in examples.
+- Tooltip (CSS/JS-lite): `.tooltip` small info overlays.
+- Toast (JS): global notifications container `#toaster`; dispatch `basecoat:toast` with `{ detail: { config } }`.
+- Sidebar (JS): `.sidebar` with collapsible items; tracks current page via `aria-current`.
+- Breadcrumb (CSS): `.breadcrumb` list of links.
+- Pagination (CSS): `.pagination` navigation controls.
+- Card (CSS): `.card` container with header/section/footer slots.
+- Alert (CSS): `.alert` contextual banners.
+- Badge (CSS): `.badge` and `.badge-outline`.
+- Avatar (CSS): `.avatar` image + fallback.
+- Skeleton (CSS): `.skeleton` loading placeholder.
+- Progress (CSS): `.progress` bar.
+- Slider (CSS): `.slider` styled input range.
+- Spinner (CSS): `.spinner` loading indicator.
+- Kbd (CSS): `.kbd` keyboard key style.
+- Table (CSS): `.table` basic and striped tables.
+- Item (CSS): `.item` list rows with icons and actions.
+- Empty State (CSS): `.empty` placeholder content.
+- Theme Switcher (JS-lite): `.theme-switcher` toggles themes (example in docs).
+
+Events
+- `basecoat:toast` (document): show a toast by dispatching `{ detail: { config } }`.
+- `basecoat:initialized` (component root): emitted after a component initializes.
+- `basecoat:popover` (document): coordination event to close other popovers.
+
+Accessibility
+- Use semantic roles/attributes from examples (tabs, menus, listbox/options).
+- Disabled items: use `disabled` or `aria-disabled="true"`; JS will ignore them.
+
+Troubleshooting
+- If a component doesn’t work, ensure its JS is loaded and required roles/IDs match examples.
+- For dynamic content, call `window.basecoat.init('<name>')` or `initAll()` after insertion.
+
+License
+- MIT (see LICENSE.md)
+---
+description: Basecoat
+alwaysApply: true
+applyTo: "**"
+downloadedFrom: https://basecoatui.com/llms.txt
+version: 0.3.x
+---
+
+# Basecoat
+Basecoat is a Tailwind CSS v4‑first UI library using semantic HTML and small vanilla JS for interactivity. No React required; framework‑agnostic.
+
+- Basecoat docs: https://basecoatui.com
+- Package CSS: `basecoat-css`
+
+## Basecoat install notes
+1. Basecoat targets Tailwind CSS v4.
+2. Import Tailwind in your CSS, then import Basecoat:
+```css
+@import "tailwindcss";
+@import "basecoat-css";
+```
+3. For interactive components, include JS. With ESM you can load all or cherry‑pick:
+```js
+import 'basecoat-css/all';
+// or cherry‑pick
+import 'basecoat-css/tabs';
+import 'basecoat-css/select';
+import 'basecoat-css/popover';
+import 'basecoat-css/dropdown-menu';
+import 'basecoat-css/sidebar';
+import 'basecoat-css/toast';
+```
+4. CDN usage (no build tool):
+```html
+<link href="https://cdn.jsdelivr.net/npm/basecoat-css@latest/dist/basecoat.cdn.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/basecoat-css@latest/dist/js/all.min.js" defer></script>
+```
+5. JS auto‑initializes on `DOMContentLoaded` and observes the DOM for added nodes. You can manually re‑init:
+```js
+window.basecoat.init('tabs');
+window.basecoat.initAll();
+```
+
+## Basecoat usage rules
+1. Add Basecoat class names to semantic HTML. Combine with Tailwind utilities for layout/spacing.
+2. Interactive components require specific roles/attributes (see each component). Keep `aria-*` for semantics and `data-*` for visual states.
+3. Disabled elements must use `disabled` or `aria-disabled="true"`. Basecoat JS filters them from interactions.
+4. Only use documented Basecoat classes or Tailwind utilities. Don’t invent new class names.
+5. Prefer native elements (button, input, dialog) and keep markup minimal.
+
+Basecoat class name categories (for reference)
+- `component`: the main component class
+- `part`: a child element/slot of a component
+- `style`: variants changing appearance
+- `size`: size variants
+- `behavior`: classes that change behavior
+- `modifier`: boolean/conditional changes
+
+## Config
+Basecoat has no Tailwind plugin config. Import the CSS after Tailwind. Customize design tokens via your Tailwind theme or overrides.
+
+Minimal CSS setup:
+```css
+@import "tailwindcss";
+@import "basecoat-css";
+```
+
+## Basecoat tokens (commonly used)
+These semantic tokens are referenced by classes (examples): `background`, `foreground`, `primary`, `primary-foreground`, `secondary`, `secondary-foreground`, `accent`, `accent-foreground`, `muted`, `muted-foreground`, `card`, `card-foreground`, `popover`, `popover-foreground`, `destructive`, `ring`, `input`, `border`.
+
+Rules
+- Tokens should be defined in your Tailwind theme or be available via your design system. You can override colors using Tailwind utilities (e.g., `bg-primary`).
+- Prefer utilities for one‑off overrides; keep semantic tokens consistent.
+
+## Basecoat components
+
+### alert
+Alerts inform users about important events.
+
+#### Class names
+- component: `alert`, `alert-destructive`
+
+#### Syntax
+```html
+<div role="alert" class="alert">{CONTENT}</div>
+```
+
+#### Rules
+- Use `alert-destructive` for destructive context.
+
+### avatar
+Avatar shows a user thumbnail.
+
+#### Class names
+- component: `avatar`
+
+#### Syntax
+```html
+<div class="avatar"><img src="{image-url}" alt="{alt}" /></div>
+```
+
+#### Rules
+- Provide meaningful `alt` text or decorative as appropriate.
+
+### badge
+Badges display statuses or counts.
+
+#### Class names
+- component: `badge`
+- style: `badge-outline`, `badge-destructive`
+
+#### Syntax
+```html
+<span class="badge {MODIFIER}">{TEXT}</span>
+```
+
+#### Rules
+- {MODIFIER} is optional; combine with utilities for spacing.
+
+### button
+Buttons trigger actions.
+
+#### Class names
+- component: `btn`
+- style: `btn-primary`, `btn-secondary`, `btn-outline`, `btn-ghost`, `btn-link`, `btn-destructive`
+- size: `btn-sm`, `btn-lg`
+- icon: `btn-icon`, `btn-sm-icon`, `btn-lg-icon`
+
+#### Syntax
+```html
+<button class="btn {MODIFIER}">{CONTENT}</button>
+```
+
+#### Rules
+- Use `disabled` attribute for disabled state. Use `aria-pressed="true"` for toggle buttons.
+
+### button-group
+Groups adjacent buttons into a single control.
+
+#### Class names
+- component: `button-group`
+
+#### Syntax
+```html
+<div class="button-group" data-orientation="{horizontal|vertical}">{BUTTONS}</div>
+```
+
+#### Rules
+- Use separators with `<hr role="separator">` inside the group if needed.
+
+### card
+Card container with optional header/section/footer.
+
+#### Class names
+- component: `card`
+- part: `> header`, `> section`, `> footer`
+
+#### Syntax
+```html
+<article class="card">
+  <header><h2>{TITLE}</h2><p>{SUBTITLE}</p></header>
+  <section>{CONTENT}</section>
+  <footer>{ACTIONS}</footer>
+</article>
+```
+
+#### Rules
+- Parts are optional; structure with semantic elements.
+
+### checkbox (CSS)
+Styled native checkbox.
+
+#### Class names
+- component: `.input[type='checkbox']:not([role='switch'])`
+
+#### Syntax
+```html
+<input type="checkbox" class="input" />
+```
+
+#### Rules
+- Use standard checkbox semantics; pair with `<label>`.
+
+### command (JS)
+Command palette with search and results.
+
+#### Class names
+- component: `command`, wrapper variant: `command-dialog`
+- part: `> header input`, `[role='menu']`, `[role='menuitem']`
+
+#### Syntax
+```html
+<div class="command">
+  <header><input type="text" placeholder="Search" /></header>
+  <div role="menu">
+    <button role="menuitem">{ITEM}</button>
+  </div>
+</div>
+```
+
+#### Rules
+- Requires JS. Keyboard navigation supported. Disabled items must use `aria-disabled="true"` or `disabled` and are ignored.
+
+### dropdown-menu (JS)
+Contextual menu triggered by a button.
+
+#### Class names
+- component: `dropdown-menu`
+- part: `> button` (trigger), `[role='menu']`, `[role='menuitem']`
+
+#### Syntax
+```html
+<div class="dropdown-menu">
+  <button type="button">{TRIGGER}</button>
+  <div role="menu"> <button role="menuitem">{ITEM}</button> </div>
+</div>
+```
+
+#### Rules
+- Requires JS. Uses `basecoat:popover` to coordinate with other popovers.
+
+### input (CSS)
+Styled text input fields.
+
+#### Class names
+- component: `input` (applied to native `<input>` types)
+
+#### Syntax
+```html
+<input type="text" class="input" placeholder="{Placeholder}" />
+```
+
+#### Rules
+- Supports common input types; pair with `.label` and `.field` patterns.
+
+### kbd (CSS)
+Keyboard key visual.
+
+#### Class names
+- component: `kbd`
+
+#### Syntax
+```html
+<kbd class="kbd">⌘K</kbd>
+```
+
+### label (CSS)
+Styled form labels.
+
+#### Class names
+- component: `label`
+
+#### Syntax
+```html
+<label class="label" for="{id}">{TEXT}</label>
+```
+
+### popover (JS)
+Small overlay anchored to a trigger.
+
+#### Class names
+- component: `popover`
+- part: `> button` (trigger), `[data-popover]` (content)
+
+#### Syntax
+```html
+<div class="popover">
+  <button type="button">{TRIGGER}</button>
+  <section data-popover aria-hidden="true">{CONTENT}</section>
+</div>
+```
+
+#### Rules
+- Requires JS. Toggling sets `aria-hidden` on content and `aria-expanded` on trigger.
+
+### radio-group (CSS)
+Styled native radio inputs.
+
+#### Class names
+- component: `.input[type='radio']`
+
+#### Syntax
+```html
+<label><input type="radio" class="input" name="{name}" /> {LABEL}</label>
+```
+
+### select (JS)
+Custom select with searchable popover and listbox.
+
+#### Class names
+- component: `select`
+- part: `> button` (trigger with label span), `[data-popover]` (panel), `[role='listbox']`, `[role='option']`, `> input[type='hidden']`, optional `header input[type='text']` filter
+
+#### Syntax
+```html
+<div class="select">
+  <button type="button" aria-expanded="false"><span>{LABEL}</span></button>
+  <input type="hidden" name="{name}" value="{value}" />
+  <section data-popover aria-hidden="true">
+    <header><input type="text" placeholder="Filter" /></header>
+    <div role="listbox">
+      <div role="option" data-value="{value}" data-label="{label}">{label}</div>
+    </div>
+  </section>
+</div>
+```
+
+#### Rules
+- Requires JS. Dispatches `change` on root with `detail.value`. Disabled options use `aria-disabled="true"`.
+
+### sidebar (JS)
+Collapsible navigation sidebar.
+
+#### Class names
+- component: `sidebar`
+
+#### Rules
+- Requires JS. Uses `aria-current="page"` for active link styling.
+
+### switch (CSS)
+Styled switch using checkbox with `role="switch"`.
+
+#### Class names
+- component: `.input[type='checkbox'][role='switch']`
+
+#### Syntax
+```html
+<input type="checkbox" role="switch" class="input" />
+```
+
+### table (CSS)
+Styled tables.
+
+#### Class names
+- component: `table`
+
+#### Syntax
+```html
+<table class="table">{ROWS}</table>
+```
+
+### tabs (JS)
+Tabbed interface with keyboard navigation.
+
+#### Class names
+- component: `tabs`
+- part: `[role='tablist']`, `[role='tab']`, `[role='tabpanel']`
+
+#### Syntax
+```html
+<div class="tabs">
+  <div role="tablist">
+    <button role="tab" aria-controls="panel-1" aria-selected="true" tabindex="0">Tab 1</button>
+    <button role="tab" aria-controls="panel-2" aria-selected="false" tabindex="-1">Tab 2</button>
+  </div>
+  <section id="panel-1" role="tabpanel">...</section>
+  <section id="panel-2" role="tabpanel" hidden>...</section>
+</div>
+```
+
+#### Rules
+- Requires JS. Arrow keys move focus; keep `aria-controls` and `aria-selected` accurate.
+
+### textarea (CSS)
+Styled multiline text input.
+
+#### Class names
+- component: `textarea`
+
+#### Syntax
+```html
+<textarea class="textarea" rows="{n}"></textarea>
+```
+
+### toast (JS)
+Global notifications.
+
+#### Class names
+- component: `#toaster` (container), `toast` (item)
+
+#### Syntax
+```html
+<section id="toaster"></section>
+```
+Show a toast:
+```js
+document.dispatchEvent(new CustomEvent('basecoat:toast', { detail: { config: { title: 'Saved', description: 'Changes persisted', category: 'success' } } }))
+```
+
+#### Rules
+- Requires JS. Uses timeouts; hovering pauses timers.
+
+### popover/dialog variants (CSS/JS‑lite)
+Dialog and drawer patterns built on native elements, styled by Basecoat.
+
+#### Class names
+- wrapper: `command-dialog` (for Command palette in a dialog)
+
+#### Rules
+- Use native `<dialog>` or popover attributes where applicable.
+
+### other CSS components
+Additional CSS components include: `progress`, `skeleton`, `slider`, `spinner`, `pagination`, `breadcrumb`, `item`, `empty`, `theme-switcher`, `form`, `field`, `input-group`, `radio-group`, `switch`, `avatar`, `badge`, `alert`, `card`, `kbd`, `table`.
+
+## Events
+- `basecoat:initialized` (component root): emitted after a component initializes.
+- `basecoat:popover` (document): used to close other popovers when one opens.
+- `basecoat:toast` (document): creates a toast using `{ detail: { config } }`.
+
+## Accessibility
+- Use semantic roles/labels per component. Keep `aria-*` for semantics and `data-*` for visual states.
+- Disabled items must use `disabled` or `aria-disabled="true"` to be filtered from interactions.
+
+## Troubleshooting
+- If interactivity doesn’t work, ensure the component’s JS is included and required roles/IDs match the examples.
+- For dynamic content, call `window.basecoat.init('<name>')` or `window.basecoat.initAll()` after insertion.
+
+## License
+MIT (see LICENSE.md)

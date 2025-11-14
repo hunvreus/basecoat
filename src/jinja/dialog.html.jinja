@@ -56,7 +56,7 @@
   <div>
     {% if title or description %}
       <header
-        {% for key, value in header_attrs %}
+        {% for key, value in header_attrs.items() %}
           {{ key }}="{{ value }}"
         {% endfor %}
       >

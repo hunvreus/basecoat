@@ -9,6 +9,7 @@ export default async function(eleventyConfig) {
   eleventyConfig.setInputDirectory("./docs/src");
   eleventyConfig.addPassthroughCopy({"docs/src/assets": "assets"});
   eleventyConfig.addPassthroughCopy({ "src/js": "assets/js" });
+  eleventyConfig.addPassthroughCopy({ "docs/src/llms.txt": "llms.txt" });
   eleventyConfig.addPlugin(eleventyLucideicons);
   eleventyConfig.addShortcode("fetchCode", function(filePath) {
     const absolutePath = path.resolve(process.cwd(), filePath);
