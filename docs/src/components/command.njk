@@ -33,15 +33,15 @@ toc:
 {% macro command_items(suggestions_id="suggestions", settings_id="settings") %}
 <div role="group" aria-labelledby="{{ suggestions_id }}">
   <span role="heading" id="{{ suggestions_id }}">Suggestions</span>
-  <div role="menuitem" data-value="calendar" onclick="console.log('Open calendar')">
+  <div role="menuitem" data-label="calendar" onclick="console.log('Open calendar')">
     {% lucide "calendar" %}
     <span>Calendar</span>
   </div>
-  <div role="menuitem" data-value="search-emoji" onclick="console.log('Search emoji')">
+  <div role="menuitem" data-label="search-emoji" onclick="console.log('Search emoji')">
     {% lucide "smile" %}
     <span>Search Emoji</span>
   </div>
-  <div role="menuitem" data-value="calculator" aria-disabled="true">
+  <div role="menuitem" data-label="calculator" aria-disabled="true">
     {% lucide "calculator" %}
     <span>Calculator</span>
   </div>
@@ -49,17 +49,17 @@ toc:
 <hr role="separator" />
 <div role="group" aria-labelledby="{{ settings_id }}">
   <span role="heading" id="{{ settings_id }}">Settings</span>
-  <div role="menuitem" data-value="profile" onclick="console.log('Open profile')">
+  <div role="menuitem" data-label="profile" onclick="console.log('Open profile')">
     {% lucide "user" %}
     <span>Profile</span>
     <kbd class="ml-auto text-muted-foreground bg-transparent tracking-widest">⌘P</kbd>
   </div>
-  <div role="menuitem" data-value="billing" onclick="console.log('Open billing')">
+  <div role="menuitem" data-label="billing" onclick="console.log('Open billing')">
     {% lucide "credit-card" %}
     <span>Billing</span>
     <kbd class="ml-auto text-muted-foreground bg-transparent tracking-widest">⌘B</kbd>
   </div>
-  <div role="menuitem" data-value="settings" onclick="console.log('Open settings')">
+  <div role="menuitem" data-label="settings" onclick="console.log('Open settings')">
     {% lucide "settings" %}
     <span>Settings</span>
     <kbd class="ml-auto text-muted-foreground bg-transparent tracking-widest">⌘S</kbd>
@@ -209,11 +209,11 @@ toc:
 </div>
 
 {% set raw_code %}{% raw %}{% call command() %}
-  <div role="menuitem" data-value="calendar">
+  <div role="menuitem" data-label="calendar">
     <svg>...</svg>
     <span>Calendar</span>
   </div>
-  <div role="menuitem" data-value="settings">
+  <div role="menuitem" data-label="settings">
     <svg>...</svg>
     <span>Settings</span>
   </div>
