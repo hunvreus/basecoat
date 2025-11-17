@@ -3279,7 +3279,7 @@
         margin-block: calc(var(--spacing) * 1);
         border-color: var(--color-border);
       }
-      &:not(:has([data-value]:not([aria-hidden='true'])))::before {
+      &:not(:has([role='menuitem']:not([aria-hidden='true'])))::before {
         margin: calc(var(--spacing) * -1);
         display: flex;
         align-items: center;
@@ -3292,11 +3292,11 @@
         font-size: var(--text-sm);
         line-height: var(--tw-leading, var(--text-sm--line-height));
       }
-      &[data-empty]:not(:has([data-value]:not([aria-hidden='true'])))::before {
+      &[data-empty]:not(:has([role='menuitem']:not([aria-hidden='true'])))::before {
         --tw-content: attr(data-empty);
         content: var(--tw-content);
       }
-      &:not([data-empty]):not(:has([data-value]:not([aria-hidden='true'])))::before {
+      &:not([data-empty]):not(:has([role='menuitem']:not([aria-hidden='true'])))::before {
         --tw-content: 'No results found';
         content: var(--tw-content);
       }

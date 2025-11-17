@@ -33,15 +33,15 @@ toc:
 {% macro command_items(suggestions_id="suggestions", settings_id="settings") %}
 <div role="group" aria-labelledby="{{ suggestions_id }}">
   <span role="heading" id="{{ suggestions_id }}">Suggestions</span>
-  <div role="menuitem" data-label="calendar" onclick="console.log('Open calendar')">
+  <div role="menuitem" onclick="console.log('Open calendar')">
     {% lucide "calendar" %}
     <span>Calendar</span>
   </div>
-  <div role="menuitem" data-label="search-emoji" onclick="console.log('Search emoji')">
+  <div role="menuitem" onclick="console.log('Search emoji')">
     {% lucide "smile" %}
     <span>Search Emoji</span>
   </div>
-  <div role="menuitem" data-label="calculator" aria-disabled="true">
+  <div role="menuitem" aria-disabled="true">
     {% lucide "calculator" %}
     <span>Calculator</span>
   </div>
@@ -49,17 +49,17 @@ toc:
 <hr role="separator" />
 <div role="group" aria-labelledby="{{ settings_id }}">
   <span role="heading" id="{{ settings_id }}">Settings</span>
-  <div role="menuitem" data-label="profile" onclick="console.log('Open profile')">
+  <div role="menuitem" onclick="console.log('Open profile')" data-filter="Profile">
     {% lucide "user" %}
     <span>Profile</span>
     <kbd class="ml-auto text-muted-foreground bg-transparent tracking-widest">⌘P</kbd>
   </div>
-  <div role="menuitem" data-label="billing" onclick="console.log('Open billing')">
+  <div role="menuitem" onclick="console.log('Open billing')" data-filter="Billing">
     {% lucide "credit-card" %}
     <span>Billing</span>
     <kbd class="ml-auto text-muted-foreground bg-transparent tracking-widest">⌘B</kbd>
   </div>
-  <div role="menuitem" data-label="settings" onclick="console.log('Open settings')">
+  <div role="menuitem" onclick="console.log('Open settings')" data-filter="Settings">
     {% lucide "settings" %}
     <span>Settings</span>
     <kbd class="ml-auto text-muted-foreground bg-transparent tracking-widest">⌘S</kbd>
@@ -158,8 +158,9 @@ toc:
                 <dt><code class="highlight language-html">&lt;div role="menuitem"&gt;</code></dt>
                 <dd>Command item that triggers an action when clicked. In a command-dialog, clicking a menuitem automatically closes the dialog unless the <code>data-keep-command-open</code> attribute is present. Optional attributes:
                   <ul>
-                    <li><code>data-label</code>: custom label for filtering (if different from text content)</li>
-                    <li><code>data-keywords</code>: additional keywords for enhanced filtering</li>
+                    <li><code>data-filter</code>: custom text used for filtering (if different from displayed content, e.g., <code>data-filter="calendar event"</code>)</li>
+                    <li><code>data-keywords</code>: additional keywords for enhanced filtering (e.g., <code>data-keywords="calendar event date"</code>)</li>
+                    <li><code>data-force</code>: forces the item to always display, regardless of filter (e.g., <code>data-force</code>)</li>
                     <li><code>aria-disabled="true"</code>: marks item as disabled (excluded from keyboard navigation and filtering)</li>
                   </ul>
                 </dd>
@@ -209,11 +210,11 @@ toc:
 </div>
 
 {% set raw_code %}{% raw %}{% call command() %}
-  <div role="menuitem" data-label="calendar">
+  <div role="menuitem">
     <svg>...</svg>
     <span>Calendar</span>
   </div>
-  <div role="menuitem" data-label="settings">
+  <div role="menuitem" data-keywords="config preferences">
     <svg>...</svg>
     <span>Settings</span>
   </div>

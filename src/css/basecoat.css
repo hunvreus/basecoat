@@ -572,13 +572,13 @@
       [role='separator'] {
         @apply border-border -mx-1 my-1;
       }
-      &:not(:has([data-value]:not([aria-hidden='true'])))::before {
+      &:not(:has([role='menuitem']:not([aria-hidden='true'])))::before {
         @apply flex items-center justify-center py-6 px-3 text-sm truncate -m-1;
       }
-      &[data-empty]:not(:has([data-value]:not([aria-hidden='true'])))::before {
+      &[data-empty]:not(:has([role='menuitem']:not([aria-hidden='true'])))::before {
         @apply content-[attr(data-empty)];
       }
-      &:not([data-empty]):not(:has([data-value]:not([aria-hidden='true'])))::before {
+      &:not([data-empty]):not(:has([role='menuitem']:not([aria-hidden='true'])))::before {
         @apply content-['No_results_found'];
       }
     }

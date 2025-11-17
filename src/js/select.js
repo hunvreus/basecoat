@@ -48,7 +48,7 @@
 
     const updateValue = (option, triggerEvent = true) => {
       if (option) {
-        selectedLabel.innerHTML = option.dataset.label || option.innerHTML;
+        selectedLabel.innerHTML = option.innerHTML;
         input.value = option.dataset.value;
         listbox.querySelector('[role="option"][aria-selected="true"]')?.removeAttribute('aria-selected');
         option.setAttribute('aria-selected', 'true');
@@ -112,8 +112,17 @@
 
         visibleOptions = [];
         allOptions.forEach(option => {
-          const optionText = (option.dataset.label || option.textContent).trim().toLowerCase();
-          const matches = optionText.includes(searchTerm);
+          if (option.hasAttribute('data-force')) {
+            option.setAttribute('aria-hidden', 'false');
+            if (options.includes(option)) {
+              visibleOptions.push(option);
+            }
+            return;
+          }
+
+          const optionText = (option.dataset.filter || option.textContent).trim().toLowerCase();
+          const keywords = (option.dataset.keywords || '').toLowerCase();
+          const matches = optionText.includes(searchTerm) || keywords.includes(searchTerm);
           option.setAttribute('aria-hidden', String(!matches));
           if (matches && options.includes(option)) {
             visibleOptions.push(option);

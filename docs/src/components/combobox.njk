@@ -118,7 +118,14 @@ toc:
             </ul>
             <dl>
               <dt><code class="highlight language-html">&lt;div role="option" data-value="{ VALUE }"&gt;</code></dt>
-              <dd>Option that can be selected.Should have a unique id if you use the <code>aria-activedescendant</code> attribute on the trigger.</dd>
+              <dd>Option that can be selected. Should have a unique id if you use the <code>aria-activedescendant</code> attribute on the trigger. Optional attributes:
+                <ul>
+                  <li><code>data-filter</code>: custom text used for filtering (if different from displayed content, e.g., <code>data-filter="united states"</code>)</li>
+                  <li><code>data-keywords</code>: additional keywords for enhanced filtering (e.g., <code>data-keywords="bread fruit"</code>)</li>
+                  <li><code>data-force</code>: forces the option to always display, regardless of filter (e.g., <code>data-force</code>)</li>
+                  <li><code>aria-disabled="true"</code>: marks option as disabled (excluded from selection and keyboard navigation)</li>
+                </ul>
+              </dd>
               <dt><code class="highlight language-html">&lt;hr role="separator"&gt;</code> <span class="badge-secondary">Optional</span></dt>
               <dd>Separator between groups/options.</dd>
               <dt><code class="highlight language-html">&lt;div role="group"&gt;</code> <span class="badge-secondary">Optional</span></dt>
