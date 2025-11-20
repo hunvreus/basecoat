@@ -1,0 +1,66 @@
+/* Select */
+@layer components {
+  :is(.form, .field) select,
+  select.select {
+    @apply appearance-none border-input focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 dark:hover:bg-input/50 flex w-fit items-center justify-between gap-2 rounded-md border bg-transparent pl-3 pr-9 py-2 text-sm whitespace-nowrap shadow-xs transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 h-9;
+    @apply bg-[image:var(--chevron-down-icon-50)] bg-no-repeat bg-position-[center_right_0.75rem] bg-size-[1rem];
+
+    option,
+    optgroup {
+      @apply bg-popover text-popover-foreground;
+    }
+  }
+  *:not(select).select {
+    @apply relative inline-flex;
+
+    [data-popover] {
+      @apply p-1;
+
+      [role='option'] {
+        @apply aria-hidden:hidden [&_svg]:text-muted-foreground relative flex cursor-default items-center gap-2 rounded-sm pl-2 py-1.5 pr-7.5 text-sm outline-hidden select-none [&_svg]:shrink-0 [&_svg]:size-4 aria-disabled:opacity-50 aria-disabled:pointer-events-none disabled:opacity-50 disabled:pointer-events-none w-full truncate;
+        
+        &[aria-selected='true'] {
+          @apply bg-[image:var(--check-icon)] bg-no-repeat bg-position-[center_right_0.5rem] bg-size-[0.875rem];
+        }
+        &.active,
+        &:focus-visible {
+          @apply bg-accent text-accent-foreground;
+        }
+      }
+      [role='listbox'] [role='heading'] {
+        @apply flex text-muted-foreground px-2 py-1.5 text-xs;
+      }
+      [role='listbox'] [role='group']:not(:has([role='option']:not([aria-hidden='true']))) {
+        @apply hidden;
+      }
+      [role='separator'] {
+        @apply border-border -mx-1 my-1;
+      }
+      > header {
+        @apply flex h-9 items-center gap-2 border-b px-3 -mx-1 -mt-1 mb-1;
+
+        svg {
+          @apply size-4 shrink-0 opacity-50;
+        }
+        input[role='combobox'] {
+          @apply placeholder:text-muted-foreground flex h-10 flex-1 w-full rounded-md bg-transparent py-3 text-sm outline-hidden disabled:cursor-not-allowed disabled:opacity-50 min-w-0;
+        }
+      }
+      [role='listbox']:not(:has([data-value]:not([aria-hidden='true'])))::before {
+        @apply flex items-center justify-center p-6 text-sm truncate;
+      }
+      [role='listbox'][data-empty]:not(:has([data-value]:not([aria-hidden='true'])))::before {
+        @apply content-[attr(data-empty)];
+      }
+      [role='listbox']:not([data-empty]):not(:has([data-value]:not([aria-hidden='true'])))::before {
+        @apply content-['No_results_found'];
+      }
+    }
+    [data-popover]:has(> header input:not(:placeholder-shown)) [role='separator'] {
+      @apply hidden;
+    }
+    &:not([data-select-initialized]) [data-popover] [role='option'] {
+      @apply hover:bg-accent hover:text-accent-foreground;
+    }
+  }
+}
