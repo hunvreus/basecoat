@@ -1,0 +1,71 @@
+/* Popover */
+@layer components {
+  [data-popover] {
+    @apply absolute bg-popover text-popover-foreground overflow-x-hidden overflow-y-auto rounded-md border shadow-md z-50 visible opacity-100 scale-100 min-w-full w-max transition-all;
+
+    &[aria-hidden='true'] {
+      @apply invisible opacity-0 scale-95;
+      
+      &:not([data-side]),
+      &[data-side='bottom'] {
+        @apply -translate-y-2;
+      }
+      &[data-side='top'] {
+        @apply translate-y-2;
+      }
+      &[data-side='left'] {
+        @apply translate-x-2;
+      }
+      &[data-side='right'] {
+        @apply -translate-x-2;
+      }
+    }
+    &:not([data-side]),
+    &[data-side='bottom'] {
+      @apply mt-1 top-full;
+    }
+    &[data-side='top'] {
+      @apply mb-1 bottom-full;
+    }
+    &[data-side='left'] {
+      @apply mr-1 right-full;
+    }
+    &[data-side='right'] {
+      @apply ml-1 left-full;
+    }
+    &:not([data-side]),
+    &[data-side='bottom'],
+    &[data-side='top'] {
+      &:not([data-align]),
+      &[data-align='start'] {
+        @apply left-0;
+      }
+      &[data-align='end'] {
+        @apply right-0;
+      }
+      &[data-align='center'] {
+        @apply left-1/2 -translate-x-1/2;
+      }
+    }
+    &[data-side='left'],
+    &[data-side='right'] {
+      &:not([data-align]),
+      &[data-align='start'] {
+        @apply top-0;
+      }
+      &[data-align='end'] {
+        @apply bottom-0;
+      }
+      &[data-align='center'] {
+        @apply top-1/2 -translate-y-1/2;
+      }
+    }
+  }
+  .popover {
+    @apply relative inline-flex;
+
+    [data-popover] {
+      @apply p-4;
+    }
+  } 
+}

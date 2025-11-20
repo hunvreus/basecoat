@@ -1,0 +1,43 @@
+/* Field */
+@layer components {
+  .fieldset {
+    @apply flex flex-col gap-6;
+
+    > legend {
+      @apply text-base font-medium mb-3;
+    }
+  }
+  .field {
+    @apply flex flex-col w-full gap-3 data-[invalid=true]:text-destructive [&>*]:w-full [&>.sr-only]:w-auto;
+
+    h2,
+    h3 {
+      @apply flex w-fit items-center gap-2 text-sm leading-snug font-medium;
+    }
+    [role="alert"] {
+      @apply text-sm text-destructive font-normal;
+      
+      ul {
+        @apply ml-4 flex list-disc flex-col gap-1;
+      }
+    }
+    section {
+      @apply flex flex-1 flex-col gap-1.5 leading-snug;
+    }
+
+    &[data-orientation='horizontal'] {
+      @apply flex-row items-center [&>label]:flex-auto has-[>section]:items-start has-[>section]:[&>[type=checkbox],[type=radio]]:mt-px [&_p]:text-balance;
+    }
+  }
+  .fieldset legend + p,
+  .field > p,
+  .field section > p {
+    @apply text-muted-foreground text-sm leading-normal font-normal [&>a:hover]:text-primary [&>a]:underline [&>a]:underline-offset-4;
+  }
+  .fieldset legend + p {
+    @apply -mt-1.5;
+  }
+  .field > p {
+    @apply last:mt-0 nth-last-2:-mt-1;
+  }
+}

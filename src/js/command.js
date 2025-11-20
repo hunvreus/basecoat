@@ -46,7 +46,15 @@
 
       visibleMenuItems = [];
       allMenuItems.forEach(item => {
-        const itemText = (item.dataset.label || item.textContent).trim().toLowerCase();
+        if (item.hasAttribute('data-force')) {
+          item.setAttribute('aria-hidden', 'false');
+          if (menuItems.includes(item)) {
+            visibleMenuItems.push(item);
+          }
+          return;
+        }
+
+        const itemText = (item.dataset.filter || item.textContent).trim().toLowerCase();
         const keywords = (item.dataset.keywords || '').toLowerCase();
         const matches = itemText.includes(searchTerm) || keywords.includes(searchTerm);
         item.setAttribute('aria-hidden', String(!matches));
