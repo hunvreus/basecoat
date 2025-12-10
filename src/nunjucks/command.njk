@@ -143,10 +143,10 @@
   Renders a list of items for the command component.
 
   @param items {array} - Array of items to render. Each item can be:
-    - { type: "item", label: "Text", content: "HTML", keywords: "search terms", disabled: true, attrs: {} }
+    - { type: "item", label: "Text or HTML", icon: "HTML", url: "href", keywords: "search terms", disabled: true, attrs: {} }
     - { type: "group", label: "Group Title", items: [...] }
     - { type: "separator" }
-    Note: Use attrs to add data-label for alternative search text if needed.
+    Note: Use attrs to add data-label for alternative search text if needed. If url is provided, renders as <a role="menuitem"> instead of <div role="menuitem">. Label supports HTML (marked as safe).
   @param parent_id_prefix {string} [optional] - The prefix for the item id.
 #}
 {% macro render_command_items(items, parent_id_prefix="items") %}
@@ -163,25 +163,44 @@
           {% endfor %}
         {% endif %}
       >
-        <span role="heading" id="{{ group_label_id }}">{{ item.label }}</span>
+        <span role="heading" id="{{ group_label_id }}">{{ item.label | safe }}</span>
         {{ render_command_items(item.items, item_id) if item.items }}
       </div>
     {% elif item.type == "separator" %}
       <hr role="separator" />
     {% elif item.type == "item" or not item.type %}
-      <div
-        id="{{ item_id }}"
-        role="menuitem"
-        {% if item.keywords %}data-keywords="{{ item.keywords }}"{% endif %}
-        {% if item.disabled %}aria-disabled="true"{% endif %}
-        {% if item.attrs %}
-          {% for key, value in item.attrs %}
-            {{ key }}="{{ value }}"
-          {% endfor %}
-        {% endif %}
-      >
-        {{ item.content | safe if item.content else item.label }}
-      </div>
+      {% if item.url %}
+        <a
+          id="{{ item_id }}"
+          href="{{ item.url }}"
+          role="menuitem"
+          {% if item.keywords %}data-keywords="{{ item.keywords }}"{% endif %}
+          {% if item.disabled %}aria-disabled="true"{% endif %}
+          {% if item.attrs %}
+            {% for key, value in item.attrs %}
+              {% if key != "href" %}{{ key }}="{{ value }}"{% endif %}
+            {% endfor %}
+          {% endif %}
+        >
+          {% if item.icon %}{{ item.icon | safe }}{% endif %}
+          {{ item.content | safe if item.content else (item.label | safe) }}
+        </a>
+      {% else %}
+        <div
+          id="{{ item_id }}"
+          role="menuitem"
+          {% if item.keywords %}data-keywords="{{ item.keywords }}"{% endif %}
+          {% if item.disabled %}aria-disabled="true"{% endif %}
+          {% if item.attrs %}
+            {% for key, value in item.attrs %}
+              {{ key }}="{{ value }}"
+            {% endfor %}
+          {% endif %}
+        >
+          {% if item.icon %}{{ item.icon | safe }}{% endif %}
+          {{ item.content | safe if item.content else (item.label | safe) }}
+        </div>
+      {% endif %}
     {% endif %}
   {% endfor %}
 {% endmacro %}

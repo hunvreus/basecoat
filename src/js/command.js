@@ -55,8 +55,12 @@
         }
 
         const itemText = (item.dataset.filter || item.textContent).trim().toLowerCase();
-        const keywords = (item.dataset.keywords || '').toLowerCase();
-        const matches = itemText.includes(searchTerm) || keywords.includes(searchTerm);
+        const keywordList = (item.dataset.keywords || '')
+          .toLowerCase()
+          .split(/[\s,]+/)
+          .filter(Boolean);
+        const matchesKeyword = keywordList.some(keyword => keyword.includes(searchTerm));
+        const matches = itemText.includes(searchTerm) || matchesKeyword;
         item.setAttribute('aria-hidden', String(!matches));
         if (matches && menuItems.includes(item)) {
           visibleMenuItems.push(item);

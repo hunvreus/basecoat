@@ -121,8 +121,12 @@
           }
 
           const optionText = (option.dataset.filter || option.textContent).trim().toLowerCase();
-          const keywords = (option.dataset.keywords || '').toLowerCase();
-          const matches = optionText.includes(searchTerm) || keywords.includes(searchTerm);
+          const keywordList = (option.dataset.keywords || '')
+            .toLowerCase()
+            .split(/[\s,]+/)
+            .filter(Boolean);
+          const matchesKeyword = keywordList.some(keyword => keyword.includes(searchTerm));
+          const matches = optionText.includes(searchTerm) || matchesKeyword;
           option.setAttribute('aria-hidden', String(!matches));
           if (matches && options.includes(option)) {
             visibleOptions.push(option);

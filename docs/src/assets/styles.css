@@ -260,6 +260,9 @@
   .invisible {
     visibility: hidden;
   }
+  .visible {
+    visibility: visible;
+  }
   .sr-only {
     position: absolute;
     width: 1px;
@@ -525,6 +528,12 @@
   .max-h-\[200px\] {
     max-height: 200px;
   }
+  .max-h-\[260px\] {
+    max-height: 260px;
+  }
+  .max-h-\[320px\] {
+    max-height: 320px;
+  }
   .max-h-\[612px\] {
     max-height: 612px;
   }
@@ -585,6 +594,9 @@
   .w-\[200px\] {
     width: 200px;
   }
+  .w-\[260px\] {
+    width: 260px;
+  }
   .w-\[271px\] {
     width: 271px;
   }
@@ -612,8 +624,14 @@
   .max-w-\[300px\] {
     max-width: 300px;
   }
+  .max-w-\[320px\] {
+    max-width: 320px;
+  }
   .max-w-\[450px\] {
     max-width: 450px;
+  }
+  .max-w-\[720px\] {
+    max-width: 720px;
   }
   .max-w-lg {
     max-width: var(--container-lg);
@@ -650,6 +668,9 @@
   }
   .min-w-\[8rem\] {
     min-width: 8rem;
+  }
+  .min-w-\[260px\] {
+    min-width: 260px;
   }
   .flex-1 {
     flex: 1;
@@ -1296,6 +1317,10 @@
   }
   .shadow-none {
     --tw-shadow: 0 0 #0000;
+    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+  }
+  .shadow-sm {
+    --tw-shadow: 0 1px 3px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 1px 2px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
     box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
   }
   .shadow-xl {
@@ -2379,7 +2404,7 @@
     &>svg {
       color: currentcolor;
     }
-    h2, h3 {
+    > h2, > h3, > h4, > h5, > h6, > strong, > [data-title] {
       grid-column-start: 2;
       overflow: hidden;
       display: -webkit-box;
@@ -2391,7 +2416,7 @@
       --tw-tracking: var(--tracking-tight);
       letter-spacing: var(--tracking-tight);
     }
-    section {
+    > section {
       grid-column-start: 2;
       display: grid;
       justify-items: start;
@@ -2421,7 +2446,7 @@
     &>svg {
       color: currentcolor;
     }
-    section {
+    > section {
       color: var(--color-destructive);
     }
   }

@@ -155,9 +155,10 @@ toc:
             <dt><code class="highlight language-html">&lt;div role="menu"&gt;</code></dt>
             <dd>The menu containing the command items. Should have <code>id="{ MENU_ID }"</code> refered to by the input's <code>aria-controls</code> attribute.
               <dl>
-                <dt><code class="highlight language-html">&lt;div role="menuitem"&gt;</code></dt>
-                <dd>Command item that triggers an action when clicked. In a command-dialog, clicking a menuitem automatically closes the dialog unless the <code>data-keep-command-open</code> attribute is present. Optional attributes:
+                <dt><code class="highlight language-html">&lt;div role="menuitem"&gt;</code> or <code class="highlight language-html">&lt;a role="menuitem"&gt;</code></dt>
+                <dd>Command item that triggers an action when clicked. Use <code>&lt;a&gt;</code> for navigation links, or <code>&lt;div&gt;</code> for actions. In a command-dialog, clicking a menuitem automatically closes the dialog unless the <code>data-keep-command-open</code> attribute is present. Optional attributes:
                   <ul>
+                    <li><code>href</code>: If present on an <code>&lt;a&gt;</code>, the item navigates to that URL</li>
                     <li><code>data-filter</code>: custom text used for filtering (if different from displayed content, e.g., <code>data-filter="calendar event"</code>)</li>
                     <li><code>data-keywords</code>: additional keywords for enhanced filtering (e.g., <code>data-keywords="calendar event date"</code>)</li>
                     <li><code>data-force</code>: forces the item to always display, regardless of filter (e.g., <code>data-force</code>)</li>
@@ -220,6 +221,31 @@ toc:
   </div>
 {% endcall %}{% endraw %}{% endset %}
 {{ code_block(raw_code, "jinja") }}
+
+<section class="prose">
+  <p>You can also use the <code>items</code> parameter to pass an array of items:</p>
+</section>
+
+{% set icon_calendar %}{% lucide "calendar" %}{% endset %}
+{% set icon_settings %}{% lucide "settings" %}{% endset %}
+{% set raw_code_items %}{% raw %}{% set icon_calendar %}{% lucide "calendar" %}{% endset %}
+{% set icon_settings %}{% lucide "settings" %}{% endset %}
+{% set items = [
+  { type: "group", label: "Suggestions", items: [
+    { label: "Calendar", icon: icon_calendar, keywords: "date event" },
+    { label: "Search Emoji", icon: icon_settings },
+    { label: "Calculator", disabled: true }
+  ]},
+  { type: "separator" },
+  { type: "group", label: "Settings", items: [
+    { label: "Profile", url: "/profile", icon: icon_settings, keywords: "user account" },
+    { label: "Billing", url: "/billing", icon: icon_settings },
+    { label: "Settings", url: "/settings", icon: icon_settings }
+  ]}
+] %}
+
+{% call command(items=items) %}{% endcall %}{% endraw %}{% endset %}
+{{ code_block(raw_code_items, "jinja") }}
 
 <h2 id="examples"><a href="#examples">Examples</a></h2>
 

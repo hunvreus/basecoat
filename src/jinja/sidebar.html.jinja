@@ -117,7 +117,7 @@
         >
           <summary aria-controls="submenu-{{ item_id }}-content">
             {% if item.icon %}{{ item.icon | safe }}{% endif %}
-            {{ item.label }}
+            {{ item.label | safe }}
           </summary>
           <ul id="submenu-{{ item_id }}-content">
             {{ render_sidebar_content(item["items"], item_id) if item["items"] }}
@@ -136,7 +136,7 @@
           {% endif %}
         >
           {% if item.icon %}{{ item.icon | safe }}{% endif %}
-          <span>{{ item.label }}</span>
+          <span>{{ item.label | safe }}</span>
         </a>
        </li>
     {% endif %}
