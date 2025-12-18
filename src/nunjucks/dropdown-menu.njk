@@ -102,6 +102,7 @@
             {% endfor %}
           {% endif %}
         >
+          {% if item.icon %}{{ item.icon | safe }}{% endif %}
           {{ item.label | safe }}
         </a>
       {% else %}
@@ -114,6 +115,7 @@
             {% endfor %}
           {% endif %}
         >
+          {% if item.icon %}{{ item.icon | safe }}{% endif %}
           {{ item.label | safe }}
         </div>
       {% endif %}

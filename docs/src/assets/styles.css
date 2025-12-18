@@ -39,6 +39,7 @@
     --container-md: 28rem;
     --container-lg: 32rem;
     --container-xl: 36rem;
+    --container-2xl: 42rem;
     --container-3xl: 48rem;
     --text-xs: 0.75rem;
     --text-xs--line-height: calc(1 / 0.75);
@@ -534,6 +535,9 @@
   .max-h-\[320px\] {
     max-height: 320px;
   }
+  .max-h-\[420px\] {
+    max-height: 420px;
+  }
   .max-h-\[612px\] {
     max-height: 612px;
   }
@@ -608,6 +612,9 @@
   }
   .w-max {
     width: max-content;
+  }
+  .max-w-2xl {
+    max-width: var(--container-2xl);
   }
   .max-w-3xl {
     max-width: var(--container-3xl);

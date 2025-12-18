@@ -183,7 +183,7 @@
           {% endif %}
         >
           {% if item.icon %}{{ item.icon | safe }}{% endif %}
-          {{ item.content | safe if item.content else (item.label | safe) }}
+          {{ item.label | safe }}
         </a>
       {% else %}
         <div
@@ -198,7 +198,7 @@
           {% endif %}
         >
           {% if item.icon %}{{ item.icon | safe }}{% endif %}
-          {{ item.content | safe if item.content else (item.label | safe) }}
+          {{ item.label | safe }}
         </div>
       {% endif %}
     {% endif %}
