@@ -2,7 +2,6 @@
 !.gitignore
 !.gitattributes
 !.eleventy.js
-!.github
 
 _site/
 node_modules/
