@@ -164,7 +164,7 @@
         {% endif %}
       >
         <span role="heading" id="{{ group_label_id }}">{{ item.label | safe }}</span>
-        {{ render_command_items(item.items, item_id) if item.items }}
+        {{ render_command_items(item['items'], item_id) if item['items'] }}
       </div>
     {% elif item.type == "separator" %}
       <hr role="separator" />

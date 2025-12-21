@@ -742,14 +742,14 @@
 
 /* Input */
 @layer components {
-  :is(.form, .field) input[type='text'],
+  :is(.form, .field) input[type='text']:not(:is(.select [data-popover] > header input[role='combobox'], .command > header input, .dialog > * > header input)),
   :is(.form, .field) input[type='email'],
   :is(.form, .field) input[type='password'],
   :is(.form, .field) input[type='number'],
   :is(.form, .field) input[type='file'],
   :is(.form, .field) input[type='tel'],
   :is(.form, .field) input[type='url'],
-  :is(.form, .field) input[type='search'],
+  :is(.form, .field) input[type='search']:not(:is(.select [data-popover] > header input[role='combobox'], .command > header input, .dialog > * > header input)),
   :is(.form, .field) input[type='date'],
   :is(.form, .field) input[type='datetime-local'],
   :is(.form, .field) input[type='month'],
@@ -797,7 +797,7 @@
 /* Popover */
 @layer components {
   [data-popover] {
-    @apply absolute bg-popover text-popover-foreground overflow-x-hidden overflow-y-auto rounded-md border shadow-md z-50 visible opacity-100 scale-100 min-w-full w-max transition-all;
+    @apply absolute bg-popover text-popover-foreground overflow-x-hidden overflow-y-auto rounded-md border shadow-md z-50 visible opacity-100 scale-100 min-w-full w-fit transition-all;
 
     &[aria-hidden='true'] {
       @apply invisible opacity-0 scale-95;
