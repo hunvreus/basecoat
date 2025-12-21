@@ -259,9 +259,6 @@
   .invisible {
     visibility: hidden;
   }
-  .visible {
-    visibility: visible;
-  }
   .sr-only {
     position: absolute;
     width: 1px;
@@ -527,15 +524,6 @@
   .max-h-\[200px\] {
     max-height: 200px;
   }
-  .max-h-\[260px\] {
-    max-height: 260px;
-  }
-  .max-h-\[320px\] {
-    max-height: 320px;
-  }
-  .max-h-\[420px\] {
-    max-height: 420px;
-  }
   .max-h-\[612px\] {
     max-height: 612px;
   }
@@ -596,9 +584,6 @@
   .w-\[200px\] {
     width: 200px;
   }
-  .w-\[260px\] {
-    width: 260px;
-  }
   .w-\[271px\] {
     width: 271px;
   }
@@ -610,9 +595,6 @@
   }
   .w-max {
     width: max-content;
-  }
-  .max-w-2xl {
-    max-width: var(--container-2xl);
   }
   .max-w-3xl {
     max-width: var(--container-3xl);
@@ -629,14 +611,8 @@
   .max-w-\[300px\] {
     max-width: 300px;
   }
-  .max-w-\[320px\] {
-    max-width: 320px;
-  }
   .max-w-\[450px\] {
     max-width: 450px;
-  }
-  .max-w-\[720px\] {
-    max-width: 720px;
   }
   .max-w-lg {
     max-width: var(--container-lg);
@@ -673,9 +649,6 @@
   }
   .min-w-\[8rem\] {
     min-width: 8rem;
-  }
-  .min-w-\[260px\] {
-    min-width: 260px;
   }
   .flex-1 {
     flex: 1;
@@ -1322,10 +1295,6 @@
   }
   .shadow-none {
     --tw-shadow: 0 0 #0000;
-    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
-  }
-  .shadow-sm {
-    --tw-shadow: 0 1px 3px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 1px 2px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
     box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
   }
   .shadow-xl {
@@ -3730,7 +3699,7 @@
   }
 }
 @layer components {
-  :is(.form, .field) input[type='text'], :is(.form, .field) input[type='email'], :is(.form, .field) input[type='password'], :is(.form, .field) input[type='number'], :is(.form, .field) input[type='file'], :is(.form, .field) input[type='tel'], :is(.form, .field) input[type='url'], :is(.form, .field) input[type='search'], :is(.form, .field) input[type='date'], :is(.form, .field) input[type='datetime-local'], :is(.form, .field) input[type='month'], :is(.form, .field) input[type='week'], :is(.form, .field) input[type='time'], .input[type='text'], .input[type='email'], .input[type='password'], .input[type='number'], .input[type='file'], .input[type='tel'], .input[type='url'], .input[type='search'], .input[type='date'], .input[type='datetime-local'], .input[type='month'], .input[type='week'], .input[type='time'] {
+  :is(.form, .field) input[type='text']:not(:is(.select [data-popover] > header input[role='combobox'], .command > header input, .dialog > * > header input)), :is(.form, .field) input[type='email'], :is(.form, .field) input[type='password'], :is(.form, .field) input[type='number'], :is(.form, .field) input[type='file'], :is(.form, .field) input[type='tel'], :is(.form, .field) input[type='url'], :is(.form, .field) input[type='search']:not(:is(.select [data-popover] > header input[role='combobox'], .command > header input, .dialog > * > header input)), :is(.form, .field) input[type='date'], :is(.form, .field) input[type='datetime-local'], :is(.form, .field) input[type='month'], :is(.form, .field) input[type='week'], :is(.form, .field) input[type='time'], .input[type='text'], .input[type='email'], .input[type='password'], .input[type='number'], .input[type='file'], .input[type='tel'], .input[type='url'], .input[type='search'], .input[type='date'], .input[type='datetime-local'], .input[type='month'], .input[type='week'], .input[type='time'] {
     display: flex;
     height: calc(var(--spacing) * 9);
     width: 100%;
@@ -3899,7 +3868,7 @@
     visibility: visible;
     position: absolute;
     z-index: 50;
-    width: max-content;
+    width: fit-content;
     min-width: 100%;
     --tw-scale-x: 100%;
     --tw-scale-y: 100%;
