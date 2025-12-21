@@ -37,7 +37,6 @@
     --container-md: 28rem;
     --container-lg: 32rem;
     --container-xl: 36rem;
-    --container-2xl: 42rem;
     --container-3xl: 48rem;
     --text-xs: 0.75rem;
     --text-xs--line-height: calc(1 / 0.75);
@@ -3868,7 +3867,7 @@
     visibility: visible;
     position: absolute;
     z-index: 50;
-    width: fit-content;
+    width: max-content;
     min-width: 100%;
     --tw-scale-x: 100%;
     --tw-scale-y: 100%;
