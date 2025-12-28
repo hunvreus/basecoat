@@ -2,6 +2,25 @@
   const componentRegistry = {};
   let observer = null;
 
+  // Utility: Escape HTML to prevent XSS
+  const escapeHtml = (str) => {
+    if (!str) return '';
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  };
+
+  // Utility: Validate URL to prevent javascript: protocol attacks
+  const isValidUrl = (url) => {
+    if (!url) return false;
+    try {
+      const parsed = new URL(url, window.location.origin);
+      return ['http:', 'https:', ''].includes(parsed.protocol) || url.startsWith('/');
+    } catch {
+      return url.startsWith('/') || url.startsWith('#');
+    }
+  };
+
   const registerComponent = (name, selector, initFunction) => {
     componentRegistry[name] = {
       selector,
@@ -89,7 +108,11 @@
     init: reinitComponent,
     initAll: reinitAll,
     start: startObserver,
-    stop: stopObserver
+    stop: stopObserver,
+    utils: {
+      escapeHtml,
+      isValidUrl
+    }
   };
 
   document.addEventListener('DOMContentLoaded', () => {
