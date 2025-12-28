@@ -19,11 +19,24 @@ toc:
             id: usage-html-js-4
       - label: Jinja and Nunjucks
         id: usage-macro
+  - label: Async Items
+    id: async-items
+    children:
+      - label: Setup
+        id: async-setup
+      - label: API Reference
+        id: async-api
+      - label: Utilities
+        id: async-utils
+      - label: States
+        id: async-states
   - label: Examples
     id: examples
     children:
       - label: Dialog
         id: example-dialog
+      - label: Async Search
+        id: example-async
 ---
 
 {% from "macros/code_preview.njk" import code_preview %}
@@ -220,6 +233,114 @@ toc:
 {% endcall %}{% endraw %}{% endset %}
 {{ code_block(raw_code, "jinja") }}
 
+<h2 id="async-items"><a href="#async-items">Async Items</a></h2>
+
+<section class="prose">
+  <p>The command component supports dynamically loading items from async sources like APIs, databases, or search engines like <a href="https://pagefind.app" target="_blank">Pagefind</a>.</p>
+</section>
+
+<h3 id="async-setup"><a href="#async-setup">Setup</a></h3>
+
+<section class="prose">
+  <p>Add <code>data-command-async="true"</code> to your command element and register a search handler:</p>
+</section>
+
+{% set code_async_register %}<!-- HTML -->
+<div id="my-search" class="command" data-command-async="true">
+  <header>
+    <input type="text" placeholder="Search..." role="combobox" aria-expanded="true" aria-controls="my-search-menu">
+  </header>
+  <div role="menu" id="my-search-menu" data-empty="No results found."></div>
+</div>
+
+<script>
+  // Register async search handler
+  window.basecoat.commandAsync.register('my-search', {
+    onSearch: async (query) => {
+      const response = await fetch(`/api/search?q=${encodeURIComponent(query)}`);
+      const data = await response.json();
+      return data.results.map(item => ({
+        label: item.title,
+        url: item.url
+      }));
+    }
+  });
+</script>{% endset %}
+{{ code_block(code_async_register, "html") }}
+
+<h3 id="async-api"><a href="#async-api">API Reference</a></h3>
+
+<section class="prose">
+  <dl>
+    <dt><code>window.basecoat.commandAsync.register(id, config)</code></dt>
+    <dd>Register an async search handler for a command element.
+      <dl>
+        <dt><code>id</code> <span class="badge-secondary">string</span></dt>
+        <dd>The <code>id</code> or <code>data-command-id</code> of the command element. When using <code>command_dialog</code> macro, the dialog gets the <code>id</code> and the inner command gets <code>data-command-id</code>.</dd>
+        <dt><code>config.onSearch</code> <span class="badge-secondary">function</span> <span class="badge-destructive">required</span></dt>
+        <dd>Async function that receives <code>(query, signal)</code> and returns an array of items. Each item should have <code>label</code> (required), <code>url</code> (optional), <code>icon</code> (optional HTML), and <code>keywords</code> (optional).</dd>
+        <dt><code>config.minLength</code> <span class="badge-secondary">number</span></dt>
+        <dd>Minimum characters to trigger search. Default: <code>1</code></dd>
+        <dt><code>config.debounce</code> <span class="badge-secondary">number</span></dt>
+        <dd>Debounce delay in milliseconds. Default: <code>150</code></dd>
+        <dt><code>config.maxResults</code> <span class="badge-secondary">number</span></dt>
+        <dd>Maximum results to display. Default: <code>8</code></dd>
+        <dt><code>config.renderItem</code> <span class="badge-secondary">function</span></dt>
+        <dd>Optional custom renderer. Receives <code>(item, id)</code> and returns HTML string. Use <code>window.basecoat.utils.escapeHtml()</code> to sanitize user content.</dd>
+      </dl>
+    </dd>
+  </dl>
+</section>
+
+<h3 id="async-utils"><a href="#async-utils">Utilities</a></h3>
+
+<section class="prose">
+  <p>Basecoat exposes utility functions for use in custom <code>renderItem</code> implementations:</p>
+  <dl>
+    <dt><code>window.basecoat.utils.escapeHtml(str)</code></dt>
+    <dd>Escapes HTML special characters to prevent XSS. Use when rendering user-provided content.</dd>
+    <dt><code>window.basecoat.utils.isValidUrl(url)</code></dt>
+    <dd>Validates URLs to prevent <code>javascript:</code> protocol attacks. Returns <code>true</code> for http, https, relative paths, and hash links.</dd>
+  </dl>
+</section>
+
+{% set code_utils %}// Using utilities in custom renderItem
+renderItem: (item, id) => {
+  const { escapeHtml, isValidUrl } = window.basecoat.utils;
+  const safeLabel = escapeHtml(item.label);
+  const href = isValidUrl(item.url) ? item.url : '#';
+  return `<a id="${id}" href="${href}" role="menuitem">${safeLabel}</a>`;
+}{% endset %}
+{{ code_block(code_utils, "js") }}
+
+<h3 id="async-states"><a href="#async-states">States</a></h3>
+
+<section class="prose">
+  <p>The command element uses <code>data-state</code> to indicate the current state:</p>
+  <dl>
+    <dt><code>data-state="idle"</code></dt>
+    <dd>Initial state, no search active.</dd>
+    <dt><code>data-state="loading"</code></dt>
+    <dd>Search in progress. Shows "Searching..." message.</dd>
+    <dt><code>data-state="results"</code></dt>
+    <dd>Results are displayed.</dd>
+    <dt><code>data-state="empty"</code></dt>
+    <dd>No results found. Shows the <code>data-empty</code> message from the menu element.</dd>
+    <dt><code>data-state="error"</code></dt>
+    <dd>Search failed. Shows the error message via <code>data-error</code> on the menu.</dd>
+  </dl>
+  <p>You can style these states using CSS:</p>
+</section>
+
+{% set code_async_states %}.command[data-state="loading"] [role="menu"]::before {
+  content: "Searching...";
+}
+.command[data-state="error"] [role="menu"]::before {
+  content: attr(data-error);
+  color: var(--destructive);
+}{% endset %}
+{{ code_block(code_async_states, "css") }}
+
 <h2 id="examples"><a href="#examples">Examples</a></h2>
 
 <h3 id="example-dialog"><a href="#example-dialog">Dialog</a></h3>
@@ -259,3 +380,54 @@ toc:
 {% endset %}
 
 {{ code_preview("command-dialog", code_dialog | prettyHtml) }}
+
+<h3 id="example-async"><a href="#example-async">Async Search</a></h3>
+
+<section class="prose">
+  <p>This example shows how to integrate with <a href="https://pagefind.app" target="_blank">Pagefind</a> for full-text search. The search dialog in this documentation site uses this pattern.</p>
+</section>
+
+{% set code_pagefind %}// Lazy load Pagefind
+let pagefind = null;
+const loadPagefind = async () => {
+  if (!pagefind) {
+    pagefind = await import('/pagefind/pagefind.js');
+    await pagefind.init();
+  }
+  return pagefind;
+};
+
+// Register with command-async
+window.basecoat.commandAsync.register('site-search', {
+  minLength: 2,
+  debounce: 150,
+  maxResults: 8,
+  onSearch: async (query, signal) => {
+    const pf = await loadPagefind();
+    const search = await pf.search(query);
+
+    if (signal?.aborted) return [];
+
+    const results = await Promise.all(
+      search.results.slice(0, 8).map(r => r.data())
+    );
+
+    return results.map(r => ({
+      label: r.meta?.title || 'Untitled',
+      excerpt: r.excerpt || '',
+      url: r.url
+    }));
+  },
+  renderItem: (item, id) => {
+    const { escapeHtml } = window.basecoat.utils;
+    return `<a id="${id}" href="${escapeHtml(item.url)}" role="menuitem">
+      <span class="font-medium">${escapeHtml(item.label)}</span>
+      <span class="text-muted-foreground text-xs">${item.excerpt}</span>
+    </a>`;
+  }
+});{% endset %}
+{{ code_block(code_pagefind, "js") }}
+
+<section class="prose">
+  <p>The <code>signal</code> parameter is an <a href="https://developer.mozilla.org/en-US/docs/Web/API/AbortSignal" target="_blank">AbortSignal</a> that can be used to cancel in-flight requests when a new search is triggered.</p>
+</section>
