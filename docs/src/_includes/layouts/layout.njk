@@ -5,11 +5,11 @@ layout: layouts/base.njk
 {% include "partials/sidebar.njk" %}
 
 <main id="content">
-  <header class="bg-background sticky inset-x-0 top-0 isolate flex shrink-0 items-center gap-2 border-b z-10">
+  <header class="bg-background sticky inset-x-0 top-0 isolate flex shrink-0 items-center gap-2 border-b z-10" data-pagefind-ignore>
     {% include "partials/header.njk" %}
   </header>
 
-  <div class="p-4 md:p-6 xl:p-12">
+  <div class="p-4 md:p-6 xl:p-12" data-pagefind-body>
     {{ content | safe }}
   </div>
 </main>

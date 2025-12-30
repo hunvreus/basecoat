@@ -570,13 +570,16 @@
       [role='separator'] {
         @apply border-border -mx-1 my-1;
       }
-      &:not(:has([data-value]:not([aria-hidden='true'])))::before {
+    }
+    /* Sync command empty state - only when NOT async (no data-state) */
+    &:not([data-state]) [role='menu'] {
+      &:not(:has([role='menuitem']:not([aria-hidden='true'])))::before {
         @apply flex items-center justify-center py-6 px-3 text-sm truncate -m-1;
       }
-      &[data-empty]:not(:has([data-value]:not([aria-hidden='true'])))::before {
+      &[data-empty]:not(:has([role='menuitem']:not([aria-hidden='true'])))::before {
         @apply content-[attr(data-empty)];
       }
-      &:not([data-empty]):not(:has([data-value]:not([aria-hidden='true'])))::before {
+      &:not([data-empty]):not(:has([role='menuitem']:not([aria-hidden='true'])))::before {
         @apply content-['No_results_found'];
       }
     }
@@ -585,6 +588,28 @@
     }
     &:has(> header input:not(:placeholder-shown)) [role='separator'] {
       @apply hidden;
+    }
+
+    /* Async command states */
+    &[data-state='idle'] [role='menu']::before {
+      @apply content-[attr(data-idle,'Type_to_search...')] flex items-center justify-center py-6 px-3 text-sm text-muted-foreground;
+    }
+    &[data-state='loading'] [role='menu']::before {
+      @apply content-['Searching...'] flex items-center justify-center py-6 px-3 text-sm text-muted-foreground;
+    }
+    &[data-state='empty'] [role='menu']::before {
+      @apply content-[attr(data-empty,'No_results_found')] flex items-center justify-center py-6 px-3 text-sm text-muted-foreground;
+    }
+    &[data-state='error'] [role='menu']::before {
+      @apply content-[attr(data-error,'Search_failed')] flex items-center justify-center py-6 px-3 text-sm text-destructive;
+    }
+    &[data-state]:not([data-state='results']) [role='menu'] [role='menuitem'] {
+      @apply hidden;
+    }
+
+    /* Search result highlight marks */
+    [role='menuitem'] mark {
+      @apply bg-yellow-200 dark:bg-yellow-800 text-inherit rounded-xs px-0.5;
     }
   }
 }

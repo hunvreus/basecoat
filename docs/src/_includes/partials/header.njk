@@ -1,3 +1,5 @@
+{% from "command.njk" import command_dialog %}
+
 <div class="flex h-14 w-full items-center gap-2 px-4">
   <button
     type="button"
@@ -6,9 +8,26 @@
     data-tooltip="Toggle sidebar"
     data-side="bottom"
     data-align="start"
-    class="btn-sm-icon-ghost mr-auto size-7 -ml-1.5"
+    class="btn-sm-icon-ghost size-7 -ml-1.5"
   >
     {% lucide "panel-left" %}
+  </button>
+  <button
+    type="button"
+    onclick="document.getElementById('site-search').showModal(); document.getElementById('site-search-input').focus();"
+    class="btn-outline h-8 px-3 gap-2 text-muted-foreground font-normal mr-auto hidden sm:flex"
+  >
+    {% lucide "search", { "class": "size-4" } %}
+    <span>Search docs...</span>
+    <kbd class="kbd text-xs">⌘K</kbd>
+  </button>
+  <button
+    type="button"
+    onclick="document.getElementById('site-search').showModal(); document.getElementById('site-search-input').focus();"
+    aria-label="Search documentation"
+    class="btn-sm-icon-ghost size-7 sm:hidden"
+  >
+    {% lucide "search" %}
   </button>
   <select
     class="select h-8 leading-none"
@@ -62,3 +81,24 @@
     {% lucide "github" %}
   </a>
 </div>
+
+{{ command_dialog(
+  id="site-search",
+  placeholder="Search documentation...",
+  empty_text="No results found. Try a different search term.",
+  main_attrs={ "data-command-async": "true" },
+  input_attrs={ "id": "site-search-input" }
+) }}
+
+<script>
+  document.addEventListener('keydown', (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+      e.preventDefault();
+      const dialog = document.getElementById('site-search');
+      if (dialog) {
+        dialog.showModal();
+        document.getElementById('site-search-input')?.focus();
+      }
+    }
+  });
+</script>

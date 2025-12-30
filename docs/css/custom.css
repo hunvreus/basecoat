@@ -90,3 +90,25 @@
     }
   }
 }
+
+/* Search dialog - larger size for search results */
+#site-search > .command {
+  @apply sm:max-w-xl;
+}
+#site-search [role="menu"] {
+  @apply p-2 max-h-[500px];
+}
+
+/* Search results */
+.search-result {
+  @apply flex flex-col items-start gap-0.5 py-2 whitespace-normal overflow-visible text-wrap;
+}
+.search-result-title {
+  @apply font-medium text-foreground truncate;
+}
+.search-result-excerpt {
+  @apply text-sm text-muted-foreground line-clamp-2;
+}
+.search-result-excerpt mark {
+  @apply bg-yellow-200/60 dark:bg-yellow-500/30 text-inherit rounded-sm px-0.5;
+}

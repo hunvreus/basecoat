@@ -72,6 +72,7 @@
   @param placeholder {string} [optional] [default="Type a command or search..."] - Placeholder text for the search input.
   @param empty_text {string} [optional] [default="No results found."] - Text displayed when no results match the search.
   @param dialog_attrs {object} [optional] - Additional HTML attributes for the dialog element.
+  @param main_attrs {object} [optional] - Additional HTML attributes for the command container div.
   @param input_attrs {object} [optional] - Additional HTML attributes for the search input.
   @param menu_attrs {object} [optional] - Additional HTML attributes for the menu div.
   @param open {boolean} [optional] [default=False] - Whether the command dialog should be open initially.
@@ -82,6 +83,7 @@
   placeholder="Type a command or search...",
   empty_text="No results found.",
   dialog_attrs={},
+  main_attrs={},
   input_attrs={},
   menu_attrs={},
   open=False
@@ -97,7 +99,13 @@
     {% if key != 'class' %}{{ key }}="{{ value }}"{% endif %}
   {% endfor %}
 >
-  <div class="command">
+  <div
+    data-command-id="{{ id }}"
+    class="command {{ main_attrs.class }}"
+    {% for key, value in main_attrs.items() %}
+      {% if key != 'class' %}{{ key }}="{{ value }}"{% endif %}
+    {% endfor %}
+  >
     <header>
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search-icon lucide-search"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
       <input
