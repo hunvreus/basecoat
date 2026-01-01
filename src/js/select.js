@@ -121,7 +121,7 @@
             if (variant !== undefined && allowedMultiSelectBadgeVariants.includes(variant)) {
               span.className = `badge-${variant}`;
             } else {
-              span.className = 'badge-primary';
+              span.className = 'badge';
             }
             span.className += ' font-normal';
             span.textContent = opt.dataset.label || opt.innerHTML;
