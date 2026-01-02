@@ -150,25 +150,27 @@
         } else {
           selectedLabel.replaceChildren(badgeContainer);
         }
-        
-        const listboxSeparator = document.createElement('hr');
-        listboxSeparator.setAttribute('data-origin-multiselect', 'true');
-        listboxSeparator.role = 'separator';
 
-        const clearSelectionOption = document.createElement('button');
-        clearSelectionOption.setAttribute('data-origin-multiselect', 'true');
-        clearSelectionOption.className = 'btn-ghost w-full justify-center';
-        clearSelectionOption.textContent = listbox.dataset.multiselectClosetext || 'Clear';
-        clearSelectionOption.addEventListener('click', () => {
-          const selected = listbox.querySelectorAll('[role="option"][aria-selected="true"]');
-          selected.forEach(opt => {
-            opt.setAttribute('aria-selected', 'false');
+        const clearButton = listbox.querySelector('[data-multiselect-clearelement]');
+
+        if (clearButton === null) {
+          const listboxSeparator = document.createElement('hr');
+          listboxSeparator.setAttribute('data-multiselect-clearelement', "");
+          listboxSeparator.role = 'separator';
+
+          const clearSelectionOption = document.createElement('button');
+          clearSelectionOption.setAttribute('data-multiselect-clearelement', "");
+          clearSelectionOption.className = 'btn-ghost w-full justify-center';
+          clearSelectionOption.textContent = listbox.dataset.multiselectClosetext || 'Clear';
+          clearSelectionOption.addEventListener('click', () => {
+            const selected = listbox.querySelectorAll('[role="option"][aria-selected="true"]');
+            selected.forEach(opt => {
+              opt.setAttribute('aria-selected', 'false');
+            });
+            updateValue(clearSelectionOption);
           });
-          updateValue(clearSelectionOption);
-        });
-
-        listbox.replaceChildren(...allOptions, listboxSeparator, clearSelectionOption);
-
+          listbox.append(listboxSeparator, clearSelectionOption)
+        } 
       } else if (selected.length === 0) {
         if (listbox.getAttribute('aria-controls') !== null) {
           const controlledElementId = listbox.getAttribute('aria-controls');
@@ -183,7 +185,11 @@
           let initial = initialSelectedLabel.cloneNode(true);
           selectedLabel.replaceChildren(...initial.childNodes);
         }
-        listbox.replaceChildren(...allOptions);
+
+        const clearButtonElements = listbox.querySelectorAll('[data-multiselect-clearelement]');
+        clearButtonElements.forEach(el => {
+            listbox.removeChild(el);
+          });
       }
 
       const inputValue = JSON.stringify(Array.from(selected).map(opt => opt.dataset.value))
