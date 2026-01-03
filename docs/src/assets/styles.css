@@ -5252,12 +5252,12 @@
       text-overflow: ellipsis;
       white-space: nowrap;
       border-radius: var(--radius-md);
-      background-color: var(--color-primary);
+      background-color: var(--color-foreground);
       padding-inline: calc(var(--spacing) * 3);
       padding-block: calc(var(--spacing) * 1.5);
       font-size: var(--text-xs);
       line-height: var(--tw-leading, var(--text-xs--line-height));
-      color: var(--color-primary-foreground);
+      color: var(--color-background);
       opacity: 0%;
       transition-property: all;
       transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));

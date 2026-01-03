@@ -1250,7 +1250,7 @@
     @apply relative;
 
     &:before {
-      @apply absolute content-[attr(data-tooltip)] bg-foreground text-primary-foreground z-[60] truncate max-w-xs w-fit rounded-md px-3 py-1.5 text-xs invisible opacity-0 scale-95 transition-all pointer-events-none;
+      @apply absolute content-[attr(data-tooltip)] bg-foreground text-background z-[60] truncate max-w-xs w-fit rounded-md px-3 py-1.5 text-xs invisible opacity-0 scale-95 transition-all pointer-events-none;
     }
     &:hover:before {
       @apply visible opacity-100 scale-100;
