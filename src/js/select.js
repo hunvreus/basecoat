@@ -87,50 +87,57 @@
       }
     };
 
-    const updateValue = (option, triggerEvent = true) => {
-      if (option) {
+    const updateValue = (optionOrOptions, triggerEvent = true) => {
+      let value;
+
+      if (isMultiple) {
+        const opts = Array.isArray(optionOrOptions) ? optionOrOptions : [];
+        selectedValues = new Set(opts.map(opt => opt.dataset.value));
+        options.forEach(opt => {
+          if (selectedValues.has(opt.dataset.value)) {
+            opt.setAttribute('aria-selected', 'true');
+          } else {
+            opt.removeAttribute('aria-selected');
+          }
+        });
+        updateMultipleLabel();
+        syncMultipleInputs();
+        value = Array.from(selectedValues);
+      } else {
+        const option = optionOrOptions;
+        if (!option) return;
         selectedLabel.innerHTML = option.innerHTML;
         input.value = option.dataset.value;
-        listbox.querySelector('[role="option"][aria-selected="true"]')?.removeAttribute('aria-selected');
-        option.setAttribute('aria-selected', 'true');
+        options.forEach(opt => {
+          if (opt === option) {
+            opt.setAttribute('aria-selected', 'true');
+          } else {
+            opt.removeAttribute('aria-selected');
+          }
+        });
+        value = option.dataset.value;
+      }
 
-        if (triggerEvent) {
-          const event = new CustomEvent('change', {
-            detail: { value: option.dataset.value },
-            bubbles: true
-          });
-          selectComponent.dispatchEvent(event);
-        }
+      if (triggerEvent) {
+        selectComponent.dispatchEvent(new CustomEvent('change', {
+          detail: { value },
+          bubbles: true
+        }));
       }
     };
 
     const toggleMultipleValue = (value, triggerEvent = true) => {
       if (!isMultiple || value == null) return;
 
-      if (selectedValues.has(value)) {
-        selectedValues.delete(value);
+      const newValues = new Set(selectedValues);
+      if (newValues.has(value)) {
+        newValues.delete(value);
       } else {
-        selectedValues.add(value);
+        newValues.add(value);
       }
 
-      options.forEach(opt => {
-        if (selectedValues.has(opt.dataset.value)) {
-          opt.setAttribute('aria-selected', 'true');
-        } else {
-          opt.removeAttribute('aria-selected');
-        }
-      });
-
-      updateMultipleLabel();
-      syncMultipleInputs();
-
-      if (triggerEvent) {
-        const event = new CustomEvent('change', {
-          detail: { value, values: Array.from(selectedValues) },
-          bubbles: true
-        });
-        selectComponent.dispatchEvent(event);
-      }
+      const selectedOptions = options.filter(opt => newValues.has(opt.dataset.value));
+      updateValue(selectedOptions, triggerEvent);
     };
 
     const closePopover = (focusOnTrigger = true) => {
@@ -172,22 +179,12 @@
     const selectByValue = (value) => {
       const option = options.find(opt => opt.dataset.value === value);
       if (isMultiple) {
+        if (value != null && selectedValues.has(value)) return;
         if (option && value != null) {
-          selectedValues.add(value);
-          options.forEach(opt => {
-            if (selectedValues.has(opt.dataset.value)) {
-              opt.setAttribute('aria-selected', 'true');
-            } else {
-              opt.removeAttribute('aria-selected');
-            }
-          });
-          updateMultipleLabel();
-          syncMultipleInputs();
-          const event = new CustomEvent('change', {
-            detail: { value, values: Array.from(selectedValues) },
-            bubbles: true
-          });
-          selectComponent.dispatchEvent(event);
+          const newValues = new Set(selectedValues);
+          newValues.add(value);
+          const selectedOptions = options.filter(opt => newValues.has(opt.dataset.value));
+          updateValue(selectedOptions);
         }
       } else {
         selectOption(option);
@@ -196,34 +193,12 @@
 
     const selectAll = () => {
       if (!isMultiple) return;
-      selectedValues = new Set(options.map(opt => opt.dataset.value).filter(v => v != null));
-      options.forEach(opt => {
-        if (selectedValues.has(opt.dataset.value)) {
-          opt.setAttribute('aria-selected', 'true');
-        } else {
-          opt.removeAttribute('aria-selected');
-        }
-      });
-      updateMultipleLabel();
-      syncMultipleInputs();
-      const event = new CustomEvent('change', {
-        detail: { values: Array.from(selectedValues) },
-        bubbles: true
-      });
-      selectComponent.dispatchEvent(event);
+      updateValue(options.filter(opt => opt.dataset.value != null));
     };
 
     const selectNone = () => {
       if (!isMultiple) return;
-      selectedValues.clear();
-      options.forEach(opt => opt.removeAttribute('aria-selected'));
-      updateMultipleLabel();
-      syncMultipleInputs();
-      const event = new CustomEvent('change', {
-        detail: { values: [] },
-        bubbles: true
-      });
-      selectComponent.dispatchEvent(event);
+      updateValue([]);
     };
 
     if (filter) {
@@ -265,23 +240,15 @@
       const initialValues = inputs
         .map(inp => inp.value)
         .filter(v => v != null && validValues.has(v));
+
+      let initialOptions;
       if (initialValues.length > 0) {
-        initialValues.forEach(val => selectedValues.add(val));
+        initialOptions = options.filter(opt => initialValues.includes(opt.dataset.value));
       } else {
-        const preSelected = options.filter(opt => opt.getAttribute('aria-selected') === 'true');
-        if (preSelected.length > 0) {
-          preSelected.forEach(opt => opt.dataset.value != null && selectedValues.add(opt.dataset.value));
-        }
+        initialOptions = options.filter(opt => opt.getAttribute('aria-selected') === 'true');
       }
-      options.forEach(opt => {
-        if (selectedValues.has(opt.dataset.value)) {
-          opt.setAttribute('aria-selected', 'true');
-        } else {
-          opt.removeAttribute('aria-selected');
-        }
-      });
-      updateMultipleLabel();
-      syncMultipleInputs();
+
+      updateValue(initialOptions, false);
     } else {
       let initialOption = options.find(opt => opt.dataset.value === input.value);
 
@@ -423,6 +390,12 @@
       if (clickedOption) {
         if (isMultiple) {
           toggleMultipleValue(clickedOption.dataset.value);
+          setActiveOption(options.indexOf(clickedOption));
+          if (filter) {
+            filter.focus();
+          } else {
+            trigger.focus();
+          }
         } else {
           selectOption(clickedOption);
         }

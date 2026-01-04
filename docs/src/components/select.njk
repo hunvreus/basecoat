@@ -191,10 +191,10 @@ toc:
     <dd>When the popover opens, the component dispatches a custom (non-bubbling) <code>basecoat:popover</code> event on <code>document</code>. Other popover components (Combobox, Dropdown Menu, Popover and Select) listen for this to close any open popovers.</dd>
     <dt><code>change</code></dt>
     <dd>
-      <p>When the selected value changes, the component dispatches a custom (bubbling) <code>change</code> event on itself, with the selected value in <code>event.detail</code>:</p>
+      <p>When the selected value changes, the component dispatches a custom (bubbling) <code>change</code> event on itself, with the selected value in <code>event.detail.value</code>:</p>
       <ul>
-        <li>Single select: <code>{ detail: { value: "something" }}</code></li>
-        <li>Multiple select: <code>{ detail: { value: "last-changed", values: ["item1", "item2"] }}</code></li>
+        <li>Single select: <code>{ detail: { value: "something" }}</code> (string)</li>
+        <li>Multiple select: <code>{ detail: { value: ["item1", "item2"] }}</code> (array)</li>
       </ul>
     </dd>
   </dl>
