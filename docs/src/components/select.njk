@@ -309,6 +309,23 @@ toc:
 
 {{ code_preview("select-disabled", code | prettyHtml) }}
 
+<h3 id="example-invalid-state"><a href="#example-invalid-state">Invalid State</a></h3>
+
+{% set code %}
+{{ select(
+  trigger_attrs={"aria-invalid": "true"},
+  items=[
+    { value: "", label: "Select a role" },
+    { value: "admin", label: "Admin" },
+    { value: "editor", label: "Editor" },
+    { value: "viewer", label: "Viewer" },
+    { value: "guest", label: "Guest" }
+  ]
+) }}
+{% endset %}
+
+{{ code_preview("select-disabled", code | prettyHtml) }}
+
 <h3 id="example-with-icon"><a href="#example-with-icon">With icon</a></h3>
 
 {% set code %}
