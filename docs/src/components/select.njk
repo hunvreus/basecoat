@@ -32,6 +32,8 @@ toc:
         id: example-disabled
       - label: With icon
         id: example-with-icon
+      - label: Multiple
+        id: example-multiple
 ---
 
 {% from "macros/code_preview.njk" import code_preview %}
@@ -120,44 +122,62 @@ toc:
 <section class="prose">
   <dl>
     <dt><code class="highlight language-html">&lt;div class="select"&gt;</code></dt>
-    <dd>Wraps around the entire component.
+    <dd>
+      <p>Wraps around the entire component. Can have the following attributes:</p>
+      <ul>
+        <li><code>data-placeholder="{ TEXT }"</code> <span class="badge-secondary">Optional</span>: placeholder text shown when no options are selected (multiselect only).</li>
+      </ul>
       <dl>
-        <dt><code class="highlight language-html">&lt;button type="button" popovertarget="{ POPOVER_ID }"&gt;</code></dt>
+        <dt><code class="highlight language-html">&lt;button type="button"&gt;</code></dt>
         <dd>
-          <p>The trigger to open the popover, can also have the following attributes:</p>
+          <p>The trigger to open the popover. Should have the following attributes:</p>
           <ul>
             <li><code>id="{BUTTON_ID}"</code>: linked to by the <code>aria-labelledby</code> attribute of the listbox.</li>
             <li><code>aria-haspopup="listbox"</code>: indicates that the button opens a listbox.</li>
             <li><code>aria-controls="{ LISTBOX_ID }"</code>: points to the listbox's id.</li>
             <li><code>aria-expanded="false"</code>: tracks the popover's state.</li>
-            <li><code>aria-activedescendant="{ OPTION_ID }"</code>: points to the active option's id.</li>
+            <li><code>aria-activedescendant="{ OPTION_ID }"</code> <span class="badge-secondary">Optional</span>: points to the active option's id.</li>
           </ul>
         </dd>
-        <dt><code class="highlight language-html">&lt;div popover class="popover" id="{ POPOVER_ID }"&gt;</code></dt>
-        <dd>As with the <a href="/components/popover">Popover</a> component, you can set up the side and alignment of the popover using the <code>data-side</code> and <code>data-align</code> attributes.
+        <dt><code class="highlight language-html">&lt;div data-popover aria-hidden="true" id="{ POPOVER_ID }"&gt;</code></dt>
+        <dd>The popover content. You can set up the side and alignment using the <code>data-side</code> and <code>data-align</code> attributes (see <a href="/components/popover">Popover</a> component).
         <dl>
           <dt><code class="highlight language-html">&lt;div role="listbox"&gt;</code></dt>
-          <dd>The listbox containing the options. Should have the following attributes:
+          <dd>
+            <p>The listbox containing the options. Should have the following attributes:</p>
             <ul>
               <li><code>id="{ LISTBOX_ID }"</code>: refered to by the <code>aria-controls</code> attribute of the trigger.</li>
               <li><code>aria-labelledby="{ BUTTON_ID }"</code>: linked to by the button's <code>id</code> attribute.</li>
+              <li><code>aria-multiselectable="true"</code> <span class="badge-secondary">Optional</span>: enables multiple selection mode.</li>
             </ul>
             <dl>
               <dt><code class="highlight language-html">&lt;div role="option" data-value="{ VALUE }"&gt;</code></dt>
-              <dd>Option that can be selected.Should have a unique id if you use the <code>aria-activedescendant</code> attribute on the trigger.</dd>
+              <dd>
+                <p>Option that can be selected. Should have the following attributes:</p>
+                <ul>
+                  <li><code>id="{ OPTION_ID }"</code> <span class="badge-secondary">Optional</span>: unique id for this option (needed if you use <code>aria-activedescendant</code> on the trigger).</li>
+                  <li><code>data-value="{ VALUE }"</code>: the value for this option.</li>
+                  <li><code>data-label="{ LABEL }"</code> <span class="badge-secondary">Optional</span>: the text label to use for this option when selected in multiple mode. If not provided, the option's text content will be used (HTML stripped).</li>
+                  <li><code>aria-selected="true"</code> <span class="badge-secondary">Optional</span>: indicates this option is selected.</li>
+                </ul>
+              </dd>
               <dt><code class="highlight language-html">&lt;hr role="separator"&gt;</code> <span class="badge-secondary">Optional</span></dt>
               <dd>Separator between groups/options.</dd>
               <dt><code class="highlight language-html">&lt;div role="group"&gt;</code> <span class="badge-secondary">Optional</span></dt>
               <dd>Group of options, can have a <code>aria-labelledby</code> attribute to link to a heading.</dd>
-              <dt><code class="highlight language-html">&lt;span role="heading"&gt;</code></dt>
+              <dt><code class="highlight language-html">&lt;span role="heading"&gt;</code> <span class="badge-secondary">Optional</span></dt>
               <dd>Group heading, must have an <code>id</code> attribute if you use the <code>aria-labelledby</code> attribute on the group.</dd>
             </dl>
           </dd>
         </dl>
       </dl>
     </dd>
-    <dt><code class="highlight language-html">&lt;input type="hidden" name="{ NAME }" value="{ VALUE }"&gt;</code> <span class="badge-secondary">Optional</span></dt>
-    <dd>The hidden input that holds the value of the field (if needed).</dd>
+    <dt><code class="highlight language-html">&lt;input type="hidden" name="{ NAME }" value="{ VALUE }"&gt;</code></dt>
+    <dd>
+      <p>The hidden input that holds the selected value.</p>
+      <p>For multiselect: multiple hidden inputs with the same name will be created (one for each selected value). When no options are selected, a single input with an empty value is submitted.</p>
+      <p><strong>Note:</strong> This differs slightly from native <code>&lt;select multiple&gt;</code> behavior, which submits nothing when empty. This allows the component to work without JavaScript for initial rendering while maintaining a simpler architecture.</p>
+    </dd>
   </dl>
 </section>
 
@@ -170,7 +190,13 @@ toc:
     <dt><code>basecoat:popover</code></dt>
     <dd>When the popover opens, the component dispatches a custom (non-bubbling) <code>basecoat:popover</code> event on <code>document</code>. Other popover components (Combobox, Dropdown Menu, Popover and Select) listen for this to close any open popovers.</dd>
     <dt><code>change</code></dt>
-    <dd>When the selected value changes, the component dispatches a custom (bubbling) <code>change</code> event on itself, with the selected value in <code>event.detail</code> (e.g. <code>{ detail: { value: "something" }}</code>).</dd>
+    <dd>
+      <p>When the selected value changes, the component dispatches a custom (bubbling) <code>change</code> event on itself, with the selected value in <code>event.detail</code>:</p>
+      <ul>
+        <li>Single select: <code>{ detail: { value: "something" }}</code></li>
+        <li>Multiple select: <code>{ detail: { value: "last-changed", values: ["item1", "item2"] }}</code></li>
+      </ul>
+    </dd>
   </dl>
 </section>
 
@@ -178,9 +204,9 @@ toc:
 
 <section class="prose">
   <dl>
-    <dt><code>selectByValue</code></dt>
+    <dt><code>selectByValue(value)</code></dt>
     <dd>
-      <p>You can call this method on the component after it is initialized to select an option by value (i.e. the option with the matching <code>data-value</code> attribute):</p>
+      <p>Selects an option by value (i.e. the option with the matching <code>data-value</code> attribute). For single-select, this will close the popover. For multiselect, this adds the value to the selection without removing existing selections.</p>
 
 {% set code_script %}<script>
   const selectComponent = document.querySelector('#my-select');
@@ -189,6 +215,30 @@ toc:
   });
 </script>{% endset %}
 {{ code_block(code_script | prettyHtml, "html") }}
+    </dd>
+    <dt><code>selectAll()</code> <span class="badge-secondary">Multiselect only</span></dt>
+    <dd>
+      <p>Selects all available options. Only available when the component is in multiselect mode (<code>aria-multiselectable="true"</code>).</p>
+
+{% set code_script_all %}<script>
+  const selectComponent = document.querySelector('#my-multiselect');
+  selectComponent.addEventListener('basecoat:initialized', () => {
+    selectComponent.selectAll();
+  });
+</script>{% endset %}
+{{ code_block(code_script_all | prettyHtml, "html") }}
+    </dd>
+    <dt><code>selectNone()</code> <span class="badge-secondary">Multiselect only</span></dt>
+    <dd>
+      <p>Deselects all options. Only available when the component is in multiselect mode (<code>aria-multiselectable="true"</code>).</p>
+
+{% set code_script_none %}<script>
+  const selectComponent = document.querySelector('#my-multiselect');
+  selectComponent.addEventListener('basecoat:initialized', () => {
+    selectComponent.selectNone();
+  });
+</script>{% endset %}
+{{ code_block(code_script_none | prettyHtml, "html") }}
     </dd>
   </dl>
 </section>
@@ -264,6 +314,7 @@ toc:
 {% set code %}
 {% call select(
   id="select-with-icons",
+  placeholder="Select a chart...",
   trigger_attrs={'class': 'w-[180px]'}
 ) %}
 <div type="button" role="option" data-value="bar">
@@ -287,4 +338,48 @@ toc:
 {% endcall %}
 {% endset %}
 
-{{ code_preview("select-scrollable", code | prettyHtml) }}
+{{ code_preview("select-with-icons", code | prettyHtml) }}
+
+<h3 id="example-multiple"><a href="#example-multiple">Multiple</a></h3>
+
+<section class="prose">
+  <p>Enable multiple selection by setting <code>multiple=true</code>. The selected options are displayed as a comma-separated list in the trigger button. Use <code>data-label</code> to specify clean text labels for options that contain HTML (like icons), otherwise the text content will be extracted automatically.</p>
+</section>
+
+{% set code %}
+{% call select(
+  id="select-multiple",
+  name="chart-types",
+  multiple=true,
+  placeholder="Select chart types...",
+  selected=["bar", "line"],
+  trigger_attrs={"class": "w-[220px]"}
+) %}
+<div role="option" data-value="bar" data-label="Bar">
+  <span class="flex items-center gap-2">
+    {% lucide "chart-bar", {"class": "text-muted-foreground"} %}
+    Bar
+  </span>
+</div>
+<div role="option" data-value="line" data-label="Line">
+  <span class="flex items-center gap-2">
+    {% lucide "chart-line", {"class": "text-muted-foreground"} %}
+    Line
+  </span>
+</div>
+<div role="option" data-value="pie" data-label="Pie">
+  <span class="flex items-center gap-2">
+    {% lucide "chart-pie", {"class": "text-muted-foreground"} %}
+    Pie
+  </span>
+</div>
+<div role="option" data-value="area" data-label="Area">
+  <span class="flex items-center gap-2">
+    {% lucide "chart-area", {"class": "text-muted-foreground"} %}
+    Area
+  </span>
+</div>
+{% endcall %}
+{% endset %}
+
+{{ code_preview("select-multiple", code | prettyHtml) }}

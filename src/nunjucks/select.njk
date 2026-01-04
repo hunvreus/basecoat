@@ -2,8 +2,10 @@
   Renders a select or combobox component.
 
   @param id {string} [optional] - Unique identifier for the select component.
-  @param selected {string} [optional] - The initially selected value.
+  @param selected {string|array} [optional] - The initially selected value(s).
   @param name {string} [optional] - The name attribute for the hidden input storing the selected value.
+  @param multiple {boolean} [optional] [default=false] - Enables multiple selection mode.
+  @param placeholder {string} [optional] - Placeholder text shown when no options are selected (multiple mode only).
   @param main_attrs {object} [optional] - Additional HTML attributes for the main container div.
   @param trigger_attrs {object} [optional] - Additional HTML attributes for the trigger button.
   @param popover_attrs {object} [optional] - Additional HTML attributes for the popover content div.
@@ -17,6 +19,8 @@
   selected=None,
   name=None,
   items=None,
+  multiple=false,
+  placeholder=None,
   main_attrs={},
   trigger_attrs={},
   popover_attrs={},
@@ -27,8 +31,9 @@
 ) %}
 {% set id = id or ("select-" + (range(100000, 999999) | random | string)) %}
 
+{% set selectedArray = ((selected if (selected is iterable and selected is not string) else [selected]) if selected else []) %}
 {% set first_option = [] %}
-{% set selected_option = [] %}
+{% set selected_options = [] %}
 
 {% if items %}
   {% for item in items %}
@@ -37,26 +42,34 @@
         {% if not first_option[0] %}
           {% set first_option = (first_option.push(sub_item), first_option) %}
         {% endif %}
-        {% if selected and sub_item.value == selected and not selected_option[0] %}
-          {% set selected_option = (selected_option.push(sub_item), selected_option) %}
+        {% if sub_item.value in selectedArray %}
+          {% set selected_options = (selected_options.push(sub_item), selected_options) %}
         {% endif %}
       {% endfor %}
     {% else %}
       {% if not first_option[0] %}
         {% set first_option = (first_option.push(item), first_option) %}
       {% endif %}
-      {% if selected and item.value == selected and not selected_option[0] %}
-        {% set selected_option = (selected_option.push(item), selected_option) %}
+      {% if item.value in selectedArray %}
+        {% set selected_options = (selected_options.push(item), selected_options) %}
       {% endif %}
     {% endif %}
   {% endfor %}
 {% endif %}
 
-{% set default_option = selected_option[0] or first_option[0] or None %}
+{% set default_option = (selected_options[0] if selected_options[0] else (first_option[0] if first_option[0] else None)) %}
+{% set labels = [] %}
+{% if multiple and selected_options %}
+  {% for opt in selected_options %}
+    {% set labels = (labels.push(opt.label), labels) %}
+  {% endfor %}
+{% endif %}
+{% set default_label = (labels | join(', ') if (multiple and selected_options) else ((placeholder or '') if (multiple and not selected_options) else (default_option.label if default_option else ''))) %}
 
 <div
   id="{{ id }}"
   class="select {{ main_attrs.class }}"
+  {% if multiple and placeholder %}data-placeholder="{{ placeholder }}"{% endif %}
   {% for key, value in main_attrs %}
     {% if key != 'class' %}{{ key }}="{{ value }}"{% endif %}
   {% endfor %}
@@ -72,7 +85,7 @@
       {% if key != 'class' %}{{ key }}="{{ value }}"{% endif %}
     {% endfor %}
   >
-    <span class="truncate">{{ default_option.label }}</span>
+    <span class="truncate">{{ default_label }}</span>
     {% if is_combobox %}
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevrons-up-down-icon lucide-chevrons-up-down text-muted-foreground opacity-50 shrink-0"><path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/></svg>
     {% else %}
@@ -110,25 +123,40 @@
       id="{{ id }}-listbox"
       aria-orientation="vertical"
       aria-labelledby="{{ id }}-trigger"
+      {% if multiple %}aria-multiselectable="true"{% endif %}
       {% for key, value in listbox_attrs %}
         {{ key }}="{{ value }}"
       {% endfor %}
     >
       {% if items and items.length > 0 %}
-        {{ render_select_items(items, default_option.value, id ~ "-items" if id else "items") }}
+        {{ render_select_items(items, selectedArray, id ~ "-items" if id else "items") }}
       {% else %}
         {{ caller() if caller }}
       {% endif %}
     </div>
   </div>
-  <input
-    type="hidden"
-    name="{{ name or id ~ '-value' }}"
-    value="{{ (default_option.value if default_option) or '' }}"
-    {% for key, value in input_attrs %}
-      {% if key != 'name' and key != 'value' %}{{ key }}="{{ value }}"{% endif %}
+  {% if multiple and selectedArray %}
+    {% for val in selectedArray %}
+      <input
+        type="hidden"
+        name="{{ name or id ~ '-value' }}"
+        value="{{ val }}"
+        {% if loop.index0 > 0 %}id="{{ id }}-value-{{ loop.index0 }}"{% endif %}
+        {% for key, value in input_attrs %}
+          {% if key != 'name' and key != 'value' %}{{ key }}="{{ value }}"{% endif %}
+        {% endfor %}
+      >
     {% endfor %}
-  >
+  {% else %}
+    <input
+      type="hidden"
+      name="{{ name or id ~ '-value' }}"
+      value="{{ (default_option.value if default_option) or '' }}"
+      {% for key, value in input_attrs %}
+        {% if key != 'name' and key != 'value' %}{{ key }}="{{ value }}"{% endif %}
+      {% endfor %}
+    >
+  {% endif %}
 </div>
 {% endmacro %}
 
@@ -138,7 +166,7 @@
   @param items {array} - The array of items to render.
   @param parent_id_prefix {string} [optional] - The prefix for the item id.
 #}
-{% macro render_select_items(items, selected, parent_id_prefix="items") %}
+{% macro render_select_items(items, selectedArray, parent_id_prefix="items") %}
   {% for item in items %}
     {% set item_id = parent_id_prefix ~ "-" ~ loop.index %}
     {% if item.type == "group" %}
@@ -153,7 +181,7 @@
         {% endif %}
       >
         <div role="heading" id="{{ group_label_id }}">{{ item.label }}</div>
-        {{ render_select_items(item.items, selected, item_id) if item.items }}
+        {{ render_select_items(item.items, selectedArray, item_id) if item.items }}
       </div>
     {% elif item.type == "separator" %}
       <hr role="separator" />
@@ -162,7 +190,7 @@
         id="{{ item_id }}"
         role="option"
         data-value="{{ item.value }}"
-        {% if selected == item.value %}aria-selected="true"{% endif %}
+        {% if item.value in selectedArray %}aria-selected="true"{% endif %}
         {% if item.attrs %}
           {% for key, value in item.attrs %}
             {{ key }}="{{ value }}"
