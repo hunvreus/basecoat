@@ -55,16 +55,15 @@ toc:
 {{ select(
   trigger_attrs={"class": "w-[180px]"},
   is_combobox=true,
-  multiple=true,
   items=[
     {
       type: "group",
       label: "Fruits",
       items: [
-        { type: "item", label: "Apple", attrs: {"data-force": "true"} },
-        { type: "item", label: "Banana", attrs: {"data-keywords": "bread"} },
-        { type: "item", label: "Blueberry" },
-        { type: "item", value: "pineapple", label: "Grapes" },
+        { type: "item", value: "apple", label: "Apple" },
+        { type: "item", value: "banana", label: "Banana" },
+        { type: "item", value: "blueberry", label: "Blueberry" },
+        { type: "item", value: "grapes", label: "Grapes" },
         { type: "item", value: "pineapple", label: "Pineapple" }
       ]
     }
