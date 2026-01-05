@@ -31,7 +31,13 @@
 ) %}
 {% set id = id or ("select-" + (range(100000, 999999) | random | string)) %}
 
-{% set selectedArray = ((selected if (selected is iterable and selected is not string) else [selected]) if selected else []) %}
+{% if selected is defined and selected is iterable and selected is not string %}
+  {% set selectedArray = selected %}
+{% elif selected is defined %}
+  {% set selectedArray = [selected] %}
+{% else %}
+  {% set selectedArray = [] %}
+{% endif %}
 {% set first_option = [] %}
 {% set selected_options = [] %}
 
@@ -175,7 +181,7 @@
       <div
         id="{{ item_id }}"
         role="option"
-        data-value="{{ item.value }}"
+        {% if item.value is defined and item.value is not none %}data-value="{{ item.value }}"{% endif %}
         {% if item.value in selectedArray %}aria-selected="true"{% endif %}
         {% if item.attrs %}
           {% for key, value in item.attrs %}

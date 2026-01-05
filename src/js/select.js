@@ -25,6 +25,8 @@
     const selectedOptions = isMultiple ? new Set() : null;
     const placeholder = isMultiple ? (selectComponent.dataset.placeholder || '') : null;
 
+    const getValue = (opt) => opt.dataset.value ?? opt.textContent.trim();
+
     const setActiveOption = (index) => {
       if (activeIndex > -1 && options[activeIndex]) {
         options[activeIndex].classList.remove('active');
@@ -68,13 +70,13 @@
           selectedLabel.classList.remove('text-muted-foreground');
         }
 
-        value = selected.map(opt => opt.dataset.value);
+        value = selected.map(getValue);
         input.value = JSON.stringify(value);
       } else {
         const option = optionOrOptions;
         if (!option) return;
         selectedLabel.innerHTML = option.innerHTML;
-        value = option.dataset.value;
+        value = getValue(option);
         input.value = value;
       }
 
@@ -129,12 +131,12 @@
 
     const select = (value) => {
       if (isMultiple) {
-        const option = options.find(opt => opt.dataset.value === value && !selectedOptions.has(opt));
+        const option = options.find(opt => getValue(opt) === value && !selectedOptions.has(opt));
         if (!option) return;
         selectedOptions.add(option);
         updateValue(options.filter(opt => selectedOptions.has(opt)));
       } else {
-        const option = options.find(opt => opt.dataset.value === value);
+        const option = options.find(opt => getValue(opt) === value);
         if (!option) return;
         if (input.value !== value) {
           updateValue(option);
@@ -145,7 +147,7 @@
 
     const deselect = (value) => {
       if (!isMultiple) return;
-      const option = options.find(opt => opt.dataset.value === value && selectedOptions.has(opt));
+      const option = options.find(opt => getValue(opt) === value && selectedOptions.has(opt));
       if (!option) return;
       selectedOptions.delete(option);
       updateValue(options.filter(opt => selectedOptions.has(opt)));
@@ -153,7 +155,7 @@
 
     const toggle = (value) => {
       if (!isMultiple) return;
-      const option = options.find(opt => opt.dataset.value === value);
+      const option = options.find(opt => getValue(opt) === value);
       if (!option) return;
       toggleMultipleValue(option);
     };
@@ -196,14 +198,14 @@
       const ariaSelected = options.filter(opt => opt.getAttribute('aria-selected') === 'true');
       try {
         const parsed = JSON.parse(input.value || '[]');
-        const validValues = new Set(options.map(opt => opt.dataset.value).filter(v => v != null));
+        const validValues = new Set(options.map(getValue));
         const initialValues = Array.isArray(parsed) ? parsed.filter(v => validValues.has(v)) : [];
 
         const initialOptions = [];
         if (initialValues.length > 0) {
           // Match values to options in order, allowing duplicates
           initialValues.forEach(val => {
-            const opt = options.find(o => o.dataset.value === val && !initialOptions.includes(o));
+            const opt = options.find(o => getValue(o) === val && !initialOptions.includes(o));
             if (opt) initialOptions.push(opt);
           });
         } else {
@@ -215,9 +217,7 @@
         updateValue(ariaSelected, false);
       }
     } else {
-      const initialOption = options.find(opt => opt.dataset.value === input.value)
-        || options.find(opt => opt.dataset.value !== undefined)
-        || options[0];
+      const initialOption = options.find(opt => getValue(opt) === input.value) || options[0];
       if (initialOption) updateValue(initialOption, false);
     }
 
@@ -249,7 +249,7 @@
           if (isMultiple) {
             toggleMultipleValue(option);
           } else {
-            if (input.value !== option.dataset.value) {
+            if (input.value !== getValue(option)) {
               updateValue(option);
             }
             closePopover();
@@ -365,7 +365,7 @@
           trigger.focus();
         }
       } else {
-        if (input.value !== option.dataset.value) {
+        if (input.value !== getValue(option)) {
           updateValue(option);
         }
         closePopover();
@@ -390,7 +390,7 @@
     Object.defineProperty(selectComponent, 'value', {
       get: () => {
         if (isMultiple) {
-          return options.filter(opt => selectedOptions.has(opt)).map(opt => opt.dataset.value);
+          return options.filter(opt => selectedOptions.has(opt)).map(getValue);
         } else {
           return input.value;
         }
@@ -400,12 +400,12 @@
           const values = Array.isArray(val) ? val : (val != null ? [val] : []);
           const opts = [];
           values.forEach(v => {
-            const opt = options.find(o => o.dataset.value === v && !opts.includes(o));
+            const opt = options.find(o => getValue(o) === v && !opts.includes(o));
             if (opt) opts.push(opt);
           });
           updateValue(opts);
         } else {
-          const option = options.find(opt => opt.dataset.value === val);
+          const option = options.find(opt => getValue(opt) === val);
           if (option) {
             updateValue(option);
             closePopover();
@@ -419,7 +419,7 @@
     if (isMultiple) {
       selectComponent.deselect = deselect;
       selectComponent.toggle = toggle;
-      selectComponent.selectAll = () => updateValue(options.filter(opt => opt.dataset.value != null));
+      selectComponent.selectAll = () => updateValue(options);
       selectComponent.selectNone = () => updateValue([]);
     }
     selectComponent.dataset.selectInitialized = true;

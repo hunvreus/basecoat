@@ -61,9 +61,9 @@ toc:
       type: "group",
       label: "Fruits",
       items: [
-        { type: "item", value: "apple", label: "Apple", attrs: {"data-force": "true"} },
-        { type: "item", value: "banana", label: "Banana", attrs: {"data-keywords": "bread"} },
-        { type: "item", value: "blueberry", label: "Blueberry" },
+        { type: "item", label: "Apple", attrs: {"data-force": "true"} },
+        { type: "item", label: "Banana", attrs: {"data-keywords": "bread"} },
+        { type: "item", label: "Blueberry" },
         { type: "item", value: "pineapple", label: "Grapes" },
         { type: "item", value: "pineapple", label: "Pineapple" }
       ]
@@ -387,7 +387,6 @@ toc:
 {% set code %}
 {% call select(
   id="select-with-icons",
-  placeholder="Select a chart...",
   trigger_attrs={'class': 'w-[180px]'}
 ) %}
 <div type="button" role="option" data-value="bar">
