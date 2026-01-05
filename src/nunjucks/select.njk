@@ -135,28 +135,14 @@
       {% endif %}
     </div>
   </div>
-  {% if multiple and selectedArray %}
-    {% for val in selectedArray %}
-      <input
-        type="hidden"
-        name="{{ name or id ~ '-value' }}"
-        value="{{ val }}"
-        {% if loop.index0 > 0 %}id="{{ id }}-value-{{ loop.index0 }}"{% endif %}
-        {% for key, value in input_attrs %}
-          {% if key != 'name' and key != 'value' %}{{ key }}="{{ value }}"{% endif %}
-        {% endfor %}
-      >
+  <input
+    type="hidden"
+    name="{{ name or id ~ '-value' }}"
+    value="{% if multiple %}{{ selectedArray | dump }}{% else %}{{ (default_option.value if default_option) or '' }}{% endif %}"
+    {% for key, value in input_attrs %}
+      {% if key != 'name' and key != 'value' %}{{ key }}="{{ value }}"{% endif %}
     {% endfor %}
-  {% else %}
-    <input
-      type="hidden"
-      name="{{ name or id ~ '-value' }}"
-      value="{{ (default_option.value if default_option) or '' }}"
-      {% for key, value in input_attrs %}
-        {% if key != 'name' and key != 'value' %}{{ key }}="{{ value }}"{% endif %}
-      {% endfor %}
-    >
-  {% endif %}
+  >
 </div>
 {% endmacro %}
 

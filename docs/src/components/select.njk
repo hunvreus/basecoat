@@ -55,6 +55,7 @@ toc:
 {{ select(
   trigger_attrs={"class": "w-[180px]"},
   is_combobox=true,
+  multiple=true,
   items=[
     {
       type: "group",
@@ -175,8 +176,15 @@ toc:
     <dt><code class="highlight language-html">&lt;input type="hidden" name="{ NAME }" value="{ VALUE }"&gt;</code></dt>
     <dd>
       <p>The hidden input that holds the selected value.</p>
-      <p>For multiselect: multiple hidden inputs with the same name will be created (one for each selected value). When no options are selected, a single input with an empty value is submitted.</p>
-      <p><strong>Note:</strong> This differs slightly from native <code>&lt;select multiple&gt;</code> behavior, which submits nothing when empty. This allows the component to work without JavaScript for initial rendering while maintaining a simpler architecture.</p>
+      <p>For single-select: contains the selected option's value as a string.</p>
+      <p>For multiselect: contains a <strong>JSON array</strong> of selected values (e.g., <code>["apple","banana"]</code>). When no options are selected, contains an empty array (<code>[]</code>).</p>
+      <p><strong>Backend handling:</strong> Parse the JSON value on the server side. For example:</p>
+      <ul>
+        <li><strong>Python/Flask:</strong> <code>values = json.loads(request.form.get('field', '[]'))</code></li>
+        <li><strong>PHP:</strong> <code>$values = json_decode($_POST['field'] ?? '[]', true);</code></li>
+        <li><strong>Node.js:</strong> <code>const values = JSON.parse(req.body.field || '[]');</code></li>
+        <li><strong>Ruby/Rails:</strong> <code>values = JSON.parse(params[:field] || '[]')</code></li>
+      </ul>
     </dd>
   </dl>
 </section>
@@ -200,21 +208,65 @@ toc:
   </dl>
 </section>
 
-<h4 id="usage-html-js-5"><a href="#usage-html-js-5">JavaScript methods</a></h4>
+<h4 id="usage-html-js-5"><a href="#usage-html-js-5">JavaScript methods and properties</a></h4>
 
 <section class="prose">
   <dl>
-    <dt><code>selectByValue(value)</code></dt>
+    <dt><code>value</code> (property)</dt>
     <dd>
-      <p>Selects an option by value (i.e. the option with the matching <code>data-value</code> attribute). For single-select, this will close the popover. For multiselect, this adds the value to the selection without removing existing selections.</p>
+      <p>Get or set the current value. For single-select, this is a string. For multiselect, this is an array. The multiselect setter accepts both strings and arrays.</p>
 
-{% set code_script %}<script>
+{% set code_value %}<script>
   const selectComponent = document.querySelector('#my-select');
   selectComponent.addEventListener('basecoat:initialized', () => {
-    selectComponent.selectByValue('apple');
+    // Get value
+    console.log(selectComponent.value); // 'apple'
+
+    // Set value (single-select)
+    selectComponent.value = 'banana';
+
+    // Set value (multiselect - accepts string or array)
+    selectComponent.value = ['apple', 'banana'];
+    selectComponent.value = 'apple'; // normalized to ['apple']
   });
 </script>{% endset %}
-{{ code_block(code_script | prettyHtml, "html") }}
+{{ code_block(code_value | prettyHtml, "html") }}
+    </dd>
+    <dt><code>select(value)</code></dt>
+    <dd>
+      <p>Selects an option by value (i.e. the option with the matching <code>data-value</code> attribute). For single-select, this will close the popover. For multiselect, this adds the value to the selection if not already selected.</p>
+
+{% set code_select %}<script>
+  const selectComponent = document.querySelector('#my-select');
+  selectComponent.addEventListener('basecoat:initialized', () => {
+    selectComponent.select('apple');
+  });
+</script>{% endset %}
+{{ code_block(code_select | prettyHtml, "html") }}
+    </dd>
+    <dt><code>deselect(value)</code> <span class="badge-secondary">Multiselect only</span></dt>
+    <dd>
+      <p>Removes a specific value from the selection. Only available when the component is in multiselect mode (<code>aria-multiselectable="true"</code>).</p>
+
+{% set code_deselect %}<script>
+  const selectComponent = document.querySelector('#my-multiselect');
+  selectComponent.addEventListener('basecoat:initialized', () => {
+    selectComponent.deselect('apple');
+  });
+</script>{% endset %}
+{{ code_block(code_deselect | prettyHtml, "html") }}
+    </dd>
+    <dt><code>toggle(value)</code> <span class="badge-secondary">Multiselect only</span></dt>
+    <dd>
+      <p>Toggles a specific value in the selection (adds if not present, removes if present). Only available when the component is in multiselect mode (<code>aria-multiselectable="true"</code>).</p>
+
+{% set code_toggle %}<script>
+  const selectComponent = document.querySelector('#my-multiselect');
+  selectComponent.addEventListener('basecoat:initialized', () => {
+    selectComponent.toggle('apple'); // adds if not selected, removes if selected
+  });
+</script>{% endset %}
+{{ code_block(code_toggle | prettyHtml, "html") }}
     </dd>
     <dt><code>selectAll()</code> <span class="badge-secondary">Multiselect only</span></dt>
     <dd>
@@ -239,6 +291,10 @@ toc:
   });
 </script>{% endset %}
 {{ code_block(code_script_none | prettyHtml, "html") }}
+    </dd>
+    <dt><code>selectByValue(value)</code></dt>
+    <dd>
+      <p><strong>Deprecated:</strong> Alias for <code>select(value)</code>. Kept for backward compatibility.</p>
     </dd>
   </dl>
 </section>
@@ -360,7 +416,7 @@ toc:
 <h3 id="example-multiple"><a href="#example-multiple">Multiple</a></h3>
 
 <section class="prose">
-  <p>Enable multiple selection by setting <code>multiple=true</code>. The selected options are displayed as a comma-separated list in the trigger button. Use <code>data-label</code> to specify clean text labels for options that contain HTML (like icons), otherwise the text content will be extracted automatically.</p>
+  <p>Enable multiple selection by setting adding <code>aria-multiselectable="true"</code> to the <code>listbox</code>. The selected options are displayed as a comma-separated list in the trigger button. Use <code>data-label</code> to specify clean text labels for options that contain HTML (like icons), otherwise the text content will be extracted automatically.</p>
 </section>
 
 {% set code %}
