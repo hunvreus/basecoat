@@ -1,0 +1,108 @@
+/* Command */
+@layer components {
+  .command-dialog {
+    @apply inset-y-0 opacity-0 transition-all transition-discrete;
+
+    &:is([open],:popover-open) {
+      @apply opacity-100;
+
+      &::backdrop {
+        @apply opacity-100;
+      }
+      > * {
+        @apply scale-100;
+      }
+
+      @starting-style {
+        @apply opacity-0;
+
+        &::backdrop {
+          @apply opacity-0;
+        }
+        > * {
+          @apply scale-95;
+        }
+      }
+    }
+    &::backdrop {
+      @apply bg-black/50 opacity-0 transition-all transition-discrete;
+    }
+    > * {
+      @apply bg-background fixed top-[50%] left-[50%] z-50 flex flex-col w-full max-w-[calc(100%_-_2rem)] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-lg border shadow-lg sm:max-w-lg max-h-[min(640px,calc(100%_-_2rem))];
+      @apply transition-all scale-95;
+
+      > button,
+      > form[method='dialog'] {
+        @apply absolute top-4 right-4;
+      }
+      > button,
+      > form[method='dialog'] > button {
+        @apply ring-offset-background focus:ring-ring data-[state=open]:bg-accent data-[state=open]:text-muted-foreground  rounded-xs opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4;
+      }
+    }
+
+    .command {
+      > header input {
+        @apply h-12;
+      }
+      [role='menu'] {
+        @apply px-2;
+
+        [role='menuitem'] {
+          @apply py-3 px-2 [&_svg]:size-5;
+        }
+        [role='heading'] {
+          @apply px-2 py-1.5 font-medium text-muted-foreground;
+        }
+      }
+    }
+  }
+
+  .command {
+    > header {
+      @apply flex items-center border-b px-3 gap-2;
+
+      svg {
+        @apply size-4 shrink-0 opacity-50;
+      }
+      input {
+        @apply placeholder:text-muted-foreground flex h-10 w-full rounded-md bg-transparent py-3 text-sm outline-hidden disabled:cursor-not-allowed disabled:opacity-50;
+      }
+    }
+    [role='menu'] {
+      @apply max-h-[300px] overflow-y-auto overflow-x-hidden p-1;
+
+      [role='menuitem'] {
+        @apply aria-hidden:hidden relative flex cursor-default items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-hidden select-none aria-disabled:opacity-50 aria-disabled:pointer-events-none disabled:opacity-50 disabled:pointer-events-none w-full truncate [&_svg:not([class*='text-'])]:text-muted-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4;
+
+        &.active {
+          @apply bg-accent text-accent-foreground;
+        }
+      }
+      [role='heading'] {
+        @apply text-muted-foreground flex px-2 py-1.5 text-xs font-medium;
+      }
+      [role='group']:not(:has([role='menuitem']:not([aria-hidden='true']))) {
+        @apply hidden;
+      }
+      [role='separator'] {
+        @apply border-border -mx-1 my-1;
+      }
+      &:not(:has([role='menuitem']:not([aria-hidden='true'])))::before {
+        @apply flex items-center justify-center py-6 px-3 text-sm truncate -m-1;
+      }
+      &[data-empty]:not(:has([role='menuitem']:not([aria-hidden='true'])))::before {
+        @apply content-[attr(data-empty)];
+      }
+      &:not([data-empty]):not(:has([role='menuitem']:not([aria-hidden='true'])))::before {
+        @apply content-['No_results_found'];
+      }
+    }
+    &:not([data-command-initialized]) [role='menuitem'] {
+      @apply hover:bg-accent hover:text-accent-foreground;
+    }
+    &:has(> header input:not(:placeholder-shown)) [role='separator'] {
+      @apply hidden;
+    }
+  }
+}
