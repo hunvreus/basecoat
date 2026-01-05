@@ -1,0 +1,78 @@
+@custom-variant dark (&:is(.body--dark *));
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities) source(none);
+@import "./basecoat.shared.css";
+
+@layer components {
+  .q-toggle__inner>.q-toggle__native {
+    @apply basecoat-switch;
+  }
+
+  .q-toggle__inner--truthy>.q-toggle__native {
+    @apply basecoat-switch-checked;
+  }
+
+  .q-checkbox__inner>.q-checkbox__native {
+    @apply basecoat-checkbox;
+  }
+
+  .q-checkbox__inner--truthy>.q-checkbox__native {
+    @apply basecoat-checkbox-checked;
+  }
+
+  .q-radio__inner>.q-radio__native {
+    @apply basecoat-radio;
+  }
+
+  .q-radio__inner--truthy>.q-radio__native {
+    @apply basecoat-radio-checked;
+  }
+
+  .textarea {
+    @apply basecoat-textarea;
+  }
+
+  .input-text {
+    @apply basecoat-input-text;
+  }
+
+  .q-card {
+    @apply basecoat-card border-input;
+  }
+
+  .q-badge {
+    @apply basecoat-badge border-transparent px-1.5 py-0;
+  }
+
+  .q-tabs {
+    @apply basecoat-tabs pb-[0px];
+  }
+
+  .q-tab {
+    @apply mb-[3px] basecoat-tab;
+  }
+
+  .q-toggle__inner>.q-toggle__native,
+  .q-checkbox__inner>.q-checkbox__native,
+  .q-radio__inner>.q-radio__native {
+    display: block !important;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .q-radio__bg,
+  .q-checkbox__bg,
+  .q-toggle__track,
+  .q-toggle__thumb,
+  .q-field__label,
+  .q-tab__indicator {
+    display: none !important;
+  }
+
+  .q-btn, .q-btn-group, .q-toggle, .q-menu, .q-uploader, .q-time, .q-date, .q-table__container, .q-stepper {
+    @apply rounded-md;
+  }
+}
