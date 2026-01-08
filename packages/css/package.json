@@ -44,6 +44,8 @@
     "./basecoat.min": "./dist/js/basecoat.min.js",
     "./all": "./dist/js/all.js",
     "./all.min": "./dist/js/all.min.js",
+    "./drawer": "./dist/js/drawer.js",
+    "./drawer.min": "./dist/js/drawer.min.js",
     "./command": "./dist/js/command.js",
     "./command.min": "./dist/js/command.min.js",
     "./dropdown-menu": "./dist/js/dropdown-menu.js",
