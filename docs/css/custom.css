@@ -50,7 +50,7 @@
         @apply border-t pt-3 mt-3 first:mt-0;
       }
       dd {
-        @apply mt-2;
+        @apply mt-2 space-y-2;
       }
       dl {
         @apply mt-4 border-b-0 pb-0 pl-8 my-0;

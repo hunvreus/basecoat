@@ -593,6 +593,9 @@
   .w-\[200px\] {
     width: 200px;
   }
+  .w-\[220px\] {
+    width: 220px;
+  }
   .w-\[271px\] {
     width: 271px;
   }
@@ -4438,6 +4441,24 @@
   *:not(select).select {
     position: relative;
     display: inline-flex;
+    & > button {
+      justify-content: space-between;
+      --tw-font-weight: var(--font-weight-normal);
+      font-weight: var(--font-weight-normal);
+      &[aria-invalid='true'] {
+        border-color: var(--color-destructive);
+        --tw-ring-color: var(--color-destructive);
+        @supports (color: color-mix(in lab, red, red)) {
+          --tw-ring-color: color-mix(in oklab, var(--color-destructive) 20%, transparent);
+        }
+        &:is(.dark *) {
+          --tw-ring-color: var(--color-destructive);
+          @supports (color: color-mix(in lab, red, red)) {
+            --tw-ring-color: color-mix(in oklab, var(--color-destructive) 40%, transparent);
+          }
+        }
+      }
+    }
     [data-popover] {
       padding: calc(var(--spacing) * 1);
       [role='option'] {
@@ -5449,12 +5470,12 @@
       text-overflow: ellipsis;
       white-space: nowrap;
       border-radius: var(--radius-md);
-      background-color: var(--color-primary);
+      background-color: var(--color-foreground);
       padding-inline: calc(var(--spacing) * 3);
       padding-block: calc(var(--spacing) * 1.5);
       font-size: var(--text-xs);
       line-height: var(--tw-leading, var(--text-xs--line-height));
-      color: var(--color-primary-foreground);
+      color: var(--color-background);
       opacity: 0%;
       transition-property: all;
       transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
@@ -5729,6 +5750,11 @@
       }
       dd {
         margin-top: calc(var(--spacing) * 2);
+        :where(& > :not(:last-child)) {
+          --tw-space-y-reverse: 0;
+          margin-block-start: calc(calc(var(--spacing) * 2) * var(--tw-space-y-reverse));
+          margin-block-end: calc(calc(var(--spacing) * 2) * calc(1 - var(--tw-space-y-reverse)));
+        }
       }
       dl {
         margin-block: calc(var(--spacing) * 0);
