@@ -2794,7 +2794,6 @@
 }
 @layer components {
   .button-group {
-    isolation: isolate;
     display: inline-flex;
     width: fit-content;
     align-items: stretch;

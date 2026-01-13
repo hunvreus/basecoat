@@ -388,7 +388,8 @@
 /* Button Group */
 @layer components {
   .button-group {
-    @apply inline-flex w-fit items-stretch isolate;
+    @apply inline-flex w-fit items-stretch;
+    /* isolate */
     
     > *:focus-visible,
     > :is(.dropdown-menu, .popover, .select) > button:focus-visible {

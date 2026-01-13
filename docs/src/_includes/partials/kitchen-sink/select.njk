@@ -10,6 +10,29 @@
   <div class="p-4 gap">
     <div class="flex flex-col gap-4">
       <div class="flex flex-wrap items-center gap-2 md:flex-row">
+        {{ select(
+          id="select-default",
+          trigger_attrs={"class": "w-[180px]"},
+          selected="blueberry",
+          items=[
+            {
+              type: "group",
+              label: "Fruits",
+              items: [
+                { type: "item", label: "Apple", value: "apple" },
+                { type: "item", label: "Banana", value: "banana" },
+                { type: "item", label: "Blueberry", value: "blueberry" }
+              ]
+            },
+            {
+              type: "group",
+              label: "Grapes",
+              items: [
+                { type: "item", label: "Pineapple", value: "pineapple" }
+              ]
+            }
+          ]
+        ) }}
         <select class="select w-[180px]">
           <optgroup label="Fruits">
             <option>Apple</option>
