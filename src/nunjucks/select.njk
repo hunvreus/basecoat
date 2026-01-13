@@ -6,6 +6,7 @@
   @param name {string} [optional] - The name attribute for the hidden input storing the selected value.
   @param multiple {boolean} [optional] [default=false] - Enables multiple selection mode.
   @param placeholder {string} [optional] - Placeholder text shown when no options are selected (multiple mode only).
+  @param close_on_select {boolean} [optional] [default=false] - Closes the popover when selecting an option in multiple mode.
   @param main_attrs {object} [optional] - Additional HTML attributes for the main container div.
   @param trigger_attrs {object} [optional] - Additional HTML attributes for the trigger button.
   @param popover_attrs {object} [optional] - Additional HTML attributes for the popover content div.
@@ -21,6 +22,7 @@
   items=None,
   multiple=false,
   placeholder=None,
+  close_on_select=false,
   main_attrs={},
   trigger_attrs={},
   popover_attrs={},
@@ -76,6 +78,7 @@
   id="{{ id }}"
   class="select {{ main_attrs.class }}"
   {% if multiple and placeholder %}data-placeholder="{{ placeholder }}"{% endif %}
+  {% if multiple and close_on_select %}data-close-on-select="true"{% endif %}
   {% for key, value in main_attrs %}
     {% if key != 'class' %}{{ key }}="{{ value }}"{% endif %}
   {% endfor %}

@@ -24,6 +24,7 @@
     const isMultiple = listbox.getAttribute('aria-multiselectable') === 'true';
     const selectedOptions = isMultiple ? new Set() : null;
     const placeholder = isMultiple ? (selectComponent.dataset.placeholder || '') : null;
+    const closeOnSelect = selectComponent.dataset.closeOnSelect === 'true';
 
     const getValue = (opt) => opt.dataset.value ?? opt.textContent.trim();
 
@@ -248,6 +249,9 @@
           const option = options[activeIndex];
           if (isMultiple) {
             toggleMultipleValue(option);
+            if (closeOnSelect) {
+              closePopover();
+            }
           } else {
             if (input.value !== getValue(option)) {
               updateValue(option);
@@ -358,11 +362,15 @@
 
       if (isMultiple) {
         toggleMultipleValue(option);
-        setActiveOption(options.indexOf(option));
-        if (filter) {
-          filter.focus();
+        if (closeOnSelect) {
+          closePopover();
         } else {
-          trigger.focus();
+          setActiveOption(options.indexOf(option));
+          if (filter) {
+            filter.focus();
+          } else {
+            trigger.focus();
+          }
         }
       } else {
         if (input.value !== getValue(option)) {
