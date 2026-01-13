@@ -1,5 +1,10 @@
 @custom-variant dark (&:is(.dark *));
 
+@font-face {
+  font-family: 'Geist';
+  src: url('"../fonts/Geist-Regular.woff2');
+}
+
 :root {
   --radius: 0.625rem;
   --background: oklch(1 0 0);
@@ -124,6 +129,7 @@
 @layer base {
   * {
     @apply border-border outline-ring/50;
+    font-family: 'Geist', sans-serif !important;
   }
   html {
     @apply scroll-smooth;
