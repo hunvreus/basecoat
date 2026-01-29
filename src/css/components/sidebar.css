@@ -1,0 +1,121 @@
+/* Sidebar */
+@layer components {
+  .sidebar {
+    &:not([data-sidebar-initialized]) {
+      @apply max-md:hidden;
+    }
+    &:not([aria-hidden]),
+    &[aria-hidden=false] {
+      @apply max-md:bg-black/50 max-md:fixed max-md:inset-0 max-md:z-40;
+    }
+    nav {
+      @apply bg-sidebar text-sidebar-foreground flex flex-col w-(--sidebar-mobile-width) md:w-(--sidebar-width) fixed inset-y-0 z-50 transition-transform ease-in-out duration-300;
+    }
+    & + * {
+      @apply transition-[margin] ease-in-out duration-300;
+    }
+    &:not([data-side]),
+    &[data-side=left] {
+      nav {
+        @apply left-0 border-r;
+      }
+      & + * {
+        @apply relative md:ml-(--sidebar-width);
+      }
+      &[aria-hidden=true] {
+        nav {
+          @apply -translate-x-full;
+        }
+        & + * {
+          @apply md:ml-0;
+        }
+      }
+    }
+    &[data-side=right] {
+      nav {
+        @apply right-0 border-l;
+      }
+      & + * {
+        @apply relative md:mr-(--sidebar-width);
+      }
+      &[aria-hidden=true] {
+        nav {
+          @apply translate-x-full;
+        }
+        & + * {
+          @apply md:mr-0;
+        }
+      }
+    }
+    nav {
+      > header,
+      > footer {
+        @apply flex flex-col gap-2 p-2;
+      }
+      [role=separator] {
+        @apply border-sidebar-border mx-2 w-auto;
+      }
+      > section {
+        @apply flex min-h-0 flex-1 flex-col gap-2 overflow-y-auto;
+
+        > [role=group] {
+          @apply relative flex w-full min-w-0 flex-col p-2;
+        }
+        h3 {
+          @apply text-sidebar-foreground/70 ring-sidebar-ring flex h-8 shrink-0 items-center rounded-md px-2 text-xs font-medium outline-hidden transition-[margin,opacity] duration-200 ease-linear focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0;
+        }
+        ul {
+          @apply flex w-full min-w-0 flex-col gap-1;
+
+          li {
+            @apply relative;
+
+            > a,
+            > details > summary {
+              @apply flex w-full items-center gap-2 overflow-hidden rounded-md p-2 text-left text-sm outline-hidden ring-sidebar-ring transition-[width,height,padding] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&[aria-current=page]]:bg-sidebar-accent [&[aria-current=page]]:font-medium [&[aria-current=page]]:text-sidebar-accent-foreground [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0;
+
+              &:not([data-variant]),
+              &[data-variant=default] {
+                @apply hover:bg-sidebar-accent hover:text-sidebar-accent-foreground;
+              }
+              &[data-variant=outline] {
+                @apply bg-background shadow-[0_0_0_1px_hsl(var(--sidebar-border))] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground hover:shadow-[0_0_0_1px_hsl(var(--sidebar-accent))];
+              }
+              &:not([data-size]),
+              &[data-size=default] {
+                @apply h-8 text-sm;
+              }
+              &[data-size=sm] {
+                @apply h-7 text-xs;
+              }
+              &[data-size=lg] {
+                @apply h-12 text-sm group-data-[collapsible=icon]:p-0!;
+              }
+            }
+            > details {
+              &:not([open]) {
+                > summary {
+                  &::after {
+                    @apply -rotate-90;
+                  }
+                }
+              }
+              > summary {
+                &::after {
+                  @apply content-[''] block size-3.5 bg-primary ml-auto transition-transform ease-linear;
+                  @apply mask-[image:var(--chevron-down-icon)] mask-size-[1rem] mask-no-repeat mask-center;
+                }
+              }
+              &::details-content {
+                @apply px-3.5;
+              }
+            }
+          }
+          ul {
+            @apply border-sidebar-border flex min-w-0 translate-x-px flex-col gap-1 border-l px-2.5 py-0.5 w-full;
+          }
+        }
+      }
+    }
+  }
+}

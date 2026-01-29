@@ -1,0 +1,12 @@
+/* Label */
+@layer components {
+  :is(.form, .field) label,
+  .label {
+    @apply flex items-center gap-2 text-sm leading-none font-medium select-none peer-disabled:pointer-events-none peer-disabled:opacity-50;
+
+     &:has(>*:disabled),
+     &:has(+*:disabled) {
+       @apply opacity-50 pointer-events-none;
+     }
+  }
+}
