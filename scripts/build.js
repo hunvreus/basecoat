@@ -150,6 +150,8 @@ async function build() {
   await ensureDir(cssDistDir); // Ensure dist dir exists for css package
   await fs.copyFile(path.join(srcCssDir, 'basecoat.css'), path.join(cssDistDir, 'basecoat.css'));
   console.log(`Copied basecoat.css to ${cssDistDir}`);
+  await fs.copyFile(path.join(srcCssDir, 'basecoat.shared.css'), path.join(cssDistDir, 'basecoat.shared.css'));
+  console.log(`Copied basecoat.shared.css to ${cssDistDir}`);
 
   // Create Tailwind CSS builds for the CSS package
   const cdnCssSrc = path.join(srcCssDir, 'basecoat.cdn.css');
@@ -160,6 +162,27 @@ async function build() {
   console.log(`Generated non-minified CSS: ${cssDistCdnPath}`);
   await execPromise(`npx tailwindcss -i "${cdnCssSrc}" -o "${cssDistCdnMinPath}" --minify`);
   console.log(`Generated minified CSS: ${cssDistCdnMinPath}`);
+
+  // Now for the Quasar build
+  const quasarCssSrc = path.join(srcCssDir, 'basecoat.quasar.css');
+  const cssDistQuasarPath = path.join(cssDistDir, 'basecoat.quasar.css');
+  const cssDistQuasarMinPath = path.join(cssDistDir, 'basecoat.quasar.min.css');
+
+  await execPromise(`npx tailwindcss -i "${quasarCssSrc}" -o "${cssDistQuasarPath}"`);
+  console.log(`Generated non-minified Quasar CSS: ${cssDistQuasarPath}`);
+  await execPromise(`npx tailwindcss -i "${quasarCssSrc}" -o "${cssDistQuasarMinPath}" --minify`);
+  console.log(`Generated minified Quasar CSS: ${cssDistQuasarMinPath}`);
+
+  console.log('HACK: Modifying Quasar CSS for :root, :host to body...');
+  let quasarCssContent = await fs.readFile(cssDistQuasarPath, 'utf-8');
+  quasarCssContent = quasarCssContent.replace(/:root, :host/g, 'body');
+  await fs.writeFile(cssDistQuasarPath, quasarCssContent);
+  console.log(`Modified ${cssDistQuasarPath} to replace :root with body`);
+
+  let quasarMinCssContent = await fs.readFile(cssDistQuasarMinPath, 'utf-8');
+  quasarMinCssContent = quasarMinCssContent.replace(/:root,:host/g, 'body');
+  await fs.writeFile(cssDistQuasarMinPath, quasarMinCssContent);
+  console.log(`Modified ${cssDistQuasarMinPath} to replace :root with body`);
 
   console.log('Build process finished successfully!');
 }
