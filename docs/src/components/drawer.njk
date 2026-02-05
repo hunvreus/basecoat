@@ -1,0 +1,233 @@
+---
+layout: layouts/page.njk
+title: Drawer
+description: A mobile-friendly modal drawer that slides from any side.
+toc:
+  - label: Usage
+    id: usage
+    children:
+      - label: HTML + JavaScript
+        id: usage-html-js
+        children:
+          - label: "Step 1: Include the JavaScript file"
+            id: usage-html-js-1
+          - label: "Step 2: Add your drawer HTML"
+            id: usage-html-js-2
+          - label: HTML structure
+            id: usage-html-js-3
+          - label: Data attributes
+            id: usage-html-js-4
+          - label: JavaScript events
+            id: usage-html-js-5
+      - label: Jinja and Nunjucks
+        id: usage-macro
+  - label: Examples
+    id: examples
+    children:
+      - label: Sides
+        id: example-sides
+      - label: Snap points
+        id: example-snap-points
+---
+
+{% from "macros/code_preview.njk" import code_preview %}
+{% from "macros/code_block.njk" import code_block %}
+{% from "drawer.njk" import drawer %}
+
+{% set code_html %}
+{% set footer %}
+  <button class="btn" type="button" data-drawer-close>Submit</button>
+  <button class="btn-outline" type="button" data-drawer-close>Cancel</button>
+{% endset %}
+{% call drawer(
+  id="demo-drawer",
+  trigger="Open drawer",
+  trigger_attrs={"class": "btn-outline"},
+  title="Are you absolutely sure?",
+  description="This action cannot be undone.",
+  footer=footer,
+  side="bottom"
+) %}
+  <div class="p-4 pt-0 text-sm">
+    <p class="text-muted-foreground">
+      Drag the handle to close or snap. Press <kbd class="kbd">Esc</kbd> to close.
+    </p>
+  </div>
+{% endcall %}
+{% endset %}
+
+{{ code_preview("drawer", code_html | prettyHtml) }}
+
+<h2 id="usage"><a href="#usage">Usage</a></h2>
+
+<h3 id="usage-html-js"><a href="#usage-html-js">HTML + JavaScript</a></h3>
+
+<h4 id="usage-html-js-1"><a href="#usage-html-js-1">Step 1: Include the JavaScript file</a></h4>
+
+<section class="prose">
+  <p>You can either <a href="/installation/#install-cdn-all">include the JavaScript file for all the components</a>, or just the one for this component by adding this to the <code>&lt;head&gt;</code> of your page:</p>
+</section>
+
+{% set code_script %}<script src="https://cdn.jsdelivr.net/npm/basecoat-css@{{ pkg.version }}/dist/js/basecoat.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/basecoat-css@{{ pkg.version }}/dist/js/drawer.min.js" defer></script>{% endset %}
+{{ code_block(code_script | prettyHtml, "html") }}
+
+<div class="flex flex-wrap gap-2 my-6">
+  <a class="badge-outline" href="/installation/#install-js">
+    Components with JavaScript
+    {% lucide "arrow-right" %}
+  </a>
+  <a class="badge-outline" href="/installation/#install-cli">
+    Use the CLI
+    {% lucide "arrow-right" %}
+  </a>
+</div>
+
+<h4 id="usage-html-js-2"><a href="#usage-html-js-2">Step 2: Add your drawer HTML</a></h4>
+
+{{ code_block(code_html | prettyHtml, "html") }}
+
+<h4 id="usage-html-js-3"><a href="#usage-html-js-3">HTML structure</a></h4>
+
+<section class="prose">
+  <dl>
+    <dt><code class="highlight language-html">&lt;button type="button" data-drawer-trigger="{ DRAWER_ID }"&gt;</code></dt>
+    <dd>Opens the drawer with the given id.</dd>
+    <dt><code class="highlight language-html">&lt;dialog class="drawer" id="{ DRAWER_ID }"&gt;</code></dt>
+    <dd>The drawer modal element. It uses <code>&lt;dialog&gt;</code> for native modality and focus handling.</dd>
+    <dt><code class="highlight language-html">&lt;button type="button" data-drawer-close&gt;</code></dt>
+    <dd>Closes the currently open drawer (use this for close buttons and footer actions).</dd>
+  </dl>
+</section>
+
+<h4 id="usage-html-js-4"><a href="#usage-html-js-4">Data attributes</a></h4>
+
+<section class="prose">
+  <ul>
+    <li><code>data-side="bottom|top|left|right"</code> (default <code>bottom</code>).</li>
+    <li><code>data-snap-points="0.25,0.5,1"</code>: snap points as fractions (0..1).</li>
+    <li><code>data-default-snap="1"</code>: default snap point when opening.</li>
+    <li><code>data-handle-only="true|false"</code>: allow dragging only from the handle (default <code>true</code>).</li>
+    <li><code>data-close-on-overlay-click="true|false"</code>: close when clicking outside the panel (default <code>true</code>).</li>
+    <li><code>data-velocity-threshold="1"</code>: snap velocity threshold (px/ms).</li>
+  </ul>
+</section>
+
+<h4 id="usage-html-js-5"><a href="#usage-html-js-5">JavaScript events</a></h4>
+
+<section class="prose">
+  <dl>
+    <dt><code>basecoat:initialized</code></dt>
+    <dd>Dispatched on the drawer once it is initialized.</dd>
+    <dt><code>basecoat:drawer</code></dt>
+    <dd>Dispatched on <code>document</code> when a drawer opens (other drawers listen for this to close).</dd>
+    <dt><code>drawer:open</code>, <code>drawer:close</code>, <code>drawer:snap</code></dt>
+    <dd>Dispatched on the drawer element for state changes.</dd>
+  </dl>
+</section>
+
+<h3 id="usage-macro"><a href="#usage-macro">Jinja and Nunjucks</a></h3>
+
+<div class="prose">
+  <p>You can use the <code class="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-xs">drawer()</code> Nunjucks or Jinja macro for this component.</p>
+</div>
+
+<div class="flex flex-wrap gap-2 my-6">
+  <a class="badge-outline" href="/installation/#install-macros" target="_blank">
+    Use Nunjucks or Jinja macros
+    {% lucide "arrow-right" %}
+  </a>
+  <a class="badge-outline" href="https://github.com/hunvreus/basecoat/blob/main/src/jinja/drawer.html.jinja" target="_blank">
+    Jinja macro
+    {% lucide "arrow-right" %}
+  </a>
+  <a class="badge-outline" href="https://github.com/hunvreus/basecoat/blob/main/src/nunjucks/drawer.njk" target="_blank">
+    Nunjucks macro
+    {% lucide "arrow-right" %}
+  </a>
+</div>
+
+{% set raw_code %}{% raw %}{% set footer %}
+  <button class="btn" type="button" data-drawer-close>Submit</button>
+  <button class="btn-outline" type="button" data-drawer-close>Cancel</button>
+{% endset %}
+{% call drawer(
+  id="demo-drawer",
+  trigger="Open drawer",
+  trigger_attrs={"class": "btn-outline"},
+  title="Are you absolutely sure?",
+  description="This action cannot be undone.",
+  footer=footer,
+  side="bottom"
+) %}
+  <div class="p-4 pt-0 text-sm">
+    Drawer content…
+  </div>
+{% endcall %}{% endraw %}{% endset %}
+{{ code_block(raw_code, "jinja") }}
+
+<h2 id="examples"><a href="#examples">Examples</a></h2>
+
+<h3 id="example-sides"><a href="#example-sides">Sides</a></h3>
+
+{% set code_sides %}
+<div class="flex flex-wrap gap-2">
+  <button type="button" class="btn-outline" data-drawer-trigger="drawer-bottom">Bottom</button>
+  <button type="button" class="btn-outline" data-drawer-trigger="drawer-top">Top</button>
+  <button type="button" class="btn-outline" data-drawer-trigger="drawer-left">Left</button>
+  <button type="button" class="btn-outline" data-drawer-trigger="drawer-right">Right</button>
+</div>
+
+{% set footer %}
+  <button class="btn-outline" type="button" data-drawer-close>Close</button>
+{% endset %}
+
+{% call drawer(id="drawer-bottom", title="Bottom drawer", footer=footer, side="bottom") %}
+  <div class="p-4 pt-0 text-sm">Bottom drawer content.</div>
+{% endcall %}
+
+{% call drawer(id="drawer-top", title="Top drawer", footer=footer, side="top") %}
+  <div class="p-4 pt-0 text-sm">Top drawer content.</div>
+{% endcall %}
+
+{% call drawer(id="drawer-left", title="Left drawer", footer=footer, side="left") %}
+  <div class="p-4 pt-0 text-sm">Left drawer content.</div>
+{% endcall %}
+
+{% call drawer(id="drawer-right", title="Right drawer", footer=footer, side="right") %}
+  <div class="p-4 pt-0 text-sm">Right drawer content.</div>
+{% endcall %}
+{% endset %}
+
+{{ code_preview("drawer-sides", code_sides | prettyHtml) }}
+
+<h3 id="example-snap-points"><a href="#example-snap-points">Snap points</a></h3>
+
+{% set code_snap %}
+<button type="button" class="btn-outline" data-drawer-trigger="drawer-snap">Open snap drawer</button>
+
+{% set footer %}
+  <button class="btn-outline" type="button" data-drawer-close>Close</button>
+{% endset %}
+
+{% call drawer(
+  id="drawer-snap",
+  title="Snap points",
+  description="Opens at 50% and can snap to 25%/50%/100%.",
+  footer=footer,
+  side="bottom",
+  snap_points="0.25,0.5,1",
+  default_snap=0.5,
+  content_attrs={"class": "h-[80vh]"}
+) %}
+  <div class="p-4 pt-0 text-sm space-y-3">
+    <p class="text-muted-foreground">Drag the handle to snap between points.</p>
+    <div class="h-48 rounded-lg border flex items-center justify-center text-muted-foreground">
+      Content placeholder
+    </div>
+  </div>
+{% endcall %}
+{% endset %}
+
+{{ code_preview("drawer-snap-points", code_snap | prettyHtml) }}
+

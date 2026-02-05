@@ -1,0 +1,122 @@
+{#
+  Renders a drawer component (modal sheet).
+
+  @param id {string} [optional] - Unique identifier for the drawer component.
+  @param trigger {string} [optional] - Text or HTML for the button that opens the drawer.
+  @param title {string} [optional] - Title text displayed in the drawer header.
+  @param description {string} [optional] - Description text displayed below the title.
+  @param footer {string} [optional] - HTML content for the drawer footer.
+  @param side {string} [optional] [default="bottom"] - Side the drawer opens from ("bottom", "top", "left", "right").
+  @param snap_points {string} [optional] - Comma-separated snap points as fractions (e.g. "0.25,0.5,1").
+  @param default_snap {number} [optional] - Default snap point when opening (0..1).
+  @param velocity_threshold {number} [optional] - Velocity threshold for snapping (px/ms).
+  @param handle {boolean} [optional] [default=true] - Whether to render a drag handle.
+  @param handle_only {boolean} [optional] [default=true] - Whether dragging is only possible from the handle.
+  @param close_on_overlay_click {boolean} [optional] [default=true] - Whether clicking the overlay closes the drawer.
+  @param close_button {boolean} [optional] [default=false] - Whether to include a close button.
+  @param drawer_attrs {object} [optional] - Additional HTML attributes for the <dialog>.
+  @param trigger_attrs {object} [optional] - Additional HTML attributes for the trigger button.
+  @param content_attrs {object} [optional] - Additional HTML attributes for the drawer content wrapper.
+  @param header_attrs {object} [optional] - Additional HTML attributes for the header element.
+  @param body_attrs {object} [optional] - Additional HTML attributes for the body section.
+  @param footer_attrs {object} [optional] - Additional HTML attributes for the footer element.
+#}
+{% macro drawer(
+  id=None,
+  trigger=None,
+  title=None,
+  description=None,
+  footer=None,
+  side="bottom",
+  snap_points=None,
+  default_snap=None,
+  velocity_threshold=None,
+  handle=true,
+  handle_only=true,
+  close_on_overlay_click=true,
+  close_button=false,
+  drawer_attrs={},
+  trigger_attrs={},
+  content_attrs={},
+  header_attrs={},
+  body_attrs={},
+  footer_attrs={}
+) %}
+{% set id = id or ("drawer-" + (range(100000, 999999) | random | string)) %}
+{% if trigger %}
+<button
+  type="button"
+  data-drawer-trigger="{{ id }}"
+  aria-controls="{{ id }}"
+  aria-expanded="false"
+  {% for key, value in trigger_attrs %}
+    {{ key }}="{{ value }}"
+  {% endfor %}
+>
+  {{ trigger | safe }}
+</button>
+{% endif %}
+<dialog
+  id="{{ id }}"
+  class="drawer {{ drawer_attrs.class }}"
+  data-side="{{ side if side else "bottom" }}"
+  data-handle-only="{{ "true" if handle_only else "false" }}"
+  data-close-on-overlay-click="{{ "true" if close_on_overlay_click else "false" }}"
+  {% if snap_points %}data-snap-points="{{ snap_points }}"{% endif %}
+  {% if default_snap is not none %}data-default-snap="{{ default_snap }}"{% endif %}
+  {% if velocity_threshold is not none %}data-velocity-threshold="{{ velocity_threshold }}"{% endif %}
+  {% if title %}aria-labelledby="{{ id }}-title"{% endif %}
+  {% if description %}aria-describedby="{{ id }}-description"{% endif %}
+  {% for key, value in drawer_attrs %}
+    {% if key != 'class' %}{{ key }}="{{ value }}"{% endif %}
+  {% endfor %}
+>
+  <div
+    class="{{ content_attrs.class }}"
+    {% for key, value in content_attrs %}
+      {% if key != 'class' %}{{ key }}="{{ value }}"{% endif %}
+    {% endfor %}
+  >
+    {% if handle %}
+      <div data-drawer-handle aria-hidden="true"></div>
+    {% endif %}
+
+    {% if title or description %}
+      <header
+        {% for key, value in header_attrs %}
+          {{ key }}="{{ value }}"
+        {% endfor %}
+      >
+        {% if title %}<h2 id="{{ id }}-title">{{ title | safe }}</h2>{% endif %}
+        {% if description %}<p id="{{ id }}-description">{{ description | safe }}</p>{% endif %}
+      </header>
+    {% endif %}
+
+    {% if caller %}
+      <section
+        {% for key, value in body_attrs %}
+          {{ key }}="{{ value }}"
+        {% endfor %}
+      >
+        {{ caller() }}
+      </section>
+    {% endif %}
+
+    {% if footer %}
+      <footer
+        {% for key, value in footer_attrs %}
+          {{ key }}="{{ value }}"
+        {% endfor %}
+      >
+        {{ footer | safe }}
+      </footer>
+    {% endif %}
+
+    {% if close_button %}
+      <button type="button" data-drawer-close aria-label="Close drawer">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+      </button>
+    {% endif %}
+  </div>
+</dialog>
+{% endmacro %}
