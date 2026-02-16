@@ -210,7 +210,9 @@ toc:
         <dt><code>label</code> <span class="badge-secondary">Optional</span></dt>
         <dd>The label of the cancel button. If not provided, the default label is "Dismiss".</dd>
         <dt><code>onclick</code> <span class="badge-secondary">Optional</span></dt>
-        <dd>The onclick of the cancel button.</dd>
+        <dd>(string) The onclick of the action. Inserted literally into the HTML so you probably want to escape it yourself.</dd>
+        <dt><code>href</code> <span class="badge-secondary">Optional</span></dt>
+        <dd>(string) The href of the action. If present, the onclick will be a <code>&lt;a&gt;</code> element. Inserted literally into the HTML so you probably want to escape it yourself. Overrides <code>conclick</code></dd>
       </dl>
     </dd>
     <dt><code>cancel</code> <span class="badge-secondary">Optional</span></dt>
@@ -219,7 +221,7 @@ toc:
         <dt><code>label</code> <span class="badge-secondary">Optional</span></dt>
         <dd>The label of the cancel button. If not provided, the default label is "Dismiss".</dd>
         <dt><code>onclick</code> <span class="badge-secondary">Optional</span></dt>
-        <dd>The onclick of the cancel button.</dd>
+        <dd>The onclick of the cancel button. Inserted literally into the HTML so you probably want to escape it yourself.</dd>
       </dl>
     </dd>
   </dl>
