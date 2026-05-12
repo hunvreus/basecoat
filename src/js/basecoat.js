@@ -1,6 +1,26 @@
 (() => {
   const componentRegistry = {};
   let observer = null;
+  const NODE_TYPES = {
+    ELEMENT: 1,
+    DOCUMENT: 9,
+    DOCUMENT_FRAGMENT: 11
+  };
+
+  const getScopedElements = (container, selector) => {
+    const elements = [];
+
+    if (
+      container.nodeType === NODE_TYPES.ELEMENT &&
+      typeof container.matches === 'function' &&
+      container.matches(selector)
+    ) {
+      elements.push(container);
+    }
+
+    elements.push(...container.querySelectorAll(selector));
+    return elements;
+  };
 
   const registerComponent = (name, selector, initFunction) => {
     componentRegistry[name] = {
@@ -84,10 +104,50 @@
     initAllComponents();
   };
 
+  const initInScope = (container, options = {}) => {
+    if (
+      !container ||
+      typeof container !== 'object' ||
+      ![
+        NODE_TYPES.ELEMENT,
+        NODE_TYPES.DOCUMENT,
+        NODE_TYPES.DOCUMENT_FRAGMENT
+      ].includes(container.nodeType)
+    ) {
+      console.warn('Invalid container passed to basecoat.initIn()', container);
+      return;
+    }
+
+    const { component: componentName, force = false } = options;
+    const componentNames = componentName ? [componentName] : Object.keys(componentRegistry);
+
+    if (componentName && !componentRegistry[componentName]) {
+      console.warn(`Component '${componentName}' not found in registry`);
+      return;
+    }
+
+    if (force) {
+      componentNames.forEach((name) => {
+        const flag = `data-${name}-initialized`;
+        getScopedElements(container, `[${flag}]`).forEach((element) => {
+          element.removeAttribute(flag);
+        });
+      });
+    }
+
+    componentNames.forEach((name) => {
+      const component = componentRegistry[name];
+      getScopedElements(container, component.selector).forEach((element) => {
+        initComponent(element, name);
+      });
+    });
+  };
+
   window.basecoat = {
     register: registerComponent,
     init: reinitComponent,
     initAll: reinitAll,
+    initIn: initInScope,
     start: startObserver,
     stop: stopObserver
   };

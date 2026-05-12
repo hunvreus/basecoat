@@ -14,7 +14,7 @@ CDN
 
 JavaScript
 - Auto‑init on `DOMContentLoaded`; observes DOM for new nodes.
-- Manual: `window.basecoat.init('<name>')` or `window.basecoat.initAll()`.
+- Manual: `window.basecoat.init('<name>')`, `window.basecoat.initAll()`, or `window.basecoat.initIn(container, options?)`.
 - Packages to import with ESM: `import 'basecoat-css/all'` or `import 'basecoat-css/tabs'`.
 
 Usage
@@ -81,7 +81,7 @@ Accessibility
 
 Troubleshooting
 - If a component doesn’t work, ensure its JS is loaded and required roles/IDs match examples.
-- For dynamic content, call `window.basecoat.init('<name>')` or `initAll()` after insertion.
+- For dynamic content, call `window.basecoat.init('<name>')`, `window.basecoat.initAll()`, or `window.basecoat.initIn(container, options?)` after insertion.
 
 License
 - MIT (see LICENSE.md)
@@ -126,6 +126,7 @@ import 'basecoat-css/toast';
 ```js
 window.basecoat.init('tabs');
 window.basecoat.initAll();
+window.basecoat.initIn(container, { component: 'tabs' });
 ```
 
 ## Basecoat usage rules
@@ -500,7 +501,7 @@ Additional CSS components include: `progress`, `skeleton`, `slider`, `spinner`, 
 
 ## Troubleshooting
 - If interactivity doesn’t work, ensure the component’s JS is included and required roles/IDs match the examples.
-- For dynamic content, call `window.basecoat.init('<name>')` or `window.basecoat.initAll()` after insertion.
+- For dynamic content, call `window.basecoat.init('<name>')`, `window.basecoat.initAll()`, or `window.basecoat.initIn(container, options?)` after insertion.
 
 ## License
 MIT (see LICENSE.md)
