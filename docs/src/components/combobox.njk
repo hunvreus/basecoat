@@ -97,6 +97,10 @@ document.addEventListener('alpine:init', () => {
 
 <div class="prose">
   <p>You can use the <code class="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-xs">select()</code> Nunjucks or Jinja macro for this component. If you use one of the macros, make sure to set <code>is_combobox</code> to <code>True</code> (or <code>true</code> for Nunjucks).</p>
+  <p>
+    To use the combobox in a form, pass a <code>name</code> parameter to the macro. This renders a hidden input that submits the selected value with the form.
+  </p>
+
 </div>
 
 <div class="flex flex-wrap gap-2 my-6">
@@ -115,6 +119,7 @@ document.addEventListener('alpine:init', () => {
 </div>
 
 {% set raw_code %}{% raw %}{% call select(
+  name="framework",
   listbox_attrs={"data-empty": "No framework found."},
   is_combobox=true
 ) %}
