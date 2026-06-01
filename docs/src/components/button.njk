@@ -28,6 +28,10 @@ toc:
         id: example-loading
       - label: Large
         id: example-large
+      - label: Extra Small
+        id: example-extra-small
+      - label: Extra Small Icon
+        id: example-extra-small-icon
       - label: Small
         id: example-small
 ---
@@ -60,9 +64,10 @@ toc:
     <li>
       <b>Sizes</b>:
       <ul>
+        <li><code>btn-xs</code> for extra small buttons.</li>
         <li><code>btn-sm</code> for small buttons.</li>
         <li><code>btn-lg</code> for large buttons.</li>
-        <li>You can combine sizes with any variant, for example <code>btn-lg-destructive</code> or <code>btn-sm-icon-outline</code>.</li>
+        <li>You can combine sizes with any variant, for example <code>btn-lg-destructive</code>, <code>btn-xs-outline</code> or <code>btn-sm-icon-outline</code>.</li>
       </ul>
     </li>
   </ul>
@@ -132,6 +137,20 @@ toc:
   Buy
 </button>{% endset %}
 {{ code_preview("button-large", code) }}
+
+<h3 id="example-extra-small"><a href="#example-extra-small">Extra Small</a></h3>
+
+{% set code %}<button class="btn-xs-outline">
+  XS outline
+</button>{% endset %}
+{{ code_preview("button-extra-small", code) }}
+
+<h3 id="example-extra-small-icon"><a href="#example-extra-small-icon">Extra Small Icon</a></h3>
+
+{% set code %}<button class="btn-xs-icon-outline">
+  {% lucide "plus" %}
+</button>{% endset %}
+{{ code_preview("button-extra-small-icon", code) }}
 
 <h3 id="example-small"><a href="#example-small">Small</a></h3>
 

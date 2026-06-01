@@ -36,6 +36,17 @@
       }
     })();
   </script>
+  {# Style variant #}
+  <script>
+    (function() {
+      try {
+        const storedStyle = localStorage.getItem('styleVariant') || 'vega';
+        document.documentElement.dataset.styleVariant = storedStyle;
+      } catch (event) {
+        console.error('Could not apply style variant from localStorage', event);
+      }
+    })();
+  </script>
   {# Meta #}
   <meta charset="utf-8">
   <meta http-equiv="Content-Language" content="en">
@@ -68,6 +79,18 @@
   <meta name="twitter:creator" content="{{ site.author.x }}">
   {# CSS #}
   <link rel="stylesheet" href="/assets/styles.css">
+  <link rel="stylesheet" id="style-variant-stylesheet">
+  <script>
+    (() => {
+      const styleLink = document.getElementById('style-variant-stylesheet');
+      const styleVariant = document.documentElement.dataset.styleVariant || 'vega';
+      if (styleVariant === 'vega') {
+        styleLink.removeAttribute('href');
+      } else {
+        styleLink.href = `/assets/style-${styleVariant}.css`;
+      }
+    })();
+  </script>
   {# JS #}
   <script src="/assets/js/basecoat.js?v={{ pkg.version }}" defer></script>
   <script src="/assets/js/command.js?v={{ pkg.version }}" defer></script>

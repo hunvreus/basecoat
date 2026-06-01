@@ -38,6 +38,44 @@
       });
     })();
   </script>
+  <select
+    class="select h-8 leading-none"
+    id="style-select"
+  >
+    <option value="vega">Vega</option>
+    <option value="nova">Nova</option>
+    <option value="maia">Maia</option>
+    <option value="lyra">Lyra</option>
+    <option value="mira">Mira</option>
+    <option value="luma">Luma</option>
+    <option value="sera">Sera</option>
+    <option value="rhea">Rhea</option>
+  </select>
+  <script>
+    (() => {
+      const styleSelect = document.getElementById('style-select');
+      const styleLink = document.getElementById('style-variant-stylesheet');
+      const applyStyle = (styleName) => {
+        const nextStyle = styleName || 'vega';
+        document.documentElement.dataset.styleVariant = nextStyle;
+        if (nextStyle === 'vega') {
+          styleLink.removeAttribute('href');
+        } else {
+          styleLink.href = `/assets/style-${nextStyle}.css`;
+        }
+      };
+
+      const storedStyle = localStorage.getItem('styleVariant') || 'vega';
+      if (styleSelect) styleSelect.value = storedStyle;
+      applyStyle(storedStyle);
+
+      styleSelect.addEventListener('change', () => {
+        const newStyle = styleSelect.value || 'vega';
+        applyStyle(newStyle);
+        localStorage.setItem('styleVariant', newStyle);
+      });
+    })();
+  </script>
 
   <button
     type="button"

@@ -1,0 +1,247 @@
+/* Button */
+@layer components {
+  .btn,
+  .btn-primary,
+  .btn-secondary,
+  .btn-outline,
+  .btn-ghost,
+  .btn-link,
+  .btn-destructive,
+  .btn-xs,
+  .btn-xs-primary,
+  .btn-xs-secondary,
+  .btn-xs-outline,
+  .btn-xs-ghost,
+  .btn-xs-link,
+  .btn-xs-destructive,
+  .btn-sm,
+  .btn-sm-primary,
+  .btn-sm-secondary,
+  .btn-sm-outline,
+  .btn-sm-ghost,
+  .btn-sm-link,
+  .btn-sm-destructive,
+  .btn-lg,
+  .btn-lg-primary,
+  .btn-lg-secondary,
+  .btn-lg-outline,
+  .btn-lg-ghost,
+  .btn-lg-link,
+  .btn-lg-destructive,
+  .btn-icon,
+  .btn-icon-primary,
+  .btn-icon-secondary,
+  .btn-icon-outline,
+  .btn-icon-ghost,
+  .btn-icon-link,
+  .btn-icon-destructive,
+  .btn-xs-icon,
+  .btn-xs-icon-primary,
+  .btn-xs-icon-secondary,
+  .btn-xs-icon-outline,
+  .btn-xs-icon-ghost,
+  .btn-xs-icon-link,
+  .btn-xs-icon-destructive,
+  .btn-sm-icon,
+  .btn-sm-icon-primary,
+  .btn-sm-icon-secondary,
+  .btn-sm-icon-outline,
+  .btn-sm-icon-ghost,
+  .btn-sm-icon-link,
+  .btn-sm-icon-destructive,
+  .btn-lg-icon,
+  .btn-lg-icon-primary,
+  .btn-lg-icon-secondary,
+  .btn-lg-icon-outline,
+  .btn-lg-icon-ghost,
+  .btn-lg-icon-link,
+  .btn-lg-icon-destructive {
+    @apply rounded-4xl border border-transparent bg-clip-padding text-sm font-medium focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive aria-invalid:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 active:not-aria-[haspopup]:translate-y-px [&_svg:not([class*='size-'])]:size-4;
+  }
+
+  .btn,
+  .btn-primary,
+  .btn-secondary,
+  .btn-outline,
+  .btn-ghost,
+  .btn-link,
+  .btn-destructive {
+    @apply h-9 gap-1.5 px-3;
+
+    &:has(> svg:first-child) {
+      @apply pl-2.5;
+    }
+
+    &:has(> svg:last-child) {
+      @apply pr-2.5;
+    }
+  }
+
+  .btn-xs,
+  .btn-xs-primary,
+  .btn-xs-secondary,
+  .btn-xs-outline,
+  .btn-xs-ghost,
+  .btn-xs-link,
+  .btn-xs-destructive {
+    @apply h-6 gap-1 px-2.5 text-xs [&_svg:not([class*='size-'])]:size-3;
+
+    &:has(> svg:first-child) {
+      @apply pl-2;
+    }
+
+    &:has(> svg:last-child) {
+      @apply pr-2;
+    }
+  }
+
+  .btn-sm,
+  .btn-sm-primary,
+  .btn-sm-secondary,
+  .btn-sm-outline,
+  .btn-sm-ghost,
+  .btn-sm-link,
+  .btn-sm-destructive {
+    @apply h-8 gap-1 px-3;
+
+    &:has(> svg:first-child) {
+      @apply pl-2;
+    }
+
+    &:has(> svg:last-child) {
+      @apply pr-2;
+    }
+  }
+
+  .btn-lg,
+  .btn-lg-primary,
+  .btn-lg-secondary,
+  .btn-lg-outline,
+  .btn-lg-ghost,
+  .btn-lg-link,
+  .btn-lg-destructive {
+    @apply h-10 gap-1.5 px-4;
+
+    &:has(> svg:first-child) {
+      @apply pl-3;
+    }
+
+    &:has(> svg:last-child) {
+      @apply pr-3;
+    }
+  }
+
+  .btn-icon,
+  .btn-icon-primary,
+  .btn-icon-secondary,
+  .btn-icon-outline,
+  .btn-icon-ghost,
+  .btn-icon-link,
+  .btn-icon-destructive {
+    @apply size-9;
+  }
+
+  .btn-xs-icon,
+  .btn-xs-icon-primary,
+  .btn-xs-icon-secondary,
+  .btn-xs-icon-outline,
+  .btn-xs-icon-ghost,
+  .btn-xs-icon-link,
+  .btn-xs-icon-destructive {
+    @apply size-6 [&_svg:not([class*='size-'])]:size-3;
+  }
+
+  .btn-sm-icon,
+  .btn-sm-icon-primary,
+  .btn-sm-icon-secondary,
+  .btn-sm-icon-outline,
+  .btn-sm-icon-ghost,
+  .btn-sm-icon-link,
+  .btn-sm-icon-destructive {
+    @apply size-8;
+  }
+
+  .btn-lg-icon,
+  .btn-lg-icon-primary,
+  .btn-lg-icon-secondary,
+  .btn-lg-icon-outline,
+  .btn-lg-icon-ghost,
+  .btn-lg-icon-link,
+  .btn-lg-icon-destructive {
+    @apply size-10;
+  }
+
+  .btn,
+  .btn-primary,
+  .btn-xs,
+  .btn-xs-primary,
+  .btn-sm,
+  .btn-sm-primary,
+  .btn-lg,
+  .btn-lg-primary,
+  .btn-icon,
+  .btn-icon-primary,
+  .btn-xs-icon,
+  .btn-xs-icon-primary,
+  .btn-sm-icon,
+  .btn-sm-icon-primary,
+  .btn-lg-icon,
+  .btn-lg-icon-primary {
+    @apply bg-primary text-primary-foreground hover:bg-primary/80;
+  }
+
+  .btn-secondary,
+  .btn-xs-secondary,
+  .btn-sm-secondary,
+  .btn-lg-secondary,
+  .btn-icon-secondary,
+  .btn-xs-icon-secondary,
+  .btn-sm-icon-secondary,
+  .btn-lg-icon-secondary {
+    @apply bg-secondary text-secondary-foreground hover:bg-[color-mix(in_oklch,var(--secondary),var(--foreground)_5%)] aria-expanded:bg-secondary aria-expanded:text-secondary-foreground;
+  }
+
+  .btn-outline,
+  .btn-xs-outline,
+  .btn-sm-outline,
+  .btn-lg-outline,
+  .btn-icon-outline,
+  .btn-xs-icon-outline,
+  .btn-sm-icon-outline,
+  .btn-lg-icon-outline {
+    @apply border-border bg-input/30 hover:bg-input/50 hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground;
+  }
+
+  .btn-ghost,
+  .btn-xs-ghost,
+  .btn-sm-ghost,
+  .btn-lg-ghost,
+  .btn-icon-ghost,
+  .btn-xs-icon-ghost,
+  .btn-sm-icon-ghost,
+  .btn-lg-icon-ghost {
+    @apply hover:bg-muted hover:text-foreground dark:hover:bg-muted/50 aria-expanded:bg-muted aria-expanded:text-foreground;
+  }
+
+  .btn-link,
+  .btn-xs-link,
+  .btn-sm-link,
+  .btn-lg-link,
+  .btn-icon-link,
+  .btn-xs-icon-link,
+  .btn-sm-icon-link,
+  .btn-lg-icon-link {
+    @apply text-primary underline-offset-4 hover:underline;
+  }
+
+  .btn-destructive,
+  .btn-xs-destructive,
+  .btn-sm-destructive,
+  .btn-lg-destructive,
+  .btn-icon-destructive,
+  .btn-xs-icon-destructive,
+  .btn-sm-icon-destructive,
+  .btn-lg-icon-destructive {
+    @apply bg-destructive/10 text-destructive hover:bg-destructive/20 dark:bg-destructive/20 dark:hover:bg-destructive/30 focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40;
+  }
+}

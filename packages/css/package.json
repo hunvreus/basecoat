@@ -58,6 +58,15 @@
     "./tabs.min": "./dist/js/tabs.min.js",
     "./toast": "./dist/js/toast.js",
     "./toast.min": "./dist/js/toast.min.js",
+    "./all.css": "./dist/basecoat.all.css",
+    "./styles/vega": "./dist/styles/style-vega.css",
+    "./styles/nova": "./dist/styles/style-nova.css",
+    "./styles/maia": "./dist/styles/style-maia.css",
+    "./styles/lyra": "./dist/styles/style-lyra.css",
+    "./styles/mira": "./dist/styles/style-mira.css",
+    "./styles/luma": "./dist/styles/style-luma.css",
+    "./styles/sera": "./dist/styles/style-sera.css",
+    "./styles/rhea": "./dist/styles/style-rhea.css",
     "./package.json": "./package.json"
   }
 }

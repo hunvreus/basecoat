@@ -77,6 +77,7 @@ async function build() {
 
   const srcDir = path.join(projectRoot, 'src');
   const srcCssDir = path.join(srcDir, 'css');
+  const srcCssStylesDir = path.join(srcCssDir, 'styles');
   const srcJsDir = path.join(srcDir, 'js');
   const srcNunjucksDir = path.join(srcDir, 'nunjucks');
   const srcJinjaDir = path.join(srcDir, 'jinja');
@@ -149,7 +150,19 @@ async function build() {
   console.log('Building CSS package...');
   await ensureDir(cssDistDir); // Ensure dist dir exists for css package
   await fs.copyFile(path.join(srcCssDir, 'basecoat.css'), path.join(cssDistDir, 'basecoat.css'));
+  await fs.copyFile(path.join(srcCssDir, 'basecoat.all.css'), path.join(cssDistDir, 'basecoat.all.css'));
   console.log(`Copied basecoat.css to ${cssDistDir}`);
+
+  // Copy split CSS folders used by basecoat.css imports.
+  const cssBaseSrcDir = path.join(srcCssDir, 'base');
+  const cssComponentsSrcDir = path.join(srcCssDir, 'components');
+  const cssBaseDistDir = path.join(cssDistDir, 'base');
+  const cssComponentsDistDir = path.join(cssDistDir, 'components');
+  const cssStylesDistDir = path.join(cssDistDir, 'styles');
+  await copyDirRecursive(cssBaseSrcDir, cssBaseDistDir);
+  await copyDirRecursive(cssComponentsSrcDir, cssComponentsDistDir);
+  await copyDirRecursive(srcCssStylesDir, cssStylesDistDir);
+  console.log(`Copied split CSS folders to ${cssDistDir}`);
 
   // Create Tailwind CSS builds for the CSS package
   const cdnCssSrc = path.join(srcCssDir, 'basecoat.cdn.css');

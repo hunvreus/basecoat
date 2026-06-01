@@ -128,7 +128,7 @@
        <li>
         <a
           href="{{ item.url }}"
-          {{ 'aria-current="page"' if item.current }}
+          {% if item.current %}aria-current="page"{% endif %}
           {% if item.attrs %}
             {% for key, value in item.attrs.items() %}
               {% if key != "href" and key != "aria-current" %}{{ key }}="{{ value }}"{% endif %}
