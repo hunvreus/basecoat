@@ -743,6 +743,7 @@
 
 /* Input */
 @layer components {
+  :is(.form, .field) input:not([type]),
   :is(.form, .field) input[type='text']:not(:is(.select [data-popover] > header input[role='combobox'], .command > header input, .dialog > * > header input)),
   :is(.form, .field) input[type='email'],
   :is(.form, .field) input[type='password'],
@@ -756,6 +757,7 @@
   :is(.form, .field) input[type='month'],
   :is(.form, .field) input[type='week'],
   :is(.form, .field) input[type='time'],
+  .input:not([type]),
   .input[type='text'],
   .input[type='email'],
   .input[type='password'],
