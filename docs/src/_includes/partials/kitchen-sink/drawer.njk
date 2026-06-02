@@ -1,0 +1,30 @@
+{% from "drawer.njk" import drawer %}
+
+<section id="drawer" class="w-full rounded-lg border scroll-mt-14">
+  <header class="border-b px-4 py-3 flex items-center justify-between">
+    <h2 class="text-sm font-medium">Drawer</h2>
+    <a href="/components/drawer" class="text-muted-foreground hover:text-foreground" data-tooltip="See documentation" data-side="left">
+      {% lucide "book-open", { "class": "size-4" } %}
+    </a>
+  </header>
+  <div class="p-4">
+    <div class="flex flex-wrap items-center gap-4">
+      {% set footer %}
+        <button class="btn-outline" type="button" data-drawer-close>Close</button>
+      {% endset %}
+      {% call drawer(
+        id="kitchen-sink-drawer",
+        trigger="Open drawer",
+        trigger_attrs={"class": "btn-outline"},
+        title="Kitchen sink drawer",
+        description="A modal drawer component.",
+        footer=footer,
+        side="bottom"
+      ) %}
+        <div class="p-4 pt-0 text-sm text-muted-foreground">
+          Drag the handle to close or snap.
+        </div>
+      {% endcall %}
+    </div>
+  </div>
+</section>
