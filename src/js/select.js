@@ -17,6 +17,8 @@
       return;
     }
 
+    selectComponent._basecoatSelectDestroy?.();
+
     const allOptions = Array.from(listbox.querySelectorAll('[role="option"]'));
     const options = allOptions.filter(opt => opt.getAttribute('aria-disabled') !== 'true');
     let visibleOptions = [...options];
@@ -161,8 +163,10 @@
       toggleMultipleValue(option);
     };
 
+    let filterOptions = null;
+
     if (filter) {
-      const filterOptions = () => {
+      filterOptions = () => {
         const searchTerm = filter.value.trim().toLowerCase();
 
         setActiveOption(-1);
@@ -295,7 +299,7 @@
       }
     };
 
-    listbox.addEventListener('mousemove', (event) => {
+    const handleListboxMouseMove = (event) => {
       const option = event.target.closest('[role="option"]');
       if (option && visibleOptions.includes(option)) {
         const index = options.indexOf(option);
@@ -303,21 +307,16 @@
           setActiveOption(index);
         }
       }
-    });
+    };
 
-    listbox.addEventListener('mouseleave', () => {
+    const handleListboxMouseLeave = () => {
       const selectedOption = listbox.querySelector('[role="option"][aria-selected="true"]');
       if (selectedOption) {
         setActiveOption(options.indexOf(selectedOption));
       } else {
         setActiveOption(-1);
       }
-    });
-
-    trigger.addEventListener('keydown', handleKeyNavigation);
-    if (filter) {
-      filter.addEventListener('keydown', handleKeyNavigation);
-    }
+    };
 
     const openPopover = () => {
       document.dispatchEvent(new CustomEvent('basecoat:popover', {
@@ -344,16 +343,16 @@
       }
     };
 
-    trigger.addEventListener('click', () => {
+    const handleTriggerClick = () => {
       const isExpanded = trigger.getAttribute('aria-expanded') === 'true';
       if (isExpanded) {
         closePopover();
       } else {
         openPopover();
       }
-    });
+    };
 
-    listbox.addEventListener('click', (event) => {
+    const handleListboxClick = (event) => {
       const clickedOption = event.target.closest('[role="option"]');
       if (!clickedOption) return;
 
@@ -378,24 +377,50 @@
         }
         closePopover();
       }
-    });
+    };
 
-    document.addEventListener('click', (event) => {
+    const handleDocumentClick = (event) => {
       if (!selectComponent.contains(event.target)) {
         closePopover(false);
       }
-    });
+    };
 
-    document.addEventListener('basecoat:popover', (event) => {
+    const handleDocumentPopover = (event) => {
       if (event.detail.source !== selectComponent) {
         closePopover(false);
       }
-    });
+    };
+
+    listbox.addEventListener('mousemove', handleListboxMouseMove);
+    listbox.addEventListener('mouseleave', handleListboxMouseLeave);
+    trigger.addEventListener('keydown', handleKeyNavigation);
+    if (filter) {
+      filter.addEventListener('keydown', handleKeyNavigation);
+    }
+    trigger.addEventListener('click', handleTriggerClick);
+    listbox.addEventListener('click', handleListboxClick);
+    document.addEventListener('click', handleDocumentClick);
+    document.addEventListener('basecoat:popover', handleDocumentPopover);
+
+    selectComponent._basecoatSelectDestroy = () => {
+      if (filter) {
+        filter.removeEventListener('input', filterOptions);
+        filter.removeEventListener('keydown', handleKeyNavigation);
+      }
+      listbox.removeEventListener('mousemove', handleListboxMouseMove);
+      listbox.removeEventListener('mouseleave', handleListboxMouseLeave);
+      trigger.removeEventListener('keydown', handleKeyNavigation);
+      trigger.removeEventListener('click', handleTriggerClick);
+      listbox.removeEventListener('click', handleListboxClick);
+      document.removeEventListener('click', handleDocumentClick);
+      document.removeEventListener('basecoat:popover', handleDocumentPopover);
+    };
 
     popover.setAttribute('aria-hidden', 'true');
 
     // Public API
     Object.defineProperty(selectComponent, 'value', {
+      configurable: true,
       get: () => {
         if (isMultiple) {
           return options.filter(opt => selectedOptions.has(opt)).map(getValue);
