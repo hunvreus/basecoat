@@ -150,6 +150,21 @@
       visibleMenuItems[0].scrollIntoView({ block: 'nearest' });
     }
 
+    // Select input text when dialog opens. This makes it easier to type a
+    // new command without having to delete the existing command.
+    const dialog = container.closest('dialog.command-dialog');
+    if (dialog) {
+      const dialogObserver = new MutationObserver((mutations) => {
+        for (const mutation of mutations) {
+          if (mutation.attributeName === 'open' && dialog.hasAttribute('open')) {
+            input.select();
+            break;
+          }
+        }
+      });
+      dialogObserver.observe(dialog, { attributes: true, attributeFilter: ['open'] });
+    }
+
     container.dataset.commandInitialized = true;
     container.dispatchEvent(new CustomEvent('basecoat:initialized'));
   };
