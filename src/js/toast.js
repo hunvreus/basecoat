@@ -165,13 +165,22 @@
   }
 
   document.addEventListener('basecoat:toast', (event) => {
-    if (!toaster) {
-      console.error('Cannot create toast: toaster container not found on page.');
+    const { target, config = {} } = event.detail || {};
+
+    let toasterTarget = toaster;
+    if (target) {
+      toasterTarget = typeof target === 'string'
+        ? document.querySelector(target)
+        : target;
+    }
+
+    if (!toasterTarget) {
+      console.error(`Cannot create toast: toaster container "${target}" not found on page.`);
       return;
     }
-    const config = event.detail?.config || {};
+
     const toastElement = createToast(config);
-    toaster.appendChild(toastElement);
+    toasterTarget.appendChild(toastElement);
   });
 
   if (window.basecoat) {
