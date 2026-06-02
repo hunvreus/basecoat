@@ -3,38 +3,35 @@
     const trigger = selectComponent.querySelector(':scope > button');
     const selectedLabel = trigger.querySelector(':scope > span');
     const popover = selectComponent.querySelector(':scope > [data-popover]');
-    const listbox = popover ? popover.querySelector('[role="listbox"]') : null;
+    const listbox = popover.querySelector('[role="listbox"]');
     const input = selectComponent.querySelector(':scope > input[type="hidden"]');
     const filter = selectComponent.querySelector('header input[type="text"]');
-
     if (!trigger || !popover || !listbox || !input) {
       const missing = [];
       if (!trigger) missing.push('trigger');
       if (!popover) missing.push('popover');
       if (!listbox) missing.push('listbox');
-      if (!input) missing.push('input');
+      if (!input)   missing.push('input');
       console.error(`Select component initialisation failed. Missing element(s): ${missing.join(', ')}`, selectComponent);
       return;
     }
+    
+    const isMultiSelect = listbox.getAttribute('aria-multiselectable') === 'true';
+    const initialSelectedLabel = selectedLabel.cloneNode(true);
+    const allowedMultiSelectBadgeVariants = ['secondary', 'destructive', 'ghost', 'outline'];
 
     const allOptions = Array.from(listbox.querySelectorAll('[role="option"]'));
     const options = allOptions.filter(opt => opt.getAttribute('aria-disabled') !== 'true');
     let visibleOptions = [...options];
     let activeIndex = -1;
-    const isMultiple = listbox.getAttribute('aria-multiselectable') === 'true';
-    const selectedOptions = isMultiple ? new Set() : null;
-    const placeholder = isMultiple ? (selectComponent.dataset.placeholder || '') : null;
-    const closeOnSelect = selectComponent.dataset.closeOnSelect === 'true';
-
-    const getValue = (opt) => opt.dataset.value ?? opt.textContent.trim();
 
     const setActiveOption = (index) => {
       if (activeIndex > -1 && options[activeIndex]) {
         options[activeIndex].classList.remove('active');
       }
-
+      
       activeIndex = index;
-
+      
       if (activeIndex > -1) {
         const activeOption = options[activeIndex];
         activeOption.classList.add('active');
@@ -53,173 +50,233 @@
       return parseFloat(style.transitionDuration) > 0 || parseFloat(style.transitionDelay) > 0;
     };
 
-    const updateValue = (optionOrOptions, triggerEvent = true) => {
-      let value;
-
-      if (isMultiple) {
-        const opts = Array.isArray(optionOrOptions) ? optionOrOptions : [];
-        selectedOptions.clear();
-        opts.forEach(opt => selectedOptions.add(opt));
-
-        // Get selected options in DOM order
-        const selected = options.filter(opt => selectedOptions.has(opt));
-        if (selected.length === 0) {
-          selectedLabel.textContent = placeholder;
-          selectedLabel.classList.add('text-muted-foreground');
+    const updateValue = (option, triggerEvent = true) => {
+      if (option) {
+        if (isMultiSelect) {
+          updateValueMultiSelect(option, triggerEvent);
         } else {
-          selectedLabel.textContent = selected.map(opt => opt.dataset.label || opt.textContent.trim()).join(', ');
-          selectedLabel.classList.remove('text-muted-foreground');
-        }
+          selectedLabel.innerHTML = option.dataset.label || option.innerHTML;
+          input.value = option.dataset.value;
+          listbox.querySelector('[role="option"][aria-selected="true"]')?.removeAttribute('aria-selected');
+          option.setAttribute('aria-selected', 'true');
+          
+          if (triggerEvent) {
+            const event = new CustomEvent('change', {
+              detail: { value: option.dataset.value },
+              bubbles: true
+            });
+            selectComponent.dispatchEvent(event);
+          }
+        }   
+      }
+    };
 
-        value = selected.map(getValue);
-        input.value = JSON.stringify(value);
-      } else {
-        const option = optionOrOptions;
-        if (!option) return;
-        selectedLabel.innerHTML = option.innerHTML;
-        value = getValue(option);
-        input.value = value;
+    const updateValueMultiSelect = (option, triggerEvent = true) => {
+      const selectedOption = option.getAttribute('aria-selected');
+      if (selectedOption === 'true') {
+        option.setAttribute('aria-selected', 'false');
+      } else if (selectedOption === 'false') {
+        option.setAttribute('aria-selected', 'true');
       }
 
-      options.forEach(opt => {
-        const isSelected = isMultiple ? selectedOptions.has(opt) : opt === optionOrOptions;
-        if (isSelected) {
-          opt.setAttribute('aria-selected', 'true');
+      const selected = listbox.querySelectorAll('[role="option"][aria-selected="true"]');
+      const threshold = listbox.dataset.multiselectThreshold || selected.length
+
+      if (selected.length > threshold) {
+
+        const thresholdText = document.createElement('p');
+        thresholdText.textContent = `${selected.length} ` + (listbox.dataset.multiselectThresholdText || 'entries selected')
+
+        if (listbox.getAttribute('aria-controls') !== null) {
+          const controlledElementId = listbox.getAttribute('aria-controls');
+          const controlledElement = document.getElementById(controlledElementId);
+          if (controlledElement !== null) {
+            controlledElement.replaceChildren(thresholdText);
+          } else {
+            console.error(`aria-controls of listbox references an element that does not exist: ${controlledElementId}`, selectComponent);
+            return;
+          }
         } else {
-          opt.removeAttribute('aria-selected');
+          selectedLabel.replaceChildren(thresholdText);
         }
-      });
+      } else if (selected.length > 0) {
+        const badgeContainer = document.createElement('div');
+        badgeContainer.className = 'items-center gap-1 flex';
+
+        selected.forEach(opt => {
+          if (opt.dataset.multiselectDisplay !== undefined) {
+            let display = document.getElementById(opt.dataset.multiselectDisplay);
+            if (display === null) {
+              console.error(`data-multiselect-display of option references an element that does not exist: ${opt}`, selectComponent);
+              return;
+            }
+            display = display.cloneNode(true)
+            display.removeAttribute('hidden')
+            display.removeAttribute('id')
+
+            badgeContainer.appendChild(display);
+          } else {
+            const span = document.createElement('span');
+            const variant = opt.dataset.multiselectVariant;
+            if (variant !== undefined && allowedMultiSelectBadgeVariants.includes(variant)) {
+              span.className = `badge-${variant}`;
+            } else {
+              span.className = 'badge';
+            }
+            span.className += ' font-normal';
+            span.textContent = opt.dataset.label || opt.innerHTML;
+
+            const removeButton = document.createElement('button');
+            removeButton.className = 'btn-ghost w-4 h-4 -m-1';
+            removeButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"></path> <path d="m6 6 12 12"></path></svg>`;
+            removeButton.addEventListener('click', () => {
+              updateValue(opt);
+            });
+            
+            span.insertBefore(removeButton, span.firstChild);
+            badgeContainer.appendChild(span);
+          }
+        });
+
+        if (listbox.getAttribute('aria-controls') !== null) {
+          const controlledElementId = listbox.getAttribute('aria-controls');
+          const controlledElement = document.getElementById(controlledElementId);
+          if (controlledElement !== null) {
+            controlledElement.replaceChildren(...badgeContainer.childNodes);
+          } else {
+            console.error(`aria-controls of listbox references an element that does not exist: ${controlledElementId}`, selectComponent);
+            return;
+          }
+        } else {
+          selectedLabel.replaceChildren(badgeContainer);
+        }
+
+        const clearButton = listbox.querySelector('[data-multiselect-clearelement]');
+
+        if (clearButton === null) {
+          const listboxSeparator = document.createElement('hr');
+          listboxSeparator.setAttribute('data-multiselect-clearelement', "");
+          listboxSeparator.role = 'separator';
+
+          const clearSelectionOption = document.createElement('button');
+          clearSelectionOption.setAttribute('data-multiselect-clearelement', "");
+          clearSelectionOption.className = 'btn-ghost w-full justify-center';
+          clearSelectionOption.textContent = listbox.dataset.multiselectClosetext || 'Clear';
+          clearSelectionOption.addEventListener('click', () => {
+            const selected = listbox.querySelectorAll('[role="option"][aria-selected="true"]');
+            selected.forEach(opt => {
+              opt.setAttribute('aria-selected', 'false');
+            });
+            updateValue(clearSelectionOption);
+          });
+          listbox.append(listboxSeparator, clearSelectionOption)
+        } 
+      } else if (selected.length === 0) {
+        if (listbox.getAttribute('aria-controls') !== null) {
+          const controlledElementId = listbox.getAttribute('aria-controls');
+          const controlledElement = document.getElementById(controlledElementId);
+          if (controlledElement !== null) {
+            controlledElement.replaceChildren();
+          } else {
+            console.error(`aria-controls of listbox references an element that does not exist: ${controlledElementId}`, selectComponent);
+            return;
+          }
+        } else {
+          let initial = initialSelectedLabel.cloneNode(true);
+          selectedLabel.replaceChildren(...initial.childNodes);
+        }
+
+        const clearButtonElements = listbox.querySelectorAll('[data-multiselect-clearelement]');
+        clearButtonElements.forEach(el => {
+            listbox.removeChild(el);
+          });
+      }
+
+      const inputValue = JSON.stringify(Array.from(selected).map(opt => opt.dataset.value))
+
+      input.value = inputValue
 
       if (triggerEvent) {
-        selectComponent.dispatchEvent(new CustomEvent('change', {
-          detail: { value },
+        const event = new CustomEvent('change', {
+          detail: { value: inputValue },
           bubbles: true
-        }));
+        });
+        selectComponent.dispatchEvent(event);
       }
     };
 
     const closePopover = (focusOnTrigger = true) => {
       if (popover.getAttribute('aria-hidden') === 'true') return;
-
+      
       if (filter) {
         const resetFilter = () => {
           filter.value = '';
           visibleOptions = [...options];
           allOptions.forEach(opt => opt.setAttribute('aria-hidden', 'false'));
         };
-
+        
         if (hasTransition()) {
           popover.addEventListener('transitionend', resetFilter, { once: true });
         } else {
           resetFilter();
         }
       }
-
+      
       if (focusOnTrigger) trigger.focus();
       popover.setAttribute('aria-hidden', 'true');
       trigger.setAttribute('aria-expanded', 'false');
       setActiveOption(-1);
-    };
+    }
 
-    const toggleMultipleValue = (option) => {
-      if (selectedOptions.has(option)) {
-        selectedOptions.delete(option);
-      } else {
-        selectedOptions.add(option);
+    const selectOption = (option) => {
+      if (!option) return;
+      
+      const oldValue = input.value;
+      const newValue = option.dataset.value;
+
+      if (newValue != null && newValue !== oldValue) {
+        updateValue(option);
       }
-      updateValue(options.filter(opt => selectedOptions.has(opt)));
-    };
-
-    const select = (value) => {
-      if (isMultiple) {
-        const option = options.find(opt => getValue(opt) === value && !selectedOptions.has(opt));
-        if (!option) return;
-        selectedOptions.add(option);
-        updateValue(options.filter(opt => selectedOptions.has(opt)));
-      } else {
-        const option = options.find(opt => getValue(opt) === value);
-        if (!option) return;
-        if (input.value !== value) {
-          updateValue(option);
-        }
+      
+      if (!isMultiSelect)
+      {
         closePopover();
       }
     };
 
-    const deselect = (value) => {
-      if (!isMultiple) return;
-      const option = options.find(opt => getValue(opt) === value && selectedOptions.has(opt));
-      if (!option) return;
-      selectedOptions.delete(option);
-      updateValue(options.filter(opt => selectedOptions.has(opt)));
-    };
-
-    const toggle = (value) => {
-      if (!isMultiple) return;
-      const option = options.find(opt => getValue(opt) === value);
-      if (!option) return;
-      toggleMultipleValue(option);
+    const selectByValue = (value) => {
+      const option = options.find(opt => opt.dataset.value === value);
+      selectOption(option);
     };
 
     if (filter) {
       const filterOptions = () => {
         const searchTerm = filter.value.trim().toLowerCase();
-
+        
         setActiveOption(-1);
 
         visibleOptions = [];
         allOptions.forEach(option => {
-          if (option.hasAttribute('data-force')) {
-            option.setAttribute('aria-hidden', 'false');
-            if (options.includes(option)) {
-              visibleOptions.push(option);
-            }
-            return;
-          }
-
-          const optionText = (option.dataset.filter || option.textContent).trim().toLowerCase();
-          const keywordList = (option.dataset.keywords || '')
-            .toLowerCase()
-            .split(/[\s,]+/)
-            .filter(Boolean);
-          const matchesKeyword = keywordList.some(keyword => keyword.includes(searchTerm));
-          const matches = optionText.includes(searchTerm) || matchesKeyword;
+          const optionText = (option.dataset.label || option.textContent).trim().toLowerCase();
+          const matches = optionText.includes(searchTerm);
           option.setAttribute('aria-hidden', String(!matches));
           if (matches && options.includes(option)) {
             visibleOptions.push(option);
           }
         });
       };
-
+  
       filter.addEventListener('input', filterOptions);
     }
 
-    // Initialization
-    if (isMultiple) {
-      const ariaSelected = options.filter(opt => opt.getAttribute('aria-selected') === 'true');
-      try {
-        const parsed = JSON.parse(input.value || '[]');
-        const validValues = new Set(options.map(getValue));
-        const initialValues = Array.isArray(parsed) ? parsed.filter(v => validValues.has(v)) : [];
+    let initialOption = options.find(opt => opt.dataset.value === input.value);
+    
+    if (!initialOption) {
+      initialOption = options.find(opt => opt.dataset.value !== undefined) ?? options[0];
+    }
 
-        const initialOptions = [];
-        if (initialValues.length > 0) {
-          // Match values to options in order, allowing duplicates
-          initialValues.forEach(val => {
-            const opt = options.find(o => getValue(o) === val && !initialOptions.includes(o));
-            if (opt) initialOptions.push(opt);
-          });
-        } else {
-          initialOptions.push(...ariaSelected);
-        }
-
-        updateValue(initialOptions, false);
-      } catch (e) {
-        updateValue(ariaSelected, false);
-      }
-    } else {
-      const initialOption = options.find(opt => getValue(opt) === input.value) || options[0];
-      if (initialOption) updateValue(initialOption, false);
+    if (!isMultiSelect) {
+        updateValue(initialOption, false);
     }
 
     const handleKeyNavigation = (event) => {
@@ -236,28 +293,17 @@
         }
         return;
       }
-
+      
       event.preventDefault();
 
       if (event.key === 'Escape') {
         closePopover();
         return;
       }
-
+      
       if (event.key === 'Enter') {
         if (activeIndex > -1) {
-          const option = options[activeIndex];
-          if (isMultiple) {
-            toggleMultipleValue(option);
-            if (closeOnSelect) {
-              closePopover();
-            }
-          } else {
-            if (input.value !== getValue(option)) {
-              updateValue(option);
-            }
-            closePopover();
-          }
+          selectOption(options[activeIndex]);
         }
         return;
       }
@@ -323,7 +369,7 @@
       document.dispatchEvent(new CustomEvent('basecoat:popover', {
         detail: { source: selectComponent }
       }));
-
+      
       if (filter) {
         if (hasTransition()) {
           popover.addEventListener('transitionend', () => {
@@ -336,7 +382,7 @@
 
       popover.setAttribute('aria-hidden', 'false');
       trigger.setAttribute('aria-expanded', 'true');
-
+      
       const selectedOption = listbox.querySelector('[role="option"][aria-selected="true"]');
       if (selectedOption) {
         setActiveOption(options.indexOf(selectedOption));
@@ -355,28 +401,8 @@
 
     listbox.addEventListener('click', (event) => {
       const clickedOption = event.target.closest('[role="option"]');
-      if (!clickedOption) return;
-
-      const option = options.find(opt => opt === clickedOption);
-      if (!option) return;
-
-      if (isMultiple) {
-        toggleMultipleValue(option);
-        if (closeOnSelect) {
-          closePopover();
-        } else {
-          setActiveOption(options.indexOf(option));
-          if (filter) {
-            filter.focus();
-          } else {
-            trigger.focus();
-          }
-        }
-      } else {
-        if (input.value !== getValue(option)) {
-          updateValue(option);
-        }
-        closePopover();
+      if (clickedOption) {
+        selectOption(clickedOption);
       }
     });
 
@@ -393,43 +419,8 @@
     });
 
     popover.setAttribute('aria-hidden', 'true');
-
-    // Public API
-    Object.defineProperty(selectComponent, 'value', {
-      get: () => {
-        if (isMultiple) {
-          return options.filter(opt => selectedOptions.has(opt)).map(getValue);
-        } else {
-          return input.value;
-        }
-      },
-      set: (val) => {
-        if (isMultiple) {
-          const values = Array.isArray(val) ? val : (val != null ? [val] : []);
-          const opts = [];
-          values.forEach(v => {
-            const opt = options.find(o => getValue(o) === v && !opts.includes(o));
-            if (opt) opts.push(opt);
-          });
-          updateValue(opts);
-        } else {
-          const option = options.find(opt => getValue(opt) === val);
-          if (option) {
-            updateValue(option);
-            closePopover();
-          }
-        }
-      }
-    });
-
-    selectComponent.select = select;
-    selectComponent.selectByValue = select; // Backward compatibility alias
-    if (isMultiple) {
-      selectComponent.deselect = deselect;
-      selectComponent.toggle = toggle;
-      selectComponent.selectAll = () => updateValue(options);
-      selectComponent.selectNone = () => updateValue([]);
-    }
+    
+    selectComponent.selectByValue = selectByValue;
     selectComponent.dataset.selectInitialized = true;
     selectComponent.dispatchEvent(new CustomEvent('basecoat:initialized'));
   };
