@@ -23,6 +23,17 @@ toc:
         id: install-npm-js
       - label: That's it
         id: install-npm-done
+  - label: Install using Tailwind CLI
+    id: install-cli-standalone
+    children:
+      - label: Copy Basecoat CSS
+        id: install-cli-copy-css
+      - label: Create your CSS entry file
+        id: install-cli-create-css
+      - label: Process with Tailwind CLI
+        id: install-cli-process
+      - label: Add JavaScript components
+        id: install-cli-js
   - label: Components with JavaScript
     id: install-js
   - label: Use the CLI
@@ -138,6 +149,53 @@ import 'basecoat-css/tabs';{% endraw %}{% endset %}
       <p>You can now use any of the Basecoat classes in your project (e.g. <code>btn</code>, <code>card</code>, <code>input</code>, etc). Read the documentation about each component to get started (e.g. <a href="/components/button">button</a>, <a href="/components/card">card</a>, <a href="/components/input">input</a>, etc).</p>
       <p>Some components (e.g. <a href="/components/select">Select</a>) require <a href="#install-js">JavaScript code to work</a>.</p>
     </div>
+  </li>
+</ol>
+
+<h2 id="install-cli-standalone"><a href="#install-cli-standalone">Install using Tailwind CLI</a></h2>
+
+<p class="prose">If you want to avoid npm entirely, you can use the <a href="https://tailwindcss.com/docs/installation#tooling-setup" target="_blank">Tailwind standalone CLI</a> to process your CSS. This gives you full Tailwind utilities alongside Basecoat components.</p>
+
+<ol class="[&>h3]:step steps mb-12 md:ml-4 md:border-l md:pl-8">
+  <li class="step">
+    <h3 class="mb-4 scroll-m-20 font-semibold tracking-tight" id="install-cli-copy-css"><a href="#install-cli-copy-css">Copy Basecoat CSS</a></h3>
+    <div class="prose">
+      <p>Download the <a href="https://github.com/hunvreus/basecoat/blob/main/src/css/basecoat.css" target="_blank"><code>basecoat.css</code></a> file and place it in your project (e.g., <code>./css/basecoat.css</code>).</p>
+    </div>
+  </li>
+  <li class="step mt-8">
+    <h3 class="mb-4 scroll-m-20 font-semibold tracking-tight" id="install-cli-create-css"><a href="#install-cli-create-css">Create your CSS entry file</a></h3>
+    <div class="prose">
+      <p>Create a CSS file that imports Tailwind first, then Basecoat:</p>
+    </div>
+    {% set code %}{% raw %}@import "tailwindcss";
+@import "./basecoat.css";{% endraw %}{% endset %}
+    {{ code_block(code, "css") }}
+  </li>
+  <li class="step mt-8">
+    <h3 class="mb-4 scroll-m-20 font-semibold tracking-tight" id="install-cli-process"><a href="#install-cli-process">Process with Tailwind CLI</a></h3>
+    <div class="prose">
+      <p>Run the Tailwind CLI to compile your CSS:</p>
+    </div>
+    {% set code %}tailwindcss -i ./styles.css -o ./dist/styles.css --watch{% endset %}
+    {{ code_block(code, "bash") }}
+    <div class="prose">
+      <p>This generates a full CSS file with all Tailwind utilities and Basecoat components.</p>
+    </div>
+  </li>
+  <li class="step mt-8">
+    <h3 class="mb-4 scroll-m-20 font-semibold tracking-tight" id="install-cli-js"><a href="#install-cli-js">Add JavaScript components</a></h3>
+    <div class="prose">
+      <p>Some components (like <a href="/components/dropdown-menu">Dropdown Menu</a>) need JavaScript. Since npm is not available, copy the pre-built JS files from the <a href="https://github.com/hunvreus/basecoat/tree/main/packages/css/dist/js" target="_blank">GitHub repository</a> to your project:</p>
+      <ul>
+        <li><code>basecoat.min.js</code> — registers and initializes components</li>
+        <li><code>dropdown-menu.min.js</code> — the specific component you need</li>
+      </ul>
+      <p>Then add them to your HTML:</p>
+    </div>
+    {% set code %}<script src="./path/to/basecoat.min.js" type="module"></script>
+<script src="./path/to/dropdown-menu.min.js" type="module"></script>{% endset %}
+    {{ code_block(code, "html") }}
   </li>
 </ol>
 
