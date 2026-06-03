@@ -21,7 +21,7 @@
    - base layer, default token fallbacks, and semantic utilities needed by CDN users
 2. `src/css/components/*.css`
    - Basecoat component selectors and shared structural behavior
-3. `src/css/styles/style-*.css`
+3. `src/css/styles/*.css`
    - one file per style pack: `vega`, `nova`, `maia`, `lyra`, `mira`, `luma`, `sera`, `rhea`
    - component visuals: size, spacing, radius, typography, shadows, focus rings, variant colors when style-owned
 4. Aggregates
@@ -33,7 +33,7 @@
 
 No `.style-*` wrapper is part of the Basecoat public contract for style selection. Users choose a style by importing a standalone style bundle or using a style-specific generated CDN asset. Docs switch by swapping the single active full stylesheet URL.
 
-Do not load Vega/default first and then layer another style pack on top. Split files under `src/css/styles/style-*.css` are source organization and advanced composition only. They should map upstream style intent directly and avoid defensive resets whose only purpose is undoing another style pack.
+Do not load Vega/default first and then layer another style pack on top. Split files under `src/css/styles/*.css` are source organization and advanced composition only. They should map upstream style intent directly and avoid defensive resets whose only purpose is undoing another style pack.
 
 ## Per-Component File Checklist
 
@@ -45,7 +45,7 @@ For every component, check these files before editing:
 - Upstream base component: `../_sandbox/shadcn-ui/apps/v4/registry/bases/base/ui/<component>.tsx`
 - Upstream docs page: `../_sandbox/shadcn-ui/apps/v4/content/docs/components/{base,radix}/<component>.mdx`
 - Upstream style packs: `../_sandbox/shadcn-ui/apps/v4/registry/styles/style-{vega,nova,maia,lyra,mira,luma,sera,rhea}.css`
-- Basecoat style packs: `src/css/styles/style-{vega,nova,maia,lyra,mira,luma,sera,rhea}.css`
+- Basecoat style packs: `src/css/styles/{vega,nova,maia,lyra,mira,luma,sera,rhea}.css`
 
 ## Component Migration Workflow
 

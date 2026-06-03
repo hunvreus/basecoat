@@ -80,7 +80,7 @@ export async function generateCssEntrypoints({ cssDir = path.resolve('src/css') 
   for (const style of styles) {
     await writeIfChanged(
       path.join(cssDir, `basecoat-${style}.css`),
-      `@import "./basecoat-base.css";\n@import "./styles/style-${style}.css";\n`,
+      `@import "./basecoat-base.css";\n@import "./styles/${style}.css";\n`,
     );
     await writeIfChanged(
       path.join(cssDir, `basecoat-${style}.cdn.css`),

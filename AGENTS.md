@@ -18,7 +18,7 @@ Basecoat is not a literal DOM port of shadcn/ui. It is an alternative implementa
 - Edit sources only:
   - `src/css/base/base.css` – Shared base layer, tokens, and semantic utility classes
   - `src/css/components/*.css` – Component CSS classes (Tailwind + custom)
-  - `src/css/styles/style-*.css` – Style-pack visual rules (`vega`, `nova`, `maia`, `lyra`, `mira`, `luma`, `sera`, `rhea`)
+  - `src/css/styles/*.css` – Style-pack visual rules (`vega`, `nova`, `maia`, `lyra`, `mira`, `luma`, `sera`, `rhea`)
   - `src/css/basecoat.css` – Aggregate CSS entrypoint
   - `src/js/*.js` – Individual component JS files (kebab-case, ESM) + `basecoat.js` (component registry)
   - `src/nunjucks/*.njk` and `src/jinja/*.html.jinja` – Component template macros
@@ -41,17 +41,17 @@ Basecoat is not a literal DOM port of shadcn/ui. It is an alternative implementa
 - Basecoat keeps its own component class API (`btn`, `dialog`, `popover`, etc.). Do not introduce shadcn `cn-*` classes into Basecoat source.
 - Shadcn/ui style packs are used as reference material, but must be mapped onto Basecoat markup and selectors.
 - Style-pack architecture is one file per style:
-  - `src/css/styles/style-vega.css`
-  - `src/css/styles/style-nova.css`
-  - `src/css/styles/style-maia.css`
-  - `src/css/styles/style-lyra.css`
-  - `src/css/styles/style-mira.css`
-  - `src/css/styles/style-luma.css`
-  - `src/css/styles/style-sera.css`
-  - `src/css/styles/style-rhea.css`
+  - `src/css/styles/vega.css`
+  - `src/css/styles/nova.css`
+  - `src/css/styles/maia.css`
+  - `src/css/styles/lyra.css`
+  - `src/css/styles/mira.css`
+  - `src/css/styles/luma.css`
+  - `src/css/styles/sera.css`
+  - `src/css/styles/rhea.css`
 - `basecoat.css` and the default CDN bundle remain Vega-compatible for Basecoat backward compatibility. This is a Basecoat compatibility decision; upstream shadcn/ui's current default generated config is Nova.
 - Non-default styles must be selected through standalone style bundles (`basecoat-<style>.css`, `basecoat-<style>.cdn.css`, or docs `styles-<style>.css`). Do not load Vega/default first and then layer another style file on top.
-- Split style files under `src/css/styles/style-*.css` are for source organization and advanced composition only. They must map upstream style intent directly and should not contain defensive resets whose only purpose is undoing another style pack.
+- Split style files under `src/css/styles/*.css` are for source organization and advanced composition only. They must map upstream style intent directly and should not contain defensive resets whose only purpose is undoing another style pack.
 - During migration, each component must be reviewed in two layers:
   - shared/base component CSS
   - style-pack CSS visual rules
@@ -108,7 +108,7 @@ Basecoat is not a literal DOM port of shadcn/ui. It is an alternative implementa
 ## CSS architecture rules
 
 - Shared component CSS in `src/css/components/*.css` should own structure, layout primitives, accessibility selectors, and behavior hooks.
-- Style-pack CSS in `src/css/styles/style-*.css` should own visual choices:
+- Style-pack CSS in `src/css/styles/*.css` should own visual choices:
   - color
   - radius
   - shadow/ring
@@ -218,14 +218,14 @@ For each component migration, follow this sequence:
    - avoid `!important` unless upstream behavior or Basecoat markup truly requires it
 9. Implement or update the component section in:
    - `src/css/components/<component>.css`
-   - `src/css/styles/style-vega.css`
-   - `src/css/styles/style-nova.css`
-   - `src/css/styles/style-maia.css`
-   - `src/css/styles/style-lyra.css`
-   - `src/css/styles/style-mira.css`
-   - `src/css/styles/style-luma.css`
-   - `src/css/styles/style-sera.css`
-   - `src/css/styles/style-rhea.css`
+   - `src/css/styles/vega.css`
+   - `src/css/styles/nova.css`
+   - `src/css/styles/maia.css`
+   - `src/css/styles/lyra.css`
+   - `src/css/styles/mira.css`
+   - `src/css/styles/luma.css`
+   - `src/css/styles/sera.css`
+   - `src/css/styles/rhea.css`
 10. Document any non-trivial difference from upstream as either:
    - intentional
    - drift fixed
@@ -254,7 +254,7 @@ Per-component file checklist:
 4. Upstream base component: `../_sandbox/shadcn-ui/apps/v4/registry/bases/base/ui/<component>.tsx`
 5. Upstream docs page: `../_sandbox/shadcn-ui/apps/v4/content/docs/components/{base,radix}/<component>.mdx`
 6. Upstream styles: `../_sandbox/shadcn-ui/apps/v4/registry/styles/style-{vega,nova,maia,lyra,mira,luma,sera,rhea}.css`
-7. Basecoat styles: `src/css/styles/style-{vega,nova,maia,lyra,mira,luma,sera,rhea}.css`
+7. Basecoat styles: `src/css/styles/{vega,nova,maia,lyra,mira,luma,sera,rhea}.css`
 
 ## Conventions
 
@@ -298,7 +298,7 @@ Examples:
 ## Common tasks
 
 - Update a component's CSS/JS: Edit `src/css/basecoat.css` and/or `src/js/*.js`.
-- Update a component's CSS/JS: Edit the relevant file in `src/css/components/*.css`, `src/css/styles/style-*.css`, and/or `src/js/*.js`.
+- Update a component's CSS/JS: Edit the relevant file in `src/css/components/*.css`, `src/css/styles/*.css`, and/or `src/js/*.js`.
 - Update a component template: Edit `src/nunjucks/*.njk` and/or `src/jinja/*.html.jinja`.
 - Add a new component: Create JS, CSS, templates, and docs page under `docs/src/components/*.md`.
 - Update navigation: Edit files in `docs/src/_includes/partials/`.

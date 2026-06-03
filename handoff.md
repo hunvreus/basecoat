@@ -30,7 +30,7 @@ The earlier five-style assumption was wrong. Luma, Sera, and Rhea are current up
 - Basecoat docs page: `docs/src/components/<component>.md`
 - Upstream base component: `../_sandbox/shadcn-ui/apps/v4/registry/bases/base/ui/<component>.tsx`
 - Upstream styles: `../_sandbox/shadcn-ui/apps/v4/registry/styles/style-{vega,nova,maia,lyra,mira,luma,sera,rhea}.css`
-- Basecoat styles: `src/css/styles/style-{vega,nova,maia,lyra,mira,luma,sera,rhea}.css`
+- Basecoat styles: `src/css/styles/{vega,nova,maia,lyra,mira,luma,sera,rhea}.css`
 
 ## Required Process
 
@@ -54,7 +54,7 @@ Do not mark a component done just because CSS compiles.
 - Split CSS source into:
   - `src/css/base/base.css`
   - `src/css/components/*.css`
-  - `src/css/styles/style-*.css`
+  - `src/css/styles/*.css`
 - Kept `src/css/basecoat.css` as the backward-compatible default aggregate.
 - Added `src/css/basecoat.all.css` as an explicit all-in-one Tailwind source.
 - Updated `scripts/build.js` to copy split CSS folders into `packages/css/dist`.
@@ -71,14 +71,14 @@ Do not mark a component done just because CSS compiles.
   - `docs/css/style-sera.css`
   - `docs/css/style-rhea.css`
 - Added Basecoat style files for all eight upstream styles:
-  - `src/css/styles/style-vega.css`
-  - `src/css/styles/style-nova.css`
-  - `src/css/styles/style-maia.css`
-  - `src/css/styles/style-lyra.css`
-  - `src/css/styles/style-mira.css`
-  - `src/css/styles/style-luma.css`
-  - `src/css/styles/style-sera.css`
-  - `src/css/styles/style-rhea.css`
+  - `src/css/styles/vega.css`
+  - `src/css/styles/nova.css`
+  - `src/css/styles/maia.css`
+  - `src/css/styles/lyra.css`
+  - `src/css/styles/mira.css`
+  - `src/css/styles/luma.css`
+  - `src/css/styles/sera.css`
+  - `src/css/styles/rhea.css`
 
 ## Button Status
 
@@ -87,14 +87,14 @@ Button is the only component with style-pack sections currently present.
 Files involved:
 
 - `src/css/components/button.css`
-- `src/css/styles/style-vega.css`
-- `src/css/styles/style-nova.css`
-- `src/css/styles/style-maia.css`
-- `src/css/styles/style-lyra.css`
-- `src/css/styles/style-mira.css`
-- `src/css/styles/style-luma.css`
-- `src/css/styles/style-sera.css`
-- `src/css/styles/style-rhea.css`
+- `src/css/styles/vega.css`
+- `src/css/styles/nova.css`
+- `src/css/styles/maia.css`
+- `src/css/styles/lyra.css`
+- `src/css/styles/mira.css`
+- `src/css/styles/luma.css`
+- `src/css/styles/sera.css`
+- `src/css/styles/rhea.css`
 - `docs/src/components/button.md`
 
 Current button work includes:
