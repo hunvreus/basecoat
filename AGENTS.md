@@ -22,7 +22,7 @@ Basecoat is not a literal DOM port of shadcn/ui. It is an alternative implementa
   - `src/css/basecoat.css` – Aggregate CSS entrypoint
   - `src/js/*.js` – Individual component JS files (kebab-case, ESM) + `basecoat.js` (component registry)
   - `src/nunjucks/*.njk` and `src/jinja/*.html.jinja` – Component template macros
-  - `docs/src/components/*.njk` – Component documentation pages with examples
+  - `docs/src/components/*.md` – Component documentation pages with examples; Markdown can embed Nunjucks macros
   - `docs/src/_includes/` – Layout templates, partials, and navigation
 - Do not edit build outputs:
   - `packages/*/dist` – built CSS/JS bundles
@@ -250,7 +250,7 @@ Per-component file checklist:
 
 1. Basecoat component CSS: `src/css/components/<component>.css`
 2. Basecoat templates/macros if relevant: `src/nunjucks/*.njk`, `src/jinja/*.html.jinja`
-3. Basecoat docs page: `docs/src/components/<component>.njk`
+3. Basecoat docs page: `docs/src/components/<component>.md`
 4. Upstream base component: `../_sandbox/shadcn-ui/apps/v4/registry/bases/base/ui/<component>.tsx`
 5. Upstream docs page: `../_sandbox/shadcn-ui/apps/v4/content/docs/components/{base,radix}/<component>.mdx`
 6. Upstream styles: `../_sandbox/shadcn-ui/apps/v4/registry/styles/style-{vega,nova,maia,lyra,mira,luma,sera,rhea}.css`
@@ -300,7 +300,7 @@ Examples:
 - Update a component's CSS/JS: Edit `src/css/basecoat.css` and/or `src/js/*.js`.
 - Update a component's CSS/JS: Edit the relevant file in `src/css/components/*.css`, `src/css/styles/style-*.css`, and/or `src/js/*.js`.
 - Update a component template: Edit `src/nunjucks/*.njk` and/or `src/jinja/*.html.jinja`.
-- Add a new component: Create JS, CSS, templates, and docs page under `docs/src/components/*.njk`.
+- Add a new component: Create JS, CSS, templates, and docs page under `docs/src/components/*.md`.
 - Update navigation: Edit files in `docs/src/_includes/partials/`.
 
 ## Testing

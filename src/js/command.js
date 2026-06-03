@@ -19,6 +19,17 @@
     let visibleMenuItems = [...menuItems];
     let activeIndex = -1;
 
+    const scrollItemIntoMenu = (item) => {
+      const itemRect = item.getBoundingClientRect();
+      const menuRect = menu.getBoundingClientRect();
+
+      if (itemRect.top < menuRect.top) {
+        menu.scrollTop -= menuRect.top - itemRect.top;
+      } else if (itemRect.bottom > menuRect.bottom) {
+        menu.scrollTop += itemRect.bottom - menuRect.bottom;
+      }
+    };
+
     const setActiveItem = (index) => {
       if (activeIndex > -1 && menuItems[activeIndex]) {
         menuItems[activeIndex].classList.remove('active');
@@ -69,7 +80,7 @@
 
       if (visibleMenuItems.length > 0) {
         setActiveItem(menuItems.indexOf(visibleMenuItems[0]));
-        visibleMenuItems[0].scrollIntoView({ block: 'nearest' });
+        scrollItemIntoMenu(visibleMenuItems[0]);
       }
     };
 
@@ -119,7 +130,7 @@
       if (nextVisibleIndex !== currentVisibleIndex) {
         const newActiveItem = visibleMenuItems[nextVisibleIndex];
         setActiveItem(menuItems.indexOf(newActiveItem));
-        newActiveItem.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+        scrollItemIntoMenu(newActiveItem);
       }
     };
 
@@ -147,7 +158,7 @@
 
     if (visibleMenuItems.length > 0) {
       setActiveItem(menuItems.indexOf(visibleMenuItems[0]));
-      visibleMenuItems[0].scrollIntoView({ block: 'nearest' });
+      scrollItemIntoMenu(visibleMenuItems[0]);
     }
 
     container.dataset.commandInitialized = true;

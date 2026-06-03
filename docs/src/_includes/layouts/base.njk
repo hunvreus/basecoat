@@ -98,7 +98,7 @@
   <script src="/assets/js/tabs.js?v={{ pkg.version }}" defer></script>
   <script src="/assets/js/toast.js?v={{ pkg.version }}" defer></script>
   {# HTMX #}
-  <script src="https://unpkg.com/htmx.org@2.0.4"></script>
+  <script src="/assets/js/htmx.min.js" defer></script>
   {# Highlight.js #}
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/django.min.js"></script>
@@ -123,7 +123,7 @@
   </script>
   {% if head %}{{ head | safe }}{% endif %}
 </head>
-<body>
+<body hx-boost="true" hx-target="#content" hx-select="#content" hx-swap="outerHTML show:window:top">
 {{ content | safe }}
 
 {% from "toast.njk" import toaster %}

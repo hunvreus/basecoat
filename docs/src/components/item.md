@@ -1,0 +1,265 @@
+---
+templateEngineOverride: njk
+layout: layouts/page.njk
+title: Item
+description: A versatile component that you can use to display any content.
+toc:
+  - label: Usage
+    id: usage
+    children:
+      - label: HTML
+        id: usage-html
+      - label: HTML structure
+        id: usage-html-structure
+  - label: Examples
+    id: examples
+    children:
+      - label: Variants
+        id: example-variants
+      - label: Size
+        id: example-size
+      - label: Icon
+        id: example-icon
+      - label: Avatar
+        id: example-avatar
+      - label: Image
+        id: example-image
+      - label: Group
+        id: example-group
+      - label: Header
+        id: example-header
+      - label: Link
+        id: example-link
+      - label: RTL
+        id: example-rtl
+---
+
+{% from "macros/code_block.njk" import code_block %}
+{% from "macros/code_preview.njk" import code_preview %}
+
+{% set code_basic %}
+<article class="item" data-variant="outline">
+  <section>
+    <h3>Basic Item</h3>
+    <p>A simple item with title and description.</p>
+  </section>
+  <aside>
+    <button class="btn-sm-outline">Action</button>
+  </aside>
+</article>
+{% endset %}
+
+{{ code_preview("item-basic", code_basic, class="w-full max-w-md") }}
+
+<h2 id="usage"><a href="#usage">Usage</a></h2>
+
+<section class="prose">
+  <p>Use <code>.item</code> on a semantic element such as <code>&lt;article&gt;</code> or <code>&lt;a&gt;</code>. Use <code>.item-group</code> when listing multiple items.</p>
+</section>
+
+<h3 id="usage-html"><a href="#usage-html">HTML</a></h3>
+
+{{ code_block(code_basic) }}
+
+<h3 id="usage-html-structure"><a href="#usage-html-structure">HTML structure</a></h3>
+
+<section class="prose">
+  <p>The component has the following HTML structure:</p>
+  <dl>
+    <dt><code class="highlight language-html">&lt;article class="item"&gt;</code> or <code class="highlight language-html">&lt;a class="item"&gt;</code></dt>
+    <dd>The item root. Use <code>data-variant="outline|muted"</code> and <code>data-size="sm|xs"</code> when needed.
+      <dl>
+        <dt><code class="highlight language-html">&lt;figure&gt;</code> <span class="badge-secondary">Optional</span></dt>
+        <dd>Media: icon, avatar, or image.</dd>
+        <dt><code class="highlight language-html">&lt;section&gt;</code></dt>
+        <dd>Primary content. Headings and paragraphs are styled automatically.
+          <dl>
+            <dt><code class="highlight language-html">&lt;h2&gt;</code>, <code class="highlight language-html">&lt;h3&gt;</code>, or <code class="highlight language-html">&lt;h4&gt;</code></dt>
+            <dd>The item title.</dd>
+            <dt><code class="highlight language-html">&lt;p&gt;</code> <span class="badge-secondary">Optional</span></dt>
+            <dd>The item description.</dd>
+          </dl>
+        </dd>
+        <dt><code class="highlight language-html">&lt;aside&gt;</code> <span class="badge-secondary">Optional</span></dt>
+        <dd>Actions or trailing metadata.</dd>
+        <dt><code class="highlight language-html">&lt;header&gt;</code>, <code class="highlight language-html">&lt;footer&gt;</code> <span class="badge-secondary">Optional</span></dt>
+        <dd>Full-width item regions.</dd>
+      </dl>
+    </dd>
+    <dt><code class="highlight language-html">&lt;div class="item-group" role="list"&gt;</code> <span class="badge-secondary">Optional</span></dt>
+    <dd>Groups related items. Use <code>role="listitem"</code> on child items when they are not native list items.</dd>
+  </dl>
+</section>
+
+<h2 id="examples"><a href="#examples">Examples</a></h2>
+
+<h3 id="example-variants"><a href="#example-variants">Variants</a></h3>
+
+{% set code_variants %}
+<div class="item-group" role="list">
+  <article class="item" role="listitem">
+    <section>
+      <h3>Default Variant</h3>
+      <p>Transparent border for quiet item rows.</p>
+    </section>
+    <aside><button class="btn-sm-outline">Open</button></aside>
+  </article>
+  <article class="item" data-variant="outline" role="listitem">
+    <section>
+      <h3>Outline Variant</h3>
+      <p>Outlined style with a visible border.</p>
+    </section>
+    <aside><button class="btn-sm-outline">Open</button></aside>
+  </article>
+  <article class="item" data-variant="muted" role="listitem">
+    <section>
+      <h3>Muted Variant</h3>
+      <p>Subdued appearance for secondary content.</p>
+    </section>
+    <aside><button class="btn-sm-outline">Open</button></aside>
+  </article>
+</div>
+{% endset %}
+
+{{ code_preview("item-variants", code_variants, class="w-full max-w-md") }}
+
+<h3 id="example-size"><a href="#example-size">Size</a></h3>
+
+{% set code_size %}
+<div class="item-group" role="list">
+  <article class="item" data-variant="outline" role="listitem">
+    <section><h3>Default</h3><p>Default item size.</p></section>
+  </article>
+  <article class="item" data-variant="outline" data-size="sm" role="listitem">
+    <section><h3>Small</h3><p>Small item size.</p></section>
+  </article>
+  <article class="item" data-variant="outline" data-size="xs" role="listitem">
+    <section><h3>Extra Small</h3><p>Extra small item size.</p></section>
+  </article>
+</div>
+{% endset %}
+
+{{ code_preview("item-size", code_size, class="w-full max-w-md") }}
+
+<h3 id="example-icon"><a href="#example-icon">Icon</a></h3>
+
+{% set code_icon %}
+<article class="item" data-variant="outline">
+  <figure>
+    {% lucide "shield-alert" %}
+  </figure>
+  <section>
+    <h3>Security Alert</h3>
+    <p>New login detected from an unknown device.</p>
+  </section>
+  <aside><button class="btn-sm-outline">Review</button></aside>
+</article>
+{% endset %}
+
+{{ code_preview("item-icon", code_icon, class="w-full max-w-lg") }}
+
+<h3 id="example-avatar"><a href="#example-avatar">Avatar</a></h3>
+
+{% set code_avatar %}
+<article class="item" data-variant="outline">
+  <figure>
+    <img src="https://github.com/hunvreus.png" alt="hunvreus">
+  </figure>
+  <section>
+    <h3>hunvreus</h3>
+    <p>Last seen 5 months ago.</p>
+  </section>
+  <aside>
+    <button class="btn-icon-outline rounded-full">{% lucide "plus" %}</button>
+  </aside>
+</article>
+{% endset %}
+
+{{ code_preview("item-avatar", code_avatar, class="w-full max-w-md") }}
+
+<h3 id="example-image"><a href="#example-image">Image</a></h3>
+
+{% set code_image %}
+<a href="#" class="item" data-variant="outline">
+  <figure>
+    <img src="https://avatar.vercel.sh/example_1" alt="Midnight City Lights">
+  </figure>
+  <section>
+    <h3>Midnight City Lights</h3>
+    <p>Neon Dreams</p>
+  </section>
+  <section>
+    <p>3:45</p>
+  </section>
+</a>
+{% endset %}
+
+{{ code_preview("item-image", code_image, class="w-full max-w-md") }}
+
+<h3 id="example-group"><a href="#example-group">Group</a></h3>
+
+{% set code_group %}
+<div class="item-group" role="list">
+  <article class="item" role="listitem">
+    <figure><img src="https://github.com/hunvreus.png" alt="hunvreus"></figure>
+    <section><h3>hunvreus</h3><p>hunvreus@gmail.com</p></section>
+    <aside><button class="btn-icon-outline rounded-full">{% lucide "plus" %}</button></aside>
+  </article>
+  <hr role="separator">
+  <article class="item" role="listitem">
+    <figure><img src="https://github.com/shadcn.png" alt="shadcn"></figure>
+    <section><h3>shadcn</h3><p>shadcn@vercel.com</p></section>
+    <aside><button class="btn-icon-outline rounded-full">{% lucide "plus" %}</button></aside>
+  </article>
+</div>
+{% endset %}
+
+{{ code_preview("item-group", code_group, class="w-full max-w-md") }}
+
+<h3 id="example-header"><a href="#example-header">Header</a></h3>
+
+{% set code_header %}
+<article class="item" data-variant="outline">
+  <header>
+    <h3>v0-1.5-sm</h3>
+    <span class="badge-outline">Model</span>
+  </header>
+  <figure>
+    <img src="https://avatar.vercel.sh/v0-1.5-sm" alt="v0-1.5-sm">
+  </figure>
+  <section>
+    <p>Everyday tasks and UI generation.</p>
+  </section>
+</article>
+{% endset %}
+
+{{ code_preview("item-header", code_header, class="w-full max-w-md") }}
+
+<h3 id="example-link"><a href="#example-link">Link</a></h3>
+
+{% set code_link %}
+<a href="#" class="item">
+  <section>
+    <h3>Visit our documentation</h3>
+    <p>Learn how to get started with our components.</p>
+  </section>
+  <aside>{% lucide "chevron-right" %}</aside>
+</a>
+{% endset %}
+
+{{ code_preview("item-link", code_link, class="w-full max-w-md") }}
+
+<h3 id="example-rtl"><a href="#example-rtl">RTL</a></h3>
+
+{% set code_rtl %}
+<article class="item" data-variant="outline" dir="rtl">
+  <figure>{% lucide "shield-alert" %}</figure>
+  <section>
+    <h3>تنبيه أمني</h3>
+    <p>تم اكتشاف تسجيل دخول من جهاز غير معروف.</p>
+  </section>
+  <aside><button class="btn-sm-outline">مراجعة</button></aside>
+</article>
+{% endset %}
+
+{{ code_preview("item-rtl", code_rtl, class="w-full max-w-lg") }}

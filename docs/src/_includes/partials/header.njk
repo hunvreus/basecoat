@@ -1,3 +1,23 @@
+{% from "command.njk" import command_dialog %}
+
+{% set docsMenu = docs.menu if docs and docs.menu else menu %}
+{% set commandMenu = docsMenu | commandMenu(collections) %}
+{{ command_dialog(id="command-search", items=commandMenu, placeholder="Search the docs...") }}
+<script>
+  document.addEventListener('keydown', (event) => {
+    if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
+      event.preventDefault();
+      const dialog = document.getElementById('command-search');
+      if (!dialog) return;
+      if (dialog.open) dialog.close();
+      else {
+        dialog.showModal();
+        dialog.querySelector('header input')?.focus();
+      }
+    }
+  });
+</script>
+
 <div class="flex h-14 w-full items-center gap-2 px-4">
   <button
     type="button"
@@ -10,10 +30,18 @@
   >
     {% lucide "panel-left" %}
   </button>
-  <select
-    class="select h-8 leading-none"
-    id="theme-select"
+
+  <button
+    type="button"
+    class="relative text-muted-foreground bg-background dark:bg-input/30 border-input hidden h-8 w-full min-w-0 max-w-72 items-center rounded-md border px-3 py-1 gap-x-2 text-sm outline-none cursor-text focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] md:flex"
+    onclick="document.getElementById('command-search').showModal(); document.getElementById('command-search').querySelector('header input')?.focus();"
   >
+    {% lucide "search", { "class": "size-4" } %}
+    Search the docs...
+    <kbd class="kbd ml-auto -mr-1.5">⌘K</kbd>
+  </button>
+
+  <select class="select h-8 leading-none" id="theme-select" aria-label="Theme">
     <option value="">Default</option>
     <option value="claude">Claude</option>
     <option value="doom-64">Doom 64</option>
@@ -24,7 +52,7 @@
       const themeSelect = document.getElementById('theme-select');
       const storedTheme = localStorage.getItem('themeVariant');
       if (themeSelect && storedTheme) themeSelect.value = storedTheme;
-      themeSelect.addEventListener('change', () => {
+      themeSelect?.addEventListener('change', () => {
         const newTheme = themeSelect.value;
         document.documentElement.classList.forEach(c => {
           if (c.startsWith('theme-')) document.documentElement.classList.remove(c);
@@ -38,10 +66,8 @@
       });
     })();
   </script>
-  <select
-    class="select h-8 leading-none"
-    id="style-select"
-  >
+
+  <select class="select h-8 leading-none" id="style-select" aria-label="Style">
     <option value="vega">Vega</option>
     <option value="nova">Nova</option>
     <option value="maia">Maia</option>
@@ -58,14 +84,14 @@
       const applyStyle = (styleName) => {
         const nextStyle = styleName || 'nova';
         document.documentElement.dataset.styleVariant = nextStyle;
-        styleLink.href = `/assets/styles-${nextStyle}.css`;
+        if (styleLink) styleLink.href = `/assets/styles-${nextStyle}.css`;
       };
 
       const storedStyle = localStorage.getItem('styleVariant') || 'nova';
       if (styleSelect) styleSelect.value = storedStyle;
       applyStyle(storedStyle);
 
-      styleSelect.addEventListener('change', () => {
+      styleSelect?.addEventListener('change', () => {
         const newStyle = styleSelect.value || 'nova';
         applyStyle(newStyle);
         localStorage.setItem('styleVariant', newStyle);

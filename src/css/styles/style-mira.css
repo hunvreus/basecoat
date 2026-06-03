@@ -475,7 +475,7 @@
   }
 
   .command [role='menu']:not(:has([role='menuitem']:not([aria-hidden='true'])))::before {
-    @apply px-3 py-2 text-center text-xs/relaxed;
+    @apply py-6 text-center text-xs/relaxed;
   }
 
   .command [role='group'] {
@@ -616,8 +616,9 @@
 
 
   /* Dialog */
-  .dialog::backdrop {
-    @apply bg-black/80 backdrop-blur-xs;
+  .dialog::backdrop,
+  .command-dialog::backdrop {
+    @apply bg-black/80 backdrop-blur-xs duration-100;
   }
 
   .dialog > * {

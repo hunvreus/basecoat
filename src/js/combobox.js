@@ -28,6 +28,17 @@
     const getValue = option => option.dataset.value ?? option.textContent.trim();
     const getLabel = option => option.dataset.label || option.textContent.trim();
 
+    const scrollOptionIntoListbox = (option) => {
+      const optionRect = option.getBoundingClientRect();
+      const listboxRect = listbox.getBoundingClientRect();
+
+      if (optionRect.top < listboxRect.top) {
+        listbox.scrollTop -= listboxRect.top - optionRect.top;
+      } else if (optionRect.bottom > listboxRect.bottom) {
+        listbox.scrollTop += optionRect.bottom - listboxRect.bottom;
+      }
+    };
+
     const setActiveOption = (index) => {
       if (activeIndex > -1 && options[activeIndex]) {
         options[activeIndex].classList.remove('active');
@@ -238,7 +249,7 @@
 
       const nextOption = visibleOptions[nextVisibleIndex];
       setActiveOption(options.indexOf(nextOption));
-      nextOption.scrollIntoView({ block: 'nearest' });
+      scrollOptionIntoListbox(nextOption);
     };
 
     input.addEventListener('focus', openPopover);

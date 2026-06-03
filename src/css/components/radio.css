@@ -2,7 +2,7 @@
 @layer components {
   .field > input[type='radio'],
   .input[type='radio'] {
-    @apply relative shrink-0 appearance-none outline-none disabled:cursor-not-allowed disabled:opacity-50;
+    @apply relative shrink-0 appearance-none border outline-none disabled:cursor-not-allowed disabled:opacity-50;
 
     &:checked:before {
       @apply absolute top-1/2 left-1/2 content-[''] -translate-x-1/2 -translate-y-1/2 rounded-full;

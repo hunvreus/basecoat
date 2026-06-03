@@ -1,16 +1,64 @@
 ---
 layout: layouts/layout.njk
 ---
+{% set docsMenu = docs.menu if docs and docs.menu else menu %}
+{% set navigation = docsMenu | getNavigation(collections) %}
 
 <main class="mx-auto relative flex w-full max-w-screen-lg gap-10">
   <div class="mx-auto w-full flex-1 max-w-screen-md">
     <header class="space-y-2">
-      <h1 class="text-2xl font-semibold tracking-tight sm:text-3xl xl:text-4xl">{{ title }}</h1>
+      <div class="flex items-start gap-x-2">
+        <h1 class="text-2xl font-semibold tracking-tight sm:text-3xl xl:text-4xl mr-auto">{{ title }}</h1>
+        <div class="flex items-center gap-x-2 pt-1">
+          <button
+            type="button"
+            class="btn-sm-secondary h-7 px-2.5 text-[13px] max-sm:size-7"
+            data-md-url="{{ page.url | markdownUrl }}"
+            onclick="copyPageMarkdown(this)"
+          >
+            {% lucide "copy" %}
+            <span class="hidden sm:block">Copy page</span>
+          </button>
+          <div role="group" class="button-group">
+            {% if navigation.prev %}
+              <a href="{{ navigation.prev.url }}" class="btn-sm-icon-secondary hidden sm:flex size-7">
+                <span class="sr-only">{{ navigation.prev.label }}</span>
+                {% lucide "arrow-left" %}
+              </a>
+            {% endif %}
+            {% if navigation.prev and navigation.next %}
+              <hr role="separator">
+            {% endif %}
+            {% if navigation.next %}
+              <a href="{{ navigation.next.url }}" class="btn-sm-icon-secondary hidden sm:flex size-7">
+                <span class="sr-only">{{ navigation.next.label }}</span>
+                {% lucide "arrow-right" %}
+              </a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
       <p class="text-muted-foreground text-[1.05rem] sm:text-base">{{ description }}</p>
     </header>
     <article class="pb-12 mt-8 content">
       {{ content | safe }}
     </article>
+    {% if navigation.prev or navigation.next %}
+      <footer class="flex items-center gap-2 border-t pt-6 mt-12">
+        {% if navigation.prev %}
+          <a href="{{ navigation.prev.url }}" class="btn-sm-secondary mr-auto">
+            {% lucide "arrow-left" %}
+            {{ navigation.prev.label }}
+          </a>
+        {% endif %}
+        {% if navigation.next %}
+          <a href="{{ navigation.next.url }}" class="btn-sm-secondary ml-auto">
+            {{ navigation.next.label }}
+            {% lucide "arrow-right" %}
+          </a>
+        {% endif %}
+      </footer>
+    {% endif %}
   </div>
   {% if toc %}
     <div class="hidden text-sm xl:block w-full max-w-[300px]">
@@ -19,3 +67,53 @@ layout: layouts/layout.njk
     </div>
   {% endif %}
 </main>
+
+<script>
+  async function copyPageMarkdown(button) {
+    const markdownUrl = button?.dataset?.mdUrl;
+    if (!markdownUrl) return;
+
+    const label = button.querySelector('span');
+    const originalLabel = label?.textContent;
+
+    try {
+      const absoluteMarkdownUrl = new URL(markdownUrl, window.location.href).toString();
+      const response =
+        (await fetch(markdownUrl, { credentials: 'same-origin', cache: 'no-store' }).catch(() => null)) ||
+        (await fetch(absoluteMarkdownUrl, { credentials: 'same-origin', cache: 'no-store' }));
+      if (!response.ok) throw new Error('Failed to fetch markdown');
+      const markdown = await response.text();
+      await writeToClipboard(markdown);
+
+      if (label) {
+        label.textContent = 'Copied';
+        window.setTimeout(() => {
+          label.textContent = originalLabel || 'Copy page';
+        }, 1200);
+      }
+    } catch (error) {
+      const absoluteMarkdownUrl = new URL(markdownUrl, window.location.href).toString();
+      window.open(absoluteMarkdownUrl, '_blank', 'noopener');
+    }
+  }
+
+  async function writeToClipboard(text) {
+    if (navigator.clipboard?.writeText && window.isSecureContext) {
+      await navigator.clipboard.writeText(text);
+      return;
+    }
+
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.setAttribute('readonly', '');
+    textarea.style.position = 'fixed';
+    textarea.style.top = '-9999px';
+    textarea.style.left = '-9999px';
+    document.body.appendChild(textarea);
+    textarea.select();
+
+    const ok = document.execCommand('copy');
+    document.body.removeChild(textarea);
+    if (!ok) throw new Error('Copy failed');
+  }
+</script>

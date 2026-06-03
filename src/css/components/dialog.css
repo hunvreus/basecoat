@@ -22,7 +22,7 @@
     }
 
     > * {
-      @apply fixed top-1/2 left-1/2 z-50 flex max-h-[calc(100%_-_2rem)] w-full -translate-x-1/2 -translate-y-1/2 scale-95 flex-col overflow-hidden transition-all outline-hidden;
+      @apply fixed top-1/2 left-1/2 z-50 flex max-h-[calc(100%_-_2rem)] w-full -translate-x-1/2 -translate-y-1/2 scale-95 flex-col transition-all outline-hidden;
     }
 
     > * > header {
@@ -30,7 +30,7 @@
     }
 
     > * > section {
-      @apply flex-1 overflow-y-auto;
+      @apply flex-1;
     }
 
     > * > footer {

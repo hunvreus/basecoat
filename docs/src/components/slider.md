@@ -1,0 +1,110 @@
+---
+templateEngineOverride: njk
+layout: layouts/page.njk
+title: Slider
+description: An input where the user selects a value from within a given range.
+toc:
+  - label: Usage
+    id: usage
+    children:
+      - label: HTML + JavaScript
+        id: usage-html-js
+      - label: HTML structure
+        id: usage-structure
+  - label: Examples
+    id: examples
+    children:
+      - label: Default
+        id: example-default
+      - label: Controlled Label
+        id: example-controlled-label
+      - label: Disabled
+        id: example-disabled
+      - label: RTL
+        id: example-rtl
+---
+
+{% from "macros/code_preview.njk" import code_preview %}
+{% from "macros/code_block.njk" import code_block %}
+
+{% set code %}<input
+  type="range"
+  class="input w-full"
+  min="0"
+  max="100"
+  value="50"
+>{% endset %}
+{{ code_preview("slider", code, "w-full max-w-sm") }}
+
+<h2 id="usage"><a href="#usage">Usage</a></h2>
+
+<h3 id="usage-html-js"><a href="#usage-html-js">HTML + JavaScript</a></h3>
+
+<section class="prose">
+  <p>Use a native <code>&lt;input type="range"&gt;</code> with the <code>input</code> class. Include <code>range.js</code> so Basecoat can keep the filled track in sync with the input value.</p>
+</section>
+
+{% set code_script %}<script src="https://cdn.jsdelivr.net/npm/basecoat-css@{{ pkg.version }}/dist/js/basecoat.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/basecoat-css@{{ pkg.version }}/dist/js/range.min.js" defer></script>{% endset %}
+{{ code_block(code_script | prettyHtml, "html") }}
+
+<div class="flex flex-wrap gap-2 my-6">
+  <a class="badge-outline" href="/installation/#install-js">
+    Components with JavaScript
+    {% lucide "arrow-right" %}
+  </a>
+  <a class="badge-outline" href="https://github.com/hunvreus/basecoat/blob/main/src/js/range.js" target="_blank">
+    range.js
+    {% lucide "arrow-right" %}
+  </a>
+</div>
+
+{{ code_block(code | prettyHtml, "html") }}
+
+<h3 id="usage-structure"><a href="#usage-structure">HTML structure</a></h3>
+
+<section class="prose">
+  <dl>
+    <dt><code class="highlight language-html">&lt;input type="range" class="input"&gt;</code></dt>
+    <dd>Native range input styled as a slider. Width utilities such as <code>w-full</code> can be added directly.</dd>
+  </dl>
+  <p>Basecoat intentionally uses the native range input. Unlike shadcn/ui's Base UI slider, it does not support multiple thumbs or vertical orientation.</p>
+</section>
+
+<h2 id="examples"><a href="#examples">Examples</a></h2>
+
+<h3 id="example-default"><a href="#example-default">Default</a></h3>
+
+{% set code %}<input type="range" class="input w-full" min="0" max="100" value="50">{% endset %}
+{{ code_preview("slider-default", code, "w-full max-w-sm") }}
+
+<h3 id="example-controlled-label"><a href="#example-controlled-label">Controlled Label</a></h3>
+
+{% set code %}<div class="grid w-full gap-3 max-w-sm">
+  <div class="flex items-center justify-between gap-2">
+    <label class="label" for="temperature">Temperature</label>
+    <output class="text-sm text-muted-foreground" for="temperature">50</output>
+  </div>
+  <input
+    id="temperature"
+    type="range"
+    class="input w-full"
+    min="0"
+    max="100"
+    value="50"
+    oninput="this.previousElementSibling.querySelector('output').value = this.value"
+  >
+</div>{% endset %}
+{{ code_preview("slider-controlled-label", code, "w-full") }}
+
+<h3 id="example-disabled"><a href="#example-disabled">Disabled</a></h3>
+
+{% set code %}<input type="range" class="input w-full" min="0" max="100" value="50" disabled>{% endset %}
+{{ code_preview("slider-disabled", code, "w-full max-w-sm") }}
+
+<h3 id="example-rtl"><a href="#example-rtl">RTL</a></h3>
+
+{% set code %}<div dir="rtl" class="w-full max-w-sm">
+  <input type="range" class="input w-full" min="0" max="100" value="50">
+</div>{% endset %}
+{{ code_preview("slider-rtl", code, "w-full") }}

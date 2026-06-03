@@ -1,7 +1,7 @@
 /* Basecoat docs font override. This is intentionally not part of the package default. */
 :root {
-  --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;
-  --font-heading: "Geist", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Geist Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: "Geist Sans", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
 

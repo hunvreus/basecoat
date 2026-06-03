@@ -27,6 +27,17 @@
 
     const getValue = (opt) => opt.dataset.value ?? opt.textContent.trim();
 
+    const scrollOptionIntoListbox = (option) => {
+      const optionRect = option.getBoundingClientRect();
+      const listboxRect = listbox.getBoundingClientRect();
+
+      if (optionRect.top < listboxRect.top) {
+        listbox.scrollTop -= listboxRect.top - optionRect.top;
+      } else if (optionRect.bottom > listboxRect.bottom) {
+        listbox.scrollTop += optionRect.bottom - listboxRect.bottom;
+      }
+    };
+
     const setActiveOption = (index) => {
       if (activeIndex > -1 && options[activeIndex]) {
         options[activeIndex].classList.remove('active');
@@ -238,7 +249,7 @@
       if (nextVisibleIndex !== currentVisibleIndex) {
         const newActiveOption = visibleOptions[nextVisibleIndex];
         setActiveOption(options.indexOf(newActiveOption));
-        newActiveOption.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+        scrollOptionIntoListbox(newActiveOption);
       }
     };
 
@@ -273,7 +284,7 @@
       const selectedOption = listbox.querySelector('[role="option"][aria-selected="true"]');
       if (selectedOption) {
         setActiveOption(options.indexOf(selectedOption));
-        selectedOption.scrollIntoView({ block: 'nearest' });
+        scrollOptionIntoListbox(selectedOption);
       }
     };
 

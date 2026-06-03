@@ -1,4 +1,4 @@
-{% macro code_preview(id, code, class=None, default_code=false) %}
+{%- macro code_preview(id, code, class=None, default_code=false) -%}
 {% from "./code_block.njk" import code_block %}
 {% set code_panel = code_block(code, class="") %}
 {% set preview_panel %}
@@ -23,4 +23,4 @@
     default_tab_index=(2 if default_code else 1)
   ) }}
 </div>
-{% endmacro %}
+{%- endmacro -%}

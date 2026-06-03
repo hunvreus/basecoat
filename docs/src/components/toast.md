@@ -1,0 +1,281 @@
+---
+templateEngineOverride: njk
+layout: layouts/page.njk
+title: Toast
+description: A succinct message that is displayed temporarily.
+toc:
+  - label: Usage
+    id: usage
+    children:
+      - label: HTML + JavaScript
+        id: usage-html-js
+        children:
+          - label: "Step 1: Include the JavaScript file"
+            id: usage-html-js-1
+          - label: "Step 2: Add the toaster HTML"
+            id: usage-html-js-2
+          - label: "Step 3: Add your toasts"
+            id: usage-html-js-3
+          - label: HTML structure
+            id: usage-html-js-4
+          - label: JavaScript events
+            id: usage-html-js-5
+          - label: Toast config object
+            id: usage-html-js-6
+      - label: Jinja and Nunjucks
+        id: usage-macro
+---
+
+{% from "toast.njk" import toaster, toast %}
+{% from "macros/code_preview.njk" import code_preview %}
+{% from "macros/code_block.njk" import code_block %}
+
+{% set code_server_side %}<button
+  class="btn-outline"
+  hx-trigger="click"
+  hx-disinherit="hx-select hx-target hx-swap"
+  hx-get="/fragments/toast/success"
+  hx-target="#toaster"
+  hx-swap="beforeend"
+>
+  Toast from backend (with HTMX)
+</button>{% endset %}
+{{ code_preview("toast-server-side", code_server_side, "max-w-md") }}
+
+{% set code_client_side %}<button
+  class="btn-outline"
+  onclick="document.dispatchEvent(new CustomEvent('basecoat:toast', {
+    detail: {
+      config: {
+        category: 'success',
+        title: 'Success',
+        description: 'A success toast called from the front-end.',
+        cancel: {
+          label: 'Dismiss'
+        }
+      }
+    }
+  }))"
+>
+  Toast from front-end
+</button>{% endset %}
+{{ code_preview("toast-client-side", code_client_side, "max-w-md") }}
+
+<h2 id="usage"><a href="#usage">Usage</a></h2>
+
+<h3 id="usage-html-js"><a href="#usage-html-js">HTML + JavaScript</a></h3>
+
+<h4 id="usage-html-js-1"><a href="#usage-html-js-1">Step 1: Include the JavaScript file</a></h4>
+
+<section class="prose">
+  <p>You can either <a href="/installation/#install-cdn-all">include the JavaScript file for all the components</a>, or just the one for this component by adding this to the <code>&lt;head&gt;</code> of your page:</p>
+</section>
+
+{% set code_script %}<script src="https://cdn.jsdelivr.net/npm/basecoat-css@{{ pkg.version }}/dist/js/basecoat.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/basecoat-css@{{ pkg.version }}/dist/js/toast.min.js" defer></script>{% endset %}
+{{ code_block(code_script | prettyHtml, "html") }}
+
+<div class="flex flex-wrap gap-2 my-6">
+  <a class="badge-outline" href="/installation/#install-js">
+    Components with JavaScript
+    {% lucide "arrow-right" %}
+  </a>
+  <a class="badge-outline" href="/cli">
+    Use the CLI
+    {% lucide "arrow-right" %}
+  </a>
+  <a class="badge-outline" href="https://github.com/hunvreus/basecoat/blob/main/src/js/toast.js" target="_blank">
+    toast.js
+    {% lucide "arrow-right" %}
+  </a>
+</div>
+
+<h4 id="usage-html-js-2"><a href="#usage-html-js-2">Step 2: Add the toaster HTML</a></h4>
+
+<section class="prose">
+  <p>Toasts are displayed in a parent element, the "toaster". Add this to this to at the end of your <code>&lt;body&gt;</code>:</p>
+</section>
+
+{% set code_toaster %}<div id="toaster" class="toaster"></div>{% endset %}
+{{ code_block(code_toaster | prettyHtml, "html") }}
+
+<section class="prose">
+  <p>You can set up the alignment of the toaster using the <code>data-align</code> attribute: <code>data-align="start"</code>, <code>data-align="center"</code>, or <code>data-align="end"</code> (default to <code>data-align="end"</code>).</p>
+</section>
+
+<h4 id="usage-html-js-3"><a href="#usage-html-js-3">Step 3: Add your toasts</a></h4>
+
+<section class="prose">
+  <p>If you decide to server-render your toasts, or load them using asynchronoulsy with something like HTMX, you can just add the toast's markup to the toaster:</p>
+</section>
+
+{% set code_toast_html %}<div id="toaster" class="toaster">
+  {{ toast(
+  category="success",
+  title="Success",
+  description="A success toast called from the front-end.",
+  action={
+    label: "Dismiss",
+    click: "close()"
+  }
+) }}
+</div>{% endset %}
+{{ code_block(code_toast_html | prettyHtml, "html") }}
+
+<div class="flex flex-wrap gap-2 my-6">
+  <a class="badge-outline" href="#usage-html-js-5">
+    HTML structure
+    {% lucide "arrow-right" %}
+  </a>
+</div>
+
+<section class="prose">
+  <p>If you need to create a toast from the front-end, you can dispatch a custom <code>basecoat:toast</code> event as such:</p>
+</section>
+
+{{ code_block(code_client_side | prettyHtml, "html") }}
+
+<div class="flex flex-wrap gap-2 my-6">
+  <a class="badge-outline" href="#usage-html-js-6">
+    Toast config object
+    {% lucide "arrow-right" %}
+  </a>
+</div>
+
+<h4 id="usage-html-js-4"><a href="#usage-html-js-4">HTML structure</a></h4>
+
+<section class="prose">
+  <dl>
+    <dt><code class="highlight language-html">&lt;div class="toast"&gt;</code></dt>
+    <dd>Wraps around the toast component. You can add a <code>data-duration</code> attribute to set the duration of the toast in milliseconds (e.g. <code>data-duration="5000"</code> for 5 seconds). If not provided, the default duration is 3000ms (3 seconds) or 5000ms (5 seconds) for <code>error</code> toasts.
+      <dl>
+        <dt><code class="highlight language-html">&lt;div class="toast-content"&gt;</code></dt>
+        <dd>The content of the toast.
+          <dl>
+            <dt><code class="highlight language-html">&lt;svg aria-hidden="true"&gt;</code> <span class="badge-secondary">Optional</span></dt>
+            <dd>The toast's icon.</dd>
+            <dt><code class="highlight language-html">&lt;section&gt;</code></dt>
+            <dd>The toast's message.
+              <dl>
+                <dt><code class="highlight language-html">&lt;h2&gt;</code></dt>
+                <dd>The toast's title.</dd>
+                <dt><code class="highlight language-html">&lt;p&gt;</code> <span class="badge-secondary">Optional</span></dt>
+                <dd>The toast's description.</dd>
+              </dl>
+            </dd>
+            <dt><code class="highlight language-html">&lt;footer&gt;</code> <span class="badge-secondary">Optional</span></dt>
+            <dd>The toast's buttons. When clicked, the toast will be closed (unless the button's <code>onclick</code> is set to <code>e.preventDefault()</code>).
+              <dl>
+                <dt><code class="highlight language-html">&lt;button type="button" class="btn" onclick="{ ONCLICK }"&gt;</code> or <code class="highlight language-html">&lt;a href="{ URL }" class="btn" &gt;</code> <span class="badge-secondary">Optional</span></dt>
+                <dd>The toast's action button. This can either be a link (with a <code>href</code> attribute) or a button (with an <code>onclick</code> attribute).</dd>
+              </dl>
+              <dl>
+                <dt><code class="highlight language-html">&lt;button type="button" class="btn-outline" onclick="{ ONCLICK }"&gt;</code> <span class="badge-secondary">Optional</span></dt>
+                <dd>The toast's cancel button (with an optional <code>onclick</code> attribute).</dd>
+              </dl>
+            </dd>
+          </dl>
+        </dd>
+      </dl>
+    </dd>
+  </dl>
+</section>
+
+<h4 id="usage-html-js-5"><a href="#usage-html-js-5">JavaScript events</a></h4>
+
+<section class="prose">
+  <dl>
+    <dt><code>basecoat:initialized</code></dt>
+    <dd>Once the component is fully initialized, it dispatches a custom (non-bubbling) <code>basecoat:initialized</code> event on the <code>toaster</code> element.</dd>
+    <dt><code>basecoat:toast</code></dt>
+    <dd>
+      <p>The <code>toaster</code> listens for <code>basecoat:toast</code> events on <code>document</code> to create toasts. The event's <code>detail</code> object must contain a <code>config</code> object (see <a href="#usage-html-js-6">JavaScript config object</a> below).</p>
+    </dd>
+  </dl>
+</section>
+
+<h4 id="usage-html-js-6"><a href="#usage-html-js-6">Toast config object</a></h4>
+
+<section class="prose">
+  <dl>
+    <dt><code>duration</code> <span class="badge-secondary">Optional</span></dt>
+    <dd>The duration of the toast in milliseconds. If not provided, the default duration is 3000ms (3 seconds) or 5000ms (5 seconds) for <code>error</code> toasts.</dd>
+    <dt><code>category</code> <span class="badge-secondary">Optional</span></dt>
+    <dd>Category of the toast, either <code>success</code>, <code>info</code>, <code>warning</code>, or <code>error</code>.</dd>
+    <dt><code>title</code></dt>
+    <dd>The title of the toast.</dd>
+    <dt><code>description</code> <span class="badge-secondary">Optional</span></dt>
+    <dd>The description of the toast.</dd>
+    <dt><code>action</code> <span class="badge-secondary">Optional</span></dt>
+    <dd>Action button.
+      <dl>
+        <dt><code>label</code> <span class="badge-secondary">Optional</span></dt>
+        <dd>The label of the cancel button. If not provided, the default label is "Dismiss".</dd>
+        <dt><code>onclick</code> <span class="badge-secondary">Optional</span></dt>
+        <dd>The onclick of the cancel button.</dd>
+      </dl>
+    </dd>
+    <dt><code>cancel</code> <span class="badge-secondary">Optional</span></dt>
+    <dd>Cancel button.
+      <dl>
+        <dt><code>label</code> <span class="badge-secondary">Optional</span></dt>
+        <dd>The label of the cancel button. If not provided, the default label is "Dismiss".</dd>
+        <dt><code>onclick</code> <span class="badge-secondary">Optional</span></dt>
+        <dd>The onclick of the cancel button.</dd>
+      </dl>
+    </dd>
+  </dl>
+</section>
+
+<h3 id="usage-macro"><a href="#usage-macro">Jinja and Nunjucks</a></h3>
+
+<div class="prose">
+  <p>You can use the <code class="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-xs">toaster()</code> and <code class="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-xs">toast()</code> Nunjucks or Jinja macros for this component.</p>
+</div>
+
+<div class="flex flex-wrap gap-2 my-6">
+  <a class="badge-outline" href="/cli#macros" target="_blank">
+    Use Nunjucks or Jinja macros
+    {% lucide "arrow-right" %}
+  </a>
+  <a class="badge-outline" href="https://github.com/hunvreus/basecoat/blob/main/src/jinja/toast.html.jinja" target="_blank">
+    Jinja macro
+    {% lucide "arrow-right" %}
+  </a>
+  <a class="badge-outline" href="https://github.com/hunvreus/basecoat/blob/main/src/nunjucks/toast.njk" target="_blank">
+    Nunjucks macro
+    {% lucide "arrow-right" %}
+  </a>
+</div>
+
+{% set raw_code_toaster %}{% raw %}{% from "toast.njk" import toaster %}
+{{ toaster(
+  toasts=[
+    {
+      type: "success",
+      title: "Success",
+      description: "A success toast called from the front-end.",
+      action: { label: "Dismiss", click: "close()" }
+    },
+    {
+      type: "info",
+      title: "Info",
+      description: "An info toast called from the front-end.",
+      action: { label: "Dismiss", click: "close()" }
+    }
+  ]
+) }}{% endraw %}{% endset%}
+
+{% set raw_code_toast %}{% raw %}{% from "toast.njk" import toast %}
+{{ toast(
+  title="Event has been created",
+  description="Sunday, December 03, 2023 at 9:00 AM",
+  cancel={ label: "Undo" }
+) }}{% endraw %}{% endset %}
+
+{% from "tabs.njk" import tabs %}
+{% set tabsets = [
+  { tab: "toaster()", panel: code_block(raw_code_toaster, "jinja", class="") },
+  { tab: "toast()", panel: code_block(raw_code_toast, "jinja", class="") }
+] %}
+{{ tabs(id="macros", tabsets=tabsets) }}

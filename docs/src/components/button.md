@@ -1,0 +1,222 @@
+---
+templateEngineOverride: njk
+layout: layouts/page.njk
+title: Button
+description: Displays a button or a component that looks like a button.
+toc:
+  - label: Usage
+    id: usage
+  - label: Examples
+    id: examples
+    children:
+      - label: Size
+        id: example-size
+      - label: Default
+        id: example-default
+      - label: Outline
+        id: example-outline
+      - label: Secondary
+        id: example-secondary
+      - label: Ghost
+        id: example-ghost
+      - label: Destructive
+        id: example-destructive
+      - label: Link
+        id: example-link
+      - label: Icon
+        id: example-icon
+      - label: With Icon
+        id: example-with-icon
+      - label: Rounded
+        id: example-rounded
+      - label: Spinner
+        id: example-spinner
+      - label: Button Group
+        id: example-button-group
+      - label: RTL
+        id: example-rtl
+---
+
+{% from "macros/code_preview.njk" import code_preview %}
+{% from "macros/code_block.njk" import code_block %}
+
+{% set code %}<button type="button" class="btn">Button</button>{% endset %}
+{{ code_preview("button", code) }}
+
+<h2 id="usage"><a href="#usage">Usage</a></h2>
+
+<section class="prose">
+  <p>You can use one of the <code>btn</code> classes to style a button element:</p>
+
+  <ul>
+    <li>
+      <b>Variants</b>:
+      <ul>
+        <li><code>btn</code> or <code>btn-primary</code> for default/primary buttons.</li>
+        <li><code>btn-secondary</code> for secondary buttons.</li>
+        <li><code>btn-destructive</code> for destructive buttons.</li>
+        <li><code>btn-outline</code> for outline buttons.</li>
+        <li><code>btn-ghost</code> for ghost buttons.</li>
+        <li><code>btn-link</code> for link buttons.</li>
+      </ul>
+    </li>
+    <li>
+      <b>Sizes</b>:
+      <ul>
+        <li><code>btn-xs</code> for extra small buttons.</li>
+        <li><code>btn-sm</code> for small buttons.</li>
+        <li><code>btn-lg</code> for large buttons.</li>
+        <li><code>btn-icon</code> for icon buttons. This can be combined with sizes and variants, for example <code>btn-sm-icon-outline</code> or <code>btn-xs-icon-destructive</code>.</li>
+      </ul>
+    </li>
+  </ul>
+
+  <p>Button classes are combined into a single class name. Use <code>btn-{variant}</code>, <code>btn-{size}</code>, <code>btn-{size}-{variant}</code>, <code>btn-icon-{variant}</code>, or <code>btn-{size}-icon-{variant}</code>. Do not stack classes like <code>btn-sm btn-outline</code>; use <code>btn-sm-outline</code> instead.</p>
+
+  <p>Basecoat follows Tailwind v4's default button cursor behavior and does not force <code>cursor: pointer</code>.</p>
+</section>
+
+{{ code_block(code) }}
+
+{% set code_composition %}<button type="button" class="btn">Default</button>
+<button type="button" class="btn-outline">Outline</button>
+<button type="button" class="btn-sm">Small</button>
+<button type="button" class="btn-sm-outline">Small outline</button>
+<button type="button" class="btn-icon-outline" aria-label="Settings">
+  {% lucide "settings" %}
+</button>
+<button type="button" class="btn-sm-icon-outline" aria-label="Settings">
+  {% lucide "settings" %}
+</button>{% endset %}
+{{ code_block(code_composition) }}
+
+<h2 id="examples"><a href="#examples">Examples</a></h2>
+
+<h3 id="example-size"><a href="#example-size">Size</a></h3>
+
+<section class="prose">
+  <p>Use size-specific classes to change the size of the button.</p>
+</section>
+
+{% set code_size %}<div class="flex flex-wrap items-center gap-2">
+  <button type="button" class="btn-xs">Extra Small</button>
+  <button type="button" class="btn-sm">Small</button>
+  <button type="button" class="btn">Default</button>
+  <button type="button" class="btn-lg">Large</button>
+</div>{% endset %}
+{{ code_preview("button-size", code_size) }}
+
+<h3 id="example-default"><a href="#example-default">Default</a></h3>
+
+{% set code %}<button type="button" class="btn">Button</button>{% endset %}
+{{ code_preview("button-default", code) }}
+
+<h3 id="example-outline"><a href="#example-outline">Outline</a></h3>
+
+{% set code %}<button type="button" class="btn-outline">Outline</button>{% endset %}
+{{ code_preview("button-outline", code) }}
+
+<h3 id="example-secondary"><a href="#example-secondary">Secondary</a></h3>
+
+{% set code %}<button type="button" class="btn-secondary">Secondary</button>{% endset %}
+{{ code_preview("button-secondary", code) }}
+
+<h3 id="example-ghost"><a href="#example-ghost">Ghost</a></h3>
+
+{% set code %}<button type="button" class="btn-ghost">Ghost</button>{% endset %}
+{{ code_preview("button-ghost", code) }}
+
+<h3 id="example-destructive"><a href="#example-destructive">Destructive</a></h3>
+
+{% set code %}<button type="button" class="btn-destructive">Destructive</button>{% endset %}
+{{ code_preview("button-destructive", code) }}
+
+<h3 id="example-link"><a href="#example-link">Link</a></h3>
+
+{% set code %}<button type="button" class="btn-link">Link</button>{% endset %}
+{{ code_preview("button-link", code) }}
+
+<h3 id="example-icon"><a href="#example-icon">Icon</a></h3>
+
+{% set code %}<button type="button" class="btn-icon-outline" aria-label="Open">
+  {% lucide "chevron-right" %}
+</button>{% endset %}
+{{ code_preview("button-icon", code) }}
+
+<h3 id="example-with-icon"><a href="#example-with-icon">With Icon</a></h3>
+
+<section class="prose">
+  <p>Mark inline icons with <code>data-icon="inline-start"</code> or <code>data-icon="inline-end"</code> when the button should use icon-aware spacing.</p>
+</section>
+
+{% set code %}<button type="button" class="btn">
+  {% lucide "git-branch", { "data-icon": "inline-start" } %}
+  New Branch
+</button>{% endset %}
+{{ code_preview("button-with-icon", code) }}
+
+<h3 id="example-rounded"><a href="#example-rounded">Rounded</a></h3>
+
+<section class="prose">
+  <p>Use standard Tailwind classes to override the button radius.</p>
+</section>
+
+{% set code %}<button type="button" class="btn rounded-full">
+  {% lucide "arrow-up" %}
+  Rounded
+</button>{% endset %}
+{{ code_preview("button-rounded", code) }}
+
+<h3 id="example-spinner"><a href="#example-spinner">Spinner</a></h3>
+
+{% set code_spinner %}<div class="flex flex-wrap items-center gap-2">
+  <button type="button" class="btn" disabled>
+    {% lucide "loader", { "class": "animate-spin" } %}
+    Generating
+  </button>
+  <button type="button" class="btn-outline">
+    Downloading
+    {% lucide "loader", { "class": "animate-spin" } %}
+  </button>
+</div>{% endset %}
+{{ code_preview("button-spinner", code_spinner) }}
+
+<h3 id="example-button-group"><a href="#example-button-group">Button Group</a></h3>
+
+<section class="prose">
+  <p>To group related buttons, use the <a href="/components/button-group/">Button Group</a> component.</p>
+</section>
+
+{% set code_button_group %}<div class="flex w-fit items-stretch gap-2">
+  <div role="group" class="button-group">
+    <button type="button" class="btn-outline">Archive</button>
+    <button type="button" class="btn-outline">Report</button>
+  </div>
+  <div role="group" class="button-group">
+    <button type="button" class="btn-outline">Snooze</button>
+    <button type="button" class="btn-icon-outline" aria-label="More options">
+      {% lucide "ellipsis" %}
+    </button>
+  </div>
+</div>{% endset %}
+{{ code_preview("button-group-demo", code_button_group) }}
+
+<h3 id="example-rtl"><a href="#example-rtl">RTL</a></h3>
+
+<section class="prose">
+  <p>Buttons support right-to-left layouts through logical spacing. Add <code>dir="rtl"</code> to the button or an ancestor. Directional icons should be flipped explicitly.</p>
+</section>
+
+{% set code_rtl %}<div dir="rtl" class="flex flex-wrap items-center gap-2">
+  <button type="button" class="btn-outline">زر</button>
+  <button type="button" class="btn-destructive">حذف</button>
+  <button type="button" class="btn-outline">
+    إرسال
+    {% lucide "arrow-right", { "data-icon": "inline-end", "class": "rtl:rotate-180" } %}
+  </button>
+  <button type="button" class="btn-secondary" disabled>
+    {% lucide "loader", { "class": "animate-spin" } %}
+    جاري التحميل
+  </button>
+</div>{% endset %}
+{{ code_preview("button-rtl", code_rtl) }}

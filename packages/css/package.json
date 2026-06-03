@@ -59,6 +59,14 @@
     "./toast": "./dist/js/toast.js",
     "./toast.min": "./dist/js/toast.min.js",
     "./all.css": "./dist/basecoat.all.css",
+    "./base": "./dist/basecoat-base.css",
+    "./base.css": "./dist/basecoat-base.css",
+    "./base.cdn.css": "./dist/basecoat-base.cdn.css",
+    "./components": "./dist/basecoat-components.css",
+    "./components.css": "./dist/basecoat-components.css",
+    "./components/*": "./dist/components/*.css",
+    "./components/*.css": "./dist/components/*.css",
+    "./base/base.css": "./dist/base/base.css",
     "./vega": "./dist/basecoat-vega.css",
     "./vega.css": "./dist/basecoat-vega.css",
     "./nova": "./dist/basecoat-nova.css",
@@ -83,6 +91,8 @@
     "./styles/luma": "./dist/styles/style-luma.css",
     "./styles/sera": "./dist/styles/style-sera.css",
     "./styles/rhea": "./dist/styles/style-rhea.css",
+    "./styles/*": "./dist/styles/style-*.css",
+    "./styles/*.css": "./dist/styles/style-*.css",
     "./package.json": "./package.json"
   }
 }

@@ -483,7 +483,7 @@
   }
 
   .command [role='menu']:not(:has([role='menuitem']:not([aria-hidden='true'])))::before {
-    @apply px-3 py-2 text-center text-sm;
+    @apply py-6 text-center text-sm;
   }
 
   .command [role='group'] {
@@ -594,7 +594,7 @@
   }
 
   *:not(select).select [role='listbox']:not(:has([data-value]:not([aria-hidden='true'])))::before {
-    @apply px-3 py-2 text-center text-sm;
+    @apply py-6 text-center text-sm;
   }
 
   *:not(select).select [role='heading'] {
@@ -620,8 +620,9 @@
 
 
   /* Dialog */
-  .dialog::backdrop {
-    @apply bg-black/30 backdrop-blur-sm;
+  .dialog::backdrop,
+  .command-dialog::backdrop {
+    @apply bg-black/30 backdrop-blur-sm duration-100;
   }
 
   .dialog > * {

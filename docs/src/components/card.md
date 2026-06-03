@@ -1,0 +1,194 @@
+---
+templateEngineOverride: njk
+layout: layouts/page.njk
+title: Card
+description: Displays a card with header, content, and footer.
+toc:
+  - label: Usage
+    id: usage
+  - label: Examples
+    id: examples
+    children:
+      - label: Size
+        id: example-size
+      - label: With content and footer
+        id: example-with-content-and-footer
+      - label: With image
+        id: example-with-image
+      - label: RTL
+        id: example-rtl
+---
+
+{% from "macros/code_preview.njk" import code_preview %}
+{% from "macros/code_block.njk" import code_block %}
+
+{% set code %}<div class="card w-full">
+  <header>
+    <h2>Login to your account</h2>
+    <p>Enter your details below to login to your account</p>
+  </header>
+  <section>
+    <form class="grid gap-6">
+      <div class="grid gap-2">
+        <label class="label" for="demo-card-form-email">Email</label>
+        <input class="input" type="email" id="demo-card-form-email">
+      </div>
+      <div class="grid gap-2">
+        <div class="flex items-center gap-2">
+          <label class="label" for="demo-card-form-password">Password</label>
+          <a href="#" class="ms-auto inline-block text-sm underline-offset-4 hover:underline">Forgot your password?</a>
+        </div>
+        <input class="input" type="password" id="demo-card-form-password">
+      </div>
+    </form>
+  </section>
+  <footer class="flex flex-col items-center gap-2">
+    <button type="button" class="btn w-full">Login</button>
+    <button type="button" class="btn-outline w-full">Login with Google</button>
+    <p class="mt-4 text-center text-sm">Don't have an account? <a href="#" class="underline-offset-4 hover:underline">Sign up</a></p>
+  </footer>
+</div>{% endset %}
+{{ code_preview("card", code, "w-full max-w-sm") }}
+
+<h2 id="usage"><a href="#usage">Usage</a></h2>
+
+{% set code %}<div class="card">
+  <header>
+    <h2>Card Title</h2>
+    <p>Card Description</p>
+  </header>
+  <section>
+    <p>Card Content</p>
+  </section>
+  <footer>
+    <p>Card Footer</p>
+  </footer>
+</div>{% endset %}
+{{ code_block(code) }}
+
+<section class="prose">
+  <p>The component has the following HTML structure:</p>
+  <dl>
+    <dt><code class="highlight language-html">&lt;div class="card"&gt;</code></dt>
+    <dd>The card container.
+      <dl>
+        <dt><code class="highlight language-html">&lt;header&gt;</code></dt>
+        <dd>The header of the card.
+          <dl>
+            <dt><code class="highlight language-html">&lt;h2&gt;</code></dt>
+            <dd>The title of the card.</dd>
+            <dt><code class="highlight language-html">&lt;p&gt;</code> <span class="badge-secondary">Optional</span></dt>
+            <dd>The description of the card.</dd>
+          </dl>
+        </dd>
+        <dt><code class="highlight language-html">&lt;section&gt;</code></dt>
+        <dd>The content of the card.</dd>
+        <dt><code class="highlight language-html">&lt;footer&gt;</code> <span class="badge-secondary">Optional</span></dt>
+        <dd>The footer of the card.</dd>
+      </dl>
+    </dd>
+  </dl>
+</section>
+
+<h2 id="examples"><a href="#examples">Examples</a></h2>
+
+<h3 id="example-size"><a href="#example-size">Size</a></h3>
+
+{% set code %}<div class="card" data-size="sm">
+  <header>
+    <h2>Small Card</h2>
+    <p>A compact card with reduced spacing.</p>
+  </header>
+  <section>
+    <p class="text-sm">Use <code>data-size="sm"</code> for denser layouts.</p>
+  </section>
+</div>{% endset %}
+{{ code_preview("card-size", code) }}
+
+<h3 id="example-with-content-and-footer"><a href="#example-with-content-and-footer">With content and footer</a></h3>
+
+{% set code %}<div class="card">
+  <header>
+    <h2>Meeting Notes</h2>
+    <p>Transcript from the meeting with the client.</p>
+  </header>
+  <section class="text-sm">
+    <p>Client requested dashboard redesign with focus on mobile responsiveness.</p>
+    <ol class="mt-4 flex list-decimal flex-col gap-2 ps-6">
+      <li>New analytics widgets for daily/weekly metrics</li>
+      <li>Simplified navigation menu</li>
+      <li>Dark mode support</li>
+      <li>Timeline: 6 weeks</li>
+      <li>Follow-up meeting scheduled for next Tuesday</li>
+    </ol>
+  </section>
+  <footer class="flex items-center">
+    <div class="flex -space-x-2 [&_img]:ring-card [&_img]:ring-2 [&_img]:grayscale [&_img]:size-8 [&_img]:shrink-0 [&_img]:object-cover [&_img]:rounded-full">
+      <img alt="@hunvreus" src="https://github.com/hunvreus.png">
+      <img alt="@shadcn" src="https://github.com/shadcn.png">
+      <img alt="@adamwathan" src="https://github.com/adamwathan.png">
+    </div>
+  </footer>
+</div>{% endset %}
+{{ code_preview("card-with-content-and-footer", code) }}
+
+<h3 id="example-with-image"><a href="#example-with-image">With image</a></h3>
+
+{% set code %}<div class="card">
+  <header>
+    <h2>Is this an image?</h2>
+    <p>This is a card with an image.</p>
+  </header>
+  <section class="px-0">
+    <img
+      alt="Photo by Drew Beamer"
+      loading="lazy"
+      width="500"
+      height="500"
+      class="aspect-video object-cover" style="color:transparent"
+      srcset="
+        https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80&w=640&q=75 1x,
+        https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80&w=1080&q=75 2x
+      "
+      src="https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80&w=1080&q=75"
+    />
+  </section>
+  <footer class="flex items-center gap-2">
+    <span class="badge-outline">
+      {% lucide "bed" %}
+      1
+    </span>
+    <span class="badge-outline">
+      {% lucide "bath" %}
+      2
+    </span>
+    <span class="badge-outline">
+      {% lucide "land-plot" %}
+      350m²
+    </span>
+    <span class="ms-auto font-medium tabular-nums">
+      $135,000
+    </span>
+  </footer>
+</div>{% endset %}
+{{ code_preview("card-with-image", code) }}
+
+<h3 id="example-rtl"><a href="#example-rtl">RTL</a></h3>
+
+<section class="prose">
+  <p>Cards support right-to-left layouts through native text flow. Add <code>dir="rtl"</code> to the card or an ancestor.</p>
+</section>
+
+{% set code %}<div class="card" dir="rtl">
+  <header>
+    <h2>إعدادات الحساب</h2>
+    <p>راجع إعدادات الأمان والإشعارات.</p>
+  </header>
+  <section>
+    <p class="text-sm">يمكنك تعديل هذه الإعدادات في أي وقت.</p>
+  </section>
+  <footer>
+    <button type="button" class="btn">حفظ</button>
+  </footer>
+</div>{% endset %}
+{{ code_preview("card-rtl", code) }}

@@ -3,6 +3,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { exec } from 'child_process';
 import { promisify } from 'util';
+import { generateCssEntrypoints } from './generate-css-entrypoints.js';
 
 const execPromise = promisify(exec);
 
@@ -66,6 +67,7 @@ async function copyDirRecursive(src, dest) {
 // Main build function to prepare packages for publishing.
 async function build() {
   console.log('Starting build process...');
+  await generateCssEntrypoints();
 
   // Define all necessary paths
   const cliPackageDir = path.join(projectRoot, 'packages', 'cli');
@@ -152,6 +154,9 @@ async function build() {
   const styles = ['vega', 'nova', 'maia', 'lyra', 'mira', 'luma', 'sera', 'rhea'];
   await fs.copyFile(path.join(srcCssDir, 'basecoat.css'), path.join(cssDistDir, 'basecoat.css'));
   await fs.copyFile(path.join(srcCssDir, 'basecoat.all.css'), path.join(cssDistDir, 'basecoat.all.css'));
+  await fs.copyFile(path.join(srcCssDir, 'basecoat-base.css'), path.join(cssDistDir, 'basecoat-base.css'));
+  await fs.copyFile(path.join(srcCssDir, 'basecoat-base.cdn.css'), path.join(cssDistDir, 'basecoat-base.cdn.css'));
+  await fs.copyFile(path.join(srcCssDir, 'basecoat-components.css'), path.join(cssDistDir, 'basecoat-components.css'));
   for (const style of styles) {
     await fs.copyFile(path.join(srcCssDir, `basecoat-${style}.css`), path.join(cssDistDir, `basecoat-${style}.css`));
     await fs.copyFile(path.join(srcCssDir, `basecoat-${style}.cdn.css`), path.join(cssDistDir, `basecoat-${style}.cdn.css`));
@@ -170,7 +175,7 @@ async function build() {
   console.log(`Copied split CSS folders to ${cssDistDir}`);
 
   // Create Tailwind CSS builds for the CSS package.
-  const cdnEntries = ['basecoat.cdn.css', ...styles.map((style) => `basecoat-${style}.cdn.css`)];
+  const cdnEntries = ['basecoat.cdn.css', 'basecoat-base.cdn.css', ...styles.map((style) => `basecoat-${style}.cdn.css`)];
   for (const entry of cdnEntries) {
     const cdnCssSrc = path.join(srcCssDir, entry);
     const baseName = path.basename(entry, '.css');

@@ -27,7 +27,7 @@ The earlier five-style assumption was wrong. Luma, Sera, and Rhea are current up
 
 - Basecoat component CSS: `src/css/components/<component>.css`
 - Basecoat templates/macros if relevant: `src/nunjucks/*.njk`, `src/jinja/*.html.jinja`
-- Basecoat docs page: `docs/src/components/<component>.njk`
+- Basecoat docs page: `docs/src/components/<component>.md`
 - Upstream base component: `../_sandbox/shadcn-ui/apps/v4/registry/bases/base/ui/<component>.tsx`
 - Upstream styles: `../_sandbox/shadcn-ui/apps/v4/registry/styles/style-{vega,nova,maia,lyra,mira,luma,sera,rhea}.css`
 - Basecoat styles: `src/css/styles/style-{vega,nova,maia,lyra,mira,luma,sera,rhea}.css`
@@ -95,7 +95,7 @@ Files involved:
 - `src/css/styles/style-luma.css`
 - `src/css/styles/style-sera.css`
 - `src/css/styles/style-rhea.css`
-- `docs/src/components/button.njk`
+- `docs/src/components/button.md`
 
 Current button work includes:
 

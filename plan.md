@@ -41,7 +41,7 @@ For every component, check these files before editing:
 
 - Basecoat component CSS: `src/css/components/<component>.css`
 - Basecoat templates/macros if relevant: `src/nunjucks/*.njk`, `src/jinja/*.html.jinja`
-- Basecoat docs examples: `docs/src/components/<component>.njk`
+- Basecoat docs examples: `docs/src/components/<component>.md`
 - Upstream base component: `../_sandbox/shadcn-ui/apps/v4/registry/bases/base/ui/<component>.tsx`
 - Upstream docs page: `../_sandbox/shadcn-ui/apps/v4/content/docs/components/{base,radix}/<component>.mdx`
 - Upstream style packs: `../_sandbox/shadcn-ui/apps/v4/registry/styles/style-{vega,nova,maia,lyra,mira,luma,sera,rhea}.css`
