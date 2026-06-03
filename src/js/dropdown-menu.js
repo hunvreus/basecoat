@@ -16,6 +16,9 @@
     let menuItems = [];
     let activeIndex = -1;
 
+    const isDisabled = (item) =>
+      item.hasAttribute('disabled') || item.getAttribute('aria-disabled') === 'true';
+
     const closePopover = (focusOnTrigger = true) => {
       if (trigger.getAttribute('aria-expanded') === 'false') return;
       trigger.setAttribute('aria-expanded', 'false');
@@ -36,10 +39,7 @@
       
       trigger.setAttribute('aria-expanded', 'true');
       popover.setAttribute('aria-hidden', 'false');
-      menuItems = Array.from(menu.querySelectorAll('[role^="menuitem"]')).filter(item => 
-        !item.hasAttribute('disabled') && 
-        item.getAttribute('aria-disabled') !== 'true'
-      );
+      menuItems = Array.from(menu.querySelectorAll('[role^="menuitem"]')).filter(item => !isDisabled(item));
       
       if (menuItems.length > 0 && initialSelection) {
         if (initialSelection === 'first') {
@@ -58,7 +58,9 @@
       if (activeIndex > -1 && menuItems[activeIndex]) {
         const activeItem = menuItems[activeIndex];
         activeItem.classList.add('active');
-        trigger.setAttribute('aria-activedescendant', activeItem.id);
+        if (activeItem.id) {
+          trigger.setAttribute('aria-activedescendant', activeItem.id);
+        }
       } else {
         trigger.removeAttribute('aria-activedescendant');
       }
@@ -131,7 +133,7 @@
 
     menu.addEventListener('mousemove', (event) => {
       const menuItem = event.target.closest('[role^="menuitem"]');
-      if (menuItem && menuItems.includes(menuItem)) {
+      if (menuItem && !isDisabled(menuItem) && menuItems.includes(menuItem)) {
         const index = menuItems.indexOf(menuItem);
         if (index !== activeIndex) {
           setActiveItem(index);
@@ -144,7 +146,8 @@
     });
 
     menu.addEventListener('click', (event) => {
-      if (event.target.closest('[role^="menuitem"]')) {
+      const menuItem = event.target.closest('[role^="menuitem"]');
+      if (menuItem && !isDisabled(menuItem)) {
         closePopover();
       }
     });

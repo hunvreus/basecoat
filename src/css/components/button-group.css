@@ -1,33 +1,36 @@
 /* Button Group */
 @layer components {
   .button-group {
-    @apply inline-flex w-fit items-stretch;
-    /* isolate */
+    @apply isolate inline-flex w-fit items-stretch;
     
+    > .input {
+      @apply flex-1;
+    }
+
     > *:focus-visible,
     > :is(.dropdown-menu, .popover, .select) > button:focus-visible {
       @apply relative z-10;
     }
 
-    > hr[role='separator'] {
-      @apply w-0 h-auto self-stretch border border-input shrink-0 m-0;
+    > :is(hr[role='separator'], .button-group-separator) {
+      @apply relative w-px h-auto self-stretch shrink-0 border-0 my-px mx-0;
     }
 
     &:not([data-orientation='vertical']) {
       > *:not(:first-child),
       > :is(.dropdown-menu, .popover, .select):not(:first-child) > button {
-        @apply rounded-l-none border-l-0;
+        @apply rounded-s-none border-s-0;
       }
       > *:not(:last-child),
       > :is(.dropdown-menu, .popover, .select):not(:last-child) > button {
-        @apply rounded-r-none;
+        @apply rounded-e-none;
       }
     }  
     &[data-orientation='vertical'] {
       @apply flex-col;
 
-      > hr[role='separator'] {
-        @apply w-auto h-px;
+      > :is(hr[role='separator'], .button-group-separator) {
+        @apply w-auto h-px mx-px my-0;
       }
       
       > *:not(:first-child),
@@ -40,5 +43,12 @@
       }
     }
   }
-}
 
+  .button-group-text {
+    @apply flex items-center [&_svg]:pointer-events-none;
+  }
+
+  .button-group-separator {
+    @apply relative self-stretch shrink-0;
+  }
+}

@@ -10,6 +10,8 @@ toc:
     children:
       - label: Disabled
         id: example-disabled
+      - label: RTL
+        id: example-rtl
 ---
 
 {% from "macros/code_preview.njk" import code_preview %}
@@ -21,10 +23,10 @@ toc:
 </label>{% endset %}
 {{ code_preview("label", code) }}
 
-<h2 id="usage">Usage</h2>
+<h2 id="usage"><a href="#usage">Usage</a></h2>
 
 <section class="prose">
-  <p>Simply add the <code>label</code> class to your <code>&lt;label&gt;</code> element or have a parent with the <code>form</code> class (<a href="/components/form">read more about form</a>). Labels' style may be affected by the presence of a disabled peer or child element.</p>
+  <p>Add the <code>label</code> class to your <code>&lt;label&gt;</code> element. Labels' style may be affected by the presence of a disabled peer or child element.</p>
 </section>
 
 {% set code %}<label class="label" for="email">Your email address</label>{% endset %}
@@ -39,3 +41,15 @@ toc:
   <input class="input" id="email" type="email" placeholder="Email" disabled>
 </div>{% endset %}
 {{ code_preview("label-disabled", code) }}
+
+<h3 id="example-rtl"><a href="#example-rtl">RTL</a></h3>
+
+<section class="prose">
+  <p>Labels support right-to-left layouts through native text flow. Add <code>dir="rtl"</code> to the label or an ancestor.</p>
+</section>
+
+{% set code %}<div class="grid gap-3" dir="rtl">
+  <label class="label" for="email-rtl">البريد الإلكتروني</label>
+  <input class="input" id="email-rtl" type="email" placeholder="name@example.com">
+</div>{% endset %}
+{{ code_preview("label-rtl", code) }}

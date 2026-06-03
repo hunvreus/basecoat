@@ -14,6 +14,8 @@ toc:
         id: example-textarea
       - label: Select
         id: example-select
+      - label: Slider
+        id: example-slider
       - label: Fieldset
         id: example-fieldset
       - label: Checkbox
@@ -22,8 +24,14 @@ toc:
         id: example-radio
       - label: Switch
         id: example-switch
+      - label: Choice Card
+        id: example-choice-card
+      - label: Field Group
+        id: example-field-group
       - label: Responsive Layout
         id: example-responsive
+      - label: RTL
+        id: example-rtl
 ---
 
 {% from "macros/code_preview.njk" import code_preview %}
@@ -292,25 +300,25 @@ toc:
   <p>Select the items you want to show on the desktop.</p>
   
   <div class="flex flex-col gap-3">
-    <div class="field">
+    <div role="group" class="field">
       <label class="gap-3">
         <input type="checkbox">
         Hard disks
       </label>
     </div>
-    <div class="field">
+    <div role="group" class="field">
       <label class="gap-3">
         <input type="checkbox">
         External disks
       </label>
     </div>
-    <div class="field">
+    <div role="group" class="field">
       <label class="gap-3">
         <input type="checkbox">
         CDs, DVDs and iPods
       </label>
     </div>
-    <div class="field">
+    <div role="group" class="field">
       <label class="gap-3">
         <input type="checkbox">
         Connected servers
@@ -320,7 +328,7 @@ toc:
 
   <hr role="separator">
 
-  <div class="field" data-orientation="horizontal">
+  <div role="group" class="field" data-orientation="horizontal">
     {# <div class="flex w-full items-center gap-3"> #}
       <input id="sync-desktop-documents" type="checkbox" checked class="input self-start">
       <section>
@@ -342,19 +350,19 @@ toc:
   <p>Yearly and lifetime plans offer significant savings.</p>
   
   <div role="radiogroup" class="grid gap-3">
-    <div class="field">
+    <div role="group" class="field">
       <label class="gap-3">
         <input type="radio" name="subscription-plan" checked>
         Monthly ($9.99/month)
       </label>
     </div>
-    <div class="field">
+    <div role="group" class="field">
       <label class="gap-3">
         <input type="radio" name="subscription-plan">
         Yearly ($99.99/year)
       </label>
     </div>
-    <div class="field">
+    <div role="group" class="field">
       <label class="gap-3">
         <input type="radio" name="subscription-plan">
         Lifetime ($299.99)
@@ -414,6 +422,34 @@ toc:
 
 {{ code_preview("field-choice-card", code_choice_card, class="w-full max-w-md") }}
 
+<h3 id="example-field-group"><a href="#example-field-group">Field Group</a></h3>
+
+{% set code_field_group %}
+<fieldset class="fieldset">
+  <legend>Account</legend>
+  <p>Use a field group to stack related fields with consistent spacing.</p>
+
+  <div role="group" aria-label="Field group">
+    <div role="group" class="field">
+      <label for="field-group-name">Name</label>
+      <input id="field-group-name" type="text" placeholder="Evil Rabbit">
+    </div>
+
+    <div class="field-separator">
+      <hr role="separator">
+      <span>Optional</span>
+    </div>
+
+    <div role="group" class="field">
+      <label for="field-group-bio">Bio</label>
+      <textarea id="field-group-bio" rows="3" placeholder="Tell us about yourself"></textarea>
+    </div>
+  </div>
+</fieldset>
+{% endset %}
+
+{{ code_preview("field-group", code_field_group, class="w-full max-w-md") }}
+
 <h3 id="example-responsive"><a href="#example-responsive">Responsive Layout</a></h3>
 
 <section class="prose">
@@ -457,3 +493,26 @@ toc:
 {% endset %}
 
 {{ code_preview("field-responsive", code_responsive, class="w-full max-w-3xl") }}
+
+<h3 id="example-rtl"><a href="#example-rtl">RTL</a></h3>
+
+<section class="prose">
+  <p>Fields support right-to-left layouts through native form direction and logical spacing. Add <code>dir="rtl"</code> to the field, fieldset, or an ancestor.</p>
+</section>
+
+{% set code_rtl %}
+<fieldset class="fieldset" dir="rtl">
+  <legend>الملف الشخصي</legend>
+  <p>تظهر هذه المعلومات في حسابك.</p>
+
+  <div role="group" aria-label="Field group">
+    <div role="group" class="field">
+      <label for="field-rtl-name">الاسم الكامل</label>
+      <input id="field-rtl-name" type="text" placeholder="أرنب شرير">
+      <p>اكتب اسمك الأول والأخير.</p>
+    </div>
+  </div>
+</fieldset>
+{% endset %}
+
+{{ code_preview("field-rtl", code_rtl, class="w-full max-w-md") }}

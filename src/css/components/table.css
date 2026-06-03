@@ -1,28 +1,34 @@
 /* Tables */
 @layer components {
+  .table-container {
+    @apply relative w-full overflow-x-auto;
+  }
+
   .table {
-    @apply w-full caption-bottom text-sm;
+    @apply w-full caption-bottom;
+
     thead {
       @apply [&_tr]:border-b;
     }
+
     tbody {
       @apply [&_tr:last-child]:border-0;
     }
+
     tfoot {
-      @apply bg-muted/50 border-t font-medium [&>tr]:last:border-b-0;
+      @apply border-t font-medium [&>tr]:last:border-b-0;
     }
+
     tr {
-      @apply hover:bg-muted/50 border-b transition-colors;
+      @apply border-b transition-colors data-[state=selected]:bg-muted;
     }
+
     th {
-      @apply text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px];
+      @apply align-middle font-medium whitespace-nowrap [&:has([role=checkbox])]:pe-0 [&>[role=checkbox]]:translate-y-[2px];
     }
+
     td {
-      @apply p-2 align-middle whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px];
-    }
-    caption {
-      @apply text-muted-foreground mt-4 text-sm;
+      @apply align-middle whitespace-nowrap [&:has([role=checkbox])]:pe-0 [&>[role=checkbox]]:translate-y-[2px];
     }
   }
 }
-

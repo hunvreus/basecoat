@@ -21,9 +21,10 @@ Usage
 - CSS‑only components: use classes like `btn`, `card`, `input`, etc.
 - JS components: include the JS and use required roles/attributes (see below).
 
-Theming
-- Tailwind projects can override design tokens (e.g., `primary`, `muted-foreground`).
+Theming and customization
+- Tailwind projects can override design tokens (e.g., `primary`, `muted-foreground`) and font tokens (`--font-sans`, `--font-mono`).
 - Without Tailwind, use CDN CSS and add overrides after the link tag.
+- See `/customization` for icons, themes, fonts, and style overrides.
 
 Common pitfalls
 - Do not invent class names; use documented classes only.
@@ -38,7 +39,6 @@ Components
 - Textarea (CSS): `.textarea` styled multiline input.
 - Label (CSS): `.label` for associated form labels.
 - Field (CSS): `.field` wrapper for label, input, hint, error.
-- Form (CSS): `.form` patterns for layout and validation styling.
 - Checkbox (CSS): styled native checkbox; use `input[type='checkbox']`.
 - Radio Group (CSS): `.radio-group` pattern using native radios.
 - Switch (CSS): styled checkbox with `role="switch"` if needed.

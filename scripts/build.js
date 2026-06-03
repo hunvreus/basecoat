@@ -122,7 +122,7 @@ async function build() {
 
   // Create combined component files
   console.log('Creating combined component files...');
-  const componentsToCombine = ['basecoat.js', 'command.js', 'dropdown-menu.js', 'popover.js', 'select.js', 'sidebar.js', 'tabs.js', 'toast.js'];
+  const componentsToCombine = ['basecoat.js', 'command.js', 'combobox.js', 'dropdown-menu.js', 'popover.js', 'range.js', 'select.js', 'sidebar.js', 'tabs.js', 'toast.js'];
   const componentPaths = componentsToCombine.map(f => path.join(srcJsDir, f));
 
   // Create non-minified bundle
@@ -149,9 +149,14 @@ async function build() {
   // Build CSS package
   console.log('Building CSS package...');
   await ensureDir(cssDistDir); // Ensure dist dir exists for css package
+  const styles = ['vega', 'nova', 'maia', 'lyra', 'mira', 'luma', 'sera', 'rhea'];
   await fs.copyFile(path.join(srcCssDir, 'basecoat.css'), path.join(cssDistDir, 'basecoat.css'));
   await fs.copyFile(path.join(srcCssDir, 'basecoat.all.css'), path.join(cssDistDir, 'basecoat.all.css'));
-  console.log(`Copied basecoat.css to ${cssDistDir}`);
+  for (const style of styles) {
+    await fs.copyFile(path.join(srcCssDir, `basecoat-${style}.css`), path.join(cssDistDir, `basecoat-${style}.css`));
+    await fs.copyFile(path.join(srcCssDir, `basecoat-${style}.cdn.css`), path.join(cssDistDir, `basecoat-${style}.cdn.css`));
+  }
+  console.log(`Copied basecoat CSS entrypoints to ${cssDistDir}`);
 
   // Copy split CSS folders used by basecoat.css imports.
   const cssBaseSrcDir = path.join(srcCssDir, 'base');
@@ -164,15 +169,19 @@ async function build() {
   await copyDirRecursive(srcCssStylesDir, cssStylesDistDir);
   console.log(`Copied split CSS folders to ${cssDistDir}`);
 
-  // Create Tailwind CSS builds for the CSS package
-  const cdnCssSrc = path.join(srcCssDir, 'basecoat.cdn.css');
-  const cssDistCdnPath = path.join(cssDistDir, 'basecoat.cdn.css');
-  const cssDistCdnMinPath = path.join(cssDistDir, 'basecoat.cdn.min.css');
-  
-  await execPromise(`npx tailwindcss -i "${cdnCssSrc}" -o "${cssDistCdnPath}"`);
-  console.log(`Generated non-minified CSS: ${cssDistCdnPath}`);
-  await execPromise(`npx tailwindcss -i "${cdnCssSrc}" -o "${cssDistCdnMinPath}" --minify`);
-  console.log(`Generated minified CSS: ${cssDistCdnMinPath}`);
+  // Create Tailwind CSS builds for the CSS package.
+  const cdnEntries = ['basecoat.cdn.css', ...styles.map((style) => `basecoat-${style}.cdn.css`)];
+  for (const entry of cdnEntries) {
+    const cdnCssSrc = path.join(srcCssDir, entry);
+    const baseName = path.basename(entry, '.css');
+    const cssDistCdnPath = path.join(cssDistDir, `${baseName}.css`);
+    const cssDistCdnMinPath = path.join(cssDistDir, `${baseName}.min.css`);
+
+    await execPromise(`npx tailwindcss -i "${cdnCssSrc}" -o "${cssDistCdnPath}"`);
+    console.log(`Generated non-minified CSS: ${cssDistCdnPath}`);
+    await execPromise(`npx tailwindcss -i "${cdnCssSrc}" -o "${cssDistCdnMinPath}" --minify`);
+    console.log(`Generated minified CSS: ${cssDistCdnMinPath}`);
+  }
 
   console.log('Build process finished successfully!');
 }

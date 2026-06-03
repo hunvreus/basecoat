@@ -12,4 +12,20 @@
 - Test locally before submitting.
 - Follow existing code style.
 
+## Cloudflare Workers deploys
+
+Docs are built with 11ty and deployed as Workers Static Assets from `_site`.
+
+- Local preview: `npm run workers:dev`
+- Production deploy: `npm run workers:deploy`
+- Preview version upload: `npm run workers:preview`
+
+Workers Builds settings:
+
+- Build command: `npm run docs:build`
+- Deploy command: `npx wrangler deploy`
+- Non-production branch deploy command: `npx wrangler versions upload`
+- Production branch: `main`
+- Enable builds for non-production branches for branch preview URLs.
+
 Thanks for helping!

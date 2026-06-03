@@ -1,18 +1,18 @@
 /* Input */
 @layer components {
-  :is(.form, .field) input[type='text']:not(:is(.select [data-popover] > header input[role='combobox'], .command > header input, .dialog > * > header input)),
-  :is(.form, .field) input[type='email'],
-  :is(.form, .field) input[type='password'],
-  :is(.form, .field) input[type='number'],
-  :is(.form, .field) input[type='file'],
-  :is(.form, .field) input[type='tel'],
-  :is(.form, .field) input[type='url'],
-  :is(.form, .field) input[type='search']:not(:is(.select [data-popover] > header input[role='combobox'], .command > header input, .dialog > * > header input)),
-  :is(.form, .field) input[type='date'],
-  :is(.form, .field) input[type='datetime-local'],
-  :is(.form, .field) input[type='month'],
-  :is(.form, .field) input[type='week'],
-  :is(.form, .field) input[type='time'],
+  .field > input[type='text']:not(:is(.command > header input, .dialog > * > header input)),
+  .field > input[type='email'],
+  .field > input[type='password'],
+  .field > input[type='number'],
+  .field > input[type='file'],
+  .field > input[type='tel'],
+  .field > input[type='url'],
+  .field > input[type='search']:not(:is(.command > header input, .dialog > * > header input)),
+  .field > input[type='date'],
+  .field > input[type='datetime-local'],
+  .field > input[type='month'],
+  .field > input[type='week'],
+  .field > input[type='time'],
   .input[type='text'],
   .input[type='email'],
   .input[type='password'],
@@ -25,10 +25,8 @@
   .input[type='datetime-local'],
   .input[type='month'],
   .input[type='week'],
-  .input[type='time'] {
-    @apply appearance-none file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input flex h-9 w-full min-w-0 rounded-md border bg-transparent px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm;
-    @apply focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px];
-    @apply aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive;
+  .input[type='time'],
+  .input:not([type]) {
+    @apply w-full min-w-0 outline-none file:inline-flex file:border-0 file:bg-transparent file:text-foreground placeholder:text-muted-foreground disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50;
   }
 }
-

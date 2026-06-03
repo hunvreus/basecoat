@@ -1,0 +1,78 @@
+/* Combobox */
+@layer components {
+  .combobox {
+    @apply relative inline-flex w-fit flex-col;
+  }
+
+  .combobox > input[role='combobox'] {
+    @apply w-full min-w-0 outline-hidden placeholder:text-muted-foreground disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .combobox > svg,
+  .combobox-trigger-icon {
+    @apply pointer-events-none absolute shrink-0;
+  }
+
+  .combobox [data-popover] {
+    @apply isolate overflow-hidden;
+    min-width: max(100%, 9rem);
+  }
+
+  .combobox [role='listbox'] {
+    @apply outline-hidden overflow-y-auto;
+  }
+
+  .combobox [role='listbox'] [role='group']:not(:has([role='option']:not([aria-hidden='true']))) {
+    @apply hidden;
+  }
+
+  .combobox [role='listbox']:not(:has([data-value]:not([aria-hidden='true'])))::before {
+    @apply flex items-center justify-center truncate;
+  }
+
+  .combobox [role='listbox'][data-empty]:not(:has([data-value]:not([aria-hidden='true'])))::before {
+    @apply content-[attr(data-empty)];
+  }
+
+  .combobox [role='listbox']:not([data-empty]):not(:has([data-value]:not([aria-hidden='true'])))::before {
+    @apply content-['No_results_found'];
+  }
+
+  .combobox [role='option'] {
+    @apply aria-hidden:hidden relative flex w-full cursor-default items-center truncate outline-hidden select-none aria-disabled:pointer-events-none aria-disabled:opacity-50 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0;
+  }
+
+  .combobox [role='option'][aria-selected='true'] {
+    @apply bg-[image:var(--check-icon)] bg-no-repeat bg-position-[center_right_0.5rem] bg-size-[0.875rem];
+  }
+
+  .combobox [role='option'][aria-selected='true']:dir(rtl) {
+    @apply bg-position-[center_left_0.5rem];
+  }
+
+  .combobox [role='separator'] {
+    @apply border-0;
+  }
+
+  .combobox [role='option'].active,
+  .combobox [role='option']:focus-visible,
+  .combobox:not([data-combobox-initialized]) [role='option']:not([aria-disabled='true']):not(:disabled):hover {
+    @apply bg-accent text-accent-foreground;
+  }
+
+  .combobox-chips {
+    @apply flex w-full min-w-0 flex-wrap items-center;
+  }
+
+  .combobox-chips > input[role='combobox'] {
+    @apply min-w-16 flex-1 bg-transparent outline-hidden placeholder:text-muted-foreground disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .combobox-chip {
+    @apply inline-flex w-fit shrink-0 items-center whitespace-nowrap;
+  }
+
+  .combobox-chip-remove {
+    @apply inline-flex items-center justify-center;
+  }
+}

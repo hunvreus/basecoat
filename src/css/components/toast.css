@@ -1,7 +1,7 @@
 /* Toasts */
 @layer components {
   .toaster {
-    @apply fixed bottom-0 p-4 pointer-events-none z-50 w-full sm:max-w-90 flex flex-col-reverse;
+    @apply pointer-events-none fixed bottom-0 z-50 flex w-full flex-col-reverse p-4 sm:max-w-90;
 
     &:not([data-align]),
     &[data-align='end'] {
@@ -14,10 +14,10 @@
       @apply left-1/2 -translate-x-1/2;
     }
     .toast {
-      @apply pointer-events-auto w-full mt-4 animate-[toast-up_0.3s_ease-in-out] grid  grid-rows-[1fr] transition-[grid-template-rows,opacity,margin] duration-300 ease-in-out;
+      @apply pointer-events-auto mt-4 grid w-full grid-rows-[1fr] animate-[toast-up_0.3s_ease-in-out] transition-[grid-template-rows,opacity,margin] duration-300 ease-in-out;
       
       .toast-content {
-        @apply text-popover-foreground text-[13px] bg-popover border shadow-lg rounded-lg overflow-hidden flex gap-2.5 p-3 items-center;
+        @apply flex items-center gap-2.5 overflow-hidden p-3 text-[13px];
 
         svg {
           @apply size-4 shrink-0;
@@ -31,7 +31,7 @@
           }
         }
         footer {
-          @apply ml-auto flex flex-col gap-2;
+          @apply ms-auto flex flex-col gap-2;
 
           [data-toast-action],
           [data-toast-cancel] {
@@ -40,7 +40,7 @@
         }
       }
       &[aria-hidden='true'] {
-        @apply grid-rows-[0fr] opacity-0 m-0 border-0 p-0 overflow-hidden;
+        @apply m-0 grid-rows-[0fr] overflow-hidden border-0 p-0 opacity-0;
 
         .toast-content {
           @apply border-0;
@@ -55,4 +55,3 @@
     transform: translateY(100%);
   }
 }
-

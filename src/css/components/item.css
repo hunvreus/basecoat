@@ -1,0 +1,50 @@
+/* Item */
+@layer components {
+  .item-group {
+    @apply flex w-full flex-col;
+  }
+
+  .item-group > hr {
+    @apply w-full shrink-0 border-0 border-t;
+  }
+
+  .item {
+    @apply flex w-full flex-wrap items-center border transition-colors duration-100 outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50;
+  }
+
+  a.item {
+    @apply hover:bg-muted;
+  }
+
+  .item > figure {
+    @apply flex shrink-0 items-center justify-center [&_svg]:pointer-events-none;
+  }
+
+  .item > figure:has(img) {
+    @apply overflow-hidden [&_img]:size-full [&_img]:object-cover;
+  }
+
+  .item > section {
+    @apply flex flex-1 flex-col;
+  }
+
+  .item > section + section {
+    @apply flex-none;
+  }
+
+  .item > aside {
+    @apply flex items-center;
+  }
+
+  .item > :is(header, footer) {
+    @apply flex basis-full items-center justify-between;
+  }
+
+  .item :is(h2, h3, h4) {
+    @apply line-clamp-1 flex w-fit items-center;
+  }
+
+  .item p {
+    @apply text-muted-foreground line-clamp-2 text-start font-normal [&>a]:underline [&>a]:underline-offset-4 [&>a:hover]:text-primary;
+  }
+}

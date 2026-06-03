@@ -2,38 +2,47 @@
 @layer components {
   .dropdown-menu {
     @apply relative inline-flex;
+  }
 
-    [data-popover] {
-      @apply p-1;
-      min-width: anchor-size(width);
+  .dropdown-menu > [data-popover] {
+    min-width: anchor-size(width);
+  }
 
-      [role='menuitem'],
-      [role='menuitemcheckbox'],
-      [role='menuitemradio'] {
-        @apply aria-hidden:hidden [&_svg]:text-muted-foreground relative flex cursor-default items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-hidden select-none [&_svg]:shrink-0 [&_svg]:size-4 aria-disabled:opacity-50 aria-disabled:pointer-events-none disabled:opacity-50 disabled:pointer-events-none w-full truncate;
+  .dropdown-menu [role='menu'] {
+    @apply outline-hidden;
+  }
 
-        &:not([aria-disabled='true']) {
-          @apply focus-visible:bg-accent focus-visible:text-accent-foreground;
-        }
+  .dropdown-menu :is([role='menuitem'], [role='menuitemcheckbox'], [role='menuitemradio']) {
+    @apply aria-hidden:hidden relative flex w-full cursor-default items-center truncate outline-hidden select-none disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0;
+  }
 
-        &.active {
-          @apply bg-accent text-accent-foreground;
-        }
-      }
-      [role='menu'] [role='heading'] {
-        @apply flex px-2 py-1.5 text-sm font-medium;
-      }
-      [role='separator'] {
-        @apply border-border -mx-1 my-1;
-      }
-    }
-    &:not([data-dropdown-menu-initialized]) [data-popover] {
-      [role='menuitem'],
-      [role='menuitemcheckbox'],
-      [role='menuitemradio'] {
-        @apply hover:bg-accent hover:text-accent-foreground;
-      }
+  .dropdown-menu [role='menu'] [role='heading'] {
+    @apply flex;
+  }
+
+  .dropdown-menu [role='separator'] {
+    @apply border-0;
+  }
+
+  .dropdown-menu [data-shortcut] {
+    @apply ms-auto;
+  }
+
+  .dropdown-menu [data-indicator] {
+    @apply pointer-events-none invisible;
+  }
+
+  .dropdown-menu :is([role='menuitemcheckbox'], [role='menuitemradio'])[aria-checked='true'] [data-indicator] {
+    @apply visible;
+  }
+
+  .dropdown-menu [data-rtl-flip] {
+    @apply rtl:rotate-180;
+  }
+
+  .dropdown-menu:not([data-dropdown-menu-initialized]) :is([role='menuitem'], [role='menuitemcheckbox'], [role='menuitemradio']) {
+    &:not([aria-disabled='true']):not(:disabled):hover {
+      @apply bg-accent text-accent-foreground;
     }
   }
 }
-

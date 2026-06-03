@@ -1,0 +1,56 @@
+---
+layout: layouts/page.njk
+title: CLI
+description: Use the Basecoat CLI and template macros.
+toc:
+  - label: Use the CLI
+    id: cli
+  - label: Use Nunjucks or Jinja macros
+    id: macros
+---
+
+{% from "macros/code_block.njk" import code_block %}
+{% from "tabs.njk" import tabs %}
+
+<h2 id="cli"><a href="#cli">Use the CLI</a></h2>
+
+<div class="prose">
+  <p>If you're using Nunjucks or Jinja, you can use the CLI to install the CSS and macros for complex components (e.g. <a href="/components/dialog">Dialog</a>). It will copy the JS and <code>.html.jinja</code> or <code>.njk</code> macros into your code.</p>
+  <p>For example, to add the Dialog component, run one of the following commands:</p>
+</div>
+
+{% set code_npm_exec %}npx basecoat-cli add dialog{% endset %}
+{% set code_pnpm_exec %}pnpm dlx basecoat-cli add dialog{% endset %}
+{% set code_bun_exec %}bunx basecoat-cli add dialog{% endset %}
+{% set code_yarn_exec %}yarn dlx basecoat-cli add dialog{% endset %}
+{% set exec_tabsets = [
+  { tab: "npm", panel: code_block(code_npm_exec, class="") },
+  { tab: "pnpm", panel: code_block(code_pnpm_exec, class="") },
+  { tab: "bun", panel: code_block(code_bun_exec, class="") },
+  { tab: "yarn", panel: code_block(code_yarn_exec, class="") }
+] %}
+{{ tabs(id="cli-execution", tabsets=exec_tabsets, label="Execute CLI commands to add components:") }}
+
+<div class="prose my-6">
+  <p>You will be asked to confirm the template engine and destination directory for the JavaScript and macros.</p>
+</div>
+
+<h2 id="macros"><a href="#macros">Use Nunjucks or Jinja macros</a></h2>
+
+<div class="prose">
+  <p>For more complex components, you can use <a href="https://mozilla.github.io/nunjucks/" target="_blank">Nunjucks</a> or <a href="https://jinja.palletsprojects.com" target="_blank">Jinja</a> macros to help generate the HTML and JavaScript code.</p>
+  <p>To install them, either <a href="https://github.com/hunvreus/basecoat/tree/main/src" target="_blank">copy them directly from the GitHub repository</a> or use <a href="#cli">the CLI</a>.</p>
+  <p>For example, here's how you could use the <code>select()</code> macro to generate the HTML and JavaScript code for a <a href="/components/select">Select</a> component:</p>
+</div>
+
+{% set code %}{% raw %}{% call select() %}
+<div role="group" aria-labelledby="fruit-options-label">
+  <span id="fruit-options-label" role="heading">Fruits</span>
+  <div role="option" data-value="apple">Apple</div>
+  <div role="option" data-value="banana">Banana</div>
+  <div role="option" data-value="blueberry">Blueberry</div>
+  <div role="option" data-value="pineapple">Grapes</div>
+  <div role="option" data-value="pineapple">Pineapple</div>
+</div>
+{% endcall %}{% endraw %}{% endset %}
+{{ code_block(code, "jinja") }}

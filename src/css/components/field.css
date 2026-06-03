@@ -1,44 +1,86 @@
 /* Field */
 @layer components {
   .fieldset {
-    @apply flex flex-col gap-6;
-
-    > legend {
-      @apply text-base font-medium mb-3;
-    }
+    @apply flex flex-col;
   }
-  .field {
-    @apply flex flex-col w-full gap-3 data-[invalid=true]:text-destructive [&>*]:w-full [&>.sr-only]:w-auto;
 
-    h2,
-    h3 {
-      @apply flex w-fit items-center gap-2 text-sm leading-snug font-medium;
-    }
-    [role="alert"] {
-      @apply text-sm text-destructive font-normal;
-      
-      ul {
-        @apply ml-4 flex list-disc flex-col gap-1;
-      }
-    }
-    section {
-      @apply flex flex-1 flex-col gap-1.5 leading-snug;
-    }
+  .fieldset > :is([role='group'], [role='radiogroup']):not(.field),
+  .field > :is(fieldset, [role='group'], [role='radiogroup']):not(.field) {
+    @apply @container/field-group flex w-full flex-col;
+  }
+
+  .field {
+    @apply flex w-full flex-col data-[invalid=true]:text-destructive [&>*]:w-full [&>.sr-only]:w-auto;
 
     &[data-orientation='horizontal'] {
       @apply flex-row items-center [&>label]:flex-auto has-[>section]:items-start has-[>section]:[&>[type=checkbox],[type=radio]]:mt-px [&_p]:text-balance;
     }
+
+    &[data-orientation='responsive'] {
+      @apply flex-col @md/field-group:flex-row @md/field-group:items-center @md/field-group:[&>*]:w-auto @md/field-group:has-[>section]:items-start @md/field-group:[&>label]:flex-auto @md/field-group:has-[>section]:[&>[type=checkbox],[type=radio]]:mt-px;
+    }
+
+    section,
+    .field-content {
+      @apply flex flex-1 flex-col leading-snug;
+    }
+
+    h2,
+    h3,
+    .field-title {
+      @apply flex w-fit items-center;
+    }
+
+    [role='alert'],
+    .field-error {
+      @apply font-normal;
+
+      ul {
+        @apply ms-4 flex list-disc flex-col gap-1;
+      }
+    }
   }
+
+  .field > label,
+  label:has(> .field) {
+    @apply w-fit;
+  }
+
+  .field > label:has(> .field),
+  .field > label:has(input[type='radio']),
+  .field > label:has(input[type='checkbox']),
+  .field > label:has(input[role='switch']),
+  label:has(> .field) {
+    @apply w-full;
+  }
+
+  .field > label:has(> .field),
+  label:has(> .field) {
+    @apply flex-col;
+  }
+
+  .field-description,
   .fieldset legend + p,
   .field > p,
   .field section > p {
-    @apply text-muted-foreground text-sm leading-normal font-normal [&>a:hover]:text-primary [&>a]:underline [&>a]:underline-offset-4;
+    @apply leading-normal font-normal [&>a:hover]:text-primary [&>a]:underline [&>a]:underline-offset-4;
   }
-  .fieldset legend + p {
-    @apply -mt-1.5;
-  }
-  .field > p {
+
+  .field > p,
+  .field section > p,
+  .field-description {
     @apply last:mt-0 nth-last-2:-mt-1;
   }
-}
 
+  .field-separator {
+    @apply relative;
+  }
+
+  .field-separator > hr[role='separator'] {
+    @apply absolute inset-x-0 top-1/2;
+  }
+
+  .field-separator > span {
+    @apply relative mx-auto block w-fit bg-background;
+  }
+}

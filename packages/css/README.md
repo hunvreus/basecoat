@@ -25,6 +25,13 @@ Add it just after Tailwind in your stylesheet:
 
 That's it, you can use any Basecoat class (`btn`, `card`, `input`, etc) in your markup.
 
+To use a specific style, import its standalone bundle instead:
+
+```css
+@import "tailwindcss";
+@import "basecoat-css/sera";
+```
+
 ### (Optional) JavaScript files
 
 Some interactive components (Dropdown Menu, Popover, Select, Sidebar, Tabs, Toast) need some JavaScript.

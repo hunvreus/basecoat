@@ -13,28 +13,18 @@ toc:
   - label: Installing using NPM
     id: install-npm
     children:
-      - label: Add Tailwind CSS
+      - label: "Step 1: Add Tailwind CSS"
         id: install-npm-tailwind
-      - label: Add Basecoat
+      - label: "Step 2: Add Basecoat"
         id: install-npm-basecoat
-      - label: Import basecoat in your CSS
+      - label: "Step 3: Import Basecoat"
         id: install-npm-import
-      - label: (Optional) Add JavaScript files
+      - label: "Step 4: Add JavaScript files"
         id: install-npm-js
-      - label: That's it
+      - label: "Step 5: Use components"
         id: install-npm-done
   - label: Components with JavaScript
     id: install-js
-  - label: Use the CLI
-    id: install-cli
-  - label: Use Nunjucks or Jinja macros
-    id: install-macros
-  - label: Icons
-    id: install-icons
-  - label: Theming
-    id: install-theming
-  - label: Customization
-    id: install-customization
 ---
 
 {% from "macros/code_block.njk" import code_block %}
@@ -52,6 +42,13 @@ toc:
 <script src="https://cdn.jsdelivr.net/npm/basecoat-css@{{ pkg.version }}/dist/js/all.min.js" defer></script>{% endset %}
 {{ code_block(code, "html") }}
 
+<section class="prose">
+  <p>The default CDN stylesheet is the Basecoat backward-compatible default. To use a specific style, load the matching standalone stylesheet instead:</p>
+</section>
+
+{% set code %}<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@{{ pkg.version }}/dist/basecoat-sera.cdn.min.css">{% endset %}
+{{ code_block(code, "html") }}
+
 <h3 id="install-cdn-specific"><a href="#install-cdn-specific">Install specific components</a></h3>
 
 <section class="prose">
@@ -65,16 +62,16 @@ toc:
 
 <h2 id="install-npm"><a href="#install-npm">Install using NPM</a></h2>
 
-<ol class="[&>h3]:step steps mb-12 md:ml-4 md:border-l md:pl-8">
-  <li class="step">
-    <h3 class="mb-4 scroll-m-20 font-semibold tracking-tight" id="install-npm-tailwind"><a href="#install-npm-tailwind">Add Tailwind CSS</a></h3>
+<div class="grid gap-8 mb-12">
+  <section>
+    <h3 class="mb-4 scroll-m-20 font-semibold tracking-tight" id="install-npm-tailwind"><a href="#install-npm-tailwind">Step 1: Add Tailwind CSS</a></h3>
     <div class="prose">
       <p>Basecoat uses Tailwind CSS. You need to install it in your project.</p>
       <p><a href="https://tailwindcss.com/docs/installation" target="_blank">Follow the Tailwind CSS installation instructions to get started.</a></p>
     </div>
-  </li>
-  <li class="step mt-8">
-    <h3 class="mb-4 scroll-m-20 font-semibold tracking-tight" id="install-npm-basecoat"><a href="#install-npm-basecoat">Add Basecoat</a></h3>
+  </section>
+  <section>
+    <h3 class="mb-4 scroll-m-20 font-semibold tracking-tight" id="install-npm-basecoat"><a href="#install-npm-basecoat">Step 2: Add Basecoat</a></h3>
     <div class="prose">
       <p>Add Basecoat to your Tailwind CSS file.</p>
     </div>
@@ -92,15 +89,21 @@ toc:
     <div class="prose">
       <p>Alternatively, you can directly <a href="https://github.com/hunvreus/basecoat/blob/main/src/css/basecoat.css" target="_blank">copy the <code>basecoat.css</code> file</a> into your project.</p>
     </div>
-  </li>
-  <li class="step mt-8">
-    <h3 class="mb-4 scroll-m-20 font-semibold tracking-tight" id="install-npm-import"><a href="#install-npm-import">Import basecoat in your CSS</a></h3>
+  </section>
+  <section>
+    <h3 class="mb-4 scroll-m-20 font-semibold tracking-tight" id="install-npm-import"><a href="#install-npm-import">Step 3: Import Basecoat</a></h3>
     {% set code %}@import "tailwindcss";
 @import "basecoat-css";{% endset %}
     {{ code_block(code, "css") }}
-  </li>
-  <li class="step mt-8">
-    <h3 class="mb-4 scroll-m-20 font-semibold tracking-tight" id="install-npm-js"><a href="#install-npm-js">(Optional) Add JavaScript files</a></h3>
+    <div class="prose">
+      <p>The default import is the Basecoat backward-compatible default. To use a specific style, import the standalone style bundle instead:</p>
+    </div>
+    {% set code %}@import "tailwindcss";
+@import "basecoat-css/sera";{% endset %}
+    {{ code_block(code, "css") }}
+  </section>
+  <section>
+    <h3 class="mb-4 scroll-m-20 font-semibold tracking-tight" id="install-npm-js"><a href="#install-npm-js">Step 4: Add JavaScript files</a></h3>
     <div class="prose">
       <p>Some components <a href="#install-js">need some JavaScript</a> (e.g. the <a href="/components/tabs">Tabs</a> component). There are two ways to get it into your project:</p>
 
@@ -131,15 +134,15 @@ import 'basecoat-css/tabs';{% endraw %}{% endset %}
     <div class="prose">
       <p>See each component page for the minimal script required.</p>
     </div>
-  </li>
-  <li class="step mt-8">
-    <h3 class="mb-4 scroll-m-20 font-semibold tracking-tight" id="install-npm-done"><a href="#install-npm-done">That's it</a></h3>
+  </section>
+  <section>
+    <h3 class="mb-4 scroll-m-20 font-semibold tracking-tight" id="install-npm-done"><a href="#install-npm-done">Step 5: Use components</a></h3>
     <div class="prose">
       <p>You can now use any of the Basecoat classes in your project (e.g. <code>btn</code>, <code>card</code>, <code>input</code>, etc). Read the documentation about each component to get started (e.g. <a href="/components/button">button</a>, <a href="/components/card">card</a>, <a href="/components/input">input</a>, etc).</p>
       <p>Some components (e.g. <a href="/components/select">Select</a>) require <a href="#install-js">JavaScript code to work</a>.</p>
     </div>
-  </li>
-</ol>
+  </section>
+</div>
 
 <h2 id="install-js"><a href="#install-js">Components with JavaScript</a></h2>
 
@@ -150,126 +153,6 @@ import 'basecoat-css/tabs';{% endraw %}{% endset %}
     
   <ul>
     <li><b>CDN</b>: you either <a href="#install-cdn-all">add the code for all of the components</a> to the <code>&lt;head&gt;</code> of your HTML file, or just the file for the component you want to use as instructed on the component's page.</li>
-    <li><b>Local file</b>: you download the script as a separate file and include it in your project (<a href="#install-cli">or let the CLI do it for you</a>). Once again, you have the choice to include the file for all components at once (<a><code>all.min.js</code> or <code>all.js</code>).</p>
+    <li><b>Local file</b>: you download the script as a separate file and include it in your project. Once again, you have the choice to include the file for all components at once (<code>all.min.js</code> or <code>all.js</code>).</li>
   </ul>
-</div>
-
-<h2 id="install-cli"><a href="#install-cli">Use the CLI</a></h2>
-
-<div class="prose">
-  <p>If you're using Nunjucks or Jinja, you can use the CLI to install the CSS and macros for any of the complex components(e.g. <a href="/components/dialog">Dialog</a>). It will copy the JS and <code>.html.jinja</code> or <code>.njk</code> macros into your code.</p>
-  <p>For example, to add the Dialog component, run one of the following commands:</p>
-</div>
-
-{% set code_npm_exec %}npx basecoat-cli add dialog{% endset %}
-{% set code_pnpm_exec %}pnpm dlx basecoat-cli add dialog{% endset %}
-{% set code_bun_exec %}bunx basecoat-cli add dialog{% endset %}
-{% set code_yarn_exec %}yarn dlx basecoat-cli add dialog{% endset %}
-{% set exec_tabsets = [
-  { tab: "npm", panel: code_block(code_npm_exec, class="") },
-  { tab: "pnpm", panel: code_block(code_pnpm_exec, class="") },
-  { tab: "bun", panel: code_block(code_bun_exec, class="") },
-  { tab: "yarn", panel: code_block(code_yarn_exec, class="") }
-] %}
-{{ tabs(id="cli-execution", tabsets=exec_tabsets, label="Execute CLI commands to add components:") }}
-
-<div class="prose my-6">
-  <p>You will be asked to confirm the template engine and destination directory for the JavaScript and macros.</p>
-</div>
-
-<h2 id="install-macros"><a href="#install-macros">Use Nunjucks or Jinja macros</a></h2>
-
-<div class="prose">
-  <p>For more complex components, you can use <a href="https://mozilla.github.io/nunjucks/" target="_blank">Nunjucks</a> or <a href="https://jinja.palletsprojects.com" target="_blank">Jinja</a> macros to help you generate the HTML and JavaScript code.</p>
-  <p>To install them, either <a href="https://github.com/hunvreus/basecoat/tree/main/src" target="_blank">copy them directly from the GitHub repository</a> or use <a href="#install-cli">the CLI</a> to do the work for you.</p>
-  <p>For example, here's how you could use the <code>select()</code> macro to generate the HTML and JavaScript code for a <a href="/components/select">Select</a> component:</p>
-</div>
-
-  {% set code %}{% raw %}{% call select() %}
-<div role="group" aria-labelledby="fruit-options-label">
-  <span id="fruit-options-label" role="heading">Fruits</span>
-  <div role="option" data-value="apple">Apple</div>
-  <div role="option" data-value="banana">Banana</div>
-  <div role="option" data-value="blueberry">Blueberry</div>
-  <div role="option" data-value="pineapple">Grapes</div>
-  <div role="option" data-value="pineapple">Pineapple</div>
-</div>
-{% endcall %}{% endraw %}{% endset %}
-  {{ code_block(code, "jinja") }}
-
-<h2 id="install-icons"><a href="#install-icons">Icons</a></h2>
-
-<div class="prose">
-  <p>Basecoat uses <a href="https://lucide.dev" target="_blank">Lucide icons</a>. You have three options:</p>
-  
-  <ul>
-    <li><b>Copy SVG code</b>: Visit <a href="https://lucide.dev/icons" target="_blank">lucide.dev/icons</a>, click any icon to copy the SVG, and paste it directly in your HTML. Best for simple projects or occasional icon usage.</li>
-    <li><b>Install lucide</b>: Follow the <a href="https://lucide.dev/guide/installation" target="_blank">installation guide</a> to install the <code>lucide</code> package and dynamically render icons. Best for projects that need many icons or want tree-shaking.</li>
-    <li><b>Use framework packages</b>: Browse <a href="https://lucide.dev/packages" target="_blank">framework-specific packages</a> (React, Vue, Angular, etc.) for component-based icon usage. Best if you're using a supported framework.</li>
-  </ul>
-</div>
-
-<div class="flex flex-wrap gap-2 my-6">
-  <a class="badge-outline" href="https://lucide.dev" target="_blank">
-    Browse icons
-    {% lucide "arrow-right" %}
-  </a>
-  <a class="badge-outline" href="https://lucide.dev/guide/installation" target="_blank">
-    Installation guide
-    {% lucide "arrow-right" %}
-  </a>
-  <a class="badge-outline" href="https://lucide.dev/packages" target="_blank">
-    Packages
-    {% lucide "arrow-right" %}
-  </a>
-</div>
-
-<h2 id="install-theming"><a href="#install-theming">Theming</a></h2>
-
-<div class="prose">
-  <p>You can import any <a href="https://shadcn-ui.com" target="_blank">shadcn/ui</a> compatible theme (e.g. <a href="https://tweakcn.com" target="_blank">tweakcn</a>). For example:</p>
-  <ul>
-    <li>Go to <a href="https://ui.shadcn.com/themes" target="_blank">ui.shadcn.com/themes</a> and select a theme.</li>
-    <li>Click "Copy code" and save the theme variables in a file (e.g. <code>theme.css</code>).</li>
-    <li>
-      Import the theme in your CSS file:
-      {% set code %}@import "tailwindcss";
-@import "basecoat-css";
-@import "./theme.css";{% endset %}
-      {{ code_block(code, "css") }}
-    </li>
-  </ul>
-</div>
-
-<div class="flex flex-wrap gap-2 my-6">
-  <a class="badge-outline" href="https://ui.shadcn.com/docs/theming" target="_blank">
-    About shadcn/ui theming
-    {% lucide "arrow-right" %}
-  </a>
-</div>
-
-<h2 id="install-customization"><a href="#install-manual">Customization</a></h2>
-
-<div class="prose">
-  <section class="prose">
-    <p>You can override default styles using Tailwind:</p>
-  </section>
-  
-  {% set code %}<button class="btn font-normal ">Click me</button>{% endset %}
-  {{ code_block(code, "html") }}
-
-  <section class="prose">
-    <p>You can also extend or override the existing styles in your own Tailwind files:</p>
-  </section>
-  
-  {% set code %}@import "tailwindcss";
-@import "basecoat-css";
-@import "./custom.css";{% endset %}
-  {{ code_block(code, "css") }}
-  
-  <section class="prose">
-    <p>More importantly, you can use the <a href="#install-theming">theme variables</a> to customize many aspects of the components (colors, fonts, sizes, etc).</p>
-    
-    <p><b>If you want to make more drastic changes</b>, you can <a href="https://github.com/hunvreus/basecoat/blob/main/src/css/basecoat.css" target="_blank">copy the <code>basecoat.css</code> file</a> into your project and make your changes there.</p>
-  </section>
 </div>

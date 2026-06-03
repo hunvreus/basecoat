@@ -1,0 +1,102 @@
+{#
+  Renders an input-first combobox component.
+#}
+{% macro combobox(
+  id=None,
+  selected=None,
+  name=None,
+  multiple=false,
+  placeholder=None,
+  close_on_select=false,
+  auto_highlight=false,
+  main_attrs={},
+  input_attrs={},
+  popover_attrs={},
+  listbox_attrs={},
+  hidden_input_attrs={}
+) %}
+{% set id = id or ("combobox-" + (range(100000, 999999) | random | string)) %}
+{% if selected is defined and selected is iterable and selected is not string %}
+  {% set selected_values = selected %}
+{% elif selected is defined and selected %}
+  {% set selected_values = [selected] %}
+{% else %}
+  {% set selected_values = [] %}
+{% endif %}
+{% set hidden_value = (selected_values | tojson if multiple else (selected_values[0] if selected_values else '')) %}
+
+<div
+  id="{{ id }}"
+  class="combobox {{ main_attrs.class }}"
+  {% if multiple %}data-multiple="true"{% endif %}
+  {% if multiple and close_on_select %}data-close-on-select="true"{% endif %}
+  {% if auto_highlight %}data-auto-highlight="true"{% endif %}
+  {% for key, value in main_attrs.items() %}
+    {% if key != 'class' %}{{ key }}="{{ value }}"{% endif %}
+  {% endfor %}
+>
+  {% if multiple %}
+  <div class="combobox-chips {{ input_attrs.class }}">
+    <input
+      type="text"
+      role="combobox"
+      placeholder="{{ placeholder or '' }}"
+      autocomplete="off"
+      autocorrect="off"
+      spellcheck="false"
+      aria-autocomplete="list"
+      aria-expanded="false"
+      aria-controls="{{ id }}-listbox"
+      {% for key, value in input_attrs.items() %}
+        {% if key != 'class' %}{{ key }}="{{ value }}"{% endif %}
+      {% endfor %}
+    >
+  </div>
+  {% else %}
+  <input
+    type="text"
+    role="combobox"
+    placeholder="{{ placeholder or '' }}"
+    autocomplete="off"
+    autocorrect="off"
+    spellcheck="false"
+    aria-autocomplete="list"
+    aria-expanded="false"
+    aria-controls="{{ id }}-listbox"
+    class="{{ input_attrs.class }}"
+    {% for key, value in input_attrs.items() %}
+      {% if key != 'class' %}{{ key }}="{{ value }}"{% endif %}
+    {% endfor %}
+  >
+  <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="combobox-trigger-icon"><path d="m6 9 6 6 6-6"/></svg>
+  {% endif %}
+  <div
+    id="{{ id }}-popover"
+    data-popover
+    aria-hidden="true"
+    {% for key, value in popover_attrs.items() %}
+      {{ key }}="{{ value }}"
+    {% endfor %}
+  >
+    <div
+      role="listbox"
+      id="{{ id }}-listbox"
+      aria-orientation="vertical"
+      {% if multiple %}aria-multiselectable="true"{% endif %}
+      {% for key, value in listbox_attrs.items() %}
+        {{ key }}="{{ value }}"
+      {% endfor %}
+    >
+      {{ caller() if caller else '' }}
+    </div>
+  </div>
+  <input
+    type="hidden"
+    {% if name %}name="{{ name }}"{% endif %}
+    value='{{ hidden_value }}'
+    {% for key, value in hidden_input_attrs.items() %}
+      {{ key }}="{{ value }}"
+    {% endfor %}
+  >
+</div>
+{% endmacro %}

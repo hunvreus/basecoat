@@ -14,6 +14,12 @@ toc:
         id: example-no-description
       - label: No icon
         id: example-no-icon
+      - label: Action
+        id: example-action
+      - label: Custom Colors
+        id: example-custom-colors
+      - label: RTL
+        id: example-rtl
 ---
 
 {% from "macros/code_preview.njk" import code_preview %}
@@ -47,7 +53,7 @@ toc:
 {% endset %}
 {{ code_preview("alert", code | prettyHtml) }}
 
-<h2 id="usage">Usage</h2>
+<h2 id="usage"><a href="#usage">Usage</a></h2>
 
 <section class="prose">
   <p>Use the <code>alert</code> or <code>alert-destructive</code>.</p>
@@ -74,6 +80,8 @@ toc:
         <dd>The title.</dd>
         <dt><code class="highlight language-html">&lt;section&gt;</code> <span class="badge-secondary">Optional</span></dt>
         <dd>The description.</dd>
+        <dt><code class="highlight language-html">&lt;div data-action&gt;</code> <span class="badge-secondary">Optional</span></dt>
+        <dd>An action aligned to the inline end of the alert.</dd>
       </dl>
     </dd>
   </dl>
@@ -106,3 +114,40 @@ toc:
   <section>This is an alert with icon, title and description.</section>
 </div>{% endset %}
 {{ code_preview("alert-no-icon", code) }}
+
+<h3 id="example-action"><a href="#example-action">Action</a></h3>
+
+{% set code %}<div class="alert">
+  {% lucide "info" %}
+  <h2>Enable notifications</h2>
+  <section>Receive updates when there is activity in your workspace.</section>
+  <div data-action>
+    <button type="button" class="btn-xs-outline">Enable</button>
+  </div>
+</div>{% endset %}
+{{ code_preview("alert-action", code) }}
+
+<h3 id="example-custom-colors"><a href="#example-custom-colors">Custom Colors</a></h3>
+
+{% set code %}<div class="alert bg-amber-50 text-amber-900 dark:bg-amber-950 dark:text-amber-200">
+  {% lucide "triangle-alert" %}
+  <h2>Storage almost full</h2>
+  <section class="text-amber-800 dark:text-amber-300">Upgrade your plan or delete unused files.</section>
+</div>{% endset %}
+{{ code_preview("alert-custom-colors", code) }}
+
+<h3 id="example-rtl"><a href="#example-rtl">RTL</a></h3>
+
+<section class="prose">
+  <p>Alerts support right-to-left layouts through logical spacing and native text flow. Add <code>dir="rtl"</code> to the alert or an ancestor.</p>
+</section>
+
+{% set code %}<div class="alert" dir="rtl">
+  {% lucide "info" %}
+  <h2>تم حفظ التغييرات</h2>
+  <section>تم تحديث إعداداتك بنجاح.</section>
+  <div data-action>
+    <button type="button" class="btn-xs-outline">عرض</button>
+  </div>
+</div>{% endset %}
+{{ code_preview("alert-rtl", code) }}

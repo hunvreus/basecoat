@@ -91,21 +91,21 @@ layout: layouts/layout.njk
           <p>Manage your cookie settings here.</p>
         </header>
         <section class="text-sm grid gap-6">
-          <label class="flex items-center justify-between gap-2">
+          <label class="label flex items-center justify-between gap-2 text-sm font-normal normal-case tracking-normal">
             <div class="flex flex-col gap-0.5">
               <div class="font-medium">Strictly Necessary</div>
               <div class="text-muted-foreground">These cookies are essential in order to use the website and use its features.</div>
             </div>
             <input type="checkbox" role="switch" class="input" checked />
           </label>
-          <label class="flex items-center justify-between gap-2">
+          <label class="label flex items-center justify-between gap-2 text-sm font-normal normal-case tracking-normal">
             <div class="flex flex-col gap-0.5">
               <div class="font-medium">Functional Cookies</div>
               <div class="text-muted-foreground">These cookies allow the website to provide personalized functionality.</div>
             </div>
             <input type="checkbox" role="switch" class="input" />
           </label>
-          <label class="flex items-center justify-between gap-2">
+          <label class="label flex items-center justify-between gap-2 text-sm font-normal normal-case tracking-normal">
             <div class="flex flex-col gap-0.5">
               <div class="font-medium">Performance Cookies</div>
               <div class="text-muted-foreground">These cookies help to improve the performance of the website.</div>
@@ -124,7 +124,7 @@ layout: layouts/layout.njk
           <p>Add a new payment method to your account.</p>
         </header>
         <section>
-          <form class="form grid gap-6">
+          <form class="grid gap-6">
             <ul class="flex gap-4">
               <li class="flex-1">
                 <input type="radio" name="payment-method-type" id="payment-method-type-apple" class="hidden peer" />
@@ -149,21 +149,21 @@ layout: layouts/layout.njk
               </li>
             </ul>
             <div class="grid gap-2">
-              <label for="payment-method-name">Name</label>
-              <input type="text" id="payment-method-name" placeholder="John Doe" />
+              <label class="label" for="payment-method-name">Name</label>
+              <input class="input" type="text" id="payment-method-name" placeholder="John Doe" />
             </div>
             <div class="grid gap-2">
-              <label for="payment-method-city">City</label>
-              <input type="text" id="payment-method-city" placeholder="New York" />
+              <label class="label" for="payment-method-city">City</label>
+              <input class="input" type="text" id="payment-method-city" placeholder="New York" />
             </div>
             <div class="grid gap-2">
-              <label for="payment-method-card-number">Card Number</label>
-              <input type="text" id="payment-method-card-number" placeholder="1234 5678 9012 3456" />
+              <label class="label" for="payment-method-card-number">Card Number</label>
+              <input class="input" type="text" id="payment-method-card-number" placeholder="1234 5678 9012 3456" />
             </div>
             <div class="flex gap-4">
               <div class="grid gap-2 flex-1">
-                <label for="payment-method-expiration-month">Expires</label>
-                <select id="payment-method-expiration-month" class="w-full">
+                <label class="label" for="payment-method-expiration-month">Expires</label>
+                <select id="payment-method-expiration-month" class="select w-full">
                   <option value="01">January</option>
                   <option value="02">February</option>
                   <option value="03">March</option>
@@ -179,8 +179,8 @@ layout: layouts/layout.njk
                 </select>
               </div>
               <div class="grid gap-2 flex-1">
-                <label for="payment-method-expiration-year">Year</label>
-                <select id="payment-method-expiration-year" class="w-full">
+                <label class="label" for="payment-method-expiration-year">Year</label>
+                <select id="payment-method-expiration-year" class="select w-full">
                   <option value="2024">2024</option>
                   <option value="2025">2025</option>
                   <option value="2026">2026</option>
@@ -195,8 +195,8 @@ layout: layouts/layout.njk
                 </select>
               </div>
               <div class="grid gap-2 flex-1">
-                <label for="payment-method-cvv">CVV</label>
-                <input type="text" id="payment-method-cvv" placeholder="123" maxlength="4" class="w-full" />
+                <label class="label" for="payment-method-cvv">CVV</label>
+                <input type="text" id="payment-method-cvv" placeholder="123" maxlength="4" class="input w-full" />
               </div>
             </div>
             <button type="button" class="btn w-full">Continue</button>
@@ -271,17 +271,17 @@ layout: layouts/layout.njk
               <span class="bg-card px-2 text-muted-foreground">Or continue with</span>
             </div>
           </div>
-          <form class="form grid gap-6">
+          <form class="grid gap-6">
             <div class="grid gap-2">
-              <label for="demo-card-form-email">Email</label>
-              <input type="email" id="demo-card-form-email">
+              <label class="label" for="demo-card-form-email">Email</label>
+              <input class="input" type="email" id="demo-card-form-email">
             </div>
             <div class="grid gap-2">
               <div class="flex items-center gap-2">
-                <label for="demo-card-form-password">Password</label>
+                <label class="label" for="demo-card-form-password">Password</label>
                 <a href="#" class="ml-auto inline-block text-sm underline-offset-4 hover:underline">Forgot your password?</a>
               </div>
-              <input type="password" id="demo-card-form-password">
+              <input class="input" type="password" id="demo-card-form-password">
             </div>
             <button type="button" class="btn w-full">Create an account</button>
           </form>
@@ -294,11 +294,11 @@ layout: layouts/layout.njk
           <p>What area are you having problems with?</p>
         </header>
         <section>
-          <form class="form grid gap-6">
+          <form class="grid gap-6">
             <div class="flex gap-4">
               <div class="grid gap-2 flex-1">
-                <label for="report-issue-area">Area</label>
-                <select id="report-issue-area" class="w-full">
+                <label class="label" for="report-issue-area">Area</label>
+                <select id="report-issue-area" class="select w-full">
                   <option value="team">Team</option>
                   <option value="billing">Billing</option>
                   <option value="account">Account</option>
@@ -307,8 +307,8 @@ layout: layouts/layout.njk
                 </select>
               </div>
               <div class="grid gap-2 flex-1">
-                <label for="report-issue-security-level">Security Level</label>
-                <select id="report-issue-security-level" class="w-full">
+                <label class="label" for="report-issue-security-level">Security Level</label>
+                <select id="report-issue-security-level" class="select w-full">
                   <option value="1">Severity 1 (Highest)</option>
                   <option value="2">Severity 2</option>
                   <option value="3">Severity 3</option>
@@ -317,12 +317,12 @@ layout: layouts/layout.njk
               </div>
             </div>
             <div class="grid gap-2">
-              <label for="report-issue-subject">Subject</label>
-              <input type="text" id="report-issue-subject" placeholder="I need help with..." class="w-full" />
+              <label class="label" for="report-issue-subject">Subject</label>
+              <input type="text" id="report-issue-subject" placeholder="I need help with..." class="input w-full" />
             </div>
             <div class="grid gap-2">
-              <label for="report-issue-description">Description</label>
-              <textarea id="report-issue-description" placeholder="Please include all information relevant to your issue." class="w-full"></textarea>
+              <label class="label" for="report-issue-description">Description</label>
+              <textarea id="report-issue-description" placeholder="Please include all information relevant to your issue." class="textarea w-full"></textarea>
             </div>
             <footer class="flex items-center gap-4 justify-between">
               <button type="button" class="btn-sm-ghost">Cancel</button>

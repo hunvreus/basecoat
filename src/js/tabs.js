@@ -6,7 +6,12 @@
     const tabs = Array.from(tablist.querySelectorAll('[role="tab"]'));
     const panels = tabs.map(tab => document.getElementById(tab.getAttribute('aria-controls'))).filter(Boolean);
 
+    const isDisabled = (tab) => tab.disabled || tab.getAttribute('aria-disabled') === 'true';
+    const getEnabledTabs = () => tabs.filter(tab => !isDisabled(tab));
+
     const selectTab = (tabToSelect) => {
+      if (isDisabled(tabToSelect)) return;
+
       tabs.forEach((tab, index) => {
         tab.setAttribute('aria-selected', 'false');
         tab.setAttribute('tabindex', '-1');
@@ -29,20 +34,33 @@
       if (!tabs.includes(currentTab)) return;
 
       let nextTab;
-      const currentIndex = tabs.indexOf(currentTab);
+      const enabledTabs = getEnabledTabs();
+      const currentIndex = enabledTabs.indexOf(currentTab);
+      const orientation = tablist.getAttribute('aria-orientation') || 'horizontal';
+      if (currentIndex === -1) return;
 
       switch (event.key) {
         case 'ArrowRight':
-          nextTab = tabs[(currentIndex + 1) % tabs.length];
+          if (orientation !== 'horizontal') return;
+          nextTab = enabledTabs[(currentIndex + 1) % enabledTabs.length];
           break;
         case 'ArrowLeft':
-          nextTab = tabs[(currentIndex - 1 + tabs.length) % tabs.length];
+          if (orientation !== 'horizontal') return;
+          nextTab = enabledTabs[(currentIndex - 1 + enabledTabs.length) % enabledTabs.length];
+          break;
+        case 'ArrowDown':
+          if (orientation !== 'vertical') return;
+          nextTab = enabledTabs[(currentIndex + 1) % enabledTabs.length];
+          break;
+        case 'ArrowUp':
+          if (orientation !== 'vertical') return;
+          nextTab = enabledTabs[(currentIndex - 1 + enabledTabs.length) % enabledTabs.length];
           break;
         case 'Home':
-          nextTab = tabs[0];
+          nextTab = enabledTabs[0];
           break;
         case 'End':
-          nextTab = tabs[tabs.length - 1];
+          nextTab = enabledTabs[enabledTabs.length - 1];
           break;
         default:
           return;

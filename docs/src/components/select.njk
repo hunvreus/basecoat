@@ -6,8 +6,6 @@ toc:
   - label: Usage
     id: usage
     children:
-      - label: HTML
-        id: usage-html
       - label: HTML + JavaScript
         id: usage-html-js
         children:
@@ -26,45 +24,40 @@ toc:
   - label: Examples
     id: examples
     children:
+      - label: Align
+        id: example-align
+      - label: Groups
+        id: example-groups
       - label: Scrollable
         id: example-scrollable
       - label: Disabled
         id: example-disabled
+      - label: Invalid
+        id: example-invalid
       - label: With icon
         id: example-with-icon
       - label: Multiple
         id: example-multiple
+      - label: RTL
+        id: example-rtl
 ---
 
 {% from "macros/code_preview.njk" import code_preview %}
 {% from "macros/code_block.njk" import code_block %}
 {% from "select.njk" import select %}
 
-{% set code_native %}<select class="select w-[180px]">
-  <optgroup label="Fruits">
-    <option>Apple</option>
-    <option>Banana</option>
-    <option>Blueberry</option>
-    <option>Grapes</option>
-    <option>Pineapple</option>
-  </optgroup>
-</select>{% endset %}
-{{ code_preview("select-native", code_native) }}
 
 {% set code_html %}
 {{ select(
   trigger_attrs={"class": "w-[180px]"},
-  is_combobox=true,
   items=[
     {
       type: "group",
-      label: "Fruits",
+      label: "Theme",
       items: [
-        { type: "item", value: "apple", label: "Apple" },
-        { type: "item", value: "banana", label: "Banana" },
-        { type: "item", value: "blueberry", label: "Blueberry" },
-        { type: "item", value: "grapes", label: "Grapes" },
-        { type: "item", value: "pineapple", label: "Pineapple" }
+        { type: "item", value: "light", label: "Light" },
+        { type: "item", value: "dark", label: "Dark" },
+        { type: "item", value: "system", label: "System" }
       ]
     }
   ]
@@ -78,13 +71,6 @@ toc:
 
 <h2 id="usage"><a href="#usage">Usage</a></h2>
 
-<h3 id="usage-html"><a href="#usage-html">HTML</a></h3>
-
-<section class="prose">
-  <p>If you use a <code>&lt;select&gt;</code> element, just add the <code>select</code> class to it or have a parent with the <code>form</code> class (<a href="/components/form">read more about form</a>).</p>
-</section>
-
-{{ code_block(code_native) }}
 
 <h3 id="usage-html-js"><a href="#usage-html-js">HTML + JavaScript</a></h3>
 
@@ -103,7 +89,7 @@ toc:
     Components with JavaScript
     {% lucide "arrow-right" %}
   </a>
-  <a class="badge-outline" href="/installation/#install-cli">
+  <a class="badge-outline" href="/cli">
     Use the CLI
     {% lucide "arrow-right" %}
   </a>
@@ -306,7 +292,7 @@ toc:
 </div>
 
 <div class="flex flex-wrap gap-2 my-6">
-  <a class="badge-outline" href="/installation/#install-macros" target="_blank">
+  <a class="badge-outline" href="/cli#macros" target="_blank">
     Use Nunjucks or Jinja macros
     {% lucide "arrow-right" %}
   </a>
@@ -339,6 +325,62 @@ toc:
 
 <h2 id="examples"><a href="#examples">Examples</a></h2>
 
+<h3 id="example-align"><a href="#example-align">Align</a></h3>
+
+<section class="prose">
+  <p>Use <code>data-align</code> on the popover to align the list to the trigger edge. Basecoat keeps the popup below the control; it does not implement shadcn/ui's selected-item-over-trigger positioning.</p>
+</section>
+
+{% set code %}
+<div class="flex flex-wrap gap-3">
+  {{ select(
+    id="select-align-start",
+    trigger_attrs={"class": "w-[180px]"},
+    popover_attrs={"data-align": "start"},
+    items=[
+      { value: "light", label: "Light" },
+      { value: "dark", label: "Dark" },
+      { value: "system", label: "System" }
+    ]
+  ) }}
+  {{ select(
+    id="select-align-end",
+    trigger_attrs={"class": "w-[180px]"},
+    popover_attrs={"data-align": "end"},
+    items=[
+      { value: "light", label: "Light" },
+      { value: "dark", label: "Dark" },
+      { value: "system", label: "System" }
+    ]
+  ) }}
+</div>
+{% endset %}
+{{ code_preview("select-align", code | prettyHtml) }}
+
+<h3 id="example-groups"><a href="#example-groups">Groups</a></h3>
+
+{% set code %}
+{% call select(
+  id="select-groups",
+  trigger_attrs={"class": "w-[220px]"}
+) %}
+<div role="group" aria-labelledby="select-groups-fruits">
+  <div role="heading" id="select-groups-fruits">Fruits</div>
+  <div role="option" data-value="apple">Apple</div>
+  <div role="option" data-value="banana">Banana</div>
+  <div role="option" data-value="blueberry">Blueberry</div>
+</div>
+<hr role="separator">
+<div role="group" aria-labelledby="select-groups-vegetables">
+  <div role="heading" id="select-groups-vegetables">Vegetables</div>
+  <div role="option" data-value="carrot">Carrot</div>
+  <div role="option" data-value="potato">Potato</div>
+  <div role="option" data-value="tomato">Tomato</div>
+</div>
+{% endcall %}
+{% endset %}
+{{ code_preview("select-groups", code | prettyHtml) }}
+
 <h3 id="example-scrollable"><a href="#example-scrollable">Scrollable</a></h3>
 
 {% set code %}
@@ -365,22 +407,27 @@ toc:
 
 {{ code_preview("select-disabled", code | prettyHtml) }}
 
-<h3 id="example-invalid-state"><a href="#example-invalid-state">Invalid State</a></h3>
+<h3 id="example-invalid"><a href="#example-invalid">Invalid</a></h3>
 
 {% set code %}
-{{ select(
-  trigger_attrs={"aria-invalid": "true"},
-  items=[
-    { value: "", label: "Select a role" },
-    { value: "admin", label: "Admin" },
-    { value: "editor", label: "Editor" },
-    { value: "viewer", label: "Viewer" },
-    { value: "guest", label: "Guest" }
-  ]
-) }}
+<div role="group" class="field" data-invalid="true">
+  <label for="select-invalid-trigger">Role</label>
+  {{ select(
+    id="select-invalid",
+    trigger_attrs={"aria-invalid": "true", "class": "w-[220px]"},
+    items=[
+      { value: "", label: "Select a role" },
+      { value: "admin", label: "Admin" },
+      { value: "editor", label: "Editor" },
+      { value: "viewer", label: "Viewer" },
+      { value: "guest", label: "Guest" }
+    ]
+  ) }}
+  <p class="field-error" role="alert">Select a role to continue.</p>
+</div>
 {% endset %}
 
-{{ code_preview("select-disabled", code | prettyHtml) }}
+{{ code_preview("select-invalid", code | prettyHtml, "w-full max-w-sm") }}
 
 <h3 id="example-with-icon"><a href="#example-with-icon">With icon</a></h3>
 
@@ -389,19 +436,19 @@ toc:
   id="select-with-icons",
   trigger_attrs={'class': 'w-[180px]'}
 ) %}
-<div type="button" role="option" data-value="bar">
+<div role="option" data-value="bar">
   <span class="flex items-center gap-2">
     {% lucide "chart-bar", {"class": "text-muted-foreground"} %}
     Bar
   </span>
 </div>
-<div type="button" role="option" data-value="line">
+<div role="option" data-value="line">
   <span class="flex items-center gap-2">
     {% lucide "chart-line", {"class": "text-muted-foreground"} %}
     Line
   </span>
 </div>
-<div type="button" role="option" data-value="pie">
+<div role="option" data-value="pie">
   <span class="flex items-center gap-2">
     {% lucide "chart-pie", {"class": "text-muted-foreground"} %}
     Pie
@@ -415,7 +462,7 @@ toc:
 <h3 id="example-multiple"><a href="#example-multiple">Multiple</a></h3>
 
 <section class="prose">
-  <p>Enable multiple selection by setting adding <code>aria-multiselectable="true"</code> to the <code>listbox</code>. The selected options are displayed as a comma-separated list in the trigger button. Use <code>data-label</code> to specify clean text labels for options that contain HTML (like icons), otherwise the text content will be extracted automatically.</p>
+  <p>Enable multiple selection by adding <code>aria-multiselectable="true"</code> to the <code>listbox</code>. The selected options are displayed as a comma-separated list in the trigger button. Use <code>data-label</code> to specify clean text labels for options that contain HTML (like icons), otherwise the text content will be extracted automatically.</p>
 </section>
 
 {% set code %}
@@ -455,3 +502,25 @@ toc:
 {% endset %}
 
 {{ code_preview("select-multiple", code | prettyHtml) }}
+
+<h3 id="example-rtl"><a href="#example-rtl">RTL</a></h3>
+
+<section class="prose">
+  <p>Set <code>dir="rtl"</code> on the select root or a parent element.</p>
+</section>
+
+{% set code %}
+<div dir="rtl">
+  {{ select(
+    id="select-rtl",
+    trigger_attrs={"class": "w-[180px]"},
+    popover_attrs={"data-align": "start"},
+    items=[
+      { value: "light", label: "فاتح" },
+      { value: "dark", label: "داكن" },
+      { value: "system", label: "النظام" }
+    ]
+  ) }}
+</div>
+{% endset %}
+{{ code_preview("select-rtl", code | prettyHtml) }}

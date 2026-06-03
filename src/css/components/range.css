@@ -1,49 +1,50 @@
 /* Range */
 @layer components {
-  :is(.form, .field) input[type='range'],
+  .field > input[type='range'],
   .input[type='range'] {
-    @apply appearance-none flex items-center p-0 outline-none;
+    @apply flex appearance-none items-center p-0 outline-none disabled:pointer-events-none disabled:opacity-50;
     --slider-value: 20%;
 
-    &:hover,
-    &:focus-visible {
-      &::-webkit-slider-thumb {
-        @apply ring-4;
-      }
-      &::-moz-range-thumb {
-        @apply ring-4;
-      }
-      &::-ms-thumb {
-        @apply ring-4;
-      }
+    &::-webkit-slider-thumb {
+      @apply block shrink-0 appearance-none;
     }
 
-    &::-webkit-slider-thumb {
-      @apply appearance-none border-primary bg-background ring-ring/50 block size-4 shrink-0 rounded-full border shadow-sm -mt-1.25;
-    }
     &::-webkit-slider-runnable-track {
-      @apply appearance-none rounded-full h-1.5 w-full;
+      @apply w-full appearance-none;
       background: linear-gradient(to right, var(--primary) var(--slider-value), var(--muted) var(--slider-value));
-    }    
+    }
+
+    &:dir(rtl)::-webkit-slider-runnable-track {
+      background: linear-gradient(to left, var(--primary) var(--slider-value), var(--muted) var(--slider-value));
+    }
+
     &::-moz-range-thumb {
-      @apply appearance-none border-primary bg-background ring-ring/50 block size-4 shrink-0 rounded-full border shadow-sm -mt-1.25;
+      @apply block shrink-0 appearance-none;
     }
+
     &::-moz-range-track {
-      @apply appearance-none rounded-full h-1.5 w-full;
+      @apply w-full appearance-none;
       background: linear-gradient(to right, var(--primary) var(--slider-value), var(--muted) var(--slider-value));
     }
+
+    &:dir(rtl)::-moz-range-track {
+      background: linear-gradient(to left, var(--primary) var(--slider-value), var(--muted) var(--slider-value));
+    }
+
     &::-ms-thumb {
-      @apply appearance-none border-primary bg-background ring-ring/50 block size-4 shrink-0 rounded-full border shadow-sm -mt-1.25;
+      @apply block shrink-0 appearance-none;
     }
+
     &::-ms-track {
-      @apply appearance-none rounded-full h-1.5 w-full;
+      @apply w-full appearance-none;
     }
+
     &::-ms-fill-lower {
-      @apply bg-primary rounded-full;
+      @apply bg-primary;
     }
+
     &::-ms-fill-upper {
-      @apply bg-muted rounded-full;
+      @apply bg-muted;
     }
   }
 }
-

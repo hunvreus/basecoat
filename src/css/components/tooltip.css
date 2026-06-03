@@ -4,21 +4,26 @@
     @apply relative;
 
     &:before {
-      @apply absolute content-[attr(data-tooltip)] bg-foreground text-background z-[60] truncate max-w-xs w-fit rounded-md px-3 py-1.5 text-xs invisible opacity-0 scale-95 transition-all pointer-events-none;
+      @apply absolute z-[60] w-fit max-w-xs origin-(--transform-origin) scale-95 truncate invisible opacity-0 transition-all pointer-events-none content-[attr(data-tooltip)];
     }
+
     &:hover:before {
       @apply visible opacity-100 scale-100;
     }
+
     &:focus-visible:not(:hover):before {
       @apply hidden;
     }
+
     &:not([data-side]),
     &[data-side='top'] {
-    @apply before:bottom-full before:mb-1.5 before:translate-y-2 hover:before:translate-y-0 ;
+      @apply before:bottom-full before:mb-1.5 before:translate-y-2 hover:before:translate-y-0;
     }
+
     &[data-side='bottom'] {
-      @apply before:top-full before:mt-1.5 before:-translate-y-2 hover:before:translate-y-0 ;
+      @apply before:top-full before:mt-1.5 before:-translate-y-2 hover:before:translate-y-0;
     }
+
     &:not([data-side]),
     &[data-side='top'],
     &[data-side='bottom'] {
@@ -30,17 +35,38 @@
       }
       &:not([data-align]),
       &[data-align='center'] {
-        @apply before:left-1/2 before:-translate-x-1/2; 
+        @apply before:left-1/2 before:-translate-x-1/2;
       }
     }
+
     &[data-side='left'] {
       @apply before:right-full before:mr-1.5 before:translate-x-2 hover:before:translate-x-0;
     }
+
     &[data-side='right'] {
       @apply before:left-full before:ml-1.5 before:-translate-x-2 hover:before:translate-x-0;
     }
+
+    &[data-side='inline-start'] {
+      @apply before:right-full before:mr-1.5 before:translate-x-2 hover:before:translate-x-0;
+    }
+
+    &[data-side='inline-start']:dir(rtl) {
+      @apply before:right-auto before:left-full before:mr-0 before:ml-1.5 before:-translate-x-2 hover:before:translate-x-0;
+    }
+
+    &[data-side='inline-end'] {
+      @apply before:left-full before:ml-1.5 before:-translate-x-2 hover:before:translate-x-0;
+    }
+
+    &[data-side='inline-end']:dir(rtl) {
+      @apply before:left-auto before:right-full before:ml-0 before:mr-1.5 before:translate-x-2 hover:before:translate-x-0;
+    }
+
     &[data-side='left'],
-    &[data-side='right'] {
+    &[data-side='right'],
+    &[data-side='inline-start'],
+    &[data-side='inline-end'] {
       &[data-align='start'] {
         @apply before:top-0;
       }

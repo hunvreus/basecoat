@@ -40,7 +40,7 @@
   <script>
     (function() {
       try {
-        const storedStyle = localStorage.getItem('styleVariant') || 'vega';
+        const storedStyle = localStorage.getItem('styleVariant') || 'nova';
         document.documentElement.dataset.styleVariant = storedStyle;
       } catch (event) {
         console.error('Could not apply style variant from localStorage', event);
@@ -78,24 +78,21 @@
   <meta name="twitter:image" content="{{ site.url }}/assets/social-screenshot.png">
   <meta name="twitter:creator" content="{{ site.author.x }}">
   {# CSS #}
-  <link rel="stylesheet" href="/assets/styles.css">
-  <link rel="stylesheet" id="style-variant-stylesheet">
+  <link rel="stylesheet" id="style-variant-stylesheet" href="/assets/styles-nova.css">
   <script>
     (() => {
       const styleLink = document.getElementById('style-variant-stylesheet');
-      const styleVariant = document.documentElement.dataset.styleVariant || 'vega';
-      if (styleVariant === 'vega') {
-        styleLink.removeAttribute('href');
-      } else {
-        styleLink.href = `/assets/style-${styleVariant}.css`;
-      }
+      const styleVariant = document.documentElement.dataset.styleVariant || 'nova';
+      styleLink.href = `/assets/styles-${styleVariant}.css`;
     })();
   </script>
   {# JS #}
   <script src="/assets/js/basecoat.js?v={{ pkg.version }}" defer></script>
   <script src="/assets/js/command.js?v={{ pkg.version }}" defer></script>
+  <script src="/assets/js/combobox.js?v={{ pkg.version }}" defer></script>
   <script src="/assets/js/dropdown-menu.js?v={{ pkg.version }}" defer></script>
   <script src="/assets/js/popover.js?v={{ pkg.version }}" defer></script>
+  <script src="/assets/js/range.js?v={{ pkg.version }}" defer></script>
   <script src="/assets/js/select.js?v={{ pkg.version }}" defer></script>
   <script src="/assets/js/sidebar.js?v={{ pkg.version }}" defer></script>
   <script src="/assets/js/tabs.js?v={{ pkg.version }}" defer></script>

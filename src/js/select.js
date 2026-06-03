@@ -5,7 +5,6 @@
     const popover = selectComponent.querySelector(':scope > [data-popover]');
     const listbox = popover ? popover.querySelector('[role="listbox"]') : null;
     const input = selectComponent.querySelector(':scope > input[type="hidden"]');
-    const filter = selectComponent.querySelector('header input[type="text"]');
 
     if (!trigger || !popover || !listbox || !input) {
       const missing = [];
@@ -46,11 +45,6 @@
       } else {
         trigger.removeAttribute('aria-activedescendant');
       }
-    };
-
-    const hasTransition = () => {
-      const style = getComputedStyle(popover);
-      return parseFloat(style.transitionDuration) > 0 || parseFloat(style.transitionDelay) > 0;
     };
 
     const updateValue = (optionOrOptions, triggerEvent = true) => {
@@ -101,20 +95,6 @@
     const closePopover = (focusOnTrigger = true) => {
       if (popover.getAttribute('aria-hidden') === 'true') return;
 
-      if (filter) {
-        const resetFilter = () => {
-          filter.value = '';
-          visibleOptions = [...options];
-          allOptions.forEach(opt => opt.setAttribute('aria-hidden', 'false'));
-        };
-
-        if (hasTransition()) {
-          popover.addEventListener('transitionend', resetFilter, { once: true });
-        } else {
-          resetFilter();
-        }
-      }
-
       if (focusOnTrigger) trigger.focus();
       popover.setAttribute('aria-hidden', 'true');
       trigger.setAttribute('aria-expanded', 'false');
@@ -160,39 +140,6 @@
       if (!option) return;
       toggleMultipleValue(option);
     };
-
-    if (filter) {
-      const filterOptions = () => {
-        const searchTerm = filter.value.trim().toLowerCase();
-
-        setActiveOption(-1);
-
-        visibleOptions = [];
-        allOptions.forEach(option => {
-          if (option.hasAttribute('data-force')) {
-            option.setAttribute('aria-hidden', 'false');
-            if (options.includes(option)) {
-              visibleOptions.push(option);
-            }
-            return;
-          }
-
-          const optionText = (option.dataset.filter || option.textContent).trim().toLowerCase();
-          const keywordList = (option.dataset.keywords || '')
-            .toLowerCase()
-            .split(/[\s,]+/)
-            .filter(Boolean);
-          const matchesKeyword = keywordList.some(keyword => keyword.includes(searchTerm));
-          const matches = optionText.includes(searchTerm) || matchesKeyword;
-          option.setAttribute('aria-hidden', String(!matches));
-          if (matches && options.includes(option)) {
-            visibleOptions.push(option);
-          }
-        });
-      };
-
-      filter.addEventListener('input', filterOptions);
-    }
 
     // Initialization
     if (isMultiple) {
@@ -315,24 +262,10 @@
     });
 
     trigger.addEventListener('keydown', handleKeyNavigation);
-    if (filter) {
-      filter.addEventListener('keydown', handleKeyNavigation);
-    }
-
     const openPopover = () => {
       document.dispatchEvent(new CustomEvent('basecoat:popover', {
         detail: { source: selectComponent }
       }));
-
-      if (filter) {
-        if (hasTransition()) {
-          popover.addEventListener('transitionend', () => {
-            filter.focus();
-          }, { once: true });
-        } else {
-          filter.focus();
-        }
-      }
 
       popover.setAttribute('aria-hidden', 'false');
       trigger.setAttribute('aria-expanded', 'true');
@@ -366,11 +299,7 @@
           closePopover();
         } else {
           setActiveOption(options.indexOf(option));
-          if (filter) {
-            filter.focus();
-          } else {
-            trigger.focus();
-          }
+          trigger.focus();
         }
       } else {
         if (input.value !== getValue(option)) {

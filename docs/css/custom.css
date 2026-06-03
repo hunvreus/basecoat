@@ -1,3 +1,10 @@
+/* Basecoat docs font override. This is intentionally not part of the package default. */
+:root {
+  --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: "Geist", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
 /* HTMX */
 .htmx-indicator {
   @apply invisible opacity-0 transition-discrete transition-all;
@@ -11,6 +18,16 @@
 }
 
 .content {
+  pre {
+    @apply grid max-h-[650px] overflow-y-auto rounded-lg bg-muted/40 text-sm;
+  }
+  pre > code {
+    @apply block rounded-[inherit] bg-transparent p-3.5 font-mono;
+  }
+  pre > code.hljs {
+    @apply !bg-transparent;
+  }
+
   > h2 {
     @apply mt-12 lg:mt-20 mb-6 scroll-m-22 text-2xl font-semibold tracking-tight first:mt-0;
   }

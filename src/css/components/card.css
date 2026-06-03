@@ -1,25 +1,22 @@
 /* Card */
 @layer components {
   .card {
-    @apply bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm;
+    @apply flex flex-col;
 
     > header {
-      @apply @container/card-header grid auto-rows-min grid-rows-[auto_auto] items-start gap-1.5 px-6 has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-6;
-      /* TODO: CLEAN has-data-[slot=card-action] */
+      @apply @container/card-header grid auto-rows-min items-start has-[>[data-slot=card-action],>.card-action]:grid-cols-[1fr_auto] has-[>p]:grid-rows-[auto_auto];
+    }
 
-      h2 {
-        @apply leading-none font-semibold;
-      }
-      p {
-        @apply text-muted-foreground text-sm;
-      }
+    > header > :is(h2, h3, [data-title], .card-title) {
+      @apply leading-none;
     }
-    > section {
-      @apply px-6;
+
+    > header > :is([data-slot='card-action'], .card-action) {
+      @apply col-start-2 row-span-2 row-start-1 self-start justify-self-end;
     }
+
     > footer {
-      @apply flex items-center px-6 [.border-t]:pt-6;
+      @apply flex items-center;
     }
   }
 }
-

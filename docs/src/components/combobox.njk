@@ -1,7 +1,7 @@
 ---
 layout: layouts/page.njk
 title: Combobox
-description: Autocomplete input and command palette with a list of suggestions.
+description: Autocomplete input with a list of suggestions.
 toc:
   - label: Usage
     id: usage
@@ -24,26 +24,39 @@ toc:
   - label: Examples
     id: examples
     children:
-      - label: Scrollable
-        id: example-scrollable
-      - label: Top side
+      - label: Multiple
+        id: example-multiple
+      - label: Groups
+        id: example-groups
+      - label: Custom Items
+        id: example-custom
+      - label: Invalid
+        id: example-invalid
+      - label: Disabled
+        id: example-disabled
+      - label: Auto Highlight
+        id: example-auto-highlight
+      - label: Top Side
         id: example-top
+      - label: RTL
+        id: example-rtl
 ---
 
 {% from "macros/code_preview.njk" import code_preview %}
 {% from "macros/code_block.njk" import code_block %}
-{% from "select.njk" import select %}
+{% from "combobox.njk" import combobox %}
 
-{% set options_frameworks = ["Next.js", "SvelteKit", "Nuxt.js", "Remix", "Astro"] %}
+{% set frameworks = ["Next.js", "SvelteKit", "Nuxt.js", "Remix", "Astro"] %}
 {% set code_html %}
-{% call select(
-  trigger_attrs={"class": "w-[200px]"},
-  listbox_attrs={"data-empty": "No framework found."},
-  is_combobox=true,
-  search_placeholder="Search framework..."
+{% call combobox(
+  id="framework-combobox",
+  name="framework",
+  placeholder="Select a framework",
+  input_attrs={"class": "w-[240px]"},
+  listbox_attrs={"data-empty": "No framework found."}
 ) %}
-  {% for framework in options_frameworks %}
-    <div role="option" data-value="{{ framework }}">{{ framework }}</div>
+  {% for framework in frameworks %}
+  <div role="option" data-value="{{ framework }}">{{ framework }}</div>
   {% endfor %}
 {% endcall %}
 {% endset %}
@@ -57,11 +70,11 @@ toc:
 <h4 id="usage-html-js-1"><a href="#usage-html-js-1">Step 1: Include the JavaScript files</a></h4>
 
 <section class="prose">
-  <p>You can either <a href="/installation/#install-cdn-all">include the JavaScript file for all the components</a>, or just the one for this component by adding this to the <code>&lt;head&gt;</code> of your page:</p>
+  <p>You can either <a href="/installation/#install-cdn-all">include the JavaScript file for all the components</a>, or just the one for this component:</p>
 </section>
 
 {% set code_script %}<script src="https://cdn.jsdelivr.net/npm/basecoat-css@{{ pkg.version }}/dist/js/basecoat.min.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/basecoat-css@{{ pkg.version }}/dist/js/select.min.js" defer></script>{% endset %}
+<script src="https://cdn.jsdelivr.net/npm/basecoat-css@{{ pkg.version }}/dist/js/combobox.min.js" defer></script>{% endset %}
 {{ code_block(code_script | prettyHtml, "html") }}
 
 <div class="flex flex-wrap gap-2 my-6">
@@ -69,12 +82,12 @@ toc:
     Components with JavaScript
     {% lucide "arrow-right" %}
   </a>
-  <a class="badge-outline" href="/installation/#install-cli">
+  <a class="badge-outline" href="/cli">
     Use the CLI
     {% lucide "arrow-right" %}
   </a>
-  <a class="badge-outline" href="https://github.com/hunvreus/basecoat/blob/main/src/js/select.js" target="_blank">
-    select.js
+  <a class="badge-outline" href="https://github.com/hunvreus/basecoat/blob/main/src/js/combobox.js" target="_blank">
+    combobox.js
     {% lucide "arrow-right" %}
   </a>
 </div>
@@ -82,7 +95,7 @@ toc:
 <h4 id="usage-html-js-2"><a href="#usage-html-js-2">Step 2: Add your combobox HTML</a></h4>
 
 <section class="prose">
-  <p>Combobox uses the same markup and JavaScript as the <a href="/components/select#usage-html-js">Select component</a>, the only difference being the search box at the top of the listbox:</p>
+  <p>Combobox is input-first. The visible input filters the list; the hidden input stores the submitted value.</p>
 </section>
 
 {{ code_block(code_html | prettyHtml, "html") }}
@@ -91,54 +104,20 @@ toc:
 
 <section class="prose">
   <dl>
-    <dt><code class="highlight language-html">&lt;div class="select"&gt;</code></dt>
-    <dd>Wraps around the entire component.
-      <dl>
-        <dt><code class="highlight language-html">&lt;button type="button" popovertarget="{ POPOVER_ID }"&gt;</code></dt>
-        <dd>
-          <p>The trigger to open the popover, can also have the following attributes:</p>
-          <ul>
-            <li><code>id="{BUTTON_ID}"</code>: linked to by the <code>aria-labelledby</code> attribute of the listbox.</li>
-            <li><code>aria-haspopup="listbox"</code>: indicates that the button opens a listbox.</li>
-            <li><code>aria-controls="{ LISTBOX_ID }"</code>: points to the listbox's id.</li>
-            <li><code>aria-expanded="false"</code>: tracks the popover's state.</li>
-            <li><code>aria-activedescendant="{ OPTION_ID }"</code>: points to the active option's id.</li>
-          </ul>
-        </dd>
-        <dt><code class="highlight language-html">&lt;div popover class="popover" id="{ POPOVER_ID }"&gt;</code></dt>
-        <dd>As with the <a href="/components/popover">Popover</a> component, you can set up the side and alignment of the popover using the <code>data-side</code> and <code>data-align</code> attributes.
-        <dl>
-          <dt><code class="highlight language-html">&lt;header&gt;</code></dt>
-          <dd>Contains the search input to filter the options in the listbox.</dd>
-          <dt><code class="highlight language-html">&lt;div role="listbox"&gt;</code></dt>
-          <dd>The listbox containing the options. Should have the following attributes:
-            <ul>
-              <li><code>id="{ LISTBOX_ID }"</code>: refered to by the <code>aria-controls</code> attribute of the trigger.</li>
-              <li><code>aria-labelledby="{ BUTTON_ID }"</code>: linked to by the button's <code>id</code> attribute.</li>
-            </ul>
-            <dl>
-              <dt><code class="highlight language-html">&lt;div role="option" data-value="{ VALUE }"&gt;</code></dt>
-              <dd>Option that can be selected. Should have a unique id if you use the <code>aria-activedescendant</code> attribute on the trigger. Optional attributes:
-                <ul>
-                  <li><code>data-filter</code>: custom text used for filtering (if different from displayed content, e.g., <code>data-filter="united states"</code>)</li>
-                  <li><code>data-keywords</code>: additional keywords for enhanced filtering (e.g., <code>data-keywords="bread fruit"</code>)</li>
-                  <li><code>data-force</code>: forces the option to always display, regardless of filter (e.g., <code>data-force</code>)</li>
-                  <li><code>aria-disabled="true"</code>: marks option as disabled (excluded from selection and keyboard navigation)</li>
-                </ul>
-              </dd>
-              <dt><code class="highlight language-html">&lt;hr role="separator"&gt;</code> <span class="badge-secondary">Optional</span></dt>
-              <dd>Separator between groups/options.</dd>
-              <dt><code class="highlight language-html">&lt;div role="group"&gt;</code> <span class="badge-secondary">Optional</span></dt>
-              <dd>Group of options, can have a <code>aria-labelledby</code> attribute to link to a heading.</dd>
-              <dt><code class="highlight language-html">&lt;span role="heading"&gt;</code></dt>
-              <dd>Group heading, must have an <code>id</code> attribute if you use the <code>aria-labelledby</code> attribute on the group.</dd>
-            </dl>
-          </dd>
-        </dl>
-      </dl>
-    </dd>
-    <dt><code class="highlight language-html">&lt;input type="hidden" name="{ NAME }" value="{ VALUE }"&gt;</code> <span class="badge-secondary">Optional</span></dt>
-    <dd>The hidden input that holds the value of the field (if needed).</dd>
+    <dt><code class="highlight language-html">&lt;div class="combobox"&gt;</code></dt>
+    <dd>Root element. Add <code>data-multiple="true"</code> for multiple selection and <code>data-auto-highlight="true"</code> to highlight the first match while filtering.</dd>
+    <dt><code class="highlight language-html">&lt;input type="text" role="combobox"&gt;</code></dt>
+    <dd>The editable control. It should include <code>aria-expanded</code>, <code>aria-controls</code>, and <code>aria-autocomplete="list"</code>.</dd>
+    <dt><code class="highlight language-html">&lt;div class="combobox-chips"&gt;</code> <span class="badge-secondary">Multiple only</span></dt>
+    <dd>Wraps selected chips and the editable input in multiple mode.</dd>
+    <dt><code class="highlight language-html">&lt;div data-popover&gt;</code></dt>
+    <dd>The suggestions popup. Use <code>data-side</code> and <code>data-align</code> like Popover.</dd>
+    <dt><code class="highlight language-html">&lt;div role="listbox"&gt;</code></dt>
+    <dd>The suggestions list. Add <code>aria-multiselectable="true"</code> in multiple mode and <code>data-empty</code> for the empty message.</dd>
+    <dt><code class="highlight language-html">&lt;div role="option" data-value="..."&gt;</code></dt>
+    <dd>Selectable option. Options can contain custom HTML; use <code>data-label</code> when the visible input should use different text than the rendered content.</dd>
+    <dt><code class="highlight language-html">&lt;input type="hidden"&gt;</code></dt>
+    <dd>Submitted value. Single mode stores a string; multiple mode stores a JSON array.</dd>
   </dl>
 </section>
 
@@ -147,147 +126,213 @@ toc:
 <section class="prose">
   <dl>
     <dt><code>basecoat:initialized</code></dt>
-    <dd>Once the component is fully initialized, it dispatches a custom (non-bubbling) <code>basecoat:initialized</code> event on itself.</dd>
+    <dd>Dispatched on the component after initialization.</dd>
     <dt><code>basecoat:popover</code></dt>
-    <dd>When the popover opens, the component dispatches a custom (non-bubbling) <code>basecoat:popover</code> event on <code>document</code>. Other popover components (Combobox, Dropdown Menu, Popover and Select) listen for this to close any open popovers.</dd>
+    <dd>Dispatched on <code>document</code> when the popup opens so other popup components can close.</dd>
     <dt><code>change</code></dt>
-    <dd>When the selected value changes, the component dispatches a custom (bubbling) <code>change</code> event on itself, with the selected value in <code>event.detail</code> (e.g. <code>{detail: {value: "something"}}</code>).</dd>
+    <dd>Dispatched on selection changes with <code>event.detail.value</code>.</dd>
   </dl>
 </section>
 
-<h4 id="usage-html-js-5"><a href="#usage-html-js-4">JavaScript methods</a></h4>
+<h4 id="usage-html-js-5"><a href="#usage-html-js-5">JavaScript methods</a></h4>
 
 <section class="prose">
   <dl>
-    <dt><code>selectByValue</code></dt>
-    <dd>
-      <p>You can call this method on the component after it is initialized to select an option by value (i.e. the option with the matching <code>data-value</code> attribute):</p>
-
-{% set code_script %}<script>
-  const comboboxComponent = document.querySelector('#my-combobox');
-  comboboxComponent.addEventListener('basecoat:initialized', () => {
-    comboboxComponent.selectByValue('apple');
-  });
-</script>{% endset %}
-{{ code_block(code_script | prettyHtml, "html") }}
-    </dd>
+    <dt><code>value</code></dt>
+    <dd>Gets or sets the selected value. Multiple mode uses an array.</dd>
+    <dt><code>select(value)</code></dt>
+    <dd>Selects an option by value.</dd>
+    <dt><code>deselect(value)</code> <span class="badge-secondary">Multiple only</span></dt>
+    <dd>Removes a selected value.</dd>
+    <dt><code>toggle(value)</code> <span class="badge-secondary">Multiple only</span></dt>
+    <dd>Toggles a selected value.</dd>
   </dl>
 </section>
 
 <h3 id="usage-macro"><a href="#usage-macro">Jinja and Nunjucks</a></h3>
 
-<div class="prose">
-  <p>You can use the <code class="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-xs">select()</code> Nunjucks or Jinja macro for this component. If you use one of the macros, make sure to set <code>is_combobox</code> to <code>True</code> (or <code>true</code> for Nunjucks).</p>
-</div>
+<section class="prose">
+  <p>Use the <code>combobox()</code> macro for Nunjucks or Jinja.</p>
+</section>
 
 <div class="flex flex-wrap gap-2 my-6">
-  <a class="badge-outline" href="/installation/#install-macros" target="_blank">
+  <a class="badge-outline" href="/cli#macros" target="_blank">
     Use Nunjucks or Jinja macros
     {% lucide "arrow-right" %}
   </a>
-  <a class="badge-outline" href="https://github.com/hunvreus/basecoat/blob/main/src/jinja/select.html.jinja" target="_blank">
+  <a class="badge-outline" href="https://github.com/hunvreus/basecoat/blob/main/src/jinja/combobox.html.jinja" target="_blank">
     Jinja macro
     {% lucide "arrow-right" %}
   </a>
-  <a class="badge-outline" href="https://github.com/hunvreus/basecoat/blob/main/src/nunjucks/select.njk" target="_blank">
+  <a class="badge-outline" href="https://github.com/hunvreus/basecoat/blob/main/src/nunjucks/combobox.njk" target="_blank">
     Nunjucks macro
     {% lucide "arrow-right" %}
   </a>
 </div>
 
-{% set raw_code %}{% raw %}{% call select(
-  listbox_attrs={"data-empty": "No framework found."},
-  is_combobox=true
+{% set raw_code %}{% raw %}{% call combobox(
+  placeholder="Select a framework",
+  listbox_attrs={"data-empty": "No framework found."}
 ) %}
   <div role="option" data-value="nextjs">Next.js</div>
   <div role="option" data-value="sveltekit">SvelteKit</div>
   <div role="option" data-value="nuxtjs">Nuxt.js</div>
-  <div role="option" data-value="remix">Remix</div>
-  <div role="option" data-value="astro">Astro</div>
 {% endcall %}{% endraw %}{% endset %}
 {{ code_block(raw_code, "jinja") }}
 
 <h2 id="examples"><a href="#examples">Examples</a></h2>
 
-<h3 id="example-scrollable"><a href="#example-scrollable">Scrollable</a></h3>
+<h3 id="example-multiple"><a href="#example-multiple">Multiple</a></h3>
 
-{% set options_timezones = [
-  {
-    label: "Americas",
-    timezones: [
-      { value: "America/New_York", label: "(GMT-5) New York" },
-      { value: "America/Los_Angeles", label: "(GMT-8) Los Angeles" },
-      { value: "America/Chicago", label: "(GMT-6) Chicago" },
-      { value: "America/Toronto", label: "(GMT-5) Toronto" },
-      { value: "America/Vancouver", label: "(GMT-8) Vancouver" },
-      { value: "America/Sao_Paulo", label: "(GMT-3) São Paulo" }
-    ]
-  },
-  {
-    label: "Europe",
-    timezones: [
-      { value: "Europe/London", label: "(GMT+0) London" },
-      { value: "Europe/Paris", label: "(GMT+1) Paris" },
-      { value: "Europe/Berlin", label: "(GMT+1) Berlin" },
-      { value: "Europe/Rome", label: "(GMT+1) Rome" },
-      { value: "Europe/Madrid", label: "(GMT+1) Madrid" },
-      { value: "Europe/Amsterdam", label: "(GMT+1) Amsterdam" }
-    ]
-  },
-  {
-    label: "Asia/Pacific",
-    timezones: [
-      { value: "Asia/Tokyo", label: "(GMT+9) Tokyo" },
-      { value: "Asia/Shanghai", label: "(GMT+8) Shanghai" },
-      { value: "Asia/Singapore", label: "(GMT+8) Singapore" },
-      { value: "Asia/Dubai", label: "(GMT+4) Dubai" },
-      { value: "Australia/Sydney", label: "(GMT+11) Sydney" },
-      { value: "Asia/Seoul", label: "(GMT+9) Seoul" }
-    ]
-  }
-] %}
 {% set code %}
-{% call select(
-  trigger_attrs={"class": "w-[200px]"},
-  popover_attrs={"class": "w-72"},
-  listbox_attrs={"data-empty": "No timezone found."},
-  is_combobox=true,
-  search_placeholder="Search timezone..."
+{% call combobox(
+  id="frameworks-combobox",
+  name="frameworks",
+  multiple=true,
+  selected=["Next.js"],
+  placeholder="Add framework",
+  input_attrs={"class": "w-[320px]"},
+  listbox_attrs={"data-empty": "No framework found."},
+  auto_highlight=true
 ) %}
-  <div class="max-h-64 overflow-y-auto scrollbar">
-    {% for group in options_timezones %}
-      <div role="group" aria-labelledby="demo-combobox-timezones-group-{{ loop.index0 }}">
-        <div role="heading" id="demo-combobox-timezones-group-{{ loop.index0 }}">{{ group.label }}</div>
-        {% for timezone in group.timezones %}
-          <div role="option" data-value="{{ timezone.value}}">
-            {{ timezone.label }}
-          </div>
-        {% endfor %}
-      </div>
-    {% endfor %}
+  {% for framework in frameworks %}
+  <div role="option" data-value="{{ framework }}">{{ framework }}</div>
+  {% endfor %}
+{% endcall %}
+{% endset %}
+{{ code_preview("combobox-multiple", code | prettyHtml) }}
+
+<h3 id="example-groups"><a href="#example-groups">Groups</a></h3>
+
+{% set code %}
+{% call combobox(
+  id="timezone-combobox",
+  placeholder="Search timezone",
+  input_attrs={"class": "w-[280px]"},
+  listbox_attrs={"data-empty": "No timezone found."}
+) %}
+  <div role="group" aria-labelledby="timezone-americas">
+    <div role="heading" id="timezone-americas">Americas</div>
+    <div role="option" data-value="America/New_York">(GMT-5) New York</div>
+    <div role="option" data-value="America/Los_Angeles">(GMT-8) Los Angeles</div>
+    <div role="option" data-value="America/Sao_Paulo">(GMT-3) São Paulo</div>
   </div>
   <hr role="separator">
-  <div role="option">
-    {% lucide "circle-plus" %}
-    Create timezone
+  <div role="group" aria-labelledby="timezone-europe">
+    <div role="heading" id="timezone-europe">Europe</div>
+    <div role="option" data-value="Europe/London">(GMT+0) London</div>
+    <div role="option" data-value="Europe/Paris">(GMT+1) Paris</div>
+    <div role="option" data-value="Europe/Berlin">(GMT+1) Berlin</div>
   </div>
 {% endcall %}
 {% endset %}
-{{ code_preview("combobox-with-groups", code | prettyHtml) }}
+{{ code_preview("combobox-groups", code | prettyHtml) }}
 
-<h3 id="example-top"><a href="#example-top">Top side</a></h3>
+<h3 id="example-custom"><a href="#example-custom">Custom Items</a></h3>
 
-{% set options_frameworks = ["Next.js", "SvelteKit", "Nuxt.js", "Remix", "Astro"] %}
 {% set code %}
-{% call select(
-  trigger_attrs={"class": "w-[200px]"},
-  listbox_attrs={"data-empty": "No framework found."},
-  is_combobox=true,
-  search_placeholder="Search framework...",
+{% call combobox(
+  id="country-combobox",
+  placeholder="Search countries",
+  input_attrs={"class": "w-[280px]"},
+  listbox_attrs={"data-empty": "No country found."}
+) %}
+  <div role="option" data-value="argentina" data-label="Argentina" data-filter="Argentina South America">
+    <span class="flex flex-col">
+      <span>Argentina</span>
+      <span class="text-muted-foreground text-xs">South America (ar)</span>
+    </span>
+  </div>
+  <div role="option" data-value="japan" data-label="Japan" data-filter="Japan Asia">
+    <span class="flex flex-col">
+      <span>Japan</span>
+      <span class="text-muted-foreground text-xs">Asia (jp)</span>
+    </span>
+  </div>
+  <div role="option" data-value="united-states" data-label="United States" data-filter="United States North America USA">
+    <span class="flex flex-col">
+      <span>United States</span>
+      <span class="text-muted-foreground text-xs">North America (us)</span>
+    </span>
+  </div>
+{% endcall %}
+{% endset %}
+{{ code_preview("combobox-custom", code | prettyHtml) }}
+
+<h3 id="example-invalid"><a href="#example-invalid">Invalid</a></h3>
+
+{% set code %}
+<div role="group" class="field" data-invalid="true">
+  <label for="invalid-combobox-input">Framework</label>
+  {% call combobox(
+    id="invalid-combobox",
+    placeholder="Select a framework",
+    input_attrs={"id": "invalid-combobox-input", "aria-invalid": "true", "class": "w-[240px]"},
+    listbox_attrs={"data-empty": "No framework found."}
+  ) %}
+    {% for framework in frameworks %}
+    <div role="option" data-value="{{ framework }}">{{ framework }}</div>
+    {% endfor %}
+  {% endcall %}
+  <p class="field-error" role="alert">Select a framework to continue.</p>
+</div>
+{% endset %}
+{{ code_preview("combobox-invalid", code | prettyHtml, "w-full max-w-sm") }}
+
+<h3 id="example-disabled"><a href="#example-disabled">Disabled</a></h3>
+
+{% set code %}
+{% call combobox(
+  placeholder="Select a framework",
+  input_attrs={"disabled": "disabled", "class": "w-[240px]"}
+) %}
+  <div role="option" data-value="nextjs">Next.js</div>
+{% endcall %}
+{% endset %}
+{{ code_preview("combobox-disabled", code | prettyHtml) }}
+
+<h3 id="example-auto-highlight"><a href="#example-auto-highlight">Auto Highlight</a></h3>
+
+{% set code %}
+{% call combobox(
+  placeholder="Select a framework",
+  input_attrs={"class": "w-[240px]"},
+  auto_highlight=true
+) %}
+  {% for framework in frameworks %}
+  <div role="option" data-value="{{ framework }}">{{ framework }}</div>
+  {% endfor %}
+{% endcall %}
+{% endset %}
+{{ code_preview("combobox-auto-highlight", code | prettyHtml) }}
+
+<h3 id="example-top"><a href="#example-top">Top Side</a></h3>
+
+{% set code %}
+{% call combobox(
+  placeholder="Select a framework",
+  input_attrs={"class": "w-[240px]"},
   popover_attrs={"data-side": "top"}
 ) %}
-  {% for framework in options_frameworks %}
-    <div role="option" data-value="{{ framework }}">{{ framework }}</div>
+  {% for framework in frameworks %}
+  <div role="option" data-value="{{ framework }}">{{ framework }}</div>
   {% endfor %}
-{% endcall %}{% endset %}
-{{ code_preview("combobox", code | prettyHtml) }}
+{% endcall %}
+{% endset %}
+{{ code_preview("combobox-top", code | prettyHtml) }}
+
+<h3 id="example-rtl"><a href="#example-rtl">RTL</a></h3>
+
+{% set code %}
+<div dir="rtl">
+  {% call combobox(
+    placeholder="اختر إطار عمل",
+    input_attrs={"class": "w-[240px]"}
+  ) %}
+    <div role="option" data-value="nextjs">Next.js</div>
+    <div role="option" data-value="sveltekit">SvelteKit</div>
+    <div role="option" data-value="astro">Astro</div>
+  {% endcall %}
+</div>
+{% endset %}
+{{ code_preview("combobox-rtl", code | prettyHtml) }}

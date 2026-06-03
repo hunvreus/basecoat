@@ -1,0 +1,26 @@
+/* Empty */
+@layer components {
+  .empty {
+    @apply flex w-full min-w-0 flex-1 flex-col items-center justify-center text-center text-balance;
+  }
+
+  .empty > header {
+    @apply flex max-w-sm flex-col items-center;
+  }
+
+  .empty figure {
+    @apply flex shrink-0 items-center justify-center [&_svg]:pointer-events-none [&_svg]:shrink-0;
+  }
+
+  .empty figure:has(img) {
+    @apply overflow-hidden [&_img]:size-full [&_img]:object-cover;
+  }
+
+  .empty > :is(section, footer) {
+    @apply flex w-full max-w-sm min-w-0 flex-col items-center text-balance;
+  }
+
+  .empty p {
+    @apply [&>a]:underline [&>a]:underline-offset-4 [&>a:hover]:text-primary;
+  }
+}

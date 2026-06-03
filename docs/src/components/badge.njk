@@ -20,6 +20,10 @@ toc:
         id: example-with-icon
       - label: Link
         id: example-link
+      - label: Custom Colors
+        id: example-custom-colors
+      - label: RTL
+        id: example-rtl
 ---
 
 {% from "macros/code_preview.njk" import code_preview %}
@@ -49,7 +53,8 @@ toc:
 <h2 id="usage"><a href="#usage">Usage</a></h2>
 
 <section class="prose">
-  <p>Use one of the badge classes: <code>badge</code>, <code>badge-primary</code>, <code>badge-secondary</code>, <code>badge-destructive</code> or <code>badge-outline</code>.
+  <p>Use one of the badge classes: <code>badge</code>, <code>badge-primary</code>, <code>badge-secondary</code>, <code>badge-destructive</code>, <code>badge-outline</code>, <code>badge-ghost</code>, or <code>badge-link</code>.</p>
+  <p>When an icon needs directional spacing, add <code>data-icon="inline-start"</code> or <code>data-icon="inline-end"</code> to the icon.</p>
 </section>
 
 {{ code_block(code) }}
@@ -88,6 +93,28 @@ toc:
 
 {% set code %}<a href="#" class="badge-outline">
   Link
-  {% lucide "arrow-right" %}
+  {% lucide "arrow-right", { "data-icon": "inline-end", "class": "rtl:rotate-180" } %}
 </a>{% endset %}
 {{ code_preview("badge-link", code) }}
+
+<h3 id="example-custom-colors"><a href="#example-custom-colors">Custom Colors</a></h3>
+
+{% set code %}<span class="badge bg-green-50 text-green-700 dark:bg-green-950 dark:text-green-300">
+  Custom
+</span>{% endset %}
+{{ code_preview("badge-custom-colors", code) }}
+
+<h3 id="example-rtl"><a href="#example-rtl">RTL</a></h3>
+
+<section class="prose">
+  <p>Badges support right-to-left layouts through native text flow and logical icon spacing. Directional icons should be flipped explicitly.</p>
+</section>
+
+{% set code %}<div dir="rtl" class="flex flex-wrap gap-2">
+  <span class="badge">نشط</span>
+  <a href="#" class="badge-outline">
+    التفاصيل
+    {% lucide "arrow-right", { "data-icon": "inline-end", "class": "rtl:rotate-180" } %}
+  </a>
+</div>{% endset %}
+{{ code_preview("badge-rtl", code) }}

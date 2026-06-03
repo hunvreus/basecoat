@@ -25,11 +25,15 @@
    - one file per style pack: `vega`, `nova`, `maia`, `lyra`, `mira`, `luma`, `sera`, `rhea`
    - component visuals: size, spacing, radius, typography, shadows, focus rings, variant colors when style-owned
 4. Aggregates
-   - `src/css/basecoat.css`: backward-compatible default aggregate, includes Vega
+   - `src/css/basecoat.css`: backward-compatible Basecoat default aggregate, currently Vega
+   - `src/css/basecoat-<style>.css`: standalone Tailwind source bundle per style
+   - `src/css/basecoat-<style>.cdn.css`: standalone CDN source bundle per style
    - `src/css/basecoat.all.css`: explicit all-in-one Tailwind source
    - `src/css/basecoat.cdn.css`: CDN build entry
 
-No `.style-*` wrapper is part of the Basecoat public contract for style selection. Users choose a style by importing a style file or using a style-specific generated asset. Docs may switch by swapping stylesheet URLs.
+No `.style-*` wrapper is part of the Basecoat public contract for style selection. Users choose a style by importing a standalone style bundle or using a style-specific generated CDN asset. Docs switch by swapping the single active full stylesheet URL.
+
+Do not load Vega/default first and then layer another style pack on top. Split files under `src/css/styles/style-*.css` are source organization and advanced composition only. They should map upstream style intent directly and avoid defensive resets whose only purpose is undoing another style pack.
 
 ## Per-Component File Checklist
 
@@ -39,6 +43,7 @@ For every component, check these files before editing:
 - Basecoat templates/macros if relevant: `src/nunjucks/*.njk`, `src/jinja/*.html.jinja`
 - Basecoat docs examples: `docs/src/components/<component>.njk`
 - Upstream base component: `../_sandbox/shadcn-ui/apps/v4/registry/bases/base/ui/<component>.tsx`
+- Upstream docs page: `../_sandbox/shadcn-ui/apps/v4/content/docs/components/{base,radix}/<component>.mdx`
 - Upstream style packs: `../_sandbox/shadcn-ui/apps/v4/registry/styles/style-{vega,nova,maia,lyra,mira,luma,sera,rhea}.css`
 - Basecoat style packs: `src/css/styles/style-{vega,nova,maia,lyra,mira,luma,sera,rhea}.css`
 
@@ -49,21 +54,33 @@ For every component, check these files before editing:
 3. Decide what is shared structure versus style-pack-owned visual rules.
 4. Remove outdated visual rules from shared component CSS when they are now style-owned.
 5. Map upstream style intent onto Basecoat selectors. Do not port `cn-*` selectors.
-6. Update the component section in all eight Basecoat style files.
-7. Document non-trivial deltas as `intentional`, `drift fixed`, or `deferred`.
-8. Update `migration-tracker.md`.
-9. Run `npm run build`.
-10. Run `npm run docs:build` when docs or docs style assets change.
-11. Manually verify the docs page in light/dark and all eight styles.
+6. Audit RTL support using upstream `*-rtl` examples and generated `ui-rtl` code when present.
+7. Prefer logical utilities/properties (`ps`, `pe`, `rounded-s`, `rounded-e`, `border-s`, `start`, `end`) over duplicated `:dir(rtl)` branches.
+8. Audit each style as a standalone full bundle, not as an override layered on another style.
+9. Check state selectors during that audit: `focus-visible`, `aria-invalid`, `hover`, disabled, open, selected, checked, and pressed states.
+10. Update the component section in all eight Basecoat style files.
+11. Document non-trivial deltas as `intentional`, `drift fixed`, or `deferred`.
+12. Align the component docs with the current upstream docs page:
+   - equivalent examples
+   - matching labels/anchors where reasonable
+   - Basecoat-specific differences and extras
+   - class/API reference
+   - explicit notes for unsupported/deferred upstream features
+   - RTL section when supported, or explicit RTL deferral
+13. Update `migration-tracker.md`.
+14. Run `npm run build`.
+15. Run `npm run docs:build` when docs or docs style assets change.
+16. Manually verify the docs page in light/dark, RTL, and all eight styles.
 
 Do not mark a component done because CSS compiles. It needs a visual/state check.
 
 ## Packaging Contract
 
-- Keep `@import "basecoat-css";` as the default Vega-compatible import.
-- Keep existing CDN files and JS bundle paths.
-- Export split style files from `packages/css` as `basecoat-css/styles/<style>`.
-- Keep the default CDN output equivalent to Vega unless a separate style-specific CDN asset is explicitly added.
+- Keep `@import "basecoat-css";` as the Basecoat backward-compatible default import. It currently resolves to Vega; this is not the upstream shadcn/ui generated default.
+- Keep existing default CDN and JS bundle paths.
+- Export standalone style bundles from `packages/css` as `basecoat-css/<style>` and `basecoat-css/<style>.css`.
+- Export split style files from `packages/css` as `basecoat-css/styles/<style>` for advanced composition.
+- Generate style-specific CDN assets for every style.
 - Custom themes should load after Basecoat styles so their `:root` and `.dark` tokens override defaults.
 
 ## Component Migration Order
@@ -92,16 +109,21 @@ Do not mark a component done because CSS compiles. It needs a visual/state check
 22. `sidebar`
 23. `toast`
 24. `tooltip`
-25. `collapsible`
+25. `collapsible` (deferred: native `details`/`summary`; add `Disclosure` docs page)
 26. `kbd`
 
 ## Current Status
 
 - CSS split exists.
 - Docs style switcher exists.
-- Button is started and style sections exist for all eight styles.
-- Button still needs a strict browser audit across all eight styles and light/dark.
+- Button and Button Group are migrated for current scope and tracked in `migration-tracker.md`.
 - No other component should be considered migrated.
+
+## TODO
+
+- Add a `Disclosure` docs page for Basecoat's native `details`/`summary` pattern.
+- Include examples for default, open by default, icon/chevron, accordion/group behavior, and RTL.
+- Keep shadcn/ui `Collapsible` deferred unless Basecoat needs controlled JS state or animation hooks beyond native disclosure.
 
 ## Risks
 

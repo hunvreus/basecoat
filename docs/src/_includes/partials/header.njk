@@ -56,21 +56,17 @@
       const styleSelect = document.getElementById('style-select');
       const styleLink = document.getElementById('style-variant-stylesheet');
       const applyStyle = (styleName) => {
-        const nextStyle = styleName || 'vega';
+        const nextStyle = styleName || 'nova';
         document.documentElement.dataset.styleVariant = nextStyle;
-        if (nextStyle === 'vega') {
-          styleLink.removeAttribute('href');
-        } else {
-          styleLink.href = `/assets/style-${nextStyle}.css`;
-        }
+        styleLink.href = `/assets/styles-${nextStyle}.css`;
       };
 
-      const storedStyle = localStorage.getItem('styleVariant') || 'vega';
+      const storedStyle = localStorage.getItem('styleVariant') || 'nova';
       if (styleSelect) styleSelect.value = storedStyle;
       applyStyle(storedStyle);
 
       styleSelect.addEventListener('change', () => {
-        const newStyle = styleSelect.value || 'vega';
+        const newStyle = styleSelect.value || 'nova';
         applyStyle(newStyle);
         localStorage.setItem('styleVariant', newStyle);
       });

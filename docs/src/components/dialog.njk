@@ -8,13 +8,25 @@ toc:
     children:
       - label: HTML
         id: usage-html
+      - label: HTML structure
+        id: usage-html-structure
       - label: Jinja and Nunjucks
         id: usage-macro
   - label: Examples
     id: examples
     children:
-      - label: Scrollable content
+      - label: Custom Close Button
+        id: example-custom-close-button
+      - label: No Close Button
+        id: example-no-close-button
+      - label: Sticky Footer
+        id: example-sticky-footer
+      - label: Scrollable Content
         id: example-scrollable-content
+      - label: RTL
+        id: example-rtl
+  - label: API Reference
+    id: api-reference
 ---
 
 {% from "macros/code_block.njk" import code_block %}
@@ -32,17 +44,16 @@ toc:
   description="Make changes to your profile here. Click save when you're done.",
   trigger="Edit Profile",
   trigger_attrs={"class": "btn-outline"},
-  dialog_attrs={"class": "w-full sm:max-w-[425px] max-h-[612px]"},
   footer=footer
 ) %}
-<form class="form grid gap-4">
+<form class="grid gap-4">
   <div class="grid gap-3">
-    <label for="demo-dialog-edit-profile-name">Name</label>
-    <input type="text" value="Pedro Duarte" id="demo-dialog-edit-profile-name" autofocus/>
+    <label class="label" for="demo-dialog-edit-profile-name">Name</label>
+    <input class="input" type="text" value="Pedro Duarte" id="demo-dialog-edit-profile-name" autofocus>
   </div>
   <div class="grid gap-3">
-    <label for="demo-dialog-edit-profile-username">Username</label>
-    <input type="text" value="@peduarte" id="demo-dialog-edit-profile-username" />
+    <label class="label" for="demo-dialog-edit-profile-username">Username</label>
+    <input class="input" type="text" value="@peduarte" id="demo-dialog-edit-profile-username">
   </div>
 </form>
 {% endcall %}
@@ -52,41 +63,42 @@ toc:
 
 <h2 id="usage"><a href="#usage">Usage</a></h2>
 
+<section class="prose">
+  <p>Basecoat uses the native <code>&lt;dialog&gt;</code> element and <code>showModal()</code>. This differs from shadcn/ui's portalled Base UI implementation, but preserves native modality, focus handling, and inert page content without component JavaScript.</p>
+</section>
+
 <h3 id="usage-html"><a href="#usage-html">HTML</a></h3>
 
 {{ code_block(code_html | prettyHtml, class="") }}
 
+<h3 id="usage-html-structure"><a href="#usage-html-structure">HTML structure</a></h3>
+
 <section class="prose">
   <p>The component has the following HTML structure:</p>
   <dl>
-    <dt><code class="highlight language-html">&lt;button type="button"&gt;</code> <span class="badge-secondary">Optional</span></dt>
-    <dd>The trigger button to open the dialog (using <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLDialogElement/showModal" target="_blank">the native <code>showModal()</code> method</a>).</dd>
+    <dt><code class="highlight language-html">&lt;button type="button" onclick="dialog.showModal()"&gt;</code> <span class="badge-secondary">Optional</span></dt>
+    <dd>Trigger button. Basecoat intentionally uses the native <code>HTMLDialogElement.showModal()</code> method.</dd>
     <dt><code class="highlight language-html">&lt;dialog class="dialog" id="{ DIALOG_ID }"&gt;</code></dt>
-    <dd>Wraps the whole component and acts as the backdrop. It can also have the following attributes:
-      <ul>
-        <li><code>aria-labelledby="{ TITLE_ID }"</code>: linked to by the <code>aria-labelledby</code> attribute of the <code>&lt;dialog&gt;</code>.</li>
-        <li><code>aria-describedby="{ DESCRIPTION_ID }"</code>: linked to by the <code>aria-describedby</code> attribute of the <code>&lt;dialog&gt;</code>.</li>
-        <li><code>onclick</code>: closes the dialog when the backdrop is clicked.</li>
-      </ul>
+    <dd>Native modal dialog. Add <code>aria-labelledby="{ TITLE_ID }"</code> and <code>aria-describedby="{ DESCRIPTION_ID }"</code> when title and description are present. The macro also adds backdrop-click close handling.
       <dl>
         <dt><code class="highlight language-html">&lt;div&gt;</code></dt>
-        <dd>Wraps the content of the dialog.
+        <dd>Dialog content surface.
           <dl>
-            <dt><code class="highlight language-html">&lt;header&gt;</code></dt>
-            <dd>Contains the header for the dialog:
+            <dt><code class="highlight language-html">&lt;header&gt;</code> <span class="badge-secondary">Optional</span></dt>
+            <dd>Dialog header.
               <dl>
-                <dt><code class="highlight language-html">&lt;h2&gt;</code></dt>
-                <dd>The title of the dialog, must have an <code>id</code> if you use the <code>aria-labelledby</code> attribute on the <code>&lt;dialog&gt;</code>.</dd>
-                <dt><code class="highlight language-html">&lt;p&gt;</code> <span class="badge-secondary">Optional</span></dt>
-                <dd>The description of the dialog, must have an <code>id</code> if you use the <code>aria-describedby</code> attribute on the <code>&lt;dialog&gt;</code>.</dd>
+                <dt><code class="highlight language-html">&lt;h2 id="{ TITLE_ID }"&gt;</code></dt>
+                <dd>Dialog title. Reference it from <code>aria-labelledby</code>.</dd>
+                <dt><code class="highlight language-html">&lt;p id="{ DESCRIPTION_ID }"&gt;</code> <span class="badge-secondary">Optional</span></dt>
+                <dd>Dialog description. Reference it from <code>aria-describedby</code>.</dd>
               </dl>
             </dd>
             <dt><code class="highlight language-html">&lt;section&gt;</code> <span class="badge-secondary">Optional</span></dt>
-            <dd>For the content.</dd>
+            <dd>Dialog body/content area. Add overflow utilities when the body should scroll.</dd>
             <dt><code class="highlight language-html">&lt;footer&gt;</code> <span class="badge-secondary">Optional</span></dt>
-            <dd>Usually contains actions.</dd>
+            <dd>Action area. It stacks actions on small screens and aligns them to the end on larger screens.</dd>
             <dt><code class="highlight language-html">&lt;button type="button" onclick="this.closest('dialog').close()"&gt;</code> <span class="badge-secondary">Optional</span></dt>
-            <dd>A button to close the dialog. Alternatively, you can wrap a button in a <code>&lt;form method="dialog"&gt;</code> element.</dd>
+            <dd>Close button. You can also wrap a button in <code>&lt;form method="dialog"&gt;</code>.</dd>
           </dl>
         </dd>
       </dl>
@@ -101,7 +113,7 @@ toc:
 </div>
 
 <div class="flex flex-wrap gap-2 my-6">
-  <a class="badge-outline" href="/installation/#install-macros" target="_blank">
+  <a class="badge-outline" href="/cli#macros" target="_blank">
     Use Nunjucks or Jinja macros
     {% lucide "arrow-right" %}
   </a>
@@ -115,63 +127,161 @@ toc:
   </a>
 </div>
 
-{% set raw_code %}{% raw %}{% set code_html %}
-{% set footer %}
+{% set raw_code %}{% raw %}{% set footer %}
   <button class="btn-outline" onclick="this.closest('dialog').close()">Cancel</button>
   <button class="btn" onclick="this.closest('dialog').close()">Save changes</button>
 {% endset %}
 {% call dialog(
-  id="demo-dialog-edit-profile",
+  id="dialog-edit-profile",
   title="Edit profile",
-  description="Make changes to your profile here. Click save when you're done.",
+  description="Make changes to your profile here.",
   trigger="Edit Profile",
   trigger_attrs={"class": "btn-outline"},
-  dialog_attrs={"class": "w-full sm:max-w-[425px] max-h-[612px]"},
   footer=footer
 ) %}
-<form class="form grid gap-4">
-  <div class="grid gap-3">
-    <label for="demo-dialog-edit-profile-name">Name</label>
-    <input type="text" value="Pedro Duarte" id="demo-dialog-edit-profile-name" />
-  </div>
-  <div class="grid gap-3">
-    <label for="demo-dialog-edit-profile-username">Username</label>
-    <input type="text" value="@peduarte" id="demo-dialog-edit-profile-username" />
-  </div>
-</form>
-{% endcall %}{% endraw %}{% endset%}
+  <form class="grid gap-4">...</form>
+{% endcall %}{% endraw %}{% endset %}
 {{ code_block(raw_code, "jinja") }}
 
 <h2 id="examples"><a href="#examples">Examples</a></h2>
 
-<h3 id="example-scrollable-content"><a href="#example-scrollable-content">Scrollable content</a></h3>
+<h3 id="example-custom-close-button"><a href="#example-custom-close-button">Custom Close Button</a></h3>
+
+{% set code %}
+{% set footer %}
+  <button class="btn-outline" onclick="this.closest('dialog').close()">Close</button>
+  <button class="btn" onclick="this.closest('dialog').close()">Continue</button>
+{% endset %}
+{% call dialog(
+  id="dialog-custom-close",
+  title="Custom close button",
+  description="The default close icon is hidden and the footer provides the close action.",
+  trigger="Open",
+  trigger_attrs={"class": "btn-outline"},
+  close_button=false,
+  footer=footer
+) %}
+<p class="text-sm text-muted-foreground">Use <code>close_button=false</code> and add a close control where it fits your layout.</p>
+{% endcall %}
+{% endset %}
+{{ code_preview("dialog-custom-close", code | prettyHtml) }}
+
+<h3 id="example-no-close-button"><a href="#example-no-close-button">No Close Button</a></h3>
+
+{% set code %}
+{% set footer %}
+  <button class="btn" onclick="this.closest('dialog').close()">I understand</button>
+{% endset %}
+{% call dialog(
+  id="dialog-no-close",
+  title="No close button",
+  description="The dialog can still be closed with Escape or a custom action.",
+  trigger="Open",
+  trigger_attrs={"class": "btn-outline"},
+  close_button=false,
+  footer=footer
+) %}
+<p class="text-sm text-muted-foreground">Native dialogs remain keyboard-accessible even without the default close icon.</p>
+{% endcall %}
+{% endset %}
+{{ code_preview("dialog-no-close", code | prettyHtml) }}
+
+<h3 id="example-sticky-footer"><a href="#example-sticky-footer">Sticky Footer</a></h3>
+
+{% set code %}
+{% set footer %}
+  <button class="btn-outline" onclick="this.closest('dialog').close()">Cancel</button>
+  <button class="btn" onclick="this.closest('dialog').close()">Save</button>
+{% endset %}
+{% call dialog(
+  id="dialog-sticky-footer",
+  title="Sticky footer",
+  description="Keep actions visible while the body scrolls.",
+  trigger="Sticky Footer",
+  trigger_attrs={"class": "btn-outline"},
+  body_attrs={"class": "overflow-y-auto scrollbar"},
+  footer_attrs={"class": "sticky bottom-0"},
+  footer=footer
+) %}
+<div class="space-y-4 text-sm text-muted-foreground">
+  {% for i in range(0, 8) %}
+  <p>Dialog content row {{ i + 1 }}. Add enough content to make the body scroll while the footer remains available.</p>
+  {% endfor %}
+</div>
+{% endcall %}
+{% endset %}
+{{ code_preview("dialog-sticky-footer", code | prettyHtml) }}
+
+<h3 id="example-scrollable-content"><a href="#example-scrollable-content">Scrollable Content</a></h3>
 
 {% set code %}
 {% set footer %}
   <button class="btn-outline" onclick="this.closest('dialog').close()">Close</button>
 {% endset %}
 {% call dialog(
-  id="dialog-example",
+  id="dialog-scrollable",
   title="Scrollable Content",
-  description="This is a dialog with scrollable content.",
+  description="Long content can scroll inside the dialog body.",
   trigger="Scrollable Content",
   trigger_attrs={"class": "btn-outline"},
-  dialog_attrs={"class": "w-full sm:max-w-[425px] max-h-[612px]"},
   body_attrs={"class": "overflow-y-auto scrollbar"},
   footer=footer
 ) %}
-<div class="space-y-4 text-sm">
-  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+<div class="space-y-4 text-sm text-muted-foreground">
+  {% for i in range(0, 10) %}
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer non nibh sit amet augue commodo ultrices. Row {{ i + 1 }}.</p>
+  {% endfor %}
 </div>
 {% endcall %}
 {% endset %}
 {{ code_preview("dialog-scrollable-content", code | prettyHtml) }}
+
+<h3 id="example-rtl"><a href="#example-rtl">RTL</a></h3>
+
+<section class="prose">
+  <p>Dialog positioning and close button placement use logical properties. Set <code>dir="rtl"</code> on the dialog or a parent element.</p>
+</section>
+
+{% set code %}
+<div dir="rtl">
+{% set footer %}
+  <button class="btn-outline" onclick="this.closest('dialog').close()">إلغاء</button>
+  <button class="btn" onclick="this.closest('dialog').close()">حفظ</button>
+{% endset %}
+{% call dialog(
+  id="dialog-rtl",
+  title="تعديل الملف الشخصي",
+  description="قم بتحديث بياناتك ثم احفظ التغييرات.",
+  trigger="فتح",
+  trigger_attrs={"class": "btn-outline"},
+  footer=footer
+) %}
+<form class="grid gap-4">
+  <div class="grid gap-3">
+    <label class="label" for="dialog-rtl-name">الاسم</label>
+    <input class="input" id="dialog-rtl-name" value="ليلى">
+  </div>
+</form>
+{% endcall %}
+</div>
+{% endset %}
+{{ code_preview("dialog-rtl", code | prettyHtml) }}
+
+<h2 id="api-reference"><a href="#api-reference">API Reference</a></h2>
+
+<section class="prose">
+  <dl>
+    <dt><code class="highlight language-html">.dialog</code></dt>
+    <dd>Native dialog root. It owns the backdrop through <code>::backdrop</code> and the open state through the native <code>open</code> attribute.</dd>
+    <dt><code class="highlight language-html">.dialog &gt; div</code></dt>
+    <dd>Dialog content surface. This maps to shadcn/ui's <code>DialogContent</code>.</dd>
+    <dt><code class="highlight language-html">.dialog &gt; div &gt; header</code></dt>
+    <dd>Header area. Direct <code>h2</code> and <code>p</code> children are styled as title and description.</dd>
+    <dt><code class="highlight language-html">.dialog &gt; div &gt; section</code></dt>
+    <dd>Body/content area. Add utilities such as <code>overflow-y-auto</code> when you need scrolling.</dd>
+    <dt><code class="highlight language-html">.dialog &gt; div &gt; footer</code></dt>
+    <dd>Action area. Use Basecoat button classes for actions.</dd>
+    <dt><code class="highlight language-html">close_button=false</code></dt>
+    <dd>Macro option to hide the generated close icon.</dd>
+  </dl>
+</section>

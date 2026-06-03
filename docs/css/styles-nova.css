@@ -1,0 +1,9 @@
+@import url("https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@400&display=swap");
+@import "tailwindcss";
+@import "../../src/css/basecoat-nova.css";
+@import "./custom.css";
+@import "./highlight.css";
+
+@import "./themes/claude.css";
+@import "./themes/doom-64.css";
+@import "./themes/supabase.css";

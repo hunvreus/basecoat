@@ -1,0 +1,50 @@
+/* Input Group */
+@layer components {
+  .input-group {
+    @apply relative isolate flex w-full min-w-0 items-center overflow-hidden outline-none;
+
+    &[data-orientation='vertical'] {
+      @apply h-auto flex-col items-stretch;
+    }
+  }
+
+  .input-group > :is(input, textarea, select, [data-control]) {
+    @apply text-foreground placeholder:text-muted-foreground block min-w-0 flex-1 appearance-none rounded-none border-0 bg-transparent shadow-none outline-none ring-0 focus-visible:ring-0 aria-invalid:ring-0 disabled:bg-transparent;
+  }
+
+  .input-group > :is(input, select, [data-control]) {
+    @apply h-full;
+  }
+
+  .input-group > [data-control] {
+    @apply w-full;
+  }
+
+  .input-group[data-orientation='vertical'] > :is(input, select, [data-control]) {
+    @apply h-auto flex-none;
+  }
+
+  .input-group > textarea {
+    @apply field-sizing-content min-h-20 w-full resize-none;
+  }
+
+  .input-group > :is(span, kbd, svg, [role='group'], .popover, .dropdown-menu, button, footer, header, hr[role='separator']) {
+    @apply shrink-0;
+  }
+
+  .input-group > :is(span, [role='group'], footer, header) {
+    @apply inline-flex items-center;
+  }
+
+  .input-group > svg {
+    @apply pointer-events-none;
+  }
+
+  .input-group > [data-align='start'] {
+    @apply order-first;
+  }
+
+  .input-group > [data-align='end'] {
+    @apply order-last;
+  }
+}

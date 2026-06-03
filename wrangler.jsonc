@@ -1,7 +1,9 @@
 {
+  "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "basecoat-docs",
-  "compatibility_date": "2025-06-15",
+  "compatibility_date": "2026-06-02",
   "assets": {
-    "directory": "./_site"
+    "directory": "./_site",
+    "not_found_handling": "404-page"
   }
 }
