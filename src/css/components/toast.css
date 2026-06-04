@@ -1,7 +1,7 @@
 /* Toasts */
 @layer components {
   .toaster {
-    @apply pointer-events-none fixed bottom-0 z-50 flex w-full flex-col-reverse p-4 sm:max-w-90;
+    @apply pointer-events-none fixed bottom-0 z-50 flex w-full flex-col-reverse gap-4 p-4 sm:max-w-90;
 
     &:not([data-align]),
     &[data-align='end'] {
@@ -14,7 +14,7 @@
       @apply left-1/2 -translate-x-1/2;
     }
     .toast {
-      @apply pointer-events-auto mt-4 grid w-full grid-rows-[1fr] animate-[toast-up_0.3s_ease-in-out] transition-[grid-template-rows,opacity,margin] duration-300 ease-in-out;
+      @apply pointer-events-auto grid w-full grid-rows-[1fr] animate-[toast-up_0.3s_ease-in-out] transition-[grid-template-rows,opacity] duration-300 ease-in-out;
       
       .toast-content {
         @apply flex items-center gap-2.5 overflow-hidden p-3 text-[13px];
@@ -40,7 +40,7 @@
         }
       }
       &[aria-hidden='true'] {
-        @apply m-0 grid-rows-[0fr] overflow-hidden border-0 p-0 opacity-0;
+        @apply grid-rows-[0fr] overflow-hidden border-0 p-0 opacity-0;
 
         .toast-content {
           @apply border-0;

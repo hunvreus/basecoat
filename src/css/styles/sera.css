@@ -738,7 +738,7 @@
 
   /* Card */
   .card {
-    @apply bg-card text-card-foreground ring-foreground/5 gap-8 py-8 text-sm shadow-sm ring-1 has-[>img:first-child]:pt-0 data-[size=sm]:gap-5 data-[size=sm]:py-5 [&>img:first-child]:rounded-none [&>img:last-child]:rounded-none;
+    @apply bg-card text-card-foreground ring-foreground/5 gap-8 overflow-hidden py-8 text-sm shadow-sm ring-1 has-[>img:first-child]:pt-0 data-[size=sm]:gap-5 data-[size=sm]:py-5 [&>img:first-child]:rounded-none [&>img:last-child]:rounded-none;
   }
 
   .card > header {

@@ -33,12 +33,12 @@
 
   <button
     type="button"
-    class="relative text-muted-foreground bg-background dark:bg-input/30 border-input hidden h-8 w-full min-w-0 max-w-72 items-center rounded-md border px-3 py-1 gap-x-2 text-sm outline-none cursor-text focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] md:flex"
+    class="docs-search-trigger"
     onclick="document.getElementById('command-search').showModal(); document.getElementById('command-search').querySelector('header input')?.focus();"
   >
-    {% lucide "search", { "class": "size-4" } %}
+    {% lucide "search" %}
     Search the docs...
-    <kbd class="kbd ml-auto -mr-1.5">⌘K</kbd>
+    <kbd class="kbd">⌘K</kbd>
   </button>
 
   <select class="select h-8 leading-none" id="theme-select" aria-label="Theme">

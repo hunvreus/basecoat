@@ -33,7 +33,7 @@ toc:
 {% set code_server_side %}<button
   class="btn-outline"
   hx-trigger="click"
-  hx-disinherit="hx-select hx-target hx-swap"
+  hx-select="unset"
   hx-get="/fragments/toast/success"
   hx-target="#toaster"
   hx-swap="beforeend"
