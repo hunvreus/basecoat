@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
-  "name": "basecoat-docs",
+  "name": "basecoat",
   "compatibility_date": "2026-06-02",
   "assets": {
     "directory": "./_site",
