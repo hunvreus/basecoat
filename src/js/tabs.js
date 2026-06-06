@@ -1,81 +1,91 @@
 (() => {
-  const initTabs = (tabsComponent) => {
-    const tablist = tabsComponent.querySelector('[role="tablist"]');
-    if (!tablist) return;
+  const states = new WeakMap();
 
-    const tabs = Array.from(tablist.querySelectorAll('[role="tab"]'));
+  const isDisabled = (tab) => tab.disabled || tab.getAttribute('aria-disabled') === 'true';
+
+  const getElements = (root) => {
+    const tablist = root.querySelector('[role="tablist"]');
+    const tabs = tablist ? Array.from(tablist.querySelectorAll('[role="tab"]')) : [];
     const panels = tabs.map(tab => document.getElementById(tab.getAttribute('aria-controls'))).filter(Boolean);
+    return { tablist, tabs, panels };
+  };
 
-    const isDisabled = (tab) => tab.disabled || tab.getAttribute('aria-disabled') === 'true';
-    const getEnabledTabs = () => tabs.filter(tab => !isDisabled(tab));
+  const refreshTabs = (root) => {
+    const state = states.get(root);
+    if (!state) return;
 
-    const selectTab = (tabToSelect) => {
-      if (isDisabled(tabToSelect)) return;
+    Object.assign(state, getElements(root));
+    if (!state.tablist) return;
 
-      tabs.forEach((tab, index) => {
+    const selected = state.tabs.find(tab => tab.getAttribute('aria-selected') === 'true' && !isDisabled(tab))
+      || state.tabs.find(tab => !isDisabled(tab));
+    if (selected) root.select(selected, false);
+  };
+
+  const initTabs = (root) => {
+    if (root.dataset.tabsInitialized) return;
+
+    const state = {};
+    states.set(root, state);
+    root.refresh = () => refreshTabs(root);
+
+    const selectTab = (tabToSelect, focus = false) => {
+      if (!tabToSelect || isDisabled(tabToSelect)) return;
+
+      state.tabs.forEach((tab) => {
         tab.setAttribute('aria-selected', 'false');
         tab.setAttribute('tabindex', '-1');
-        if (panels[index]) panels[index].hidden = true;
+        const panel = document.getElementById(tab.getAttribute('aria-controls'));
+        if (panel) panel.hidden = true;
       });
 
       tabToSelect.setAttribute('aria-selected', 'true');
       tabToSelect.setAttribute('tabindex', '0');
       const activePanel = document.getElementById(tabToSelect.getAttribute('aria-controls'));
       if (activePanel) activePanel.hidden = false;
+      if (focus) tabToSelect.focus();
     };
 
-    tablist.addEventListener('click', (event) => {
+    root.select = selectTab;
+    refreshTabs(root);
+    if (!state.tablist) return;
+
+    state.tablist.addEventListener('click', (event) => {
       const clickedTab = event.target.closest('[role="tab"]');
-      if (clickedTab) selectTab(clickedTab);
+      if (clickedTab) root.select(clickedTab);
     });
 
-    tablist.addEventListener('keydown', (event) => {
+    state.tablist.addEventListener('keydown', (event) => {
       const currentTab = event.target;
-      if (!tabs.includes(currentTab)) return;
+      if (!state.tabs.includes(currentTab)) return;
 
-      let nextTab;
-      const enabledTabs = getEnabledTabs();
+      const enabledTabs = state.tabs.filter(tab => !isDisabled(tab));
       const currentIndex = enabledTabs.indexOf(currentTab);
-      const orientation = tablist.getAttribute('aria-orientation') || 'horizontal';
+      const orientation = state.tablist.getAttribute('aria-orientation') || 'horizontal';
       if (currentIndex === -1) return;
 
-      switch (event.key) {
-        case 'ArrowRight':
-          if (orientation !== 'horizontal') return;
-          nextTab = enabledTabs[(currentIndex + 1) % enabledTabs.length];
-          break;
-        case 'ArrowLeft':
-          if (orientation !== 'horizontal') return;
-          nextTab = enabledTabs[(currentIndex - 1 + enabledTabs.length) % enabledTabs.length];
-          break;
-        case 'ArrowDown':
-          if (orientation !== 'vertical') return;
-          nextTab = enabledTabs[(currentIndex + 1) % enabledTabs.length];
-          break;
-        case 'ArrowUp':
-          if (orientation !== 'vertical') return;
-          nextTab = enabledTabs[(currentIndex - 1 + enabledTabs.length) % enabledTabs.length];
-          break;
-        case 'Home':
-          nextTab = enabledTabs[0];
-          break;
-        case 'End':
-          nextTab = enabledTabs[enabledTabs.length - 1];
-          break;
-        default:
-          return;
-      }
+      let nextTab;
+      if (event.key === 'ArrowRight' && orientation === 'horizontal') nextTab = enabledTabs[(currentIndex + 1) % enabledTabs.length];
+      if (event.key === 'ArrowLeft' && orientation === 'horizontal') nextTab = enabledTabs[(currentIndex - 1 + enabledTabs.length) % enabledTabs.length];
+      if (event.key === 'ArrowDown' && orientation === 'vertical') nextTab = enabledTabs[(currentIndex + 1) % enabledTabs.length];
+      if (event.key === 'ArrowUp' && orientation === 'vertical') nextTab = enabledTabs[(currentIndex - 1 + enabledTabs.length) % enabledTabs.length];
+      if (event.key === 'Home') nextTab = enabledTabs[0];
+      if (event.key === 'End') nextTab = enabledTabs[enabledTabs.length - 1];
+      if (!nextTab) return;
 
       event.preventDefault();
-      selectTab(nextTab);
-      nextTab.focus();
+      root.select(nextTab, true);
     });
-    
-    tabsComponent.dataset.tabsInitialized = true;
-    tabsComponent.dispatchEvent(new CustomEvent('basecoat:initialized'));
+
+    root.dataset.tabsInitialized = 'true';
+    root.dispatchEvent(new CustomEvent('basecoat:initialized'));
   };
 
   if (window.basecoat) {
-    window.basecoat.register('tabs', '.tabs:not([data-tabs-initialized])', initTabs);
+    window.basecoat.register('tabs', {
+      selector: '.tabs:not([data-tabs-initialized])',
+      init: initTabs,
+      refresh: refreshTabs,
+    });
   }
 })();

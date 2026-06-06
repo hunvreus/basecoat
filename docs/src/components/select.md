@@ -283,6 +283,10 @@ toc:
     <dd>
       <p><strong>Deprecated:</strong> Alias for <code>select(value)</code>. Kept for backward compatibility.</p>
     </dd>
+    <dt><code>refresh()</code></dt>
+    <dd>Rescans options after changing children inside the existing <code>role="listbox"</code> element.</dd>
+    <dt><code>window.basecoat.refresh(selectComponent)</code></dt>
+    <dd>Calls the component refresh method through the global dispatcher.</dd>
   </dl>
 </section>
 

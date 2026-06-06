@@ -1140,33 +1140,42 @@
     @apply text-sm;
   }
 
-  .sidebar nav li > :is(a, button, details > summary) {
+  .sidebar nav li > :is(a, button),
+  .sidebar nav li > details > summary {
     @apply ring-sidebar-ring hover:bg-sidebar-accent hover:text-sidebar-accent-foreground active:bg-sidebar-accent active:text-sidebar-accent-foreground gap-2 rounded-md p-2 text-sm focus-visible:ring-2 text-left focus-visible:outline-hidden data-[open]:hover:bg-sidebar-accent data-[open]:hover:text-sidebar-accent-foreground [&>svg]:shrink-0 [&>svg]:size-4;
   }
 
-  .sidebar nav li > :is(a, button, details > summary):is([aria-current=page], [data-active=true]) {
+  .sidebar nav li > :is(a, button):is([aria-current=page], [data-active=true]),
+  .sidebar nav li > details > summary:is([aria-current=page], [data-active=true]) {
     @apply bg-sidebar-accent text-sidebar-accent-foreground font-medium;
   }
 
-  .sidebar nav li > :is(a, button, details > summary):not([data-variant]),
-  .sidebar nav li > :is(a, button, details > summary)[data-variant=default] {
+  .sidebar nav li > :is(a, button):not([data-variant]),
+  .sidebar nav li > details > summary:not([data-variant]),
+  .sidebar nav li > :is(a, button)[data-variant=default],
+  .sidebar nav li > details > summary[data-variant=default] {
     @apply hover:bg-sidebar-accent hover:text-sidebar-accent-foreground;
   }
 
-  .sidebar nav li > :is(a, button, details > summary)[data-variant=outline] {
+  .sidebar nav li > :is(a, button)[data-variant=outline],
+  .sidebar nav li > details > summary[data-variant=outline] {
     @apply bg-background shadow-[0_0_0_1px_var(--sidebar-border)] hover:shadow-[0_0_0_1px_var(--sidebar-accent)] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground;
   }
 
-  .sidebar nav li > :is(a, button, details > summary):not([data-size]),
-  .sidebar nav li > :is(a, button, details > summary)[data-size=default] {
+  .sidebar nav li > :is(a, button):not([data-size]),
+  .sidebar nav li > details > summary:not([data-size]),
+  .sidebar nav li > :is(a, button)[data-size=default],
+  .sidebar nav li > details > summary[data-size=default] {
     @apply h-8 text-sm;
   }
 
-  .sidebar nav li > :is(a, button, details > summary)[data-size=sm] {
+  .sidebar nav li > :is(a, button)[data-size=sm],
+  .sidebar nav li > details > summary[data-size=sm] {
     @apply h-7 text-xs;
   }
 
-  .sidebar nav li > :is(a, button, details > summary)[data-size=lg] {
+  .sidebar nav li > :is(a, button)[data-size=lg],
+  .sidebar nav li > details > summary[data-size=lg] {
     @apply h-12 text-sm;
   }
 
@@ -1179,10 +1188,11 @@
   }
 
   .sidebar nav ul ul {
-    @apply border-sidebar-border mx-3.5 translate-x-px gap-1 border-s px-2.5 py-0.5 rtl:-translate-x-px;
+    @apply border-sidebar-border translate-x-px gap-1 border-s px-2.5 py-0.5 rtl:-translate-x-px;
   }
 
-  .sidebar nav ul ul > li > :is(a, button, details > summary) {
+  .sidebar nav ul ul > li > :is(a, button),
+  .sidebar nav ul ul > li > details > summary {
     @apply text-sidebar-foreground ring-sidebar-ring hover:bg-sidebar-accent hover:text-sidebar-accent-foreground active:bg-sidebar-accent active:text-sidebar-accent-foreground h-7 gap-2 rounded-md px-2 text-sm focus-visible:ring-2 [&>svg]:size-4;
   }
 

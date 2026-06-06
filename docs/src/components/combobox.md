@@ -147,6 +147,10 @@ toc:
     <dd>Removes a selected value.</dd>
     <dt><code>toggle(value)</code> <span class="badge-secondary">Multiple only</span></dt>
     <dd>Toggles a selected value.</dd>
+    <dt><code>refresh()</code></dt>
+    <dd>Rescans options after changing children inside the existing <code>role="listbox"</code> element.</dd>
+    <dt><code>window.basecoat.refresh(combobox)</code></dt>
+    <dd>Calls the component refresh method through the global dispatcher.</dd>
   </dl>
 </section>
 

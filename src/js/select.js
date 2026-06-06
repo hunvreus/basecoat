@@ -1,380 +1,356 @@
 (() => {
-  const initSelect = (selectComponent) => {
-    const trigger = selectComponent.querySelector(':scope > button');
-    const selectedLabel = trigger.querySelector(':scope > span');
-    const popover = selectComponent.querySelector(':scope > [data-popover]');
-    const listbox = popover ? popover.querySelector('[role="listbox"]') : null;
-    const input = selectComponent.querySelector(':scope > input[type="hidden"]');
+  const states = new WeakMap();
 
-    if (!trigger || !popover || !listbox || !input) {
+  const getElements = (root) => {
+    const trigger = root.querySelector(':scope > button');
+    const selectedLabel = trigger?.querySelector(':scope > span') || null;
+    const popover = root.querySelector(':scope > [data-popover]');
+    const listbox = popover ? popover.querySelector('[role="listbox"]') : null;
+    const input = root.querySelector(':scope > input[type="hidden"]');
+    return { trigger, selectedLabel, popover, listbox, input };
+  };
+
+  const getValue = (option) => option.dataset.value ?? option.textContent.trim();
+  const isDisabled = (option) => option.getAttribute('aria-disabled') === 'true';
+
+  const getOptions = (listbox) => {
+    const allOptions = Array.from(listbox.querySelectorAll('[role="option"]'));
+    return {
+      allOptions,
+      options: allOptions.filter(option => !isDisabled(option)),
+    };
+  };
+
+  const scrollOptionIntoListbox = (state, option) => {
+    const optionRect = option.getBoundingClientRect();
+    const listboxRect = state.listbox.getBoundingClientRect();
+
+    if (optionRect.top < listboxRect.top) {
+      state.listbox.scrollTop -= listboxRect.top - optionRect.top;
+    } else if (optionRect.bottom > listboxRect.bottom) {
+      state.listbox.scrollTop += optionRect.bottom - listboxRect.bottom;
+    }
+  };
+
+  const setActiveOption = (state, index) => {
+    if (state.activeIndex > -1 && state.options[state.activeIndex]) {
+      state.options[state.activeIndex].classList.remove('active');
+    }
+
+    state.activeIndex = index;
+
+    if (state.activeIndex > -1) {
+      const activeOption = state.options[state.activeIndex];
+      activeOption.classList.add('active');
+      if (activeOption.id) {
+        state.trigger.setAttribute('aria-activedescendant', activeOption.id);
+      } else {
+        state.trigger.removeAttribute('aria-activedescendant');
+      }
+    } else {
+      state.trigger.removeAttribute('aria-activedescendant');
+    }
+  };
+
+  const updateValue = (root, optionOrOptions, triggerEvent = true) => {
+    const state = states.get(root);
+    let value;
+
+    if (state.isMultiple) {
+      const selected = Array.isArray(optionOrOptions) ? optionOrOptions : [];
+      state.selectedOptions.clear();
+      selected.forEach(option => state.selectedOptions.add(option));
+
+      const selectedInOrder = state.options.filter(option => state.selectedOptions.has(option));
+      if (selectedInOrder.length === 0) {
+        state.selectedLabel.textContent = state.placeholder;
+        state.selectedLabel.classList.add('text-muted-foreground');
+      } else {
+        state.selectedLabel.textContent = selectedInOrder.map(option => option.dataset.label || option.textContent.trim()).join(', ');
+        state.selectedLabel.classList.remove('text-muted-foreground');
+      }
+
+      value = selectedInOrder.map(getValue);
+      state.input.value = JSON.stringify(value);
+    } else {
+      const option = optionOrOptions;
+      if (!option) return;
+      state.selectedLabel.innerHTML = option.innerHTML;
+      value = getValue(option);
+      state.input.value = value;
+    }
+
+    state.options.forEach(option => {
+      const isSelected = state.isMultiple ? state.selectedOptions.has(option) : option === optionOrOptions;
+      if (isSelected) {
+        option.setAttribute('aria-selected', 'true');
+      } else {
+        option.removeAttribute('aria-selected');
+      }
+    });
+
+    if (triggerEvent) {
+      root.dispatchEvent(new CustomEvent('change', {
+        detail: { value },
+        bubbles: true,
+      }));
+    }
+  };
+
+  const closePopover = (state, focusOnTrigger = true) => {
+    if (state.popover.getAttribute('aria-hidden') === 'true') return;
+    if (focusOnTrigger) state.trigger.focus();
+    state.popover.setAttribute('aria-hidden', 'true');
+    state.trigger.setAttribute('aria-expanded', 'false');
+    setActiveOption(state, -1);
+  };
+
+  const refreshSelect = (root) => {
+    const state = states.get(root);
+    if (!state) return;
+
+    const elements = getElements(root);
+    if (!elements.trigger || !elements.selectedLabel || !elements.popover || !elements.listbox || !elements.input) {
       const missing = [];
-      if (!trigger) missing.push('trigger');
-      if (!popover) missing.push('popover');
-      if (!listbox) missing.push('listbox');
-      if (!input) missing.push('input');
-      console.error(`Select component initialisation failed. Missing element(s): ${missing.join(', ')}`, selectComponent);
+      if (!elements.trigger) missing.push('trigger');
+      if (!elements.selectedLabel) missing.push('selected label');
+      if (!elements.popover) missing.push('popover');
+      if (!elements.listbox) missing.push('listbox');
+      if (!elements.input) missing.push('input');
+      console.error(`Select component refresh failed. Missing element(s): ${missing.join(', ')}`, root);
       return;
     }
 
-    const allOptions = Array.from(listbox.querySelectorAll('[role="option"]'));
-    const options = allOptions.filter(opt => opt.getAttribute('aria-disabled') !== 'true');
-    let visibleOptions = [...options];
-    let activeIndex = -1;
-    const isMultiple = listbox.getAttribute('aria-multiselectable') === 'true';
-    const selectedOptions = isMultiple ? new Set() : null;
-    const placeholder = isMultiple ? (selectComponent.dataset.placeholder || '') : null;
-    const closeOnSelect = selectComponent.dataset.closeOnSelect === 'true';
+    const previousValue = elements.input.value;
+    Object.assign(state, elements, getOptions(elements.listbox));
+    state.visibleOptions = [...state.options];
+    state.isMultiple = state.listbox.getAttribute('aria-multiselectable') === 'true';
+    state.placeholder = state.isMultiple ? (root.dataset.placeholder || '') : null;
+    state.closeOnSelect = root.dataset.closeOnSelect === 'true';
 
-    const getValue = (opt) => opt.dataset.value ?? opt.textContent.trim();
-
-    const scrollOptionIntoListbox = (option) => {
-      const optionRect = option.getBoundingClientRect();
-      const listboxRect = listbox.getBoundingClientRect();
-
-      if (optionRect.top < listboxRect.top) {
-        listbox.scrollTop -= listboxRect.top - optionRect.top;
-      } else if (optionRect.bottom > listboxRect.bottom) {
-        listbox.scrollTop += optionRect.bottom - listboxRect.bottom;
-      }
-    };
-
-    const setActiveOption = (index) => {
-      if (activeIndex > -1 && options[activeIndex]) {
-        options[activeIndex].classList.remove('active');
-      }
-
-      activeIndex = index;
-
-      if (activeIndex > -1) {
-        const activeOption = options[activeIndex];
-        activeOption.classList.add('active');
-        if (activeOption.id) {
-          trigger.setAttribute('aria-activedescendant', activeOption.id);
-        } else {
-          trigger.removeAttribute('aria-activedescendant');
-        }
-      } else {
-        trigger.removeAttribute('aria-activedescendant');
-      }
-    };
-
-    const updateValue = (optionOrOptions, triggerEvent = true) => {
-      let value;
-
-      if (isMultiple) {
-        const opts = Array.isArray(optionOrOptions) ? optionOrOptions : [];
-        selectedOptions.clear();
-        opts.forEach(opt => selectedOptions.add(opt));
-
-        // Get selected options in DOM order
-        const selected = options.filter(opt => selectedOptions.has(opt));
-        if (selected.length === 0) {
-          selectedLabel.textContent = placeholder;
-          selectedLabel.classList.add('text-muted-foreground');
-        } else {
-          selectedLabel.textContent = selected.map(opt => opt.dataset.label || opt.textContent.trim()).join(', ');
-          selectedLabel.classList.remove('text-muted-foreground');
-        }
-
-        value = selected.map(getValue);
-        input.value = JSON.stringify(value);
-      } else {
-        const option = optionOrOptions;
-        if (!option) return;
-        selectedLabel.innerHTML = option.innerHTML;
-        value = getValue(option);
-        input.value = value;
-      }
-
-      options.forEach(opt => {
-        const isSelected = isMultiple ? selectedOptions.has(opt) : opt === optionOrOptions;
-        if (isSelected) {
-          opt.setAttribute('aria-selected', 'true');
-        } else {
-          opt.removeAttribute('aria-selected');
-        }
-      });
-
-      if (triggerEvent) {
-        selectComponent.dispatchEvent(new CustomEvent('change', {
-          detail: { value },
-          bubbles: true
-        }));
-      }
-    };
-
-    const closePopover = (focusOnTrigger = true) => {
-      if (popover.getAttribute('aria-hidden') === 'true') return;
-
-      if (focusOnTrigger) trigger.focus();
-      popover.setAttribute('aria-hidden', 'true');
-      trigger.setAttribute('aria-expanded', 'false');
-      setActiveOption(-1);
-    };
-
-    const toggleMultipleValue = (option) => {
-      if (selectedOptions.has(option)) {
-        selectedOptions.delete(option);
-      } else {
-        selectedOptions.add(option);
-      }
-      updateValue(options.filter(opt => selectedOptions.has(opt)));
-    };
-
-    const select = (value) => {
-      if (isMultiple) {
-        const option = options.find(opt => getValue(opt) === value && !selectedOptions.has(opt));
-        if (!option) return;
-        selectedOptions.add(option);
-        updateValue(options.filter(opt => selectedOptions.has(opt)));
-      } else {
-        const option = options.find(opt => getValue(opt) === value);
-        if (!option) return;
-        if (input.value !== value) {
-          updateValue(option);
-        }
-        closePopover();
-      }
-    };
-
-    const deselect = (value) => {
-      if (!isMultiple) return;
-      const option = options.find(opt => getValue(opt) === value && selectedOptions.has(opt));
-      if (!option) return;
-      selectedOptions.delete(option);
-      updateValue(options.filter(opt => selectedOptions.has(opt)));
-    };
-
-    const toggle = (value) => {
-      if (!isMultiple) return;
-      const option = options.find(opt => getValue(opt) === value);
-      if (!option) return;
-      toggleMultipleValue(option);
-    };
-
-    // Initialization
-    if (isMultiple) {
-      const ariaSelected = options.filter(opt => opt.getAttribute('aria-selected') === 'true');
+    if (state.isMultiple) {
+      if (!state.selectedOptions) state.selectedOptions = new Set();
+      let values = [];
       try {
-        const parsed = JSON.parse(input.value || '[]');
-        const validValues = new Set(options.map(getValue));
-        const initialValues = Array.isArray(parsed) ? parsed.filter(v => validValues.has(v)) : [];
-
-        const initialOptions = [];
-        if (initialValues.length > 0) {
-          // Match values to options in order, allowing duplicates
-          initialValues.forEach(val => {
-            const opt = options.find(o => getValue(o) === val && !initialOptions.includes(o));
-            if (opt) initialOptions.push(opt);
-          });
-        } else {
-          initialOptions.push(...ariaSelected);
-        }
-
-        updateValue(initialOptions, false);
-      } catch (e) {
-        updateValue(ariaSelected, false);
+        const parsed = JSON.parse(previousValue || '[]');
+        values = Array.isArray(parsed) ? parsed : [];
+      } catch (_) {
+        values = [];
       }
+      const selected = values.length
+        ? values.map(value => state.options.find(option => getValue(option) === value)).filter(Boolean)
+        : state.options.filter(option => option.getAttribute('aria-selected') === 'true');
+      updateValue(root, selected, false);
     } else {
-      const initialOption = options.find(opt => getValue(opt) === input.value) || options[0];
-      if (initialOption) updateValue(initialOption, false);
+      const selected = state.options.find(option => getValue(option) === previousValue)
+        || state.options.find(option => option.getAttribute('aria-selected') === 'true');
+      state.options.forEach(option => option.removeAttribute('aria-selected'));
+      if (selected) updateValue(root, selected, false);
     }
 
-    const handleKeyNavigation = (event) => {
-      const isPopoverOpen = popover.getAttribute('aria-hidden') === 'false';
+    const selectedOption = state.listbox.querySelector('[role="option"][aria-selected="true"]');
+    setActiveOption(state, selectedOption ? state.options.indexOf(selectedOption) : -1);
+  };
 
-      if (!['ArrowDown', 'ArrowUp', 'Enter', 'Home', 'End', 'Escape'].includes(event.key)) {
-        return;
+  const toggleMultipleValue = (root, option) => {
+    const state = states.get(root);
+    if (state.selectedOptions.has(option)) {
+      state.selectedOptions.delete(option);
+    } else {
+      state.selectedOptions.add(option);
+    }
+    updateValue(root, state.options.filter(opt => state.selectedOptions.has(opt)));
+  };
+
+  const selectValue = (root, value) => {
+    const state = states.get(root);
+    if (state.isMultiple) {
+      const option = state.options.find(opt => getValue(opt) === value && !state.selectedOptions.has(opt));
+      if (!option) return;
+      state.selectedOptions.add(option);
+      updateValue(root, state.options.filter(opt => state.selectedOptions.has(opt)));
+    } else {
+      const option = state.options.find(opt => getValue(opt) === value);
+      if (!option) return;
+      if (state.input.value !== value) updateValue(root, option);
+      closePopover(state);
+    }
+  };
+
+  const deselectValue = (root, value) => {
+    const state = states.get(root);
+    if (!state.isMultiple) return;
+    const option = state.options.find(opt => getValue(opt) === value && state.selectedOptions.has(opt));
+    if (!option) return;
+    state.selectedOptions.delete(option);
+    updateValue(root, state.options.filter(opt => state.selectedOptions.has(opt)));
+  };
+
+  const handleKeyNavigation = (event, root) => {
+    const state = states.get(root);
+    const isPopoverOpen = state.popover.getAttribute('aria-hidden') === 'false';
+
+    if (!['ArrowDown', 'ArrowUp', 'Enter', 'Home', 'End', 'Escape'].includes(event.key)) return;
+
+    if (!isPopoverOpen) {
+      if (event.key !== 'Enter' && event.key !== 'Escape') {
+        event.preventDefault();
+        root.open();
       }
+      return;
+    }
 
-      if (!isPopoverOpen) {
-        if (event.key !== 'Enter' && event.key !== 'Escape') {
-          event.preventDefault();
-          trigger.click();
+    event.preventDefault();
+
+    if (event.key === 'Escape') {
+      root.close();
+      return;
+    }
+
+    if (event.key === 'Enter') {
+      if (state.activeIndex > -1) {
+        const option = state.options[state.activeIndex];
+        if (state.isMultiple) {
+          toggleMultipleValue(root, option);
+          if (state.closeOnSelect) root.close();
+        } else {
+          if (state.input.value !== getValue(option)) updateValue(root, option);
+          root.close();
         }
-        return;
       }
+      return;
+    }
 
-      event.preventDefault();
+    if (state.visibleOptions.length === 0) return;
 
-      if (event.key === 'Escape') {
-        closePopover();
-        return;
-      }
+    const currentVisibleIndex = state.activeIndex > -1 ? state.visibleOptions.indexOf(state.options[state.activeIndex]) : -1;
+    let nextVisibleIndex = currentVisibleIndex;
 
-      if (event.key === 'Enter') {
-        if (activeIndex > -1) {
-          const option = options[activeIndex];
-          if (isMultiple) {
-            toggleMultipleValue(option);
-            if (closeOnSelect) {
-              closePopover();
-            }
-          } else {
-            if (input.value !== getValue(option)) {
-              updateValue(option);
-            }
-            closePopover();
-          }
-        }
-        return;
-      }
+    if (event.key === 'ArrowDown' && currentVisibleIndex < state.visibleOptions.length - 1) nextVisibleIndex = currentVisibleIndex + 1;
+    if (event.key === 'ArrowUp') nextVisibleIndex = currentVisibleIndex > 0 ? currentVisibleIndex - 1 : 0;
+    if (event.key === 'Home') nextVisibleIndex = 0;
+    if (event.key === 'End') nextVisibleIndex = state.visibleOptions.length - 1;
 
-      if (visibleOptions.length === 0) return;
+    if (nextVisibleIndex !== currentVisibleIndex) {
+      const newActiveOption = state.visibleOptions[nextVisibleIndex];
+      setActiveOption(state, state.options.indexOf(newActiveOption));
+      scrollOptionIntoListbox(state, newActiveOption);
+    }
+  };
 
-      const currentVisibleIndex = activeIndex > -1 ? visibleOptions.indexOf(options[activeIndex]) : -1;
-      let nextVisibleIndex = currentVisibleIndex;
+  const initSelect = (root) => {
+    if (root.dataset.selectInitialized) return;
 
-      switch (event.key) {
-        case 'ArrowDown':
-          if (currentVisibleIndex < visibleOptions.length - 1) {
-            nextVisibleIndex = currentVisibleIndex + 1;
-          }
-          break;
-        case 'ArrowUp':
-          if (currentVisibleIndex > 0) {
-            nextVisibleIndex = currentVisibleIndex - 1;
-          } else if (currentVisibleIndex === -1) {
-            nextVisibleIndex = 0;
-          }
-          break;
-        case 'Home':
-          nextVisibleIndex = 0;
-          break;
-        case 'End':
-          nextVisibleIndex = visibleOptions.length - 1;
-          break;
-      }
+    const state = { activeIndex: -1, selectedOptions: null, options: [], allOptions: [], visibleOptions: [] };
+    states.set(root, state);
+    root.refresh = () => refreshSelect(root);
 
-      if (nextVisibleIndex !== currentVisibleIndex) {
-        const newActiveOption = visibleOptions[nextVisibleIndex];
-        setActiveOption(options.indexOf(newActiveOption));
-        scrollOptionIntoListbox(newActiveOption);
+    refreshSelect(root);
+    if (!state.trigger || !state.selectedLabel || !state.popover || !state.listbox || !state.input) {
+      states.delete(root);
+      return;
+    }
+
+    root.open = () => {
+      document.dispatchEvent(new CustomEvent('basecoat:popover', { detail: { source: root } }));
+      root.refresh();
+      state.popover.setAttribute('aria-hidden', 'false');
+      state.trigger.setAttribute('aria-expanded', 'true');
+
+      const selectedOption = state.listbox.querySelector('[role="option"][aria-selected="true"]');
+      if (selectedOption) {
+        setActiveOption(state, state.options.indexOf(selectedOption));
+        scrollOptionIntoListbox(state, selectedOption);
       }
     };
+    root.close = (focusOnTrigger = true) => closePopover(state, focusOnTrigger);
+    root.togglePopover = () => state.trigger.getAttribute('aria-expanded') === 'true' ? root.close() : root.open();
 
-    listbox.addEventListener('mousemove', (event) => {
+    state.trigger.addEventListener('keydown', (event) => handleKeyNavigation(event, root));
+    state.trigger.addEventListener('click', root.togglePopover);
+
+    state.listbox.addEventListener('mousemove', (event) => {
       const option = event.target.closest('[role="option"]');
-      if (option && visibleOptions.includes(option)) {
-        const index = options.indexOf(option);
-        if (index !== activeIndex) {
-          setActiveOption(index);
-        }
+      if (option && state.visibleOptions.includes(option)) {
+        const index = state.options.indexOf(option);
+        if (index !== state.activeIndex) setActiveOption(state, index);
       }
     });
 
-    listbox.addEventListener('mouseleave', () => {
-      const selectedOption = listbox.querySelector('[role="option"][aria-selected="true"]');
-      if (selectedOption) {
-        setActiveOption(options.indexOf(selectedOption));
-      } else {
-        setActiveOption(-1);
-      }
+    state.listbox.addEventListener('mouseleave', () => {
+      const selectedOption = state.listbox.querySelector('[role="option"][aria-selected="true"]');
+      setActiveOption(state, selectedOption ? state.options.indexOf(selectedOption) : -1);
     });
 
-    trigger.addEventListener('keydown', handleKeyNavigation);
-    const openPopover = () => {
-      document.dispatchEvent(new CustomEvent('basecoat:popover', {
-        detail: { source: selectComponent }
-      }));
-
-      popover.setAttribute('aria-hidden', 'false');
-      trigger.setAttribute('aria-expanded', 'true');
-
-      const selectedOption = listbox.querySelector('[role="option"][aria-selected="true"]');
-      if (selectedOption) {
-        setActiveOption(options.indexOf(selectedOption));
-        scrollOptionIntoListbox(selectedOption);
-      }
-    };
-
-    trigger.addEventListener('click', () => {
-      const isExpanded = trigger.getAttribute('aria-expanded') === 'true';
-      if (isExpanded) {
-        closePopover();
-      } else {
-        openPopover();
-      }
-    });
-
-    listbox.addEventListener('click', (event) => {
+    state.listbox.addEventListener('click', (event) => {
       const clickedOption = event.target.closest('[role="option"]');
       if (!clickedOption) return;
 
-      const option = options.find(opt => opt === clickedOption);
+      const option = state.options.find(opt => opt === clickedOption);
       if (!option) return;
 
-      if (isMultiple) {
-        toggleMultipleValue(option);
-        if (closeOnSelect) {
-          closePopover();
+      if (state.isMultiple) {
+        toggleMultipleValue(root, option);
+        if (state.closeOnSelect) {
+          root.close();
         } else {
-          setActiveOption(options.indexOf(option));
-          trigger.focus();
+          setActiveOption(state, state.options.indexOf(option));
+          state.trigger.focus();
         }
       } else {
-        if (input.value !== getValue(option)) {
-          updateValue(option);
-        }
-        closePopover();
+        if (state.input.value !== getValue(option)) updateValue(root, option);
+        root.close();
       }
     });
 
     document.addEventListener('click', (event) => {
-      if (!selectComponent.contains(event.target)) {
-        closePopover(false);
-      }
+      if (!root.contains(event.target)) root.close(false);
     });
 
     document.addEventListener('basecoat:popover', (event) => {
-      if (event.detail.source !== selectComponent) {
-        closePopover(false);
-      }
+      if (event.detail.source !== root) root.close(false);
     });
 
-    popover.setAttribute('aria-hidden', 'true');
-
-    // Public API
-    Object.defineProperty(selectComponent, 'value', {
-      get: () => {
-        if (isMultiple) {
-          return options.filter(opt => selectedOptions.has(opt)).map(getValue);
+    Object.defineProperty(root, 'value', {
+      configurable: true,
+      get: () => state.isMultiple ? state.options.filter(option => state.selectedOptions.has(option)).map(getValue) : state.input.value,
+      set: (value) => {
+        if (state.isMultiple) {
+          const values = Array.isArray(value) ? value : (value != null ? [value] : []);
+          updateValue(root, values.map(v => state.options.find(option => getValue(option) === v)).filter(Boolean));
         } else {
-          return input.value;
-        }
-      },
-      set: (val) => {
-        if (isMultiple) {
-          const values = Array.isArray(val) ? val : (val != null ? [val] : []);
-          const opts = [];
-          values.forEach(v => {
-            const opt = options.find(o => getValue(o) === v && !opts.includes(o));
-            if (opt) opts.push(opt);
-          });
-          updateValue(opts);
-        } else {
-          const option = options.find(opt => getValue(opt) === val);
+          const option = state.options.find(opt => getValue(opt) === value);
           if (option) {
-            updateValue(option);
-            closePopover();
+            updateValue(root, option);
+            root.close();
           }
         }
-      }
+      },
     });
 
-    selectComponent.select = select;
-    selectComponent.selectByValue = select; // Backward compatibility alias
-    if (isMultiple) {
-      selectComponent.deselect = deselect;
-      selectComponent.toggle = toggle;
-      selectComponent.selectAll = () => updateValue(options);
-      selectComponent.selectNone = () => updateValue([]);
+    root.select = (value) => selectValue(root, value);
+    root.selectByValue = root.select;
+    if (state.isMultiple) {
+      root.deselect = (value) => deselectValue(root, value);
+      root.toggle = (value) => {
+        const option = state.options.find(opt => getValue(opt) === value);
+        if (option) toggleMultipleValue(root, option);
+      };
+      root.selectAll = () => updateValue(root, state.options);
+      root.selectNone = () => updateValue(root, []);
     }
-    selectComponent.dataset.selectInitialized = true;
-    selectComponent.dispatchEvent(new CustomEvent('basecoat:initialized'));
+
+    state.popover.setAttribute('aria-hidden', 'true');
+    state.trigger.setAttribute('aria-expanded', 'false');
+    root.dataset.selectInitialized = 'true';
+    root.dispatchEvent(new CustomEvent('basecoat:initialized'));
   };
 
   if (window.basecoat) {
-    window.basecoat.register('select', 'div.select:not([data-select-initialized])', initSelect);
+    window.basecoat.register('select', {
+      selector: 'div.select:not([data-select-initialized])',
+      init: initSelect,
+      refresh: refreshSelect,
+    });
   }
 })();

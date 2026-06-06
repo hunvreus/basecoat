@@ -1,15 +1,17 @@
 (() => {
   const initSidebar = (sidebarComponent) => {
+    if (sidebarComponent.dataset.sidebarInitialized) return;
+
     const initialOpen = sidebarComponent.dataset.initialOpen !== 'false';
     const initialMobileOpen = sidebarComponent.dataset.initialMobileOpen === 'true';
     const breakpoint = parseInt(sidebarComponent.dataset.breakpoint) || 768;
-    
-    let open = breakpoint > 0 
+
+    let open = breakpoint > 0
       ? (window.innerWidth >= breakpoint ? initialOpen : initialMobileOpen)
       : initialOpen;
-    
+
     const updateState = () => {
-      sidebarComponent.setAttribute('aria-hidden', !open);
+      sidebarComponent.setAttribute('aria-hidden', String(!open));
       if (open) {
         sidebarComponent.removeAttribute('inert');
       } else {
@@ -18,48 +20,33 @@
     };
 
     const setState = (state) => {
-      open = state;
+      open = Boolean(state);
       updateState();
     };
 
-    const sidebarId = sidebarComponent.id;
+    sidebarComponent.open = () => setState(true);
+    sidebarComponent.close = () => setState(false);
+    sidebarComponent.toggle = () => setState(!open);
 
-    document.addEventListener('basecoat:sidebar', (event) => {
-      if (event.detail?.id && event.detail.id !== sidebarId) return;
-
-      switch (event.detail?.action) {
-        case 'open':
-          setState(true);
-          break;
-        case 'close':
-          setState(false);
-          break;
-        default:
-          setState(!open);
-          break;
-      }
-    });
-    
     sidebarComponent.addEventListener('click', (event) => {
       const target = event.target;
       const nav = sidebarComponent.querySelector('nav');
-      
       const isMobile = window.innerWidth < breakpoint;
-      
-      if (isMobile && (target.closest('a, button') && !target.closest('[data-keep-mobile-sidebar-open]'))) {
+
+      if (isMobile && target.closest('a, button') && !target.closest('[data-keep-mobile-sidebar-open]')) {
         if (document.activeElement) document.activeElement.blur();
-        setState(false);
+        sidebarComponent.close();
         return;
       }
-      
+
       if (target === sidebarComponent || (nav && !nav.contains(target))) {
         if (document.activeElement) document.activeElement.blur();
-        setState(false);
+        sidebarComponent.close();
       }
     });
 
     updateState();
-    sidebarComponent.dataset.sidebarInitialized = true;
+    sidebarComponent.dataset.sidebarInitialized = 'true';
     sidebarComponent.dispatchEvent(new CustomEvent('basecoat:initialized'));
   };
 

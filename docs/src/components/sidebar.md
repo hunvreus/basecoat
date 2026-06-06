@@ -18,7 +18,7 @@ toc:
             id: usage-html-js-3
           - label: Basecoat differences
             id: usage-html-js-4
-          - label: JavaScript events
+          - label: JavaScript API
             id: usage-html-js-5
       - label: Jinja and Nunjucks
         id: usage-macro
@@ -82,7 +82,7 @@ toc:
   menu=menu
 ) }}
 <main>
-  <button type="button" onclick="document.dispatchEvent(new CustomEvent('basecoat:sidebar'))">Toggle sidebar</button>
+  <button type="button" onclick="document.getElementById('sidebar')?.toggle()">Toggle sidebar</button>
   <h1>Content</h1>
 </main>
 {% endset %}
@@ -95,7 +95,7 @@ toc:
     <dt><code class="highlight language-html">&lt;aside class="sidebar" aria-hidden="false"&gt;</code></dt>
     <dd>Wraps the sidebar component. Supported attributes:
       <ul>
-        <li><code>id</code>: target a specific sidebar from the <code>basecoat:sidebar</code> event.</li>
+        <li><code>id</code>: target a specific sidebar from JavaScript methods.</li>
         <li><code>aria-hidden</code>: current open state. <code>false</code> means visible, <code>true</code> means hidden.</li>
         <li><code>data-side</code>: physical side of the viewport. Use <code>left</code> or <code>right</code>. Defaults to <code>left</code>.</li>
         <li><code>data-initial-open</code>: set to <code>false</code> to start closed on desktop.</li>
@@ -123,8 +123,8 @@ toc:
     <dd>Bottom area for account controls, settings, or secondary actions.</dd>
     <dt><code class="highlight language-html">&lt;main&gt;</code></dt>
     <dd>The sibling content wrapper. Basecoat applies the desktop margin to the sibling that follows the sidebar.</dd>
-    <dt><code class="highlight language-html">&lt;button type="button" onclick="document.dispatchEvent(new CustomEvent('basecoat:sidebar'))"&gt;</code></dt>
-    <dd>Dispatches the event used to toggle, open, or close the sidebar.</dd>
+    <dt><code class="highlight language-html">&lt;button type="button" onclick="document.getElementById('sidebar')?.toggle()"&gt;</code></dt>
+    <dd>Calls the sidebar method used to toggle, open, or close the sidebar.</dd>
   </dl>
 </section>
 
@@ -146,25 +146,28 @@ toc:
   <p>RTL content is supported through logical spacing and borders. The <code>data-side</code> value remains physical: <code>left</code> means the left side of the viewport and <code>right</code> means the right side.</p>
 </section>
 
-<h4 id="usage-html-js-5"><a href="#usage-html-js-5">JavaScript events</a></h4>
+<h4 id="usage-html-js-5"><a href="#usage-html-js-5">JavaScript API</a></h4>
 
 <section class="prose">
   <dl>
     <dt><code>basecoat:initialized</code></dt>
     <dd>Once the component is fully initialized, it dispatches a custom (non-bubbling) <code>basecoat:initialized</code> event on itself.</dd>
-    <dt><code>basecoat:sidebar</code></dt>
-    <dd>
-      <p>Sidebars listen for this event on <code>document</code> to open, close or toggle themselves. By default, the event will toggle the sidebar, but can be used to open or close if you add an <code>action</code> to the detail. Additionally, if you have multiple sidebars on the page, you can target a specific sidebar by adding its <code>id</code> to the detail:</p>
-        {% set code_trigger %}<!-- Toggles the sidebar -->
-<button type="button" onclick="document.dispatchEvent(new CustomEvent('basecoat:sidebar'));">Toggle sidebar</button>
-<!-- Opens the `#main-navigation` sidebar -->
-<button type="button" onclick="document.dispatchEvent(new CustomEvent('basecoat:sidebar', { detail: { id: 'main-navigation', action: 'open' } }));">Open sidebar</button>
-<!-- Closes the sidebar -->
-<button type="button" onclick="document.dispatchEvent(new CustomEvent('basecoat:sidebar', { detail: { action: 'close' } }));">Close sidebar</button>{% endset %}
-        {{ code_block(code_trigger | prettyHtml, "html") }}
-    </dd>
+    <dt><code>sidebar.open()</code></dt>
+    <dd>Opens the specific sidebar element.</dd>
+    <dt><code>sidebar.close()</code></dt>
+    <dd>Closes the specific sidebar element.</dd>
+    <dt><code>sidebar.toggle()</code></dt>
+    <dd>Toggles the specific sidebar element.</dd>
   </dl>
 </section>
+
+{% set code_trigger %}<!-- Toggles the sidebar -->
+<button type="button" onclick="document.getElementById('sidebar')?.toggle()">Toggle sidebar</button>
+<!-- Opens the `#main-navigation` sidebar -->
+<button type="button" onclick="document.getElementById('main-navigation')?.open()">Open sidebar</button>
+<!-- Closes the sidebar -->
+<button type="button" onclick="document.getElementById('sidebar')?.close()">Close sidebar</button>{% endset %}
+{{ code_block(code_trigger | prettyHtml, "html") }}
 
 <h3 id="usage-macro"><a href="#usage-macro">Jinja and Nunjucks</a></h3>
 

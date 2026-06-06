@@ -21,7 +21,7 @@
 <div class="flex h-14 w-full items-center gap-2 px-4">
   <button
     type="button"
-    onclick="document.dispatchEvent(new CustomEvent('basecoat:sidebar'))"
+    onclick="document.getElementById('sidebar')?.toggle()"
     aria-label="Toggle sidebar"
     data-tooltip="Toggle sidebar"
     data-side="bottom"
@@ -83,8 +83,11 @@
       const styleLink = document.getElementById('style-variant-stylesheet');
       const applyStyle = (styleName) => {
         const nextStyle = styleName || 'nova';
+        const nextHref = `/assets/styles-${nextStyle}.css`;
         document.documentElement.dataset.styleVariant = nextStyle;
-        if (styleLink) styleLink.href = `/assets/styles-${nextStyle}.css`;
+        if (styleLink && styleLink.getAttribute('href') !== nextHref) {
+          styleLink.href = nextHref;
+        }
       };
 
       const storedStyle = localStorage.getItem('styleVariant') || 'nova';
@@ -104,7 +107,7 @@
     aria-label="Toggle dark mode"
     data-tooltip="Toggle dark mode"
     data-side="bottom"
-    onclick="document.dispatchEvent(new CustomEvent('basecoat:theme'))"
+    onclick="window.basecoat?.theme.toggle()"
     class="btn-icon-outline size-8"
   >
     <span class="hidden dark:block">{% lucide "sun" %}</span>

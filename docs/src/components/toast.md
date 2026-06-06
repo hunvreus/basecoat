@@ -18,7 +18,7 @@ toc:
             id: usage-html-js-3
           - label: HTML structure
             id: usage-html-js-4
-          - label: JavaScript events
+          - label: JavaScript API
             id: usage-html-js-5
           - label: Toast config object
             id: usage-html-js-6
@@ -44,18 +44,14 @@ toc:
 
 {% set code_client_side %}<button
   class="btn-outline"
-  onclick="document.dispatchEvent(new CustomEvent('basecoat:toast', {
-    detail: {
-      config: {
-        category: 'success',
-        title: 'Success',
-        description: 'A success toast called from the front-end.',
-        cancel: {
-          label: 'Dismiss'
-        }
-      }
+  onclick="document.getElementById('toaster').toast({
+    category: 'success',
+    title: 'Success',
+    description: 'A success toast called from the front-end.',
+    cancel: {
+      label: 'Dismiss'
     }
-  }))"
+  })"
 >
   Toast from front-end
 </button>{% endset %}
@@ -106,7 +102,7 @@ toc:
 <h4 id="usage-html-js-3"><a href="#usage-html-js-3">Step 3: Add your toasts</a></h4>
 
 <section class="prose">
-  <p>If you decide to server-render your toasts, or load them using asynchronoulsy with something like HTMX, you can just add the toast's markup to the toaster:</p>
+  <p>If you decide to server-render your toasts, or load them asynchronously with something like HTMX, you can just add the toast's markup to the toaster:</p>
 </section>
 
 {% set code_toast_html %}<div id="toaster" class="toaster">
@@ -123,14 +119,14 @@ toc:
 {{ code_block(code_toast_html | prettyHtml, "html") }}
 
 <div class="flex flex-wrap gap-2 my-6">
-  <a class="badge-outline" href="#usage-html-js-5">
+  <a class="badge-outline" href="#usage-html-js-4">
     HTML structure
     {% lucide "arrow-right" %}
   </a>
 </div>
 
 <section class="prose">
-  <p>If you need to create a toast from the front-end, you can dispatch a custom <code>basecoat:toast</code> event as such:</p>
+  <p>If you need to create a toast from the front-end, call the toaster element's <code>toast(config)</code> method:</p>
 </section>
 
 {{ code_block(code_client_side | prettyHtml, "html") }}
@@ -181,16 +177,18 @@ toc:
   </dl>
 </section>
 
-<h4 id="usage-html-js-5"><a href="#usage-html-js-5">JavaScript events</a></h4>
+<h4 id="usage-html-js-5"><a href="#usage-html-js-5">JavaScript API</a></h4>
 
 <section class="prose">
   <dl>
     <dt><code>basecoat:initialized</code></dt>
     <dd>Once the component is fully initialized, it dispatches a custom (non-bubbling) <code>basecoat:initialized</code> event on the <code>toaster</code> element.</dd>
-    <dt><code>basecoat:toast</code></dt>
-    <dd>
-      <p>The <code>toaster</code> listens for <code>basecoat:toast</code> events on <code>document</code> to create toasts. The event's <code>detail</code> object must contain a <code>config</code> object (see <a href="#usage-html-js-6">JavaScript config object</a> below).</p>
-    </dd>
+    <dt><code>toaster.toast(config)</code></dt>
+    <dd>Creates a toast from a config object and returns the inserted <code>.toast</code> element. See <a href="#usage-html-js-6">Toast config object</a>.</dd>
+    <dt><code>toaster.closeAll()</code></dt>
+    <dd>Closes every toast inside the toaster.</dd>
+    <dt><code>toast.close()</code></dt>
+    <dd>Closes one initialized toast element.</dd>
   </dl>
 </section>
 

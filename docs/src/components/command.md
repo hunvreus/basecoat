@@ -18,7 +18,7 @@ toc:
             id: usage-html-js-2
           - label: HTML structure
             id: usage-html-js-3
-          - label: JavaScript events
+          - label: JavaScript API
             id: usage-html-js-4
       - label: Jinja and Nunjucks
         id: usage-macro
@@ -183,12 +183,16 @@ toc:
   </dl>
 </section>
 
-<h4 id="usage-html-js-4"><a href="#usage-html-js-4">JavaScript events</a></h4>
+<h4 id="usage-html-js-4"><a href="#usage-html-js-4">JavaScript API</a></h4>
 
 <section class="prose">
   <dl>
     <dt><code>basecoat:initialized</code></dt>
     <dd>Once the component is initialized, it dispatches a custom non-bubbling <code>basecoat:initialized</code> event on itself.</dd>
+    <dt><code>command.refresh()</code></dt>
+    <dd>Rescans command items after changing children inside the existing <code>role="menu"</code> list.</dd>
+    <dt><code>window.basecoat.refresh(command)</code></dt>
+    <dd>Calls the component refresh method through the global dispatcher.</dd>
   </dl>
 </section>
 

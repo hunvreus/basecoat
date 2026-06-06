@@ -123,6 +123,6 @@ toc:
 <section class="prose">
   <ul>
     <li>Use <strong>Native Select</strong> for native browser behavior, better performance, form integration, and mobile-optimized pickers.</li>
-    <li>Use <strong>Select</strong> for a custom popover, richer option content, multi-select behavior, or custom JavaScript events.</li>
+    <li>Use <strong>Select</strong> for a custom popover, richer option content, multi-select behavior, or custom JavaScript APIs.</li>
   </ul>
 </section>

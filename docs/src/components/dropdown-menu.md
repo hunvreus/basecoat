@@ -16,7 +16,7 @@ toc:
             id: usage-html-js-2
           - label: HTML structure
             id: usage-html-js-3
-          - label: JavaScript events
+          - label: JavaScript API
             id: usage-html-js-4
       - label: Jinja and Nunjucks
         id: usage-macro
@@ -151,7 +151,7 @@ toc:
   </dl>
 </section>
 
-<h4 id="usage-html-js-4"><a href="#usage-html-js-4">JavaScript events</a></h4>
+<h4 id="usage-html-js-4"><a href="#usage-html-js-4">JavaScript API</a></h4>
 
 <section class="prose">
   <dl>
@@ -159,6 +159,16 @@ toc:
     <dd>Once the component is initialized, it dispatches a custom non-bubbling <code>basecoat:initialized</code> event on itself.</dd>
     <dt><code>basecoat:popover</code></dt>
     <dd>When the menu opens, the component dispatches a custom event on <code>document</code>. Other popover-based components listen for this to close any open popovers.</dd>
+    <dt><code>dropdown.open()</code></dt>
+    <dd>Opens the menu.</dd>
+    <dt><code>dropdown.close()</code></dt>
+    <dd>Closes the menu.</dd>
+    <dt><code>dropdown.toggle()</code></dt>
+    <dd>Toggles the menu.</dd>
+    <dt><code>dropdown.refresh()</code></dt>
+    <dd>Rescans menu items after changing children inside the existing <code>role="menu"</code> element.</dd>
+    <dt><code>window.basecoat.refresh(dropdown)</code></dt>
+    <dd>Calls the component refresh method through the global dispatcher.</dd>
   </dl>
 </section>
 

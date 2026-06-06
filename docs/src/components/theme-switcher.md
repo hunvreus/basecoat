@@ -2,7 +2,7 @@
 templateEngineOverride: njk
 layout: layouts/page.njk
 title: Theme Switcher
-description: A component that allows the user to switch between light and dark mode.
+description: A simple button pattern for switching between light and dark mode.
 toc:
   - label: Usage
     id: usage
@@ -10,48 +10,47 @@ toc:
       - label: HTML + JavaScript
         id: usage-html-js
         children:
-          - label: "Step 1: Include the JavaScript script"
+          - label: "Step 1: Avoid the initial flash"
             id: usage-html-js-1
           - label: "Step 2: Add your switcher"
             id: usage-html-js-2
-          - label: JavaScript events
+          - label: JavaScript API
             id: usage-html-js-3
 ---
 
 <div class="alert mb-6">
   {% lucide "circle-alert" %}
   <h2>There is no dedicated theme switcher component in Basecoat.</h2>
-  <section><p>Instead, we offer a short JavaScript <code>&lt;script&gt;</code> block you can insert in the <code>&lt;head&gt;</code> of your page.</p></section>
+  <section><p>Theme switching is handled by <code>window.basecoat.theme</code> and a small inline script that applies the stored mode before styles render.</p></section>
 </div>
-
 
 {% from "macros/code_preview.njk" import code_preview %}
 {% from "macros/code_block.njk" import code_block %}
 
-{% set code %}<button
+{% set code_switcher %}<button
   type="button"
   aria-label="Toggle dark mode"
   data-tooltip="Toggle dark mode"
   data-side="bottom"
-  onclick="document.dispatchEvent(new CustomEvent('basecoat:theme'))"
+  onclick="window.basecoat.theme.toggle()"
   class="btn-icon-outline size-8"
 >
   <span class="hidden dark:block">{% lucide "sun" %}</span>
   <span class="block dark:hidden">{% lucide "moon" %}</span>
 </button>{% endset %}
-{{ code_preview("button", code) }}
+{{ code_preview("button", code_switcher) }}
 
 <h2 id="usage"><a href="#usage">Usage</a></h2>
 
 <h3 id="usage-html-js"><a href="#usage-html-js">HTML + JavaScript</a></h3>
 
-<h4 id="usage-html-js-1"><a href="#usage-html-js-1">Step 1: Include the JavaScript script</a></h4>
+<h4 id="usage-html-js-1"><a href="#usage-html-js-1">Step 1: Avoid the initial flash</a></h4>
 
 <section class="prose">
-  <p>Insert the following JavaScript block right at the beginning of the <code>&lt;head&gt;</code> your page. We do this instead of using a separate file to ensure the theme is defined before the page loads, avoiding a flash of unstyled or mist-styled content.</p>
+  <p>Add this inline script before loading your styles. It applies the stored mode before the page renders.</p>
 </section>
 
-{% set code %}<script>
+{% set code_head %}<script>
   (() => {
     try {
       const stored = localStorage.getItem('themeMode');
@@ -60,53 +59,31 @@ toc:
         document.documentElement.classList.add('dark');
       }
     } catch (_) {}
-
-    const apply = dark => {
-      document.documentElement.classList.toggle('dark', dark);
-      try { localStorage.setItem('themeMode', dark ? 'dark' : 'light'); } catch (_) {}
-    };
-
-    document.addEventListener('basecoat:theme', (event) => {
-      const mode = event.detail?.mode;
-      apply(mode === 'dark' ? true
-            : mode === 'light' ? false
-            : !document.documentElement.classList.contains('dark'));
-    });
   })();
 </script>{% endset %}
-{{ code_block(code) }}
+{{ code_block(code_head | prettyHtml, "html") }}
+
+<section class="prose">
+  <p>Load <code>basecoat.js</code> or the bundled JavaScript before calling <code>window.basecoat.theme</code>.</p>
+</section>
 
 <h4 id="usage-html-js-2"><a href="#usage-html-js-2">Step 2: Add your switcher</a></h4>
 
-<section class="prose">
-  <p>To change the theme, you need to dispatch a <code>basecoat:theme</code> event:</p>
-</section>
+{{ code_block(code_switcher | prettyHtml, "html") }}
 
-{% set code %}<button
-  type="button"
-  aria-label="Toggle dark mode"
-  data-tooltip="Toggle dark mode"
-  data-side="bottom"
-  onclick="document.dispatchEvent(new CustomEvent('basecoat:theme'))"
-  class="btn-icon-outline size-8"
->
-  <span class="hidden dark:block">{% lucide "sun" %}</span>
-  <span class="block dark:hidden">{% lucide "moon" %}</span>
-</button>{% endset %}
-{{ code_block(code) }}
-
-<h4 id="usage-html-js-3"><a href="#usage-html-js-3">JavaScript events</a></h4>
+<h4 id="usage-html-js-3"><a href="#usage-html-js-3">JavaScript API</a></h4>
 
 <section class="prose">
   <dl>
-    <dt><code>basecoat:theme</code></dt>
-    <dd>
-      <p>By default, the event will toggle the theme, but you can also add a <code>mode</code> to the detail to set the theme explicitly:</p>
-        {% set code_trigger %}<!-- Toggles the theme -->
-<button type="button" onclick="document.dispatchEvent(new CustomEvent('basecoat:theme'));">Toggle theme</button>
-<!-- Sets the theme to dark -->
-<button type="button" onclick="document.dispatchEvent(new CustomEvent('basecoat:theme', { detail: { mode: 'dark' } }));">Set dark theme</button>{% endset %}
-        {{ code_block(code_trigger | prettyHtml, "html") }}
-    </dd>
+    <dt><code>window.basecoat.theme.get()</code></dt>
+    <dd>Returns <code>"dark"</code> or <code>"light"</code>.</dd>
+    <dt><code>window.basecoat.theme.set(mode)</code></dt>
+    <dd>Sets the mode to <code>"dark"</code> or <code>"light"</code> and stores it in <code>localStorage.themeMode</code>.</dd>
+    <dt><code>window.basecoat.theme.toggle()</code></dt>
+    <dd>Toggles between dark and light mode.</dd>
   </dl>
 </section>
+
+{% set code_methods %}<button type="button" onclick="window.basecoat.theme.toggle()">Toggle theme</button>
+<button type="button" onclick="window.basecoat.theme.set('dark')">Set dark theme</button>{% endset %}
+{{ code_block(code_methods | prettyHtml, "html") }}

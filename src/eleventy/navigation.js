@@ -70,6 +70,7 @@ export const registerNavigationFilters = (eleventyConfig, lucideIcons) => {
       if (item?.type === 'submenu') {
         const submenuIcon = resolveIcon(item.icon) || null;
         const processed = (item.items || []).map((sub) => processItem(sub));
+        const commandItems = processed.map((entry) => entry.command).filter(Boolean);
         return {
           sidebar: {
             ...item,
@@ -77,11 +78,11 @@ export const registerNavigationFilters = (eleventyConfig, lucideIcons) => {
             open: item.open ?? processed.some((entry) => entry.sidebar?.current),
             items: processed.map((entry) => entry.sidebar).filter(Boolean),
           },
-          command: {
+          command: commandItems.length ? {
             type: 'group',
             label: item.label,
-            items: processed.map((entry) => entry.command).filter(Boolean),
-          },
+            items: commandItems,
+          } : null,
         };
       }
 
