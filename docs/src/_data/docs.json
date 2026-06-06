@@ -36,27 +36,6 @@
       "type": "group",
       "label": "Components",
       "items": [
-        {
-          "type": "submenu",
-          "label": "Parent item",
-          "icon": "folder",
-          "items": [
-            {
-              "type": "item",
-              "label": "Item 1",
-              "icon": "file",
-              "url": "#",
-              "external": true
-            },
-            {
-              "type": "item",
-              "label": "Item 2",
-              "icon": "file",
-              "url": "#",
-              "external": true
-            }
-          ]
-        },
         "components/accordion",
         "components/alert",
         "components/alert-dialog",
