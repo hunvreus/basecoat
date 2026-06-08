@@ -49,6 +49,15 @@
   };
 
   const filterItems = (state) => {
+    if (state.manualFilter) {
+      setActiveItem(state, -1);
+      state.visibleItems = state.items.filter(item => item.getAttribute('aria-hidden') !== 'true');
+      if (state.visibleItems.length > 0) {
+        setActiveItem(state, state.items.indexOf(state.visibleItems[0]));
+      }
+      return;
+    }
+
     const searchTerm = state.input.value.trim().toLowerCase();
 
     setActiveItem(state, -1);
@@ -92,6 +101,7 @@
     }
 
     Object.assign(state, elements, getItems(elements.menu));
+    state.manualFilter = container.dataset.filter === 'manual';
     filterItems(state);
   };
 
@@ -126,7 +136,7 @@
   const initCommand = (container) => {
     if (container.dataset.commandInitialized) return;
 
-    const state = { activeIndex: -1, allItems: [], items: [], visibleItems: [] };
+    const state = { activeIndex: -1, allItems: [], items: [], visibleItems: [], manualFilter: false };
     states.set(container, state);
 
     container.refresh = () => refreshCommand(container);
@@ -138,28 +148,41 @@
       if (!elements.menu) missing.push('menu');
       console.error(`Command component initialization failed. Missing element(s): ${missing.join(', ')}`, container);
       states.delete(container);
+      delete container.refresh;
       return;
     }
     Object.assign(state, elements);
 
-    state.input.addEventListener('input', () => filterItems(state));
-    state.input.addEventListener('keydown', (event) => handleKeyNavigation(event, state));
-
-    state.menu.addEventListener('mousemove', (event) => {
+    const handleInput = () => filterItems(state);
+    const handleInputKeydown = (event) => handleKeyNavigation(event, state);
+    const handleMenuMousemove = (event) => {
       const menuItem = event.target.closest('[role="menuitem"]');
       if (menuItem && state.visibleItems.includes(menuItem)) {
         const index = state.items.indexOf(menuItem);
         if (index !== state.activeIndex) setActiveItem(state, index);
       }
-    });
-
-    state.menu.addEventListener('click', (event) => {
+    };
+    const handleMenuClick = (event) => {
       const clickedItem = event.target.closest('[role="menuitem"]');
       if (clickedItem && state.visibleItems.includes(clickedItem)) {
         const dialog = container.closest('dialog.command-dialog');
         if (dialog && !clickedItem.hasAttribute('data-keep-command-open')) dialog.close();
       }
-    });
+    };
+
+    state.input.addEventListener('input', handleInput);
+    state.input.addEventListener('keydown', handleInputKeydown);
+    state.menu.addEventListener('mousemove', handleMenuMousemove);
+    state.menu.addEventListener('click', handleMenuClick);
+
+    container._destroy = () => {
+      state.input.removeEventListener('input', handleInput);
+      state.input.removeEventListener('keydown', handleInputKeydown);
+      state.menu.removeEventListener('mousemove', handleMenuMousemove);
+      state.menu.removeEventListener('click', handleMenuClick);
+      states.delete(container);
+      delete container.refresh;
+    };
 
     refreshCommand(container);
     container.dataset.commandInitialized = 'true';

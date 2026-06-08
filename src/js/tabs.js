@@ -48,14 +48,19 @@
 
     root.select = selectTab;
     refreshTabs(root);
-    if (!state.tablist) return;
+    if (!state.tablist) {
+      states.delete(root);
+      delete root.refresh;
+      delete root.select;
+      return;
+    }
 
-    state.tablist.addEventListener('click', (event) => {
+    const handleClick = (event) => {
       const clickedTab = event.target.closest('[role="tab"]');
       if (clickedTab) root.select(clickedTab);
-    });
+    };
 
-    state.tablist.addEventListener('keydown', (event) => {
+    const handleKeydown = (event) => {
       const currentTab = event.target;
       if (!state.tabs.includes(currentTab)) return;
 
@@ -75,7 +80,18 @@
 
       event.preventDefault();
       root.select(nextTab, true);
-    });
+    };
+
+    state.tablist.addEventListener('click', handleClick);
+    state.tablist.addEventListener('keydown', handleKeydown);
+
+    root._destroy = () => {
+      state.tablist.removeEventListener('click', handleClick);
+      state.tablist.removeEventListener('keydown', handleKeydown);
+      states.delete(root);
+      delete root.refresh;
+      delete root.select;
+    };
 
     root.dataset.tabsInitialized = 'true';
     root.dispatchEvent(new CustomEvent('basecoat:initialized'));

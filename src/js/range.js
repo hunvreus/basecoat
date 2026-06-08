@@ -11,7 +11,11 @@
     if (element.dataset.rangeInitialized) return;
 
     updateRange(element);
-    element.addEventListener('input', () => updateRange(element));
+    const handleInput = () => updateRange(element);
+    element.addEventListener('input', handleInput);
+    element._destroy = () => {
+      element.removeEventListener('input', handleInput);
+    };
     element.dataset.rangeInitialized = 'true';
   }
 

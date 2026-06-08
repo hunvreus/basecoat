@@ -7,6 +7,7 @@
   @param multiple {boolean} [optional] [default=false] - Enables multiple selection mode.
   @param placeholder {string} [optional] - Placeholder text shown when no options are selected (multiple mode only).
   @param close_on_select {boolean} [optional] [default=false] - Closes the popover when selecting an option in multiple mode.
+  @param format {string} [optional] [default="value"] - Hidden input serialization format: "value" or "object".
   @param main_attrs {object} [optional] - Additional HTML attributes for the main container div.
   @param trigger_attrs {object} [optional] - Additional HTML attributes for the trigger button.
   @param popover_attrs {object} [optional] - Additional HTML attributes for the popover content div.
@@ -21,6 +22,7 @@
   multiple=false,
   placeholder=None,
   close_on_select=false,
+  format="value",
   main_attrs={},
   trigger_attrs={},
   popover_attrs={},
@@ -69,10 +71,19 @@
   {% endfor %}
 {% endif %}
 {% set default_label = (labels | join(', ') if (multiple and selected_options) else ((placeholder or '') if (multiple and not selected_options) else (default_option.label if default_option else ''))) %}
+{% set selected_payload = [] %}
+{% if multiple and selected_options %}
+  {% for opt in selected_options %}
+    {% set selected_payload = (selected_payload.push({ value: opt.value, label: opt.label }), selected_payload) %}
+  {% endfor %}
+{% elif default_option %}
+  {% set selected_payload = [{ value: default_option.value, label: default_option.label }] %}
+{% endif %}
 
 <div
   id="{{ id }}"
   class="select {{ main_attrs.class }}"
+  {% if format == "object" %}data-format="object"{% endif %}
   {% if multiple and placeholder %}data-placeholder="{{ placeholder }}"{% endif %}
   {% if multiple and close_on_select %}data-close-on-select="true"{% endif %}
   {% for key, value in main_attrs %}
@@ -121,7 +132,7 @@
   <input
     type="hidden"
     name="{{ name or id ~ '-value' }}"
-    value="{% if multiple %}{{ selectedArray | dump }}{% else %}{{ (default_option.value if default_option) or '' }}{% endif %}"
+    value="{% if format == 'object' %}{{ (selected_payload if multiple else (selected_payload[0] if selected_payload[0] else None)) | dump }}{% elif multiple %}{{ selectedArray | dump }}{% else %}{{ (default_option.value if default_option) or '' }}{% endif %}"
     {% for key, value in input_attrs %}
       {% if key != 'name' and key != 'value' %}{{ key }}="{{ value }}"{% endif %}
     {% endfor %}

@@ -13,15 +13,17 @@
     if (toasterElement.dataset.toasterInitialized) return;
     toaster = toasterElement;
 
-    toaster.addEventListener('mouseenter', pauseAllTimeouts);
-    toaster.addEventListener('mouseleave', resumeAllTimeouts);
-    toaster.addEventListener('click', (event) => {
+    const handleClick = (event) => {
       const actionLink = event.target.closest('.toast footer a');
       const actionButton = event.target.closest('.toast footer button');
       if (actionLink || actionButton) {
         closeToast(event.target.closest('.toast'));
       }
-    });
+    };
+
+    toaster.addEventListener('mouseenter', pauseAllTimeouts);
+    toaster.addEventListener('mouseleave', resumeAllTimeouts);
+    toaster.addEventListener('click', handleClick);
 
     toasterElement.toast = (config = {}) => {
       const toastElement = createToast(config);
@@ -34,6 +36,15 @@
     };
 
     toaster.querySelectorAll('.toast:not([data-toast-initialized])').forEach(initToast);
+    toaster._destroy = () => {
+      toaster.removeEventListener('mouseenter', pauseAllTimeouts);
+      toaster.removeEventListener('mouseleave', resumeAllTimeouts);
+      toaster.removeEventListener('click', handleClick);
+      toaster.querySelectorAll('.toast[data-toast-initialized]').forEach(toast => toast._destroy?.());
+      delete toaster.toast;
+      delete toaster.closeAll;
+      if (toaster === toasterElement) toaster = null;
+    };
     toaster.dataset.toasterInitialized = 'true';
     toaster.dispatchEvent(new CustomEvent('basecoat:initialized'));
   }
@@ -63,6 +74,11 @@
     toasts.set(element, state);
 
     element.close = () => closeToast(element);
+    element._destroy = () => {
+      clearTimeout(state.timeoutId);
+      toasts.delete(element);
+      delete element.close;
+    };
     element.dataset.toastInitialized = 'true';
   }
 

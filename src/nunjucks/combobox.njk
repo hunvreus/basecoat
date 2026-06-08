@@ -8,6 +8,7 @@
   @param placeholder {string} [optional] - Placeholder text for the visible input.
   @param close_on_select {boolean} [optional] [default=false] - Closes the popover when selecting an option in multiple mode.
   @param auto_highlight {boolean} [optional] [default=false] - Highlights the first matching option while filtering.
+  @param format {string} [optional] [default="value"] - Hidden input serialization format: "value" or "object".
   @param main_attrs {object} [optional] - Additional HTML attributes for the root div.
   @param input_attrs {object} [optional] - Additional HTML attributes for the visible input.
   @param popover_attrs {object} [optional] - Additional HTML attributes for the popover div.
@@ -22,6 +23,7 @@
   placeholder=None,
   close_on_select=false,
   auto_highlight=false,
+  format="value",
   main_attrs={},
   input_attrs={},
   popover_attrs={},
@@ -30,17 +32,32 @@
 ) %}
 {% set id = id or ("combobox-" + (range(100000, 999999) | random | string)) %}
 {% set selected_values = [] %}
+{% set selected_entries = [] %}
 {% if selected is defined and selected is iterable and selected is not string %}
-  {% set selected_values = selected %}
+  {% for item in selected %}
+    {% if item.value is defined %}
+      {% set selected_values = (selected_values.push(item.value), selected_values) %}
+      {% set selected_entries = (selected_entries.push({ value: item.value, label: (item.label if item.label is defined else item.value) }), selected_entries) %}
+    {% else %}
+      {% set selected_values = (selected_values.push(item), selected_values) %}
+      {% set selected_entries = (selected_entries.push({ value: item, label: item }), selected_entries) %}
+    {% endif %}
+  {% endfor %}
 {% elif selected is defined and selected %}
-  {% set selected_values = [selected] %}
+  {% if selected.value is defined %}
+    {% set selected_values = [selected.value] %}
+    {% set selected_entries = [{ value: selected.value, label: (selected.label if selected.label is defined else selected.value) }] %}
+  {% else %}
+    {% set selected_values = [selected] %}
+    {% set selected_entries = [{ value: selected, label: selected }] %}
+  {% endif %}
 {% endif %}
-{% set hidden_value = (selected_values | dump if multiple else (selected_values[0] if selected_values[0] else '')) %}
+{% set hidden_value = ((selected_entries | dump if multiple else ((selected_entries[0] if selected_entries[0] else None) | dump)) if format == "object" else (selected_values | dump if multiple else (selected_values[0] if selected_values[0] else ''))) %}
 
 <div
   id="{{ id }}"
   class="combobox {{ main_attrs.class }}"
-  {% if multiple %}data-multiple="true"{% endif %}
+  {% if format == "object" %}data-format="object"{% endif %}
   {% if multiple and close_on_select %}data-close-on-select="true"{% endif %}
   {% if auto_highlight %}data-auto-highlight="true"{% endif %}
   {% for key, value in main_attrs %}

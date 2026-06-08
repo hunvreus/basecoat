@@ -150,7 +150,7 @@ toc:
     <dd>Dialog variant. Wraps one <code>&lt;div class="command"&gt;</code>. Add <code>aria-label</code> or <code>aria-labelledby</code> for an accessible name.
       <dl>
         <dt><code class="highlight language-html">&lt;div class="command"&gt;</code></dt>
-        <dd>Root command menu. Can also be used standalone without the dialog wrapper.
+        <dd>Root command menu. Can also be used standalone without the dialog wrapper. Add <code>data-filter="manual"</code> when your app owns filtering, such as remote search or a local Lunr index.
           <dl>
             <dt><code class="highlight language-html">&lt;header&gt;</code></dt>
             <dd>Search input wrapper. The macro includes a search icon and input.
@@ -191,6 +191,8 @@ toc:
     <dd>Once the component is initialized, it dispatches a custom non-bubbling <code>basecoat:initialized</code> event on itself.</dd>
     <dt><code>command.refresh()</code></dt>
     <dd>Rescans command items after changing children inside the existing <code>role="menu"</code> list.</dd>
+    <dt><code>data-filter="manual"</code></dt>
+    <dd>Disables Basecoat's built-in text filtering. Update the menu items yourself, then call <code>command.refresh()</code>.</dd>
     <dt><code>window.basecoat.refresh(command)</code></dt>
     <dd>Calls the component refresh method through the global dispatcher.</dd>
   </dl>

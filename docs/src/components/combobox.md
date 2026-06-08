@@ -106,7 +106,7 @@ toc:
 <section class="prose">
   <dl>
     <dt><code class="highlight language-html">&lt;div class="combobox"&gt;</code></dt>
-    <dd>Root element. Add <code>data-multiple="true"</code> for multiple selection and <code>data-auto-highlight="true"</code> to highlight the first match while filtering.</dd>
+    <dd>Root element. Add <code>data-auto-highlight="true"</code> to highlight the first match while filtering. Add <code>data-format="object"</code> to serialize selected values as <code>{ value, label }</code> objects in the hidden input. Add <code>data-filter="manual"</code> when your app owns filtering, such as remote autocomplete or a local Lunr index.</dd>
     <dt><code class="highlight language-html">&lt;input type="text" role="combobox"&gt;</code></dt>
     <dd>The editable control. It should include <code>aria-expanded</code>, <code>aria-controls</code>, and <code>aria-autocomplete="list"</code>.</dd>
     <dt><code class="highlight language-html">&lt;div class="combobox-chips"&gt;</code> <span class="badge-secondary">Multiple only</span></dt>
@@ -118,7 +118,7 @@ toc:
     <dt><code class="highlight language-html">&lt;div role="option" data-value="..."&gt;</code></dt>
     <dd>Selectable option. Options can contain custom HTML; use <code>data-label</code> when the visible input should use different text than the rendered content.</dd>
     <dt><code class="highlight language-html">&lt;input type="hidden"&gt;</code></dt>
-    <dd>Submitted value. Single mode stores a string; multiple mode stores a JSON array.</dd>
+    <dd>Submitted value. Single mode stores a string; multiple mode stores a JSON array. With <code>data-format="object"</code>, single mode stores a JSON object and multiple mode stores a JSON array of objects.</dd>
   </dl>
 </section>
 
@@ -131,7 +131,7 @@ toc:
     <dt><code>basecoat:popover</code></dt>
     <dd>Dispatched on <code>document</code> when the popup opens so other popup components can close.</dd>
     <dt><code>change</code></dt>
-    <dd>Dispatched on selection changes with <code>event.detail.value</code>.</dd>
+    <dd>Dispatched on selection changes with <code>event.detail.value</code> and <code>event.detail.selected</code>. <code>value</code> is the canonical value or array of values; <code>selected</code> is the matching <code>{ value, label }</code> object or array.</dd>
   </dl>
 </section>
 
@@ -141,6 +141,10 @@ toc:
   <dl>
     <dt><code>value</code></dt>
     <dd>Gets or sets the selected value. Multiple mode uses an array.</dd>
+    <dt><code>selected</code></dt>
+    <dd>Gets the selected <code>{ value, label }</code> object. Multiple mode returns an array.</dd>
+    <dt><code>setValue(value)</code></dt>
+    <dd>Sets the selected value. Accepts plain values or <code>{ value, label }</code> objects, which is useful when hydrating remote autocomplete selections before the option exists in the list.</dd>
     <dt><code>select(value)</code></dt>
     <dd>Selects an option by value.</dd>
     <dt><code>deselect(value)</code> <span class="badge-secondary">Multiple only</span></dt>
@@ -149,6 +153,8 @@ toc:
     <dd>Toggles a selected value.</dd>
     <dt><code>refresh()</code></dt>
     <dd>Rescans options after changing children inside the existing <code>role="listbox"</code> element.</dd>
+    <dt><code>data-filter="manual"</code></dt>
+    <dd>Disables Basecoat's built-in text filtering. Update the listbox options yourself, then call <code>combobox.refresh()</code>.</dd>
     <dt><code>window.basecoat.refresh(combobox)</code></dt>
     <dd>Calls the component refresh method through the global dispatcher.</dd>
   </dl>

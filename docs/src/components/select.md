@@ -114,6 +114,7 @@ toc:
       <ul>
         <li><code>data-placeholder="{ TEXT }"</code> <span class="badge-secondary">Optional</span>: placeholder text shown when no options are selected (multiselect only).</li>
         <li><code>data-close-on-select="true"</code> <span class="badge-secondary">Optional</span>: closes the popover when selecting an option in multiselect mode.</li>
+        <li><code>data-format="object"</code> <span class="badge-secondary">Optional</span>: serializes selected values as <code>{ value, label }</code> objects in the hidden input.</li>
       </ul>
       <dl>
         <dt><code class="highlight language-html">&lt;button type="button"&gt;</code></dt>
@@ -165,6 +166,7 @@ toc:
       <p>The hidden input that holds the selected value.</p>
       <p>For single-select: contains the selected option's value as a string.</p>
       <p>For multiselect: contains a <strong>JSON array</strong> of selected values (e.g., <code>["apple","banana"]</code>). When no options are selected, contains an empty array (<code>[]</code>).</p>
+      <p>With <code>data-format="object"</code>: single-select contains a JSON object (e.g., <code>{"value":"apple","label":"Apple"}</code>) and multiselect contains a JSON array of objects.</p>
       <p><strong>Backend handling:</strong> Parse the JSON value on the server side. For example:</p>
       <ul>
         <li><strong>Python/Flask:</strong> <code>values = json.loads(request.form.get('field', '[]'))</code></li>
@@ -186,10 +188,10 @@ toc:
     <dd>When the popover opens, the component dispatches a custom (non-bubbling) <code>basecoat:popover</code> event on <code>document</code>. Other popover components (Combobox, Dropdown Menu, Popover and Select) listen for this to close any open popovers.</dd>
     <dt><code>change</code></dt>
     <dd>
-      <p>When the selected value changes, the component dispatches a custom (bubbling) <code>change</code> event on itself, with the selected value in <code>event.detail.value</code>:</p>
+      <p>When the selected value changes, the component dispatches a custom (bubbling) <code>change</code> event on itself, with the selected value in <code>event.detail.value</code> and the selected object payload in <code>event.detail.selected</code>:</p>
       <ul>
-        <li>Single select: <code>{ detail: { value: "something" }}</code> (string)</li>
-        <li>Multiple select: <code>{ detail: { value: ["item1", "item2"] }}</code> (array)</li>
+        <li>Single select: <code>{ detail: { value: "apple", selected: { value: "apple", label: "Apple" } }}</code></li>
+        <li>Multiple select: <code>{ detail: { value: ["apple", "banana"], selected: [{ value: "apple", label: "Apple" }, { value: "banana", label: "Banana" }] }}</code></li>
       </ul>
     </dd>
   </dl>
@@ -218,6 +220,10 @@ toc:
   });
 </script>{% endset %}
 {{ code_block(code_value | prettyHtml, "html") }}
+    </dd>
+    <dt><code>selected</code> (property)</dt>
+    <dd>
+      <p>Gets the selected <code>{ value, label }</code> object. For multiselect, returns an array.</p>
     </dd>
     <dt><code>select(value)</code></dt>
     <dd>

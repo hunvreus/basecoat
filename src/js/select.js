@@ -11,7 +11,10 @@
   };
 
   const getValue = (option) => option.dataset.value ?? option.textContent.trim();
+  const getLabel = (option) => option.dataset.label || option.textContent.trim();
+  const getFormat = (root) => root.dataset.format === 'object' ? 'object' : 'value';
   const isDisabled = (option) => option.getAttribute('aria-disabled') === 'true';
+  const toSelected = (option) => ({ value: getValue(option), label: getLabel(option) });
 
   const getOptions = (listbox) => {
     const allOptions = Array.from(listbox.querySelectorAll('[role="option"]'));
@@ -19,6 +22,41 @@
       allOptions,
       options: allOptions.filter(option => !isDisabled(option)),
     };
+  };
+
+  const parseStoredValues = (storedValue, { isMultiple, format }) => {
+    if (isMultiple) {
+      try {
+        const parsed = JSON.parse(storedValue || '[]');
+        if (!Array.isArray(parsed)) return [];
+        return parsed
+          .map(item => format === 'object' && item && typeof item === 'object' ? item.value : item)
+          .filter(value => value != null)
+          .map(String);
+      } catch (_) {
+        return [];
+      }
+    }
+
+    if (format === 'object') {
+      try {
+        const parsed = JSON.parse(storedValue || 'null');
+        return parsed && typeof parsed === 'object' && parsed.value != null ? String(parsed.value) : '';
+      } catch (_) {
+        return '';
+      }
+    }
+
+    return storedValue || '';
+  };
+
+  const serializeSelection = (state, selected) => {
+    if (state.format === 'object') {
+      return JSON.stringify(state.isMultiple ? selected : (selected[0] || null));
+    }
+
+    const value = selected.map(item => item.value);
+    return state.isMultiple ? JSON.stringify(value) : (value[0] || '');
   };
 
   const scrollOptionIntoListbox = (state, option) => {
@@ -55,6 +93,7 @@
   const updateValue = (root, optionOrOptions, triggerEvent = true) => {
     const state = states.get(root);
     let value;
+    let selectedDetail;
 
     if (state.isMultiple) {
       const selected = Array.isArray(optionOrOptions) ? optionOrOptions : [];
@@ -62,22 +101,24 @@
       selected.forEach(option => state.selectedOptions.add(option));
 
       const selectedInOrder = state.options.filter(option => state.selectedOptions.has(option));
+      selectedDetail = selectedInOrder.map(toSelected);
       if (selectedInOrder.length === 0) {
         state.selectedLabel.textContent = state.placeholder;
         state.selectedLabel.classList.add('text-muted-foreground');
       } else {
-        state.selectedLabel.textContent = selectedInOrder.map(option => option.dataset.label || option.textContent.trim()).join(', ');
+        state.selectedLabel.textContent = selectedDetail.map(item => item.label).join(', ');
         state.selectedLabel.classList.remove('text-muted-foreground');
       }
 
-      value = selectedInOrder.map(getValue);
-      state.input.value = JSON.stringify(value);
+      value = selectedDetail.map(item => item.value);
+      state.input.value = serializeSelection(state, selectedDetail);
     } else {
       const option = optionOrOptions;
       if (!option) return;
       state.selectedLabel.innerHTML = option.innerHTML;
-      value = getValue(option);
-      state.input.value = value;
+      selectedDetail = toSelected(option);
+      value = selectedDetail.value;
+      state.input.value = serializeSelection(state, [selectedDetail]);
     }
 
     state.options.forEach(option => {
@@ -91,7 +132,7 @@
 
     if (triggerEvent) {
       root.dispatchEvent(new CustomEvent('change', {
-        detail: { value },
+        detail: { value, selected: selectedDetail },
         bubbles: true,
       }));
     }
@@ -125,24 +166,20 @@
     Object.assign(state, elements, getOptions(elements.listbox));
     state.visibleOptions = [...state.options];
     state.isMultiple = state.listbox.getAttribute('aria-multiselectable') === 'true';
+    state.format = getFormat(root);
     state.placeholder = state.isMultiple ? (root.dataset.placeholder || '') : null;
     state.closeOnSelect = root.dataset.closeOnSelect === 'true';
 
     if (state.isMultiple) {
       if (!state.selectedOptions) state.selectedOptions = new Set();
-      let values = [];
-      try {
-        const parsed = JSON.parse(previousValue || '[]');
-        values = Array.isArray(parsed) ? parsed : [];
-      } catch (_) {
-        values = [];
-      }
+      const values = parseStoredValues(previousValue, state);
       const selected = values.length
         ? values.map(value => state.options.find(option => getValue(option) === value)).filter(Boolean)
         : state.options.filter(option => option.getAttribute('aria-selected') === 'true');
       updateValue(root, selected, false);
     } else {
-      const selected = state.options.find(option => getValue(option) === previousValue)
+      const value = parseStoredValues(previousValue, state);
+      const selected = state.options.find(option => getValue(option) === value)
         || state.options.find(option => option.getAttribute('aria-selected') === 'true');
       state.options.forEach(option => option.removeAttribute('aria-selected'));
       if (selected) updateValue(root, selected, false);
@@ -172,7 +209,7 @@
     } else {
       const option = state.options.find(opt => getValue(opt) === value);
       if (!option) return;
-      if (state.input.value !== value) updateValue(root, option);
+      if (root.value !== value) updateValue(root, option);
       closePopover(state);
     }
   };
@@ -214,7 +251,7 @@
           toggleMultipleValue(root, option);
           if (state.closeOnSelect) root.close();
         } else {
-          if (state.input.value !== getValue(option)) updateValue(root, option);
+          if (root.value !== getValue(option)) updateValue(root, option);
           root.close();
         }
       }
@@ -241,13 +278,14 @@
   const initSelect = (root) => {
     if (root.dataset.selectInitialized) return;
 
-    const state = { activeIndex: -1, selectedOptions: null, options: [], allOptions: [], visibleOptions: [] };
+    const state = { activeIndex: -1, selectedOptions: null, options: [], allOptions: [], visibleOptions: [], format: 'value' };
     states.set(root, state);
     root.refresh = () => refreshSelect(root);
 
     refreshSelect(root);
     if (!state.trigger || !state.selectedLabel || !state.popover || !state.listbox || !state.input) {
       states.delete(root);
+      delete root.refresh;
       return;
     }
 
@@ -266,23 +304,20 @@
     root.close = (focusOnTrigger = true) => closePopover(state, focusOnTrigger);
     root.togglePopover = () => state.trigger.getAttribute('aria-expanded') === 'true' ? root.close() : root.open();
 
-    state.trigger.addEventListener('keydown', (event) => handleKeyNavigation(event, root));
-    state.trigger.addEventListener('click', root.togglePopover);
-
-    state.listbox.addEventListener('mousemove', (event) => {
+    const handleTriggerKeydown = (event) => handleKeyNavigation(event, root);
+    const handleTriggerClick = root.togglePopover;
+    const handleListboxMousemove = (event) => {
       const option = event.target.closest('[role="option"]');
       if (option && state.visibleOptions.includes(option)) {
         const index = state.options.indexOf(option);
         if (index !== state.activeIndex) setActiveOption(state, index);
       }
-    });
-
-    state.listbox.addEventListener('mouseleave', () => {
+    };
+    const handleListboxMouseleave = () => {
       const selectedOption = state.listbox.querySelector('[role="option"][aria-selected="true"]');
       setActiveOption(state, selectedOption ? state.options.indexOf(selectedOption) : -1);
-    });
-
-    state.listbox.addEventListener('click', (event) => {
+    };
+    const handleListboxClick = (event) => {
       const clickedOption = event.target.closest('[role="option"]');
       if (!clickedOption) return;
 
@@ -298,22 +333,49 @@
           state.trigger.focus();
         }
       } else {
-        if (state.input.value !== getValue(option)) updateValue(root, option);
+        if (root.value !== getValue(option)) updateValue(root, option);
         root.close();
       }
-    });
-
-    document.addEventListener('click', (event) => {
+    };
+    const handleDocumentClick = (event) => {
       if (!root.contains(event.target)) root.close(false);
-    });
-
-    document.addEventListener('basecoat:popover', (event) => {
+    };
+    const handleDocumentPopover = (event) => {
       if (event.detail.source !== root) root.close(false);
-    });
+    };
+
+    state.trigger.addEventListener('keydown', handleTriggerKeydown);
+    state.trigger.addEventListener('click', handleTriggerClick);
+    state.listbox.addEventListener('mousemove', handleListboxMousemove);
+    state.listbox.addEventListener('mouseleave', handleListboxMouseleave);
+    state.listbox.addEventListener('click', handleListboxClick);
+    document.addEventListener('click', handleDocumentClick);
+    document.addEventListener('basecoat:popover', handleDocumentPopover);
+
+    root._destroy = () => {
+      state.trigger.removeEventListener('keydown', handleTriggerKeydown);
+      state.trigger.removeEventListener('click', handleTriggerClick);
+      state.listbox.removeEventListener('mousemove', handleListboxMousemove);
+      state.listbox.removeEventListener('mouseleave', handleListboxMouseleave);
+      state.listbox.removeEventListener('click', handleListboxClick);
+      document.removeEventListener('click', handleDocumentClick);
+      document.removeEventListener('basecoat:popover', handleDocumentPopover);
+      states.delete(root);
+      delete root.refresh;
+      delete root.open;
+      delete root.close;
+      delete root.togglePopover;
+      delete root.select;
+      delete root.selectByValue;
+      delete root.deselect;
+      delete root.toggle;
+      delete root.selectAll;
+      delete root.selectNone;
+    };
 
     Object.defineProperty(root, 'value', {
       configurable: true,
-      get: () => state.isMultiple ? state.options.filter(option => state.selectedOptions.has(option)).map(getValue) : state.input.value,
+      get: () => state.isMultiple ? state.options.filter(option => state.selectedOptions.has(option)).map(getValue) : parseStoredValues(state.input.value, state),
       set: (value) => {
         if (state.isMultiple) {
           const values = Array.isArray(value) ? value : (value != null ? [value] : []);
@@ -325,6 +387,16 @@
             root.close();
           }
         }
+      },
+    });
+
+    Object.defineProperty(root, 'selected', {
+      configurable: true,
+      get: () => {
+        if (state.isMultiple) return state.options.filter(option => state.selectedOptions.has(option)).map(toSelected);
+        const value = root.value;
+        const option = state.options.find(opt => getValue(opt) === value);
+        return option ? toSelected(option) : null;
       },
     });
 

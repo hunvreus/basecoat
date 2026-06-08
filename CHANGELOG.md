@@ -6,6 +6,7 @@
 
 - Removed the `.form` convenience selector for Basecoat 1.0. Use explicit component classes (`label`, `input`, `textarea`, `select`) or compose fields with `.field` / `.fieldset`.
 - Changed Combobox markup and behavior to an input-first structure. The visible input now filters options, the hidden input stores the submitted value, single select stores the selected value, and multiple select stores a JSON array.
+- Removed Combobox `data-multiple`; use `aria-multiselectable="true"` on the Combobox listbox, matching Select.
 - Changed Command markup to the migrated Basecoat structure: `.command-dialog` wraps `.command`, the search input lives in the command header, and items use role-based menu markup with `role="menuitem"`.
 - Removed Combobox-specific search-header behavior from Select. Use the dedicated Combobox component for editable/filterable selection.
 - Removed built-in document command events for Toast, Sidebar, and Theme. Use element methods instead: `toaster.toast(config)`, `sidebar.open()`, `sidebar.close()`, `sidebar.toggle()`, and `window.basecoat.theme.*`.
@@ -22,9 +23,14 @@
 - Added `window.basecoat.refresh(element)` as a generic dispatcher for components that expose `refresh()`.
 - Added `refresh()` methods to Command, Select, Combobox, Dropdown Menu, and Tabs for dynamic child lists.
 - Added method APIs for Sidebar, Toast, and Theme.
+- Added `data-format="object"` to Select and Combobox for opt-in hidden input serialization as `{ value, label }` objects.
+- Added `selected` details to Select and Combobox change events and JavaScript properties.
+- Added `data-filter="manual"` to Command and Combobox for app-owned remote or local-search result filtering.
 
 ### Changed
 
+- Changed `window.basecoat.init(name)` and `window.basecoat.initAll()` to initialize uninitialized components only, instead of forcing global reinitialization.
+- Added internal destroy hooks for JavaScript components so removed component roots clean up event listeners and runtime state.
 - Reworked component CSS so shared component files own structure and behavior hooks while style-pack files own visual treatment.
 - Updated Button, Button Group, Input, Textarea, Select, Combobox, Command, Dialog, Dropdown Menu, Popover, Field, Tabs, Table, Card, Alert, Badge, Kbd, Label, Skeleton, Radio, Switch, Empty, Item, and Input Group toward current shadcn/ui styles.
 - Split Native Select documentation from custom Select documentation.

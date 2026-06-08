@@ -1,5 +1,7 @@
 (() => {
   const initPopover = (popoverComponent) => {
+    if (popoverComponent.dataset.popoverInitialized) return;
+
     const trigger = popoverComponent.querySelector(':scope > button');
     const content = popoverComponent.querySelector(':scope > [data-popover]');
 
@@ -36,32 +38,44 @@
       content.setAttribute('aria-hidden', 'false');
     };
 
-    trigger.addEventListener('click', () => {
+    const handleTriggerClick = () => {
       const isExpanded = trigger.getAttribute('aria-expanded') === 'true';
       if (isExpanded) {
         closePopover();
       } else {
         openPopover();
       }
-    });
+    };
 
-    popoverComponent.addEventListener('keydown', (event) => {
+    const handleKeydown = (event) => {
       if (event.key === 'Escape') {
         closePopover();
       }
-    });
+    };
 
-    document.addEventListener('click', (event) => {
+    const handleDocumentClick = (event) => {
       if (!popoverComponent.contains(event.target)) {
         closePopover();
       }
-    });
+    };
 
-    document.addEventListener('basecoat:popover', (event) => {
+    const handleDocumentPopover = (event) => {
       if (event.detail.source !== popoverComponent) {
         closePopover(false);
       }
-    });
+    };
+
+    trigger.addEventListener('click', handleTriggerClick);
+    popoverComponent.addEventListener('keydown', handleKeydown);
+    document.addEventListener('click', handleDocumentClick);
+    document.addEventListener('basecoat:popover', handleDocumentPopover);
+
+    popoverComponent._destroy = () => {
+      trigger.removeEventListener('click', handleTriggerClick);
+      popoverComponent.removeEventListener('keydown', handleKeydown);
+      document.removeEventListener('click', handleDocumentClick);
+      document.removeEventListener('basecoat:popover', handleDocumentPopover);
+    };
 
     popoverComponent.dataset.popoverInitialized = true;
     popoverComponent.dispatchEvent(new CustomEvent('basecoat:initialized'));

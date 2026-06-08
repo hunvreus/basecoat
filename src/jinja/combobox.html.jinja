@@ -9,6 +9,7 @@
   placeholder=None,
   close_on_select=false,
   auto_highlight=false,
+  format="value",
   main_attrs={},
   input_attrs={},
   popover_attrs={},
@@ -16,19 +17,33 @@
   hidden_input_attrs={}
 ) %}
 {% set id = id or ("combobox-" + (range(100000, 999999) | random | string)) %}
+{% set selected_entries = namespace(items=[]) %}
 {% if selected is defined and selected is iterable and selected is not string %}
   {% set selected_values = selected %}
+  {% for item in selected %}
+    {% if item.value is defined %}
+      {% set selected_entries.items = selected_entries.items + [{'value': item.value, 'label': item.label if item.label is defined else item.value}] %}
+    {% else %}
+      {% set selected_entries.items = selected_entries.items + [{'value': item, 'label': item}] %}
+    {% endif %}
+  {% endfor %}
 {% elif selected is defined and selected %}
-  {% set selected_values = [selected] %}
+  {% if selected.value is defined %}
+    {% set selected_values = [selected.value] %}
+    {% set selected_entries.items = [{'value': selected.value, 'label': selected.label if selected.label is defined else selected.value}] %}
+  {% else %}
+    {% set selected_values = [selected] %}
+    {% set selected_entries.items = [{'value': selected, 'label': selected}] %}
+  {% endif %}
 {% else %}
   {% set selected_values = [] %}
 {% endif %}
-{% set hidden_value = (selected_values | tojson if multiple else (selected_values[0] if selected_values else '')) %}
+{% set hidden_value = ((selected_entries.items | tojson if multiple else ((selected_entries.items[0] if selected_entries.items else none) | tojson)) if format == "object" else (selected_values | tojson if multiple else (selected_values[0] if selected_values else ''))) %}
 
 <div
   id="{{ id }}"
   class="combobox {{ main_attrs.class }}"
-  {% if multiple %}data-multiple="true"{% endif %}
+  {% if format == "object" %}data-format="object"{% endif %}
   {% if multiple and close_on_select %}data-close-on-select="true"{% endif %}
   {% if auto_highlight %}data-auto-highlight="true"{% endif %}
   {% for key, value in main_attrs.items() %}

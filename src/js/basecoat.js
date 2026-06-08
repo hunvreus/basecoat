@@ -2,8 +2,6 @@
   const componentRegistry = {};
   let observer = null;
 
-  const getInitFlag = (name) => `data-${name}-initialized`;
-
   const registerComponent = (name, selectorOrOptions, initFunction) => {
     const options = typeof selectorOrOptions === 'object'
       ? selectorOrOptions
@@ -22,10 +20,47 @@
 
     try {
       component.init(element);
-      element.dataset.basecoatComponent = componentName;
+      if (element.hasAttribute(`data-${componentName}-initialized`)) {
+        element.dataset.basecoatComponent = componentName;
+      }
     } catch (error) {
       console.error(`Failed to initialize ${componentName}:`, error);
+      if (typeof element._destroy === 'function') {
+        try {
+          element._destroy();
+        } catch (destroyError) {
+          console.error(`Failed to clean up ${componentName} after initialization error:`, destroyError);
+        }
+      }
+      delete element._destroy;
+      element.removeAttribute(`data-${componentName}-initialized`);
+      delete element.dataset.basecoatComponent;
     }
+  };
+
+  const destroyComponent = (element) => {
+    if (!element || element.nodeType !== Node.ELEMENT_NODE) return;
+    const componentName = element.dataset?.basecoatComponent;
+
+    if (typeof element._destroy === 'function') {
+      try {
+        element._destroy();
+      } catch (error) {
+        console.error('Failed to destroy Basecoat component:', error);
+      }
+    }
+
+    delete element._destroy;
+    if (componentName) element.removeAttribute(`data-${componentName}-initialized`);
+    delete element.dataset.basecoatComponent;
+  };
+
+  const destroyRemovedComponents = (node) => {
+    if (node.nodeType !== Node.ELEMENT_NODE) return;
+    if (node.isConnected) return;
+
+    if (node.dataset?.basecoatComponent) destroyComponent(node);
+    node.querySelectorAll('[data-basecoat-component]').forEach(destroyComponent);
   };
 
   const initAllComponents = () => {
@@ -63,6 +98,7 @@
     observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
         mutation.addedNodes.forEach(initNewComponents);
+        mutation.removedNodes.forEach(destroyRemovedComponents);
       });
     });
 
@@ -75,31 +111,17 @@
     observer = null;
   };
 
-  const reinitComponent = (componentName) => {
+  const initRegisteredComponent = (componentName) => {
     const component = componentRegistry[componentName];
     if (!component) {
       console.warn(`Component '${componentName}' not found in registry`);
       return;
     }
 
-    const flag = getInitFlag(componentName);
-    document.querySelectorAll(`[${flag}]`).forEach(element => {
-      element.removeAttribute(flag);
-      delete element.dataset.basecoatComponent;
-    });
-
     document.querySelectorAll(component.selector).forEach(element => initComponent(element, componentName));
   };
 
-  const reinitAll = () => {
-    Object.entries(componentRegistry).forEach(([name]) => {
-      const flag = getInitFlag(name);
-      document.querySelectorAll(`[${flag}]`).forEach(element => {
-        element.removeAttribute(flag);
-        delete element.dataset.basecoatComponent;
-      });
-    });
-
+  const initAllRegisteredComponents = () => {
     initAllComponents();
   };
 
@@ -113,8 +135,8 @@
 
   window.basecoat = {
     register: registerComponent,
-    init: reinitComponent,
-    initAll: reinitAll,
+    init: initRegisteredComponent,
+    initAll: initAllRegisteredComponents,
     refresh: refreshComponent,
     start: startObserver,
     stop: stopObserver,

@@ -12,7 +12,17 @@
 
   const getValue = option => option.dataset.value ?? option.textContent.trim();
   const getLabel = option => option.dataset.label || option.textContent.trim();
+  const getFormat = root => root.dataset.format === 'object' ? 'object' : 'value';
   const isDisabled = option => option.getAttribute('aria-disabled') === 'true';
+  const toSelected = option => ({ value: getValue(option), label: getLabel(option) });
+  const normalizeEntry = entry => {
+    if (entry && typeof entry === 'object') {
+      const value = entry.value == null ? '' : String(entry.value);
+      return value ? { value, label: String(entry.label ?? entry.value) } : null;
+    }
+    const value = entry == null ? '' : String(entry);
+    return value ? { value, label: value } : null;
+  };
 
   const getOptions = (listbox) => {
     const allOptions = Array.from(listbox.querySelectorAll('[role="option"]'));
@@ -20,6 +30,53 @@
       allOptions,
       options: allOptions.filter(option => !isDisabled(option)),
     };
+  };
+
+  const getSelection = (state) => Array.from(state.selected.values());
+  const getCanonicalValue = (state) => state.isMultiple ? getSelection(state).map(item => item.value) : (getSelection(state)[0]?.value || '');
+  const getSelectedDetail = (state) => state.isMultiple ? getSelection(state) : (getSelection(state)[0] || null);
+
+  const serializeSelection = (state) => {
+    const selected = getSelection(state);
+    if (state.format === 'object') {
+      return JSON.stringify(state.isMultiple ? selected : (selected[0] || null));
+    }
+    const value = selected.map(item => item.value);
+    return state.isMultiple ? JSON.stringify(value) : (value[0] || '');
+  };
+
+  const parseStoredSelection = (storedValue, inputValue, state) => {
+    if (state.isMultiple) {
+      let parsed = [];
+      try {
+        parsed = JSON.parse(storedValue || '[]');
+      } catch (_) {
+        parsed = [];
+      }
+      if (!Array.isArray(parsed)) return [];
+      return parsed.map(item => {
+        const entry = normalizeEntry(state.format === 'object' ? item : { value: item, label: state.selected.get(String(item))?.label ?? item });
+        if (!entry) return null;
+        const option = state.options.find(opt => getValue(opt) === entry.value);
+        return option ? toSelected(option) : entry;
+      }).filter(Boolean);
+    }
+
+    if (state.format === 'object') {
+      try {
+        const entry = normalizeEntry(JSON.parse(storedValue || 'null'));
+        if (!entry) return [];
+        const option = state.options.find(opt => getValue(opt) === entry.value);
+        return [option ? toSelected(option) : entry];
+      } catch (_) {
+        return [];
+      }
+    }
+
+    const value = storedValue || '';
+    if (!value) return [];
+    const option = state.options.find(opt => getValue(opt) === value);
+    return [option ? toSelected(option) : { value, label: state.selected.get(value)?.label || inputValue || value }];
   };
 
   const scrollOptionIntoListbox = (state, option) => {
@@ -56,8 +113,21 @@
 
   const filterOptions = (state, { preserveActive = false } = {}) => {
     const previousActive = state.activeIndex > -1 ? state.options[state.activeIndex] : null;
-    const search = state.input.value.trim().toLowerCase();
     state.visibleOptions = [];
+
+    if (state.manualFilter) {
+      state.visibleOptions = state.options.filter(option => option.getAttribute('aria-hidden') !== 'true');
+
+      if (preserveActive && previousActive && state.visibleOptions.includes(previousActive)) {
+        setActiveOption(state, state.options.indexOf(previousActive));
+      } else {
+        setActiveOption(state, state.autoHighlight && state.visibleOptions.length > 0 ? state.options.indexOf(state.visibleOptions[0]) : -1);
+      }
+      syncEmptyState(state);
+      return;
+    }
+
+    const search = state.input.value.trim().toLowerCase();
 
     state.allOptions.forEach(option => {
       if (option.hasAttribute('data-force')) {
@@ -86,64 +156,60 @@
     if (!state.chips) return;
 
     state.chips.querySelectorAll('.combobox-chip').forEach(chip => chip.remove());
-    const selected = state.options.filter(option => state.selectedOptions.has(option));
 
-    selected.forEach(option => {
+    getSelection(state).forEach(entry => {
       const chip = document.createElement('span');
       chip.className = 'combobox-chip';
-      chip.dataset.value = getValue(option);
-      chip.textContent = getLabel(option);
+      chip.dataset.value = entry.value;
+      chip.textContent = entry.label;
 
       const remove = document.createElement('button');
       remove.type = 'button';
       remove.className = 'combobox-chip-remove';
-      remove.setAttribute('aria-label', `Remove ${getLabel(option)}`);
+      remove.setAttribute('aria-label', `Remove ${entry.label}`);
       remove.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>';
-      remove.addEventListener('click', () => root.deselect(getValue(option)));
+      remove.addEventListener('click', () => root.deselect(entry.value));
 
       chip.appendChild(remove);
       state.chips.insertBefore(chip, state.input);
     });
   };
 
-  const updateValue = (root, optionOrOptions, triggerEvent = true) => {
-    const state = states.get(root);
-    let value;
+  const syncSelectedOptions = (state) => {
+    state.options.forEach(option => {
+      if (state.selected.has(getValue(option))) {
+        option.setAttribute('aria-selected', 'true');
+      } else {
+        option.removeAttribute('aria-selected');
+      }
+    });
+  };
 
+  const setSelected = (root, entries, triggerEvent = true) => {
+    const state = states.get(root);
+    const normalized = (Array.isArray(entries) ? entries : [entries]).map(normalizeEntry).filter(Boolean);
+
+    state.selected.clear();
     if (state.isMultiple) {
-      const selected = Array.isArray(optionOrOptions) ? optionOrOptions : [];
-      state.selectedOptions.clear();
-      selected.forEach(option => state.selectedOptions.add(option));
-      state.options.forEach(option => {
-        if (state.selectedOptions.has(option)) {
-          option.setAttribute('aria-selected', 'true');
-        } else {
-          option.removeAttribute('aria-selected');
-        }
-      });
-      value = state.options.filter(option => state.selectedOptions.has(option)).map(getValue);
-      state.hiddenInput.value = JSON.stringify(value);
+      normalized.forEach(entry => state.selected.set(entry.value, entry));
       state.input.value = '';
+    } else if (normalized[0]) {
+      state.selected.set(normalized[0].value, normalized[0]);
+      state.input.value = normalized[0].label;
+    } else {
+      state.input.value = '';
+    }
+
+    state.hiddenInput.value = serializeSelection(state);
+    syncSelectedOptions(state);
+    if (state.isMultiple) {
       renderChips(root);
       filterOptions(state, { preserveActive: true });
-    } else {
-      const option = optionOrOptions;
-      if (!option) return;
-      state.options.forEach(opt => {
-        if (opt === option) {
-          opt.setAttribute('aria-selected', 'true');
-        } else {
-          opt.removeAttribute('aria-selected');
-        }
-      });
-      value = getValue(option);
-      state.hiddenInput.value = value;
-      state.input.value = getLabel(option);
     }
 
     if (triggerEvent) {
       root.dispatchEvent(new CustomEvent('change', {
-        detail: { value },
+        detail: { value: getCanonicalValue(state), selected: getSelectedDetail(state) },
         bubbles: true,
       }));
     }
@@ -175,47 +241,55 @@
     const previousValue = elements.hiddenInput.value;
     const previousInputValue = elements.input.value;
     Object.assign(state, elements, getOptions(elements.listbox));
-    state.isMultiple = state.listbox.getAttribute('aria-multiselectable') === 'true' || root.dataset.multiple === 'true';
+    state.isMultiple = state.listbox.getAttribute('aria-multiselectable') === 'true';
     state.closeOnSelect = root.dataset.closeOnSelect === 'true';
     state.autoHighlight = root.dataset.autoHighlight === 'true';
-    if (state.isMultiple && !state.selectedOptions) state.selectedOptions = new Set();
+    state.manualFilter = root.dataset.filter === 'manual';
+    state.format = getFormat(root);
 
-    if (state.isMultiple) {
-      let values = [];
-      try {
-        const parsed = JSON.parse(previousValue || '[]');
-        values = Array.isArray(parsed) ? parsed : [];
-      } catch (_) {
-        values = [];
-      }
-      const ariaSelected = state.options.filter(option => option.getAttribute('aria-selected') === 'true').map(getValue);
-      const selectedValues = values.length ? values : ariaSelected;
-      updateValue(root, state.options.filter(option => selectedValues.includes(getValue(option))), false);
+    const stored = parseStoredSelection(previousValue, previousInputValue, state);
+    if (stored.length > 0) {
+      setSelected(root, stored, false);
     } else {
-      const selected = state.options.find(option => getValue(option) === previousValue)
-        || state.options.find(option => option.getAttribute('aria-selected') === 'true');
-      if (selected) {
-        updateValue(root, selected, false);
+      const selectedOptions = state.options.filter(option => option.getAttribute('aria-selected') === 'true').map(toSelected);
+      if (selectedOptions.length > 0) {
+        setSelected(root, state.isMultiple ? selectedOptions : selectedOptions[0], false);
+      } else if (state.isMultiple) {
+        setSelected(root, [], false);
       } else {
         state.input.value = previousInputValue;
-        state.options.forEach(option => option.removeAttribute('aria-selected'));
+        state.selected.clear();
+        state.hiddenInput.value = '';
+        syncSelectedOptions(state);
         filterOptions(state, { preserveActive: true });
       }
     }
   };
 
+  const resolveEntry = (state, value) => {
+    if (value && typeof value === 'object') {
+      const entry = normalizeEntry(value);
+      if (!entry) return null;
+      const option = state.options.find(opt => getValue(opt) === entry.value);
+      return option ? toSelected(option) : entry;
+    }
+
+    const option = state.options.find(opt => getValue(opt) === value);
+    if (option) return toSelected(option);
+    const existing = state.selected.get(String(value));
+    return existing || null;
+  };
+
   const selectValue = (root, value) => {
     const state = states.get(root);
-    const option = state.options.find(opt => getValue(opt) === value);
-    if (!option) return;
+    const entry = resolveEntry(state, value);
+    if (!entry) return;
 
     if (state.isMultiple) {
-      const selected = new Set(state.selectedOptions);
-      selected.add(option);
-      updateValue(root, state.options.filter(opt => selected.has(opt)));
+      setSelected(root, [...getSelection(state).filter(item => item.value !== entry.value), entry]);
       if (state.closeOnSelect) root.close(true);
     } else {
-      updateValue(root, option);
+      setSelected(root, entry);
       root.close(true);
     }
   };
@@ -223,11 +297,9 @@
   const deselectValue = (root, value) => {
     const state = states.get(root);
     if (!state.isMultiple) return;
-    const option = state.options.find(opt => getValue(opt) === value);
-    if (!option || !state.selectedOptions.has(option)) return;
-    const selected = new Set(state.selectedOptions);
-    selected.delete(option);
-    updateValue(root, state.options.filter(opt => selected.has(opt)));
+    const normalized = String(value);
+    if (!state.selected.has(normalized)) return;
+    setSelected(root, getSelection(state).filter(item => item.value !== normalized));
   };
 
   const handleKeydown = (event, root) => {
@@ -237,9 +309,9 @@
     const isOpen = state.popover.getAttribute('aria-hidden') === 'false';
 
     if (event.key === 'Backspace' && state.isMultiple && state.input.value === '') {
-      const selected = state.options.filter(option => state.selectedOptions.has(option));
+      const selected = getSelection(state);
       const last = selected[selected.length - 1];
-      if (last) root.deselect(getValue(last));
+      if (last) root.deselect(last.value);
       return;
     }
 
@@ -283,13 +355,14 @@
   const initCombobox = (root) => {
     if (root.dataset.comboboxInitialized) return;
 
-    const state = { root, activeIndex: -1, allOptions: [], options: [], visibleOptions: [], selectedOptions: null };
+    const state = { root, activeIndex: -1, allOptions: [], options: [], visibleOptions: [], selected: new Map(), format: 'value', manualFilter: false };
     states.set(root, state);
     root.refresh = () => refreshCombobox(root);
 
     refreshCombobox(root);
     if (!state.input || !state.popover || !state.listbox || !state.hiddenInput) {
       states.delete(root);
+      delete root.refresh;
       return;
     }
 
@@ -305,63 +378,95 @@
 
     root.select = (value) => selectValue(root, value);
     root.selectByValue = root.select;
+    root.setValue = (value) => {
+      const entries = state.isMultiple ? (Array.isArray(value) ? value : (value == null ? [] : [value])) : [value];
+      const resolved = entries.map(entry => resolveEntry(state, entry) || normalizeEntry(entry)).filter(Boolean);
+      setSelected(root, state.isMultiple ? resolved : resolved[0]);
+    };
     if (state.isMultiple) {
       root.deselect = (value) => deselectValue(root, value);
       root.toggle = (value) => {
-        const option = state.options.find(opt => getValue(opt) === value);
-        if (!option) return;
-        state.selectedOptions.has(option) ? root.deselect(value) : root.select(value);
+        const entry = resolveEntry(state, value);
+        if (!entry) return;
+        state.selected.has(entry.value) ? root.deselect(entry.value) : root.select(entry);
       };
-      root.selectAll = () => updateValue(root, state.options);
-      root.selectNone = () => updateValue(root, []);
+      root.selectAll = () => setSelected(root, state.options.map(toSelected));
+      root.selectNone = () => setSelected(root, []);
     }
 
-    state.input.addEventListener('focus', root.open);
-    state.input.addEventListener('click', root.open);
-    state.input.addEventListener('input', () => {
+    const handleInputFocus = root.open;
+    const handleInputClick = root.open;
+    const handleInput = () => {
       root.open();
       filterOptions(state);
       if (!state.isMultiple) {
         state.hiddenInput.value = '';
-        state.options.forEach(option => option.removeAttribute('aria-selected'));
+        state.selected.clear();
+        syncSelectedOptions(state);
       }
-    });
-    state.input.addEventListener('keydown', (event) => handleKeydown(event, root));
-
-    state.listbox.addEventListener('mousemove', (event) => {
+    };
+    const handleInputKeydown = (event) => handleKeydown(event, root);
+    const handleListboxMousemove = (event) => {
       const option = event.target.closest('[role="option"]');
       if (option && state.visibleOptions.includes(option)) setActiveOption(state, state.options.indexOf(option));
-    });
-
-    state.listbox.addEventListener('click', (event) => {
+    };
+    const handleListboxClick = (event) => {
       const option = event.target.closest('[role="option"]');
       if (!option || !state.options.includes(option)) return;
       state.isMultiple ? root.toggle(getValue(option)) : root.select(getValue(option));
       if (state.isMultiple && !state.closeOnSelect) state.input.focus();
-    });
-
-    document.addEventListener('click', (event) => {
+    };
+    const handleDocumentClick = (event) => {
       if (!root.contains(event.target)) root.close(false);
-    });
-
-    document.addEventListener('basecoat:popover', (event) => {
+    };
+    const handleDocumentPopover = (event) => {
       if (event.detail.source !== root) root.close(false);
-    });
+    };
+
+    state.input.addEventListener('focus', handleInputFocus);
+    state.input.addEventListener('click', handleInputClick);
+    state.input.addEventListener('input', handleInput);
+    state.input.addEventListener('keydown', handleInputKeydown);
+    state.listbox.addEventListener('mousemove', handleListboxMousemove);
+    state.listbox.addEventListener('click', handleListboxClick);
+    document.addEventListener('click', handleDocumentClick);
+    document.addEventListener('basecoat:popover', handleDocumentPopover);
+
+    root._destroy = () => {
+      state.input.removeEventListener('focus', handleInputFocus);
+      state.input.removeEventListener('click', handleInputClick);
+      state.input.removeEventListener('input', handleInput);
+      state.input.removeEventListener('keydown', handleInputKeydown);
+      state.listbox.removeEventListener('mousemove', handleListboxMousemove);
+      state.listbox.removeEventListener('click', handleListboxClick);
+      document.removeEventListener('click', handleDocumentClick);
+      document.removeEventListener('basecoat:popover', handleDocumentPopover);
+      state.chips?.querySelectorAll('.combobox-chip').forEach(chip => chip.remove());
+      states.delete(root);
+      delete root.refresh;
+      delete root.open;
+      delete root.close;
+      delete root.select;
+      delete root.selectByValue;
+      delete root.setValue;
+      delete root.deselect;
+      delete root.toggle;
+      delete root.selectAll;
+      delete root.selectNone;
+    };
 
     state.popover.setAttribute('aria-hidden', 'true');
     state.input.setAttribute('aria-expanded', 'false');
 
     Object.defineProperty(root, 'value', {
       configurable: true,
-      get: () => state.isMultiple ? state.options.filter(option => state.selectedOptions.has(option)).map(getValue) : state.hiddenInput.value,
-      set: (value) => {
-        if (state.isMultiple) {
-          const values = Array.isArray(value) ? value : (value == null ? [] : [value]);
-          updateValue(root, state.options.filter(option => values.includes(getValue(option))));
-        } else {
-          root.select(value);
-        }
-      },
+      get: () => getCanonicalValue(state),
+      set: (value) => root.setValue(value),
+    });
+
+    Object.defineProperty(root, 'selected', {
+      configurable: true,
+      get: () => getSelectedDetail(state),
     });
 
     root.dataset.comboboxInitialized = 'true';

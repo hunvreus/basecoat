@@ -76,6 +76,7 @@
     refreshDropdownMenu(root);
     if (!state.trigger || !state.popover || !state.menu) {
       states.delete(root);
+      delete root.refresh;
       return;
     }
 
@@ -83,9 +84,9 @@
     root.close = (focusOnTrigger = true) => closePopover(state, focusOnTrigger);
     root.toggle = () => state.trigger.getAttribute('aria-expanded') === 'true' ? root.close() : root.open(false);
 
-    state.trigger.addEventListener('click', root.toggle);
+    const handleTriggerClick = root.toggle;
 
-    root.addEventListener('keydown', (event) => {
+    const handleKeydown = (event) => {
       const isExpanded = state.trigger.getAttribute('aria-expanded') === 'true';
 
       if (event.key === 'Escape') {
@@ -132,29 +133,52 @@
       }
 
       if (nextIndex !== state.activeIndex) setActiveItem(state, nextIndex);
-    });
+    };
 
-    state.menu.addEventListener('mousemove', (event) => {
+    const handleMenuMousemove = (event) => {
       const menuItem = event.target.closest('[role^="menuitem"]');
       if (menuItem && !isDisabled(menuItem) && state.items.includes(menuItem)) {
         const index = state.items.indexOf(menuItem);
         if (index !== state.activeIndex) setActiveItem(state, index);
       }
-    });
+    };
 
-    state.menu.addEventListener('mouseleave', () => setActiveItem(state, -1));
-    state.menu.addEventListener('click', (event) => {
+    const handleMenuMouseleave = () => setActiveItem(state, -1);
+    const handleMenuClick = (event) => {
       const menuItem = event.target.closest('[role^="menuitem"]');
       if (menuItem && !isDisabled(menuItem)) root.close();
-    });
+    };
 
-    document.addEventListener('click', (event) => {
+    const handleDocumentClick = (event) => {
       if (!root.contains(event.target)) root.close(false);
-    });
+    };
 
-    document.addEventListener('basecoat:popover', (event) => {
+    const handleDocumentPopover = (event) => {
       if (event.detail.source !== root) root.close(false);
-    });
+    };
+
+    state.trigger.addEventListener('click', handleTriggerClick);
+    root.addEventListener('keydown', handleKeydown);
+    state.menu.addEventListener('mousemove', handleMenuMousemove);
+    state.menu.addEventListener('mouseleave', handleMenuMouseleave);
+    state.menu.addEventListener('click', handleMenuClick);
+    document.addEventListener('click', handleDocumentClick);
+    document.addEventListener('basecoat:popover', handleDocumentPopover);
+
+    root._destroy = () => {
+      state.trigger.removeEventListener('click', handleTriggerClick);
+      root.removeEventListener('keydown', handleKeydown);
+      state.menu.removeEventListener('mousemove', handleMenuMousemove);
+      state.menu.removeEventListener('mouseleave', handleMenuMouseleave);
+      state.menu.removeEventListener('click', handleMenuClick);
+      document.removeEventListener('click', handleDocumentClick);
+      document.removeEventListener('basecoat:popover', handleDocumentPopover);
+      states.delete(root);
+      delete root.refresh;
+      delete root.open;
+      delete root.close;
+      delete root.toggle;
+    };
 
     state.trigger.setAttribute('aria-expanded', 'false');
     state.popover.setAttribute('aria-hidden', 'true');

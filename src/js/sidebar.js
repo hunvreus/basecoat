@@ -28,7 +28,7 @@
     sidebarComponent.close = () => setState(false);
     sidebarComponent.toggle = () => setState(!open);
 
-    sidebarComponent.addEventListener('click', (event) => {
+    const handleClick = (event) => {
       const target = event.target;
       const nav = sidebarComponent.querySelector('nav');
       const isMobile = window.innerWidth < breakpoint;
@@ -43,7 +43,16 @@
         if (document.activeElement) document.activeElement.blur();
         sidebarComponent.close();
       }
-    });
+    };
+
+    sidebarComponent.addEventListener('click', handleClick);
+
+    sidebarComponent._destroy = () => {
+      sidebarComponent.removeEventListener('click', handleClick);
+      delete sidebarComponent.open;
+      delete sidebarComponent.close;
+      delete sidebarComponent.toggle;
+    };
 
     updateState();
     sidebarComponent.dataset.sidebarInitialized = 'true';
