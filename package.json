@@ -34,8 +34,8 @@
   "homepage": "https://github.com/hunvreus/basecoat#readme",
   "scripts": {
     "build": "node ./scripts/build.js",
-    "docs:build": "npm run docs:generate && astro build",
-    "docs:dev": "npm run docs:generate && astro dev",
+    "docs:build": "npm run build && npm run docs:generate && astro build",
+    "docs:dev": "npm run build && npm run docs:generate && astro dev",
     "workers:dev": "npm run docs:build && wrangler dev",
     "workers:deploy": "npm run docs:build && wrangler deploy",
     "workers:preview": "npm run docs:build && wrangler versions upload",
