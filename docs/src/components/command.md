@@ -192,7 +192,7 @@ toc:
     <dt><code>command.refresh()</code></dt>
     <dd>Rescans command items after changing children inside the existing <code>role="menu"</code> list.</dd>
     <dt><code>data-filter="manual"</code></dt>
-    <dd>Disables Basecoat's built-in text filtering. Update the menu items yourself, then call <code>command.refresh()</code>.</dd>
+    <dd>Disables Basecoat's built-in text filtering. Your app owns the visible result set: add, remove, or update items, set <code>aria-hidden="true"</code> on hidden items, then call <code>command.refresh()</code>.</dd>
     <dt><code>window.basecoat.refresh(command)</code></dt>
     <dd>Calls the component refresh method through the global dispatcher.</dd>
   </dl>

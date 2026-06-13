@@ -154,7 +154,7 @@ toc:
     <dt><code>refresh()</code></dt>
     <dd>Rescans options after changing children inside the existing <code>role="listbox"</code> element.</dd>
     <dt><code>data-filter="manual"</code></dt>
-    <dd>Disables Basecoat's built-in text filtering. Update the listbox options yourself, then call <code>combobox.refresh()</code>.</dd>
+    <dd>Disables Basecoat's built-in text filtering. Your app owns the visible suggestion set: add, remove, or update options, set <code>aria-hidden="true"</code> on hidden options, then call <code>combobox.refresh()</code>.</dd>
     <dt><code>window.basecoat.refresh(combobox)</code></dt>
     <dd>Calls the component refresh method through the global dispatcher.</dd>
   </dl>

@@ -37,7 +37,7 @@ toc:
 <h3 id="install-cdn-all"><a href="#install-cdn-all">Install all components</a></h3>
 
 <section class="prose">
-  <p>Add the following to the <code>&lt;head&gt;</code> of your HTML file:</p>
+  <p>Add the following to the <code>&lt;head&gt;</code> of your HTML file. This loads the default CDN stylesheet and the JavaScript bundle for every JavaScript component:</p>
 </section>
 
 {% set code %}<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@{{ pkg.version }}/dist/basecoat.cdn.min.css">
@@ -54,7 +54,8 @@ toc:
 <h3 id="install-cdn-specific"><a href="#install-cdn-specific">Install specific components</a></h3>
 
 <section class="prose">
-  <p>While the JavaScript file for all components is small (around 3kB gzipped), you can cherry-pick the components you need as instructed in the component's page (<a href="/components/dropdown-menu">Dropdown Menu</a>, <a href="/components/popover">Popover</a>, <a href="/components/select">Select</a>, <a href="/components/sidebar">Sidebar</a>, <a href="/components/tabs">Tabs</a> and <a href="/components/toast">Toast</a>). For example, to add the <a href="/components/dropdown-menu">Dropdown Menu</a> component, add the following to the <code>&lt;head&gt;</code> of your HTML file:</p>
+  <p>The CDN style bundles are aggregated. If you want to cherry-pick CSS, use the package component files through npm or your own asset pipeline.</p>
+  <p>For JavaScript, you can cherry-pick the components you need as instructed in each component page. Include <code>basecoat.min.js</code> once, then include the component script.</p>
 </section>
 
 {% set code %}<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@{{ pkg.version }}/dist/basecoat.cdn.min.css">
@@ -103,19 +104,37 @@ toc:
     {% set code %}@import "tailwindcss";
 @import "basecoat-css/sera";{% endset %}
     {{ code_block(code, "css") }}
+    <div class="prose">
+      <p>You can also import lower-level bundles or individual component CSS files:</p>
+    </div>
+    {% set code %}@import "tailwindcss";
+
+/* Base tokens and global utilities only. */
+@import "basecoat-css/base";
+
+/* All component structure without a style pack. */
+@import "basecoat-css/components";
+
+/* Individual component CSS. */
+@import "basecoat-css/components/button";
+@import "basecoat-css/components/select";
+
+/* One standalone style pack. */
+@import "basecoat-css/styles/sera";{% endset %}
+    {{ code_block(code, "css") }}
   </section>
   <section>
     <h3 class="mb-4 scroll-m-20 font-semibold tracking-tight" id="install-npm-js"><a href="#install-npm-js">Step 4: Add JavaScript files</a></h3>
     <div class="prose">
-      <p>Some components <a href="#install-js">need some JavaScript</a> (e.g. the <a href="/components/tabs">Tabs</a> component). There are two ways to get it into your project:</p>
+      <p>Some components <a href="#install-js">need JavaScript</a>. You can either import the all-in-one bundle or only the components you use.</p>
 
       <h4 class="mt-6 font-semibold">Using a build tool (Vite, Webpack…)</h4>
-      <p>If your project is ESM-aware you can directly import the scripts. To include all components:</p>
+      <p>To include all JavaScript components:</p>
     </div>
     {% set code %}{% raw %}import 'basecoat-css/all';{% endraw %}{% endset %}
     {{ code_block(code, "js") }}
     <div class="prose">
-      <p>Or cherry-pick specific components, for example:</p>
+      <p>Or cherry-pick specific components. Import <code>basecoat-css/basecoat</code> once, then import the component scripts:</p>
     </div>
     {% set code %}{% raw %}import 'basecoat-css/basecoat';
 import 'basecoat-css/popover';
@@ -149,12 +168,12 @@ import 'basecoat-css/tabs';{% endraw %}{% endset %}
 <h2 id="install-js"><a href="#install-js">Components with JavaScript</a></h2>
 
 <div class="prose">
-  <p><b>A handful of components require JavaScript code to work</b>, specifically <a href="/components/dropdown-menu">Dropdown Menu</a>, <a href="/components/popover">Popover</a>, <a href="/components/select">Select</a>, <a href="/components/sidebar">Sidebar</a>, <a href="/components/tabs">Tabs</a> and <a href="/components/toast">Toast</a></p>
+  <p><b>A handful of components require JavaScript code to work</b>, specifically <a href="/components/combobox">Combobox</a>, <a href="/components/command">Command</a>, <a href="/components/dropdown-menu">Dropdown Menu</a>, <a href="/components/popover">Popover</a>, <a href="/components/select">Select</a>, <a href="/components/sidebar">Sidebar</a>, <a href="/components/slider">Slider</a>, <a href="/components/tabs">Tabs</a> and <a href="/components/toast">Toast</a>.</p>
 
-  <p>If a component requires JavaScript, the documentation page will provide instructions. There are 2 options to add the JavaScript code to your project:</p>
+  <p>If a component requires JavaScript, the documentation page provides the minimal scripts. There are two options:</p>
     
   <ul>
-    <li><b>CDN</b>: you either <a href="#install-cdn-all">add the code for all of the components</a> to the <code>&lt;head&gt;</code> of your HTML file, or just the file for the component you want to use as instructed on the component's page.</li>
-    <li><b>Local file</b>: you download the script as a separate file and include it in your project. Once again, you have the choice to include the file for all components at once (<code>all.min.js</code> or <code>all.js</code>).</li>
+    <li><b>All-in-one</b>: use <code>dist/js/all.min.js</code> from the CDN or <code>import "basecoat-css/all"</code> with a build tool.</li>
+    <li><b>Per component</b>: load <code>basecoat.min.js</code> once, then load or import each component script, such as <code>select.min.js</code> or <code>basecoat-css/select</code>.</li>
   </ul>
 </div>
