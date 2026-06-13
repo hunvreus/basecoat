@@ -15,7 +15,9 @@
 ## Source Boundaries
 - Do not hand-edit build outputs:
   - `packages/*/dist/**`
-  - `_site/**`
+  - `dist/**`
+  - `docs/generated/**`
+  - `public/assets/**`
 - Generated source entrypoints such as `src/css/basecoat-vega.css` are committed, but must be regenerated through `scripts/generate-css-entrypoints.js` or build scripts, not manually maintained.
 
 ## Public API and Markup

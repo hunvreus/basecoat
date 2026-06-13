@@ -3,7 +3,7 @@
   "name": "basecoat",
   "compatibility_date": "2026-06-02",
   "assets": {
-    "directory": "./_site",
+    "directory": "./dist",
     "not_found_handling": "404-page"
   }
 }
