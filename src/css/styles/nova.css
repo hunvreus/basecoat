@@ -391,7 +391,7 @@
   }
 
   .alert-destructive {
-    @apply text-destructive bg-card [&>section]:text-destructive/90 [&>svg]:text-current;
+    @apply text-destructive bg-card [&>svg]:text-current;
   }
 
   .alert > :is(h2, h3, h4, h5, h6, strong, [data-title]),
@@ -403,9 +403,12 @@
   :is(.alert, .alert-destructive):has(> svg) > :is(h2, h3, h4, h5, h6, strong, [data-title]) {
     @apply col-start-2;
   }
-  .alert > section,
-  .alert-destructive > section {
+  .alert > section {
     @apply text-muted-foreground text-sm text-balance md:text-pretty [&_p:not(:last-child)]:mb-4;
+  }
+
+  .alert-destructive > section {
+    @apply text-destructive/90 text-sm text-balance md:text-pretty [&_p:not(:last-child)]:mb-4;
   }
 
   .alert > [data-action],

@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## [1.0.0-beta.2] - 2026-06-14
+
 ### Breaking Changes
 
 - Removed the `.form` convenience selector for Basecoat 1.0. Use explicit component classes (`label`, `input`, `textarea`, `select`) or compose fields with `.field` / `.fieldset`.
@@ -36,10 +38,16 @@
 - Split Native Select documentation from custom Select documentation.
 - Updated docs to use Basecoat-specific HTML usage instead of React/shadcn composition APIs.
 - Updated docs site styling, navigation, fonts, and style switcher for the 1.0 style system.
+- Migrated the docs build to ReallySimpleDocs/Astro while keeping Basecoat's Nunjucks source examples as a pre-render step.
+- Changed docs build scripts so local Basecoat package assets are generated before ReallySimpleDocs resolves `basecoat-css`.
 
 ### Removed
 
 - Removed the old Form component page. Form layout should now be composed with Field, Fieldset, Input, Textarea, Select, Native Select, Checkbox, Radio, and Switch.
+
+### Fixed
+
+- Fixed destructive Alert descriptions/content using muted text instead of destructive text across all style packs.
 
 ### Migration Notes
 
