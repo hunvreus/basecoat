@@ -1,0 +1,82 @@
+# Kbd
+
+<Preview>
+<div class="flex flex-col items-center gap-4">
+  <span class="kbd-group">
+    <kbd class="kbd">⌘</kbd>
+    <kbd class="kbd">⇧</kbd>
+    <kbd class="kbd">⌥</kbd>
+    <kbd class="kbd">⌃</kbd>
+  </span>
+  <span class="kbd-group">
+    <kbd class="kbd">Ctrl</kbd>
+    <span>+</span>
+    <kbd class="kbd">B</kbd>
+  </span>
+</div>
+</Preview>
+
+## Usage
+
+Use `<kbd class="kbd">` for a key label. Use `kbd-group` to group multiple keys.
+
+```html
+<kbd class="kbd">⌘K</kbd>
+```
+
+Keyboard labels are direction-neutral. Surrounding spacing should use logical utilities when position matters.
+
+## Examples
+
+### Group
+
+<Preview>
+<p class="text-muted-foreground text-sm">
+  Use
+  <span class="kbd-group">
+    <kbd class="kbd">Ctrl + B</kbd>
+    <kbd class="kbd">Ctrl + K</kbd>
+  </span>
+  to open the command palette
+</p>
+</Preview>
+
+### Button
+
+<Preview>
+<div class="flex flex-wrap items-center gap-x-4">
+  <button class="btn-sm-outline pe-2">
+    Accept
+    <kbd class="kbd">⏎</kbd>
+  </button>
+  <button class="btn-sm-outline pe-2">
+    Cancel
+    <kbd class="kbd">Esc</kbd>
+  </button>
+</div>
+</Preview>
+
+### Input Group
+
+<Preview>
+<div class="relative w-full max-w-sm">
+  <input type="search" class="input ps-9 pe-12" placeholder="Search..." />
+  <svg class="absolute start-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground lucide lucide-search" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21 21-4.34-4.34" /><circle cx="11" cy="11" r="8" /></svg>
+  <kbd class="kbd absolute end-3 top-1/2 -translate-y-1/2">/</kbd>
+</div>
+</Preview>
+
+### RTL
+
+Keyboard labels are direction-neutral. Surrounding spacing should use logical utilities when position matters.
+
+<Preview>
+<p dir="rtl" class="text-muted-foreground text-sm">
+  استخدم
+  <span class="kbd-group">
+    <kbd class="kbd">Ctrl</kbd>
+    <kbd class="kbd">K</kbd>
+  </span>
+  لفتح البحث
+</p>
+</Preview>

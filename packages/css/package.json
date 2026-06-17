@@ -44,6 +44,8 @@
     "./basecoat.min": "./dist/js/basecoat.min.js",
     "./all": "./dist/js/all.js",
     "./all.min": "./dist/js/all.min.js",
+    "./chart": "./dist/js/chart.js",
+    "./chart.min": "./dist/js/chart.min.js",
     "./combobox": "./dist/js/combobox.js",
     "./combobox.min": "./dist/js/combobox.min.js",
     "./command": "./dist/js/command.js",

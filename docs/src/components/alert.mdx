@@ -1,0 +1,136 @@
+# Alert
+
+<Preview>
+<div class="grid w-full max-w-xl items-start gap-4">
+  <div class="alert">
+    <svg class="lucide lucide-circle-check" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="m9 12 2 2 4-4" /></svg>
+    <h2>Success! Your changes have been saved</h2>
+    <section>This is an alert with icon, title and description.</section>
+  </div>
+  <div class="alert">
+    <svg class="lucide lucide-popcorn" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a2 2 0 0 0 0-4 2 2 0 0 0-4 0 2 2 0 0 0-4 0 2 2 0 0 0-4 0 2 2 0 0 0 0 4" /><path d="M10 22 9 8" /><path d="m14 22 1-14" /><path d="M20 8c.5 0 .9.4.8 1l-2.6 12c-.1.5-.7 1-1.2 1H7c-.6 0-1.1-.4-1.2-1L3.2 9c-.1-.6.3-1 .8-1Z" /></svg>
+    <h2>This Alert has a title and an icon. No description.</h2>
+    <section>This is an alert with icon, title and description.</section>
+  </div>
+  <div class="alert-destructive">
+    <svg class="lucide lucide-circle-check" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="m9 12 2 2 4-4" /></svg>
+    <h2>Unable to process your payment.</h2>
+    <section>
+      <p>Please verify your billing information and try again.</p>
+      <ul class="list-inside list-disc text-sm">
+        <li>Check your card details</li>
+        <li>Ensure sufficient funds</li>
+        <li>Verify billing address</li>
+      </ul>
+    </section>
+  </div>
+</div>
+</Preview>
+
+## Usage
+
+Use `alert` for default styling or `alert-destructive` for error states. Add a direct child `<footer>` for an inline-end action region.
+
+```html
+<div class="alert">
+  <svg class="lucide lucide-circle-check" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="m9 12 2 2 4-4" /></svg>
+  <h2>Success! Your changes have been saved</h2>
+  <section>This is an alert with icon, title and description.</section>
+</div>
+```
+
+### HTML structure
+
+<dl>
+  <dt><code class="highlight language-html">&lt;div class="alert"&gt;</code></dt>
+  <dd>
+    Main container. Use <code>alert</code> for default styling or <code>alert-destructive</code> for error states.
+    <dl>
+      <dt><code class="highlight language-html">&lt;svg&gt;</code> <span class="badge-secondary">Optional</span></dt>
+      <dd>The icon.</dd>
+      <dt><code class="highlight language-html">&lt;h2&gt;</code></dt>
+      <dd>The title.</dd>
+      <dt><code class="highlight language-html">&lt;section&gt;</code> <span class="badge-secondary">Optional</span></dt>
+      <dd>The description.</dd>
+      <dt><code class="highlight language-html">&lt;footer&gt;</code> <span class="badge-secondary">Optional</span></dt>
+      <dd>The action region, aligned to the inline end of the alert. Put the action element inside it, such as a button or link.</dd>
+    </dl>
+  </dd>
+</dl>
+
+## Examples
+
+### Destructive
+
+<Preview>
+<div class="alert-destructive">
+  <svg class="lucide lucide-circle-alert" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><line x1="12" x2="12" y1="8" y2="12" /><line x1="12" x2="12.01" y1="16" y2="16" /></svg>
+  <h2>Something went wrong!</h2>
+  <section>Your session has expired. Please log in again.</section>
+</div>
+</Preview>
+
+### No description
+
+<Preview>
+<div class="alert">
+  <svg class="lucide lucide-shield-alert" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" /><path d="M12 8v4" /><path d="M12 16h.01" /></svg>
+  <h2>This is a very long alert title that demonstrates how the component handles extended text content and potentially wraps across multiple lines</h2>
+</div>
+</Preview>
+
+### No icon
+
+<Preview>
+<div class="alert">
+  <h2>Success! Your changes have been saved</h2>
+  <section>This is an alert with icon, title and description.</section>
+</div>
+</Preview>
+
+### Action
+
+<Preview>
+<div class="grid w-full max-w-xl gap-4">
+  <div class="alert">
+    <svg class="lucide lucide-circle-alert" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10" /><line x1="12" x2="12" y1="8" y2="12" /><line x1="12" x2="12.01" y1="16" y2="16" /></svg>
+    <h2>The selected emails have been marked as spam.</h2>
+    <footer>
+      <button type="button" class="btn-xs-outline">Undo</button>
+    </footer>
+  </div>
+  <div class="alert">
+    <svg class="lucide lucide-circle-alert" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10" /><line x1="12" x2="12" y1="8" y2="12" /><line x1="12" x2="12.01" y1="16" y2="16" /></svg>
+    <h2>The selected emails have been marked as spam.</h2>
+    <section>This is a longer alert description that demonstrates how the action stays aligned to the inline end.</section>
+    <footer>
+      <span class="badge-secondary">Badge</span>
+    </footer>
+  </div>
+</div>
+</Preview>
+
+### Custom Colors
+
+<Preview>
+<div class="alert bg-amber-50 text-amber-900 dark:bg-amber-950 dark:text-amber-200">
+  <svg class="lucide lucide-triangle-alert" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3" /><path d="M12 9v4" /><path d="M12 17h.01" /></svg>
+  <h2>Storage almost full</h2>
+  <section class="text-amber-800 dark:text-amber-300">Upgrade your plan or delete unused files.</section>
+</div>
+</Preview>
+
+### RTL
+
+Add `dir="rtl"` to the alert or an ancestor.
+
+<Preview>
+<div class="alert" dir="rtl">
+  <svg class="lucide lucide-info" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10" /><path d="M12 16v-4" /><path d="M12 8h.01" /></svg>
+  <h2>تم حفظ التغييرات</h2>
+  <section>تم تحديث إعداداتك بنجاح.</section>
+  <footer>
+    <button type="button" class="btn-xs-outline">عرض</button>
+  </footer>
+</div>
+</Preview>

@@ -1,0 +1,170 @@
+import ChartExample from "../site/ChartExample.astro"
+
+# Chart
+
+Use Chart.js with Basecoat defaults for themed colors, external tooltips, and optional generated legends.
+
+<ChartExample />
+
+Chart is an optional JavaScript helper. Load Chart.js first, then `basecoat.js`, then `chart.js`.
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.2/dist/js/basecoat.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.2/dist/js/chart.min.js" defer></script>
+```
+
+## Usage
+
+```html
+<canvas id="visitors-chart" aria-label="Monthly visitors"></canvas>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    window.basecoat.chart("#visitors-chart", {
+      type: "bar",
+      labelKey: "month",
+      data: [
+        { month: "Jan", desktop: 186, mobile: 80 },
+        { month: "Feb", desktop: 305, mobile: 200 },
+        { month: "Mar", desktop: 237, mobile: 120 },
+        { month: "Apr", desktop: 73, mobile: 190 },
+        { month: "May", desktop: 209, mobile: 130 },
+        { month: "Jun", desktop: 214, mobile: 140 },
+      ],
+      series: {
+        desktop: { label: "Desktop", color: "var(--chart-1)" },
+        mobile: { label: "Mobile", color: "var(--chart-2)" },
+      },
+    })
+  })
+</script>
+```
+
+`basecoat.chart()` targets the `<canvas>` directly and creates Basecoat's internal `.chart` container for Chart.js sizing. You do not need to add a wrapper or class in your HTML.
+
+Charts default to `aspect-video`. Use a height, `min-h-*`, or `aspect-*` utility on a parent element when you need a different measuring box.
+
+## Card Composition
+
+Chart does not own titles, descriptions, or framing. Compose those with Card or your own markup.
+
+```html
+<div class="card">
+  <header>
+    <h2>Bar Chart - Multiple</h2>
+    <p>Showing total visitors for the last 6 months</p>
+  </header>
+  <section>
+    <canvas id="visitors-chart" aria-label="Monthly visitors"></canvas>
+  </section>
+</div>
+```
+
+## Legend
+
+Set `legend: true` to generate a Basecoat-styled legend after the canvas.
+
+The generated legend is display-only by default, matching shadcn/ui. Use a Chart.js plugin or custom legend markup if you need click-to-toggle behavior.
+
+```js
+window.basecoat.chart("#visitors-chart", {
+  type: "bar",
+  labelKey: "month",
+  data,
+  series,
+  legend: true,
+})
+```
+
+## Series
+
+`series` maps object keys from each data row to labels, colors, and optional Chart.js dataset settings.
+
+```js
+window.basecoat.chart("#revenue-chart", {
+  type: "line",
+  labelKey: "month",
+  data,
+  series: {
+    recurring: {
+      label: "Recurring",
+      color: "var(--chart-1)",
+      dataset: {
+        tension: 0.35,
+      },
+    },
+    new: {
+      label: "New",
+      color: "var(--chart-2)",
+      dataset: {
+        borderDash: [4, 4],
+      },
+    },
+  },
+})
+```
+
+## Escape Hatches
+
+Pass raw Chart.js options and plugins through `options` and `plugins`.
+
+```js
+const chart = window.basecoat.chart("#visitors-chart", {
+  type: "bar",
+  labelKey: "month",
+  data,
+  series,
+  options: {
+    indexAxis: "x",
+    scales: {
+      y: {
+        beginAtZero: true,
+      },
+    },
+    plugins: {
+      tooltip: {
+        mode: "index",
+      },
+    },
+  },
+  plugins: [myChartJsPlugin],
+})
+```
+
+Pass complete Chart.js data through `chartData` when the simplified `data` plus `series` mapper is not enough.
+
+```js
+window.basecoat.chart("#custom-chart", {
+  type: "scatter",
+  chartData: {
+    datasets: [
+      {
+        label: "Samples",
+        data: [{ x: 1, y: 2 }, { x: 2, y: 5 }],
+      },
+    ],
+  },
+  options: {
+    scales: {
+      x: { type: "linear" },
+    },
+  },
+})
+```
+
+`basecoat.chart()` returns the Chart.js instance for single targets and an array of instances for multi-target selectors.
+
+## API
+
+| Option | Default | Description |
+| --- | --- | --- |
+| `type` | `"bar"` | Chart.js chart type. |
+| `labelKey` | `"label"` | Row key used for labels. |
+| `data` | `[]` | Array of row objects, or raw Chart.js data with `datasets`. |
+| `series` | `{}` | Series config mapped from row keys. |
+| `legend` | `false` | Generates a Basecoat legend after the canvas. |
+| `tooltip` | `true` | Uses the Basecoat external tooltip. |
+| `options` | `{}` | Raw Chart.js options. |
+| `plugins` | `[]` | Raw Chart.js plugins. |
+| `chartData` | `undefined` | Complete Chart.js data object. Overrides the data mapper. |

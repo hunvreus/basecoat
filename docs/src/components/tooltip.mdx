@@ -1,0 +1,69 @@
+# Tooltip
+
+<Preview>
+<button class="btn-outline" data-tooltip="Add to library">Hover</button>
+</Preview>
+
+## Usage
+
+Add `data-tooltip` to the trigger element. Use `data-side` and `data-align` to change the position:
+
+- `data-tooltip`: Tooltip text.
+- `data-side` `Optional`: `top`, `bottom`, `left`, `right`, `inline-start`, or `inline-end`. Defaults to `top`.
+- `data-align` `Optional`: `start`, `center`, or `end`. Defaults to `center`.
+
+Basecoat tooltips are CSS-only and text-only. This intentionally differs from shadcn/ui's composed tooltip content, which can render arbitrary markup and uses a portal.
+
+```html
+<button class="btn-outline" data-tooltip="Tooltip text" data-side="bottom" data-align="center">Bottom</button>
+```
+
+## Examples
+
+### Default
+
+<Preview>
+<button class="btn-outline" data-tooltip="Default tooltip">Default</button>
+</Preview>
+
+### Sides
+
+<Preview>
+<div class="flex flex-wrap gap-2">
+  <button class="btn-outline" data-tooltip="Tooltip" data-side="inline-start">Inline Start</button>
+  <button class="btn-outline" data-tooltip="Tooltip" data-side="top">Top</button>
+  <button class="btn-outline" data-tooltip="Tooltip" data-side="bottom">Bottom</button>
+  <button class="btn-outline" data-tooltip="Tooltip" data-side="inline-end">Inline End</button>
+</div>
+</Preview>
+
+### Icon Button
+
+<Preview>
+<button class="btn-icon-ghost" data-tooltip="Additional information" aria-label="Info">
+  <svg class="lucide lucide-info" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="M12 16v-4" /><path d="M12 8h.01" /></svg>
+</button>
+</Preview>
+
+### Disabled Button
+
+<Preview>
+<span class="inline-block" data-tooltip="This feature is currently unavailable">
+  <button class="btn-outline" disabled>Disabled</button>
+</span>
+</Preview>
+
+### Link
+
+<Preview>
+<a href="#" class="text-primary text-sm underline-offset-4 hover:underline" data-tooltip="Click to read the documentation">Learn more</a>
+</Preview>
+
+### RTL
+
+<Preview>
+<div dir="rtl" class="flex gap-2">
+  <button class="btn-outline" data-tooltip="تلميح" data-side="inline-start">Inline Start</button>
+  <button class="btn-outline" data-tooltip="تلميح" data-side="inline-end">Inline End</button>
+</div>
+</Preview>

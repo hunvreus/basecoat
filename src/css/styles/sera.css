@@ -261,7 +261,7 @@
       @apply border-border focus-visible:border-ring;
     }
 
-    > .button-group-text {
+    > :is(span, label, output) {
       @apply border-border;
     }
   }
@@ -280,7 +280,7 @@
     }
   }
 
-  .button-group-text {
+  .button-group > :is(span, label, output) {
     @apply gap-2 border border-transparent border-b-input bg-transparent px-2.5 text-xs font-semibold uppercase [&_svg:not([class*='size-'])]:size-3.5;
   }
 
@@ -399,7 +399,7 @@
   /* Alert */
   .alert,
   .alert-destructive {
-    @apply grid gap-1 bg-background border px-4 py-3 text-start text-sm has-[>[data-action]]:relative has-[>[data-action]]:pe-18 has-[>svg]:grid-cols-[auto_1fr] has-[>svg]:gap-x-2.5 [&>svg]:row-span-2 [&>svg]:translate-y-0.5 [&>svg]:text-current [&>svg:not([class*='size-'])]:size-4 relative after:-inset-y-px after:-start-px after:w-0.5 after:absolute;
+    @apply grid gap-1 bg-background border px-4 py-3 text-start text-sm has-[>svg]:grid-cols-[auto_1fr] has-[>svg]:gap-x-2.5 [&>svg]:row-span-2 [&>svg]:translate-y-0.5 [&>svg]:text-current [&>svg:not([class*='size-'])]:size-4 relative after:-inset-y-px after:-start-px after:w-0.5 after:absolute;
   }
 
   .alert {
@@ -427,9 +427,57 @@
     @apply text-destructive/90 text-sm text-balance md:text-pretty [&_p:not(:last-child)]:mb-4;
   }
 
-  .alert > [data-action],
-  .alert-destructive > [data-action] {
-    @apply absolute top-2.5 end-3;
+  .alert > footer,
+  .alert-destructive > footer {
+    @apply top-2.5 end-3;
+  }
+  /* Avatar */
+  .avatar,
+  .avatar-sm,
+  .avatar-lg {
+    @apply rounded-full after:rounded-[inherit];
+  }
+
+  .avatar {
+    @apply size-8;
+  }
+
+  .avatar-sm {
+    @apply size-6;
+  }
+
+  .avatar-lg {
+    @apply size-10;
+  }
+
+  .avatar > span:not([data-badge]),
+  .avatar-sm > span:not([data-badge]),
+  .avatar-lg > span:not([data-badge]) {
+    @apply bg-muted text-muted-foreground rounded-[inherit];
+  }
+
+  .avatar > img,
+  .avatar-sm > img,
+  .avatar-lg > img {
+    @apply rounded-[inherit];
+  }
+
+  .avatar > [data-badge],
+  .avatar-sm > [data-badge],
+  .avatar-lg > [data-badge] {
+    @apply bg-primary text-primary-foreground ring-background;
+  }
+
+  .avatar-group > [data-count] {
+    @apply bg-muted text-muted-foreground size-8 rounded-full text-sm [&>svg]:size-4;
+  }
+
+  .avatar-group:has(> .avatar-sm) > [data-count] {
+    @apply size-6 [&>svg]:size-3;
+  }
+
+  .avatar-group:has(> .avatar-lg) > [data-count] {
+    @apply size-10 [&>svg]:size-5;
   }
 
   /* Badge */
@@ -740,28 +788,71 @@
   }
 
   /* Card */
+  .card,
+  .card-sm {
+    @apply bg-card text-card-foreground ring-foreground/5 overflow-hidden text-sm shadow-sm ring-1 has-[>img:first-child]:pt-0 [&>img:first-child]:rounded-none [&>img:last-child]:rounded-none;
+  }
+
   .card {
-    @apply bg-card text-card-foreground ring-foreground/5 gap-8 overflow-hidden py-8 text-sm shadow-sm ring-1 has-[>img:first-child]:pt-0 data-[size=sm]:gap-5 data-[size=sm]:py-5 [&>img:first-child]:rounded-none [&>img:last-child]:rounded-none;
+    @apply gap-8 py-8;
   }
 
-  .card > header {
-    @apply gap-1.5 rounded-none px-8 in-data-[size=sm]:px-5 [.border-b]:pb-8 in-data-[size=sm]:[.border-b]:pb-5;
+  .card-sm {
+    @apply gap-5 py-5;
   }
 
-  .card > header > :is(h2, h3, [data-title], .card-title) {
+  .card > header,
+  .card-sm > header {
+    @apply gap-1.5 rounded-none px-8 [.border-b]:pb-8;
+  }
+
+  .card-sm > header {
+    @apply px-5 [.border-b]:pb-5;
+  }
+
+  .card > header > :is(h2, h3, [data-title], .card-title),
+  .card-sm > header > :is(h2, h3, [data-title], .card-title) {
     @apply text-lg font-semibold tracking-wider uppercase;
   }
 
-  .card > header > :is(p, [data-description], .card-description) {
+  .card > header > :is(p, [data-description], .card-description),
+  .card-sm > header > :is(p, [data-description], .card-description) {
     @apply text-muted-foreground text-sm leading-relaxed;
   }
 
-  .card > section {
-    @apply px-8 in-data-[size=sm]:px-5;
+  .card > section,
+  .card-sm > section {
+    @apply px-8;
   }
 
-  .card > footer {
-    @apply px-8 in-data-[size=sm]:px-5 [.border-t]:pt-8 in-data-[size=sm]:[.border-t]:pt-5;
+  .card-sm > section {
+    @apply px-5;
+  }
+
+  .card > footer,
+  .card-sm > footer {
+    @apply px-8 [.border-t]:pt-8;
+  }
+
+  .card-sm > footer {
+    @apply px-5 [.border-t]:pt-5;
+  }
+
+  /* Chart */
+  .chart-tooltip {
+    @apply border-border/50 bg-background text-foreground gap-1.5 rounded-none border px-2.5 py-1.5 text-xs shadow-xl;
+  }
+
+  .chart-tooltip-title {
+    @apply font-medium;
+  }
+
+  .chart-legend-item {
+    @apply text-foreground;
+  }
+
+  .chart-legend-item[aria-pressed='false'] {
+    @apply text-muted-foreground;
   }
 
   /* Checkbox */

@@ -34,24 +34,23 @@
   "homepage": "https://github.com/hunvreus/basecoat#readme",
   "scripts": {
     "build": "node ./scripts/build.js",
-    "docs:build": "npm run build && npm run docs:generate && astro build",
-    "docs:dev": "npm run build && npm run docs:generate && astro dev",
+    "docs:build": "npm run build && astro build",
+    "docs:dev": "astro dev",
     "workers:dev": "npm run docs:build && wrangler dev",
     "workers:deploy": "npm run docs:build && wrangler deploy",
-    "workers:preview": "npm run docs:build && wrangler versions upload",
-    "docs:generate": "node ./scripts/prepare-rsd-assets.js && node ./scripts/generate-rsd-docs.js"
+    "workers:preview": "npm run docs:build && wrangler versions upload"
   },
   "devDependencies": {
     "@fontsource/geist-mono": "^5.2.8",
     "@fontsource/geist-sans": "^5.2.5",
-    "@tailwindcss/cli": "^4.1.3",
+    "@tailwindcss/cli": "^4.1.17",
     "astro": "^6.4.6",
     "htmx.org": "^2.0.10",
     "lucide-static": "^1.17.0",
     "nunjucks": "^3.2.4",
     "prettier": "^3.5.3",
-    "reallysimpledocs": "^1.0.0-beta.0",
-    "tailwindcss": "^4.1.3",
+    "reallysimpledocs": "file:../reallysimpledocs",
+    "tailwindcss": "^4.1.17",
     "terser": "^5.42.0",
     "wrangler": "^4.50.0"
   }

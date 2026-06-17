@@ -1,0 +1,126 @@
+# Checkbox
+
+<Preview>
+<div role="group" class="field" data-orientation="horizontal">
+  <input type="checkbox" id="terms" class="input" />
+  <label for="terms">Accept terms and conditions</label>
+</div>
+</Preview>
+
+## Usage
+
+Add `input` to checkbox inputs. Pair it with [Field](/components/field) and a native `<label>` for layout and labeling.
+
+```html
+<input type="checkbox" class="input" />
+```
+
+## Examples
+
+### Basic
+
+<Preview>
+<div role="group" class="field" data-orientation="horizontal">
+  <input type="checkbox" id="checkbox-basic" class="input" />
+  <label for="checkbox-basic">Accept terms and conditions</label>
+</div>
+</Preview>
+
+### Description
+
+<Preview>
+<div role="group" class="field" data-orientation="horizontal">
+  <input type="checkbox" id="checkbox-description" class="input" aria-describedby="checkbox-description-text" />
+  <section>
+    <label for="checkbox-description">Accept terms and conditions</label>
+    <p id="checkbox-description-text" class="field-description">By clicking this checkbox, you agree to the terms and conditions.</p>
+  </section>
+</div>
+</Preview>
+
+### Invalid
+
+<Preview>
+<div role="group" class="field" data-orientation="horizontal" data-invalid="true">
+  <input type="checkbox" id="checkbox-invalid" class="input" aria-invalid="true" />
+  <label for="checkbox-invalid">Accept terms and conditions</label>
+</div>
+</Preview>
+
+### Disabled
+
+<Preview>
+<div role="group" class="field" data-orientation="horizontal" data-disabled="true">
+  <input type="checkbox" id="checkbox-disabled" class="input" disabled />
+  <label for="checkbox-disabled">Accept terms and conditions</label>
+</div>
+</Preview>
+
+### Group
+
+<Preview>
+<fieldset class="fieldset">
+  <legend>Sidebar</legend>
+  <p>Select the items you want to display in the sidebar.</p>
+  <div role="group" aria-label="Sidebar items" data-slot="checkbox-group">
+    <div role="group" class="field" data-orientation="horizontal">
+      <input class="input" type="checkbox" id="checkbox-recents" checked />
+      <label for="checkbox-recents">Recents</label>
+    </div>
+    <div role="group" class="field" data-orientation="horizontal">
+      <input class="input" type="checkbox" id="checkbox-home" checked />
+      <label for="checkbox-home">Home</label>
+    </div>
+    <div role="group" class="field" data-orientation="horizontal">
+      <input class="input" type="checkbox" id="checkbox-applications" />
+      <label for="checkbox-applications">Applications</label>
+    </div>
+    <div role="group" class="field" data-orientation="horizontal">
+      <input class="input" type="checkbox" id="checkbox-desktop" />
+      <label for="checkbox-desktop">Desktop</label>
+    </div>
+  </div>
+</fieldset>
+</Preview>
+
+### Table
+
+<Preview>
+<div class="table-container">
+  <table class="table">
+    <thead>
+      <tr>
+        <th><input type="checkbox" class="input" aria-label="Select all" /></th>
+        <th>Status</th>
+        <th>Email</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><input type="checkbox" class="input" aria-label="Select row 1" checked /></td>
+        <td>Active</td>
+        <td>olivia@example.com</td>
+      </tr>
+      <tr>
+        <td><input type="checkbox" class="input" aria-label="Select row 2" /></td>
+        <td>Inactive</td>
+        <td>noah@example.com</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</Preview>
+
+### RTL
+
+Checkbox layout uses document direction and logical spacing. Set `dir="rtl"` on a parent to render right-to-left.
+
+<Preview>
+<div dir="rtl" class="field" data-orientation="horizontal">
+  <input type="checkbox" id="checkbox-rtl" class="input" aria-describedby="checkbox-rtl-description" checked />
+  <section>
+    <label for="checkbox-rtl">قبول الشروط والأحكام</label>
+    <p id="checkbox-rtl-description" class="field-description">يمكنك تغيير هذا الخيار في أي وقت.</p>
+  </section>
+</div>
+</Preview>

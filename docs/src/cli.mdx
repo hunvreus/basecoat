@@ -1,0 +1,207 @@
+# CLI
+
+## Install Components
+
+Use the CLI to copy Basecoat component assets into your project. It can install CSS, JavaScript, and the matching Nunjucks or Jinja macros for components that ship template helpers.
+
+<CodeGroup defaultTab="npm">
+  <Code title="npm" lang="bash">{`npx basecoat-cli add dialog`}</Code>
+  <Code title="pnpm" lang="bash">{`pnpm dlx basecoat-cli add dialog`}</Code>
+  <Code title="bun" lang="bash">{`bunx basecoat-cli add dialog`}</Code>
+  <Code title="yarn" lang="bash">{`yarn dlx basecoat-cli add dialog`}</Code>
+</CodeGroup>
+
+The CLI asks which template engine you use and where it should copy JavaScript and macro files.
+
+## Macros
+
+Nunjucks and Jinja macros are optional helpers for components with larger HTML structures. They generate the same semantic Basecoat markup shown in the component docs.
+
+<CodeGroup defaultTab="Nunjucks">
+  <Code title="Nunjucks" lang="jinja">{`{% from "select.njk" import select %}
+
+{{ select(
+  name="fruit",
+  items=[
+    { value: "apple", label: "Apple" },
+    { value: "banana", label: "Banana" },
+    { value: "blueberry", label: "Blueberry" }
+  ]
+) }}`}</Code>
+  <Code title="Jinja" lang="jinja">{`{% from "select.html.jinja" import select %}
+
+{{ select(
+  name="fruit",
+  items=[
+    { "value": "apple", "label": "Apple" },
+    { "value": "banana", "label": "Banana" },
+    { "value": "blueberry", "label": "Blueberry" }
+  ]
+) }}`}</Code>
+</CodeGroup>
+
+### Public Macros
+
+| Component | Macro | Nunjucks | Jinja |
+| --- | --- | --- | --- |
+| [Combobox](/components/combobox) | `combobox()` | [combobox.njk](https://github.com/hunvreus/basecoat/blob/main/src/nunjucks/combobox.njk#L18) | [combobox.html.jinja](https://github.com/hunvreus/basecoat/blob/main/src/jinja/combobox.html.jinja#L4) |
+| [Command](/components/command) | `command()` | [command.njk](https://github.com/hunvreus/basecoat/blob/main/src/nunjucks/command.njk#L12) | [command.html.jinja](https://github.com/hunvreus/basecoat/blob/main/src/jinja/command.html.jinja#L12) |
+| [Command](/components/command) | `command_dialog()` | [command.njk](https://github.com/hunvreus/basecoat/blob/main/src/nunjucks/command.njk#L79) | [command.html.jinja](https://github.com/hunvreus/basecoat/blob/main/src/jinja/command.html.jinja#L79) |
+| [Dialog](/components/dialog) | `dialog()` | [dialog.njk](https://github.com/hunvreus/basecoat/blob/main/src/nunjucks/dialog.njk#L19) | [dialog.html.jinja](https://github.com/hunvreus/basecoat/blob/main/src/jinja/dialog.html.jinja#L19) |
+| [Dropdown Menu](/components/dropdown-menu) | `dropdown_menu()` | [dropdown-menu.njk](https://github.com/hunvreus/basecoat/blob/main/src/nunjucks/dropdown-menu.njk#L11) | [dropdown-menu.html.jinja](https://github.com/hunvreus/basecoat/blob/main/src/jinja/dropdown-menu.html.jinja#L11) |
+| [Popover](/components/popover) | `popover()` | [popover.njk](https://github.com/hunvreus/basecoat/blob/main/src/nunjucks/popover.njk#L10) | [popover.html.jinja](https://github.com/hunvreus/basecoat/blob/main/src/jinja/popover.html.jinja#L10) |
+| [Select](/components/select) | `select()` | [select.njk](https://github.com/hunvreus/basecoat/blob/main/src/nunjucks/select.njk#L17) | [select.html.jinja](https://github.com/hunvreus/basecoat/blob/main/src/jinja/select.html.jinja#L16) |
+| [Sidebar](/components/sidebar) | `sidebar()` | [sidebar.njk](https://github.com/hunvreus/basecoat/blob/main/src/nunjucks/sidebar.njk#L16) | [sidebar.html.jinja](https://github.com/hunvreus/basecoat/blob/main/src/jinja/sidebar.html.jinja#L16) |
+| [Tabs](/components/tabs) | `tabs()` | [tabs.njk](https://github.com/hunvreus/basecoat/blob/main/src/nunjucks/tabs.njk#L16) | [tabs.html.jinja](https://github.com/hunvreus/basecoat/blob/main/src/jinja/tabs.html.jinja#L17) |
+| [Toast](/components/toast) | `toaster()` | [toast.njk](https://github.com/hunvreus/basecoat/blob/main/src/nunjucks/toast.njk#L11) | [toast.html.jinja](https://github.com/hunvreus/basecoat/blob/main/src/jinja/toast.html.jinja#L11) |
+| [Toast](/components/toast) | `toast()` | [toast.njk](https://github.com/hunvreus/basecoat/blob/main/src/nunjucks/toast.njk#L53) | [toast.html.jinja](https://github.com/hunvreus/basecoat/blob/main/src/jinja/toast.html.jinja#L53) |
+
+Some macro files include internal recursive helpers such as `render_select_items()`. Those helpers are implementation details and are not part of the public API.
+
+## Macro Reference
+
+### `combobox()`
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `id` | `string` | generated | Unique combobox id. |
+| `selected` | `string \| array \| object` | `None` / `none` | Initial selected value or values. Objects can include `value` and `label`. |
+| `name` | `string` | `None` / `none` | Hidden input name. |
+| `multiple` | `boolean` | `false` | Enables chip-based multiple selection. |
+| `placeholder` | `string` | `None` / `none` | Visible input placeholder. |
+| `close_on_select` | `boolean` | `false` | Closes the popover after each option selection in multiple mode. |
+| `auto_highlight` | `boolean` | `false` | Highlights the first matching option while filtering. |
+| `format` | `"value" \| "object"` | `"value"` | Hidden input serialization format. |
+| `main_attrs` | `object` | `{}` | Extra attributes for the `.combobox` root. |
+| `input_attrs` | `object` | `{}` | Extra attributes for the visible input or chip input wrapper. |
+| `popover_attrs` | `object` | `{}` | Extra attributes for the popover element. |
+| `listbox_attrs` | `object` | `{}` | Extra attributes for the listbox. |
+| `hidden_input_attrs` | `object` | `{}` | Extra attributes for the hidden input. |
+
+### `command()`
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `id` | `string` | generated | Unique command id. |
+| `items` | `array` | `None` / `none` | Optional structured item data. Use caller content when omitted. |
+| `placeholder` | `string` | `"Type a command or search..."` | Search input placeholder. |
+| `empty_text` | `string` | `"No results found."` | Empty-state text. |
+| `main_attrs` | `object` | `{}` | Extra attributes for the `.command` root. |
+| `input_attrs` | `object` | `{}` | Extra attributes for the search input. |
+| `menu_attrs` | `object` | `{}` | Extra attributes for the command menu. |
+
+### `command_dialog()`
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `id` | `string` | generated | Unique command dialog id. |
+| `items` | `array` | `None` / `none` | Optional structured item data. Use caller content when omitted. |
+| `placeholder` | `string` | `"Type a command or search..."` | Search input placeholder. |
+| `empty_text` | `string` | `"No results found."` | Empty-state text. |
+| `dialog_attrs` | `object` | `{}` | Extra attributes for the native dialog. |
+| `input_attrs` | `object` | `{}` | Extra attributes for the search input. |
+| `menu_attrs` | `object` | `{}` | Extra attributes for the command menu. |
+| `open` | `boolean` | `false` | Renders the dialog open by default. |
+
+### `dialog()`
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `id` | `string` | generated | Unique dialog id. |
+| `trigger` | `string` | `None` / `none` | Text or HTML for a generated trigger button. |
+| `title` | `string` | `None` / `none` | Dialog title. |
+| `description` | `string` | `None` / `none` | Dialog description. |
+| `footer` | `string` | `None` / `none` | HTML for the dialog footer. |
+| `dialog_attrs` | `object` | `{}` | Extra attributes for the native dialog. |
+| `trigger_attrs` | `object` | `{}` | Extra attributes for the generated trigger button. |
+| `header_attrs` | `object` | `{}` | Extra attributes for the dialog header. |
+| `body_attrs` | `object` | `{}` | Extra attributes for the dialog body section. |
+| `footer_attrs` | `object` | `{}` | Extra attributes for the dialog footer. |
+| `open` | `boolean` | `false` | Renders the dialog open by default. |
+| `close_button` | `boolean` | `true` | Includes the generated close button. |
+| `close_on_overlay_click` | `boolean` | `true` | Adds backdrop-click close behavior. |
+
+### `dropdown_menu()`
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `trigger` | `string` | required | HTML for the trigger button. |
+| `id` | `string` | generated | Unique dropdown menu id. |
+| `items` | `array` | `None` / `none` | Optional structured menu item data. Use caller content when omitted. |
+| `main_attrs` | `object` | `{}` | Extra attributes for the `.dropdown-menu` root. |
+| `trigger_attrs` | `object` | `{}` | Extra attributes for the trigger button. |
+| `popover_attrs` | `object` | `{}` | Extra attributes for the popover element. |
+| `menu_attrs` | `object` | `{}` | Extra attributes for the menu element. |
+
+### `popover()`
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `trigger` | `string` | required | HTML for the trigger button. |
+| `id` | `string` | generated | Unique popover id. |
+| `main_attrs` | `object` | `{}` | Extra attributes for the `.popover` root. |
+| `trigger_attrs` | `object` | `{}` | Extra attributes for the trigger button. |
+| `popover_attrs` | `object` | `{}` | Extra attributes for the popover element. |
+
+### `select()`
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `id` | `string` | generated | Unique select id. |
+| `selected` | `string \| array` | `None` / `none` | Initial selected value or values. |
+| `name` | `string` | generated from `id` | Hidden input name. |
+| `items` | `array` | `None` / `none` | Optional structured item data. Use caller content when omitted. |
+| `multiple` | `boolean` | `false` | Enables multiple selection. |
+| `placeholder` | `string` | `None` / `none` | Placeholder text for multiple mode with no selection. |
+| `close_on_select` | `boolean` | `false` | Closes the popover after each option selection in multiple mode. |
+| `format` | `"value" \| "object"` | `"value"` | Hidden input serialization format. |
+| `main_attrs` | `object` | `{}` | Extra attributes for the `.select` root. |
+| `trigger_attrs` | `object` | `{}` | Extra attributes for the trigger button. |
+| `popover_attrs` | `object` | `{}` | Extra attributes for the popover element. |
+| `listbox_attrs` | `object` | `{}` | Extra attributes for the listbox. |
+| `input_attrs` | `object` | `{}` | Extra attributes for the hidden input. |
+
+### `sidebar()`
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `id` | `string` | `None` / `none` | Optional sidebar id. Use one when multiple sidebars exist. |
+| `label` | `string` | `"Sidebar navigation"` | Navigation landmark label. |
+| `open` | `boolean` | `true` | Initial open state. |
+| `side` | `"left" \| "right"` | `"left"` | Side of the viewport. |
+| `header` | `string` | `None` / `none` | HTML for the sidebar header. |
+| `footer` | `string` | `None` / `none` | HTML for the sidebar footer. |
+| `menu` | `array` | `None` / `none` | Optional structured menu data. Use caller content when omitted. |
+| `main_attrs` | `object` | `{}` | Extra attributes for the `.sidebar` root. |
+| `header_attrs` | `object` | `{}` | Extra attributes for the header. |
+| `content_attrs` | `object` | `{}` | Extra attributes for the scrollable content section. |
+| `footer_attrs` | `object` | `{}` | Extra attributes for the footer. |
+
+### `tabs()`
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `id` | `string` | generated | Unique tabs id. |
+| `tabsets` | `array` | `[]` | Tab definitions. Each item can include `tab`, `panel`, `tab_attrs`, and `panel_attrs`. |
+| `main_attrs` | `object` | `{}` | Extra attributes for the `.tabs` root. |
+| `tablist_attrs` | `object` | `{}` | Extra attributes for the tablist. Use `aria-orientation="vertical"` or `data-variant="line"` here. |
+| `default_tab_index` | `number` | `1` | One-based index of the initially selected tab. |
+
+### `toaster()`
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `id` | `string` | `"toaster"` | Toaster container id. |
+| `toasts` | `array` | `[]` | Initial toast objects rendered inside the toaster. |
+| `attrs` | `object` | `{}` | Extra attributes for the `.toaster` container. |
+
+### `toast()`
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `category` | `"success" \| "error" \| "info" \| "warning"` | `"success"` | Toast category. Controls icon and ARIA role. |
+| `title` | `string` | `""` | Toast title. |
+| `description` | `string` | `""` | Toast description. |
+| `action` | `object` | `None` / `none` | Action button/link config. Supports `label`, `onclick`, and `href`. |
+| `cancel` | `object` | `None` / `none` | Cancel button/link config. Supports `label`, `onclick`, and `href`. |
+| `attrs` | `object` | `{}` | Extra attributes for the `.toast` element. |

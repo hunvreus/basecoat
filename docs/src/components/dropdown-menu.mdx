@@ -1,0 +1,352 @@
+# Dropdown Menu
+
+<Preview>
+<div id="demo-dropdown-menu" class="dropdown-menu">
+  <button type="button" id="demo-dropdown-menu-trigger" aria-haspopup="menu" aria-controls="demo-dropdown-menu-menu" aria-expanded="false" class="btn-outline">Open</button>
+  <div id="demo-dropdown-menu-popover" data-popover aria-hidden="true" class="min-w-56">
+    <div role="menu" id="demo-dropdown-menu-menu" aria-labelledby="demo-dropdown-menu-trigger">
+      <div role="group" aria-labelledby="demo-dropdown-account">
+        <div role="heading" id="demo-dropdown-account">My Account</div>
+        <div role="menuitem">
+          Profile
+          <span data-shortcut>⇧⌘P</span>
+        </div>
+        <div role="menuitem">
+          Billing
+          <span data-shortcut>⌘B</span>
+        </div>
+        <div role="menuitem">Settings</div>
+        <div role="menuitem">Keyboard shortcuts</div>
+      </div>
+      <hr role="separator" />
+      <div role="menuitem">GitHub</div>
+      <div role="menuitem">Support</div>
+      <div role="menuitem" aria-disabled="true">API</div>
+      <hr role="separator" />
+      <div role="menuitem">Log out</div>
+    </div>
+  </div>
+</div>
+</Preview>
+
+## Usage
+
+<Callout title="Template macros available" icon="code" action={{ label: "Read more", href: "/cli#dropdown_menu" }}>
+  This component ships a `dropdown_menu()` macro for Jinja and Nunjucks.
+</Callout>
+
+Basecoat dropdown menus are inline-positioned relative to the `.dropdown-menu` wrapper. This differs from shadcn/ui's portalled Base UI implementation, but keeps the markup dependency-free and matches Basecoat's current popover/select positioning model.
+
+<Steps>
+  <Step title="Include the JavaScript files">
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.2/dist/js/basecoat.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.2/dist/js/dropdown-menu.min.js" defer></script>
+```
+
+  </Step>
+  <Step title="Add your dropdown menu HTML">
+
+```html
+<div id="demo-dropdown-menu" class="dropdown-menu">
+  <button type="button" id="demo-dropdown-menu-trigger" aria-haspopup="menu" aria-controls="demo-dropdown-menu-menu" aria-expanded="false" class="btn-outline">Open</button>
+  <div id="demo-dropdown-menu-popover" data-popover aria-hidden="true" class="min-w-56">
+    <div role="menu" id="demo-dropdown-menu-menu" aria-labelledby="demo-dropdown-menu-trigger">
+      <div role="group" aria-labelledby="demo-dropdown-account">
+        <div role="heading" id="demo-dropdown-account">My Account</div>
+        <div role="menuitem">
+          Profile
+          <span data-shortcut>⇧⌘P</span>
+        </div>
+        <div role="menuitem">
+          Billing
+          <span data-shortcut>⌘B</span>
+        </div>
+        <div role="menuitem">Settings</div>
+        <div role="menuitem">Keyboard shortcuts</div>
+      </div>
+      <hr role="separator" />
+      <div role="menuitem">GitHub</div>
+      <div role="menuitem">Support</div>
+      <div role="menuitem" aria-disabled="true">API</div>
+      <hr role="separator" />
+      <div role="menuitem">Log out</div>
+    </div>
+  </div>
+</div>
+```
+
+  </Step>
+</Steps>
+
+#### HTML structure
+
+<dl>
+  <dt><code class="highlight language-html">&lt;div class="dropdown-menu"&gt;</code></dt>
+  <dd>
+    Relative wrapper for the trigger and inline menu content.
+    <dl>
+      <dt><code class="highlight language-html">&lt;button aria-haspopup="menu" aria-expanded="false"&gt;</code></dt>
+      <dd>Trigger button. The script toggles <code>aria-expanded</code> and manages keyboard navigation.</dd>
+      <dt><code class="highlight language-html">&lt;div data-popover aria-hidden="true"&gt;</code></dt>
+      <dd>
+        Menu content popover. Set <code>data-side="top|right|bottom|left"</code> and <code>data-align="start|center|end"</code> to control placement.
+        <dl>
+          <dt><code class="highlight language-html">&lt;div role="menu"&gt;</code></dt>
+          <dd>
+            Container for menu items, groups, labels, and separators.
+            <dl>
+              <dt><code class="highlight language-html">&lt;div role="group" aria-labelledby="&#123; HEADING_ID &#125;"&gt;</code> <span class="badge-secondary">Optional</span></dt>
+              <dd>Groups related menu items.</dd>
+              <dt><code class="highlight language-html">&lt;div role="heading" id="&#123; HEADING_ID &#125;"&gt;</code> <span class="badge-secondary">Optional</span></dt>
+              <dd>Group heading/label.</dd>
+              <dt><code class="highlight language-html">&lt;div role="menuitem"&gt;</code></dt>
+              <dd>Standard action item. Use <code>aria-disabled="true"</code> for disabled items.</dd>
+              <dt><code class="highlight language-html">&lt;div role="menuitemcheckbox" aria-checked="true"&gt;</code></dt>
+              <dd>Checkbox-style item. Add a child with <code>data-indicator</code> for the checked icon.</dd>
+              <dt><code class="highlight language-html">&lt;div role="menuitemradio" aria-checked="true"&gt;</code></dt>
+              <dd>Radio-style item. Add a child with <code>data-indicator</code> for the selected icon.</dd>
+              <dt><code class="highlight language-html">&lt;span data-shortcut&gt;</code> <span class="badge-secondary">Optional</span></dt>
+              <dd>Shortcut hint aligned to the inline end of the item.</dd>
+              <dt><code class="highlight language-html">&lt;hr role="separator"&gt;</code> <span class="badge-secondary">Optional</span></dt>
+              <dd>Separator between groups or options.</dd>
+            </dl>
+          </dd>
+        </dl>
+      </dd>
+    </dl>
+  </dd>
+</dl>
+
+
+### JavaScript API
+
+| API | Type | Description |
+| --- | --- | --- |
+| `dropdown.open()` | Method | Opens the menu. |
+| `dropdown.close()` | Method | Closes the menu. |
+| `dropdown.toggle()` | Method | Toggles the menu. |
+| `dropdown.refresh()` | Method | Rescans menu items after children change inside the existing `role="menu"` element. |
+
+## Examples
+
+### Basic
+
+<Preview>
+<div id="dropdown-basic" class="dropdown-menu">
+  <button type="button" id="dropdown-basic-trigger" aria-haspopup="menu" aria-controls="dropdown-basic-menu" aria-expanded="false" class="btn-outline">Open</button>
+  <div id="dropdown-basic-popover" data-popover aria-hidden="true" class="min-w-56">
+    <div role="menu" id="dropdown-basic-menu" aria-labelledby="dropdown-basic-trigger">
+      <div role="group" aria-labelledby="dropdown-basic-account">
+        <div role="heading" id="dropdown-basic-account">My Account</div>
+        <div role="menuitem">Profile</div>
+        <div role="menuitem">Billing</div>
+        <div role="menuitem">Settings</div>
+      </div>
+      <hr role="separator" />
+      <div role="menuitem">Team</div>
+      <div role="menuitem" aria-disabled="true">API</div>
+    </div>
+  </div>
+</div>
+</Preview>
+
+### Shortcuts
+
+<Preview>
+<div id="dropdown-shortcuts" class="dropdown-menu">
+  <button type="button" id="dropdown-shortcuts-trigger" aria-haspopup="menu" aria-controls="dropdown-shortcuts-menu" aria-expanded="false" class="btn-outline">Open</button>
+  <div id="dropdown-shortcuts-popover" data-popover aria-hidden="true" class="min-w-56">
+    <div role="menu" id="dropdown-shortcuts-menu" aria-labelledby="dropdown-shortcuts-trigger">
+      <div role="menuitem">
+        New Tab
+        <span data-shortcut>⌘T</span>
+      </div>
+      <div role="menuitem">
+        New Window
+        <span data-shortcut>⌘N</span>
+      </div>
+      <div role="menuitem">
+        New Private Window
+        <span data-shortcut>⇧⌘N</span>
+      </div>
+      <hr role="separator" />
+      <div role="menuitem">
+        Print
+        <span data-shortcut>⌘P</span>
+      </div>
+    </div>
+  </div>
+</div>
+</Preview>
+
+### Icons
+
+<Preview>
+<div id="dropdown-icons" class="dropdown-menu">
+  <button type="button" id="dropdown-icons-trigger" aria-haspopup="menu" aria-controls="dropdown-icons-menu" aria-expanded="false" class="btn-outline">Open</button>
+  <div id="dropdown-icons-popover" data-popover aria-hidden="true" class="min-w-56">
+    <div role="menu" id="dropdown-icons-menu" aria-labelledby="dropdown-icons-trigger">
+      <div role="menuitem">
+        <svg class="lucide lucide-user" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>
+        Profile
+      </div>
+      <div role="menuitem">
+        <svg class="lucide lucide-credit-card" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2" /><line x1="2" x2="22" y1="10" y2="10" /></svg>
+        Billing
+      </div>
+      <div role="menuitem">
+        <svg class="lucide lucide-settings" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915" /><circle cx="12" cy="12" r="3" /></svg>
+        Settings
+      </div>
+      <hr role="separator" />
+      <div role="menuitem">
+        <svg class="lucide lucide-log-out" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 17 5-5-5-5" /><path d="M21 12H9" /><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" /></svg>
+        Log out
+      </div>
+    </div>
+  </div>
+</div>
+</Preview>
+
+### Checkboxes
+
+<Preview>
+<div id="dropdown-checkboxes" class="dropdown-menu">
+  <button type="button" id="dropdown-checkboxes-trigger" aria-haspopup="menu" aria-controls="dropdown-checkboxes-menu" aria-expanded="false" class="btn-outline">Open</button>
+  <div id="dropdown-checkboxes-popover" data-popover aria-hidden="true" class="min-w-56">
+    <div role="menu" id="dropdown-checkboxes-menu" aria-labelledby="dropdown-checkboxes-trigger">
+      <div role="group" aria-labelledby="dropdown-checkboxes-label">
+        <div role="heading" id="dropdown-checkboxes-label">Appearance</div>
+        <div role="menuitemcheckbox" aria-checked="true">
+          <span data-indicator>
+            <svg class="lucide lucide-check" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
+          </span>
+          Status Bar
+          <span data-shortcut>⌘S</span>
+        </div>
+        <div role="menuitemcheckbox" aria-checked="false">
+          <span data-indicator>
+            <svg class="lucide lucide-check" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
+          </span>
+          Activity Bar
+          <span data-shortcut>⌘A</span>
+        </div>
+        <div role="menuitemcheckbox" aria-checked="false" aria-disabled="true">
+          <span data-indicator>
+            <svg class="lucide lucide-check" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
+          </span>
+          Panel
+          <span data-shortcut>⌘P</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  (() => {
+    const dropdownMenu = document.querySelector("#dropdown-checkboxes");
+    const checkboxes = dropdownMenu.querySelectorAll('[role="menuitemcheckbox"]');
+    checkboxes.forEach((checkbox) => {
+      checkbox.addEventListener("click", () => {
+        if (checkbox.getAttribute("aria-disabled") === "true") return;
+        checkbox.setAttribute("aria-checked", checkbox.getAttribute("aria-checked") !== "true");
+      });
+    });
+  })();
+</script>
+</Preview>
+
+### Radio Group
+
+<Preview>
+<div id="dropdown-radio-group" class="dropdown-menu">
+  <button type="button" id="dropdown-radio-group-trigger" aria-haspopup="menu" aria-controls="dropdown-radio-group-menu" aria-expanded="false" class="btn-outline">Open</button>
+  <div id="dropdown-radio-group-popover" data-popover aria-hidden="true" class="min-w-56">
+    <div role="menu" id="dropdown-radio-group-menu" aria-labelledby="dropdown-radio-group-trigger">
+      <div role="group" aria-labelledby="dropdown-radio-label">
+        <div role="heading" id="dropdown-radio-label">Panel Position</div>
+        <div role="menuitemradio" aria-checked="false">
+          <span data-indicator>
+            <svg class="lucide lucide-check" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
+          </span>
+          Top
+        </div>
+        <div role="menuitemradio" aria-checked="true">
+          <span data-indicator>
+            <svg class="lucide lucide-check" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
+          </span>
+          Bottom
+        </div>
+        <div role="menuitemradio" aria-checked="false">
+          <span data-indicator>
+            <svg class="lucide lucide-check" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
+          </span>
+          Right
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  (() => {
+    const dropdownMenu = document.querySelector("#dropdown-radio-group");
+    const radios = dropdownMenu.querySelectorAll('[role="menuitemradio"]');
+    radios.forEach((radio) => {
+      radio.addEventListener("click", () => {
+        radios.forEach((item) => item.setAttribute("aria-checked", "false"));
+        radio.setAttribute("aria-checked", "true");
+      });
+    });
+  })();
+</script>
+</Preview>
+
+### Destructive
+
+<Preview>
+<div id="dropdown-destructive" class="dropdown-menu">
+  <button type="button" id="dropdown-destructive-trigger" aria-haspopup="menu" aria-controls="dropdown-destructive-menu" aria-expanded="false" class="btn-outline">Open</button>
+  <div id="dropdown-destructive-popover" data-popover aria-hidden="true" class="min-w-56">
+    <div role="menu" id="dropdown-destructive-menu" aria-labelledby="dropdown-destructive-trigger">
+      <div role="menuitem">Edit</div>
+      <div role="menuitem">Duplicate</div>
+      <hr role="separator" />
+      <div role="menuitem" data-variant="destructive">
+        <svg class="lucide lucide-trash-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 11v6" /><path d="M14 11v6" /><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" /><path d="M3 6h18" /><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" /></svg>
+        Delete
+      </div>
+    </div>
+  </div>
+</div>
+</Preview>
+
+### RTL
+
+Dropdown menus support document direction. Set `dir="rtl"` on the dropdown root or a parent element. Use logical alignment data attributes where possible.
+
+<Preview>
+<div dir="rtl">
+  <div id="dropdown-rtl" class="dropdown-menu">
+    <button type="button" id="dropdown-rtl-trigger" aria-haspopup="menu" aria-controls="dropdown-rtl-menu" aria-expanded="false" class="btn-outline">فتح</button>
+    <div id="dropdown-rtl-popover" data-popover aria-hidden="true" class="min-w-56" data-align="end">
+      <div role="menu" id="dropdown-rtl-menu" aria-labelledby="dropdown-rtl-trigger">
+        <div role="heading" id="dropdown-rtl-label">الحساب</div>
+        <div role="menuitem">
+          الملف الشخصي
+          <span data-shortcut>⌘P</span>
+        </div>
+        <div role="menuitem">
+          الإعدادات
+          <span data-shortcut>⌘S</span>
+        </div>
+        <hr role="separator" />
+        <div role="menuitem" data-variant="destructive">حذف</div>
+      </div>
+    </div>
+  </div>
+</div>
+</Preview>

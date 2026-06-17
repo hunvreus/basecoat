@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+### Added
+
+- Added an optional Chart.js helper with `window.basecoat.chart()`, chart CSS, generated tooltips, generated legends, and docs.
+- Added shared Alert action layout support for direct child `<footer>` action regions.
+- Added dedicated Avatar and Avatar Group component styles and docs.
+
 ## [1.0.0-beta.2] - 2026-06-14
 
 ### Breaking Changes

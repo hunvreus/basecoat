@@ -1,0 +1,421 @@
+# Select
+
+<Preview>
+<div id="select-855441" class="select">
+  <button type="button" class="w-[180px]" id="select-855441-trigger" aria-haspopup="listbox" aria-expanded="false" aria-controls="select-855441-listbox">
+    <span class="truncate">Light</span>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down text-muted-foreground opacity-50 shrink-0"><path d="m6 9 6 6 6-6" /></svg>
+  </button>
+  <div id="select-855441-popover" data-popover aria-hidden="true">
+    <div role="listbox" id="select-855441-listbox" aria-orientation="vertical" aria-labelledby="select-855441-trigger">
+      <div id="select-855441-items-1" role="option" data-value="light">Light</div>
+      <div id="select-855441-items-2" role="option" data-value="dark">Dark</div>
+      <div id="select-855441-items-3" role="option" data-value="system">System</div>
+    </div>
+  </div>
+  <input type="hidden" name="select-855441-value" value="light" />
+</div>
+</Preview>
+
+## Usage
+
+<Callout title="Template macros available" icon="code" action={{ label: "Read more", href: "/cli#select" }}>
+  This component ships a `select()` macro for Jinja and Nunjucks.
+</Callout>
+
+<Steps>
+  <Step title="Include the JavaScript files">
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.2/dist/js/basecoat.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.2/dist/js/select.min.js" defer></script>
+```
+
+  </Step>
+  <Step title="Add your select HTML">
+
+```html
+<div id="select-855441" class="select">
+  <button type="button" class="w-[180px]" id="select-855441-trigger" aria-haspopup="listbox" aria-expanded="false" aria-controls="select-855441-listbox">
+    <span class="truncate">Light</span>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down text-muted-foreground opacity-50 shrink-0"><path d="m6 9 6 6 6-6" /></svg>
+  </button>
+  <div id="select-855441-popover" data-popover aria-hidden="true">
+    <div role="listbox" id="select-855441-listbox" aria-orientation="vertical" aria-labelledby="select-855441-trigger">
+      <div id="select-855441-items-1" role="option" data-value="light">Light</div>
+      <div id="select-855441-items-2" role="option" data-value="dark">Dark</div>
+      <div id="select-855441-items-3" role="option" data-value="system">System</div>
+    </div>
+  </div>
+  <input type="hidden" name="select-855441-value" value="light" />
+</div>
+```
+
+  </Step>
+</Steps>
+
+### HTML structure
+
+<dl>
+  <dt><code class="highlight language-html">&lt;div class="select"&gt;</code></dt>
+  <dd>
+    Select root. Supports <code>data-placeholder</code>, <code>data-close-on-select="true"</code>, and <code>data-format="object"</code>.
+    <dl>
+      <dt><code class="highlight language-html">&lt;button type="button"&gt;</code></dt>
+      <dd>Trigger button. Use <code>aria-haspopup="listbox"</code>, <code>aria-expanded</code>, and <code>aria-controls</code>.</dd>
+      <dt><code class="highlight language-html">&lt;div data-popover aria-hidden="true"&gt;</code></dt>
+      <dd>
+        Popover content. Supports <code>data-side</code> and <code>data-align</code> through the shared popover rules.
+        <dl>
+          <dt><code class="highlight language-html">&lt;div role="listbox"&gt;</code></dt>
+          <dd>
+            Options container. Add <code>aria-multiselectable="true"</code> for multiple selection.
+            <dl>
+              <dt><code class="highlight language-html">&lt;div role="option" data-value="..."&gt;</code></dt>
+              <dd>Selectable option. Use <code>data-label</code> when selected text should differ from rendered content.</dd>
+              <dt><code class="highlight language-html">&lt;hr role="separator"&gt;</code> <span class="badge-secondary">Optional</span></dt>
+              <dd>Separator between groups or options.</dd>
+              <dt><code class="highlight language-html">&lt;div role="group"&gt;</code> <span class="badge-secondary">Optional</span></dt>
+              <dd>Option group. Use <code>aria-labelledby</code> to connect it to its heading.</dd>
+              <dt><code class="highlight language-html">&lt;span role="heading"&gt;</code> <span class="badge-secondary">Optional</span></dt>
+              <dd>Group heading.</dd>
+            </dl>
+          </dd>
+        </dl>
+      </dd>
+      <dt><code class="highlight language-html">&lt;input type="hidden"&gt;</code></dt>
+      <dd>Submitted value. Single select stores a string; multiselect stores a JSON array. With <code>data-format="object"</code>, values are serialized as <code>&#123; value, label &#125;</code> objects.</dd>
+    </dl>
+  </dd>
+</dl>
+
+### JavaScript API
+
+| API | Type | Description |
+| --- | --- | --- |
+| `change` | Event | Dispatched on selection changes with `event.detail.value` and `event.detail.selected`. |
+| `select.refresh()` | Method | Rescans options after children change inside the existing `role="listbox"` element. |
+
+## Examples
+
+### Align
+
+Use `data-align` on the popover to align the list to the trigger edge. Basecoat keeps the popup below the control; it does not implement shadcn/ui's selected-item-over-trigger positioning.
+
+<Preview>
+<div class="flex flex-wrap gap-3">
+  <div id="select-align-start" class="select">
+    <button type="button" class="w-[180px]" id="select-align-start-trigger" aria-haspopup="listbox" aria-expanded="false" aria-controls="select-align-start-listbox">
+      <span class="truncate">Light</span>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down text-muted-foreground opacity-50 shrink-0"><path d="m6 9 6 6 6-6" /></svg>
+    </button>
+    <div id="select-align-start-popover" data-popover aria-hidden="true" data-align="start">
+      <div role="listbox" id="select-align-start-listbox" aria-orientation="vertical" aria-labelledby="select-align-start-trigger">
+        <div id="select-align-start-items-1" role="option" data-value="light">Light</div>
+        <div id="select-align-start-items-2" role="option" data-value="dark">Dark</div>
+        <div id="select-align-start-items-3" role="option" data-value="system">System</div>
+      </div>
+    </div>
+    <input type="hidden" name="select-align-start-value" value="light" />
+  </div>
+  <div id="select-align-end" class="select">
+    <button type="button" class="w-[180px]" id="select-align-end-trigger" aria-haspopup="listbox" aria-expanded="false" aria-controls="select-align-end-listbox">
+      <span class="truncate">Light</span>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down text-muted-foreground opacity-50 shrink-0"><path d="m6 9 6 6 6-6" /></svg>
+    </button>
+    <div id="select-align-end-popover" data-popover aria-hidden="true" data-align="end">
+      <div role="listbox" id="select-align-end-listbox" aria-orientation="vertical" aria-labelledby="select-align-end-trigger">
+        <div id="select-align-end-items-1" role="option" data-value="light">Light</div>
+        <div id="select-align-end-items-2" role="option" data-value="dark">Dark</div>
+        <div id="select-align-end-items-3" role="option" data-value="system">System</div>
+      </div>
+    </div>
+    <input type="hidden" name="select-align-end-value" value="light" />
+  </div>
+</div>
+</Preview>
+
+### Groups
+
+<Preview>
+<div id="select-groups" class="select">
+  <button type="button" class="w-[220px]" id="select-groups-trigger" aria-haspopup="listbox" aria-expanded="false" aria-controls="select-groups-listbox">
+    <span class="truncate"></span>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down text-muted-foreground opacity-50 shrink-0"><path d="m6 9 6 6 6-6" /></svg>
+  </button>
+  <div id="select-groups-popover" data-popover aria-hidden="true">
+    <div role="listbox" id="select-groups-listbox" aria-orientation="vertical" aria-labelledby="select-groups-trigger">
+      <div role="group" aria-labelledby="select-groups-fruits">
+        <div role="heading" id="select-groups-fruits">Fruits</div>
+        <div role="option" data-value="apple">Apple</div>
+        <div role="option" data-value="banana">Banana</div>
+        <div role="option" data-value="blueberry">Blueberry</div>
+      </div>
+      <hr role="separator" />
+      <div role="group" aria-labelledby="select-groups-vegetables">
+        <div role="heading" id="select-groups-vegetables">Vegetables</div>
+        <div role="option" data-value="carrot">Carrot</div>
+        <div role="option" data-value="potato">Potato</div>
+        <div role="option" data-value="tomato">Tomato</div>
+      </div>
+    </div>
+  </div>
+  <input type="hidden" name="select-groups-value" value="" />
+</div>
+</Preview>
+
+### Scrollable
+
+<Preview>
+<div id="select-679828" class="select">
+  <button type="button" class="" id="select-679828-trigger" aria-haspopup="listbox" aria-expanded="false" aria-controls="select-679828-listbox">
+    <span class="truncate"></span>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down text-muted-foreground opacity-50 shrink-0"><path d="m6 9 6 6 6-6" /></svg>
+  </button>
+  <div id="select-679828-popover" data-popover aria-hidden="true">
+    <div role="listbox" id="select-679828-listbox" aria-orientation="vertical" aria-labelledby="select-679828-trigger" class="scrollbar-thin overflow-y-auto max-h-64">
+      <div role="option">Item 0</div>
+      <div role="option" data-value="item-1">Item 1</div>
+      <div role="option" data-value="item-2">Item 2</div>
+      <div role="option" data-value="item-3">Item 3</div>
+      <div role="option" data-value="item-4">Item 4</div>
+      <div role="option" data-value="item-5">Item 5</div>
+      <div role="option" data-value="item-6">Item 6</div>
+      <div role="option" data-value="item-7">Item 7</div>
+      <div role="option" data-value="item-8">Item 8</div>
+      <div role="option" data-value="item-9">Item 9</div>
+      <div role="option" data-value="item-10">Item 10</div>
+      <div role="option" data-value="item-11">Item 11</div>
+      <div role="option" data-value="item-12">Item 12</div>
+      <div role="option" data-value="item-13">Item 13</div>
+      <div role="option" data-value="item-14">Item 14</div>
+      <div role="option" data-value="item-15">Item 15</div>
+      <div role="option" data-value="item-16">Item 16</div>
+      <div role="option" data-value="item-17">Item 17</div>
+      <div role="option" data-value="item-18">Item 18</div>
+      <div role="option" data-value="item-19">Item 19</div>
+      <div role="option" data-value="item-20">Item 20</div>
+      <div role="option" data-value="item-21">Item 21</div>
+      <div role="option" data-value="item-22">Item 22</div>
+      <div role="option" data-value="item-23">Item 23</div>
+      <div role="option" data-value="item-24">Item 24</div>
+      <div role="option" data-value="item-25">Item 25</div>
+      <div role="option" data-value="item-26">Item 26</div>
+      <div role="option" data-value="item-27">Item 27</div>
+      <div role="option" data-value="item-28">Item 28</div>
+      <div role="option" data-value="item-29">Item 29</div>
+      <div role="option" data-value="item-30">Item 30</div>
+      <div role="option" data-value="item-31">Item 31</div>
+      <div role="option" data-value="item-32">Item 32</div>
+      <div role="option" data-value="item-33">Item 33</div>
+      <div role="option" data-value="item-34">Item 34</div>
+      <div role="option" data-value="item-35">Item 35</div>
+      <div role="option" data-value="item-36">Item 36</div>
+      <div role="option" data-value="item-37">Item 37</div>
+      <div role="option" data-value="item-38">Item 38</div>
+      <div role="option" data-value="item-39">Item 39</div>
+      <div role="option" data-value="item-40">Item 40</div>
+      <div role="option" data-value="item-41">Item 41</div>
+      <div role="option" data-value="item-42">Item 42</div>
+      <div role="option" data-value="item-43">Item 43</div>
+      <div role="option" data-value="item-44">Item 44</div>
+      <div role="option" data-value="item-45">Item 45</div>
+      <div role="option" data-value="item-46">Item 46</div>
+      <div role="option" data-value="item-47">Item 47</div>
+      <div role="option" data-value="item-48">Item 48</div>
+      <div role="option" data-value="item-49">Item 49</div>
+      <div role="option" data-value="item-50">Item 50</div>
+      <div role="option" data-value="item-51">Item 51</div>
+      <div role="option" data-value="item-52">Item 52</div>
+      <div role="option" data-value="item-53">Item 53</div>
+      <div role="option" data-value="item-54">Item 54</div>
+      <div role="option" data-value="item-55">Item 55</div>
+      <div role="option" data-value="item-56">Item 56</div>
+      <div role="option" data-value="item-57">Item 57</div>
+      <div role="option" data-value="item-58">Item 58</div>
+      <div role="option" data-value="item-59">Item 59</div>
+      <div role="option" data-value="item-60">Item 60</div>
+      <div role="option" data-value="item-61">Item 61</div>
+      <div role="option" data-value="item-62">Item 62</div>
+      <div role="option" data-value="item-63">Item 63</div>
+      <div role="option" data-value="item-64">Item 64</div>
+      <div role="option" data-value="item-65">Item 65</div>
+      <div role="option" data-value="item-66">Item 66</div>
+      <div role="option" data-value="item-67">Item 67</div>
+      <div role="option" data-value="item-68">Item 68</div>
+      <div role="option" data-value="item-69">Item 69</div>
+      <div role="option" data-value="item-70">Item 70</div>
+      <div role="option" data-value="item-71">Item 71</div>
+      <div role="option" data-value="item-72">Item 72</div>
+      <div role="option" data-value="item-73">Item 73</div>
+      <div role="option" data-value="item-74">Item 74</div>
+      <div role="option" data-value="item-75">Item 75</div>
+      <div role="option" data-value="item-76">Item 76</div>
+      <div role="option" data-value="item-77">Item 77</div>
+      <div role="option" data-value="item-78">Item 78</div>
+      <div role="option" data-value="item-79">Item 79</div>
+      <div role="option" data-value="item-80">Item 80</div>
+      <div role="option" data-value="item-81">Item 81</div>
+      <div role="option" data-value="item-82">Item 82</div>
+      <div role="option" data-value="item-83">Item 83</div>
+      <div role="option" data-value="item-84">Item 84</div>
+      <div role="option" data-value="item-85">Item 85</div>
+      <div role="option" data-value="item-86">Item 86</div>
+      <div role="option" data-value="item-87">Item 87</div>
+      <div role="option" data-value="item-88">Item 88</div>
+      <div role="option" data-value="item-89">Item 89</div>
+      <div role="option" data-value="item-90">Item 90</div>
+      <div role="option" data-value="item-91">Item 91</div>
+      <div role="option" data-value="item-92">Item 92</div>
+      <div role="option" data-value="item-93">Item 93</div>
+      <div role="option" data-value="item-94">Item 94</div>
+      <div role="option" data-value="item-95">Item 95</div>
+      <div role="option" data-value="item-96">Item 96</div>
+      <div role="option" data-value="item-97">Item 97</div>
+      <div role="option" data-value="item-98">Item 98</div>
+    </div>
+  </div>
+  <input type="hidden" name="select-679828-value" value="" />
+</div>
+</Preview>
+
+### Disabled
+
+<Preview>
+<div id="select-877925" class="select">
+  <button type="button" class="" id="select-877925-trigger" aria-haspopup="listbox" aria-expanded="false" aria-controls="select-877925-listbox" disabled="disabled">
+    <span class="truncate"></span>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down text-muted-foreground opacity-50 shrink-0"><path d="m6 9 6 6 6-6" /></svg>
+  </button>
+  <div id="select-877925-popover" data-popover aria-hidden="true">
+    <div role="listbox" id="select-877925-listbox" aria-orientation="vertical" aria-labelledby="select-877925-trigger">
+      <div role="option" data-value="disabled">Disabled</div>
+    </div>
+  </div>
+  <input type="hidden" name="select-877925-value" value="" />
+</div>
+</Preview>
+
+### Invalid
+
+<Preview class="w-full max-w-sm">
+<div role="group" class="field" data-invalid="true">
+  <label for="select-invalid-trigger">Role</label>
+  <div id="select-invalid" class="select">
+    <button type="button" class="w-[220px]" id="select-invalid-trigger" aria-haspopup="listbox" aria-expanded="false" aria-controls="select-invalid-listbox" aria-invalid="true">
+      <span class="truncate">Select a role</span>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down text-muted-foreground opacity-50 shrink-0"><path d="m6 9 6 6 6-6" /></svg>
+    </button>
+    <div id="select-invalid-popover" data-popover aria-hidden="true">
+      <div role="listbox" id="select-invalid-listbox" aria-orientation="vertical" aria-labelledby="select-invalid-trigger">
+        <div id="select-invalid-items-1" role="option" data-value="">Select a role</div>
+        <div id="select-invalid-items-2" role="option" data-value="admin">Admin</div>
+        <div id="select-invalid-items-3" role="option" data-value="editor">Editor</div>
+        <div id="select-invalid-items-4" role="option" data-value="viewer">Viewer</div>
+        <div id="select-invalid-items-5" role="option" data-value="guest">Guest</div>
+      </div>
+    </div>
+    <input type="hidden" name="select-invalid-value" value="" />
+  </div>
+  <p class="field-error" role="alert">Select a role to continue.</p>
+</div>
+</Preview>
+
+### With icon
+
+<Preview>
+<div id="select-with-icons" class="select">
+  <button type="button" class="w-[180px]" id="select-with-icons-trigger" aria-haspopup="listbox" aria-expanded="false" aria-controls="select-with-icons-listbox">
+    <span class="truncate"></span>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down text-muted-foreground opacity-50 shrink-0"><path d="m6 9 6 6 6-6" /></svg>
+  </button>
+  <div id="select-with-icons-popover" data-popover aria-hidden="true">
+    <div role="listbox" id="select-with-icons-listbox" aria-orientation="vertical" aria-labelledby="select-with-icons-trigger">
+      <div role="option" data-value="bar">
+        <span class="flex items-center gap-2">
+          <svg class="text-muted-foreground lucide lucide-chart-bar" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v16a2 2 0 0 0 2 2h16" /><path d="M7 16h8" /><path d="M7 11h12" /><path d="M7 6h3" /></svg>
+          Bar
+        </span>
+      </div>
+      <div role="option" data-value="line">
+        <span class="flex items-center gap-2">
+          <svg class="text-muted-foreground lucide lucide-chart-line" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v16a2 2 0 0 0 2 2h16" /><path d="m19 9-5 5-4-4-3 3" /></svg>
+          Line
+        </span>
+      </div>
+      <div role="option" data-value="pie">
+        <span class="flex items-center gap-2">
+          <svg class="text-muted-foreground lucide lucide-chart-pie" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12c.552 0 1.005-.449.95-.998a10 10 0 0 0-8.953-8.951c-.55-.055-.998.398-.998.95v8a1 1 0 0 0 1 1z" /><path d="M21.21 15.89A10 10 0 1 1 8 2.83" /></svg>
+          Pie
+        </span>
+      </div>
+    </div>
+  </div>
+  <input type="hidden" name="select-with-icons-value" value="" />
+</div>
+</Preview>
+
+### Multiple
+
+Enable multiple selection by adding `aria-multiselectable="true"` to the `listbox`. The selected options are displayed as a comma-separated list in the trigger button. Use `data-label` to specify clean text labels for options that contain HTML (like icons), otherwise the text content will be extracted automatically.
+
+<Preview>
+<div id="select-multiple" class="select" data-placeholder="Select chart types...">
+  <button type="button" class="w-[220px]" id="select-multiple-trigger" aria-haspopup="listbox" aria-expanded="false" aria-controls="select-multiple-listbox">
+    <span class="truncate"></span>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down text-muted-foreground opacity-50 shrink-0"><path d="m6 9 6 6 6-6" /></svg>
+  </button>
+  <div id="select-multiple-popover" data-popover aria-hidden="true">
+    <div role="listbox" id="select-multiple-listbox" aria-orientation="vertical" aria-labelledby="select-multiple-trigger" aria-multiselectable="true">
+      <div role="option" data-value="bar" data-label="Bar">
+        <span class="flex items-center gap-2">
+          <svg class="text-muted-foreground lucide lucide-chart-bar" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v16a2 2 0 0 0 2 2h16" /><path d="M7 16h8" /><path d="M7 11h12" /><path d="M7 6h3" /></svg>
+          Bar
+        </span>
+      </div>
+      <div role="option" data-value="line" data-label="Line">
+        <span class="flex items-center gap-2">
+          <svg class="text-muted-foreground lucide lucide-chart-line" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v16a2 2 0 0 0 2 2h16" /><path d="m19 9-5 5-4-4-3 3" /></svg>
+          Line
+        </span>
+      </div>
+      <div role="option" data-value="pie" data-label="Pie">
+        <span class="flex items-center gap-2">
+          <svg class="text-muted-foreground lucide lucide-chart-pie" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12c.552 0 1.005-.449.95-.998a10 10 0 0 0-8.953-8.951c-.55-.055-.998.398-.998.95v8a1 1 0 0 0 1 1z" /><path d="M21.21 15.89A10 10 0 1 1 8 2.83" /></svg>
+          Pie
+        </span>
+      </div>
+      <div role="option" data-value="area" data-label="Area">
+        <span class="flex items-center gap-2">
+          <svg class="text-muted-foreground lucide lucide-chart-area" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v16a2 2 0 0 0 2 2h16" /><path d="M7 11.207a.5.5 0 0 1 .146-.353l2-2a.5.5 0 0 1 .708 0l3.292 3.292a.5.5 0 0 0 .708 0l4.292-4.292a.5.5 0 0 1 .854.353V16a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1z" /></svg>
+          Area
+        </span>
+      </div>
+    </div>
+  </div>
+  <input type="hidden" name="chart-types" value='["bar","line"]' />
+</div>
+</Preview>
+
+### RTL
+
+Set `dir="rtl"` on the select root or a parent element.
+
+<Preview>
+<div dir="rtl">
+  <div id="select-rtl" class="select">
+    <button type="button" class="w-[180px]" id="select-rtl-trigger" aria-haspopup="listbox" aria-expanded="false" aria-controls="select-rtl-listbox">
+      <span class="truncate">فاتح</span>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down text-muted-foreground opacity-50 shrink-0"><path d="m6 9 6 6 6-6" /></svg>
+    </button>
+    <div id="select-rtl-popover" data-popover aria-hidden="true" data-align="start">
+      <div role="listbox" id="select-rtl-listbox" aria-orientation="vertical" aria-labelledby="select-rtl-trigger">
+        <div id="select-rtl-items-1" role="option" data-value="light">فاتح</div>
+        <div id="select-rtl-items-2" role="option" data-value="dark">داكن</div>
+        <div id="select-rtl-items-3" role="option" data-value="system">النظام</div>
+      </div>
+    </div>
+    <input type="hidden" name="select-rtl-value" value="light" />
+  </div>
+</div>
+</Preview>

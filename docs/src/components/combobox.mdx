@@ -1,0 +1,284 @@
+# Combobox
+
+<Preview>
+<div id="framework-combobox" class="combobox w-[240px]">
+  <input type="text" role="combobox" placeholder="Select a framework" autocomplete="off" autocorrect="off" spellcheck="false" aria-autocomplete="list" aria-expanded="false" aria-controls="framework-combobox-listbox" />
+  <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="combobox-trigger-icon"><path d="m6 9 6 6 6-6" /></svg>
+  <div id="framework-combobox-popover" data-popover aria-hidden="true">
+    <div role="listbox" id="framework-combobox-listbox" aria-orientation="vertical" data-empty="No framework found.">
+      <div role="option" data-value="Next.js">Next.js</div>
+      <div role="option" data-value="SvelteKit">SvelteKit</div>
+      <div role="option" data-value="Nuxt.js">Nuxt.js</div>
+      <div role="option" data-value="Remix">Remix</div>
+      <div role="option" data-value="Astro">Astro</div>
+    </div>
+  </div>
+  <input type="hidden" name="framework" value="" />
+</div>
+</Preview>
+
+## Usage
+
+<Callout title="Template macros available" icon="code" action={{ label: "Read more", href: "/cli#combobox" }}>
+  This component ships a `combobox()` macro for Jinja and Nunjucks.
+</Callout>
+
+<Steps>
+  <Step title="Include the JavaScript files">
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.2/dist/js/basecoat.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.2/dist/js/combobox.min.js" defer></script>
+```
+
+  </Step>
+  <Step title="Add your combobox HTML">
+
+Combobox is input-first. The visible input filters the list; the hidden input stores the submitted value.
+
+```html
+<div id="framework-combobox" class="combobox w-[240px]">
+  <input type="text" role="combobox" placeholder="Select a framework" autocomplete="off" autocorrect="off" spellcheck="false" aria-autocomplete="list" aria-expanded="false" aria-controls="framework-combobox-listbox" />
+  <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="combobox-trigger-icon"><path d="m6 9 6 6 6-6" /></svg>
+  <div id="framework-combobox-popover" data-popover aria-hidden="true">
+    <div role="listbox" id="framework-combobox-listbox" aria-orientation="vertical" data-empty="No framework found.">
+      <div role="option" data-value="Next.js">Next.js</div>
+      <div role="option" data-value="SvelteKit">SvelteKit</div>
+      <div role="option" data-value="Nuxt.js">Nuxt.js</div>
+      <div role="option" data-value="Remix">Remix</div>
+      <div role="option" data-value="Astro">Astro</div>
+    </div>
+  </div>
+  <input type="hidden" name="framework" value="" />
+</div>
+```
+
+  </Step>
+</Steps>
+
+### HTML structure
+
+<dl>
+  <dt><code class="highlight language-html">&lt;div class="combobox"&gt;</code></dt>
+  <dd>
+    Root element. Add <code>data-auto-highlight="true"</code> to highlight the first match while filtering. Add <code>data-format="object"</code> to serialize selected values as <code>&#123; value, label &#125;</code> objects in the hidden input. Add <code>data-filter="manual"</code> when your app owns filtering, such as remote autocomplete or a local Lunr index.
+    <dl>
+      <dt><code class="highlight language-html">&lt;input type="text" role="combobox"&gt;</code></dt>
+      <dd>The editable control. It should include <code>aria-expanded</code>, <code>aria-controls</code>, and <code>aria-autocomplete="list"</code>.</dd>
+      <dt><code class="highlight language-html">&lt;div class="combobox-chips"&gt;</code> <span class="badge-secondary">Multiple only</span></dt>
+      <dd>
+        Wraps selected chips and the editable input in multiple mode.
+        <dl>
+          <dt><code class="highlight language-html">&lt;input type="text" role="combobox"&gt;</code></dt>
+          <dd>The editable control in multiple mode.</dd>
+        </dl>
+      </dd>
+      <dt><code class="highlight language-html">&lt;div data-popover&gt;</code></dt>
+      <dd>
+        The suggestions popup. Use <code>data-side</code> and <code>data-align</code> like Popover.
+        <dl>
+          <dt><code class="highlight language-html">&lt;div role="listbox"&gt;</code></dt>
+          <dd>
+            The suggestions list. Add <code>aria-multiselectable="true"</code> in multiple mode and <code>data-empty</code> for the empty message.
+            <dl>
+              <dt><code class="highlight language-html">&lt;div role="option" data-value="..."&gt;</code></dt>
+              <dd>Selectable option. Options can contain custom HTML; use <code>data-label</code> when the visible input should use different text than the rendered content.</dd>
+              <dt><code class="highlight language-html">&lt;div role="group"&gt;</code> <span class="badge-secondary">Optional</span></dt>
+              <dd>Option group. Use <code>aria-labelledby</code> to connect it to its heading.</dd>
+              <dt><code class="highlight language-html">&lt;div role="heading"&gt;</code> <span class="badge-secondary">Optional</span></dt>
+              <dd>Group heading.</dd>
+              <dt><code class="highlight language-html">&lt;hr role="separator"&gt;</code> <span class="badge-secondary">Optional</span></dt>
+              <dd>Separator between groups or options.</dd>
+            </dl>
+          </dd>
+        </dl>
+      </dd>
+      <dt><code class="highlight language-html">&lt;input type="hidden"&gt;</code></dt>
+      <dd>Submitted value. Single mode stores a string; multiple mode stores a JSON array. With <code>data-format="object"</code>, single mode stores a JSON object and multiple mode stores a JSON array of objects.</dd>
+    </dl>
+  </dd>
+</dl>
+
+### JavaScript API
+
+| API | Type | Description |
+| --- | --- | --- |
+| `change` | Event | Dispatched on selection changes with `event.detail.value` and `event.detail.selected`. |
+| `combobox.setValue(value)` | Method | Sets the selected value from a plain value or `{ value, label }` object, useful for remote autocomplete hydration. |
+| `combobox.refresh()` | Method | Rescans options after children change inside the existing `role="listbox"` element. |
+
+## Examples
+
+### Multiple
+
+<Preview>
+<div id="frameworks-combobox" class="combobox" data-auto-highlight="true">
+  <div class="combobox-chips w-[320px]">
+    <input type="text" role="combobox" placeholder="Add framework" autocomplete="off" autocorrect="off" spellcheck="false" aria-autocomplete="list" aria-expanded="false" aria-controls="frameworks-combobox-listbox" />
+  </div>
+  <div id="frameworks-combobox-popover" data-popover aria-hidden="true">
+    <div role="listbox" id="frameworks-combobox-listbox" aria-orientation="vertical" aria-multiselectable="true" data-empty="No framework found.">
+      <div role="option" data-value="Next.js">Next.js</div>
+      <div role="option" data-value="SvelteKit">SvelteKit</div>
+      <div role="option" data-value="Nuxt.js">Nuxt.js</div>
+      <div role="option" data-value="Remix">Remix</div>
+      <div role="option" data-value="Astro">Astro</div>
+    </div>
+  </div>
+  <input type="hidden" name="frameworks" value='["Next.js"]' />
+</div>
+</Preview>
+
+### Groups
+
+<Preview>
+<div id="timezone-combobox" class="combobox w-[280px]">
+  <input type="text" role="combobox" placeholder="Search timezone" autocomplete="off" autocorrect="off" spellcheck="false" aria-autocomplete="list" aria-expanded="false" aria-controls="timezone-combobox-listbox" />
+  <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="combobox-trigger-icon"><path d="m6 9 6 6 6-6" /></svg>
+  <div id="timezone-combobox-popover" data-popover aria-hidden="true">
+    <div role="listbox" id="timezone-combobox-listbox" aria-orientation="vertical" data-empty="No timezone found.">
+      <div role="group" aria-labelledby="timezone-americas">
+        <div role="heading" id="timezone-americas">Americas</div>
+        <div role="option" data-value="America/New_York">(GMT-5) New York</div>
+        <div role="option" data-value="America/Los_Angeles">(GMT-8) Los Angeles</div>
+        <div role="option" data-value="America/Sao_Paulo">(GMT-3) São Paulo</div>
+      </div>
+      <hr role="separator" />
+      <div role="group" aria-labelledby="timezone-europe">
+        <div role="heading" id="timezone-europe">Europe</div>
+        <div role="option" data-value="Europe/London">(GMT+0) London</div>
+        <div role="option" data-value="Europe/Paris">(GMT+1) Paris</div>
+        <div role="option" data-value="Europe/Berlin">(GMT+1) Berlin</div>
+      </div>
+    </div>
+  </div>
+  <input type="hidden" value="" />
+</div>
+</Preview>
+
+### Custom Items
+
+<Preview>
+<div id="country-combobox" class="combobox w-[280px]">
+  <input type="text" role="combobox" placeholder="Search countries" autocomplete="off" autocorrect="off" spellcheck="false" aria-autocomplete="list" aria-expanded="false" aria-controls="country-combobox-listbox" />
+  <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="combobox-trigger-icon"><path d="m6 9 6 6 6-6" /></svg>
+  <div id="country-combobox-popover" data-popover aria-hidden="true">
+    <div role="listbox" id="country-combobox-listbox" aria-orientation="vertical" data-empty="No country found.">
+      <div role="option" data-value="argentina" data-label="Argentina" data-filter="Argentina South America">
+        <span class="flex flex-col">
+          <span>Argentina</span>
+          <span class="text-muted-foreground text-xs">South America (ar)</span>
+        </span>
+      </div>
+      <div role="option" data-value="japan" data-label="Japan" data-filter="Japan Asia">
+        <span class="flex flex-col">
+          <span>Japan</span>
+          <span class="text-muted-foreground text-xs">Asia (jp)</span>
+        </span>
+      </div>
+      <div role="option" data-value="united-states" data-label="United States" data-filter="United States North America USA">
+        <span class="flex flex-col">
+          <span>United States</span>
+          <span class="text-muted-foreground text-xs">North America (us)</span>
+        </span>
+      </div>
+    </div>
+  </div>
+  <input type="hidden" value="" />
+</div>
+</Preview>
+
+### Invalid
+
+<Preview>
+<div role="group" class="field" data-invalid="true">
+  <label for="invalid-combobox-input">Framework</label>
+  <div id="invalid-combobox" class="combobox w-[240px]">
+    <input type="text" role="combobox" placeholder="Select a framework" autocomplete="off" autocorrect="off" spellcheck="false" aria-autocomplete="list" aria-expanded="false" aria-controls="invalid-combobox-listbox" id="invalid-combobox-input" aria-invalid="true" />
+    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="combobox-trigger-icon"><path d="m6 9 6 6 6-6" /></svg>
+    <div id="invalid-combobox-popover" data-popover aria-hidden="true">
+      <div role="listbox" id="invalid-combobox-listbox" aria-orientation="vertical" data-empty="No framework found.">
+        <div role="option" data-value="Next.js">Next.js</div>
+        <div role="option" data-value="SvelteKit">SvelteKit</div>
+        <div role="option" data-value="Nuxt.js">Nuxt.js</div>
+        <div role="option" data-value="Remix">Remix</div>
+        <div role="option" data-value="Astro">Astro</div>
+      </div>
+    </div>
+    <input type="hidden" value="" />
+  </div>
+  <p class="field-error" role="alert">Select a framework to continue.</p>
+</div>
+</Preview>
+
+### Disabled
+
+<Preview>
+<div id="combobox-489412" class="combobox w-[240px]">
+  <input type="text" role="combobox" placeholder="Select a framework" autocomplete="off" autocorrect="off" spellcheck="false" aria-autocomplete="list" aria-expanded="false" aria-controls="combobox-489412-listbox" disabled="disabled" />
+  <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="combobox-trigger-icon"><path d="m6 9 6 6 6-6" /></svg>
+  <div id="combobox-489412-popover" data-popover aria-hidden="true">
+    <div role="listbox" id="combobox-489412-listbox" aria-orientation="vertical">
+      <div role="option" data-value="nextjs">Next.js</div>
+    </div>
+  </div>
+  <input type="hidden" value="" />
+</div>
+</Preview>
+
+### Auto Highlight
+
+<Preview>
+<div id="combobox-906805" class="combobox w-[240px]" data-auto-highlight="true">
+  <input type="text" role="combobox" placeholder="Select a framework" autocomplete="off" autocorrect="off" spellcheck="false" aria-autocomplete="list" aria-expanded="false" aria-controls="combobox-906805-listbox" />
+  <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="combobox-trigger-icon"><path d="m6 9 6 6 6-6" /></svg>
+  <div id="combobox-906805-popover" data-popover aria-hidden="true">
+    <div role="listbox" id="combobox-906805-listbox" aria-orientation="vertical">
+      <div role="option" data-value="Next.js">Next.js</div>
+      <div role="option" data-value="SvelteKit">SvelteKit</div>
+      <div role="option" data-value="Nuxt.js">Nuxt.js</div>
+      <div role="option" data-value="Remix">Remix</div>
+      <div role="option" data-value="Astro">Astro</div>
+    </div>
+  </div>
+  <input type="hidden" value="" />
+</div>
+</Preview>
+
+### Top Side
+
+<Preview>
+<div id="combobox-775269" class="combobox w-[240px]">
+  <input type="text" role="combobox" placeholder="Select a framework" autocomplete="off" autocorrect="off" spellcheck="false" aria-autocomplete="list" aria-expanded="false" aria-controls="combobox-775269-listbox" />
+  <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="combobox-trigger-icon"><path d="m6 9 6 6 6-6" /></svg>
+  <div id="combobox-775269-popover" data-popover aria-hidden="true" data-side="top">
+    <div role="listbox" id="combobox-775269-listbox" aria-orientation="vertical">
+      <div role="option" data-value="Next.js">Next.js</div>
+      <div role="option" data-value="SvelteKit">SvelteKit</div>
+      <div role="option" data-value="Nuxt.js">Nuxt.js</div>
+      <div role="option" data-value="Remix">Remix</div>
+      <div role="option" data-value="Astro">Astro</div>
+    </div>
+  </div>
+  <input type="hidden" value="" />
+</div>
+</Preview>
+
+### RTL
+
+<Preview>
+<div dir="rtl">
+  <div id="combobox-998046" class="combobox w-[240px]">
+    <input type="text" role="combobox" placeholder="اختر إطار عمل" autocomplete="off" autocorrect="off" spellcheck="false" aria-autocomplete="list" aria-expanded="false" aria-controls="combobox-998046-listbox" />
+    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="combobox-trigger-icon"><path d="m6 9 6 6 6-6" /></svg>
+    <div id="combobox-998046-popover" data-popover aria-hidden="true">
+      <div role="listbox" id="combobox-998046-listbox" aria-orientation="vertical">
+        <div role="option" data-value="nextjs">Next.js</div>
+        <div role="option" data-value="sveltekit">SvelteKit</div>
+        <div role="option" data-value="astro">Astro</div>
+      </div>
+    </div>
+    <input type="hidden" value="" />
+  </div>
+</div>
+</Preview>

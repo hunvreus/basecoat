@@ -1,0 +1,130 @@
+# Scroll Area
+
+<Preview class="w-full">
+<div class="scrollbar h-72 w-full max-w-sm overflow-y-auto rounded-md border p-4">
+  <div class="space-y-4">
+    <h4 class="text-sm leading-none font-medium">Tags</h4>
+    <div class="text-sm">
+      <div class="border-b py-2">v1.2.0-beta.50</div>
+      <div class="border-b py-2">v1.2.0-beta.49</div>
+      <div class="border-b py-2">v1.2.0-beta.48</div>
+      <div class="border-b py-2">v1.2.0-beta.47</div>
+      <div class="border-b py-2">v1.2.0-beta.46</div>
+      <div class="border-b py-2">v1.2.0-beta.45</div>
+      <div class="border-b py-2">v1.2.0-beta.44</div>
+      <div class="border-b py-2">v1.2.0-beta.43</div>
+      <div class="border-b py-2">v1.2.0-beta.42</div>
+      <div class="border-b py-2">v1.2.0-beta.41</div>
+      <div class="border-b py-2">v1.2.0-beta.40</div>
+      <div class="border-b py-2">v1.2.0-beta.39</div>
+      <div class="py-2">v1.2.0-beta.38</div>
+    </div>
+  </div>
+</div>
+</Preview>
+
+## Usage
+
+Use `scrollbar` or `scrollbar-thin` on an element that already scrolls with `overflow-auto`, `overflow-y-auto`, or `overflow-x-auto`.
+
+```html
+<div class="scrollbar h-72 overflow-y-auto rounded-md border p-4">
+  Your scrollable content here.
+</div>
+```
+
+Use `scrollbar` or `scrollbar-thin` on an element that already scrolls with `overflow-auto`, `overflow-y-auto`, or `overflow-x-auto`.
+
+The utility augments native scrolling for cross-browser styling. It does not wrap content, replace browser scroll behavior, or require JavaScript.
+
+## Examples
+
+### Horizontal
+
+Use `scrollbar` with `overflow-x-auto` for horizontal scrolling.
+
+<Preview class="w-full">
+<div class="scrollbar w-full max-w-sm overflow-x-auto rounded-md border">
+  <div class="flex w-max gap-4 p-4">
+    <figure class="shrink-0">
+      <div class="aspect-[3/4] w-40 rounded-md bg-muted"></div>
+      <figcaption class="text-muted-foreground pt-2 text-xs">Photo by Ornella Binni</figcaption>
+    </figure>
+    <figure class="shrink-0">
+      <div class="aspect-[3/4] w-40 rounded-md bg-muted"></div>
+      <figcaption class="text-muted-foreground pt-2 text-xs">Photo by Tom Byrom</figcaption>
+    </figure>
+    <figure class="shrink-0">
+      <div class="aspect-[3/4] w-40 rounded-md bg-muted"></div>
+      <figcaption class="text-muted-foreground pt-2 text-xs">Photo by Vladimir Malyavko</figcaption>
+    </figure>
+  </div>
+</div>
+</Preview>
+
+### Thin
+
+Use `scrollbar-thin` for compact scrollable regions like menus, listboxes, sidebars, and command results.
+
+<Preview class="w-full">
+<div class="w-full max-w-sm rounded-md border p-1">
+  <div class="px-2 py-1.5 text-xs font-medium text-muted-foreground">Recent files</div>
+  <div class="scrollbar-thin max-h-48 overflow-y-auto">
+    <button type="button" class="flex w-full items-center justify-between rounded-sm px-2 py-1.5 text-sm hover:bg-accent">
+      <span>project-roadmap.md</span>
+      <span class="text-xs text-muted-foreground">2m</span>
+    </button>
+    <button type="button" class="flex w-full items-center justify-between rounded-sm px-2 py-1.5 text-sm hover:bg-accent">
+      <span>release-notes.md</span>
+      <span class="text-xs text-muted-foreground">8m</span>
+    </button>
+    <button type="button" class="flex w-full items-center justify-between rounded-sm px-2 py-1.5 text-sm hover:bg-accent">
+      <span>api-contract.json</span>
+      <span class="text-xs text-muted-foreground">16m</span>
+    </button>
+    <button type="button" class="flex w-full items-center justify-between rounded-sm px-2 py-1.5 text-sm hover:bg-accent">
+      <span>pricing-table.html</span>
+      <span class="text-xs text-muted-foreground">1h</span>
+    </button>
+    <button type="button" class="flex w-full items-center justify-between rounded-sm px-2 py-1.5 text-sm hover:bg-accent">
+      <span>onboarding-flow.md</span>
+      <span class="text-xs text-muted-foreground">2h</span>
+    </button>
+    <button type="button" class="flex w-full items-center justify-between rounded-sm px-2 py-1.5 text-sm hover:bg-accent">
+      <span>settings-panel.ts</span>
+      <span class="text-xs text-muted-foreground">3h</span>
+    </button>
+    <button type="button" class="flex w-full items-center justify-between rounded-sm px-2 py-1.5 text-sm hover:bg-accent">
+      <span>invoice-template.html</span>
+      <span class="text-xs text-muted-foreground">5h</span>
+    </button>
+  </div>
+</div>
+</Preview>
+
+### RTL
+
+Set `dir="rtl"` on the scrollable element or one of its ancestors to use right-to-left layout.
+
+<Preview class="w-full">
+<div dir="rtl" class="scrollbar h-72 w-full max-w-sm overflow-y-auto rounded-md border p-4">
+  <div class="space-y-4">
+    <h4 class="text-sm leading-none font-medium">العلامات</h4>
+    <div class="text-sm">
+      <div class="border-b py-2">v1.2.0-beta.50</div>
+      <div class="border-b py-2">v1.2.0-beta.49</div>
+      <div class="border-b py-2">v1.2.0-beta.48</div>
+      <div class="border-b py-2">v1.2.0-beta.47</div>
+      <div class="border-b py-2">v1.2.0-beta.46</div>
+      <div class="border-b py-2">v1.2.0-beta.45</div>
+      <div class="border-b py-2">v1.2.0-beta.44</div>
+      <div class="border-b py-2">v1.2.0-beta.43</div>
+      <div class="border-b py-2">v1.2.0-beta.42</div>
+      <div class="border-b py-2">v1.2.0-beta.41</div>
+      <div class="border-b py-2">v1.2.0-beta.40</div>
+      <div class="border-b py-2">v1.2.0-beta.39</div>
+      <div class="py-2">v1.2.0-beta.38</div>
+    </div>
+  </div>
+</div>
+</Preview>

@@ -264,7 +264,7 @@
     }
   }
 
-  .button-group-text {
+  .button-group > :is(span, label, output) {
     @apply bg-muted gap-2 rounded-md border px-2.5 text-sm font-medium shadow-xs [&_svg:not([class*='size-'])]:size-4;
   }
 
@@ -383,7 +383,7 @@
   /* Alert */
   .alert,
   .alert-destructive {
-    @apply grid gap-0.5 rounded-lg border px-4 py-3 text-start text-sm has-[>[data-action]]:relative has-[>[data-action]]:pe-18 has-[>svg]:grid-cols-[auto_1fr] has-[>svg]:gap-x-2.5 [&>svg]:row-span-2 [&>svg]:translate-y-0.5 [&>svg]:text-current [&>svg:not([class*='size-'])]:size-4;
+    @apply grid gap-0.5 rounded-lg border px-4 py-3 text-start text-sm has-[>svg]:grid-cols-[auto_1fr] has-[>svg]:gap-x-2.5 [&>svg]:row-span-2 [&>svg]:translate-y-0.5 [&>svg]:text-current [&>svg:not([class*='size-'])]:size-4;
   }
 
   .alert {
@@ -411,9 +411,57 @@
     @apply text-destructive/90 text-sm text-balance md:text-pretty [&_p:not(:last-child)]:mb-4;
   }
 
-  .alert > [data-action],
-  .alert-destructive > [data-action] {
-    @apply absolute top-2.5 end-3;
+  .alert > footer,
+  .alert-destructive > footer {
+    @apply top-2.5 end-3;
+  }
+  /* Avatar */
+  .avatar,
+  .avatar-sm,
+  .avatar-lg {
+    @apply rounded-full after:rounded-[inherit];
+  }
+
+  .avatar {
+    @apply size-8;
+  }
+
+  .avatar-sm {
+    @apply size-6;
+  }
+
+  .avatar-lg {
+    @apply size-10;
+  }
+
+  .avatar > span:not([data-badge]),
+  .avatar-sm > span:not([data-badge]),
+  .avatar-lg > span:not([data-badge]) {
+    @apply bg-muted text-muted-foreground rounded-[inherit];
+  }
+
+  .avatar > img,
+  .avatar-sm > img,
+  .avatar-lg > img {
+    @apply rounded-[inherit];
+  }
+
+  .avatar > [data-badge],
+  .avatar-sm > [data-badge],
+  .avatar-lg > [data-badge] {
+    @apply bg-primary text-primary-foreground ring-background;
+  }
+
+  .avatar-group > [data-count] {
+    @apply bg-muted text-muted-foreground size-8 rounded-full text-sm [&>svg]:size-4;
+  }
+
+  .avatar-group:has(> .avatar-sm) > [data-count] {
+    @apply size-6 [&>svg]:size-3;
+  }
+
+  .avatar-group:has(> .avatar-lg) > [data-count] {
+    @apply size-10 [&>svg]:size-5;
   }
 
   /* Badge */
@@ -720,28 +768,75 @@
   }
 
   /* Card */
+  .card,
+  .card-sm {
+    @apply ring-foreground/10 bg-card text-card-foreground overflow-hidden rounded-xl text-sm shadow-xs ring-1 has-[>img:first-child]:pt-0 [&>img:first-child]:rounded-t-xl [&>img:last-child]:rounded-b-xl;
+  }
+
   .card {
-    @apply ring-foreground/10 bg-card text-card-foreground gap-6 overflow-hidden rounded-xl py-6 text-sm shadow-xs ring-1 has-[>img:first-child]:pt-0 data-[size=sm]:gap-4 data-[size=sm]:py-4 [&>img:first-child]:rounded-t-xl [&>img:last-child]:rounded-b-xl;
+    @apply gap-6 py-6;
   }
 
-  .card > header {
-    @apply gap-1 rounded-t-xl px-6 in-data-[size=sm]:px-4 [.border-b]:pb-6 in-data-[size=sm]:[.border-b]:pb-4;
+  .card-sm {
+    @apply gap-4 py-4;
   }
 
-  .card > header > :is(h2, h3, [data-title], .card-title) {
-    @apply text-base leading-normal font-medium in-data-[size=sm]:text-sm;
+  .card > header,
+  .card-sm > header {
+    @apply gap-1 rounded-t-xl px-6 [.border-b]:pb-6;
   }
 
-  .card > header > :is(p, [data-description], .card-description) {
+  .card-sm > header {
+    @apply px-4 [.border-b]:pb-4;
+  }
+
+  .card > header > :is(h2, h3, [data-title], .card-title),
+  .card-sm > header > :is(h2, h3, [data-title], .card-title) {
+    @apply text-base leading-normal font-medium;
+  }
+
+  .card-sm > header > :is(h2, h3, [data-title], .card-title) {
+    @apply text-sm;
+  }
+
+  .card > header > :is(p, [data-description], .card-description),
+  .card-sm > header > :is(p, [data-description], .card-description) {
     @apply text-muted-foreground text-sm;
   }
 
-  .card > section {
-    @apply px-6 in-data-[size=sm]:px-4;
+  .card > section,
+  .card-sm > section {
+    @apply px-6;
   }
 
-  .card > footer {
-    @apply rounded-b-xl px-6 in-data-[size=sm]:px-4 [.border-t]:pt-6 in-data-[size=sm]:[.border-t]:pt-4;
+  .card-sm > section {
+    @apply px-4;
+  }
+
+  .card > footer,
+  .card-sm > footer {
+    @apply rounded-b-xl px-6 [.border-t]:pt-6;
+  }
+
+  .card-sm > footer {
+    @apply px-4 [.border-t]:pt-4;
+  }
+
+  /* Chart */
+  .chart-tooltip {
+    @apply border-border/50 bg-background text-foreground gap-1.5 rounded-lg border px-2.5 py-1.5 text-xs shadow-xl;
+  }
+
+  .chart-tooltip-title {
+    @apply font-medium;
+  }
+
+  .chart-legend-item {
+    @apply text-foreground;
+  }
+
+  .chart-legend-item[aria-pressed='false'] {
+    @apply text-muted-foreground;
   }
 
   /* Checkbox */

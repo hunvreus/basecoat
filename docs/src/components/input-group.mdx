@@ -1,0 +1,428 @@
+# Input Group
+
+<Preview class="w-full max-w-sm">
+<div class="grid gap-6">
+  <div class="input-group">
+    <input type="text" placeholder="Search..." />
+    <span data-align="start" aria-hidden="true">
+      <svg class="lucide lucide-search" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21 21-4.34-4.34" /><circle cx="11" cy="11" r="8" /></svg>
+    </span>
+    <span data-align="end">12 results</span>
+  </div>
+  <div class="input-group">
+    <input type="text" placeholder="example.com" />
+    <span data-align="start">https://</span>
+    <button type="button" class="btn-xs-icon-ghost rounded-full" data-align="end" aria-label="Info">
+      <svg class="lucide lucide-info" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="M12 16v-4" /><path d="M12 8h.01" /></svg>
+    </button>
+  </div>
+  <div class="input-group min-h-32" data-orientation="vertical">
+    <textarea placeholder="Ask, Search or Chat..."></textarea>
+    <footer data-align="end" role="group" aria-label="Message actions">
+      <button type="button" class="btn-xs-icon-outline rounded-full" aria-label="Add attachment">
+        <svg class="lucide lucide-plus" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14" /><path d="M12 5v14" /></svg>
+      </button>
+      <div id="dropdown-menu-670915" class="dropdown-menu min-w-0">
+        <button type="button" id="dropdown-menu-670915-trigger" aria-haspopup="menu" aria-controls="dropdown-menu-670915-menu" aria-expanded="false" class="btn-xs-ghost">Auto</button>
+        <div id="dropdown-menu-670915-popover" data-popover aria-hidden="true" data-side="top" data-align="start" class="min-w-28 [--radius:0.95rem]">
+          <div role="menu" id="dropdown-menu-670915-menu" aria-labelledby="dropdown-menu-670915-trigger">
+            <div id="dropdown-menu-670915-items-1" role="menuitem">Auto</div>
+            <div id="dropdown-menu-670915-items-2" role="menuitem">Agent</div>
+            <div id="dropdown-menu-670915-items-3" role="menuitem">Manual</div>
+          </div>
+        </div>
+      </div>
+      <span class="ms-auto">52% used</span>
+      <hr role="separator" class="h-4" />
+      <button type="button" class="btn-xs-icon rounded-full" disabled aria-label="Send">
+        <svg class="lucide lucide-arrow-up" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 7-7 7 7" /><path d="M12 19V5" /></svg>
+      </button>
+    </footer>
+  </div>
+  <div class="input-group">
+    <input type="text" placeholder="@shadcn" />
+    <span data-align="end" aria-hidden="true">
+      <span class="flex size-4 items-center justify-center rounded-full bg-primary text-primary-foreground">
+        <svg class="size-3 lucide lucide-check" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
+      </span>
+    </span>
+  </div>
+</div>
+</Preview>
+
+## Usage
+
+```html
+<div class="input-group">
+  <input type="text" placeholder="Search..." />
+  <span data-align="start" aria-hidden="true">
+    <!-- icon -->
+  </span>
+  <span data-align="end">12 results</span>
+</div>
+```
+
+Use `.input-group` on the root. Native controls stay semantic and become borderless children inside that shell.
+
+<dl>
+  <dt><code class="highlight language-html">&lt;div class="input-group"&gt;</code></dt>
+  <dd>
+    The root shell. Add <code>role="group"</code> and an accessible label only when the group itself needs to be named.
+    <dl>
+      <dt><code class="highlight language-html">&lt;input&gt;</code>, <code class="highlight language-html">&lt;textarea&gt;</code>, <code class="highlight language-html">&lt;select&gt;</code></dt>
+      <dd>The native control. Use <code>aria-invalid="true"</code> for invalid state and <code>disabled</code> for disabled state.</dd>
+      <dt><code class="highlight language-html">&lt;span&gt;</code>, <code class="highlight language-html">&lt;svg&gt;</code>, <code class="highlight language-html">&lt;kbd&gt;</code></dt>
+      <dd>Decorative or helper content. Use <code>aria-hidden="true"</code> for decorative icons.</dd>
+      <dt><code class="highlight language-html">&lt;button&gt;</code>, <code class="highlight language-html">&lt;div role="group"&gt;</code></dt>
+      <dd>Interactive actions. Use <code>role="group"</code> with an accessible label when multiple related actions share one side of the input.</dd>
+      <dt><code class="highlight language-html">&lt;header&gt;</code>, <code class="highlight language-html">&lt;footer&gt;</code></dt>
+      <dd>Header or footer addon rows for vertically oriented input groups.</dd>
+      <dt><code class="highlight language-html">data-align="start|end"</code></dt>
+      <dd>Optional visual placement. Values use logical direction, so start/end automatically flip in RTL. Use <code>data-orientation="vertical"</code> on the root for header/footer layouts.</dd>
+      <dt><code class="highlight language-html">[data-control]</code></dt>
+      <dd>Escape hatch for custom controls that are not native <code>input</code>, <code>textarea</code>, or <code>select</code>.</dd>
+    </dl>
+  </dd>
+</dl>
+
+## Examples
+
+Use `data-align="start|end"` on addon wrappers to position them inline. Use `data-orientation="vertical"` with `header` or `footer` for block placement.
+
+### inline-start
+
+<Preview class="w-full max-w-sm">
+<div class="field max-w-sm">
+  <label for="inline-start-input">Input</label>
+  <div class="input-group">
+    <input id="inline-start-input" type="text" placeholder="Search..." />
+    <span role="group" data-align="start" aria-hidden="true">
+      <svg class="text-muted-foreground lucide lucide-search" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21 21-4.34-4.34" /><circle cx="11" cy="11" r="8" /></svg>
+    </span>
+  </div>
+  <p>Icon positioned at the start.</p>
+</div>
+</Preview>
+
+### inline-end
+
+<Preview class="w-full max-w-sm">
+<div class="field max-w-sm">
+  <label for="inline-end-input">Input</label>
+  <div class="input-group">
+    <input id="inline-end-input" type="password" placeholder="Enter password" />
+    <span role="group" data-align="end" aria-hidden="true">
+      <svg class="lucide lucide-eye-off" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.733 5.076a10.744 10.744 0 0 1 11.205 6.575 1 1 0 0 1 0 .696 10.747 10.747 0 0 1-1.444 2.49" /><path d="M14.084 14.158a3 3 0 0 1-4.242-4.242" /><path d="M17.479 17.499a10.75 10.75 0 0 1-15.417-5.151 1 1 0 0 1 0-.696 10.75 10.75 0 0 1 4.446-5.143" /><path d="m2 2 20 20" /></svg>
+    </span>
+  </div>
+  <p>Icon positioned at the end.</p>
+</div>
+</Preview>
+
+### block-start
+
+<Preview class="w-full max-w-sm">
+<div role="group" aria-label="Block start input group examples" class="fieldset max-w-sm">
+  <div class="field">
+    <label for="block-start-input">Input</label>
+    <div class="input-group" data-orientation="vertical">
+      <input id="block-start-input" type="text" placeholder="Enter your name" />
+      <header data-align="start">
+        <span>Full Name</span>
+      </header>
+    </div>
+    <p>Header positioned above the input.</p>
+  </div>
+  <div class="field">
+    <label for="block-start-textarea">Textarea</label>
+    <div class="input-group" data-orientation="vertical">
+      <textarea id="block-start-textarea" class="font-mono text-sm" placeholder="console.log('Hello, world!');"></textarea>
+      <header data-align="start">
+        <svg class="text-muted-foreground lucide lucide-file-code" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" /><path d="M14 2v5a1 1 0 0 0 1 1h5" /><path d="M10 12.5 8 15l2 2.5" /><path d="m14 12.5 2 2.5-2 2.5" /></svg>
+        <span class="font-mono">script.js</span>
+        <button type="button" class="btn-xs-icon-ghost ml-auto" aria-label="Copy">
+          <svg class="lucide lucide-copy" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2" /><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" /></svg>
+        </button>
+      </header>
+    </div>
+    <p>Header positioned above the textarea.</p>
+  </div>
+</div>
+</Preview>
+
+### block-end
+
+<Preview class="w-full max-w-sm">
+<div role="group" aria-label="Block end input group examples" class="fieldset max-w-sm">
+  <div class="field">
+    <label for="block-end-input">Input</label>
+    <div class="input-group" data-orientation="vertical">
+      <input id="block-end-input" type="text" placeholder="Enter amount" />
+      <footer data-align="end">
+        <span>USD</span>
+      </footer>
+    </div>
+    <p>Footer positioned below the input.</p>
+  </div>
+
+  <div class="field">
+    <label for="block-end-textarea">Textarea</label>
+    <div class="input-group" data-orientation="vertical">
+      <textarea id="block-end-textarea" placeholder="Write a comment..."></textarea>
+      <footer data-align="end">
+        <span>0/280</span>
+        <button type="button" class="btn-sm ml-auto">Post</button>
+      </footer>
+    </div>
+    <p>Footer positioned below the textarea.</p>
+  </div>
+</div>
+</Preview>
+
+### Icon
+
+<Preview class="w-full max-w-sm">
+<div class="grid gap-6">
+  <div class="input-group">
+    <input type="text" placeholder="Search..." />
+    <span data-align="start" aria-hidden="true">
+      <svg class="lucide lucide-search" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21 21-4.34-4.34" /><circle cx="11" cy="11" r="8" /></svg>
+    </span>
+  </div>
+  <div class="input-group">
+    <input type="email" placeholder="Enter your email" />
+    <span data-align="start" aria-hidden="true">
+      <svg class="lucide lucide-mail" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7" /><rect x="2" y="4" width="20" height="16" rx="2" /></svg>
+    </span>
+  </div>
+  <div class="input-group">
+    <input type="text" placeholder="Card number" />
+    <span data-align="start" aria-hidden="true">
+      <svg class="lucide lucide-credit-card" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2" /><line x1="2" x2="22" y1="10" y2="10" /></svg>
+    </span>
+    <span data-align="end" aria-hidden="true">
+      <svg class="lucide lucide-check" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
+    </span>
+  </div>
+  <div class="input-group">
+    <input type="text" placeholder="Card number" />
+    <span data-align="end" aria-hidden="true">
+      <svg class="lucide lucide-star" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z" /></svg>
+      <svg class="lucide lucide-info" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="M12 16v-4" /><path d="M12 8h.01" /></svg>
+    </span>
+  </div>
+</div>
+</Preview>
+
+### Text
+
+<Preview class="w-full max-w-sm">
+<div class="grid gap-6">
+  <div class="input-group">
+    <input type="text" placeholder="0.00" />
+    <span data-align="start">$</span>
+    <span data-align="end">USD</span>
+  </div>
+  <div class="input-group">
+    <input type="text" placeholder="example.com" />
+    <span data-align="start">https://</span>
+    <span data-align="end">.com</span>
+  </div>
+  <div class="input-group">
+    <input type="text" placeholder="Enter your username" />
+    <span data-align="end">@company.com</span>
+  </div>
+  <div class="input-group" data-orientation="vertical">
+    <textarea placeholder="Enter your message"></textarea>
+    <footer data-align="end">
+      <span class="text-xs text-muted-foreground">120 characters left</span>
+    </footer>
+  </div>
+</div>
+</Preview>
+
+### Button
+
+<Preview class="w-full max-w-sm">
+<div class="grid gap-6">
+  <div class="input-group">
+    <input type="text" readonly placeholder="https://x.com/shadcn" />
+    <button type="button" class="btn-xs-icon-ghost" data-align="end" aria-label="Copy" title="Copy">
+      <svg class="lucide lucide-copy" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2" /><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" /></svg>
+    </button>
+  </div>
+  <div class="input-group [--radius:9999px]">
+    <button type="button" class="btn-xs-icon-secondary" data-align="start" aria-label="Connection information">
+      <svg class="lucide lucide-info" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="M12 16v-4" /><path d="M12 8h.01" /></svg>
+    </button>
+    <span data-align="start" class="text-muted-foreground">https://</span>
+    <input type="text" id="input-secure-19" />
+    <button type="button" class="btn-xs-icon-ghost" data-align="end" aria-label="Favorite">
+      <svg class="lucide lucide-star" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z" /></svg>
+    </button>
+  </div>
+  <div class="input-group">
+    <input type="text" placeholder="Type to search..." />
+    <button type="button" class="btn-secondary" data-align="end">Search</button>
+  </div>
+</div>
+</Preview>
+
+### Kbd
+
+<Preview class="w-full max-w-sm">
+<div class="input-group">
+  <input type="text" placeholder="Search..." />
+  <span data-align="start" aria-hidden="true">
+    <svg class="lucide lucide-search" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21 21-4.34-4.34" /><circle cx="11" cy="11" r="8" /></svg>
+  </span>
+  <span data-align="end"><kbd class="kbd">⌘K</kbd></span>
+</div>
+</Preview>
+
+### Dropdown
+
+<Preview class="w-full max-w-sm">
+<div class="grid gap-6">
+  <div class="input-group">
+    <input type="text" placeholder="Enter file name" />
+    <div id="dropdown-menu-601971" class="dropdown-menu" data-align="end">
+      <button type="button" id="dropdown-menu-601971-trigger" aria-haspopup="menu" aria-controls="dropdown-menu-601971-menu" aria-expanded="false" class="btn-xs-icon-ghost" aria-label="Open file actions">
+        <svg class="lucide lucide-ellipsis" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1" /><circle cx="19" cy="12" r="1" /><circle cx="5" cy="12" r="1" /></svg>
+      </button>
+      <div id="dropdown-menu-601971-popover" data-popover aria-hidden="true" data-align="end" class="min-w-32">
+        <div role="menu" id="dropdown-menu-601971-menu" aria-labelledby="dropdown-menu-601971-trigger">
+          <div id="dropdown-menu-601971-items-1" role="menuitem">Settings</div>
+          <div id="dropdown-menu-601971-items-2" role="menuitem">Copy path</div>
+          <div id="dropdown-menu-601971-items-3" role="menuitem">Open location</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="input-group [--radius:1rem]">
+    <input type="text" placeholder="Enter search query" />
+    <div id="dropdown-menu-689868" class="dropdown-menu" data-align="end">
+      <button type="button" id="dropdown-menu-689868-trigger" aria-haspopup="menu" aria-controls="dropdown-menu-689868-menu" aria-expanded="false" class="btn-xs-ghost pr-1.5! text-xs">
+        Search In...
+        <svg class="size-3 lucide lucide-chevron-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6" /></svg>
+      </button>
+      <div id="dropdown-menu-689868-popover" data-popover aria-hidden="true" data-align="end" class="min-w-32 [--radius:0.95rem]">
+        <div role="menu" id="dropdown-menu-689868-menu" aria-labelledby="dropdown-menu-689868-trigger">
+          <div id="dropdown-menu-689868-items-1" role="menuitem">Documentation</div>
+          <div id="dropdown-menu-689868-items-2" role="menuitem">Blog Posts</div>
+          <div id="dropdown-menu-689868-items-3" role="menuitem">Changelog</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</Preview>
+
+### Spinner
+
+<Preview class="w-full max-w-sm">
+<div class="grid gap-6">
+  <div class="input-group">
+    <input type="text" placeholder="Searching..." />
+    <span data-align="end">
+      <svg aria-label="Loading" role="status" class="animate-spin lucide lucide-loader-circle" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56" /></svg>
+    </span>
+  </div>
+  <div class="input-group">
+    <input type="text" placeholder="Processing..." />
+    <span data-align="start">
+      <svg aria-label="Loading" role="status" class="animate-spin lucide lucide-loader-circle" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56" /></svg>
+    </span>
+  </div>
+  <div class="input-group">
+    <input type="text" placeholder="Saving changes..." />
+    <span data-align="end">
+      Saving...
+      <svg aria-label="Loading" role="status" class="animate-spin lucide lucide-loader-circle" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56" /></svg>
+    </span>
+  </div>
+  <div class="input-group">
+    <input type="text" placeholder="Refreshing data..." />
+    <span data-align="start" aria-hidden="true">
+      <svg class="animate-spin lucide lucide-loader" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4" /><path d="m16.2 7.8 2.9-2.9" /><path d="M18 12h4" /><path d="m16.2 16.2 2.9 2.9" /><path d="M12 18v4" /><path d="m4.9 19.1 2.9-2.9" /><path d="M2 12h4" /><path d="m4.9 4.9 2.9 2.9" /></svg>
+    </span>
+    <span data-align="end" class="text-muted-foreground">Please wait...</span>
+  </div>
+</div>
+</Preview>
+
+### Textarea
+
+<Preview class="w-full max-w-md">
+<div class="input-group min-h-[200px]" data-orientation="vertical">
+  <textarea placeholder="console.log('Hello, world!');"></textarea>
+  <footer data-align="end" class="border-t">
+    <span>Line 1, Column 1</span>
+    <button type="button" class="btn-sm ml-auto">
+      Run
+      <svg class="lucide lucide-corner-down-left" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4v7a4 4 0 0 1-4 4H4" /><path d="m9 10-5 5 5 5" /></svg>
+    </button>
+  </footer>
+  <header data-align="start" class="border-b">
+    <svg class="text-muted-foreground lucide lucide-file-code" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" /><path d="M14 2v5a1 1 0 0 0 1 1h5" /><path d="M10 12.5 8 15l2 2.5" /><path d="m14 12.5 2 2.5-2 2.5" /></svg>
+    <span>script.js</span>
+    <div role="group" aria-label="File actions" class="ml-auto flex gap-1">
+      <button type="button" class="btn-xs-icon-ghost">
+        <svg class="lucide lucide-refresh-ccw" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" /><path d="M3 3v5h5" /><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16" /><path d="M16 16h5v5" /></svg>
+      </button>
+      <button type="button" class="btn-xs-icon-ghost">
+        <svg class="lucide lucide-copy" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2" /><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" /></svg>
+      </button>
+    </div>
+  </header>
+</div>
+</Preview>
+
+### Custom Input
+
+<Preview class="w-full max-w-sm">
+<div class="input-group" data-orientation="vertical">
+  <textarea data-control placeholder="Autoresize textarea..." class="field-sizing-content min-h-16 resize-none"></textarea>
+  <footer data-align="end">
+    <button type="button" class="btn-sm ml-auto">Submit</button>
+  </footer>
+</div>
+</Preview>
+
+### RTL
+
+<Preview class="w-full max-w-sm">
+<div dir="rtl" class="grid gap-6">
+  <div class="input-group">
+    <input type="text" placeholder="بحث..." />
+    <span role="group" data-align="start" aria-hidden="true">
+      <svg class="lucide lucide-search" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21 21-4.34-4.34" /><circle cx="11" cy="11" r="8" /></svg>
+    </span>
+    <span role="group" data-align="end">١٢ نتيجة</span>
+  </div>
+  <div class="input-group">
+    <input type="text" placeholder="جاري البحث..." />
+    <span role="group" data-align="end">
+      <svg aria-label="Loading" role="status" class="animate-spin lucide lucide-loader-circle" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56" /></svg>
+    </span>
+  </div>
+  <div class="input-group">
+    <input type="text" placeholder="جاري حفظ التغييرات..." />
+    <span role="group" data-align="end">
+      جاري الحفظ...
+      <svg aria-label="Loading" role="status" class="animate-spin lucide lucide-loader-circle" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56" /></svg>
+    </span>
+  </div>
+  <div class="field">
+    <label for="rtl-textarea">منطقة النص</label>
+    <div class="input-group" data-orientation="vertical">
+      <textarea id="rtl-textarea" placeholder="اكتب تعليقًا..."></textarea>
+      <footer data-align="end">
+        <span>٠/٢٨٠</span>
+        <button type="button" class="btn-sm ms-auto">نشر</button>
+      </footer>
+    </div>
+    <p>تذييل موضع أسفل منطقة النص.</p>
+  </div>
+</div>
+</Preview>

@@ -1,0 +1,26 @@
+# Progress
+
+<Callout title="No dedicated component" icon="circle-alert">
+  There is no dedicated Progress component in Basecoat.
+</Callout>
+
+<Preview class="w-full max-w-sm">
+<div class="bg-primary/20 relative h-2 w-full overflow-hidden rounded-full">
+  <div id="demo-progress" class="bg-primary h-full w-full flex-1 transition-all" style="width: 17%"></div>
+</div>
+<script>
+  setTimeout(() => {
+    document.getElementById('demo-progress').style.width = '66%';
+  }, 500);
+</script>
+</Preview>
+
+## Usage
+
+```html
+<div class="bg-primary/20 relative h-2 w-full overflow-hidden rounded-full">
+  <div class="bg-primary h-full w-full flex-1 transition-all" style="width: 66%"></div>
+</div>
+```
+
+Progress bars are pure HTML composition using Tailwind utility classes. Use a container div for the track and an inner div for the indicator. Set the indicator's width with inline styles or via JavaScript.

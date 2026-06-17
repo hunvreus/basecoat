@@ -1,0 +1,191 @@
+# Popover
+
+<Preview>
+<div id="demo-popover" class="popover">
+  <button id="demo-popover-trigger" type="button" aria-expanded="false" aria-controls="demo-popover-popover" class="btn-outline">Open popover</button>
+  <div id="demo-popover-popover" data-popover aria-hidden="true" class="w-72">
+    <header>
+      <h4>Dimensions</h4>
+      <p>Set the dimensions for the layer.</p>
+    </header>
+    <form class="grid gap-2">
+      <div class="grid grid-cols-3 items-center gap-4">
+        <label for="demo-popover-width">Width</label>
+        <input type="text" id="demo-popover-width" value="100%" class="input col-span-2 h-8" autofocus />
+      </div>
+      <div class="grid grid-cols-3 items-center gap-4">
+        <label for="demo-popover-max-width">Max. width</label>
+        <input type="text" id="demo-popover-max-width" value="300px" class="input col-span-2 h-8" />
+      </div>
+      <div class="grid grid-cols-3 items-center gap-4">
+        <label for="demo-popover-height">Height</label>
+        <input type="text" id="demo-popover-height" value="25px" class="input col-span-2 h-8" />
+      </div>
+      <div class="grid grid-cols-3 items-center gap-4">
+        <label for="demo-popover-max-height">Max. height</label>
+        <input type="text" id="demo-popover-max-height" value="none" class="input col-span-2 h-8" />
+      </div>
+    </form>
+  </div>
+</div>
+</Preview>
+
+## Usage
+
+<Callout title="Template macros available" icon="code" action={{ label: "Read more", href: "/cli#popover" }}>
+  This component ships a `popover()` macro for Jinja and Nunjucks.
+</Callout>
+
+Basecoat popovers are inline-positioned relative to the `.popover` wrapper. This differs from shadcn/ui's portalled Base UI implementation, but keeps the markup dependency-free and works with Basecoat's existing dropdown/select positioning model.
+
+<Steps>
+  <Step title="Include the JavaScript files">
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.2/dist/js/basecoat.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.2/dist/js/popover.min.js" defer></script>
+```
+
+  </Step>
+  <Step title="Add your popover HTML">
+
+```html
+<div id="demo-popover" class="popover">
+  <button id="demo-popover-trigger" type="button" aria-expanded="false" aria-controls="demo-popover-popover" class="btn-outline">Open popover</button>
+  <div id="demo-popover-popover" data-popover aria-hidden="true" class="w-72">
+    <header>
+      <h4>Dimensions</h4>
+      <p>Set the dimensions for the layer.</p>
+    </header>
+    <form class="grid gap-2">
+      <div class="grid grid-cols-3 items-center gap-4">
+        <label for="demo-popover-width">Width</label>
+        <input type="text" id="demo-popover-width" value="100%" class="input col-span-2 h-8" autofocus />
+      </div>
+      <div class="grid grid-cols-3 items-center gap-4">
+        <label for="demo-popover-max-width">Max. width</label>
+        <input type="text" id="demo-popover-max-width" value="300px" class="input col-span-2 h-8" />
+      </div>
+      <div class="grid grid-cols-3 items-center gap-4">
+        <label for="demo-popover-height">Height</label>
+        <input type="text" id="demo-popover-height" value="25px" class="input col-span-2 h-8" />
+      </div>
+      <div class="grid grid-cols-3 items-center gap-4">
+        <label for="demo-popover-max-height">Max. height</label>
+        <input type="text" id="demo-popover-max-height" value="none" class="input col-span-2 h-8" />
+      </div>
+    </form>
+  </div>
+</div>
+```
+
+  </Step>
+</Steps>
+
+### HTML structure
+
+<dl>
+  <dt><code class="highlight language-html">&lt;div class="popover"&gt;</code></dt>
+  <dd>
+    Relative wrapper for the trigger and inline popover content.
+    <dl>
+      <dt><code class="highlight language-html">&lt;button type="button" aria-expanded="false" aria-controls="&#123; POPOVER_ID &#125;"&gt;</code></dt>
+      <dd>Trigger button. The script toggles <code>aria-expanded</code> and opens or closes the content.</dd>
+      <dt><code class="highlight language-html">&lt;div data-popover id="&#123; POPOVER_ID &#125;" aria-hidden="true"&gt;</code></dt>
+      <dd>Popover content. Supports <code>data-side="top|right|bottom|left"</code> and <code>data-align="start|center|end"</code>.</dd>
+    </dl>
+  </dd>
+</dl>
+
+## Examples
+
+### Basic
+
+<Preview>
+<div id="popover-basic" class="popover">
+  <button id="popover-basic-trigger" type="button" aria-expanded="false" aria-controls="popover-basic-popover" class="btn-outline">Open</button>
+  <div id="popover-basic-popover" data-popover aria-hidden="true" class="w-72">
+    <header>
+      <h4>Title</h4>
+      <p>Description text here.</p>
+    </header>
+  </div>
+</div>
+</Preview>
+
+### Align
+
+<Preview>
+<div class="flex flex-wrap gap-3">
+  <div id="popover-align-start" class="popover">
+    <button id="popover-align-start-trigger" type="button" aria-expanded="false" aria-controls="popover-align-start-popover" class="btn-outline">Start</button>
+    <div id="popover-align-start-popover" data-popover aria-hidden="true" class="w-56" data-align="start">
+      <p>Aligned to start.</p>
+    </div>
+  </div>
+
+  <div id="popover-align-center" class="popover">
+    <button id="popover-align-center-trigger" type="button" aria-expanded="false" aria-controls="popover-align-center-popover" class="btn-outline">Center</button>
+    <div id="popover-align-center-popover" data-popover aria-hidden="true" class="w-56" data-align="center">
+      <p>Aligned to center.</p>
+    </div>
+  </div>
+
+  <div id="popover-align-end" class="popover">
+    <button id="popover-align-end-trigger" type="button" aria-expanded="false" aria-controls="popover-align-end-popover" class="btn-outline">End</button>
+    <div id="popover-align-end-popover" data-popover aria-hidden="true" class="w-56" data-align="end">
+      <p>Aligned to end.</p>
+    </div>
+  </div>
+</div>
+</Preview>
+
+### With Form
+
+<Preview>
+<div id="popover-form" class="popover">
+  <button id="popover-form-trigger" type="button" aria-expanded="false" aria-controls="popover-form-popover" class="btn-outline">Open popover</button>
+  <div id="popover-form-popover" data-popover aria-hidden="true" class="w-72">
+    <header>
+      <h4>Dimensions</h4>
+      <p>Set the dimensions for the layer.</p>
+    </header>
+    <form class="grid gap-2">
+      <div class="grid grid-cols-3 items-center gap-4">
+        <label for="popover-form-width">Width</label>
+        <input type="text" id="popover-form-width" value="100%" class="input col-span-2 h-8" autofocus />
+      </div>
+      <div class="grid grid-cols-3 items-center gap-4">
+        <label for="popover-form-max-width">Max. width</label>
+        <input type="text" id="popover-form-max-width" value="300px" class="input col-span-2 h-8" />
+      </div>
+      <div class="grid grid-cols-3 items-center gap-4">
+        <label for="popover-form-height">Height</label>
+        <input type="text" id="popover-form-height" value="25px" class="input col-span-2 h-8" />
+      </div>
+      <div class="grid grid-cols-3 items-center gap-4">
+        <label for="popover-form-max-height">Max. height</label>
+        <input type="text" id="popover-form-max-height" value="none" class="input col-span-2 h-8" />
+      </div>
+    </form>
+  </div>
+</div>
+</Preview>
+
+### RTL
+
+Popover alignment uses logical start and end offsets. Set `dir="rtl"` on a parent to flip start/end alignment.
+
+<Preview>
+<div dir="rtl">
+  <div id="popover-rtl" class="popover">
+    <button id="popover-rtl-trigger" type="button" aria-expanded="false" aria-controls="popover-rtl-popover" class="btn-outline">فتح</button>
+    <div id="popover-rtl-popover" data-popover aria-hidden="true" class="w-72" data-align="start">
+      <header>
+        <h4>العنوان</h4>
+        <p>نص الوصف هنا.</p>
+      </header>
+    </div>
+  </div>
+</div>
+</Preview>

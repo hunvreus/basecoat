@@ -1,0 +1,74 @@
+# Alert Dialog
+
+<Preview>
+<button type="button" onclick="document.getElementById('demo-alert-dialog').showModal()" class="btn-outline">Open alert dialog</button>
+<dialog id="demo-alert-dialog" class="dialog" aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
+  <div>
+    <header>
+      <h2 id="alert-dialog-title">Are you absolutely sure?</h2>
+      <p id="alert-dialog-description">This action cannot be undone. This will permanently delete your account and remove your data from our servers.</p>
+    </header>
+    <footer>
+      <button class="btn-outline" onclick="document.getElementById('demo-alert-dialog').close()">Cancel</button>
+      <button class="btn-primary" onclick="document.getElementById('demo-alert-dialog').close()">Continue</button>
+    </footer>
+  </div>
+</dialog>
+</Preview>
+
+## Usage
+
+<Callout title="Template macros available" icon="code" action={{ label: "Read more", href: "/cli#dialog" }}>
+  This component can use the `dialog()` macro for Jinja and Nunjucks.
+</Callout>
+
+Alert Dialog uses the same `.dialog` class as [Dialog](/components/dialog), but the example omits the close button and does not close on backdrop click.
+
+```html
+<button type="button" onclick="document.getElementById('demo-alert-dialog').showModal()" class="btn-outline">Open alert dialog</button>
+<dialog id="demo-alert-dialog" class="dialog" aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
+  <div>
+    <header>
+      <h2 id="alert-dialog-title">Are you absolutely sure?</h2>
+      <p id="alert-dialog-description">This action cannot be undone. This will permanently delete your account and remove your data from our servers.</p>
+    </header>
+    <footer>
+      <button class="btn-outline" onclick="document.getElementById('demo-alert-dialog').close()">Cancel</button>
+      <button class="btn-primary" onclick="document.getElementById('demo-alert-dialog').close()">Continue</button>
+    </footer>
+  </div>
+</dialog>
+```
+
+### HTML structure
+
+<dl>
+  <dt><code class="highlight language-html">&lt;button type="button"&gt;</code> <span class="badge-secondary">Optional</span></dt>
+  <dd>The trigger button to open the alert dialog (using <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLDialogElement/showModal" target="_blank">the native <code>showModal()</code> method</a>).</dd>
+  <dt><code class="highlight language-html">&lt;dialog class="dialog" id="&#123; DIALOG_ID &#125;"&gt;</code></dt>
+  <dd>
+    Native modal dialog. Add <code>aria-labelledby</code> and <code>aria-describedby</code> when title and description are present.
+    <dl>
+      <dt><code class="highlight language-html">&lt;div&gt;</code></dt>
+      <dd>
+        Wraps the content of the alert dialog.
+        <dl>
+          <dt><code class="highlight language-html">&lt;header&gt;</code></dt>
+          <dd>
+            Contains the header for the alert dialog:
+            <dl>
+              <dt><code class="highlight language-html">&lt;h2&gt;</code></dt>
+              <dd>The title of the alert dialog, must have an <code>id</code> if you use the <code>aria-labelledby</code> attribute on the <code>&lt;dialog&gt;</code>.</dd>
+              <dt><code class="highlight language-html">&lt;p&gt;</code> <span class="badge-secondary">Optional</span></dt>
+              <dd>The description of the alert dialog, must have an <code>id</code> if you use the <code>aria-describedby</code> attribute on the <code>&lt;dialog&gt;</code>.</dd>
+            </dl>
+          </dd>
+          <dt><code class="highlight language-html">&lt;section&gt;</code> <span class="badge-secondary">Optional</span></dt>
+          <dd>For the content.</dd>
+          <dt><code class="highlight language-html">&lt;footer&gt;</code> <span class="badge-secondary">Optional</span></dt>
+          <dd>Usually contains actions.</dd>
+        </dl>
+      </dd>
+    </dl>
+  </dd>
+</dl>

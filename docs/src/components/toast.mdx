@@ -1,0 +1,156 @@
+# Toast
+
+<div id="toaster" class="toaster"></div>
+<script src="/assets/js/htmx.min.js" defer></script>
+
+<Preview class="max-w-md">
+<button
+  class="btn-outline"
+  hx-trigger="click"
+  hx-select="unset"
+  hx-get="/fragments/toast/success"
+  hx-target="#toaster"
+  hx-swap="beforeend"
+>
+  Toast from backend (with HTMX)
+</button>
+</Preview>
+
+<Preview class="max-w-md">
+<button
+  class="btn-outline"
+  onclick="document.getElementById('toaster').toast({
+    category: 'success',
+    title: 'Success',
+    description: 'A success toast called from the front-end.',
+    cancel: {
+      label: 'Dismiss'
+    }
+  })"
+>
+  Toast from front-end
+</button>
+</Preview>
+
+## Usage
+
+<Callout title="Template macros available" icon="code" action={{ label: "Read more", href: "/cli#toast" }}>
+  This component ships `toaster()` and `toast()` macros for Jinja and Nunjucks.
+</Callout>
+
+<Steps>
+  <Step title="Include the JavaScript files">
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.2/dist/js/basecoat.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.2/dist/js/toast.min.js" defer></script>
+```
+
+  </Step>
+  <Step title="Add the toaster HTML">
+
+Add one toaster near the end of your page body:
+
+```html
+<div id="toaster" class="toaster"></div>
+```
+
+Set `data-align="start"`, `data-align="center"`, or `data-align="end"` on the toaster to change placement.
+
+  </Step>
+  <Step title="Add your toasts">
+
+Append server-rendered toast markup to the toaster, or create one from JavaScript with `toaster.toast(config)`.
+
+```html
+<div id="toaster" class="toaster">
+  <div class="toast" role="status" aria-atomic="true" aria-hidden="false" data-category="success">
+    <div class="toast-content">
+      <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="m9 12 2 2 4-4" /></svg>
+      <section>
+        <h2>Success</h2>
+        <p>A success toast called from the front-end.</p>
+      </section>
+      <footer>
+        <button type="button" class="btn" data-toast-action>Dismiss</button>
+      </footer>
+    </div>
+  </div>
+</div>
+```
+
+```html
+<button
+  class="btn-outline"
+  onclick="document.getElementById('toaster').toast({
+    category: 'success',
+    title: 'Success',
+    description: 'A success toast called from the front-end.',
+    cancel: {
+      label: 'Dismiss'
+    }
+  })">
+  Toast from front-end
+</button>
+```
+
+  </Step>
+</Steps>
+
+### HTML structure
+
+<dl>
+  <dt><code class="highlight language-html">&lt;div id="toaster" class="toaster"&gt;</code></dt>
+  <dd>Toast container. Optional <code>data-align</code> values are <code>start</code>, <code>center</code>, and <code>end</code>.</dd>
+  <dt><code class="highlight language-html">&lt;div class="toast"&gt;</code></dt>
+  <dd>
+    Toast item. Use <code>data-category="success|info|warning|error"</code> for category styling and <code>data-duration</code> to override the timeout in milliseconds. Use <code>data-duration="-1"</code> to keep it open.
+    <dl>
+      <dt><code class="highlight language-html">&lt;div class="toast-content"&gt;</code></dt>
+      <dd>
+        Content wrapper.
+        <dl>
+          <dt><code class="highlight language-html">&lt;svg aria-hidden="true"&gt;</code> <span class="badge-secondary">Optional</span></dt>
+          <dd>Icon.</dd>
+          <dt><code class="highlight language-html">&lt;section&gt;</code></dt>
+          <dd>
+            Message region.
+            <dl>
+              <dt><code class="highlight language-html">&lt;h2&gt;</code></dt>
+              <dd>Title.</dd>
+              <dt><code class="highlight language-html">&lt;p&gt;</code> <span class="badge-secondary">Optional</span></dt>
+              <dd>Description.</dd>
+            </dl>
+          </dd>
+          <dt><code class="highlight language-html">&lt;footer&gt;</code> <span class="badge-secondary">Optional</span></dt>
+          <dd>Action buttons or links. Clicking a footer button or link closes the toast.</dd>
+        </dl>
+      </dd>
+    </dl>
+  </dd>
+</dl>
+
+### JavaScript API
+
+| API | Type | Description |
+| --- | --- | --- |
+| `toaster.toast(config)` | Method | Creates a toast from a config object and returns the inserted `.toast` element. |
+| `toaster.closeAll()` | Method | Closes every toast inside the toaster. |
+| `toast.close()` | Method | Closes one initialized toast element. |
+
+### Toast config object
+
+<dl>
+  <dt><code>duration</code> <span class="badge-secondary">Optional</span></dt>
+  <dd>Timeout in milliseconds. Defaults to <code>3000</code>, or <code>5000</code> for error toasts. Use <code>-1</code> to keep it open.</dd>
+  <dt><code>category</code> <span class="badge-secondary">Optional</span></dt>
+  <dd>Category of the toast, either <code>success</code>, <code>info</code>, <code>warning</code>, or <code>error</code>.</dd>
+  <dt><code>title</code></dt>
+  <dd>The title of the toast.</dd>
+  <dt><code>description</code> <span class="badge-secondary">Optional</span></dt>
+  <dd>The description of the toast.</dd>
+  <dt><code>action</code> <span class="badge-secondary">Optional</span></dt>
+  <dd>Primary action. Supports <code>label</code> with either <code>href</code> or <code>onclick</code>.</dd>
+  <dt><code>cancel</code> <span class="badge-secondary">Optional</span></dt>
+  <dd>Secondary action. Supports <code>label</code> and optional <code>onclick</code>.</dd>
+</dl>

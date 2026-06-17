@@ -1,0 +1,73 @@
+# Slider
+
+<Preview class="w-full max-w-sm">
+<input
+  type="range"
+  class="input w-full"
+  min="0"
+  max="100"
+  value="50"
+/>
+</Preview>
+
+## Usage
+
+Use a native `<input type="range">` with the `input` class. Include `range.js` so Basecoat can keep the filled track in sync with the input value.
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.2/dist/js/basecoat.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.2/dist/js/range.min.js" defer></script>
+```
+
+```html
+<input type="range" class="input w-full" min="0" max="100" value="50" />
+```
+
+### HTML structure
+
+<dl>
+  <dt><code class="highlight language-html">&lt;input type="range" class="input"&gt;</code></dt>
+  <dd>Native range input styled as a slider. Width utilities such as <code>w-full</code> can be added directly.</dd>
+</dl>
+  
+Basecoat intentionally uses the native range input. Unlike shadcn/ui's Base UI slider, it does not support multiple thumbs or vertical orientation.
+
+## Examples
+
+### Default
+
+<Preview class="w-full max-w-sm">
+<input type="range" class="input w-full" min="0" max="100" value="50" />
+</Preview>
+
+### Controlled Label
+
+<Preview class="w-full max-w-sm">
+<div class="grid w-full gap-3 max-w-sm">
+  <div class="flex items-center justify-between gap-2">
+    <label class="label" for="temperature">Temperature</label>
+    <output class="text-sm text-muted-foreground" for="temperature">50</output>
+  </div>
+  <input
+    id="temperature"
+    type="range"
+    class="input w-full"
+    min="0"
+    max="100"
+    value="50"
+    oninput="this.previousElementSibling.querySelector('output').value = this.value"
+  />
+</div>
+</Preview>
+
+### Disabled
+
+<Preview class="w-full max-w-sm">
+<input type="range" class="input w-full" min="0" max="100" value="50" disabled />
+</Preview>
+
+### RTL
+
+<Preview class="w-full max-w-sm">
+<input type="range" class="input w-full" min="0" max="100" value="50" dir="rtl" />
+</Preview>

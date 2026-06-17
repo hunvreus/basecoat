@@ -1,0 +1,168 @@
+# Empty
+
+<Preview>
+<section class="empty">
+  <header>
+    <figure>
+      <svg class="lucide lucide-folder-code" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M10 10.5 8 13l2 2.5" /><path d="m14 10.5 2 2.5-2 2.5" /><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2z" /></svg>
+    </figure>
+    <h3>No Projects Yet</h3>
+    <p>You haven't created any projects yet. Get started by creating your first project.</p>
+  </header>
+  <footer>
+    <div class="flex gap-2">
+      <button class="btn">Create Project</button>
+      <button class="btn-outline">Import Project</button>
+    </div>
+    <a href="#" class="btn-link text-muted-foreground">
+      Learn More
+      <svg class="lucide lucide-arrow-up-right" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M7 7h10v10" /><path d="M7 17 17 7" /></svg>
+    </a>
+  </footer>
+</section>
+</Preview>
+
+## Usage
+
+Use `.empty` on a semantic container. The component styles common children like `header`, `figure`, headings, descriptions, and `footer`.
+
+```html
+<section class="empty">
+  <header>
+    <figure>
+      <svg class="lucide lucide-folder-code" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M10 10.5 8 13l2 2.5" /><path d="m14 10.5 2 2.5-2 2.5" /><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2z" /></svg>
+    </figure>
+    <h3>No Projects Yet</h3>
+    <p>You haven't created any projects yet. Get started by creating your first project.</p>
+  </header>
+  <footer>
+    <div class="flex gap-2">
+      <button class="btn">Create Project</button>
+      <button class="btn-outline">Import Project</button>
+    </div>
+    <a href="#" class="btn-link text-muted-foreground">
+      Learn More
+<svg class="lucide lucide-arrow-up-right" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M7 7h10v10" /><path d="M7 17 17 7" /></svg>
+    </a>
+  </footer>
+</section>
+```
+
+#### HTML structure
+
+<dl>
+  <dt><code class="highlight language-html">&lt;section class="empty"&gt;</code></dt>
+  <dd>
+    The empty-state container.
+    <dl>
+      <dt><code class="highlight language-html">&lt;header&gt;</code></dt>
+      <dd>
+        Groups the media, title, and description.
+        <dl>
+          <dt><code class="highlight language-html">&lt;figure&gt;</code> <span class="badge-secondary">Optional</span></dt>
+          <dd>Icon, avatar, image, or avatar group. An icon-only figure is styled automatically with <code>:has(&gt; svg:only-child)</code>.</dd>
+          <dt><code class="highlight language-html">&lt;h2&gt;</code>, <code class="highlight language-html">&lt;h3&gt;</code>, or <code class="highlight language-html">&lt;h4&gt;</code></dt>
+          <dd>The empty-state title.</dd>
+          <dt><code class="highlight language-html">&lt;p&gt;</code> <span class="badge-secondary">Optional</span></dt>
+          <dd>The empty-state description.</dd>
+        </dl>
+      </dd>
+      <dt><code class="highlight language-html">&lt;section&gt;</code> or <code class="highlight language-html">&lt;footer&gt;</code> <span class="badge-secondary">Optional</span></dt>
+      <dd>Actions and supporting content.</dd>
+    </dl>
+  </dd>
+</dl>
+
+## Examples
+
+### Outline
+
+<Preview>
+<section class="empty border">
+  <header>
+    <figure>
+      <svg class="lucide lucide-cloud" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z" /></svg>
+    </figure>
+    <h3>Cloud Storage Empty</h3>
+    <p>Upload files to your cloud storage to access them anywhere.</p>
+  </header>
+  <footer>
+    <button class="btn-sm-outline">Upload Files</button>
+  </footer>
+</section>
+</Preview>
+
+### Avatar
+
+<Preview>
+<section class="empty">
+  <header>
+    <figure class="size-12 rounded-full">
+      <img alt="@shadcn" src="https://github.com/shadcn.png" />
+    </figure>
+    <h3>User Offline</h3>
+    <p>This user is currently offline. You can leave a message or try again later.</p>
+  </header>
+  <footer>
+    <button class="btn-sm">Leave Message</button>
+  </footer>
+</section>
+</Preview>
+
+### Avatar Group
+
+<Preview>
+<section class="empty">
+  <header>
+    <figure class="-space-x-2 [&_img]:ring-background [&_img]:ring-2 [&_img]:grayscale [&_img]:size-12 [&_img]:rounded-full">
+      <img alt="@hunvreus" src="https://github.com/hunvreus.png" />
+      <img alt="@shadcn" src="https://github.com/shadcn.png" />
+      <img alt="@adamwathan" src="https://github.com/adamwathan.png" />
+    </figure>
+    <h3>No Team Members</h3>
+    <p>Invite your team to collaborate on this project.</p>
+  </header>
+  <footer>
+    <button class="btn-sm">
+      <svg class="lucide lucide-plus" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M5 12h14" /><path d="M12 5v14" /></svg>
+      Invite Members
+    </button>
+  </footer>
+</section>
+</Preview>
+
+### Input Group
+
+<Preview>
+<section class="empty">
+  <header>
+    <h3>404 - Not Found</h3>
+    <p>The page you're looking for doesn't exist. Try searching for what you need below.</p>
+  </header>
+  <footer>
+    <div class="input-group w-full">
+      <svg class="lucide lucide-search" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="m21 21-4.34-4.34" /><circle cx="11" cy="11" r="8" /></svg>
+      <input type="search" placeholder="Try searching for pages..." />
+      <kbd class="kbd">/</kbd>
+    </div>
+    <p>Need help? <a href="#">Contact support</a></p>
+  </footer>
+</section>
+</Preview>
+
+### RTL
+
+<Preview>
+<section class="empty" dir="rtl">
+  <header>
+    <figure>
+      <svg class="lucide lucide-folder-code" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M10 10.5 8 13l2 2.5" /><path d="m14 10.5 2 2.5-2 2.5" /><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2z" /></svg>
+    </figure>
+    <h3>لا توجد مشاريع بعد</h3>
+    <p>ابدأ بإنشاء مشروعك الأول.</p>
+  </header>
+  <footer>
+    <button class="btn-sm">إنشاء مشروع</button>
+  </footer>
+</section>
+</Preview>

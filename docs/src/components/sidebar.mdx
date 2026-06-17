@@ -1,0 +1,123 @@
+
+## Usage
+
+<Callout title="Template macros available" icon="code" action={{ label: "Read more", href: "/cli#sidebar" }}>
+  This component ships a `sidebar()` macro for Jinja and Nunjucks.
+</Callout>
+
+
+<Steps>
+  <Step title="Include the JavaScript files">
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.2/dist/js/basecoat.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.2/dist/js/sidebar.min.js" defer></script>
+```
+
+  </Step>
+  <Step title="Add your sidebar HTML">
+
+```html
+<aside class="sidebar" data-side="left" aria-hidden="false">
+  <nav aria-label="Sidebar navigation">
+    <section class="scrollbar-thin">
+      <div role="group" aria-labelledby="group-label-content-1">
+        <h3 id="group-label-content-1">Getting started</h3>
+        <ul>
+          <li>
+            <a href="#">
+              <svg class="lucide lucide-square-terminal" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7 11 2-2-2-2" /><path d="M11 13h4" /><rect width="18" height="18" x="3" y="3" rx="2" ry="2" /></svg>
+              <span>Playground</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <svg class="lucide lucide-bot" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8" /><rect width="16" height="12" x="4" y="8" rx="2" /><path d="M2 14h2" /><path d="M20 14h2" /><path d="M15 13v2" /><path d="M9 13v2" /></svg>
+              <span>Models</span>
+            </a>
+          </li>
+          <li>
+            <details id="submenu-content-1-3">
+              <summary aria-controls="submenu-content-1-3-content">
+                <svg class="lucide lucide-settings" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915" /><circle cx="12" cy="12" r="3" /></svg>
+                <span>Settings</span>
+              </summary>
+              <ul id="submenu-content-1-3-content">
+                <li>
+                  <a href="#">
+                    <span>General</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    <span>Team</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    <span>Billing</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    <span>Limits</span>
+                  </a>
+                </li>
+              </ul>
+            </details>
+          </li>
+        </ul>
+      </div>
+    </section>
+  </nav>
+</aside>
+<main>
+  <button type="button" onclick="document.getElementById('sidebar')?.toggle()">Toggle sidebar</button>
+  <h1>Content</h1>
+</main>
+```
+
+  </Step>
+</Steps>
+
+#### HTML structure
+
+```html
+<!-- Server-side or router-driven current item -->
+<nav aria-label="Sidebar navigation">
+  <ul>
+    <li><a href="/my-path?page=overview">Overview</a></li>
+    <li><a href="/my-path?page=settings" aria-current="page">Settings</a></li>
+    <li><button type="button" data-active="true">Active action</button></li>
+  </ul>
+</nav>
+```
+
+<dl>
+  <dt><code class="highlight language-html">&lt;aside class="sidebar" aria-hidden="false"&gt;</code></dt>
+  <dd>Sidebar root. Supports <code>id</code>, <code>aria-hidden</code>, <code>data-side="left|right"</code>, <code>data-initial-open</code>, <code>data-initial-mobile-open</code>, and <code>data-breakpoint</code>.</dd>
+  <dt><code class="highlight language-html">&lt;nav aria-label="..."&gt;</code></dt>
+  <dd>Navigation landmark inside the sidebar.</dd>
+  <dt><code class="highlight language-html">&lt;section&gt;</code></dt>
+  <dd>Scrollable sidebar content.</dd>
+  <dt><code class="highlight language-html">&lt;a aria-current="page"&gt;</code></dt>
+  <dd>Current-page link. Use <code>data-active="true"</code> for active non-link items.</dd>
+  <dt><code class="highlight language-html">&lt;details&gt;</code> / <code class="highlight language-html">&lt;summary&gt;</code></dt>
+  <dd>Native disclosure for submenus.</dd>
+  <dt><code class="highlight language-html">&lt;main&gt;</code></dt>
+  <dd>Sibling content wrapper. The desktop margin applies to the sibling immediately after the sidebar.</dd>
+</dl>
+
+#### Basecoat differences
+
+Basecoat supports fixed left/right sidebars, mobile overlay behavior, grouped navigation, active states, and native `details` submenus. It does not expose shadcn/ui's React provider, rail, inset/floating variants, icon-only collapse mode, menu actions, menu badges, or menu skeleton API.
+
+RTL content is supported through logical spacing and borders. `data-side` remains physical: `left` means the left side of the viewport and `right` means the right side.
+
+### JavaScript API
+
+| API | Type | Description |
+| --- | --- | --- |
+| `sidebar.open()` | Method | Opens the sidebar. |
+| `sidebar.close()` | Method | Closes the sidebar. |
+| `sidebar.toggle()` | Method | Toggles the sidebar. |

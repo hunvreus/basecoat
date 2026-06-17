@@ -1,0 +1,65 @@
+---
+import { Preview } from "reallysimpledocs/components";
+
+const code = `<div class="card">
+  <header>
+    <h2>Bar Chart - Multiple</h2>
+    <p>Showing total visitors for the last 6 months</p>
+  </header>
+  <section>
+    <canvas id="chart-example-visitors" aria-label="Monthly visitors by device"></canvas>
+  </section>
+</div>`;
+---
+
+<Preview class="w-full" code={code}>
+  <div class="card w-full">
+    <header>
+      <h2>Bar Chart - Multiple</h2>
+      <p>Showing total visitors for the last 6 months</p>
+    </header>
+    <section>
+      <canvas id="chart-example-visitors" aria-label="Monthly visitors by device"></canvas>
+    </section>
+  </div>
+</Preview>
+
+<script is:inline src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  import "../../../src/js/chart.js";
+
+  const initChartExample = () => {
+    const canvas = document.getElementById("chart-example-visitors");
+    if (!canvas || !window.Chart || !window.basecoat?.chart || canvas.dataset.chartInitialized) return;
+
+    window.basecoat.chart(canvas, {
+      type: "bar",
+      labelKey: "month",
+      legend: true,
+      data: [
+        { month: "Jan", desktop: 186, mobile: 80 },
+        { month: "Feb", desktop: 305, mobile: 200 },
+        { month: "Mar", desktop: 237, mobile: 120 },
+        { month: "Apr", desktop: 73, mobile: 190 },
+        { month: "May", desktop: 209, mobile: 130 },
+        { month: "Jun", desktop: 214, mobile: 140 },
+      ],
+      series: {
+        desktop: { label: "Desktop", color: "var(--chart-1)" },
+        mobile: { label: "Mobile", color: "var(--chart-2)" },
+      },
+      options: {
+        scales: {
+          y: { beginAtZero: true },
+          x: { grid: { display: false } },
+        },
+      },
+    });
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initChartExample, { once: true });
+  } else {
+    initChartExample();
+  }
+</script>

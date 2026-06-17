@@ -1,0 +1,189 @@
+# Radio Group
+
+<Preview class="w-full max-w-sm">
+<fieldset class="fieldset">
+  <legend>Plan</legend>
+  <div role="radiogroup" aria-label="Plan" data-slot="radio-group">
+    <div role="group" class="field flex-row items-center gap-3">
+      <input type="radio" id="plan-free" name="plan" value="free" class="input" checked />
+      <label for="plan-free">Free</label>
+    </div>
+    <div role="group" class="field flex-row items-center gap-3">
+      <input type="radio" id="plan-pro" name="plan" value="pro" class="input" />
+      <label for="plan-pro">Pro</label>
+    </div>
+  </div>
+</fieldset>
+</Preview>
+
+## Usage
+
+Add `input` to radio inputs. Use a shared `name` attribute for mutually exclusive options, and wrap related options in a semantic `<fieldset>` or an element with `role="radiogroup"`.
+
+```html
+<input type="radio" name="plan" class="input" />
+```
+
+## Checked state
+
+Use native HTML state. Add `checked` for the initially selected option, or read and update the element's `checked` property in JavaScript.
+
+```html
+<input type="radio" name="plan" class="input" checked />
+```
+
+## Invalid state
+
+Set `aria-invalid="true"` on the invalid radio and, when using `field`, set `data-invalid="true"` on the field wrapper.
+
+<Preview class="w-full max-w-sm">
+<div role="group" class="field flex-row items-start gap-3" data-invalid="true">
+  <input type="radio" id="radio-invalid" name="radio-invalid" class="input" aria-invalid="true" />
+  <div class="grid gap-1.5">
+    <label for="radio-invalid">I agree to the terms</label>
+    <p class="field-error">You must select an option to continue.</p>
+  </div>
+</div>
+</Preview>
+
+## Examples
+
+### Basic
+
+<Preview class="w-full max-w-sm">
+<div role="radiogroup" aria-label="View density" data-slot="radio-group">
+  <div role="group" class="field flex-row items-center gap-3">
+    <input type="radio" id="density-default" name="density" value="default" class="input" />
+    <label for="density-default">Default</label>
+  </div>
+  <div role="group" class="field flex-row items-center gap-3">
+    <input type="radio" id="density-comfortable" name="density" value="comfortable" class="input" checked />
+    <label for="density-comfortable">Comfortable</label>
+  </div>
+  <div role="group" class="field flex-row items-center gap-3">
+    <input type="radio" id="density-compact" name="density" value="compact" class="input" />
+    <label for="density-compact">Compact</label>
+  </div>
+</div>
+</Preview>
+
+### Description
+
+<Preview class="w-full max-w-sm">
+<div role="radiogroup" aria-label="Notifications" data-slot="radio-group">
+  <div role="group" class="field flex-row items-start gap-3">
+    <input type="radio" id="notify-all" name="notifications" value="all" class="input" checked aria-describedby="notify-all-description" />
+    <div class="grid gap-1.5">
+      <label for="notify-all">All new messages</label>
+      <p id="notify-all-description" class="field-description">Receive a notification for every new message.</p>
+    </div>
+  </div>
+  <div role="group" class="field flex-row items-start gap-3">
+    <input type="radio" id="notify-mentions" name="notifications" value="mentions" class="input" aria-describedby="notify-mentions-description" />
+    <div class="grid gap-1.5">
+      <label for="notify-mentions">Direct messages and mentions</label>
+      <p id="notify-mentions-description" class="field-description">Only notify me for direct messages and mentions.</p>
+    </div>
+  </div>
+</div>
+</Preview>
+
+### Choice Card
+
+Wrap a `.field` in a native `<label>` when the whole card should select the option.
+
+<Preview class="w-full">
+<div role="radiogroup" aria-label="Plans" data-slot="radio-group" class="w-full max-w-md">
+  <label>
+    <div role="group" class="field flex-row items-center justify-between">
+      <div class="grid gap-1.5">
+        <span>Starter</span>
+        <span class="field-description">For small teams getting started.</span>
+      </div>
+      <input type="radio" name="choice-plan" value="starter" class="input" checked />
+    </div>
+  </label>
+  <label>
+    <div role="group" class="field flex-row items-center justify-between">
+      <div class="grid gap-1.5">
+        <span>Team</span>
+        <span class="field-description">Collaboration tools for growing teams.</span>
+      </div>
+      <input type="radio" name="choice-plan" value="team" class="input" />
+    </div>
+  </label>
+</div>
+</Preview>
+
+### Fieldset
+
+<Preview class="w-full max-w-sm">
+<fieldset class="fieldset">
+  <legend>Notify me about...</legend>
+  <div role="radiogroup" aria-label="Notification preference" data-slot="radio-group">
+    <div role="group" class="field flex-row items-center gap-3">
+      <input class="input" type="radio" id="notify-all-fieldset" name="notify-fieldset" value="all" checked />
+      <label for="notify-all-fieldset">All new messages</label>
+    </div>
+    <div role="group" class="field flex-row items-center gap-3">
+      <input class="input" type="radio" id="notify-mentions-fieldset" name="notify-fieldset" value="mentions" />
+      <label for="notify-mentions-fieldset">Direct messages and mentions</label>
+    </div>
+    <div role="group" class="field flex-row items-center gap-3">
+      <input class="input" type="radio" id="notify-none-fieldset" name="notify-fieldset" value="none" />
+      <label for="notify-none-fieldset">Nothing</label>
+    </div>
+  </div>
+</fieldset>
+</Preview>
+
+### Disabled
+
+<Preview class="w-full max-w-sm">
+<div role="radiogroup" aria-label="Disabled notifications" data-slot="radio-group">
+  <div role="group" class="field flex-row items-center gap-3" data-disabled="true">
+    <input type="radio" id="radio-disabled" name="radio-disabled" class="input" disabled />
+    <label for="radio-disabled">Disabled option</label>
+  </div>
+  <div role="group" class="field flex-row items-center gap-3" data-disabled="true">
+    <input type="radio" id="radio-disabled-checked" name="radio-disabled" class="input" checked disabled />
+    <label for="radio-disabled-checked">Disabled checked option</label>
+  </div>
+</div>
+</Preview>
+
+### Invalid
+
+<Preview class="w-full max-w-sm">
+<fieldset class="fieldset" data-invalid="true">
+  <legend>Plan</legend>
+  <div role="radiogroup" aria-label="Invalid plan" data-slot="radio-group" aria-describedby="radio-group-error">
+    <div role="group" class="field flex-row items-center gap-3" data-invalid="true">
+      <input type="radio" id="radio-invalid-free" name="radio-invalid-plan" class="input" aria-invalid="true" />
+      <label for="radio-invalid-free">Free</label>
+    </div>
+    <div role="group" class="field flex-row items-center gap-3" data-invalid="true">
+      <input type="radio" id="radio-invalid-pro" name="radio-invalid-plan" class="input" aria-invalid="true" />
+      <label for="radio-invalid-pro">Pro</label>
+    </div>
+  </div>
+  <p id="radio-group-error" class="field-error">Select a plan to continue.</p>
+</fieldset>
+</Preview>
+
+### RTL
+
+Radio group layout uses document direction and logical spacing. Set `dir="rtl"` on a parent to render right-to-left.
+
+<Preview class="w-full max-w-sm">
+<div dir="rtl" role="radiogroup" aria-label="طريقة العرض" data-slot="radio-group">
+  <div role="group" class="field flex-row items-center gap-3">
+    <input type="radio" id="radio-rtl-default" name="radio-rtl" value="default" class="input" checked />
+    <label for="radio-rtl-default">افتراضي</label>
+  </div>
+  <div role="group" class="field flex-row items-center gap-3">
+    <input type="radio" id="radio-rtl-comfortable" name="radio-rtl" value="comfortable" class="input" />
+    <label for="radio-rtl-comfortable">مريح</label>
+  </div>
+</div>
+</Preview>

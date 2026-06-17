@@ -1,0 +1,196 @@
+# Avatar
+
+<Preview>
+<div class="flex flex-row flex-wrap items-center gap-12">
+  <span class="avatar">
+    <img src="https://github.com/shadcn.png" alt="@shadcn" />
+    <span>CN</span>
+  </span>
+  <span class="avatar rounded-lg">
+    <img src="https://github.com/evilrabbit.png" alt="@evilrabbit" />
+    <span>ER</span>
+    <span data-badge class="bg-green-600 dark:bg-green-800"></span>
+  </span>
+  <div class="avatar-group [&_.avatar]:grayscale">
+    <span class="avatar">
+      <img src="https://github.com/shadcn.png" alt="@shadcn" />
+      <span>CN</span>
+    </span>
+    <span class="avatar">
+      <img src="https://github.com/maxleiter.png" alt="@maxleiter" />
+      <span>LR</span>
+    </span>
+    <span class="avatar">
+      <img src="https://github.com/evilrabbit.png" alt="@evilrabbit" />
+      <span>ER</span>
+    </span>
+    <span data-count>+3</span>
+  </div>
+</div>
+</Preview>
+
+## Usage
+
+Use `.avatar`, `.avatar-sm`, or `.avatar-lg` on a small inline container. Put the image first and a fallback `<span>` after it.
+
+```html
+<span class="avatar">
+  <img src="https://github.com/shadcn.png" alt="@shadcn" />
+  <span>CN</span>
+</span>
+```
+
+### HTML structure
+
+<dl>
+  <dt><code class="highlight language-html">&lt;div class="avatar-group"&gt;</code> <span class="badge-secondary">Optional</span></dt>
+  <dd>
+    Optional parent that groups avatars with overlap.
+    <dl>
+      <dt><code class="highlight language-html">&lt;span class="avatar|avatar-sm|avatar-lg"&gt;</code></dt>
+      <dd>
+        Avatar root. Use <code>.avatar-sm</code>, <code>.avatar</code>, or <code>.avatar-lg</code>. Use it standalone or as a direct child of <code>.avatar-group</code>.
+        <dl>
+          <dt><code class="highlight language-html">&lt;img&gt;</code> <span class="badge-secondary">Optional</span></dt>
+          <dd>The avatar image. Provide meaningful <code>alt</code> text.</dd>
+          <dt><code class="highlight language-html">&lt;span&gt;</code></dt>
+          <dd>Fallback initials or icon.</dd>
+          <dt><code class="highlight language-html">&lt;span data-badge&gt;</code> <span class="badge-secondary">Optional</span></dt>
+          <dd>Status badge positioned at the block-end inline-end corner.</dd>
+        </dl>
+      </dd>
+      <dt><code class="highlight language-html">&lt;span data-count&gt;</code> <span class="badge-secondary">Optional</span></dt>
+      <dd>Count or icon indicator displayed at the end of the group.</dd>
+    </dl>
+  </dd>
+</dl>
+
+## Examples
+
+### Basic
+
+<Preview>
+<span class="avatar">
+  <img class="grayscale" src="https://github.com/shadcn.png" alt="@shadcn" />
+  <span>CN</span>
+</span>
+</Preview>
+
+### Badge
+
+<Preview>
+<span class="avatar">
+  <img src="https://github.com/shadcn.png" alt="@shadcn" />
+  <span>CN</span>
+  <span data-badge class="bg-green-600 dark:bg-green-800"></span>
+</span>
+</Preview>
+
+### Badge With Icon
+
+<Preview>
+<span class="avatar grayscale">
+  <img src="https://github.com/pranathip.png" alt="@pranathip" />
+  <span>PP</span>
+  <span data-badge>
+    <svg class="lucide lucide-plus" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14" /><path d="M12 5v14" /></svg>
+  </span>
+</span>
+</Preview>
+
+### Avatar Group
+
+<Preview>
+<div class="avatar-group grayscale">
+  <span class="avatar"><img src="https://github.com/shadcn.png" alt="@shadcn" /><span>CN</span></span>
+  <span class="avatar"><img src="https://github.com/maxleiter.png" alt="@maxleiter" /><span>LR</span></span>
+  <span class="avatar"><img src="https://github.com/evilrabbit.png" alt="@evilrabbit" /><span>ER</span></span>
+</div>
+</Preview>
+
+### Avatar Group Count
+
+<Preview>
+<div class="avatar-group grayscale">
+  <span class="avatar"><img src="https://github.com/shadcn.png" alt="@shadcn" /><span>CN</span></span>
+  <span class="avatar"><img src="https://github.com/maxleiter.png" alt="@maxleiter" /><span>LR</span></span>
+  <span class="avatar"><img src="https://github.com/evilrabbit.png" alt="@evilrabbit" /><span>ER</span></span>
+  <span data-count>+3</span>
+</div>
+</Preview>
+
+### Avatar Group With Icon
+
+<Preview>
+<div class="avatar-group grayscale">
+  <span class="avatar"><img src="https://github.com/shadcn.png" alt="@shadcn" /><span>CN</span></span>
+  <span class="avatar"><img src="https://github.com/maxleiter.png" alt="@maxleiter" /><span>LR</span></span>
+  <span class="avatar"><img src="https://github.com/evilrabbit.png" alt="@evilrabbit" /><span>ER</span></span>
+  <span data-count aria-label="Additional avatars">
+    <svg class="lucide lucide-plus" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14" /><path d="M12 5v14" /></svg>
+  </span>
+</div>
+</Preview>
+
+### Sizes
+
+<Preview>
+<div class="flex flex-wrap items-center gap-2 grayscale">
+  <span class="avatar-sm">
+    <img src="https://github.com/shadcn.png" alt="@shadcn" />
+    <span>CN</span>
+  </span>
+  <span class="avatar">
+    <img src="https://github.com/shadcn.png" alt="@shadcn" />
+    <span>CN</span>
+  </span>
+  <span class="avatar-lg">
+    <img src="https://github.com/shadcn.png" alt="@shadcn" />
+    <span>CN</span>
+  </span>
+</div>
+</Preview>
+
+### Dropdown
+
+<Preview>
+<div class="dropdown-menu">
+  <button type="button" id="avatar-dropdown-trigger" aria-haspopup="menu" aria-controls="avatar-dropdown-menu" aria-expanded="false" class="btn-icon-ghost rounded-full">
+    <span class="avatar">
+      <img src="https://github.com/shadcn.png" alt="@shadcn" />
+      <span>CN</span>
+    </span>
+  </button>
+  <div data-popover aria-hidden="true" class="w-32">
+    <div role="menu" id="avatar-dropdown-menu" aria-labelledby="avatar-dropdown-trigger">
+      <div role="menuitem">Profile</div>
+      <div role="menuitem">Billing</div>
+      <div role="menuitem">Settings</div>
+      <hr role="separator" />
+      <div role="menuitem" data-variant="destructive">Log out</div>
+    </div>
+  </div>
+</div>
+</Preview>
+
+### RTL
+
+<Preview>
+<div class="flex flex-row flex-wrap items-center gap-6 md:gap-12" dir="rtl">
+  <span class="avatar">
+    <img class="grayscale" src="https://github.com/shadcn.png" alt="@shadcn" />
+    <span>CN</span>
+  </span>
+  <span class="avatar">
+    <img src="https://github.com/evilrabbit.png" alt="@evilrabbit" />
+    <span>ER</span>
+    <span data-badge class="bg-green-600 dark:bg-green-800"></span>
+  </span>
+  <div class="avatar-group grayscale">
+    <span class="avatar"><img src="https://github.com/shadcn.png" alt="@shadcn" /><span>CN</span></span>
+    <span class="avatar"><img src="https://github.com/maxleiter.png" alt="@maxleiter" /><span>LR</span></span>
+    <span class="avatar"><img src="https://github.com/evilrabbit.png" alt="@evilrabbit" /><span>ER</span></span>
+    <span data-count>+٣</span>
+  </div>
+</div>
+</Preview>

@@ -264,7 +264,7 @@
     }
   }
 
-  .button-group-text {
+  .button-group > :is(span, label, output) {
     @apply bg-muted gap-2 rounded-md border px-2.5 text-xs/relaxed font-medium [&_svg:not([class*='size-'])]:size-4;
   }
 
@@ -383,7 +383,7 @@
   /* Alert */
   .alert,
   .alert-destructive {
-    @apply grid gap-0.5 rounded-lg border px-2 py-1.5 text-start text-xs/relaxed has-[>[data-action]]:relative has-[>[data-action]]:pe-18 has-[>svg]:grid-cols-[auto_1fr] has-[>svg]:gap-x-1.5 [&>svg]:row-span-2 [&>svg]:translate-y-0.5 [&>svg]:text-current [&>svg:not([class*='size-'])]:size-3.5;
+    @apply grid gap-0.5 rounded-lg border px-2 py-1.5 text-start text-xs/relaxed has-[>svg]:grid-cols-[auto_1fr] has-[>svg]:gap-x-1.5 [&>svg]:row-span-2 [&>svg]:translate-y-0.5 [&>svg]:text-current [&>svg:not([class*='size-'])]:size-3.5;
   }
 
   .alert {
@@ -411,9 +411,57 @@
     @apply text-destructive/90 text-xs/relaxed text-balance md:text-pretty [&_p:not(:last-child)]:mb-4;
   }
 
-  .alert > [data-action],
-  .alert-destructive > [data-action] {
-    @apply absolute top-1.5 end-2;
+  .alert > footer,
+  .alert-destructive > footer {
+    @apply top-1.5 end-2;
+  }
+  /* Avatar */
+  .avatar,
+  .avatar-sm,
+  .avatar-lg {
+    @apply rounded-full after:rounded-[inherit];
+  }
+
+  .avatar {
+    @apply size-8;
+  }
+
+  .avatar-sm {
+    @apply size-6;
+  }
+
+  .avatar-lg {
+    @apply size-10;
+  }
+
+  .avatar > span:not([data-badge]),
+  .avatar-sm > span:not([data-badge]),
+  .avatar-lg > span:not([data-badge]) {
+    @apply bg-muted text-muted-foreground rounded-[inherit];
+  }
+
+  .avatar > img,
+  .avatar-sm > img,
+  .avatar-lg > img {
+    @apply rounded-[inherit];
+  }
+
+  .avatar > [data-badge],
+  .avatar-sm > [data-badge],
+  .avatar-lg > [data-badge] {
+    @apply bg-primary text-primary-foreground ring-background;
+  }
+
+  .avatar-group > [data-count] {
+    @apply bg-muted text-muted-foreground size-8 rounded-full text-xs/relaxed [&>svg]:size-4;
+  }
+
+  .avatar-group:has(> .avatar-sm) > [data-count] {
+    @apply size-6 [&>svg]:size-3;
+  }
+
+  .avatar-group:has(> .avatar-lg) > [data-count] {
+    @apply size-10 [&>svg]:size-5;
   }
 
   /* Badge */
@@ -724,28 +772,71 @@
   }
 
   /* Card */
+  .card,
+  .card-sm {
+    @apply ring-foreground/10 bg-card text-card-foreground overflow-hidden rounded-lg text-xs/relaxed ring-1 has-[>img:first-child]:pt-0 [&>img:first-child]:rounded-t-lg [&>img:last-child]:rounded-b-lg;
+  }
+
   .card {
-    @apply ring-foreground/10 bg-card text-card-foreground gap-4 overflow-hidden rounded-lg py-4 text-xs/relaxed ring-1 has-[>img:first-child]:pt-0 data-[size=sm]:gap-3 data-[size=sm]:py-3 [&>img:first-child]:rounded-t-lg [&>img:last-child]:rounded-b-lg;
+    @apply gap-4 py-4;
   }
 
-  .card > header {
-    @apply gap-1 rounded-t-lg px-4 in-data-[size=sm]:px-3 [.border-b]:pb-4 in-data-[size=sm]:[.border-b]:pb-3;
+  .card-sm {
+    @apply gap-3 py-3;
   }
 
-  .card > header > :is(h2, h3, [data-title], .card-title) {
+  .card > header,
+  .card-sm > header {
+    @apply gap-1 rounded-t-lg px-4 [.border-b]:pb-4;
+  }
+
+  .card-sm > header {
+    @apply px-3 [.border-b]:pb-3;
+  }
+
+  .card > header > :is(h2, h3, [data-title], .card-title),
+  .card-sm > header > :is(h2, h3, [data-title], .card-title) {
     @apply text-sm font-medium;
   }
 
-  .card > header > :is(p, [data-description], .card-description) {
+  .card > header > :is(p, [data-description], .card-description),
+  .card-sm > header > :is(p, [data-description], .card-description) {
     @apply text-muted-foreground text-xs/relaxed;
   }
 
-  .card > section {
-    @apply px-4 in-data-[size=sm]:px-3;
+  .card > section,
+  .card-sm > section {
+    @apply px-4;
   }
 
-  .card > footer {
-    @apply rounded-b-lg px-4 in-data-[size=sm]:px-3 [.border-t]:pt-4 in-data-[size=sm]:[.border-t]:pt-3;
+  .card-sm > section {
+    @apply px-3;
+  }
+
+  .card > footer,
+  .card-sm > footer {
+    @apply rounded-b-lg px-4 [.border-t]:pt-4;
+  }
+
+  .card-sm > footer {
+    @apply px-3 [.border-t]:pt-3;
+  }
+
+  /* Chart */
+  .chart-tooltip {
+    @apply border-border/50 bg-background text-foreground gap-1.5 rounded-lg border px-2.5 py-1.5 text-xs shadow-xl;
+  }
+
+  .chart-tooltip-title {
+    @apply font-medium;
+  }
+
+  .chart-legend-item {
+    @apply text-foreground;
+  }
+
+  .chart-legend-item[aria-pressed='false'] {
+    @apply text-muted-foreground;
   }
 
   /* Checkbox */

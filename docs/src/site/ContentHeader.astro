@@ -1,0 +1,84 @@
+---
+import novaUrl from "../assets/styles/style-nova.css?url";
+import maiaUrl from "../assets/styles/style-maia.css?url";
+import lyraUrl from "../assets/styles/style-lyra.css?url";
+import miraUrl from "../assets/styles/style-mira.css?url";
+import lumaUrl from "../assets/styles/style-luma.css?url";
+import seraUrl from "../assets/styles/style-sera.css?url";
+import rheaUrl from "../assets/styles/style-rhea.css?url";
+
+const styleUrls = {
+  vega: null,
+  nova: novaUrl,
+  maia: maiaUrl,
+  lyra: lyraUrl,
+  mira: miraUrl,
+  luma: lumaUrl,
+  sera: seraUrl,
+  rhea: rheaUrl,
+};
+---
+
+<nav class="hidden items-center gap-2 sm:flex">
+  <select id="style-variant-select" class="select h-8 w-28 text-sm leading-none" aria-label="Style pack">
+    <option value="vega">Vega</option>
+    <option value="nova">Nova</option>
+    <option value="maia">Maia</option>
+    <option value="lyra">Lyra</option>
+    <option value="mira">Mira</option>
+    <option value="luma">Luma</option>
+    <option value="sera">Sera</option>
+    <option value="rhea">Rhea</option>
+  </select>
+</nav>
+
+<script is:inline define:vars={{ styleUrls }}>
+  (() => {
+    const styleSelect = document.getElementById("style-variant-select");
+    const styleLinkId = "docs-style-variant";
+
+    const getStyleLink = () => document.getElementById(styleLinkId);
+
+    const applyStyle = (style) => {
+      const nextStyle = Object.prototype.hasOwnProperty.call(styleUrls, style) ? style : "vega";
+      const href = styleUrls[nextStyle];
+      let link = getStyleLink();
+
+      document.documentElement.dataset.styleVariant = nextStyle;
+
+      if (!href) {
+        link?.remove();
+        return;
+      }
+
+      if (!link) {
+        link = document.createElement("link");
+        link.id = styleLinkId;
+        link.rel = "stylesheet";
+        document.head.appendChild(link);
+      }
+
+      if (link.href !== href) link.href = href;
+    };
+
+    const getStoredStyle = () => {
+      try {
+        return localStorage.getItem("styleVariant") || "vega";
+      } catch (_) {
+        return "vega";
+      }
+    };
+
+    const initialStyle = getStoredStyle();
+    if (styleSelect) styleSelect.value = initialStyle;
+    applyStyle(initialStyle);
+
+    styleSelect?.addEventListener("change", () => {
+      const nextStyle = styleSelect.value || "vega";
+      applyStyle(nextStyle);
+      try {
+        localStorage.setItem("styleVariant", nextStyle);
+      } catch (_) {}
+    });
+  })();
+</script>

@@ -5,6 +5,11 @@
     @apply relative w-full;
   }
 
+  .alert:has(> footer),
+  .alert-destructive:has(> footer) {
+    @apply pe-18;
+  }
+
   .alert > :is(h2, h3, h4, h5, h6, strong, [data-title]),
   .alert-destructive > :is(h2, h3, h4, h5, h6, strong, [data-title]) {
     @apply min-h-4;
@@ -17,5 +22,10 @@
     ul {
       @apply list-inside list-disc;
     }
+  }
+
+  .alert > footer,
+  .alert-destructive > footer {
+    @apply absolute;
   }
 }

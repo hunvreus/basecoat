@@ -2,6 +2,10 @@
 @layer components {
   .button-group {
     @apply isolate inline-flex w-fit items-stretch;
+
+    &:has(> :is(.dropdown-menu, .popover, .select) > [data-popover][aria-hidden='false']) {
+      @apply relative z-50;
+    }
     
     > .input {
       @apply flex-1;
@@ -44,7 +48,7 @@
     }
   }
 
-  .button-group-text {
+  .button-group > :is(span, label, output) {
     @apply flex items-center [&_svg]:pointer-events-none;
   }
 

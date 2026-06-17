@@ -1,0 +1,177 @@
+# Card
+
+<Preview class="w-full max-w-sm">
+<div class="card w-full">
+  <header>
+    <h2>Login to your account</h2>
+    <p>Enter your details below to login to your account</p>
+  </header>
+  <section>
+    <form class="grid gap-6">
+      <div class="grid gap-2">
+        <label class="label" for="demo-card-form-email">Email</label>
+        <input class="input" type="email" id="demo-card-form-email" />
+      </div>
+      <div class="grid gap-2">
+        <div class="flex items-center gap-2">
+          <label class="label" for="demo-card-form-password">Password</label>
+          <a href="#" class="ms-auto inline-block text-sm underline-offset-4 hover:underline">Forgot your password?</a>
+        </div>
+        <input class="input" type="password" id="demo-card-form-password" />
+      </div>
+    </form>
+  </section>
+  <footer class="flex flex-col items-center gap-2">
+    <button type="button" class="btn w-full">Login</button>
+    <button type="button" class="btn-outline w-full">Login with Google</button>
+    <p class="mt-4 text-center text-sm">Don't have an account? <a href="#" class="underline-offset-4 hover:underline">Sign up</a></p>
+  </footer>
+</div>
+</Preview>
+
+## Usage
+
+```html
+<div class="card">
+  <header>
+    <h2>Card Title</h2>
+    <p>Card Description</p>
+  </header>
+  <section>
+    <p>Card Content</p>
+  </section>
+  <footer>
+    <p>Card Footer</p>
+  </footer>
+</div>
+```
+
+### HTML structure
+
+<dl>
+  <dt><code class="highlight language-html">&lt;div class="card|card-sm"&gt;</code></dt>
+  <dd>
+    The card container. Use <code>.card-sm</code> for a denser layout.
+    <dl>
+      <dt><code class="highlight language-html">&lt;header&gt;</code></dt>
+      <dd>
+        The header of the card.
+        <dl>
+          <dt><code class="highlight language-html">&lt;h2&gt;</code></dt>
+          <dd>The title of the card.</dd>
+          <dt><code class="highlight language-html">&lt;p&gt;</code> <span class="badge-secondary">Optional</span></dt>
+          <dd>The description of the card.</dd>
+        </dl>
+      </dd>
+      <dt><code class="highlight language-html">&lt;section&gt;</code></dt>
+      <dd>The content of the card.</dd>
+      <dt><code class="highlight language-html">&lt;footer&gt;</code> <span class="badge-secondary">Optional</span></dt>
+      <dd>The footer of the card.</dd>
+    </dl>
+  </dd>
+</dl>
+
+## Examples
+
+### Size
+
+<Preview>
+<div class="card-sm">
+  <header>
+    <h2>Small Card</h2>
+    <p>A compact card with reduced spacing.</p>
+  </header>
+  <section>
+    <p class="text-sm">Use <code>.card-sm</code> for denser layouts.</p>
+  </section>
+</div>
+</Preview>
+
+### With content and footer
+
+<Preview>
+<div class="card">
+  <header>
+    <h2>Meeting Notes</h2>
+    <p>Transcript from the meeting with the client.</p>
+  </header>
+  <section class="text-sm">
+    <p>Client requested dashboard redesign with focus on mobile responsiveness.</p>
+    <ol class="mt-4 flex list-decimal flex-col gap-2 ps-6">
+      <li>New analytics widgets for daily/weekly metrics</li>
+      <li>Simplified navigation menu</li>
+      <li>Dark mode support</li>
+      <li>Timeline: 6 weeks</li>
+      <li>Follow-up meeting scheduled for next Tuesday</li>
+    </ol>
+  </section>
+  <footer class="flex items-center">
+    <div class="flex -space-x-2 [&_img]:ring-card [&_img]:ring-2 [&_img]:grayscale [&_img]:size-8 [&_img]:shrink-0 [&_img]:object-cover [&_img]:rounded-full">
+      <img alt="@hunvreus" src="https://github.com/hunvreus.png" />
+      <img alt="@shadcn" src="https://github.com/shadcn.png" />
+      <img alt="@adamwathan" src="https://github.com/adamwathan.png" />
+    </div>
+  </footer>
+</div>
+</Preview>
+
+### With image
+
+<Preview>
+<div class="card">
+  <header>
+    <h2>Is this an image?</h2>
+    <p>This is a card with an image.</p>
+  </header>
+  <section class="px-0">
+    <img
+      alt="Photo by Drew Beamer"
+      loading="lazy"
+      width="500"
+      height="500"
+      class="aspect-video object-cover" style="color:transparent"
+      srcset="
+        https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80&w=640&q=75 1x,
+        https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80&w=1080&q=75 2x
+      "
+      src="https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80&w=1080&q=75"
+    />
+  </section>
+  <footer class="flex items-center gap-2">
+    <span class="badge-outline">
+     <svg class="lucide lucide-bed" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M2 4v16" /><path d="M2 8h18a2 2 0 0 1 2 2v10" /><path d="M2 17h20" /><path d="M6 8v9" /></svg>
+      1
+    </span>
+    <span class="badge-outline">
+      <svg class="lucide lucide-bath" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M10 4 8 6" /><path d="M17 19v2" /><path d="M2 12h20" /><path d="M7 19v2" /><path d="M9 5 7.621 3.621A2.121 2.121 0 0 0 4 5v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5" /></svg>
+      2
+    </span>
+    <span class="badge-outline">
+      <svg class="lucide lucide-land-plot" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="m12 8 6-3-6-3v10" /><path d="m8 11.99-5.5 3.14a1 1 0 0 0 0 1.74l8.5 4.86a2 2 0 0 0 2 0l8.5-4.86a1 1 0 0 0 0-1.74L16 12" /><path d="m6.49 12.85 11.02 6.3" /><path d="M17.51 12.85 6.5 19.15" /></svg>
+      350m²
+    </span>
+    <span class="ms-auto font-medium tabular-nums">
+      $135,000
+    </span>
+  </footer>
+</div>
+</Preview>
+
+### RTL
+
+Add `dir="rtl"` to the card or an ancestor.
+
+<Preview>
+<div class="card" dir="rtl">
+  <header>
+    <h2>إعدادات الحساب</h2>
+    <p>راجع إعدادات الأمان والإشعارات.</p>
+  </header>
+  <section>
+    <p class="text-sm">يمكنك تعديل هذه الإعدادات في أي وقت.</p>
+  </section>
+  <footer>
+    <button type="button" class="btn">حفظ</button>
+  </footer>
+</div>
+</Preview>

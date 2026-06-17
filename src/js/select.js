@@ -115,7 +115,11 @@
     } else {
       const option = optionOrOptions;
       if (!option) return;
-      state.selectedLabel.innerHTML = option.innerHTML;
+      if (option.dataset.label) {
+        state.selectedLabel.textContent = option.dataset.label;
+      } else {
+        state.selectedLabel.innerHTML = option.innerHTML;
+      }
       selectedDetail = toSelected(option);
       value = selectedDetail.value;
       state.input.value = serializeSelection(state, [selectedDetail]);

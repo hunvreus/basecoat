@@ -1,0 +1,55 @@
+/* Avatar */
+@layer components {
+  .avatar,
+  .avatar-sm,
+  .avatar-lg {
+    @apply relative inline-flex shrink-0 select-none appearance-none border-0 bg-transparent p-0 align-middle outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 after:absolute after:inset-0 after:rounded-[inherit] after:border after:border-border after:mix-blend-darken dark:after:mix-blend-lighten;
+  }
+
+  .avatar > img,
+  .avatar-sm > img,
+  .avatar-lg > img {
+    @apply absolute inset-0 aspect-square size-full rounded-[inherit] object-cover;
+  }
+
+  .avatar > span:not([data-badge]),
+  .avatar-sm > span:not([data-badge]),
+  .avatar-lg > span:not([data-badge]) {
+    @apply flex size-full items-center justify-center rounded-[inherit] text-sm;
+  }
+
+  .avatar-sm > span:not([data-badge]) {
+    @apply text-xs;
+  }
+
+  .avatar > [data-badge],
+  .avatar-sm > [data-badge],
+  .avatar-lg > [data-badge] {
+    @apply absolute end-0 bottom-0 z-10 inline-flex items-center justify-center rounded-full bg-blend-color ring-2 select-none;
+  }
+
+  .avatar-sm > [data-badge] {
+    @apply size-2 [&>svg]:hidden;
+  }
+
+  .avatar > [data-badge] {
+    @apply size-2.5 [&>svg]:size-2;
+  }
+
+  .avatar-lg > [data-badge] {
+    @apply size-3 [&>svg]:size-2;
+  }
+
+  .avatar-group {
+    @apply flex -space-x-2;
+  }
+
+  .avatar-group > :is(.avatar, .avatar-sm, .avatar-lg),
+  .avatar-group > [data-count] {
+    @apply ring-2 ring-background;
+  }
+
+  .avatar-group > [data-count] {
+    @apply relative flex shrink-0 items-center justify-center;
+  }
+}

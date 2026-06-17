@@ -1,0 +1,170 @@
+
+# Customization
+
+## Icons
+
+Basecoat uses [Lucide icons](https://lucide.dev). You have three options:
+
+- **Copy SVG code**: Visit [lucide.dev/icons](https://lucide.dev/icons), click any icon to copy the SVG, and paste it directly in your HTML. Best for simple projects or occasional icon usage.
+- **Install lucide**: Follow the [installation guide](https://lucide.dev/guide/installation) to install the `lucide` package and dynamically render icons. Best for projects that need many icons or want tree-shaking.
+- **Use framework packages**: Browse [framework-specific packages](https://lucide.dev/packages) (React, Vue, Angular, etc.) for component-based icon usage. Best if you're using a supported framework.
+
+<div class="flex flex-wrap gap-2 my-6">
+  <a class="badge-outline" href="https://lucide.dev" target="_blank">
+    Browse icons
+    
+<svg
+  class="lucide lucide-arrow-right"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M5 12h14" />
+  <path d="m12 5 7 7-7 7" />
+</svg>
+
+  </a>
+  <a class="badge-outline" href="https://lucide.dev/guide/installation" target="_blank">
+    Installation guide
+    
+<svg
+  class="lucide lucide-arrow-right"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M5 12h14" />
+  <path d="m12 5 7 7-7 7" />
+</svg>
+
+  </a>
+  <a class="badge-outline" href="https://lucide.dev/packages" target="_blank">
+    Packages
+    
+<svg
+  class="lucide lucide-arrow-right"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M5 12h14" />
+  <path d="m12 5 7 7-7 7" />
+</svg>
+
+  </a>
+</div>
+
+## Theming
+
+You can import any [shadcn/ui](https://shadcn-ui.com) compatible theme, such as [tweakcn](https://tweakcn.com):
+
+1. Go to [ui.shadcn.com/themes](https://ui.shadcn.com/themes) and select a theme.
+2. Click "Copy code" and save the theme variables in a file, such as `theme.css`.
+3. Import the theme in your CSS file:
+
+```css
+@import "tailwindcss";
+@import "basecoat-css/sera";
+@import "./theme.css";
+```
+
+<div class="flex flex-wrap gap-2 my-6">
+  <a class="badge-outline" href="https://ui.shadcn.com/docs/theming" target="_blank">
+    About shadcn/ui theming
+    
+<svg
+  class="lucide lucide-arrow-right"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M5 12h14" />
+  <path d="m12 5 7 7-7 7" />
+</svg>
+
+  </a>
+</div>
+
+## Fonts
+
+Basecoat does not ship web fonts by default. The Basecoat docs site uses the same font choices as the current shadcn/ui site: [Geist Sans](https://fonts.google.com/specimen/Geist) for sans and heading text, and [Geist Mono](https://fonts.google.com/specimen/Geist+Mono) for monospace text.
+
+To use the same setup, load the fonts and override the font tokens after importing Basecoat:
+
+<Code lang="css">{`@import "tailwindcss";
+@import "basecoat-css/sera";
+@import "@fontsource/geist-sans/400.css";
+@import "@fontsource/geist-sans/500.css";
+@import "@fontsource/geist-sans/600.css";
+@import "@fontsource/geist-sans/700.css";
+@import "@fontsource/geist-mono/400.css";
+@import "@fontsource/geist-mono/500.css";
+@import "@fontsource/geist-mono/600.css";
+@import "@fontsource/geist-mono/700.css";
+
+:root {
+  --font-sans: "Geist Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: "Geist Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}`}</Code>
+
+Keep font overrides in a small CSS file imported after Basecoat. This makes fonts a project-level customization instead of a Basecoat package default.
+
+## Custom styles
+
+Basecoat style packs combine shared Basecoat structure with visual rules for each component. If you want to write a full custom style, import the styleless Basecoat base and then your own style file.
+
+<Code lang="css">{`@import "tailwindcss";
+@import "basecoat-css/base";
+@import "./style-acme.css";`}</Code>
+
+`basecoat-css/base` includes Basecoat tokens, semantic utilities, and component structure, but no Vega/Nova/Maia/etc. visual style pack. Your style file is responsible for component visuals such as colors, radius, shadows, focus rings, spacing, and variant treatment.
+
+The practical way to start is to copy one existing style pack, rename it, and edit from there. The style files live in `src/css/styles/` and are also published under `basecoat-css/styles/*`.
+
+<Code lang="css">{`@import "basecoat-css/base";
+@import "./style-acme.css";
+
+/* style-acme.css can start as a copy of basecoat-css/styles/nova. */`}</Code>
+
+Do not load a full Basecoat style bundle and then override it wholesale. For example, avoid importing `basecoat-css/nova` before your custom style. That loads Nova component visuals and forces your file to undo them. Use `basecoat-css/base` instead.
+
+## Style overrides
+
+You can override default styles using Tailwind:
+
+<Code lang="html">{`<button class="btn font-normal">Click me</button>`}</Code>
+
+You can also extend or override the existing styles in your own Tailwind files:
+
+<Code lang="css">{`@import "tailwindcss";
+@import "basecoat-css/sera";
+@import "./custom.css";`}</Code>
+
+More importantly, you can use the [theme variables](#theming) to customize many aspects of the components (colors, fonts, sizes, etc).
+
+**If you want to make more drastic changes**, you can [copy the `basecoat.css` file](https://github.com/hunvreus/basecoat/blob/main/src/css/basecoat.css) into your project and make your changes there.

@@ -26,6 +26,7 @@ const DEFAULT_CONFIG = {
   scriptDest: './static/js/basecoat'
 };
 let config = { ...DEFAULT_CONFIG }; // User-specific config, potentially updated by prompts
+const SCRIPT_ONLY_COMPONENTS = new Set(['chart', 'range']);
 
 // Discovers available components from the CLI's bundled assets.
 async function getAvailableComponents() {
@@ -33,12 +34,22 @@ async function getAvailableComponents() {
     const cliScriptRunningDir = path.dirname(fileURLToPath(import.meta.url));
     const assetsDir = path.resolve(cliScriptRunningDir, 'assets'); 
     const jsSourceDir = path.join(assetsDir, 'js');
+    const nunjucksSourceDir = path.join(assetsDir, 'nunjucks');
+    const jinjaSourceDir = path.join(assetsDir, 'jinja');
     
     const jsFiles = await fs.readdir(jsSourceDir);
+    const nunjucksFiles = await fs.readdir(nunjucksSourceDir).catch(() => []);
+    const jinjaFiles = await fs.readdir(jinjaSourceDir).catch(() => []);
+    const templateNames = new Set([
+      ...nunjucksFiles.filter(file => file.endsWith('.njk')).map(file => path.basename(file, '.njk')),
+      ...jinjaFiles.filter(file => file.endsWith('.html.jinja')).map(file => path.basename(file, '.html.jinja')),
+    ]);
     
     return jsFiles
-      .filter(file => file.endsWith('.js'))
-      .map(file => path.basename(file, '.js'));
+      .filter(file => file.endsWith('.js') && !file.endsWith('.min.js'))
+      .map(file => path.basename(file, '.js'))
+      .filter(name => name !== 'all' && name !== 'basecoat')
+      .filter(name => templateNames.has(name) || SCRIPT_ONLY_COMPONENTS.has(name));
   } catch (error) {
     console.error("Error reading component source directories from CLI assets:", error);
     return [];
@@ -102,20 +113,22 @@ async function addComponent(componentName) {
     const templateExists = await fs.pathExists(templateSource);
     const scriptExists = await fs.pathExists(scriptSource);
 
-    if (!templateExists) {
+    if (!templateExists && !SCRIPT_ONLY_COMPONENTS.has(componentName)) {
       console.error(`  Error: Template file for component '${componentName}' not found in CLI assets. Searched: ${templateSource}`);
       // Optionally, list available template engines or files for that component if helpful
     }
     if (!scriptExists) {
       console.error(`  Error: Script file for component '${componentName}' not found in CLI assets. Searched: ${scriptSource}`);
-}
-    if (!templateExists || !scriptExists) return; // Skip this component if sources are missing
+    }
+    if ((!templateExists && !SCRIPT_ONLY_COMPONENTS.has(componentName)) || !scriptExists) return; // Skip this component if sources are missing
 
     await fs.ensureDir(path.dirname(templateDestPath));
     await fs.ensureDir(path.dirname(scriptDestPath));
 
-    await fs.copyFile(templateSource, templateDestPath);
-    console.log(`  -> Copied template to: ${templateDestPath}`);
+    if (templateExists) {
+      await fs.copyFile(templateSource, templateDestPath);
+      console.log(`  -> Copied template to: ${templateDestPath}`);
+    }
     await fs.copyFile(scriptSource, scriptDestPath);
     console.log(`  -> Copied script to:   ${scriptDestPath}`);
 

@@ -1,0 +1,38 @@
+# Label
+
+<Preview>
+<label class="label gap-3">
+  <input type="checkbox" class="input" />
+  Accept terms and conditions
+</label>
+</Preview>
+
+## Usage
+
+Add `label` to a `<label>` element.
+
+```html
+<label class="label" for="email">Your email address</label>
+```
+
+## Examples
+
+### Disabled
+
+<Preview>
+<div class="grid gap-3">
+  <label class="label" for="email">Email</label>
+  <input class="input" id="email" type="email" placeholder="Email" disabled />
+</div>
+</Preview>
+
+### RTL
+
+Add `dir="rtl"` to the label or an ancestor.
+
+<Preview>
+<div class="grid gap-3" dir="rtl">
+  <label class="label" for="email-rtl">البريد الإلكتروني</label>
+  <input class="input" id="email-rtl" type="email" placeholder="name@example.com" />
+</div>
+</Preview>

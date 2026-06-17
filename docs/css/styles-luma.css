@@ -1,9 +1,0 @@
-@import "./fonts.css";
-@import "tailwindcss";
-@import "../../src/css/basecoat-luma.css";
-@import "./themes/claude.css";
-@import "./themes/doom-64.css";
-@import "./themes/supabase.css";
-
-@import "./custom.css";
-@import "./highlight.css";

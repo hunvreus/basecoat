@@ -1,0 +1,56 @@
+/* Chart */
+@layer components {
+  .chart {
+    @apply relative flex aspect-video w-full justify-center text-xs;
+  }
+
+  .chart > canvas {
+    @apply block size-full;
+  }
+
+  .chart-tooltip {
+    @apply pointer-events-none fixed z-50 grid min-w-32 -translate-x-1/2 translate-y-2 items-start transition-[left,top,opacity] duration-150 ease-out;
+  }
+
+  .chart-tooltip[hidden] {
+    @apply opacity-0;
+  }
+
+  .chart-tooltip-items {
+    @apply grid gap-1.5;
+  }
+
+  .chart-tooltip-item {
+    @apply flex w-full flex-wrap items-center gap-2;
+  }
+
+  .chart-tooltip-indicator {
+    @apply size-2.5 shrink-0 rounded-[2px];
+    background-color: var(--chart-indicator-color);
+  }
+
+  .chart-legend-indicator {
+    @apply size-2 shrink-0 rounded-[2px];
+    background-color: var(--chart-indicator-color);
+  }
+
+  .chart-tooltip-label {
+    @apply text-muted-foreground leading-none;
+  }
+
+  .chart-tooltip-value {
+    @apply ms-auto font-mono font-medium leading-none tabular-nums;
+  }
+
+  .chart-legend {
+    @apply flex flex-wrap items-center justify-center gap-4 pt-3;
+  }
+
+  .chart-legend-item {
+    @apply flex items-center gap-1.5 text-xs;
+  }
+
+  .chart-legend-item[aria-pressed='false'] {
+    @apply opacity-70;
+  }
+}

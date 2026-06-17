@@ -7,10 +7,12 @@ const excludedComponents = new Set(['form']);
 // Keep cascade stable for components whose selectors intentionally compose.
 const componentOrder = [
   'alert',
+  'avatar',
   'badge',
   'button',
   'button-group',
   'card',
+  'chart',
   'collapsible',
   'command',
   'combobox',
