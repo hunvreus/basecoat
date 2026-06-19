@@ -68,6 +68,35 @@
     return resolved || color;
   };
 
+  const colorWithAlpha = (color, alpha, element) => {
+    const canvas = document.createElement('canvas');
+    canvas.width = 1;
+    canvas.height = 1;
+    const context = canvas.getContext('2d', { willReadFrequently: true });
+    if (!context) return color;
+
+    context.clearRect(0, 0, 1, 1);
+    context.fillStyle = '#000';
+    context.fillStyle = resolveColor(color, element);
+    context.fillRect(0, 0, 1, 1);
+
+    const [red, green, blue, sourceAlpha] = context.getImageData(0, 0, 1, 1).data;
+    return `rgba(${red}, ${green}, ${blue}, ${(sourceAlpha / 255) * alpha})`;
+  };
+
+  const surfaceColor = (color, element, { from = 0.4, to } = {}) => {
+    if (to === undefined) return colorWithAlpha(color, from, element);
+
+    return ({ chart }) => {
+      if (!chart.chartArea) return colorWithAlpha(color, from, element);
+
+      const gradient = chart.ctx.createLinearGradient(0, chart.chartArea.top, 0, chart.chartArea.bottom);
+      gradient.addColorStop(0, colorWithAlpha(color, from, element));
+      gradient.addColorStop(1, colorWithAlpha(color, to, element));
+      return gradient;
+    };
+  };
+
   const resolveDatasetColors = (chartData, element) => {
     chartData.datasets?.forEach((dataset) => {
       dataset.borderColor = resolveColor(dataset.borderColor, element);
@@ -78,9 +107,46 @@
     return chartData;
   };
 
+  const resolveScaleColors = (scales, element) => {
+    Object.values(scales || {}).forEach((scale) => {
+      ['border', 'grid', 'ticks', 'angleLines', 'pointLabels'].forEach((key) => {
+        if (scale[key]?.color !== undefined) {
+          scale[key].color = resolveColor(scale[key].color, element);
+        }
+      });
+    });
+
+    return scales;
+  };
+
   const chartColor = (element, token) => resolveColor(`var(${token})`, element);
 
   const colorMix = (color, opacity) => `color-mix(in oklab, ${color} ${opacity * 100}%, transparent)`;
+
+  const readCssPixels = (element, property, fallback = 0) => {
+    const value = getComputedStyle(element).getPropertyValue(property).trim();
+    if (!value) return fallback;
+
+    const number = Number.parseFloat(value);
+    return Number.isFinite(number) ? number : fallback;
+  };
+
+  const applyDatasetDefaults = (chartData, type, { barRadius, element }) => {
+    chartData.datasets?.forEach((dataset) => {
+      if (type === 'bar' || dataset.type === 'bar') {
+        if (dataset.borderRadius === undefined) dataset.borderRadius = barRadius;
+      }
+
+      if (dataset._basecoatSurface) {
+        dataset.backgroundColor = surfaceColor(dataset.borderColor || dataset.backgroundColor, element, dataset._basecoatSurface);
+        delete dataset._basecoatSurface;
+      }
+    });
+
+    return chartData;
+  };
+
+  const usesCartesianScales = (type) => !['pie', 'doughnut', 'polarArea', 'radar'].includes(type);
 
   const ensureContainer = (canvas) => {
     if (canvas.parentElement?.classList.contains('chart')) {
@@ -128,6 +194,13 @@
       labels,
       datasets: entries.map(([key, item], index) => {
         const color = item.color || colorForIndex(index);
+        const dataset = item.dataset || {};
+        const surface = item.surface === true
+          ? { from: 0.4 }
+          : item.surface === 'gradient'
+            ? { from: 0.8, to: 0.1 }
+            : item.surface;
+
         return {
           label: item.label || key,
           data: rows.map((row) => valueFor(row, key)),
@@ -137,7 +210,10 @@
           type: item.type,
           yAxisID: item.axis,
           hidden: item.hidden,
-          ...(item.dataset || {}),
+          ...dataset,
+          ...(surface && item.backgroundColor === undefined && dataset.backgroundColor === undefined
+            ? { _basecoatSurface: surface }
+            : {}),
         };
       }),
     };
@@ -276,23 +352,9 @@
     const borderColor = chartColor(canvas, '--border');
     const gridColor = resolveColor(colorMix('var(--border)', 0.5), canvas);
     const mutedColor = chartColor(canvas, '--muted-foreground');
-
-    canvas.classList.remove('chart');
-    canvas._basecoatChartContainer = container;
-    canvas.dataset.chartLegend = String(legend);
-
-    const chart = new Chart(canvas, {
-      type,
-      data: resolveDatasetColors(chartData, canvas),
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        interaction: {
-          mode: 'index',
-          intersect: false,
-        },
-        ...userOptions,
-        scales: {
+    const barRadius = readCssPixels(canvas, '--chart-bar-radius');
+    const defaultScales = usesCartesianScales(type)
+      ? {
           x: {
             border: { display: false, color: borderColor },
             grid: { display: false, color: gridColor },
@@ -305,8 +367,29 @@
             ticks: { display: false, color: mutedColor },
             ...(userOptions.scales?.y || {}),
           },
-          ...(Object.fromEntries(Object.entries(userOptions.scales || {}).filter(([key]) => key !== 'x' && key !== 'y'))),
+        }
+      : {};
+    const scales = {
+      ...defaultScales,
+      ...(Object.fromEntries(Object.entries(userOptions.scales || {}).filter(([key]) => key !== 'x' && key !== 'y'))),
+    };
+
+    canvas.classList.remove('chart');
+    canvas._basecoatChartContainer = container;
+    canvas.dataset.chartLegend = String(legend);
+
+    const chart = new Chart(canvas, {
+      type,
+      data: resolveDatasetColors(applyDatasetDefaults(chartData, type, { barRadius, element: canvas }), canvas),
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: {
+          mode: 'index',
+          intersect: false,
         },
+        ...userOptions,
+        scales: resolveScaleColors(scales, canvas),
         plugins: {
           ...userOptions.plugins,
           legend: {

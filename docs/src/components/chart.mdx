@@ -1,6 +1,11 @@
 import ChartExample from "../site/ChartExample.astro"
+import ChartExamples from "../site/ChartExamples.astro"
 
 # Chart
+
+<Callout type="warning" title="Alpha API" icon="triangle-alert">
+  Chart support is alpha. The JavaScript API, generated markup, and option names may change before the stable 1.0 release.
+</Callout>
 
 Use Chart.js with Basecoat defaults for themed colors, external tooltips, and optional generated legends.
 
@@ -9,7 +14,7 @@ Use Chart.js with Basecoat defaults for themed colors, external tooltips, and op
 Chart is an optional JavaScript helper. Load Chart.js first, then `basecoat.js`, then `chart.js`.
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.2/dist/js/basecoat.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.2/dist/js/chart.min.js" defer></script>
 ```
@@ -45,22 +50,6 @@ Chart is an optional JavaScript helper. Load Chart.js first, then `basecoat.js`,
 
 Charts default to `aspect-video`. Use a height, `min-h-*`, or `aspect-*` utility on a parent element when you need a different measuring box.
 
-## Card Composition
-
-Chart does not own titles, descriptions, or framing. Compose those with Card or your own markup.
-
-```html
-<div class="card">
-  <header>
-    <h2>Bar Chart - Multiple</h2>
-    <p>Showing total visitors for the last 6 months</p>
-  </header>
-  <section>
-    <canvas id="visitors-chart" aria-label="Monthly visitors"></canvas>
-  </section>
-</div>
-```
-
 ## Legend
 
 Set `legend: true` to generate a Basecoat-styled legend after the canvas.
@@ -90,7 +79,9 @@ window.basecoat.chart("#revenue-chart", {
     recurring: {
       label: "Recurring",
       color: "var(--chart-1)",
+      surface: "gradient",
       dataset: {
+        fill: true,
         tension: 0.35,
       },
     },
@@ -155,6 +146,10 @@ window.basecoat.chart("#custom-chart", {
 
 `basecoat.chart()` returns the Chart.js instance for single targets and an array of instances for multi-target selectors.
 
+## Examples
+
+<ChartExamples />
+
 ## API
 
 | Option | Default | Description |
@@ -168,3 +163,12 @@ window.basecoat.chart("#custom-chart", {
 | `options` | `{}` | Raw Chart.js options. |
 | `plugins` | `[]` | Raw Chart.js plugins. |
 | `chartData` | `undefined` | Complete Chart.js data object. Overrides the data mapper. |
+
+### Series options
+
+| Option | Description |
+| --- | --- |
+| `label` | Display label for legends and tooltips. |
+| `color` | Base color for the series stroke, fill, legend marker, and tooltip marker. |
+| `surface` | Derives a fill from `color`. Use `true` for a translucent fill, `"gradient"` for an upstream-style vertical fade, or `{ from, to }` for custom opacity stops. |
+| `dataset` | Raw Chart.js dataset options. |
