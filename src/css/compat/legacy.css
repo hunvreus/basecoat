@@ -2,6 +2,12 @@
    This layer preserves pre-1.0 visual classes for the default Basecoat style only. */
 
 @layer components {
+  .scrollbar-thin {
+    @apply scrollbar-sm;
+  }
+}
+
+@layer components {
   .btn-primary,
   .btn-secondary,
   .btn-outline,

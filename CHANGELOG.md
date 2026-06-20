@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+## [1.0.0-beta.4] - 2026-06-20
+
+### Changed
+
+- Renamed the compact scrollbar utility from `scrollbar-thin` to `scrollbar-sm`; `scrollbar-thin` remains available through the compatibility stylesheet.
+
 ## [1.0.0-beta.3] - 2026-06-20
 
 ### Breaking Changes

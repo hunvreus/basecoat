@@ -38,7 +38,7 @@
   --scrollbar-track: transparent;
   --scrollbar-thumb: var(--border);
   --scrollbar-width: 0.625rem;
-  --scrollbar-thin-width: 0.375rem;
+  --scrollbar-sm-width: 0.375rem;
   --scrollbar-radius: 9999px;
   --chevron-down-icon: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="oklch(0.556 0 0)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down"><path d="m6 9 6 6 6-6"/></svg>'); /* --muted-foreground */
   --chevron-down-icon-50: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="oklch(0.556 0 0 / 0.5)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down"><path d="m6 9 6 6 6-6"/></svg>'); /* --muted-foreground + 50% opacity */
@@ -121,6 +121,50 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
+@utility scrollbar {
+  scrollbar-width: auto;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+
+  &::-webkit-scrollbar {
+    width: var(--scrollbar-width);
+    height: var(--scrollbar-width);
+  }
+  &::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+  }
+  &::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: var(--scrollbar-radius);
+    border: 1px solid transparent;
+    background-clip: padding-box;
+  }
+  &::-webkit-scrollbar-corner {
+    background: var(--scrollbar-track);
+  }
+}
+
+@utility scrollbar-sm {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+
+  &::-webkit-scrollbar {
+    width: var(--scrollbar-sm-width);
+    height: var(--scrollbar-sm-width);
+  }
+  &::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+  }
+  &::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: var(--scrollbar-radius);
+    border: 1px solid transparent;
+    background-clip: padding-box;
+  }
+  &::-webkit-scrollbar-corner {
+    background: var(--scrollbar-track);
+  }
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -130,47 +174,5 @@
   }
   body {
     @apply bg-background text-foreground overscroll-none antialiased;
-  }
-  .scrollbar {
-    scrollbar-width: auto;
-    scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
-
-    &::-webkit-scrollbar {
-      width: var(--scrollbar-width);
-      height: var(--scrollbar-width);
-    }
-    &::-webkit-scrollbar-track {
-      background: var(--scrollbar-track);
-    }
-    &::-webkit-scrollbar-thumb {
-      background: var(--scrollbar-thumb);
-      border-radius: var(--scrollbar-radius);
-      border: 1px solid transparent;
-      background-clip: padding-box;
-    }
-    &::-webkit-scrollbar-corner {
-      background: var(--scrollbar-track);
-    }
-  }
-  .scrollbar-thin {
-    scrollbar-width: thin;
-    scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
-
-    &::-webkit-scrollbar {
-      width: var(--scrollbar-thin-width);
-      height: var(--scrollbar-thin-width);
-    }
-    &::-webkit-scrollbar-track {
-      background: var(--scrollbar-track);
-    }
-    &::-webkit-scrollbar-thumb {
-      background: var(--scrollbar-thumb);
-      border-radius: var(--scrollbar-radius);
-      border: 1px solid transparent;
-      background-clip: padding-box;
-    }
-    &::-webkit-scrollbar-corner {
-      background: var(--scrollbar-track);
-    }
   }
 }
