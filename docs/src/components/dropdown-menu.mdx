@@ -2,18 +2,18 @@
 
 <Preview>
 <div id="demo-dropdown-menu" class="dropdown-menu">
-  <button type="button" id="demo-dropdown-menu-trigger" aria-haspopup="menu" aria-controls="demo-dropdown-menu-menu" aria-expanded="false" class="btn-outline">Open</button>
+  <button type="button" id="demo-dropdown-menu-trigger" aria-haspopup="menu" aria-controls="demo-dropdown-menu-menu" aria-expanded="false" class="btn" data-variant="outline">Open</button>
   <div id="demo-dropdown-menu-popover" data-popover aria-hidden="true" class="min-w-56">
     <div role="menu" id="demo-dropdown-menu-menu" aria-labelledby="demo-dropdown-menu-trigger">
       <div role="group" aria-labelledby="demo-dropdown-account">
         <div role="heading" id="demo-dropdown-account">My Account</div>
         <div role="menuitem">
-          Profile
-          <span data-shortcut>⇧⌘P</span>
+          <span>Profile</span>
+          <kbd>⇧⌘P</kbd>
         </div>
         <div role="menuitem">
-          Billing
-          <span data-shortcut>⌘B</span>
+          <span>Billing</span>
+          <kbd>⌘B</kbd>
         </div>
         <div role="menuitem">Settings</div>
         <div role="menuitem">Keyboard shortcuts</div>
@@ -39,29 +39,26 @@ Basecoat dropdown menus are inline-positioned relative to the `.dropdown-menu` w
 
 <Steps>
   <Step title="Include the JavaScript files">
-
 ```html
-<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.2/dist/js/basecoat.min.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.2/dist/js/dropdown-menu.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.3/dist/js/basecoat.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.3/dist/js/dropdown-menu.min.js" defer></script>
 ```
-
   </Step>
   <Step title="Add your dropdown menu HTML">
-
 ```html
 <div id="demo-dropdown-menu" class="dropdown-menu">
-  <button type="button" id="demo-dropdown-menu-trigger" aria-haspopup="menu" aria-controls="demo-dropdown-menu-menu" aria-expanded="false" class="btn-outline">Open</button>
+  <button type="button" id="demo-dropdown-menu-trigger" aria-haspopup="menu" aria-controls="demo-dropdown-menu-menu" aria-expanded="false" class="btn" data-variant="outline">Open</button>
   <div id="demo-dropdown-menu-popover" data-popover aria-hidden="true" class="min-w-56">
     <div role="menu" id="demo-dropdown-menu-menu" aria-labelledby="demo-dropdown-menu-trigger">
       <div role="group" aria-labelledby="demo-dropdown-account">
         <div role="heading" id="demo-dropdown-account">My Account</div>
         <div role="menuitem">
-          Profile
-          <span data-shortcut>⇧⌘P</span>
+          <span>Profile</span>
+          <kbd>⇧⌘P</kbd>
         </div>
         <div role="menuitem">
-          Billing
-          <span data-shortcut>⌘B</span>
+          <span>Billing</span>
+          <kbd>⌘B</kbd>
         </div>
         <div role="menuitem">Settings</div>
         <div role="menuitem">Keyboard shortcuts</div>
@@ -76,40 +73,39 @@ Basecoat dropdown menus are inline-positioned relative to the `.dropdown-menu` w
   </div>
 </div>
 ```
-
   </Step>
 </Steps>
 
-#### HTML structure
+### HTML structure
 
 <dl>
-  <dt><code class="highlight language-html">&lt;div class="dropdown-menu"&gt;</code></dt>
+  <dt><code>&lt;div class="dropdown-menu"&gt;</code></dt>
   <dd>
     Relative wrapper for the trigger and inline menu content.
     <dl>
-      <dt><code class="highlight language-html">&lt;button aria-haspopup="menu" aria-expanded="false"&gt;</code></dt>
+      <dt><code>&lt;button aria-haspopup="menu" aria-expanded="false"&gt;</code></dt>
       <dd>Trigger button. The script toggles <code>aria-expanded</code> and manages keyboard navigation.</dd>
-      <dt><code class="highlight language-html">&lt;div data-popover aria-hidden="true"&gt;</code></dt>
+      <dt><code>&lt;div data-popover aria-hidden="true"&gt;</code></dt>
       <dd>
         Menu content popover. Set <code>data-side="top|right|bottom|left"</code> and <code>data-align="start|center|end"</code> to control placement.
         <dl>
-          <dt><code class="highlight language-html">&lt;div role="menu"&gt;</code></dt>
+          <dt><code>&lt;div role="menu"&gt;</code></dt>
           <dd>
             Container for menu items, groups, labels, and separators.
             <dl>
-              <dt><code class="highlight language-html">&lt;div role="group" aria-labelledby="&#123; HEADING_ID &#125;"&gt;</code> <span class="badge-secondary">Optional</span></dt>
+              <dt><code>&lt;div role="group" aria-labelledby="&#123; HEADING_ID &#125;"&gt;</code> <span class="badge" data-variant="secondary">Optional</span></dt>
               <dd>Groups related menu items.</dd>
-              <dt><code class="highlight language-html">&lt;div role="heading" id="&#123; HEADING_ID &#125;"&gt;</code> <span class="badge-secondary">Optional</span></dt>
+              <dt><code>&lt;div role="heading" id="&#123; HEADING_ID &#125;"&gt;</code> <span class="badge" data-variant="secondary">Optional</span></dt>
               <dd>Group heading/label.</dd>
-              <dt><code class="highlight language-html">&lt;div role="menuitem"&gt;</code></dt>
+              <dt><code>&lt;div role="menuitem"&gt;</code></dt>
               <dd>Standard action item. Use <code>aria-disabled="true"</code> for disabled items.</dd>
-              <dt><code class="highlight language-html">&lt;div role="menuitemcheckbox" aria-checked="true"&gt;</code></dt>
+              <dt><code>&lt;div role="menuitemcheckbox" aria-checked="true"&gt;</code></dt>
               <dd>Checkbox-style item. Add a child with <code>data-indicator</code> for the checked icon.</dd>
-              <dt><code class="highlight language-html">&lt;div role="menuitemradio" aria-checked="true"&gt;</code></dt>
+              <dt><code>&lt;div role="menuitemradio" aria-checked="true"&gt;</code></dt>
               <dd>Radio-style item. Add a child with <code>data-indicator</code> for the selected icon.</dd>
-              <dt><code class="highlight language-html">&lt;span data-shortcut&gt;</code> <span class="badge-secondary">Optional</span></dt>
+              <dt><code>&lt;kbd&gt;</code> <span class="badge" data-variant="secondary">Optional</span></dt>
               <dd>Shortcut hint aligned to the inline end of the item.</dd>
-              <dt><code class="highlight language-html">&lt;hr role="separator"&gt;</code> <span class="badge-secondary">Optional</span></dt>
+              <dt><code>&lt;hr role="separator"&gt;</code> <span class="badge" data-variant="secondary">Optional</span></dt>
               <dd>Separator between groups or options.</dd>
             </dl>
           </dd>
@@ -135,8 +131,8 @@ Basecoat dropdown menus are inline-positioned relative to the `.dropdown-menu` w
 
 <Preview>
 <div id="dropdown-basic" class="dropdown-menu">
-  <button type="button" id="dropdown-basic-trigger" aria-haspopup="menu" aria-controls="dropdown-basic-menu" aria-expanded="false" class="btn-outline">Open</button>
-  <div id="dropdown-basic-popover" data-popover aria-hidden="true" class="min-w-56">
+  <button type="button" id="dropdown-basic-trigger" aria-haspopup="menu" aria-controls="dropdown-basic-menu" aria-expanded="false" class="btn" data-variant="outline">Open</button>
+  <div id="dropdown-basic-popover" data-popover aria-hidden="true" class="min-w-32">
     <div role="menu" id="dropdown-basic-menu" aria-labelledby="dropdown-basic-trigger">
       <div role="group" aria-labelledby="dropdown-basic-account">
         <div role="heading" id="dropdown-basic-account">My Account</div>
@@ -156,25 +152,25 @@ Basecoat dropdown menus are inline-positioned relative to the `.dropdown-menu` w
 
 <Preview>
 <div id="dropdown-shortcuts" class="dropdown-menu">
-  <button type="button" id="dropdown-shortcuts-trigger" aria-haspopup="menu" aria-controls="dropdown-shortcuts-menu" aria-expanded="false" class="btn-outline">Open</button>
-  <div id="dropdown-shortcuts-popover" data-popover aria-hidden="true" class="min-w-56">
+  <button type="button" id="dropdown-shortcuts-trigger" aria-haspopup="menu" aria-controls="dropdown-shortcuts-menu" aria-expanded="false" class="btn" data-variant="outline">Open</button>
+  <div id="dropdown-shortcuts-popover" data-popover aria-hidden="true" class="min-w-46">
     <div role="menu" id="dropdown-shortcuts-menu" aria-labelledby="dropdown-shortcuts-trigger">
       <div role="menuitem">
-        New Tab
-        <span data-shortcut>⌘T</span>
+        <span>New Tab</span>
+        <kbd>⌘T</kbd>
       </div>
       <div role="menuitem">
-        New Window
-        <span data-shortcut>⌘N</span>
+        <span>New Window</span>
+        <kbd>⌘N</kbd>
       </div>
       <div role="menuitem">
-        New Private Window
-        <span data-shortcut>⇧⌘N</span>
+        <span>New Private Window</span>
+        <kbd>⇧⌘N</kbd>
       </div>
       <hr role="separator" />
       <div role="menuitem">
-        Print
-        <span data-shortcut>⌘P</span>
+        <span>Print</span>
+        <kbd>⌘P</kbd>
       </div>
     </div>
   </div>
@@ -185,8 +181,8 @@ Basecoat dropdown menus are inline-positioned relative to the `.dropdown-menu` w
 
 <Preview>
 <div id="dropdown-icons" class="dropdown-menu">
-  <button type="button" id="dropdown-icons-trigger" aria-haspopup="menu" aria-controls="dropdown-icons-menu" aria-expanded="false" class="btn-outline">Open</button>
-  <div id="dropdown-icons-popover" data-popover aria-hidden="true" class="min-w-56">
+  <button type="button" id="dropdown-icons-trigger" aria-haspopup="menu" aria-controls="dropdown-icons-menu" aria-expanded="false" class="btn" data-variant="outline">Open</button>
+  <div id="dropdown-icons-popover" data-popover aria-hidden="true" class="min-w-32">
     <div role="menu" id="dropdown-icons-menu" aria-labelledby="dropdown-icons-trigger">
       <div role="menuitem">
         <svg class="lucide lucide-user" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>
@@ -201,7 +197,7 @@ Basecoat dropdown menus are inline-positioned relative to the `.dropdown-menu` w
         Settings
       </div>
       <hr role="separator" />
-      <div role="menuitem">
+      <div role="menuitem" data-variant="destructive">
         <svg class="lucide lucide-log-out" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 17 5-5-5-5" /><path d="M21 12H9" /><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" /></svg>
         Log out
       </div>
@@ -214,8 +210,8 @@ Basecoat dropdown menus are inline-positioned relative to the `.dropdown-menu` w
 
 <Preview>
 <div id="dropdown-checkboxes" class="dropdown-menu">
-  <button type="button" id="dropdown-checkboxes-trigger" aria-haspopup="menu" aria-controls="dropdown-checkboxes-menu" aria-expanded="false" class="btn-outline">Open</button>
-  <div id="dropdown-checkboxes-popover" data-popover aria-hidden="true" class="min-w-56">
+  <button type="button" id="dropdown-checkboxes-trigger" aria-haspopup="menu" aria-controls="dropdown-checkboxes-menu" aria-expanded="false" class="btn" data-variant="outline">Open</button>
+  <div id="dropdown-checkboxes-popover" data-popover aria-hidden="true" class="min-w-32">
     <div role="menu" id="dropdown-checkboxes-menu" aria-labelledby="dropdown-checkboxes-trigger">
       <div role="group" aria-labelledby="dropdown-checkboxes-label">
         <div role="heading" id="dropdown-checkboxes-label">Appearance</div>
@@ -223,28 +219,27 @@ Basecoat dropdown menus are inline-positioned relative to the `.dropdown-menu` w
           <span data-indicator>
             <svg class="lucide lucide-check" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
           </span>
-          Status Bar
-          <span data-shortcut>⌘S</span>
+          <span>Status Bar</span>
+          <kbd>⌘S</kbd>
         </div>
         <div role="menuitemcheckbox" aria-checked="false">
           <span data-indicator>
             <svg class="lucide lucide-check" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
           </span>
-          Activity Bar
-          <span data-shortcut>⌘A</span>
+          <span>Activity Bar</span>
+          <kbd>⌘A</kbd>
         </div>
         <div role="menuitemcheckbox" aria-checked="false" aria-disabled="true">
           <span data-indicator>
             <svg class="lucide lucide-check" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
           </span>
-          Panel
-          <span data-shortcut>⌘P</span>
+          <span>Panel</span>
+          <kbd>⌘P</kbd>
         </div>
       </div>
     </div>
   </div>
 </div>
-
 <script>
   (() => {
     const dropdownMenu = document.querySelector("#dropdown-checkboxes");
@@ -263,8 +258,8 @@ Basecoat dropdown menus are inline-positioned relative to the `.dropdown-menu` w
 
 <Preview>
 <div id="dropdown-radio-group" class="dropdown-menu">
-  <button type="button" id="dropdown-radio-group-trigger" aria-haspopup="menu" aria-controls="dropdown-radio-group-menu" aria-expanded="false" class="btn-outline">Open</button>
-  <div id="dropdown-radio-group-popover" data-popover aria-hidden="true" class="min-w-56">
+  <button type="button" id="dropdown-radio-group-trigger" aria-haspopup="menu" aria-controls="dropdown-radio-group-menu" aria-expanded="false" class="btn" data-variant="outline">Open</button>
+  <div id="dropdown-radio-group-popover" data-popover aria-hidden="true" class="min-w-32">
     <div role="menu" id="dropdown-radio-group-menu" aria-labelledby="dropdown-radio-group-trigger">
       <div role="group" aria-labelledby="dropdown-radio-label">
         <div role="heading" id="dropdown-radio-label">Panel Position</div>
@@ -290,7 +285,6 @@ Basecoat dropdown menus are inline-positioned relative to the `.dropdown-menu` w
     </div>
   </div>
 </div>
-
 <script>
   (() => {
     const dropdownMenu = document.querySelector("#dropdown-radio-group");
@@ -309,8 +303,8 @@ Basecoat dropdown menus are inline-positioned relative to the `.dropdown-menu` w
 
 <Preview>
 <div id="dropdown-destructive" class="dropdown-menu">
-  <button type="button" id="dropdown-destructive-trigger" aria-haspopup="menu" aria-controls="dropdown-destructive-menu" aria-expanded="false" class="btn-outline">Open</button>
-  <div id="dropdown-destructive-popover" data-popover aria-hidden="true" class="min-w-56">
+  <button type="button" id="dropdown-destructive-trigger" aria-haspopup="menu" aria-controls="dropdown-destructive-menu" aria-expanded="false" class="btn" data-variant="outline">Open</button>
+  <div id="dropdown-destructive-popover" data-popover aria-hidden="true" class="min-w-32">
     <div role="menu" id="dropdown-destructive-menu" aria-labelledby="dropdown-destructive-trigger">
       <div role="menuitem">Edit</div>
       <div role="menuitem">Duplicate</div>
@@ -331,17 +325,17 @@ Dropdown menus support document direction. Set `dir="rtl"` on the dropdown root 
 <Preview>
 <div dir="rtl">
   <div id="dropdown-rtl" class="dropdown-menu">
-    <button type="button" id="dropdown-rtl-trigger" aria-haspopup="menu" aria-controls="dropdown-rtl-menu" aria-expanded="false" class="btn-outline">فتح</button>
-    <div id="dropdown-rtl-popover" data-popover aria-hidden="true" class="min-w-56" data-align="end">
+    <button type="button" id="dropdown-rtl-trigger" aria-haspopup="menu" aria-controls="dropdown-rtl-menu" aria-expanded="false" class="btn" data-variant="outline">فتح</button>
+    <div id="dropdown-rtl-popover" data-popover aria-hidden="true" class="min-w-32" data-align="end">
       <div role="menu" id="dropdown-rtl-menu" aria-labelledby="dropdown-rtl-trigger">
         <div role="heading" id="dropdown-rtl-label">الحساب</div>
         <div role="menuitem">
-          الملف الشخصي
-          <span data-shortcut>⌘P</span>
+          <span>الملف الشخصي</span>
+          <kbd>⌘P</kbd>
         </div>
         <div role="menuitem">
-          الإعدادات
-          <span data-shortcut>⌘S</span>
+          <span>الإعدادات</span>
+          <kbd>⌘S</kbd>
         </div>
         <hr role="separator" />
         <div role="menuitem" data-variant="destructive">حذف</div>

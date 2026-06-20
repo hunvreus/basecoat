@@ -1,26 +1,52 @@
 # Progress
 
-<Callout title="No dedicated component" icon="circle-alert">
-  There is no dedicated Progress component in Basecoat.
-</Callout>
-
 <Preview class="w-full max-w-sm">
-<div class="bg-primary/20 relative h-2 w-full overflow-hidden rounded-full">
-  <div id="demo-progress" class="bg-primary h-full w-full flex-1 transition-all" style="width: 17%"></div>
+<div class="progress" role="progressbar" aria-label="Loading" aria-valuenow="66" aria-valuemin="0" aria-valuemax="100">
+  <span style="width: 66%"></span>
 </div>
-<script>
-  setTimeout(() => {
-    document.getElementById('demo-progress').style.width = '66%';
-  }, 500);
-</script>
 </Preview>
 
 ## Usage
 
+Add `class="progress"` and `role="progressbar"` to the root. Use one child `<span>` as the visual indicator.
+
 ```html
-<div class="bg-primary/20 relative h-2 w-full overflow-hidden rounded-full">
-  <div class="bg-primary h-full w-full flex-1 transition-all" style="width: 66%"></div>
+<div class="progress" role="progressbar" aria-label="Loading" aria-valuenow="66" aria-valuemin="0" aria-valuemax="100">
+  <span style="width: 66%"></span>
 </div>
 ```
 
-Progress bars are pure HTML composition using Tailwind utility classes. Use a container div for the track and an inner div for the indicator. Set the indicator's width with inline styles or via JavaScript.
+### HTML structure
+
+<dl>
+  <dt><code>&lt;div class="progress" role="progressbar"&gt;</code></dt>
+  <dd>Progress root. Set <code>aria-label</code> or <code>aria-labelledby</code>, plus <code>aria-valuenow</code>, <code>aria-valuemin</code>, and <code>aria-valuemax</code>.</dd>
+  <dt><code>&lt;span style="width: ..."&gt;</code></dt>
+  <dd>Visual indicator. Its width should match the current value.</dd>
+</dl>
+
+## Examples
+
+### Label
+
+<Preview class="w-full max-w-sm">
+<div class="field">
+  <div class="flex items-center gap-3">
+    <label id="progress-label">Upload progress</label>
+    <output class="text-muted-foreground ms-auto text-sm tabular-nums">66%</output>
+  </div>
+  <div class="progress" role="progressbar" aria-labelledby="progress-label" aria-valuenow="66" aria-valuemin="0" aria-valuemax="100">
+    <span style="width: 66%"></span>
+  </div>
+</div>
+</Preview>
+
+### RTL
+
+Progress uses logical direction. Set `dir="rtl"` on the progress root or a parent to fill from the right.
+
+<Preview class="w-full max-w-sm">
+<div dir="rtl" class="progress" role="progressbar" aria-label="تحميل" aria-valuenow="66" aria-valuemin="0" aria-valuemax="100">
+  <span style="width: 66%"></span>
+</div>
+</Preview>

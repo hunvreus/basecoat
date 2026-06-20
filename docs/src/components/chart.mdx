@@ -1,5 +1,4 @@
-import ChartExample from "../site/ChartExample.astro"
-import ChartExamples from "../site/ChartExamples.astro"
+import chartExamplesUrl from "../site/chart-examples.js?url"
 
 # Chart
 
@@ -9,14 +8,16 @@ import ChartExamples from "../site/ChartExamples.astro"
 
 Use Chart.js with Basecoat defaults for themed colors, external tooltips, and optional generated legends.
 
-<ChartExample />
+<Preview class="w-full">
+  <canvas id="chart-example-overview" aria-label="Visitors by device"></canvas>
+</Preview>
 
 Chart is an optional JavaScript helper. Load Chart.js first, then `basecoat.js`, then `chart.js`.
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.2/dist/js/basecoat.min.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.2/dist/js/chart.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.3/dist/js/basecoat.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.3/dist/js/chart.min.js" defer></script>
 ```
 
 ## Usage
@@ -148,7 +149,44 @@ window.basecoat.chart("#custom-chart", {
 
 ## Examples
 
-<ChartExamples />
+### Bar Chart - Multiple
+
+<Preview class="w-full">
+  <canvas id="chart-example-visitors" aria-label="Monthly visitors by device"></canvas>
+</Preview>
+
+### Line Chart - Linear
+
+<Preview class="w-full">
+  <canvas id="chart-example-line" aria-label="Revenue line chart"></canvas>
+</Preview>
+
+### Line Chart - Step
+
+<Preview class="w-full">
+  <canvas id="chart-example-step" aria-label="Support queue step chart"></canvas>
+</Preview>
+
+### Bar Chart - Stacked
+
+<Preview class="w-full">
+  <canvas id="chart-example-stacked" aria-label="Stacked pipeline bar chart"></canvas>
+</Preview>
+
+### Pie Chart - Donut
+
+<Preview class="w-full">
+  <canvas id="chart-example-donut" aria-label="Traffic source donut chart"></canvas>
+</Preview>
+
+### Radar Chart
+
+<Preview class="w-full">
+  <canvas id="chart-example-radar" aria-label="Channel performance radar chart"></canvas>
+</Preview>
+
+<script is:inline src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script>
+<script type="module" src={chartExamplesUrl}></script>
 
 ## API
 

@@ -7,7 +7,7 @@
         {
           "type": "item",
           "label": "Introduction",
-          "slug": "index",
+          "slug": "introduction",
           "icon": "info"
         },
         {
@@ -16,12 +16,12 @@
           "slug": "installation",
           "icon": "download"
         },
-        {
-          "type": "item",
-          "label": "Customize",
-          "slug": "customization",
-          "icon": "wrench"
-        },
+      {
+        "type": "item",
+        "label": "Customize",
+        "slug": "customization",
+        "icon": "sliders-horizontal"
+      },
         {
           "type": "item",
           "label": "CLI",
@@ -65,7 +65,11 @@
         "components/button",
         "components/button-group",
         "components/card",
-        "components/chart",
+        {
+          "type": "item",
+          "slug": "components/chart",
+          "badge": "Alpha"
+        },
         "components/checkbox",
         "components/combobox",
         "components/command",

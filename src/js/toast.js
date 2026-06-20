@@ -151,7 +151,7 @@
         ? `<button type="button" class="btn" data-toast-action onclick="${action.onclick}">${action.label}</button>`
         : '';
     const cancelHtml = cancel
-      ? `<button type="button" class="btn-outline h-6 text-xs px-2.5 rounded-sm" data-toast-cancel onclick="${cancel?.onclick || ''}">${cancel.label}</button>`
+      ? `<button type="button" class="btn h-6 text-xs px-2.5 rounded-sm" data-variant="outline" data-toast-cancel onclick="${cancel?.onclick || ''}">${cancel.label}</button>`
       : '';
 
     const footerHtml = actionHtml || cancelHtml ? `<footer>${actionHtml}${cancelHtml}</footer>` : '';

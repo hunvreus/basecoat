@@ -1,0 +1,44 @@
+@layer theme, base, components, utilities;
+@import "tailwindcss" source("../pages");
+
+.theme-neutral {
+  --chart-1: oklch(0.87 0 0);
+  --chart-2: oklch(0.556 0 0);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+}
+
+:root {
+  --landing-demo-surface-radius: 0.375rem;
+  --chart-bar-radius: 6px;
+}
+
+[data-style-variant="nova"] {
+  --landing-demo-surface-radius: 0.5rem;
+}
+
+[data-style-variant="maia"],
+[data-style-variant="luma"],
+[data-style-variant="rhea"] {
+  --landing-demo-surface-radius: 1rem;
+}
+
+[data-style-variant="lyra"],
+[data-style-variant="sera"] {
+  --landing-demo-surface-radius: 0;
+  --chart-bar-radius: 0;
+}
+
+.landing-demo-surface {
+  border-radius: var(--landing-demo-surface-radius);
+}
+
+.theme-neutral .card > footer,
+.theme-neutral hr {
+  border-color: var(--border);
+}
+
+.landing-demo-chart-bar {
+  border-start-start-radius: var(--chart-bar-radius);
+  border-start-end-radius: var(--chart-bar-radius);
+}

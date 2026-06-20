@@ -6,7 +6,7 @@
 
 ## Usage
 
-Add `input` to supported `<input>` elements. Inputs inside a `form` or `field` container also receive the same styling automatically for common text-like input types.
+Add `class="input"` to supported `<input>` elements. Inputs inside a `class="field"` container also receive the same styling automatically for common text-like input types.
 
 Use native HTML attributes for behavior: `disabled` for disabled inputs, `required` for required fields, and `aria-invalid="true"` for invalid state styling.
 
@@ -103,9 +103,9 @@ Use `field` with a label and description to create an accessible field.
 
 <Preview class="w-full max-w-xs">
 <div role="group" class="field w-full max-w-xs">
-  <label for="input-badge" class="flex items-center gap-2">
+  <label for="input-badge" class="flex w-full items-center gap-2">
     Email
-    <span class="badge-secondary">Recommended</span>
+    <span class="badge ml-auto" data-variant="secondary">Recommended</span>
   </label>
   <input id="input-badge" type="email" placeholder="m@example.com" />
 </div>
@@ -131,7 +131,7 @@ Use [Button Group](/components/button-group/) when an input should be grouped wi
 <Preview class="w-full max-w-xs">
 <div role="group" aria-label="Search" class="button-group w-full max-w-xs">
   <input class="input" type="search" placeholder="Search..." />
-  <button type="submit" class="btn-icon-outline" aria-label="Search">
+  <button type="submit" class="btn" data-variant="outline" data-size="icon" aria-label="Search">
     <svg class="lucide lucide-search" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="m21 21-4.34-4.34" /><circle cx="11" cy="11" r="8" /></svg>
   </button>
 </div>

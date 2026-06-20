@@ -1,247 +1,64 @@
 /* Button */
 @layer components {
-  .btn,
-  .btn-primary,
-  .btn-secondary,
-  .btn-outline,
-  .btn-ghost,
-  .btn-link,
-  .btn-destructive,
-  .btn-xs,
-  .btn-xs-primary,
-  .btn-xs-secondary,
-  .btn-xs-outline,
-  .btn-xs-ghost,
-  .btn-xs-link,
-  .btn-xs-destructive,
-  .btn-sm,
-  .btn-sm-primary,
-  .btn-sm-secondary,
-  .btn-sm-outline,
-  .btn-sm-ghost,
-  .btn-sm-link,
-  .btn-sm-destructive,
-  .btn-lg,
-  .btn-lg-primary,
-  .btn-lg-secondary,
-  .btn-lg-outline,
-  .btn-lg-ghost,
-  .btn-lg-link,
-  .btn-lg-destructive,
-  .btn-icon,
-  .btn-icon-primary,
-  .btn-icon-secondary,
-  .btn-icon-outline,
-  .btn-icon-ghost,
-  .btn-icon-link,
-  .btn-icon-destructive,
-  .btn-xs-icon,
-  .btn-xs-icon-primary,
-  .btn-xs-icon-secondary,
-  .btn-xs-icon-outline,
-  .btn-xs-icon-ghost,
-  .btn-xs-icon-link,
-  .btn-xs-icon-destructive,
-  .btn-sm-icon,
-  .btn-sm-icon-primary,
-  .btn-sm-icon-secondary,
-  .btn-sm-icon-outline,
-  .btn-sm-icon-ghost,
-  .btn-sm-icon-link,
-  .btn-sm-icon-destructive,
-  .btn-lg-icon,
-  .btn-lg-icon-primary,
-  .btn-lg-icon-secondary,
-  .btn-lg-icon-outline,
-  .btn-lg-icon-ghost,
-  .btn-lg-icon-link,
-  .btn-lg-icon-destructive {
+  .btn {
     @apply rounded-none border border-transparent bg-clip-padding text-xs font-semibold uppercase tracking-widest focus-visible:border-ring focus-visible:ring-ring/30 focus-visible:ring-[2px] aria-invalid:border-destructive aria-invalid:ring-[2px] aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 active:not-aria-[haspopup]:translate-y-px [&_svg:not([class*='size-'])]:size-3.5;
   }
 
-  .btn,
-  .btn-primary,
-  .btn-secondary,
-  .btn-outline,
-  .btn-ghost,
-  .btn-link,
-  .btn-destructive {
-    @apply h-10 gap-1.5 px-6;
-
-    &:has(> [data-icon=inline-start]) {
-      @apply ps-4;
-    }
-
-    &:has(> [data-icon=inline-end]) {
-      @apply pe-4;
-    }
+  .btn:not([data-size]),
+  .btn[data-size='default'] {
+    @apply h-10 gap-1.5 px-6 has-[[data-icon='inline-end']]:pr-4 has-[[data-icon='inline-start']]:pl-4;
   }
 
-  .btn-xs,
-  .btn-xs-primary,
-  .btn-xs-secondary,
-  .btn-xs-outline,
-  .btn-xs-ghost,
-  .btn-xs-link,
-  .btn-xs-destructive {
-    @apply h-7 gap-1 px-3 [&_svg:not([class*='size-'])]:size-3;
-
-    &:has(> [data-icon=inline-start]) {
-      @apply ps-2;
-    }
-
-    &:has(> [data-icon=inline-end]) {
-      @apply pe-2;
-    }
+  .btn[data-size='xs'] {
+    @apply h-7 gap-1 px-3 [&_svg:not([class*='size-'])]:size-3 has-[[data-icon='inline-end']]:pr-2 has-[[data-icon='inline-start']]:pl-2;
   }
 
-  .btn-sm,
-  .btn-sm-primary,
-  .btn-sm-secondary,
-  .btn-sm-outline,
-  .btn-sm-ghost,
-  .btn-sm-link,
-  .btn-sm-destructive {
-    @apply h-9 gap-1 px-4;
-
-    &:has(> [data-icon=inline-start]) {
-      @apply ps-3;
-    }
-
-    &:has(> [data-icon=inline-end]) {
-      @apply pe-3;
-    }
+  .btn[data-size='sm'] {
+    @apply h-9 gap-1 px-4 has-[[data-icon='inline-end']]:pr-3 has-[[data-icon='inline-start']]:pl-3;
   }
 
-  .btn-lg,
-  .btn-lg-primary,
-  .btn-lg-secondary,
-  .btn-lg-outline,
-  .btn-lg-ghost,
-  .btn-lg-link,
-  .btn-lg-destructive {
-    @apply h-11 gap-1.5 px-8;
-
-    &:has(> [data-icon=inline-start]) {
-      @apply ps-5;
-    }
-
-    &:has(> [data-icon=inline-end]) {
-      @apply pe-5;
-    }
+  .btn[data-size='lg'] {
+    @apply h-11 gap-1.5 px-8 has-[[data-icon='inline-end']]:pr-5 has-[[data-icon='inline-start']]:pl-5;
   }
 
-  .btn-icon,
-  .btn-icon-primary,
-  .btn-icon-secondary,
-  .btn-icon-outline,
-  .btn-icon-ghost,
-  .btn-icon-link,
-  .btn-icon-destructive {
+  .btn[data-size='icon'] {
     @apply size-10;
   }
 
-  .btn-xs-icon,
-  .btn-xs-icon-primary,
-  .btn-xs-icon-secondary,
-  .btn-xs-icon-outline,
-  .btn-xs-icon-ghost,
-  .btn-xs-icon-link,
-  .btn-xs-icon-destructive {
+  .btn[data-size='icon-xs'] {
     @apply size-7 [&_svg:not([class*='size-'])]:size-3;
   }
 
-  .btn-sm-icon,
-  .btn-sm-icon-primary,
-  .btn-sm-icon-secondary,
-  .btn-sm-icon-outline,
-  .btn-sm-icon-ghost,
-  .btn-sm-icon-link,
-  .btn-sm-icon-destructive {
+  .btn[data-size='icon-sm'] {
     @apply size-9;
   }
 
-  .btn-lg-icon,
-  .btn-lg-icon-primary,
-  .btn-lg-icon-secondary,
-  .btn-lg-icon-outline,
-  .btn-lg-icon-ghost,
-  .btn-lg-icon-link,
-  .btn-lg-icon-destructive {
+  .btn[data-size='icon-lg'] {
     @apply size-11;
   }
 
-  .btn,
-  .btn-primary,
-  .btn-xs,
-  .btn-xs-primary,
-  .btn-sm,
-  .btn-sm-primary,
-  .btn-lg,
-  .btn-lg-primary,
-  .btn-icon,
-  .btn-icon-primary,
-  .btn-xs-icon,
-  .btn-xs-icon-primary,
-  .btn-sm-icon,
-  .btn-sm-icon-primary,
-  .btn-lg-icon,
-  .btn-lg-icon-primary {
+  .btn:not([data-variant]),
+  .btn[data-variant='primary'] {
     @apply bg-primary text-primary-foreground hover:bg-primary/80;
   }
 
-  .btn-secondary,
-  .btn-xs-secondary,
-  .btn-sm-secondary,
-  .btn-lg-secondary,
-  .btn-icon-secondary,
-  .btn-xs-icon-secondary,
-  .btn-sm-icon-secondary,
-  .btn-lg-icon-secondary {
+  .btn[data-variant='secondary'] {
     @apply bg-secondary text-secondary-foreground hover:bg-[color-mix(in_oklch,var(--secondary),var(--foreground)_5%)] aria-expanded:bg-secondary aria-expanded:text-secondary-foreground;
   }
 
-  .btn-outline,
-  .btn-xs-outline,
-  .btn-sm-outline,
-  .btn-lg-outline,
-  .btn-icon-outline,
-  .btn-xs-icon-outline,
-  .btn-sm-icon-outline,
-  .btn-lg-icon-outline {
+  .btn[data-variant='outline'] {
     @apply border-border bg-transparent hover:bg-muted hover:text-foreground dark:hover:bg-input/30 aria-expanded:bg-muted aria-expanded:text-foreground;
   }
 
-  .btn-ghost,
-  .btn-xs-ghost,
-  .btn-sm-ghost,
-  .btn-lg-ghost,
-  .btn-icon-ghost,
-  .btn-xs-icon-ghost,
-  .btn-sm-icon-ghost,
-  .btn-lg-icon-ghost {
+  .btn[data-variant='ghost'] {
     @apply hover:bg-muted hover:text-foreground dark:hover:bg-muted/50 aria-expanded:bg-muted aria-expanded:text-foreground;
   }
 
-  .btn-link,
-  .btn-xs-link,
-  .btn-sm-link,
-  .btn-lg-link,
-  .btn-icon-link,
-  .btn-xs-icon-link,
-  .btn-sm-icon-link,
-  .btn-lg-icon-link {
+  .btn[data-variant='link'] {
     @apply text-primary underline underline-offset-4 hover:underline;
   }
 
-  .btn-destructive,
-  .btn-xs-destructive,
-  .btn-sm-destructive,
-  .btn-lg-destructive,
-  .btn-icon-destructive,
-  .btn-xs-icon-destructive,
-  .btn-sm-icon-destructive,
-  .btn-lg-icon-destructive {
+  .btn[data-variant='destructive'] {
     @apply bg-destructive/10 text-destructive hover:bg-destructive/20 dark:bg-destructive/20 dark:hover:bg-destructive/30 focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40;
   }
 
@@ -254,8 +71,8 @@
     }
   }
 
-  .button-group:has(> :is(.btn-outline, .btn-icon-outline, .btn-xs-outline, .btn-xs-icon-outline, .btn-sm-outline, .btn-sm-icon-outline, .btn-lg-outline, .btn-lg-icon-outline)),
-  .button-group:has(> .select > button:is(.btn-outline, .btn-icon-outline, .btn-xs-outline, .btn-xs-icon-outline, .btn-sm-outline, .btn-sm-icon-outline, .btn-lg-outline, .btn-lg-icon-outline)) {
+  .button-group:has(> .btn[data-variant='outline']),
+  .button-group:has(> .select > button.btn[data-variant='outline']) {
     > .input,
     > .select > button {
       @apply border-border focus-visible:border-ring;
@@ -284,8 +101,7 @@
     @apply gap-2 border border-transparent border-b-input bg-transparent px-2.5 text-xs font-semibold uppercase [&_svg:not([class*='size-'])]:size-3.5;
   }
 
-  .button-group > hr[role='separator'],
-  .button-group-separator {
+  .button-group > hr[role='separator'] {
     @apply bg-input;
   }
 
@@ -397,8 +213,7 @@
   }
 
   /* Alert */
-  .alert,
-  .alert-destructive {
+  .alert {
     @apply grid gap-1 bg-background border px-4 py-3 text-start text-sm has-[>svg]:grid-cols-[auto_1fr] has-[>svg]:gap-x-2.5 [&>svg]:row-span-2 [&>svg]:translate-y-0.5 [&>svg]:text-current [&>svg:not([class*='size-'])]:size-4 relative after:-inset-y-px after:-start-px after:w-0.5 after:absolute;
   }
 
@@ -406,35 +221,33 @@
     @apply bg-card text-card-foreground after:bg-foreground;
   }
 
-  .alert-destructive {
+  .alert[data-variant='destructive'] {
     @apply text-destructive bg-card [&>svg]:text-current after:bg-destructive;
   }
 
   .alert > :is(h2, h3, h4, h5, h6, strong, [data-title]),
-  .alert-destructive > :is(h2, h3, h4, h5, h6, strong, [data-title]) {
+  .alert[data-variant='destructive'] > :is(h2, h3, h4, h5, h6, strong, [data-title]) {
     @apply font-semibold text-sm;
   }
 
 
-  :is(.alert, .alert-destructive):has(> svg) > :is(h2, h3, h4, h5, h6, strong, [data-title]) {
+  .alert:has(> svg) > :is(h2, h3, h4, h5, h6, strong, [data-title]) {
     @apply col-start-2;
   }
   .alert > section {
     @apply text-muted-foreground text-sm text-balance md:text-pretty [&_p:not(:last-child)]:mb-4;
   }
 
-  .alert-destructive > section {
+  .alert[data-variant='destructive'] > section {
     @apply text-destructive/90 text-sm text-balance md:text-pretty [&_p:not(:last-child)]:mb-4;
   }
 
   .alert > footer,
-  .alert-destructive > footer {
+  .alert[data-variant='destructive'] > footer {
     @apply top-2.5 end-3;
   }
   /* Avatar */
-  .avatar,
-  .avatar-sm,
-  .avatar-lg {
+  .avatar {
     @apply rounded-full after:rounded-[inherit];
   }
 
@@ -442,29 +255,23 @@
     @apply size-8;
   }
 
-  .avatar-sm {
+  .avatar[data-size='sm'] {
     @apply size-6;
   }
 
-  .avatar-lg {
+  .avatar[data-size='lg'] {
     @apply size-10;
   }
 
-  .avatar > span:not([data-badge]),
-  .avatar-sm > span:not([data-badge]),
-  .avatar-lg > span:not([data-badge]) {
+  .avatar > span:not([data-badge]) {
     @apply bg-muted text-muted-foreground rounded-[inherit];
   }
 
-  .avatar > img,
-  .avatar-sm > img,
-  .avatar-lg > img {
+  .avatar > img {
     @apply rounded-[inherit];
   }
 
-  .avatar > [data-badge],
-  .avatar-sm > [data-badge],
-  .avatar-lg > [data-badge] {
+  .avatar > [data-badge] {
     @apply bg-primary text-primary-foreground ring-background;
   }
 
@@ -472,47 +279,41 @@
     @apply bg-muted text-muted-foreground size-8 rounded-full text-sm [&>svg]:size-4;
   }
 
-  .avatar-group:has(> .avatar-sm) > [data-count] {
+  .avatar-group:has(> .avatar[data-size='sm']) > [data-count] {
     @apply size-6 [&>svg]:size-3;
   }
 
-  .avatar-group:has(> .avatar-lg) > [data-count] {
+  .avatar-group:has(> .avatar[data-size='lg']) > [data-count] {
     @apply size-10 [&>svg]:size-5;
   }
 
   /* Badge */
-  .badge,
-  .badge-primary,
-  .badge-secondary,
-  .badge-destructive,
-  .badge-outline,
-  .badge-ghost,
-  .badge-link {
-    @apply gap-1.5 rounded-none border-0 bg-transparent px-0 py-0 text-[0.625rem] font-semibold uppercase tracking-widest transition-colors has-data-[icon=inline-end]:pe-0 has-data-[icon=inline-start]:ps-0 [&>svg]:size-3!;
+  .badge {
+    @apply gap-1.5 rounded-none border-0 bg-transparent px-0 py-0 text-[0.625rem] font-semibold uppercase tracking-widest transition-colors [&>svg]:size-3!;
   }
 
-  .badge,
-  .badge-primary {
+  .badge:not([data-variant]),
+  .badge[data-variant='primary'] {
     @apply text-foreground [a]:hover:text-foreground/70;
   }
 
-  .badge-secondary {
+  .badge[data-variant='secondary'] {
     @apply text-muted-foreground [a]:hover:text-foreground;
   }
 
-  .badge-outline {
+  .badge[data-variant='outline'] {
     @apply text-foreground [a]:hover:text-foreground/70;
   }
 
-  .badge-destructive {
+  .badge[data-variant='destructive'] {
     @apply text-destructive [a]:hover:text-destructive/70 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40;
   }
 
-  .badge-ghost {
+  .badge[data-variant='ghost'] {
     @apply text-muted-foreground hover:text-foreground;
   }
 
-  .badge-link {
+  .badge[data-variant='link'] {
     @apply text-foreground underline-offset-4 hover:underline;
   }
 
@@ -606,7 +407,7 @@
 
   .combobox [role='option'].active,
   .combobox [role='option']:focus-visible {
-    @apply bg-accent text-accent-foreground [&_svg]:text-accent-foreground;
+    @apply bg-muted text-foreground [&_svg]:text-foreground;
   }
 
   .combobox [role='group'] {
@@ -666,7 +467,7 @@
 
   *:not(select).select [role='option'].active,
   *:not(select).select [role='option']:focus-visible {
-    @apply bg-accent text-accent-foreground [&_svg]:text-accent-foreground;
+    @apply bg-muted text-foreground [&_svg]:text-foreground;
   }
 
   *:not(select).select [role='group'] {
@@ -724,7 +525,7 @@
   }
 
   .dropdown-menu :is([role='menuitem'], [role='menuitemcheckbox'], [role='menuitemradio']).active {
-    @apply bg-accent text-accent-foreground;
+    @apply bg-muted text-foreground;
   }
 
   .dropdown-menu [data-variant='destructive'] {
@@ -760,11 +561,11 @@
     @apply bg-border/50 -mx-1.5 my-1.5 h-px;
   }
 
-  .dropdown-menu [data-shortcut] {
-    @apply text-muted-foreground text-xs tracking-widest;
+  .dropdown-menu :is([data-shortcut], kbd:last-child) {
+    @apply text-muted-foreground font-sans text-xs tracking-widest;
   }
 
-  .dropdown-menu :is([role='menuitem'], [role='menuitemcheckbox'], [role='menuitemradio']):is(:focus-visible, .active) [data-shortcut] {
+  .dropdown-menu :is([role='menuitem'], [role='menuitemcheckbox'], [role='menuitemradio']):is(:focus-visible, .active) :is([data-shortcut], kbd:last-child) {
     @apply text-accent-foreground;
   }
 
@@ -788,8 +589,7 @@
   }
 
   /* Card */
-  .card,
-  .card-sm {
+  .card {
     @apply bg-card text-card-foreground ring-foreground/5 overflow-hidden text-sm shadow-sm ring-1 has-[>img:first-child]:pt-0 [&>img:first-child]:rounded-none [&>img:last-child]:rounded-none;
   }
 
@@ -797,48 +597,47 @@
     @apply gap-8 py-8;
   }
 
-  .card-sm {
+  .card[data-size='sm'] {
     @apply gap-5 py-5;
   }
 
-  .card > header,
-  .card-sm > header {
+  .card > header {
     @apply gap-1.5 rounded-none px-8 [.border-b]:pb-8;
   }
 
-  .card-sm > header {
+  .card[data-size='sm'] > header {
     @apply px-5 [.border-b]:pb-5;
   }
 
-  .card > header > :is(h2, h3, [data-title], .card-title),
-  .card-sm > header > :is(h2, h3, [data-title], .card-title) {
+  .card > header > :is(h2, h3, [data-title], .card-title) {
     @apply text-lg font-semibold tracking-wider uppercase;
   }
 
-  .card > header > :is(p, [data-description], .card-description),
-  .card-sm > header > :is(p, [data-description], .card-description) {
+  .card > header > :is(p, [data-description], .card-description) {
     @apply text-muted-foreground text-sm leading-relaxed;
   }
 
-  .card > section,
-  .card-sm > section {
+  .card > section {
     @apply px-8;
   }
 
-  .card-sm > section {
+  .card[data-size='sm'] > section {
     @apply px-5;
   }
 
-  .card > footer,
-  .card-sm > footer {
+  .card > footer {
     @apply px-8 [.border-t]:pt-8;
   }
 
-  .card-sm > footer {
+  .card[data-size='sm'] > footer {
     @apply px-5 [.border-t]:pt-5;
   }
 
   /* Chart */
+  .chart {
+    --chart-bar-radius: 0;
+  }
+
   .chart-tooltip {
     @apply border-border/50 bg-background text-foreground gap-1.5 rounded-none border px-2.5 py-1.5 text-xs shadow-xl;
   }
@@ -935,8 +734,7 @@
     @apply gap-6 has-[>[data-slot=checkbox-group]]:gap-3 has-[>[data-slot=radio-group]]:gap-3;
   }
 
-  .fieldset > legend,
-  .field-legend {
+  .fieldset > legend {
     @apply mb-3 font-semibold uppercase data-[variant=label]:text-xs data-[variant=legend]:text-xs;
   }
 
@@ -945,6 +743,8 @@
     @apply gap-10;
 
     &[role='radiogroup'],
+    &:has(> .field > input[type='checkbox']:not([role='switch'])),
+    &:has(> .field > input[type='radio']),
     &[data-slot='checkbox-group'],
     &[data-slot='radio-group'] {
       @apply gap-3;
@@ -957,15 +757,15 @@
   }
 
   .field {
-    @apply data-[invalid=true]:text-destructive gap-3;
+    @apply data-invalid:text-destructive data-[invalid=true]:text-destructive gap-3;
   }
 
-  .field > section,
-  .field-content {
+  .field > section {
     @apply gap-1;
   }
 
   .field > label,
+  .field > section > label,
   label:has(> .field) {
     @apply has-[:checked]:bg-primary/5 has-[:checked]:border-primary/30 dark:has-[:checked]:border-primary/20 dark:has-[:checked]:bg-primary/10 gap-2 in-data-[disabled=true]:opacity-50 leading-relaxed;
   }
@@ -988,16 +788,23 @@
     @apply p-4;
   }
   .field h2,
-  .field h3,
-  .field-title {
+  .field h3 {
     @apply gap-2 in-data-[disabled=true]:opacity-50 leading-normal font-semibold uppercase text-xs;
   }
 
   .fieldset legend + p,
   .field > p,
-  .field section > p,
-  .field-description {
+  .field section > p {
     @apply text-muted-foreground text-start text-sm [[data-variant=legend]+&]:-mt-1.5 normal-case tracking-normal;
+  }
+
+  .fieldset > legend[data-variant='label'] {
+    @apply mb-0;
+  }
+
+  .fieldset > legend:not([data-variant]) + p,
+  .fieldset > legend[data-variant='legend'] + p {
+    @apply -mt-1.5;
   }
 
   .field-separator {
@@ -1008,8 +815,7 @@
     @apply text-muted-foreground px-2;
   }
 
-  .field [role="alert"],
-  .field-error {
+  .field [role="alert"] {
     @apply text-destructive text-sm;
   }
 
@@ -1022,16 +828,15 @@
   .input-group:has(> :is(input, textarea, select, [data-control]):disabled) {
     @apply opacity-50;
   }
-
   .input-group > :is(input, select, [data-control]) {
     @apply px-0 py-1 text-sm;
   }
 
-  .input-group:not([data-orientation='vertical']):has(> [data-align='start']) > :is(input, select, [data-control]) {
+  .input-group:not([data-orientation='vertical']):has(> :is([data-align='start'], [data-align='inline-start'])) > :is(input, select, [data-control]) {
     @apply ps-2;
   }
 
-  .input-group:not([data-orientation='vertical']):has(> [data-align='end']) > :is(input, select, [data-control]) {
+  .input-group:not([data-orientation='vertical']):has(> :is([data-align='end'], [data-align='inline-end'])) > :is(input, select, [data-control]) {
     @apply pe-2;
   }
 
@@ -1044,24 +849,57 @@
     @apply gap-2 py-2 text-sm font-medium text-muted-foreground select-none [&>svg:not([class*='size-'])]:size-3.5;
   }
 
-  .input-group > [data-align='start']:has(> button) {
+  .input-group > :is([data-align='start'], [data-align='inline-start']):has(> button) {
     @apply -ms-1;
   }
 
-  .input-group > [data-align='end']:has(> button) {
+  .input-group > :is([data-align='end'], [data-align='inline-end']):has(> button) {
     @apply -me-1;
   }
 
-  .input-group > [data-align='start']:has(> kbd) {
+  .input-group > :is([data-align='start'], [data-align='inline-start']):has(> kbd) {
     @apply -ms-0.5;
   }
 
-  .input-group > [data-align='end']:has(> kbd) {
+  .input-group > :is([data-align='end'], [data-align='inline-end']):has(> kbd) {
     @apply -me-0.5;
   }
   .input-group[data-orientation='vertical'] > :is(header, footer, [role='group'], [data-align]) {
     @apply px-0;
   }
+
+  .input-group > [data-align='block-start'] {
+    @apply px-0 pt-2;
+  }
+
+  .input-group > [data-align='block-end'] {
+    @apply px-0 pb-2;
+  }
+
+  .input-group[data-orientation='vertical'] > :is(header[data-align='start'], [data-align='block-start']) {
+    @apply px-0 pt-3;
+  }
+
+  .input-group[data-orientation='vertical'] > :is(footer[data-align='end'], [data-align='block-end']) {
+    @apply px-0 pb-3;
+  }
+
+  .input-group[data-orientation='vertical']:has(> input) > :is(header[data-align='start'], [data-align='block-start']) {
+    @apply pt-3.5;
+  }
+
+  .input-group[data-orientation='vertical']:has(> input) > :is(footer[data-align='end'], [data-align='block-end']) {
+    @apply pb-3.5;
+  }
+
+  .input-group[data-orientation='vertical'] > :is(header[data-align='start'], [data-align='block-start']).border-b {
+    @apply pb-3.5;
+  }
+
+  .input-group[data-orientation='vertical'] > :is(footer[data-align='end'], [data-align='block-end']).border-t {
+    @apply pt-3.5;
+  }
+
 
   .input-group > :is(kbd, span > kbd, [role='group'] > kbd, header > kbd, footer > kbd) {
     @apply rounded-none bg-muted-foreground/10 px-1.5;
@@ -1097,7 +935,7 @@
     @apply text-lg font-semibold tracking-wider uppercase;
   }
 
-  .empty p {
+  .empty > header > p {
     @apply text-muted-foreground mt-0.5 text-sm/relaxed;
   }
 
@@ -1148,15 +986,15 @@
     @apply [&_svg:not([class*='size-'])]:size-4;
   }
 
-  .item > figure:has(img) {
+  .item > figure:has(> img) {
     @apply size-10 overflow-hidden rounded-none;
   }
 
-  .item[data-size='sm'] > figure:has(img) {
+  .item[data-size='sm'] > figure:has(> img) {
     @apply size-8;
   }
 
-  .item[data-size='xs'] > figure:has(img) {
+  .item[data-size='xs'] > figure:has(> img) {
     @apply size-6 rounded-none;
   }
 
@@ -1206,20 +1044,20 @@
     @apply bg-muted text-muted-foreground in-data-[slot=tooltip-content]:bg-background/20 in-data-[slot=tooltip-content]:text-background dark:in-data-[slot=tooltip-content]:bg-background/10 h-5.5 w-fit min-w-5.5 gap-1 rounded-none px-1.5 font-sans text-xs font-medium [&_svg:not([class*='size-'])]:size-3;
   }
 
-  .kbd-group {
-    @apply gap-1;
-  }
-
   /* Label */
   .field > label,
   .label {
     @apply gap-2 font-semibold leading-relaxed in-data-[disabled=true]:opacity-50 peer-disabled:opacity-50 uppercase text-xs tracking-wide;
   }
 
-  :is(.field > label, .label):has(input[type='checkbox']),
-  :is(.field > label, .label):has(input[type='radio']),
-  :is(.field > label, .label):has(input[role='switch']),
-  :is(input[type='checkbox'], input[type='radio'], input[role='switch']) + :is(.field > label, .label) {
+  .field > section > label {
+    @apply gap-2 font-semibold leading-relaxed in-data-[disabled=true]:opacity-50 peer-disabled:opacity-50 uppercase text-xs tracking-wide;
+  }
+
+  :is(.field > label, .field > section > label, .label):has(input[type='checkbox']),
+  :is(.field > label, .field > section > label, .label):has(input[type='radio']),
+  :is(.field > label, .field > section > label, .label):has(input[role='switch']),
+  :is(input[type='checkbox'], input[type='radio'], input[role='switch']) + :is(.field > label, .field > section > label, .label) {
     @apply text-sm font-normal normal-case tracking-normal;
   }
 
@@ -1311,6 +1149,14 @@
   .sidebar nav ul ul > li > :is(a, button),
   .sidebar nav ul ul > li > details > summary {
     @apply text-sidebar-foreground ring-sidebar-ring hover:bg-sidebar-accent hover:text-sidebar-accent-foreground active:bg-sidebar-accent active:text-sidebar-accent-foreground h-7 gap-2 rounded-none px-3 text-sm focus-visible:ring-2 [&>svg]:size-3.5;
+  }
+  /* Progress */
+  .progress {
+    @apply bg-muted h-0.5 rounded-none;
+  }
+
+  .progress > span {
+    @apply bg-primary;
   }
 
   /* Skeleton */

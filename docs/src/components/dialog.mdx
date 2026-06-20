@@ -1,9 +1,9 @@
 # Dialog
 
 <Preview>
-<button type="button" onclick="document.getElementById('demo-dialog-edit-profile').showModal()" class="btn-outline">Edit Profile</button>
+<button type="button" onclick="document.getElementById('demo-dialog-edit-profile').showModal()" class="btn" data-variant="outline">Open Dialog</button>
 <dialog id="demo-dialog-edit-profile" class="dialog" aria-labelledby="demo-dialog-edit-profile-title" aria-describedby="demo-dialog-edit-profile-description" onclick="if (event.target === this) this.close()">
-  <div>
+  <div class="sm:max-w-sm">
     <header>
       <h2 id="demo-dialog-edit-profile-title">Edit profile</h2>
       <p id="demo-dialog-edit-profile-description">Make changes to your profile here. Click save when you're done.</p>
@@ -21,10 +21,10 @@
       </form>
     </section>
     <footer>
-      <button class="btn-outline" onclick="this.closest('dialog').close()">Cancel</button>
+      <button class="btn" data-variant="outline" onclick="this.closest('dialog').close()">Cancel</button>
       <button class="btn" onclick="this.closest('dialog').close()">Save changes</button>
     </footer>
-    <button type="button" class="btn-sm-icon-ghost" aria-label="Close dialog" onclick="this.closest('dialog').close()">
+    <button type="button" class="btn" data-variant="ghost" data-size="icon-sm" aria-label="Close dialog" onclick="this.closest('dialog').close()">
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
     </button>
   </div>
@@ -40,9 +40,9 @@
 Basecoat uses the native `<dialog>` element and `showModal()`. This differs from shadcn/ui's portalled Base UI implementation, but preserves native modality, focus handling, and inert page content without component JavaScript.
 
 ```html
-<button type="button" onclick="document.getElementById('demo-dialog-edit-profile').showModal()" class="btn-outline">Edit Profile</button>
+<button type="button" onclick="document.getElementById('demo-dialog-edit-profile').showModal()" class="btn" data-variant="outline">Open Dialog</button>
 <dialog id="demo-dialog-edit-profile" class="dialog" aria-labelledby="demo-dialog-edit-profile-title" aria-describedby="demo-dialog-edit-profile-description" onclick="if (event.target === this) this.close()">
-  <div>
+  <div class="sm:max-w-sm">
     <header>
       <h2 id="demo-dialog-edit-profile-title">Edit profile</h2>
       <p id="demo-dialog-edit-profile-description">Make changes to your profile here. Click save when you're done.</p>
@@ -60,10 +60,10 @@ Basecoat uses the native `<dialog>` element and `showModal()`. This differs from
       </form>
     </section>
     <footer>
-      <button class="btn-outline" onclick="this.closest('dialog').close()">Cancel</button>
+      <button class="btn" data-variant="outline" onclick="this.closest('dialog').close()">Cancel</button>
       <button class="btn" onclick="this.closest('dialog').close()">Save changes</button>
     </footer>
-    <button type="button" class="btn-sm-icon-ghost" aria-label="Close dialog" onclick="this.closest('dialog').close()">
+    <button type="button" class="btn" data-variant="ghost" data-size="icon-sm" aria-label="Close dialog" onclick="this.closest('dialog').close()">
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
     </button>
   </div>
@@ -73,31 +73,31 @@ Basecoat uses the native `<dialog>` element and `showModal()`. This differs from
 ### HTML structure
 
 <dl>
-  <dt><code class="highlight language-html">&lt;button type="button" onclick="dialog.showModal()"&gt;</code> <span class="badge-secondary">Optional</span></dt>
+  <dt><code>&lt;button type="button" onclick="dialog.showModal()"&gt;</code> <span class="badge" data-variant="secondary">Optional</span></dt>
   <dd>Trigger button. Basecoat intentionally uses the native <code>HTMLDialogElement.showModal()</code> method.</dd>
-  <dt><code class="highlight language-html">&lt;dialog class="dialog" id="&#123; DIALOG_ID &#125;"&gt;</code></dt>
+  <dt><code>&lt;dialog class="dialog" id="&#123; DIALOG_ID &#125;"&gt;</code></dt>
   <dd>
     Native modal dialog. Add <code>aria-labelledby="&#123; TITLE_ID &#125;"</code> and <code>aria-describedby="&#123; DESCRIPTION_ID &#125;"</code> when title and description are present. The macro also adds backdrop-click close handling.
     <dl>
-      <dt><code class="highlight language-html">&lt;div&gt;</code></dt>
+      <dt><code>&lt;div&gt;</code></dt>
       <dd>
         Dialog content surface.
         <dl>
-          <dt><code class="highlight language-html">&lt;header&gt;</code> <span class="badge-secondary">Optional</span></dt>
+          <dt><code>&lt;header&gt;</code> <span class="badge" data-variant="secondary">Optional</span></dt>
           <dd>
             Dialog header.
             <dl>
-              <dt><code class="highlight language-html">&lt;h2 id="&#123; TITLE_ID &#125;"&gt;</code></dt>
+              <dt><code>&lt;h2 id="&#123; TITLE_ID &#125;"&gt;</code></dt>
               <dd>Dialog title. Reference it from <code>aria-labelledby</code>.</dd>
-              <dt><code class="highlight language-html">&lt;p id="&#123; DESCRIPTION_ID &#125;"&gt;</code> <span class="badge-secondary">Optional</span></dt>
+              <dt><code>&lt;p id="&#123; DESCRIPTION_ID &#125;"&gt;</code> <span class="badge" data-variant="secondary">Optional</span></dt>
               <dd>Dialog description. Reference it from <code>aria-describedby</code>.</dd>
             </dl>
           </dd>
-          <dt><code class="highlight language-html">&lt;section&gt;</code> <span class="badge-secondary">Optional</span></dt>
+          <dt><code>&lt;section&gt;</code> <span class="badge" data-variant="secondary">Optional</span></dt>
           <dd>Dialog body/content area. Add overflow utilities when the body should scroll.</dd>
-          <dt><code class="highlight language-html">&lt;footer&gt;</code> <span class="badge-secondary">Optional</span></dt>
+          <dt><code>&lt;footer&gt;</code> <span class="badge" data-variant="secondary">Optional</span></dt>
           <dd>Action area. It stacks actions on small screens and aligns them to the end on larger screens.</dd>
-          <dt><code class="highlight language-html">&lt;button type="button" onclick="this.closest('dialog').close()"&gt;</code> <span class="badge-secondary">Optional</span></dt>
+          <dt><code>&lt;button type="button" onclick="this.closest('dialog').close()"&gt;</code> <span class="badge" data-variant="secondary">Optional</span></dt>
           <dd>Close button. You can also wrap a button in <code>&lt;form method="dialog"&gt;</code>.</dd>
         </dl>
       </dd>
@@ -110,23 +110,21 @@ Basecoat uses the native `<dialog>` element and `showModal()`. This differs from
 ### Custom Close Button
 
 <Preview>
-<button type="button" onclick="document.getElementById('dialog-custom-close').showModal()" class="btn-outline">Open</button>
+<button type="button" onclick="document.getElementById('dialog-custom-close').showModal()" class="btn" data-variant="outline">Share</button>
 <dialog id="dialog-custom-close" class="dialog" aria-labelledby="dialog-custom-close-title" aria-describedby="dialog-custom-close-description" onclick="if (event.target === this) this.close()">
-  <div>
+  <div class="sm:max-w-md">
     <header>
-      <h2 id="dialog-custom-close-title">Custom close button</h2>
-      <p id="dialog-custom-close-description">The default close icon is hidden and the footer provides the close action.</p>
+      <h2 id="dialog-custom-close-title">Share link</h2>
+      <p id="dialog-custom-close-description">Anyone who has this link will be able to view this.</p>
     </header>
-    <section>
-      <p class="text-sm text-muted-foreground">
-        Use
-        <code>close_button=false</code>
-        and add a close control where it fits your layout.
-      </p>
+    <section class="flex items-center gap-2">
+      <div class="grid flex-1 gap-2">
+        <label class="label sr-only" for="dialog-custom-close-link">Link</label>
+        <input class="input" id="dialog-custom-close-link" value="https://ui.shadcn.com/docs/installation" readonly />
+      </div>
     </section>
-    <footer>
-      <button class="btn-outline" onclick="this.closest('dialog').close()">Close</button>
-      <button class="btn" onclick="this.closest('dialog').close()">Continue</button>
+    <footer class="sm:justify-start">
+      <button class="btn" onclick="this.closest('dialog').close()">Close</button>
     </footer>
   </div>
 </dialog>
@@ -135,19 +133,13 @@ Basecoat uses the native `<dialog>` element and `showModal()`. This differs from
 ### No Close Button
 
 <Preview>
-<button type="button" onclick="document.getElementById('dialog-no-close').showModal()" class="btn-outline">Open</button>
+<button type="button" onclick="document.getElementById('dialog-no-close').showModal()" class="btn" data-variant="outline">No Close Button</button>
 <dialog id="dialog-no-close" class="dialog" aria-labelledby="dialog-no-close-title" aria-describedby="dialog-no-close-description" onclick="if (event.target === this) this.close()">
   <div>
     <header>
-      <h2 id="dialog-no-close-title">No close button</h2>
-      <p id="dialog-no-close-description">The dialog can still be closed with Escape or a custom action.</p>
+      <h2 id="dialog-no-close-title">No Close Button</h2>
+      <p id="dialog-no-close-description">This dialog doesn't have a close button in the top-right corner.</p>
     </header>
-    <section>
-      <p class="text-sm text-muted-foreground">Native dialogs remain keyboard-accessible even without the default close icon.</p>
-    </section>
-    <footer>
-      <button class="btn" onclick="this.closest('dialog').close()">I understand</button>
-    </footer>
   </div>
 </dialog>
 </Preview>
@@ -155,30 +147,27 @@ Basecoat uses the native `<dialog>` element and `showModal()`. This differs from
 ### Sticky Footer
 
 <Preview>
-<button type="button" onclick="document.getElementById('dialog-sticky-footer').showModal()" class="btn-outline">Sticky Footer</button>
+<button type="button" onclick="document.getElementById('dialog-sticky-footer').showModal()" class="btn" data-variant="outline">Sticky Footer</button>
 <dialog id="dialog-sticky-footer" class="dialog" aria-labelledby="dialog-sticky-footer-title" aria-describedby="dialog-sticky-footer-description" onclick="if (event.target === this) this.close()">
   <div>
     <header>
-      <h2 id="dialog-sticky-footer-title">Sticky footer</h2>
-      <p id="dialog-sticky-footer-description">Keep actions visible while the body scrolls.</p>
+      <h2 id="dialog-sticky-footer-title">Sticky Footer</h2>
+      <p id="dialog-sticky-footer-description">This dialog has a sticky footer that stays visible while the content scrolls.</p>
     </header>
-    <section class="overflow-y-auto scrollbar">
-      <div class="space-y-4 text-sm text-muted-foreground">
-        <p>Dialog content row 1. Add enough content to make the body scroll while the footer remains available.</p>
-        <p>Dialog content row 2. Add enough content to make the body scroll while the footer remains available.</p>
-        <p>Dialog content row 3. Add enough content to make the body scroll while the footer remains available.</p>
-        <p>Dialog content row 4. Add enough content to make the body scroll while the footer remains available.</p>
-        <p>Dialog content row 5. Add enough content to make the body scroll while the footer remains available.</p>
-        <p>Dialog content row 6. Add enough content to make the body scroll while the footer remains available.</p>
-        <p>Dialog content row 7. Add enough content to make the body scroll while the footer remains available.</p>
-        <p>Dialog content row 8. Add enough content to make the body scroll while the footer remains available.</p>
-      </div>
+    <section class="-mx-4 max-h-[50vh] overflow-y-auto px-4 scrollbar">
+      <p class="mb-4 leading-normal">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+      <p class="mb-4 leading-normal">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      <p class="mb-4 leading-normal">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <p class="mb-4 leading-normal">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+      <p class="mb-4 leading-normal">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+      <p class="mb-4 leading-normal">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      <p class="mb-4 leading-normal">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <p class="mb-4 leading-normal">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
     </section>
-    <footer class="sticky bottom-0">
-      <button class="btn-outline" onclick="this.closest('dialog').close()">Cancel</button>
-      <button class="btn" onclick="this.closest('dialog').close()">Save</button>
+    <footer>
+      <button class="btn" data-variant="outline" onclick="this.closest('dialog').close()">Close</button>
     </footer>
-    <button type="button" class="btn-sm-icon-ghost" aria-label="Close dialog" onclick="this.closest('dialog').close()">
+    <button type="button" class="btn" data-variant="ghost" data-size="icon-sm" aria-label="Close dialog" onclick="this.closest('dialog').close()">
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
     </button>
   </div>
@@ -188,31 +177,26 @@ Basecoat uses the native `<dialog>` element and `showModal()`. This differs from
 ### Scrollable Content
 
 <Preview>
-<button type="button" onclick="document.getElementById('dialog-scrollable').showModal()" class="btn-outline">Scrollable Content</button>
+<button type="button" onclick="document.getElementById('dialog-scrollable').showModal()" class="btn" data-variant="outline">Scrollable Content</button>
 <dialog id="dialog-scrollable" class="dialog" aria-labelledby="dialog-scrollable-title" aria-describedby="dialog-scrollable-description" onclick="if (event.target === this) this.close()">
   <div>
     <header>
       <h2 id="dialog-scrollable-title">Scrollable Content</h2>
-      <p id="dialog-scrollable-description">Long content can scroll inside the dialog body.</p>
+      <p id="dialog-scrollable-description">This is a dialog with scrollable content.</p>
     </header>
-    <section class="overflow-y-auto scrollbar">
-      <div class="space-y-4 text-sm text-muted-foreground">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer non nibh sit amet augue commodo ultrices. Row 1.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer non nibh sit amet augue commodo ultrices. Row 2.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer non nibh sit amet augue commodo ultrices. Row 3.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer non nibh sit amet augue commodo ultrices. Row 4.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer non nibh sit amet augue commodo ultrices. Row 5.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer non nibh sit amet augue commodo ultrices. Row 6.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer non nibh sit amet augue commodo ultrices. Row 7.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer non nibh sit amet augue commodo ultrices. Row 8.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer non nibh sit amet augue commodo ultrices. Row 9.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer non nibh sit amet augue commodo ultrices. Row 10.</p>
-      </div>
+    <section class="-mx-4 max-h-[50vh] overflow-y-auto px-4 scrollbar">
+      <p class="mb-4 leading-normal">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <p class="mb-4 leading-normal">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+      <p class="mb-4 leading-normal">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+      <p class="mb-4 leading-normal">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      <p class="mb-4 leading-normal">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <p class="mb-4 leading-normal">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+      <p class="mb-4 leading-normal">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+      <p class="mb-4 leading-normal">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      <p class="mb-4 leading-normal">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <p class="mb-4 leading-normal">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
     </section>
-    <footer>
-      <button class="btn-outline" onclick="this.closest('dialog').close()">Close</button>
-    </footer>
-    <button type="button" class="btn-sm-icon-ghost" aria-label="Close dialog" onclick="this.closest('dialog').close()">
+    <button type="button" class="btn" data-variant="ghost" data-size="icon-sm" aria-label="Close dialog" onclick="this.closest('dialog').close()">
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
     </button>
   </div>
@@ -225,7 +209,7 @@ Dialog positioning and close button placement use logical properties. Set `dir="
 
 <Preview>
 <div dir="rtl">
-  <button type="button" onclick="document.getElementById('dialog-rtl').showModal()" class="btn-outline">فتح</button>
+  <button type="button" onclick="document.getElementById('dialog-rtl').showModal()" class="btn" data-variant="outline">فتح</button>
   <dialog id="dialog-rtl" class="dialog" aria-labelledby="dialog-rtl-title" aria-describedby="dialog-rtl-description" onclick="if (event.target === this) this.close()">
     <div>
       <header>
@@ -241,10 +225,10 @@ Dialog positioning and close button placement use logical properties. Set `dir="
         </form>
       </section>
       <footer>
-        <button class="btn-outline" onclick="this.closest('dialog').close()">إلغاء</button>
+        <button class="btn" data-variant="outline" onclick="this.closest('dialog').close()">إلغاء</button>
         <button class="btn" onclick="this.closest('dialog').close()">حفظ</button>
       </footer>
-      <button type="button" class="btn-sm-icon-ghost" aria-label="Close dialog" onclick="this.closest('dialog').close()">
+      <button type="button" class="btn" data-variant="ghost" data-size="icon-sm" aria-label="Close dialog" onclick="this.closest('dialog').close()">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
       </button>
     </div>

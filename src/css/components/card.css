@@ -1,7 +1,6 @@
 /* Card */
 @layer components {
-  .card,
-  .card-sm {
+  .card {
     @apply flex flex-col;
 
     > header {

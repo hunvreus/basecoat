@@ -20,7 +20,7 @@
     @apply flex shrink-0 items-center justify-center [&_svg]:pointer-events-none;
   }
 
-  .item > figure:has(img) {
+  .item > figure:has(> img) {
     @apply overflow-hidden [&_img]:size-full [&_img]:object-cover;
   }
 

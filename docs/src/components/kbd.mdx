@@ -2,13 +2,13 @@
 
 <Preview>
 <div class="flex flex-col items-center gap-4">
-  <span class="kbd-group">
+  <span class="inline-flex items-center gap-1">
     <kbd class="kbd">⌘</kbd>
     <kbd class="kbd">⇧</kbd>
     <kbd class="kbd">⌥</kbd>
     <kbd class="kbd">⌃</kbd>
   </span>
-  <span class="kbd-group">
+  <span class="inline-flex items-center gap-1">
     <kbd class="kbd">Ctrl</kbd>
     <span>+</span>
     <kbd class="kbd">B</kbd>
@@ -18,7 +18,7 @@
 
 ## Usage
 
-Use `<kbd class="kbd">` for a key label. Use `kbd-group` to group multiple keys.
+Use `<kbd class="kbd">` for a key label. Use an inline wrapper with utilities when grouping multiple keys.
 
 ```html
 <kbd class="kbd">⌘K</kbd>
@@ -33,7 +33,7 @@ Keyboard labels are direction-neutral. Surrounding spacing should use logical ut
 <Preview>
 <p class="text-muted-foreground text-sm">
   Use
-  <span class="kbd-group">
+  <span class="inline-flex items-center gap-1">
     <kbd class="kbd">Ctrl + B</kbd>
     <kbd class="kbd">Ctrl + K</kbd>
   </span>
@@ -45,11 +45,11 @@ Keyboard labels are direction-neutral. Surrounding spacing should use logical ut
 
 <Preview>
 <div class="flex flex-wrap items-center gap-x-4">
-  <button class="btn-sm-outline pe-2">
+  <button class="btn pe-2" data-variant="outline" data-size="sm">
     Accept
     <kbd class="kbd">⏎</kbd>
   </button>
-  <button class="btn-sm-outline pe-2">
+  <button class="btn pe-2" data-variant="outline" data-size="sm">
     Cancel
     <kbd class="kbd">Esc</kbd>
   </button>
@@ -73,7 +73,7 @@ Keyboard labels are direction-neutral. Surrounding spacing should use logical ut
 <Preview>
 <p dir="rtl" class="text-muted-foreground text-sm">
   استخدم
-  <span class="kbd-group">
+  <span class="inline-flex items-center gap-1">
     <kbd class="kbd">Ctrl</kbd>
     <kbd class="kbd">K</kbd>
   </span>

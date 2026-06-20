@@ -4,36 +4,36 @@
 <div class="flex flex-col items-center gap-2">
   <div class="flex w-full flex-wrap gap-2">
     <span class="badge">Badge</span>
-    <span class="badge-secondary">Secondary</span>
-    <span class="badge-destructive">Destructive</span>
-    <span class="badge-outline">Outline</span>
+    <span class="badge" data-variant="secondary">Secondary</span>
+    <span class="badge" data-variant="destructive">Destructive</span>
+    <span class="badge" data-variant="outline">Outline</span>
   </div>
   <div class="flex w-full flex-wrap gap-2">
-    <span class="badge-secondary bg-blue-500 text-white dark:bg-blue-600"> 
+    <span class="badge bg-blue-500 text-white dark:bg-blue-600"> 
       <svg class="lucide lucide-badge-check" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z" /><path d="m9 12 2 2 4-4" /></svg>
       Verified
     </span>
     <span class="badge rounded-full h-5 min-w-5 px-1 font-mono tabular-nums">8</span>
-    <span class="badge-destructive rounded-full h-5 min-w-5 px-1 font-mono tabular-nums">99</span>
-    <span class="badge-outline rounded-full h-5 min-w-5 px-1 font-mono tabular-nums">20+</span>
+    <span class="badge rounded-full h-5 min-w-5 px-1 font-mono tabular-nums" data-variant="destructive">99</span>
+    <span class="badge rounded-full h-5 min-w-5 px-1 font-mono tabular-nums" data-variant="outline">20+</span>
   </div>
 </div>
 </Preview>
 
 ## Usage
 
-Use one of the badge classes: `badge`, `badge-primary`, `badge-secondary`, `badge-destructive`, `badge-outline`, `badge-ghost`, or `badge-link`.
+Add `class="badge"` to an inline element. Add `data-variant` when the badge is not the default primary variant.
 
-When an icon needs directional spacing, add `data-icon="inline-start"` or `data-icon="inline-end"` to the icon.
+Inline SVG icons are spaced automatically by the badge gap.
 
 ```html
 <span class="badge">Badge</span>
-<span class="badge-secondary">Secondary</span>
-<span class="badge-destructive">Destructive</span>
-<span class="badge-outline">Outline</span>
+<span class="badge" data-variant="secondary">Secondary</span>
+<span class="badge" data-variant="destructive">Destructive</span>
+<span class="badge" data-variant="outline">Outline</span>
 ```
 
-Badges support right-to-left layouts through native text flow and logical icon spacing.
+Badges support right-to-left layouts through native text flow. Flip directional icons explicitly.
 
 ## Examples
 
@@ -46,25 +46,25 @@ Badges support right-to-left layouts through native text flow and logical icon s
 ### Secondary
 
 <Preview>
-<span class="badge-secondary">Secondary</span>
+<span class="badge" data-variant="secondary">Secondary</span>
 </Preview>
 
 ### Destructive
 
 <Preview>
-<span class="badge-destructive">Destructive</span>
+<span class="badge" data-variant="destructive">Destructive</span>
 </Preview>
 
 ### Outline
 
 <Preview>
-<span class="badge-outline">Outline</span>
+<span class="badge" data-variant="outline">Outline</span>
 </Preview>
 
 ### With icon
 
 <Preview>
-<span class="badge-destructive">
+<span class="badge" data-variant="destructive">
   <svg class="lucide lucide-circle-alert" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10" /><line x1="12" x2="12" y1="8" y2="12" /><line x1="12" x2="12.01" y1="16" y2="16" /></svg>
   With icon
 </span>
@@ -73,9 +73,9 @@ Badges support right-to-left layouts through native text flow and logical icon s
 ### Link
 
 <Preview>
-<a href="#" class="badge-outline">
+<a href="#" class="badge" data-variant="outline">
   Link
-  <svg data-icon="inline-end" class="rtl:rotate-180 lucide lucide-arrow-right" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
+  <svg class="rtl:rotate-180 lucide lucide-arrow-right" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
 </a>
 </Preview>
 
@@ -94,9 +94,9 @@ Flip directional icons explicitly.
 <Preview>
 <div dir="rtl" class="flex flex-wrap gap-2">
   <span class="badge">نشط</span>
-  <a href="#" class="badge-outline">
+  <a href="#" class="badge" data-variant="outline">
     التفاصيل
-  <svg data-icon="inline-end" class="rtl:rotate-180 lucide lucide-arrow-right" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
+  <svg class="rtl:rotate-180 lucide lucide-arrow-right" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
   </a>
 </div>
 </Preview>

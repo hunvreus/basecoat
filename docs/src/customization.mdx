@@ -1,84 +1,37 @@
-
 # Customization
 
-## Icons
+Basecoat customization has three layers:
 
-Basecoat uses [Lucide icons](https://lucide.dev). You have three options:
+1. Choose a style pack.
+2. Override theme tokens such as colors and fonts.
+3. Add small project-level CSS overrides when tokens are not enough.
 
-- **Copy SVG code**: Visit [lucide.dev/icons](https://lucide.dev/icons), click any icon to copy the SVG, and paste it directly in your HTML. Best for simple projects or occasional icon usage.
-- **Install lucide**: Follow the [installation guide](https://lucide.dev/guide/installation) to install the `lucide` package and dynamically render icons. Best for projects that need many icons or want tree-shaking.
-- **Use framework packages**: Browse [framework-specific packages](https://lucide.dev/packages) (React, Vue, Angular, etc.) for component-based icon usage. Best if you're using a supported framework.
+For a full visual rewrite, import the Basecoat base layer and write your own style pack instead of overriding an existing one wholesale.
 
-<div class="flex flex-wrap gap-2 my-6">
-  <a class="badge-outline" href="https://lucide.dev" target="_blank">
-    Browse icons
-    
-<svg
-  class="lucide lucide-arrow-right"
-  xmlns="http://www.w3.org/2000/svg"
-  width="24"
-  height="24"
-  viewBox="0 0 24 24"
-  fill="none"
-  stroke="currentColor"
-  stroke-width="2"
-  stroke-linecap="round"
-  stroke-linejoin="round"
->
-  <path d="M5 12h14" />
-  <path d="m12 5 7 7-7 7" />
-</svg>
+## Styles
 
-  </a>
-  <a class="badge-outline" href="https://lucide.dev/guide/installation" target="_blank">
-    Installation guide
-    
-<svg
-  class="lucide lucide-arrow-right"
-  xmlns="http://www.w3.org/2000/svg"
-  width="24"
-  height="24"
-  viewBox="0 0 24 24"
-  fill="none"
-  stroke="currentColor"
-  stroke-width="2"
-  stroke-linecap="round"
-  stroke-linejoin="round"
->
-  <path d="M5 12h14" />
-  <path d="m12 5 7 7-7 7" />
-</svg>
+Basecoat ships the same style families used by the current shadcn/ui registry: Vega, Nova, Maia, Lyra, Mira, Luma, Sera, and Rhea.
 
-  </a>
-  <a class="badge-outline" href="https://lucide.dev/packages" target="_blank">
-    Packages
-    
-<svg
-  class="lucide lucide-arrow-right"
-  xmlns="http://www.w3.org/2000/svg"
-  width="24"
-  height="24"
-  viewBox="0 0 24 24"
-  fill="none"
-  stroke="currentColor"
-  stroke-width="2"
-  stroke-linecap="round"
-  stroke-linejoin="round"
->
-  <path d="M5 12h14" />
-  <path d="m12 5 7 7-7 7" />
-</svg>
+Pick one complete style bundle in your app CSS:
 
-  </a>
-</div>
+```css
+@import "tailwindcss";
+@import "basecoat-css/vega";
+```
 
-## Theming
+Swap the import to use another style:
 
-You can import any [shadcn/ui](https://shadcn-ui.com) compatible theme, such as [tweakcn](https://tweakcn.com):
+```css
+@import "tailwindcss";
+@import "basecoat-css/sera";
+```
 
-1. Go to [ui.shadcn.com/themes](https://ui.shadcn.com/themes) and select a theme.
-2. Click "Copy code" and save the theme variables in a file, such as `theme.css`.
-3. Import the theme in your CSS file:
+Each style bundle is standalone. Do not import Vega first and then load another style on top of it.
+Keep the selected Basecoat style after Tailwind or any other stylesheet that emits a reset/base layer.
+
+## Themes
+
+Basecoat uses shadcn/ui-compatible CSS variables. You can use a theme from [TweakCN](https://tweakcn.com) or another shadcn/ui theme generator by importing the variables after Basecoat:
 
 ```css
 @import "tailwindcss";
@@ -86,36 +39,24 @@ You can import any [shadcn/ui](https://shadcn-ui.com) compatible theme, such as 
 @import "./theme.css";
 ```
 
-<div class="flex flex-wrap gap-2 my-6">
-  <a class="badge-outline" href="https://ui.shadcn.com/docs/theming" target="_blank">
-    About shadcn/ui theming
-    
-<svg
-  class="lucide lucide-arrow-right"
-  xmlns="http://www.w3.org/2000/svg"
-  width="24"
-  height="24"
-  viewBox="0 0 24 24"
-  fill="none"
-  stroke="currentColor"
-  stroke-width="2"
-  stroke-linecap="round"
-  stroke-linejoin="round"
->
-  <path d="M5 12h14" />
-  <path d="m12 5 7 7-7 7" />
-</svg>
+`theme.css` should define token values such as `--background`, `--foreground`, `--primary`, `--muted`, `--border`, `--input`, and `--ring` for `:root` and `.dark` when needed.
 
-  </a>
-</div>
+Learn more in the [shadcn/ui theming docs](https://ui.shadcn.com/docs/theming).
 
 ## Fonts
 
-Basecoat does not ship web fonts by default. The Basecoat docs site uses the same font choices as the current shadcn/ui site: [Geist Sans](https://fonts.google.com/specimen/Geist) for sans and heading text, and [Geist Mono](https://fonts.google.com/specimen/Geist+Mono) for monospace text.
+Basecoat does not ship web fonts by default. The docs site uses the same font choices as the current shadcn/ui site: [Geist Sans](https://fonts.google.com/specimen/Geist) for sans and heading text, and [Geist Mono](https://fonts.google.com/specimen/Geist+Mono) for monospace text.
 
-To use the same setup, load the fonts and override the font tokens after importing Basecoat:
+Install the fonts with Fontsource:
 
-<Code lang="css">{`@import "tailwindcss";
+```bash
+npm install @fontsource/geist-sans @fontsource/geist-mono
+```
+
+Then import the font files and override the font tokens after Basecoat:
+
+```css
+@import "tailwindcss";
 @import "basecoat-css/sera";
 @import "@fontsource/geist-sans/400.css";
 @import "@fontsource/geist-sans/500.css";
@@ -130,41 +71,70 @@ To use the same setup, load the fonts and override the font tokens after importi
   --font-sans: "Geist Sans", ui-sans-serif, system-ui, sans-serif;
   --font-heading: "Geist Sans", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-}`}</Code>
+}
+```
 
-Keep font overrides in a small CSS file imported after Basecoat. This makes fonts a project-level customization instead of a Basecoat package default.
+Keep font overrides in a small CSS file imported after Basecoat. Fonts are project-level customization, not a Basecoat default.
 
-## Custom styles
+## Icons
 
-Basecoat style packs combine shared Basecoat structure with visual rules for each component. If you want to write a full custom style, import the styleless Basecoat base and then your own style file.
+Basecoat examples use [Lucide icons](https://lucide.dev), but Basecoat does not require an icon package.
 
-<Code lang="css">{`@import "tailwindcss";
-@import "basecoat-css/base";
-@import "./style-acme.css";`}</Code>
+You can:
 
-`basecoat-css/base` includes Basecoat tokens, semantic utilities, and component structure, but no Vega/Nova/Maia/etc. visual style pack. Your style file is responsible for component visuals such as colors, radius, shadows, focus rings, spacing, and variant treatment.
+- Copy SVGs from [lucide.dev/icons](https://lucide.dev/icons) and paste them into your HTML.
+- Install [`lucide`](https://lucide.dev/guide/installation) and render icons from JavaScript.
+- Use a framework-specific Lucide package if your app already uses a framework.
 
-The practical way to start is to copy one existing style pack, rename it, and edit from there. The style files live in `src/css/styles/` and are also published under `basecoat-css/styles/*`.
+Inline SVG is the simplest option for plain HTML, Jinja, Nunjucks, Rails, Django, Laravel, or similar stacks.
 
-<Code lang="css">{`@import "basecoat-css/base";
-@import "./style-acme.css";
+## Project overrides
 
-/* style-acme.css can start as a copy of basecoat-css/styles/nova. */`}</Code>
+For small visual tweaks, add utilities or project CSS after Basecoat:
 
-Do not load a full Basecoat style bundle and then override it wholesale. For example, avoid importing `basecoat-css/nova` before your custom style. That loads Nova component visuals and forces your file to undo them. Use `basecoat-css/base` instead.
-
-## Style overrides
-
-You can override default styles using Tailwind:
-
-<Code lang="html">{`<button class="btn font-normal">Click me</button>`}</Code>
-
-You can also extend or override the existing styles in your own Tailwind files:
-
-<Code lang="css">{`@import "tailwindcss";
+```css
+@import "tailwindcss";
 @import "basecoat-css/sera";
-@import "./custom.css";`}</Code>
+@import "./app.css";
+```
 
-More importantly, you can use the [theme variables](#theming) to customize many aspects of the components (colors, fonts, sizes, etc).
+```html
+<button class="btn font-normal" data-variant="outline">Click me</button>
+```
 
-**If you want to make more drastic changes**, you can [copy the `basecoat.css` file](https://github.com/hunvreus/basecoat/blob/main/src/css/basecoat.css) into your project and make your changes there.
+Prefer theme tokens for broad changes and one-off utilities for local changes. Avoid copying generated Basecoat bundles into your app unless you intend to maintain a fork.
+
+## Custom style packs
+
+If you want a full custom style, import the styleless Basecoat base and then your own style file:
+
+```css
+@import "tailwindcss";
+@import "basecoat-css/base";
+@import "./styles/acme.css";
+```
+
+`basecoat-css/base` includes Basecoat tokens, semantic utilities, and component structure, but no Vega/Nova/Maia/etc. visual style pack. Your style file owns component visuals: colors, radius, shadows, focus rings, spacing, variants, and state treatment.
+
+The practical way to start is to copy one existing style pack from `basecoat-css/styles/*`, rename it, and edit it:
+
+```css
+@import "basecoat-css/base";
+@import "./styles/acme.css";
+
+/* ./styles/acme.css can start as a copy of basecoat-css/styles/nova. */
+```
+
+Do not import a complete style bundle before your custom style. For example, avoid importing `basecoat-css/nova` and then overriding it wholesale. That loads Nova visuals and forces your file to undo them. Use `basecoat-css/base` instead.
+
+## Compatibility
+
+Basecoat 1.0 prefers `data-variant` and `data-size` over legacy variant classes. If you need old pre-1.0 aliases while migrating, import the compatibility layer after Basecoat:
+
+```css
+@import "tailwindcss";
+@import "basecoat-css/vega";
+@import "basecoat-css/compat";
+```
+
+The compatibility layer is for migration only. New code should use the documented 1.0 API.

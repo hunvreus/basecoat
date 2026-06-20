@@ -22,12 +22,12 @@ const componentOrder = [
   'field',
   'checkbox',
   'input',
-  'input-group',
   'item',
   'kbd',
   'label',
   'native-select',
   'popover',
+  'progress',
   'radio',
   'range',
   'select',
@@ -37,6 +37,7 @@ const componentOrder = [
   'table',
   'tabs',
   'textarea',
+  'input-group',
   'toast',
   'tooltip',
 ];
@@ -93,6 +94,8 @@ export async function generateCssEntrypoints({ cssDir = path.resolve('src/css') 
   await writeIfChanged(path.join(cssDir, 'basecoat.css'), '@import "./basecoat-vega.css";\n');
   await writeIfChanged(path.join(cssDir, 'basecoat.all.css'), '@import "./basecoat.css";\n');
   await writeIfChanged(path.join(cssDir, 'basecoat.cdn.css'), '@import "tailwindcss" source(none);\n@import "./basecoat.css";\n');
+  await writeIfChanged(path.join(cssDir, 'basecoat-compat.css'), '@import "./compat/legacy.css";\n');
+  await writeIfChanged(path.join(cssDir, 'basecoat-compat.cdn.css'), '@import "tailwindcss" source(none);\n@reference "./basecoat.css";\n@import "./basecoat-compat.css";\n');
 
   return { components, styles };
 }

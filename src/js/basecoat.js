@@ -129,6 +129,7 @@
     const dark = mode === 'dark';
     document.documentElement.classList.toggle('dark', dark);
     try { localStorage.setItem('themeMode', dark ? 'dark' : 'light'); } catch (_) {}
+    document.dispatchEvent(new CustomEvent('basecoat:themechange', { detail: { mode: dark ? 'dark' : 'light' } }));
   };
 
   const getTheme = () => document.documentElement.classList.contains('dark') ? 'dark' : 'light';

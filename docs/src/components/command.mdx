@@ -56,8 +56,8 @@ shadcn/ui's Command component is built on `cmdk`. Basecoat implements the same c
   <Step title="Include the JavaScript files">
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.2/dist/js/basecoat.min.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.2/dist/js/command.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.3/dist/js/basecoat.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.3/dist/js/command.min.js" defer></script>
 ```
 
   </Step>
@@ -108,7 +108,7 @@ shadcn/ui's Command component is built on `cmdk`. Basecoat implements the same c
 Use `<dialog class="command-dialog">` for the command palette variant.
 
 ```html
-<button class="btn-outline" onclick="document.getElementById('command-palette').showModal()">Open</button>
+<button class="btn" data-variant="outline" onclick="document.getElementById('command-palette').showModal()">Open</button>
 <dialog id="command-palette" class="command-dialog" aria-label="Command menu">
   <div class="command">
     <!-- Command content -->
@@ -124,37 +124,37 @@ Use `<dialog class="command-dialog">` for the command palette variant.
 The command menu can be used standalone or inside a native dialog. The structure is:
 
 <dl>
-  <dt><code class="highlight language-html">&lt;dialog class="command-dialog"&gt;</code> <span class="badge-secondary">Optional</span></dt>
+  <dt><code>&lt;dialog class="command-dialog"&gt;</code> <span class="badge" data-variant="secondary">Optional</span></dt>
   <dd>
     Dialog variant. Wraps one <code>&lt;div class="command"&gt;</code>. Add <code>aria-label</code> or <code>aria-labelledby</code> for an accessible name.
     <dl>
-      <dt><code class="highlight language-html">&lt;div class="command"&gt;</code></dt>
+      <dt><code>&lt;div class="command"&gt;</code></dt>
       <dd>
         Root command menu. Can also be used standalone without the dialog wrapper. Add <code>data-filter="manual"</code> when your app owns filtering, such as remote search or a local Lunr index.
         <dl>
-          <dt><code class="highlight language-html">&lt;header&gt;</code></dt>
+          <dt><code>&lt;header&gt;</code></dt>
           <dd>
             Search input wrapper. The macro includes a search icon and input.
             <dl>
-              <dt><code class="highlight language-html">&lt;input type="text" role="combobox"&gt;</code></dt>
+              <dt><code>&lt;input type="text" role="combobox"&gt;</code></dt>
               <dd>Filter input. Use <code>aria-expanded="true"</code> and <code>aria-controls="&#123; MENU_ID &#125;"</code> to point to the command list.</dd>
             </dl>
           </dd>
-          <dt><code class="highlight language-html">&lt;div role="menu" id="&#123; MENU_ID &#125;"&gt;</code></dt>
+          <dt><code>&lt;div role="menu" id="&#123; MENU_ID &#125;"&gt;</code></dt>
           <dd>
             Command list. Set <code>data-empty</code> to customize the empty state.
             <dl>
-              <dt><code class="highlight language-html">&lt;div role="group" aria-labelledby="&#123; HEADING_ID &#125;"&gt;</code> <span class="badge-secondary">Optional</span></dt>
+              <dt><code>&lt;div role="group" aria-labelledby="&#123; HEADING_ID &#125;"&gt;</code> <span class="badge" data-variant="secondary">Optional</span></dt>
               <dd>Groups related command items. Hidden automatically when every item in the group is filtered out.</dd>
-              <dt><code class="highlight language-html">&lt;span role="heading" id="&#123; HEADING_ID &#125;"&gt;</code> <span class="badge-secondary">Optional</span></dt>
+              <dt><code>&lt;span role="heading" id="&#123; HEADING_ID &#125;"&gt;</code> <span class="badge" data-variant="secondary">Optional</span></dt>
               <dd>Group heading. Use an <code>id</code> when the parent group uses <code>aria-labelledby</code>.</dd>
-              <dt><code class="highlight language-html">&lt;div role="menuitem"&gt;</code> or <code class="highlight language-html">&lt;a role="menuitem"&gt;</code></dt>
+              <dt><code>&lt;div role="menuitem"&gt;</code> or <code>&lt;a role="menuitem"&gt;</code></dt>
               <dd>Selectable command item. Use <code>&lt;a&gt;</code> for navigation and <code>&lt;div&gt;</code> for actions. Supports <code>data-filter</code>, <code>data-keywords</code>, <code>data-force</code>, <code>data-keep-command-open</code>, and <code>aria-disabled="true"</code>.</dd>
-              <dt><code class="highlight language-html">&lt;span data-shortcut&gt;</code> <span class="badge-secondary">Optional</span></dt>
+              <dt><code>&lt;span data-shortcut&gt;</code> <span class="badge" data-variant="secondary">Optional</span></dt>
               <dd>Shortcut hint aligned to the inline end of the item.</dd>
-              <dt><code class="highlight language-html">&lt;span data-indicator&gt;</code> <span class="badge-secondary">Optional</span></dt>
+              <dt><code>&lt;span data-indicator&gt;</code> <span class="badge" data-variant="secondary">Optional</span></dt>
               <dd>Item indicator. It becomes visible with <code>data-checked="true"</code> or <code>aria-selected="true"</code>.</dd>
-              <dt><code class="highlight language-html">&lt;hr role="separator"&gt;</code> <span class="badge-secondary">Optional</span></dt>
+              <dt><code>&lt;hr role="separator"&gt;</code> <span class="badge" data-variant="secondary">Optional</span></dt>
               <dd>Separator between groups/items. Hidden while filtering.</dd>
             </dl>
           </dd>
@@ -177,7 +177,7 @@ The command menu can be used standalone or inside a native dialog. The structure
 A simple command menu in a dialog. The button also shows the keyboard shortcut used in this example.
 
 <Preview>
-<button type="button" class="btn-outline" onclick="document.getElementById('command-basic').showModal()">
+<button type="button" class="btn" data-variant="outline" onclick="document.getElementById('command-basic').showModal()">
   Open command menu
   <kbd class="kbd">⌘J</kbd>
 </button>

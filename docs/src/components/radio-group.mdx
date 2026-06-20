@@ -18,33 +18,11 @@
 
 ## Usage
 
-Add `input` to radio inputs. Use a shared `name` attribute for mutually exclusive options, and wrap related options in a semantic `<fieldset>` or an element with `role="radiogroup"`.
+Add `class="input"` to radio inputs. Use a shared `name` attribute for mutually exclusive options, and wrap related options in a semantic `<fieldset>` or an element with `role="radiogroup"`.
 
 ```html
 <input type="radio" name="plan" class="input" />
 ```
-
-## Checked state
-
-Use native HTML state. Add `checked` for the initially selected option, or read and update the element's `checked` property in JavaScript.
-
-```html
-<input type="radio" name="plan" class="input" checked />
-```
-
-## Invalid state
-
-Set `aria-invalid="true"` on the invalid radio and, when using `field`, set `data-invalid="true"` on the field wrapper.
-
-<Preview class="w-full max-w-sm">
-<div role="group" class="field flex-row items-start gap-3" data-invalid="true">
-  <input type="radio" id="radio-invalid" name="radio-invalid" class="input" aria-invalid="true" />
-  <div class="grid gap-1.5">
-    <label for="radio-invalid">I agree to the terms</label>
-    <p class="field-error">You must select an option to continue.</p>
-  </div>
-</div>
-</Preview>
 
 ## Examples
 
@@ -73,17 +51,17 @@ Set `aria-invalid="true"` on the invalid radio and, when using `field`, set `dat
 <div role="radiogroup" aria-label="Notifications" data-slot="radio-group">
   <div role="group" class="field flex-row items-start gap-3">
     <input type="radio" id="notify-all" name="notifications" value="all" class="input" checked aria-describedby="notify-all-description" />
-    <div class="grid gap-1.5">
+    <section>
       <label for="notify-all">All new messages</label>
-      <p id="notify-all-description" class="field-description">Receive a notification for every new message.</p>
-    </div>
+      <p id="notify-all-description">Receive a notification for every new message.</p>
+    </section>
   </div>
   <div role="group" class="field flex-row items-start gap-3">
     <input type="radio" id="notify-mentions" name="notifications" value="mentions" class="input" aria-describedby="notify-mentions-description" />
-    <div class="grid gap-1.5">
+    <section>
       <label for="notify-mentions">Direct messages and mentions</label>
-      <p id="notify-mentions-description" class="field-description">Only notify me for direct messages and mentions.</p>
-    </div>
+      <p id="notify-mentions-description">Only notify me for direct messages and mentions.</p>
+    </section>
   </div>
 </div>
 </Preview>
@@ -96,19 +74,19 @@ Wrap a `.field` in a native `<label>` when the whole card should select the opti
 <div role="radiogroup" aria-label="Plans" data-slot="radio-group" class="w-full max-w-md">
   <label>
     <div role="group" class="field flex-row items-center justify-between">
-      <div class="grid gap-1.5">
+      <section>
         <span>Starter</span>
-        <span class="field-description">For small teams getting started.</span>
-      </div>
+        <span>For small teams getting started.</span>
+      </section>
       <input type="radio" name="choice-plan" value="starter" class="input" checked />
     </div>
   </label>
   <label>
     <div role="group" class="field flex-row items-center justify-between">
-      <div class="grid gap-1.5">
+      <section>
         <span>Team</span>
-        <span class="field-description">Collaboration tools for growing teams.</span>
-      </div>
+        <span>Collaboration tools for growing teams.</span>
+      </section>
       <input type="radio" name="choice-plan" value="team" class="input" />
     </div>
   </label>
@@ -155,20 +133,13 @@ Wrap a `.field` in a native `<label>` when the whole card should select the opti
 ### Invalid
 
 <Preview class="w-full max-w-sm">
-<fieldset class="fieldset" data-invalid="true">
-  <legend>Plan</legend>
-  <div role="radiogroup" aria-label="Invalid plan" data-slot="radio-group" aria-describedby="radio-group-error">
-    <div role="group" class="field flex-row items-center gap-3" data-invalid="true">
-      <input type="radio" id="radio-invalid-free" name="radio-invalid-plan" class="input" aria-invalid="true" />
-      <label for="radio-invalid-free">Free</label>
-    </div>
-    <div role="group" class="field flex-row items-center gap-3" data-invalid="true">
-      <input type="radio" id="radio-invalid-pro" name="radio-invalid-plan" class="input" aria-invalid="true" />
-      <label for="radio-invalid-pro">Pro</label>
-    </div>
-  </div>
-  <p id="radio-group-error" class="field-error">Select a plan to continue.</p>
-</fieldset>
+<div role="group" class="field flex-row items-start gap-3" data-invalid="true">
+  <input type="radio" id="radio-invalid" name="radio-invalid" class="input" aria-invalid="true" aria-describedby="radio-invalid-error" />
+  <section>
+    <label for="radio-invalid">I agree to the terms</label>
+    <p id="radio-invalid-error" role="alert">You must select an option to continue.</p>
+  </section>
+</div>
 </Preview>
 
 ### RTL

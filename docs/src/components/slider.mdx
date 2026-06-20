@@ -12,11 +12,11 @@
 
 ## Usage
 
-Use a native `<input type="range">` with the `input` class. Include `range.js` so Basecoat can keep the filled track in sync with the input value.
+Use a native `<input type="range" class="input">`. Include `range.js` so Basecoat can keep the filled track in sync with the input value.
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.2/dist/js/basecoat.min.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.2/dist/js/range.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.3/dist/js/basecoat.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.3/dist/js/range.min.js" defer></script>
 ```
 
 ```html
@@ -26,7 +26,7 @@ Use a native `<input type="range">` with the `input` class. Include `range.js` s
 ### HTML structure
 
 <dl>
-  <dt><code class="highlight language-html">&lt;input type="range" class="input"&gt;</code></dt>
+  <dt><code>&lt;input type="range" class="input"&gt;</code></dt>
   <dd>Native range input styled as a slider. Width utilities such as <code>w-full</code> can be added directly.</dd>
 </dl>
   
@@ -40,10 +40,10 @@ Basecoat intentionally uses the native range input. Unlike shadcn/ui's Base UI s
 <input type="range" class="input w-full" min="0" max="100" value="50" />
 </Preview>
 
-### Controlled Label
+### Label
 
 <Preview class="w-full max-w-sm">
-<div class="grid w-full gap-3 max-w-sm">
+<div class="grid w-full gap-1 max-w-sm">
   <div class="flex items-center justify-between gap-2">
     <label class="label" for="temperature">Temperature</label>
     <output class="text-sm text-muted-foreground" for="temperature">50</output>

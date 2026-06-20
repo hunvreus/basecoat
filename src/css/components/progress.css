@@ -1,0 +1,14 @@
+/* Progress */
+@layer components {
+  .progress {
+    @apply flex w-full items-center overflow-hidden;
+  }
+
+  .progress:dir(rtl) {
+    @apply flex-row-reverse;
+  }
+
+  .progress > span {
+    @apply h-full transition-all;
+  }
+}

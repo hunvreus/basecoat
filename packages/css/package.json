@@ -1,6 +1,6 @@
 {
   "name": "basecoat-css",
-  "version": "1.0.0-beta.2",
+  "version": "1.0.0-beta.3",
   "description": "Tailwind CSS for Basecoat components",
   "author": {
     "name": "hunvreus",
@@ -68,6 +68,10 @@
     "./base": "./dist/basecoat-base.css",
     "./base.css": "./dist/basecoat-base.css",
     "./base.cdn.css": "./dist/basecoat-base.cdn.css",
+    "./compat": "./dist/basecoat-compat.css",
+    "./compat.css": "./dist/basecoat-compat.css",
+    "./compat.cdn.css": "./dist/basecoat-compat.cdn.css",
+    "./compat/legacy.css": "./dist/compat/legacy.css",
     "./components": "./dist/basecoat-components.css",
     "./components.css": "./dist/basecoat-components.css",
     "./components/*": "./dist/components/*.css",

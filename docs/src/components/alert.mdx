@@ -12,7 +12,7 @@
     <h2>This Alert has a title and an icon. No description.</h2>
     <section>This is an alert with icon, title and description.</section>
   </div>
-  <div class="alert-destructive">
+  <div class="alert" data-variant="destructive">
     <svg class="lucide lucide-circle-check" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="m9 12 2 2 4-4" /></svg>
     <h2>Unable to process your payment.</h2>
     <section>
@@ -29,7 +29,7 @@
 
 ## Usage
 
-Use `alert` for default styling or `alert-destructive` for error states. Add a direct child `<footer>` for an inline-end action region.
+Use `alert` for default styling. Add `data-variant="destructive"` for error states. Add a direct child `<footer>` for an inline-end action region.
 
 ```html
 <div class="alert">
@@ -42,17 +42,17 @@ Use `alert` for default styling or `alert-destructive` for error states. Add a d
 ### HTML structure
 
 <dl>
-  <dt><code class="highlight language-html">&lt;div class="alert"&gt;</code></dt>
+  <dt><code>&lt;div class="alert"&gt;</code></dt>
   <dd>
-    Main container. Use <code>alert</code> for default styling or <code>alert-destructive</code> for error states.
+    Main container. Use <code>data-variant="destructive"</code> for error states.
     <dl>
-      <dt><code class="highlight language-html">&lt;svg&gt;</code> <span class="badge-secondary">Optional</span></dt>
+      <dt><code>&lt;svg&gt;</code> <span class="badge" data-variant="secondary">Optional</span></dt>
       <dd>The icon.</dd>
-      <dt><code class="highlight language-html">&lt;h2&gt;</code></dt>
+      <dt><code>&lt;h2&gt;</code></dt>
       <dd>The title.</dd>
-      <dt><code class="highlight language-html">&lt;section&gt;</code> <span class="badge-secondary">Optional</span></dt>
+      <dt><code>&lt;section&gt;</code> <span class="badge" data-variant="secondary">Optional</span></dt>
       <dd>The description.</dd>
-      <dt><code class="highlight language-html">&lt;footer&gt;</code> <span class="badge-secondary">Optional</span></dt>
+      <dt><code>&lt;footer&gt;</code> <span class="badge" data-variant="secondary">Optional</span></dt>
       <dd>The action region, aligned to the inline end of the alert. Put the action element inside it, such as a button or link.</dd>
     </dl>
   </dd>
@@ -63,7 +63,7 @@ Use `alert` for default styling or `alert-destructive` for error states. Add a d
 ### Destructive
 
 <Preview>
-<div class="alert-destructive">
+<div class="alert" data-variant="destructive">
   <svg class="lucide lucide-circle-alert" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><line x1="12" x2="12" y1="8" y2="12" /><line x1="12" x2="12.01" y1="16" y2="16" /></svg>
   <h2>Something went wrong!</h2>
   <section>Your session has expired. Please log in again.</section>
@@ -96,7 +96,7 @@ Use `alert` for default styling or `alert-destructive` for error states. Add a d
     <svg class="lucide lucide-circle-alert" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10" /><line x1="12" x2="12" y1="8" y2="12" /><line x1="12" x2="12.01" y1="16" y2="16" /></svg>
     <h2>The selected emails have been marked as spam.</h2>
     <footer>
-      <button type="button" class="btn-xs-outline">Undo</button>
+      <button type="button" class="btn" data-variant="outline" data-size="xs">Undo</button>
     </footer>
   </div>
   <div class="alert">
@@ -104,7 +104,7 @@ Use `alert` for default styling or `alert-destructive` for error states. Add a d
     <h2>The selected emails have been marked as spam.</h2>
     <section>This is a longer alert description that demonstrates how the action stays aligned to the inline end.</section>
     <footer>
-      <span class="badge-secondary">Badge</span>
+      <span class="badge">Badge</span>
     </footer>
   </div>
 </div>
@@ -130,7 +130,7 @@ Add `dir="rtl"` to the alert or an ancestor.
   <h2>تم حفظ التغييرات</h2>
   <section>تم تحديث إعداداتك بنجاح.</section>
   <footer>
-    <button type="button" class="btn-xs-outline">عرض</button>
+    <button type="button" class="btn" data-variant="outline" data-size="xs">عرض</button>
   </footer>
 </div>
 </Preview>

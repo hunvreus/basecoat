@@ -80,6 +80,7 @@ async function build() {
   const srcDir = path.join(projectRoot, 'src');
   const srcCssDir = path.join(srcDir, 'css');
   const srcCssStylesDir = path.join(srcCssDir, 'styles');
+  const srcCssCompatDir = path.join(srcCssDir, 'compat');
   const srcJsDir = path.join(srcDir, 'js');
   const srcNunjucksDir = path.join(srcDir, 'nunjucks');
   const srcJinjaDir = path.join(srcDir, 'jinja');
@@ -156,6 +157,8 @@ async function build() {
   await fs.copyFile(path.join(srcCssDir, 'basecoat.all.css'), path.join(cssDistDir, 'basecoat.all.css'));
   await fs.copyFile(path.join(srcCssDir, 'basecoat-base.css'), path.join(cssDistDir, 'basecoat-base.css'));
   await fs.copyFile(path.join(srcCssDir, 'basecoat-base.cdn.css'), path.join(cssDistDir, 'basecoat-base.cdn.css'));
+  await fs.copyFile(path.join(srcCssDir, 'basecoat-compat.css'), path.join(cssDistDir, 'basecoat-compat.css'));
+  await fs.copyFile(path.join(srcCssDir, 'basecoat-compat.cdn.css'), path.join(cssDistDir, 'basecoat-compat.cdn.css'));
   await fs.copyFile(path.join(srcCssDir, 'basecoat-components.css'), path.join(cssDistDir, 'basecoat-components.css'));
   for (const style of styles) {
     await fs.copyFile(path.join(srcCssDir, `basecoat-${style}.css`), path.join(cssDistDir, `basecoat-${style}.css`));
@@ -169,13 +172,15 @@ async function build() {
   const cssBaseDistDir = path.join(cssDistDir, 'base');
   const cssComponentsDistDir = path.join(cssDistDir, 'components');
   const cssStylesDistDir = path.join(cssDistDir, 'styles');
+  const cssCompatDistDir = path.join(cssDistDir, 'compat');
   await copyDirRecursive(cssBaseSrcDir, cssBaseDistDir);
   await copyDirRecursive(cssComponentsSrcDir, cssComponentsDistDir);
   await copyDirRecursive(srcCssStylesDir, cssStylesDistDir);
+  await copyDirRecursive(srcCssCompatDir, cssCompatDistDir);
   console.log(`Copied split CSS folders to ${cssDistDir}`);
 
   // Create Tailwind CSS builds for the CSS package.
-  const cdnEntries = ['basecoat.cdn.css', 'basecoat-base.cdn.css', ...styles.map((style) => `basecoat-${style}.cdn.css`)];
+  const cdnEntries = ['basecoat.cdn.css', 'basecoat-base.cdn.css', 'basecoat-compat.cdn.css', ...styles.map((style) => `basecoat-${style}.cdn.css`)];
   for (const entry of cdnEntries) {
     const cdnCssSrc = path.join(srcCssDir, entry);
     const baseName = path.basename(entry, '.css');

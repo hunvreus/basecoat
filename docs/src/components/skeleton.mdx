@@ -1,7 +1,7 @@
 # Skeleton
 
 <Preview>
-<div class="flex items-center gap-4">
+<div class="flex w-fit items-center gap-4">
   <div class="skeleton size-10 shrink-0 rounded-full"></div>
   <div class="grid gap-2">
     <div class="skeleton h-4 w-[150px]"></div>
@@ -12,16 +12,10 @@
 
 ## Usage
 
-Use the `skeleton` class with sizing utilities to create loading placeholders.
+Add `class="skeleton"` with sizing utilities to create loading placeholders.
 
 ```html
-<div class="flex items-center gap-4">
-  <div class="skeleton size-10 shrink-0 rounded-full"></div>
-  <div class="grid gap-2">
-    <div class="skeleton h-4 w-[150px]"></div>
-    <div class="skeleton h-4 w-[100px]"></div>
-  </div>
-</div>
+<div class="skeleton h-4 w-[150px]"></div>
 ```
 
 ## Examples
@@ -29,19 +23,19 @@ Use the `skeleton` class with sizing utilities to create loading placeholders.
 ### Avatar
 
 <Preview>
-<div class="flex items-center gap-4">
-  <div class="skeleton size-12 rounded-full"></div>
+<div class="flex w-fit items-center gap-4">
+  <div class="skeleton size-10 shrink-0 rounded-full"></div>
   <div class="grid gap-2">
-    <div class="skeleton h-4 w-32"></div>
-    <div class="skeleton h-4 w-48"></div>
+    <div class="skeleton h-4 w-[150px]"></div>
+    <div class="skeleton h-4 w-[100px]"></div>
   </div>
 </div>
 </Preview>
 
 ### Card
 
-<Preview class="w-full max-w-md">
-<div class="card w-full @md:w-auto @md:min-w-sm">
+<Preview class="w-full max-w-xs">
+<div class="card w-full">
   <header>
     <div class="skeleton h-4 w-2/3"></div>
     <div class="skeleton h-4 w-1/2"></div>
@@ -54,32 +48,49 @@ Use the `skeleton` class with sizing utilities to create loading placeholders.
 
 ### Text
 
-<Preview class="w-full max-w-md">
-<div class="grid gap-2">
+<Preview class="w-full max-w-xs">
+<div class="flex w-full flex-col gap-2">
   <div class="skeleton h-4 w-full"></div>
-  <div class="skeleton h-4 w-5/6"></div>
-  <div class="skeleton h-4 w-2/3"></div>
+  <div class="skeleton h-4 w-full"></div>
+  <div class="skeleton h-4 w-3/4"></div>
 </div>
 </Preview>
 
 ### Form
 
-<Preview class="w-full max-w-md">
-<div class="grid gap-4 w-full max-w-sm">
-  <div class="skeleton h-4 w-24"></div>
-  <div class="skeleton h-9 w-full"></div>
-  <div class="skeleton h-4 w-32"></div>
-  <div class="skeleton h-9 w-full"></div>
+<Preview class="w-full max-w-xs">
+<div class="flex w-full flex-col gap-7">
+  <div class="flex flex-col gap-3">
+    <div class="skeleton h-4 w-20"></div>
+    <div class="skeleton h-10 w-full"></div>
+  </div>
+  <div class="flex flex-col gap-3">
+    <div class="skeleton h-4 w-24"></div>
+    <div class="skeleton h-10 w-full"></div>
+  </div>
+  <div class="skeleton h-9 w-24"></div>
 </div>
 </Preview>
 
 ### Table
 
-<Preview class="w-full max-w-md">
-<div class="grid gap-3 w-full">
-  <div class="skeleton h-8 w-full"></div>
-  <div class="skeleton h-8 w-full"></div>
-  <div class="skeleton h-8 w-full"></div>
+<Preview class="w-full max-w-sm">
+<div class="flex w-full flex-col gap-2">
+  <div class="flex gap-4">
+    <div class="skeleton h-4 flex-1"></div>
+    <div class="skeleton h-4 w-24"></div>
+    <div class="skeleton h-4 w-20"></div>
+  </div>
+  <div class="flex gap-4">
+    <div class="skeleton h-4 flex-1"></div>
+    <div class="skeleton h-4 w-24"></div>
+    <div class="skeleton h-4 w-20"></div>
+  </div>
+  <div class="flex gap-4">
+    <div class="skeleton h-4 flex-1"></div>
+    <div class="skeleton h-4 w-24"></div>
+    <div class="skeleton h-4 w-20"></div>
+  </div>
 </div>
 </Preview>
 
@@ -88,7 +99,7 @@ Use the `skeleton` class with sizing utilities to create loading placeholders.
 Skeleton blocks are direction-neutral. Use logical layout utilities around them when spacing depends on direction.
 
 <Preview>
-<div dir="rtl" class="flex items-center gap-4">
+<div dir="rtl" class="flex w-fit items-center gap-4">
   <div class="skeleton size-10 shrink-0 rounded-full"></div>
   <div class="grid gap-2">
     <div class="skeleton h-4 w-[150px]"></div>

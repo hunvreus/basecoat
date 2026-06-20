@@ -3,8 +3,4 @@
   .kbd {
     @apply pointer-events-none inline-flex items-center justify-center select-none;
   }
-
-  .kbd-group {
-    @apply inline-flex items-center;
-  }
 }

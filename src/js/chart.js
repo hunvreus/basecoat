@@ -1,6 +1,8 @@
 (() => {
   const instances = new WeakMap();
+  const activeCanvases = new Set();
   const defaultColors = ['var(--chart-1)', 'var(--chart-2)', 'var(--chart-3)', 'var(--chart-4)', 'var(--chart-5)'];
+  let refreshFrame = null;
 
   const isChartJsData = (data) => {
     return data && typeof data === 'object' && Array.isArray(data.datasets);
@@ -53,6 +55,32 @@
   };
 
   const colorForIndex = (index) => defaultColors[index % defaultColors.length];
+
+  const cloneChartData = (chartData) => {
+    if (!isChartJsData(chartData)) return chartData;
+
+    return {
+      ...chartData,
+      labels: Array.isArray(chartData.labels) ? [...chartData.labels] : chartData.labels,
+      datasets: chartData.datasets.map((dataset) => ({
+        ...dataset,
+        data: Array.isArray(dataset.data) ? [...dataset.data] : dataset.data,
+        backgroundColor: Array.isArray(dataset.backgroundColor) ? [...dataset.backgroundColor] : dataset.backgroundColor,
+        borderColor: Array.isArray(dataset.borderColor) ? [...dataset.borderColor] : dataset.borderColor,
+        hoverBackgroundColor: Array.isArray(dataset.hoverBackgroundColor) ? [...dataset.hoverBackgroundColor] : dataset.hoverBackgroundColor,
+        hoverBorderColor: Array.isArray(dataset.hoverBorderColor) ? [...dataset.hoverBorderColor] : dataset.hoverBorderColor,
+      })),
+    };
+  };
+
+  const clonePlainObject = (value) => {
+    if (!value || typeof value !== 'object' || Array.isArray(value)) return value;
+
+    return Object.fromEntries(Object.entries(value).map(([key, item]) => [
+      key,
+      item && typeof item === 'object' && !Array.isArray(item) ? clonePlainObject(item) : item,
+    ]));
+  };
 
   const resolveColor = (color, element) => {
     if (Array.isArray(color)) return color.map(item => resolveColor(item, element));
@@ -148,15 +176,25 @@
 
   const usesCartesianScales = (type) => !['pie', 'doughnut', 'polarArea', 'radar'].includes(type);
 
+  const moveCanvasClassesToContainer = (canvas, container) => {
+    const classes = Array.from(canvas.classList).filter((className) => className !== 'chart');
+    if (classes.length === 0) return;
+
+    container.classList.add(...classes);
+    canvas.classList.remove(...classes);
+  };
+
   const ensureContainer = (canvas) => {
     if (canvas.parentElement?.classList.contains('chart')) {
       canvas.parentElement.dataset.basecoatChartContainer = 'true';
+      moveCanvasClassesToContainer(canvas, canvas.parentElement);
       return canvas.parentElement;
     }
 
     const container = document.createElement('div');
     container.className = 'chart';
     container.dataset.basecoatChartContainer = 'true';
+    moveCanvasClassesToContainer(canvas, container);
     canvas.insertAdjacentElement('beforebegin', container);
     container.append(canvas);
     return container;
@@ -170,7 +208,7 @@
   };
 
   const toChartData = ({ type, labelKey, data, series }) => {
-    if (isChartJsData(data)) return data;
+    if (isChartJsData(data)) return cloneChartData(data);
 
     const rows = Array.isArray(data) ? data : [];
     const entries = seriesEntries(series);
@@ -223,6 +261,23 @@
     return typeof value === 'number' ? value.toLocaleString() : String(value);
   };
 
+  const colorForTooltipItem = (item) => {
+    const elementColor = item.element?.options?.backgroundColor || item.element?.options?.borderColor;
+    if (typeof elementColor === 'string') return elementColor;
+
+    const backgroundColor = Array.isArray(item.dataset.backgroundColor)
+      ? item.dataset.backgroundColor[item.dataIndex]
+      : item.dataset.backgroundColor;
+    if (typeof backgroundColor === 'string') return backgroundColor;
+
+    const borderColor = Array.isArray(item.dataset.borderColor)
+      ? item.dataset.borderColor[item.dataIndex]
+      : item.dataset.borderColor;
+    if (typeof borderColor === 'string') return borderColor;
+
+    return colorForIndex(item.datasetIndex);
+  };
+
   const ensureTooltip = (canvas) => {
     let tooltip = canvas._basecoatChartTooltip;
     if (tooltip) return tooltip;
@@ -258,7 +313,7 @@
     const items = document.createElement('div');
     items.className = 'chart-tooltip-items';
     tooltip.dataPoints.forEach((item) => {
-      const color = item.dataset.borderColor || item.dataset.backgroundColor || colorForIndex(item.datasetIndex);
+      const color = colorForTooltipItem(item);
       const value = item.formattedValue || formatValue(item.raw);
 
       const row = document.createElement('div');
@@ -284,8 +339,8 @@
     const rect = chart.canvas.getBoundingClientRect();
     element.replaceChildren(...children);
     element.hidden = false;
-    element.style.left = `${rect.left + window.scrollX + tooltip.caretX}px`;
-    element.style.top = `${rect.top + window.scrollY + tooltip.caretY}px`;
+    element.style.left = `${rect.left + tooltip.caretX}px`;
+    element.style.top = `${rect.top + tooltip.caretY}px`;
   };
 
   const createLegendPlugin = (canvas, enabled) => ({
@@ -308,7 +363,12 @@
 
         const indicator = document.createElement('span');
         indicator.className = 'chart-legend-indicator';
-        indicator.style.setProperty('--chart-indicator-color', item.fillStyle || item.strokeStyle || colorForIndex(item.datasetIndex || item.index || 0));
+        const indicatorColor = typeof item.fillStyle === 'string'
+          ? item.fillStyle
+          : typeof item.strokeStyle === 'string'
+            ? item.strokeStyle
+            : colorForIndex(item.datasetIndex || item.index || 0);
+        indicator.style.setProperty('--chart-indicator-color', indicatorColor);
 
         const label = document.createElement('span');
         label.textContent = item.text;
@@ -345,7 +405,7 @@
     const tooltip = readBoolean(canvas, config, 'tooltip', 'chartTooltip', true);
     const data = config.data || readJsonAttribute(canvas, 'data-chart-data') || [];
     const series = config.series || readJsonAttribute(canvas, 'data-chart-series') || {};
-    const chartData = config.chartData || toChartData({ type, labelKey, data, series });
+    const chartData = config.chartData ? cloneChartData(config.chartData) : toChartData({ type, labelKey, data, series });
     const userOptions = config.options || {};
     const legendPlugin = createLegendPlugin(canvas, legend);
     const container = ensureContainer(canvas);
@@ -359,19 +419,21 @@
             border: { display: false, color: borderColor },
             grid: { display: false, color: gridColor },
             ticks: { color: mutedColor, padding: 8 },
-            ...(userOptions.scales?.x || {}),
+            ...clonePlainObject(userOptions.scales?.x || {}),
           },
           y: {
             border: { display: false, color: borderColor },
             grid: { color: gridColor },
             ticks: { display: false, color: mutedColor },
-            ...(userOptions.scales?.y || {}),
+            ...clonePlainObject(userOptions.scales?.y || {}),
           },
         }
       : {};
     const scales = {
       ...defaultScales,
-      ...(Object.fromEntries(Object.entries(userOptions.scales || {}).filter(([key]) => key !== 'x' && key !== 'y'))),
+      ...(Object.fromEntries(Object.entries(userOptions.scales || {})
+        .filter(([key]) => key !== 'x' && key !== 'y')
+        .map(([key, value]) => [key, clonePlainObject(value)]))),
     };
 
     canvas.classList.remove('chart');
@@ -407,14 +469,18 @@
     });
 
     instances.set(canvas, chart);
+    activeCanvases.add(canvas);
     canvas.dataset.chartInitialized = 'true';
     canvas.chart = chart;
+    canvas._basecoatChartConfig = config;
     canvas._destroy = () => {
       chart.destroy();
       removeGeneratedElements(canvas);
       instances.delete(canvas);
+      activeCanvases.delete(canvas);
       canvas.removeAttribute('data-chart-initialized');
       delete canvas._basecoatChartContainer;
+      delete canvas._basecoatChartConfig;
       delete canvas.chart;
       delete canvas._destroy;
     };
@@ -428,7 +494,44 @@
     return charts.length === 1 ? charts[0] : charts;
   };
 
+  const refreshCharts = () => {
+    refreshFrame = null;
+
+    Array.from(activeCanvases).forEach((canvas) => {
+      if (!canvas.isConnected) {
+        canvas._destroy?.();
+        activeCanvases.delete(canvas);
+        return;
+      }
+
+      initChart(canvas, canvas._basecoatChartConfig || {});
+    });
+  };
+
+  const scheduleRefresh = () => {
+    if (refreshFrame !== null) return;
+    refreshFrame = requestAnimationFrame(refreshCharts);
+  };
+
+  const observeTokenChanges = () => {
+    const observer = new MutationObserver((mutations) => {
+      if (mutations.some((mutation) => mutation.attributeName === 'class' || mutation.attributeName === 'data-style-variant')) {
+        scheduleRefresh();
+      }
+    });
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class', 'data-style-variant'],
+    });
+
+    document.addEventListener('basecoat:themechange', scheduleRefresh);
+    document.addEventListener('basecoat:stylechange', scheduleRefresh);
+  };
+
   if (window.basecoat) {
     window.basecoat.chart = chart;
   }
+
+  observeTokenChanges();
 })();

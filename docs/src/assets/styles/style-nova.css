@@ -1,1 +1,5 @@
-@import "../../../../packages/css/dist/basecoat-nova.cdn.css";
+@import "tailwindcss" source(none);
+@reference "tailwindcss";
+@reference "../../../../src/css/base/base.css";
+@import "../../../../src/css/basecoat-nova.css";
+@import "../../../../node_modules/reallysimpledocs/src/css/styles/nova.css";

@@ -1,0 +1,80 @@
+---
+import vegaUrl from "../assets/styles/style-vega.css?url";
+import novaUrl from "../assets/styles/style-nova.css?url";
+import maiaUrl from "../assets/styles/style-maia.css?url";
+import lyraUrl from "../assets/styles/style-lyra.css?url";
+import miraUrl from "../assets/styles/style-mira.css?url";
+import lumaUrl from "../assets/styles/style-luma.css?url";
+import seraUrl from "../assets/styles/style-sera.css?url";
+import rheaUrl from "../assets/styles/style-rhea.css?url";
+
+const styleUrls = {
+  vega: vegaUrl,
+  nova: novaUrl,
+  maia: maiaUrl,
+  lyra: lyraUrl,
+  mira: miraUrl,
+  luma: lumaUrl,
+  sera: seraUrl,
+  rhea: rheaUrl,
+};
+---
+
+<style id="docs-style-gate" is:inline>
+  html[data-style-pending] body {
+    visibility: hidden;
+  }
+</style>
+
+<script is:inline define:vars={{ styleUrls }}>
+  (() => {
+    const styleGateId = "docs-style-gate";
+    const styleLinkId = "docs-style-variant";
+    const clearStylePending = () => {
+      document.documentElement.removeAttribute("data-style-pending");
+      document.getElementById(styleGateId)?.remove();
+    };
+    const getStoredStyle = () => {
+      try {
+        return localStorage.getItem("styleVariant") || "vega";
+      } catch (_) {
+        return "vega";
+      }
+    };
+    const getStyleHref = (style) => {
+      const href = styleUrls[style];
+      return href?.startsWith("/docs/src/assets/styles/") ? `${href}?direct` : href;
+    };
+
+    const style = getStoredStyle();
+    const nextStyle = Object.prototype.hasOwnProperty.call(styleUrls, style) ? style : "vega";
+    const href = getStyleHref(nextStyle);
+
+    document.documentElement.dataset.styleVariant = nextStyle;
+
+    if (!href) return;
+
+    document.documentElement.setAttribute("data-style-pending", "");
+
+    const existing = document.getElementById("docs-style-variant");
+    if (existing?.getAttribute("href") === href) {
+      clearStylePending();
+      return;
+    }
+
+    if (!existing && document.currentScript) {
+      document.write(
+        `<link id="${styleLinkId}" rel="stylesheet" href="${href}" onload="document.documentElement.removeAttribute('data-style-pending');document.getElementById('${styleGateId}')?.remove()" onerror="document.documentElement.removeAttribute('data-style-pending');document.getElementById('${styleGateId}')?.remove()">`,
+      );
+      return;
+    }
+
+    const link = existing || document.createElement("link");
+    link.id = styleLinkId;
+    link.rel = "stylesheet";
+    link.addEventListener("load", clearStylePending, { once: true });
+    link.addEventListener("error", clearStylePending, { once: true });
+    link.href = href;
+    if (!existing) document.head.appendChild(link);
+  })();
+</script>

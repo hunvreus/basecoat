@@ -1,162 +1,169 @@
 # Field
 
 <Preview>
-<form class="w-full max-w-md space-y-6">
-  <fieldset class="fieldset">
-    <legend>Payment Method</legend>
-    <p>All transactions are secure and encrypted</p>
-    <div role="group" class="field">
-      <label for="card-name">Name on Card</label>
-      <input id="card-name" type="text" placeholder="Evil Rabbit" required />
-    </div>
-    <div role="group" class="field">
-      <label for="card-number">Card Number</label>
-      <input id="card-number" type="text" placeholder="1234 5678 9012 3456" aria-describedby="card-number-desc" required />
-      <p id="card-number-desc">Enter your 16-digit card number</p>
-    </div>
-    <div class="grid grid-cols-3 gap-4">
-      <div role="group" class="field">
-        <label for="exp-month">Month</label>
-        <select id="exp-month" class="select w-full">
-          <option value="">MM</option>
-          <option value="01">01</option>
-          <option value="02">02</option>
-          <option value="03">03</option>
-          <option value="04">04</option>
-          <option value="05">05</option>
-          <option value="06">06</option>
-          <option value="07">07</option>
-          <option value="08">08</option>
-          <option value="09">09</option>
-          <option value="10">10</option>
-          <option value="11">11</option>
-          <option value="12">12</option>
-        </select>
+<form class="w-full max-w-md">
+  <div role="group" aria-label="Checkout fields" class="fieldset">
+    <fieldset class="fieldset">
+      <legend>Payment Method</legend>
+      <p>All transactions are secure and encrypted</p>
+      <div role="group" aria-label="Payment method fields">
+        <div role="group" class="field">
+          <label for="checkout-card-name">Name on Card</label>
+          <input id="checkout-card-name" type="text" placeholder="Evil Rabbit" required />
+        </div>
+        <div role="group" class="field">
+          <label for="checkout-card-number">Card Number</label>
+          <input id="checkout-card-number" type="text" placeholder="1234 5678 9012 3456" aria-describedby="checkout-card-number-description" required />
+          <p id="checkout-card-number-description">Enter your 16-digit card number</p>
+        </div>
+        <div class="grid grid-cols-3 gap-4">
+          <div role="group" class="field">
+            <label for="checkout-exp-month">Month</label>
+            <select id="checkout-exp-month" class="select w-full">
+              <option value="">MM</option>
+              <option value="01">01</option>
+              <option value="02">02</option>
+              <option value="03">03</option>
+              <option value="04">04</option>
+              <option value="05">05</option>
+              <option value="06">06</option>
+              <option value="07">07</option>
+              <option value="08">08</option>
+              <option value="09">09</option>
+              <option value="10">10</option>
+              <option value="11">11</option>
+              <option value="12">12</option>
+            </select>
+          </div>
+          <div role="group" class="field">
+            <label for="checkout-exp-year">Year</label>
+            <select id="checkout-exp-year" class="select w-full">
+              <option value="">YYYY</option>
+              <option value="2024">2024</option>
+              <option value="2025">2025</option>
+              <option value="2026">2026</option>
+              <option value="2027">2027</option>
+              <option value="2028">2028</option>
+              <option value="2029">2029</option>
+            </select>
+          </div>
+          <div role="group" class="field">
+            <label for="checkout-cvv">CVV</label>
+            <input id="checkout-cvv" type="text" placeholder="123" required />
+          </div>
+        </div>
       </div>
-      <div role="group" class="field">
-        <label for="exp-year">Year</label>
-        <select id="exp-year" class="select w-full">
-          <option value="">YYYY</option>
-          <option value="2024">2024</option>
-          <option value="2025">2025</option>
-          <option value="2026">2026</option>
-          <option value="2027">2027</option>
-          <option value="2028">2028</option>
-          <option value="2029">2029</option>
-        </select>
+    </fieldset>
+    <div class="field-separator">
+      <hr role="separator" />
+    </div>
+    <fieldset class="fieldset">
+      <legend>Billing Address</legend>
+      <p>The billing address associated with your payment method</p>
+      <div role="group" class="field" data-orientation="horizontal">
+        <input id="checkout-same-as-shipping" type="checkbox" checked />
+        <label for="checkout-same-as-shipping" class="font-normal">Same as shipping address</label>
       </div>
+    </fieldset>
+    <fieldset class="fieldset">
       <div role="group" class="field">
-        <label for="cvv">CVV</label>
-        <input id="cvv" type="text" placeholder="123" required />
+        <label for="checkout-comments">Comments</label>
+        <textarea id="checkout-comments" placeholder="Add any additional comments" rows="3"></textarea>
       </div>
+    </fieldset>
+    <div role="group" class="field" data-orientation="horizontal">
+      <button type="submit" class="btn">Submit</button>
+      <button type="button" class="btn" data-variant="outline">Cancel</button>
     </div>
-  </fieldset>
-  <hr role="separator" class="my-6 border-border" />
-  <fieldset class="fieldset">
-    <legend>Billing Address</legend>
-    <p>The billing address associated with your payment method</p>
-    <div role="group" class="field">
-      <label for="same-as-shipping" class="gap-3">
-        <input type="checkbox" id="same-as-shipping" checked />
-        Same as shipping address
-      </label>
-    </div>
-  </fieldset>
-  <fieldset class="fieldset">
-    <div role="group" class="field">
-      <label for="comments">Comments</label>
-      <textarea id="comments" placeholder="Add any additional comments" rows="3"></textarea>
-    </div>
-  </fieldset>
-  <div class="flex gap-3">
-    <button type="submit" class="btn">Submit</button>
-    <button type="button" class="btn-outline">Cancel</button>
   </div>
 </form>
 </Preview>
 
 ## Usage
 
-Field uses semantic HTML with minimal classes. Two main patterns can be used independently or composed together:
+Use `class="field"` for one control and `class="fieldset"` for related controls. Use a native `<fieldset>` when the group needs a `<legend>`; otherwise use a labelled `role="group"`.
 
-- `<div role="group" class="field">` for individual field containers.
-- `<fieldset class="fieldset">` for grouping multiple related fields together.
+```html
+<fieldset class="fieldset">
+  <legend>Profile</legend>
+  <p>This appears on invoices and emails.</p>
+  <div role="group" aria-label="Profile fields">
+    <div role="group" class="field">
+      <label for="name">Full name</label>
+      <input id="name" autocomplete="off" placeholder="Evil Rabbit" />
+      <p>This appears on invoices and emails.</p>
+    </div>
+    <div role="group" class="field" data-invalid>
+      <label for="username">Username</label>
+      <input id="username" autocomplete="off" aria-invalid="true" aria-describedby="username-error" />
+      <p id="username-error" role="alert">Choose another username.</p>
+    </div>
+    <div role="group" class="field" data-orientation="horizontal">
+      <input id="newsletter" type="checkbox" role="switch" />
+      <label for="newsletter">Subscribe to the newsletter</label>
+    </div>
+  </div>
+</fieldset>
+```
 
-Elements inside these containers are styled automatically based on their purpose. Use `aria-describedby` to connect helper text and errors to inputs.
-
-**Fields** have the following HTML structure:
-
-<dl>
-  <dt><code class="highlight language-html">&lt;div role="group" class="field"&gt;</code></dt>
-  <dd>
-    Field container. Add <code>data-orientation="horizontal"</code> to align controls horizontally. For responsive layouts, use standard Tailwind responsive classes.
-    <dl>
-      <dt><code class="highlight language-html">&lt;label&gt;</code></dt>
-      <dd>Label for the input.</dd>
-      <dt><code class="highlight language-html">&lt;input&gt;</code>, <code>&lt;select&gt;</code> or <code>&lt;textarea&gt;</code></dt>
-      <dd>Form input.</dd>
-      <dt><code class="highlight language-html">&lt;p&gt;</code> <span class="badge-secondary">Optional</span></dt>
-      <dd>Helper text. Use <code>aria-describedby</code> on the input to reference this element's <code>id</code>.</dd>
-      <dt><code class="highlight language-html">&lt;p role="alert"&gt;</code> <span class="badge-secondary">Optional</span></dt>
-      <dd>Error message. Use <code>aria-describedby</code> on the input and <code>aria-invalid="true"</code> to reference this element's <code>id</code>.</dd>
-      <dt><code class="highlight language-html">&lt;section&gt;</code> <span class="badge-secondary">Optional</span></dt>
-      <dd>Wraps label and description when the label sits beside the input (e.g. <code>data-orientation="horizontal"</code>). Not required if you have no description.</dd>
-    </dl>
-  </dd>
-</dl>
-
-**Fieldsets** have the following HTML structure:
+### HTML structure
 
 <dl>
-  <dt><code class="highlight language-html">&lt;fieldset class="fieldset"&gt;</code></dt>
-  <dd>
-    Container for grouping related fields.
-    <dl>
-      <dt><code class="highlight language-html">&lt;legend&gt;</code></dt>
-      <dd>Heading for the fieldset.</dd>
-      <dt><code class="highlight language-html">&lt;p&gt;</code> <span class="badge-secondary">Optional</span></dt>
-      <dd>Description text. When placed directly after <code>&lt;legend&gt;</code>, automatically styled as muted text.</dd>
-      <dt><code class="highlight language-html">&lt;div role="group" class="field"&gt;</code> <span class="badge-secondary">Optional</span></dt>
-      <dd>Individual field containers (see structure above). You can include multiple <code>.field</code> elements, or place form controls directly in the fieldset.</dd>
-    </dl>
-  </dd>
+  <dt><code>&lt;fieldset class="fieldset"&gt;</code></dt>
+  <dd>Native group for related fields. Use <code>&lt;legend&gt;</code> for the label and a following <code>&lt;p&gt;</code> for description.</dd>
+  <dt><code>&lt;div role="group" class="fieldset"&gt;</code></dt>
+  <dd>Structural group when <code>&lt;fieldset&gt;</code> is not appropriate. Add <code>aria-label</code> or <code>aria-labelledby</code>.</dd>
+  <dt><code>&lt;div role="group" class="field"&gt;</code></dt>
+  <dd>Single field wrapper. Add <code>data-orientation</code> when needed.</dd>
+  <dt><code>&lt;label&gt;</code></dt>
+  <dd>Label for the control. Use <code>for</code> when the control has an <code>id</code>.</dd>
+  <dt><code>&lt;input&gt;</code>, <code>&lt;select&gt;</code>, <code>&lt;textarea&gt;</code></dt>
+  <dd>Native form control. Put <code>aria-invalid="true"</code> on the invalid control, not only on the wrapper.</dd>
+  <dt><code>&lt;section&gt;</code></dt>
+  <dd>Optional content wrapper for label and description when the control sits beside text.</dd>
+  <dt><code>&lt;p&gt;</code></dt>
+  <dd>Helper text or error text. Use <code>role="alert"</code> for validation errors and connect it with <code>aria-describedby</code>.</dd>
 </dl>
 
 ## Examples
 
 ### Input
 
-<Preview class="w-full max-w-md">
-<div class="grid gap-6">
-  <div role="group" class="field">
-    <label for="username">Username</label>
-    <input id="username" type="text" placeholder="evilrabbit" aria-describedby="username-desc" />
-    <p id="username-desc">Choose a unique username for your account.</p>
+<Preview class="w-full max-w-xs">
+<fieldset class="fieldset">
+  <div role="group" aria-label="Account credentials">
+    <div role="group" class="field">
+      <label for="username">Username</label>
+      <input id="username" type="text" placeholder="Max Leiter" aria-describedby="username-description" />
+      <p id="username-description">Choose a unique username for your account.</p>
+    </div>
+    <div role="group" class="field">
+      <label for="password">Password</label>
+      <p id="password-description">Must be at least 8 characters long.</p>
+      <input id="password" type="password" placeholder="••••••••" aria-describedby="password-description" />
+    </div>
   </div>
-  <div role="group" class="field">
-    <label for="password">Password</label>
-    <p id="password-desc">Must be at least 8 characters long.</p>
-    <input id="password" type="password" placeholder="••••••••" aria-describedby="password-desc" />
-  </div>
-</div>
+</fieldset>
 </Preview>
 
 ### Textarea
 
-<Preview class="w-full max-w-md">
-<div role="group" class="field">
-  <label for="bio">Feedback</label>
-  <textarea id="bio" rows="4" placeholder="Your feedback helps us improve..." aria-describedby="bio-desc"></textarea>
-  <p id="bio-desc">Share your thoughts about our service.</p>
-</div>
+<Preview class="w-full max-w-xs">
+<fieldset class="fieldset">
+  <div role="group" class="field">
+    <label for="feedback">Feedback</label>
+    <textarea id="feedback" placeholder="Your feedback helps us improve..." rows="4" aria-describedby="feedback-description"></textarea>
+    <p id="feedback-description">Share your thoughts about our service.</p>
+  </div>
+</fieldset>
 </Preview>
 
 ### Select
 
-<Preview class="w-full max-w-md">
+<Preview class="w-full max-w-xs">
 <div role="group" class="field">
-  <label for="country">Department</label>
-  <select id="country" class="select w-full" aria-describedby="country-desc">
+  <label for="department">Department</label>
+  <select id="department" class="select w-full" aria-describedby="department-description">
     <option value="">Choose department</option>
     <option value="engineering">Engineering</option>
     <option value="design">Design</option>
@@ -167,139 +174,119 @@ Elements inside these containers are styled automatically based on their purpose
     <option value="finance">Finance</option>
     <option value="operations">Operations</option>
   </select>
-  <p id="country-desc">Select your department or area of work.</p>
+  <p id="department-description">Select your department or area of work.</p>
 </div>
 </Preview>
 
 ### Slider
 
-<Preview class="w-full max-w-sm">
+<Preview class="w-full max-w-xs">
 <div role="group" class="field">
-  <label for="price-range">Price</label>
-  <p id="price-range-desc">Set your budget: $<span id="price-range-value">150</span></p>
-  <input id="price-range" type="range" min="0" max="500" value="150" />
+  <label for="price-range">Price Range</label>
+  <p id="price-range-description">Set your maximum budget <span id="price-range-output">(up to $800)</span>.</p>
+  <input id="price-range" type="range" min="0" max="1000" step="10" value="800" aria-describedby="price-range-description" class="input" />
 </div>
 <script>
   (() => {
-    const sliders = document.querySelectorAll('input[type="range"]');
-    if (!sliders) return;
-
-    const updateSlider = (el) => {
-      const min = parseFloat(el.min || 0);
-      const max = parseFloat(el.max || 100);
-      const value = parseFloat(el.value);
-      const percent = (max === min) ? 0 : ((value - min) / (max - min)) * 100;
-      el.style.setProperty('--slider-value', \`\${percent}%\`);
+    const input = document.getElementById("price-range");
+    const output = document.getElementById("price-range-output");
+    if (!input || !output) return;
+    const updateRange = () => {
+      const min = Number(input.min || 0);
+      const max = Number(input.max || 100);
+      const value = Number(input.value || 0);
+      const percent = max === min ? 0 : ((value - min) / (max - min)) * 100;
+      input.style.setProperty("--slider-value", `${percent}%`);
+      output.textContent = `(up to $${value})`;
     };
-
-    sliders.forEach(slider => {
-      updateSlider(slider);
-      slider.addEventListener('input', (event) => updateSlider(event.target));
-    });
-
-    const priceSlider = document.getElementById('price-range');
-    const priceValue = document.getElementById('price-range-value');
-
-    priceSlider.addEventListener('input', (event) => priceValue.innerHTML = event.target.value);
+    input.addEventListener("input", updateRange);
+    updateRange();
   })();
 </script>
 </Preview>
 
 ### Fieldset
 
-Group related fields with `<fieldset class="fieldset">` and `<legend>`.
-
-<Preview>
-<form class="w-full max-w-md">
-  <fieldset class="fieldset">
-    <legend>Profile</legend>
-    <p>This information will be displayed on your profile</p>
-    <div role="group" class="field">
-      <label for="full-name">Full name</label>
-      <input id="full-name" type="text" placeholder="Evil Rabbit" aria-describedby="name-desc" />
-      <p id="name-desc">Your first and last name</p>
-    </div>
-    <div role="group" class="field">
-      <label for="display-name">Username</label>
-      <input id="display-name" type="text" placeholder="@evilrabbit" aria-invalid="true" aria-describedby="username-error" />
-      <p id="username-error" role="alert">Username is already taken</p>
-    </div>
-    <div class="flex items-center gap-3">
-      <input type="checkbox" id="newsletter" />
-      <label for="newsletter" class="font-normal">Subscribe to the newsletter</label>
-    </div>
-  </fieldset>
-  <button type="submit" class="btn mt-4">Save changes</button>
-</form>
-</Preview>
-
-### Checkbox
-
-<Preview class="w-full max-w-md">
+<Preview class="w-full max-w-sm">
 <fieldset class="fieldset">
-  <legend>Show these items on the desktop</legend>
-  <p>Select the items you want to show on the desktop.</p>
-  <div class="flex flex-col gap-3">
+  <legend>Address Information</legend>
+  <p>We need your address to deliver your order.</p>
+  <div role="group" aria-label="Address fields">
     <div role="group" class="field">
-      <label class="gap-3">
-        <input type="checkbox" />
-        Hard disks
-      </label>
+      <label for="street">Street Address</label>
+      <input id="street" type="text" placeholder="123 Main St" />
     </div>
-    <div role="group" class="field">
-      <label class="gap-3">
-        <input type="checkbox" />
-        External disks
-      </label>
+    <div class="grid grid-cols-2 gap-4">
+      <div role="group" class="field">
+        <label for="city">City</label>
+        <input id="city" type="text" placeholder="New York" />
+      </div>
+      <div role="group" class="field">
+        <label for="zip">Postal Code</label>
+        <input id="zip" type="text" placeholder="90502" />
+      </div>
     </div>
-    <div role="group" class="field">
-      <label class="gap-3">
-        <input type="checkbox" />
-        CDs, DVDs and iPods
-      </label>
-    </div>
-    <div role="group" class="field">
-      <label class="gap-3">
-        <input type="checkbox" />
-        Connected servers
-      </label>
-    </div>
-  </div>
-  <hr role="separator" />
-  <div role="group" class="field" data-orientation="horizontal"> 
-    <input id="sync-desktop-documents" type="checkbox" checked class="input self-start" />
-    <section>
-      <label for="sync-desktop-documents">Sync Desktop & Documents folders</label>
-      <p>Your Desktop & Documents folders are being synced with iCloud Drive. You can access them from other devices.</p>
-    </section>
   </div>
 </fieldset>
 </Preview>
 
-### Radio Group
+### Checkbox
 
-<Preview class="w-full max-w-md">
+<Preview class="w-full max-w-xs">
+<div role="group" aria-label="Finder preferences" class="fieldset">
+  <fieldset class="fieldset">
+    <legend data-variant="label">Show these items on the desktop</legend>
+    <p>Select the items you want to show on the desktop.</p>
+    <div role="group" aria-label="Desktop items">
+      <div role="group" class="field" data-orientation="horizontal">
+        <input id="finder-hard-disks" type="checkbox" />
+        <label for="finder-hard-disks" class="font-normal">Hard disks</label>
+      </div>
+      <div role="group" class="field" data-orientation="horizontal">
+        <input id="finder-external-disks" type="checkbox" />
+        <label for="finder-external-disks" class="font-normal">External disks</label>
+      </div>
+      <div role="group" class="field" data-orientation="horizontal">
+        <input id="finder-cds" type="checkbox" />
+        <label for="finder-cds" class="font-normal">CDs, DVDs, and iPods</label>
+      </div>
+      <div role="group" class="field" data-orientation="horizontal">
+        <input id="finder-connected-servers" type="checkbox" />
+        <label for="finder-connected-servers" class="font-normal">Connected servers</label>
+      </div>
+    </div>
+  </fieldset>
+  <div class="field-separator">
+    <hr role="separator" />
+  </div>
+  <div role="group" class="field" data-orientation="horizontal">
+    <input id="sync-folders" type="checkbox" checked />
+    <section>
+      <label for="sync-folders">Sync Desktop & Documents folders</label>
+      <p>Your Desktop & Documents folders are being synced with iCloud Drive. You can access them from other devices.</p>
+    </section>
+  </div>
+</div>
+</Preview>
+
+### Radio
+
+<Preview class="w-full max-w-xs">
 <fieldset class="fieldset">
-  <legend>Subscription plan</legend>
+  <legend data-variant="label">Subscription Plan</legend>
   <p>Yearly and lifetime plans offer significant savings.</p>
-  <div role="radiogroup" class="grid gap-3">
-    <div role="group" class="field">
-      <label class="gap-3">
-        <input type="radio" name="subscription-plan" checked />
-        Monthly ($9.99/month)
-      </label>
+  <div role="radiogroup" aria-label="Subscription plan">
+    <div role="group" class="field" data-orientation="horizontal">
+      <input id="plan-monthly" type="radio" name="plan" value="monthly" checked />
+      <label for="plan-monthly" class="font-normal">Monthly ($9.99/month)</label>
     </div>
-    <div role="group" class="field">
-      <label class="gap-3">
-        <input type="radio" name="subscription-plan" />
-        Yearly ($99.99/year)
-      </label>
+    <div role="group" class="field" data-orientation="horizontal">
+      <input id="plan-yearly" type="radio" name="plan" value="yearly" />
+      <label for="plan-yearly" class="font-normal">Yearly ($99.99/year)</label>
     </div>
-    <div role="group" class="field">
-      <label class="gap-3">
-        <input type="radio" name="subscription-plan" />
-        Lifetime ($299.99)
-      </label>
+    <div role="group" class="field" data-orientation="horizontal">
+      <input id="plan-lifetime" type="radio" name="plan" value="lifetime" />
+      <label for="plan-lifetime" class="font-normal">Lifetime ($299.99)</label>
     </div>
   </div>
 </fieldset>
@@ -307,9 +294,7 @@ Group related fields with `<fieldset class="fieldset">` and `<legend>`.
 
 ### Switch
 
-Set `data-orientation="horizontal"` on `.field` to align labels and controls side-by-side.
-
-<Preview class="w-full max-w-md">
+<Preview class="w-full max-w-sm">
 <div role="group" class="field" data-orientation="horizontal">
   <section>
     <label for="multi-factor-authentication">Multi-factor authentication</label>
@@ -321,26 +306,30 @@ Set `data-orientation="horizontal"` on `.field` to align labels and controls sid
 
 ### Choice Card
 
-<Preview class="w-full max-w-md">
+Wrap a `.field` inside a `<label>` to create selectable field cards. This works with radio, checkbox, and switch controls.
+
+<Preview class="w-full max-w-xs">
 <fieldset class="fieldset">
-  <legend class="text-sm">Compute Environment</legend>
+  <legend data-variant="label">Compute Environment</legend>
   <p>Select the compute environment for your cluster.</p>
-  <div role="group" class="field">
-    <label class="flex gap-3 border rounded-md p-4 has-[:checked]:border-primary has-[:checked]:bg-primary/5 dark:has-[:checked]:bg-primary/10">
-      <section>
-        <h3>Kubernetes</h3>
-        <p>Run GPU workloads on a K8s configured cluster.</p>
-      </section>
-      <input id="choice-card" type="radio" name="choice-card" class="self-start" checked />
+  <div role="radiogroup" aria-label="Compute environment">
+    <label for="compute-kubernetes">
+      <div role="group" class="field" data-orientation="horizontal">
+        <section>
+          <h3>Kubernetes</h3>
+          <p>Run GPU workloads on a K8s cluster.</p>
+        </section>
+        <input id="compute-kubernetes" type="radio" name="compute" value="kubernetes" checked />
+      </div>
     </label>
-  </div>
-  <div role="group" class="field">
-    <label class="flex gap-3 border rounded-md p-4 has-[:checked]:border-primary has-[:checked]:bg-primary/5 dark:has-[:checked]:bg-primary/10">
-      <section>
-        <h3>Virtual Machine</h3>
-        <p>Access a VM configured cluster to run GPU workloads.</p>
-      </section>
-      <input id="choice-card" type="radio" name="choice-card" class="self-start" />
+    <label for="compute-vm">
+      <div role="group" class="field" data-orientation="horizontal">
+        <section>
+          <h3>Virtual Machine</h3>
+          <p>Access a cluster to run GPU workloads.</p>
+        </section>
+        <input id="compute-vm" type="radio" name="compute" value="vm" />
+      </div>
     </label>
   </div>
 </fieldset>
@@ -348,70 +337,91 @@ Set `data-orientation="horizontal"` on `.field` to align labels and controls sid
 
 ### Field Group
 
-<Preview class="w-full max-w-md">
-<fieldset class="fieldset">
-  <legend>Account</legend>
-  <p>Use a field group to stack related fields with consistent spacing.</p>
-  <div role="group" aria-label="Field group">
-    <div role="group" class="field">
-      <label for="field-group-name">Name</label>
-      <input id="field-group-name" type="text" placeholder="Evil Rabbit" />
+Stack fields inside a group and use `.field-separator` to divide sections.
+
+<Preview class="w-full max-w-xs">
+<div role="group" aria-label="Notification preferences" class="fieldset">
+  <fieldset class="fieldset">
+    <legend data-variant="label">Responses</legend>
+    <p>Get notified when ChatGPT responds to requests that take time, like research or image generation.</p>
+    <div role="group" aria-label="Response notifications">
+      <div role="group" class="field" data-orientation="horizontal" data-disabled="true">
+        <input id="push-responses" type="checkbox" checked disabled />
+        <label for="push-responses" class="font-normal">Push notifications</label>
+      </div>
     </div>
-    <div class="field-separator">
-      <hr role="separator" />
-      <span>Optional</span>
-    </div>
-    <div role="group" class="field">
-      <label for="field-group-bio">Bio</label>
-      <textarea id="field-group-bio" rows="3" placeholder="Tell us about yourself"></textarea>
-    </div>
+  </fieldset>
+  <div class="field-separator">
+    <hr role="separator" />
   </div>
-</fieldset>
+  <fieldset class="fieldset">
+    <legend data-variant="label">Tasks</legend>
+    <p>Get notified when tasks you've created have updates. <a href="#">Manage tasks</a></p>
+    <div role="group" aria-label="Task notifications">
+      <div role="group" class="field" data-orientation="horizontal">
+        <input id="push-tasks" type="checkbox" />
+        <label for="push-tasks" class="font-normal">Push notifications</label>
+      </div>
+      <div role="group" class="field" data-orientation="horizontal">
+        <input id="email-tasks" type="checkbox" />
+        <label for="email-tasks" class="font-normal">Email notifications</label>
+      </div>
+    </div>
+  </fieldset>
+</div>
 </Preview>
 
 ### Responsive Layout
 
-For responsive layouts, use standard Tailwind responsive classes directly on `.field`. This example stacks vertically on mobile and switches to horizontal at the `md` breakpoint.
+Use `data-orientation="responsive"` to stack by default and switch to horizontal in wider containers.
 
-<Preview class="w-full max-w-3xl">
-<fieldset class="fieldset">
-  <legend>Profile</legend>
-  <p>Keep your profile details up to date.</p>
-  <hr role="separator" />  
-  <div class="flex flex-col gap-7">
-    <div role="group" class="field flex-col md:flex-row md:items-center">
-      <section class="md:flex-auto">
-        <label for="profile-name">Name</label>
-        <p id="profile-name-desc">Provide your full name for identification.</p>
-      </section>
-      <input id="profile-name" type="text" placeholder="Evil Rabbit" aria-describedby="profile-name-desc" class="md:w-auto md:min-w-80" />
+<Preview class="w-full max-w-4xl">
+<form>
+  <fieldset class="fieldset">
+    <legend>Profile</legend>
+    <p>Fill in your profile information.</p>
+    <div class="field-separator">
+      <hr role="separator" />
     </div>
-    <hr role="separator" />
-    <div role="group" class="field flex-col md:flex-row md:items-start">
-      <section class="md:flex-auto">
-        <label for="profile-bio">Message</label>
-        <p id="profile-bio-desc">You can write your message here. Keep it short, preferably under 100 characters.</p>
-      </section>
-      <textarea id="profile-bio" rows="3" placeholder="Hello, world!" aria-describedby="profile-bio-desc" class="md:w-auto md:min-w-80"></textarea>
+    <div role="group" aria-label="Profile fields">
+      <div role="group" class="field" data-orientation="responsive">
+        <section>
+          <label for="responsive-name">Name</label>
+          <p id="responsive-name-description">Provide your full name for identification</p>
+        </section>
+        <input id="responsive-name" placeholder="Evil Rabbit" aria-describedby="responsive-name-description" required />
+      </div>
+      <div class="field-separator">
+        <hr role="separator" />
+      </div>
+      <div role="group" class="field" data-orientation="responsive">
+        <section>
+          <label for="responsive-message">Message</label>
+          <p id="responsive-message-description">You can write your message here. Keep it short, preferably under 100 characters.</p>
+        </section>
+        <textarea id="responsive-message" placeholder="Hello, world!" rows="4" aria-describedby="responsive-message-description" required class="min-h-[100px] resize-none sm:min-w-[300px]"></textarea>
+      </div>
+      <div class="field-separator">
+        <hr role="separator" />
+      </div>
+      <div role="group" class="field" data-orientation="responsive">
+        <button type="submit" class="btn">Submit</button>
+        <button type="button" class="btn" data-variant="outline">Cancel</button>
+      </div>
     </div>
-    <hr role="separator" />
-    <div role="group" class="field flex-col md:flex-row md:items-center">
-      <button type="submit" class="btn md:w-auto">Submit</button>
-      <button type="button" class="btn-outline md:w-auto">Cancel</button>
-    </div>
-  </div>
-</fieldset>
+  </fieldset>
+</form>
 </Preview>
 
 ### RTL
 
-Fields support right-to-left layouts through native form direction and logical spacing. Add `dir="rtl"` to the field, fieldset, or an ancestor.
+Add `dir="rtl"` to the field, fieldset, or an ancestor.
 
-<Preview class="w-full max-w-md">
+<Preview class="w-full max-w-xs">
 <fieldset class="fieldset" dir="rtl">
   <legend>الملف الشخصي</legend>
   <p>تظهر هذه المعلومات في حسابك.</p>
-  <div role="group" aria-label="Field group">
+  <div role="group" aria-label="حقول الملف الشخصي">
     <div role="group" class="field">
       <label for="field-rtl-name">الاسم الكامل</label>
       <input id="field-rtl-name" type="text" placeholder="أرنب شرير" />
@@ -419,4 +429,24 @@ Fields support right-to-left layouts through native form direction and logical s
     </div>
   </div>
 </fieldset>
+</Preview>
+
+## Validation and Errors
+
+Add `data-invalid` to `.field` and `aria-invalid="true"` to the invalid control.
+
+```html
+<div role="group" class="field" data-invalid>
+  <label for="email">Email</label>
+  <input id="email" type="email" aria-invalid="true" aria-describedby="email-error" />
+  <p id="email-error" role="alert">Enter a valid email address.</p>
+</div>
+```
+
+<Preview class="w-full max-w-xs">
+<div role="group" class="field" data-invalid>
+  <label for="invalid-email">Email</label>
+  <input id="invalid-email" type="email" value="wrong-email" aria-invalid="true" aria-describedby="invalid-email-error" />
+  <p id="invalid-email-error" role="alert">Enter a valid email address.</p>
+</div>
 </Preview>

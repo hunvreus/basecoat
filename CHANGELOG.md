@@ -2,11 +2,20 @@
 
 ## Unreleased
 
+## [1.0.0-beta.3] - 2026-06-20
+
+### Breaking Changes
+
+- Changed Button, Badge, Card, Avatar, and Alert visual APIs to use a canonical root class plus data attributes instead of composed visual classes. For example, use `class="btn" data-variant="outline"`, `class="badge" data-variant="secondary"`, `class="card" data-size="sm"`, `class="avatar" data-size="lg"`, and `class="alert" data-variant="destructive"`. Legacy aliases are available only through the optional compatibility stylesheet.
+- Changed icon-only Button sizing from `data-icon="only"` plus optional `data-size` to upstream-aligned `data-size="icon|icon-xs|icon-sm|icon-lg"`.
+
 ### Added
 
+- Added an opt-in `basecoat-css/compat` stylesheet for pre-1.0 default Basecoat class aliases.
 - Added an optional Chart.js helper with `window.basecoat.chart()`, chart CSS, generated tooltips, generated legends, and docs.
 - Added shared Alert action layout support for direct child `<footer>` action regions.
 - Added dedicated Avatar and Avatar Group component styles and docs.
+- Added dedicated Progress component styles and docs with label, controlled, and RTL examples.
 
 ## [1.0.0-beta.2] - 2026-06-14
 

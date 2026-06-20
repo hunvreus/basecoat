@@ -1,15 +1,17 @@
 /* Input Group */
 @layer components {
   .input-group {
-    @apply relative isolate flex w-full min-w-0 items-center overflow-hidden outline-none;
+    @apply relative isolate flex w-full min-w-0 items-center outline-none;
 
-    &[data-orientation='vertical'] {
+    &[data-orientation='vertical'],
+    &:has(> [data-align='block-start']),
+    &:has(> [data-align='block-end']) {
       @apply h-auto flex-col items-stretch;
     }
   }
 
   .input-group > :is(input, textarea, select, [data-control]) {
-    @apply text-foreground placeholder:text-muted-foreground block min-w-0 flex-1 appearance-none rounded-none border-0 bg-transparent shadow-none outline-none ring-0 focus-visible:ring-0 aria-invalid:ring-0 disabled:bg-transparent;
+    @apply text-foreground placeholder:text-muted-foreground block min-w-0 flex-1 appearance-none rounded-none border-0 bg-transparent shadow-none outline-none ring-0 focus-visible:ring-0 aria-invalid:ring-0;
   }
 
   .input-group > :is(input, select, [data-control]) {
@@ -20,8 +22,18 @@
     @apply w-full;
   }
 
-  .input-group[data-orientation='vertical'] > :is(input, select, [data-control]) {
+  .input-group:is([data-orientation='vertical'], :has(> [data-align='block-start']), :has(> [data-align='block-end'])) > :is(input, select, [data-control]) {
     @apply h-auto flex-none;
+  }
+
+  .input-group[data-orientation='vertical']:has(> footer[data-align='end']) > :is(input, select, [data-control]),
+  .input-group:has(> [data-align='block-end']) > :is(input, select, [data-control]) {
+    @apply pt-3;
+  }
+
+  .input-group[data-orientation='vertical']:has(> header[data-align='start']) > :is(input, select, [data-control]),
+  .input-group:has(> [data-align='block-start']) > :is(input, select, [data-control]) {
+    @apply pb-3;
   }
 
   .input-group > textarea {
@@ -40,11 +52,23 @@
     @apply pointer-events-none;
   }
 
-  .input-group > [data-align='start'] {
+  .input-group > :is([data-align='start'], [data-align='inline-start'], [data-align='block-start']) {
     @apply order-first;
   }
 
-  .input-group > [data-align='end'] {
+  .input-group > :is([data-align='end'], [data-align='inline-end'], [data-align='block-end']) {
     @apply order-last;
+  }
+
+  .input-group > :is([data-align='block-start'], [data-align='block-end']) {
+    @apply w-full justify-start;
+  }
+
+  .input-group > button:is([data-align='start'], [data-align='inline-start']) {
+    @apply ms-1;
+  }
+
+  .input-group > button:is([data-align='end'], [data-align='inline-end']) {
+    @apply me-1;
   }
 }

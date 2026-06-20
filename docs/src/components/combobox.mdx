@@ -27,8 +27,8 @@
   <Step title="Include the JavaScript files">
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.2/dist/js/basecoat.min.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.2/dist/js/combobox.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.3/dist/js/basecoat.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.3/dist/js/combobox.min.js" defer></script>
 ```
 
   </Step>
@@ -59,41 +59,41 @@ Combobox is input-first. The visible input filters the list; the hidden input st
 ### HTML structure
 
 <dl>
-  <dt><code class="highlight language-html">&lt;div class="combobox"&gt;</code></dt>
+  <dt><code>&lt;div class="combobox"&gt;</code></dt>
   <dd>
     Root element. Add <code>data-auto-highlight="true"</code> to highlight the first match while filtering. Add <code>data-format="object"</code> to serialize selected values as <code>&#123; value, label &#125;</code> objects in the hidden input. Add <code>data-filter="manual"</code> when your app owns filtering, such as remote autocomplete or a local Lunr index.
     <dl>
-      <dt><code class="highlight language-html">&lt;input type="text" role="combobox"&gt;</code></dt>
+      <dt><code>&lt;input type="text" role="combobox"&gt;</code></dt>
       <dd>The editable control. It should include <code>aria-expanded</code>, <code>aria-controls</code>, and <code>aria-autocomplete="list"</code>.</dd>
-      <dt><code class="highlight language-html">&lt;div class="combobox-chips"&gt;</code> <span class="badge-secondary">Multiple only</span></dt>
+      <dt><code>&lt;div class="combobox-chips"&gt;</code> <span class="badge" data-variant="secondary">Multiple only</span></dt>
       <dd>
         Wraps selected chips and the editable input in multiple mode.
         <dl>
-          <dt><code class="highlight language-html">&lt;input type="text" role="combobox"&gt;</code></dt>
+          <dt><code>&lt;input type="text" role="combobox"&gt;</code></dt>
           <dd>The editable control in multiple mode.</dd>
         </dl>
       </dd>
-      <dt><code class="highlight language-html">&lt;div data-popover&gt;</code></dt>
+      <dt><code>&lt;div data-popover&gt;</code></dt>
       <dd>
         The suggestions popup. Use <code>data-side</code> and <code>data-align</code> like Popover.
         <dl>
-          <dt><code class="highlight language-html">&lt;div role="listbox"&gt;</code></dt>
+          <dt><code>&lt;div role="listbox"&gt;</code></dt>
           <dd>
             The suggestions list. Add <code>aria-multiselectable="true"</code> in multiple mode and <code>data-empty</code> for the empty message.
             <dl>
-              <dt><code class="highlight language-html">&lt;div role="option" data-value="..."&gt;</code></dt>
+              <dt><code>&lt;div role="option" data-value="..."&gt;</code></dt>
               <dd>Selectable option. Options can contain custom HTML; use <code>data-label</code> when the visible input should use different text than the rendered content.</dd>
-              <dt><code class="highlight language-html">&lt;div role="group"&gt;</code> <span class="badge-secondary">Optional</span></dt>
+              <dt><code>&lt;div role="group"&gt;</code> <span class="badge" data-variant="secondary">Optional</span></dt>
               <dd>Option group. Use <code>aria-labelledby</code> to connect it to its heading.</dd>
-              <dt><code class="highlight language-html">&lt;div role="heading"&gt;</code> <span class="badge-secondary">Optional</span></dt>
+              <dt><code>&lt;div role="heading"&gt;</code> <span class="badge" data-variant="secondary">Optional</span></dt>
               <dd>Group heading.</dd>
-              <dt><code class="highlight language-html">&lt;hr role="separator"&gt;</code> <span class="badge-secondary">Optional</span></dt>
+              <dt><code>&lt;hr role="separator"&gt;</code> <span class="badge" data-variant="secondary">Optional</span></dt>
               <dd>Separator between groups or options.</dd>
             </dl>
           </dd>
         </dl>
       </dd>
-      <dt><code class="highlight language-html">&lt;input type="hidden"&gt;</code></dt>
+      <dt><code>&lt;input type="hidden"&gt;</code></dt>
       <dd>Submitted value. Single mode stores a string; multiple mode stores a JSON array. With <code>data-format="object"</code>, single mode stores a JSON object and multiple mode stores a JSON array of objects.</dd>
     </dl>
   </dd>
@@ -207,7 +207,7 @@ Combobox is input-first. The visible input filters the list; the hidden input st
     </div>
     <input type="hidden" value="" />
   </div>
-  <p class="field-error" role="alert">Select a framework to continue.</p>
+  <p role="alert">Select a framework to continue.</p>
 </div>
 </Preview>
 

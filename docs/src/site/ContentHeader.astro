@@ -1,4 +1,5 @@
 ---
+import vegaUrl from "../assets/styles/style-vega.css?url";
 import novaUrl from "../assets/styles/style-nova.css?url";
 import maiaUrl from "../assets/styles/style-maia.css?url";
 import lyraUrl from "../assets/styles/style-lyra.css?url";
@@ -8,7 +9,7 @@ import seraUrl from "../assets/styles/style-sera.css?url";
 import rheaUrl from "../assets/styles/style-rhea.css?url";
 
 const styleUrls = {
-  vega: null,
+  vega: vegaUrl,
   nova: novaUrl,
   maia: maiaUrl,
   lyra: lyraUrl,
@@ -36,29 +37,63 @@ const styleUrls = {
   (() => {
     const styleSelect = document.getElementById("style-variant-select");
     const styleLinkId = "docs-style-variant";
+    const pendingStyleLinkId = "docs-style-variant-pending";
+    const styleGateId = "docs-style-gate";
 
     const getStyleLink = () => document.getElementById(styleLinkId);
+    const clearStylePending = () => {
+      document.documentElement.removeAttribute("data-style-pending");
+      document.getElementById(styleGateId)?.remove();
+    };
+    const getStyleHref = (style) => {
+      const href = styleUrls[style];
+      return href?.startsWith("/docs/src/assets/styles/") ? `${href}?direct` : href;
+    };
 
     const applyStyle = (style) => {
       const nextStyle = Object.prototype.hasOwnProperty.call(styleUrls, style) ? style : "vega";
-      const href = styleUrls[nextStyle];
-      let link = getStyleLink();
-
-      document.documentElement.dataset.styleVariant = nextStyle;
+      const href = getStyleHref(nextStyle);
+      const link = getStyleLink();
 
       if (!href) {
         link?.remove();
+        document.getElementById(pendingStyleLinkId)?.remove();
+        clearStylePending();
         return;
       }
 
-      if (!link) {
-        link = document.createElement("link");
-        link.id = styleLinkId;
-        link.rel = "stylesheet";
-        document.head.appendChild(link);
+      const sameHref = link?.getAttribute("href") === href;
+      if (sameHref || link?.sheet) {
+        clearStylePending();
       }
+      if (sameHref) return;
 
-      if (link.href !== href) link.href = href;
+      document.getElementById(pendingStyleLinkId)?.remove();
+
+      const pendingLink = document.createElement("link");
+      pendingLink.id = pendingStyleLinkId;
+      pendingLink.rel = "stylesheet";
+      pendingLink.addEventListener(
+        "load",
+        () => {
+          link?.remove();
+          pendingLink.id = styleLinkId;
+          document.documentElement.dataset.styleVariant = nextStyle;
+          clearStylePending();
+          document.dispatchEvent(new CustomEvent("basecoat:stylechange", { detail: { style: nextStyle } }));
+        },
+        { once: true },
+      );
+      pendingLink.addEventListener(
+        "error",
+        () => {
+          pendingLink.remove();
+          clearStylePending();
+        },
+        { once: true },
+      );
+      pendingLink.href = href;
+      document.head.appendChild(pendingLink);
     };
 
     const getStoredStyle = () => {

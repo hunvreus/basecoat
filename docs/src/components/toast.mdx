@@ -5,7 +5,7 @@
 
 <Preview class="max-w-md">
 <button
-  class="btn-outline"
+  class="btn" data-variant="outline"
   hx-trigger="click"
   hx-select="unset"
   hx-get="/fragments/toast/success"
@@ -18,7 +18,7 @@
 
 <Preview class="max-w-md">
 <button
-  class="btn-outline"
+  class="btn" data-variant="outline"
   onclick="document.getElementById('toaster').toast({
     category: 'success',
     title: 'Success',
@@ -42,8 +42,8 @@
   <Step title="Include the JavaScript files">
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.2/dist/js/basecoat.min.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.2/dist/js/toast.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.3/dist/js/basecoat.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.3/dist/js/toast.min.js" defer></script>
 ```
 
   </Step>
@@ -81,7 +81,7 @@ Append server-rendered toast markup to the toaster, or create one from JavaScrip
 
 ```html
 <button
-  class="btn-outline"
+  class="btn" data-variant="outline"
   onclick="document.getElementById('toaster').toast({
     category: 'success',
     title: 'Success',
@@ -100,29 +100,29 @@ Append server-rendered toast markup to the toaster, or create one from JavaScrip
 ### HTML structure
 
 <dl>
-  <dt><code class="highlight language-html">&lt;div id="toaster" class="toaster"&gt;</code></dt>
+  <dt><code>&lt;div id="toaster" class="toaster"&gt;</code></dt>
   <dd>Toast container. Optional <code>data-align</code> values are <code>start</code>, <code>center</code>, and <code>end</code>.</dd>
-  <dt><code class="highlight language-html">&lt;div class="toast"&gt;</code></dt>
+  <dt><code>&lt;div class="toast"&gt;</code></dt>
   <dd>
     Toast item. Use <code>data-category="success|info|warning|error"</code> for category styling and <code>data-duration</code> to override the timeout in milliseconds. Use <code>data-duration="-1"</code> to keep it open.
     <dl>
-      <dt><code class="highlight language-html">&lt;div class="toast-content"&gt;</code></dt>
+      <dt><code>&lt;div class="toast-content"&gt;</code></dt>
       <dd>
         Content wrapper.
         <dl>
-          <dt><code class="highlight language-html">&lt;svg aria-hidden="true"&gt;</code> <span class="badge-secondary">Optional</span></dt>
+          <dt><code>&lt;svg aria-hidden="true"&gt;</code> <span class="badge" data-variant="secondary">Optional</span></dt>
           <dd>Icon.</dd>
-          <dt><code class="highlight language-html">&lt;section&gt;</code></dt>
+          <dt><code>&lt;section&gt;</code></dt>
           <dd>
             Message region.
             <dl>
-              <dt><code class="highlight language-html">&lt;h2&gt;</code></dt>
+              <dt><code>&lt;h2&gt;</code></dt>
               <dd>Title.</dd>
-              <dt><code class="highlight language-html">&lt;p&gt;</code> <span class="badge-secondary">Optional</span></dt>
+              <dt><code>&lt;p&gt;</code> <span class="badge" data-variant="secondary">Optional</span></dt>
               <dd>Description.</dd>
             </dl>
           </dd>
-          <dt><code class="highlight language-html">&lt;footer&gt;</code> <span class="badge-secondary">Optional</span></dt>
+          <dt><code>&lt;footer&gt;</code> <span class="badge" data-variant="secondary">Optional</span></dt>
           <dd>Action buttons or links. Clicking a footer button or link closes the toast.</dd>
         </dl>
       </dd>
@@ -134,23 +134,23 @@ Append server-rendered toast markup to the toaster, or create one from JavaScrip
 
 | API | Type | Description |
 | --- | --- | --- |
-| `toaster.toast(config)` | Method | Creates a toast from a config object and returns the inserted `.toast` element. |
+| `toaster.toast(config)` | Method | Creates a toast from a config object and returns the inserted `.toast` element. [See "Config object" below](#config-object). |
 | `toaster.closeAll()` | Method | Closes every toast inside the toaster. |
 | `toast.close()` | Method | Closes one initialized toast element. |
 
-### Toast config object
+### Config object
 
 <dl>
-  <dt><code>duration</code> <span class="badge-secondary">Optional</span></dt>
+  <dt><code>duration</code> <span class="badge" data-variant="secondary">Optional</span></dt>
   <dd>Timeout in milliseconds. Defaults to <code>3000</code>, or <code>5000</code> for error toasts. Use <code>-1</code> to keep it open.</dd>
-  <dt><code>category</code> <span class="badge-secondary">Optional</span></dt>
+  <dt><code>category</code> <span class="badge" data-variant="secondary">Optional</span></dt>
   <dd>Category of the toast, either <code>success</code>, <code>info</code>, <code>warning</code>, or <code>error</code>.</dd>
   <dt><code>title</code></dt>
   <dd>The title of the toast.</dd>
-  <dt><code>description</code> <span class="badge-secondary">Optional</span></dt>
+  <dt><code>description</code> <span class="badge" data-variant="secondary">Optional</span></dt>
   <dd>The description of the toast.</dd>
-  <dt><code>action</code> <span class="badge-secondary">Optional</span></dt>
+  <dt><code>action</code> <span class="badge" data-variant="secondary">Optional</span></dt>
   <dd>Primary action. Supports <code>label</code> with either <code>href</code> or <code>onclick</code>.</dd>
-  <dt><code>cancel</code> <span class="badge-secondary">Optional</span></dt>
+  <dt><code>cancel</code> <span class="badge" data-variant="secondary">Optional</span></dt>
   <dd>Secondary action. Supports <code>label</code> and optional <code>onclick</code>.</dd>
 </dl>

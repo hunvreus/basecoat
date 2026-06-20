@@ -8,53 +8,53 @@
 
 ```html
 <button type="button" class="btn">Primary</button>
-<button type="button" class="btn-outline">Outline</button>
-<button type="button" class="btn-sm-secondary">Small secondary</button>
-<button type="button" class="btn-icon-outline" aria-label="Settings">
+<button type="button" class="btn" data-variant="outline">Outline</button>
+<button type="button" class="btn" data-variant="secondary" data-size="sm">Small secondary</button>
+<button type="button" class="btn" data-variant="outline" data-size="icon" aria-label="Settings">
   <svg class="lucide lucide-settings" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915" /><circle cx="12" cy="12" r="3" /></svg>
 </button>
 ```
 
-Use exactly one `btn` class on a `<button>` or `<a>`. The class name combines size, icon shape, and variant:
+Add `class="btn"` to a `<button>` or `<a>`. Add `data-variant` and `data-size` when needed. Add `data-icon="inline-start"` or `data-icon="inline-end"` to inline icons when a text button needs icon-aware spacing.
 
-| Pattern | Example | Use for |
-| --- | --- | --- |
-| `btn` | `btn` | Default-size primary button |
-| `btn-{variant}` | `btn-outline` | Default-size button with a visual variant |
-| `btn-{size}` | `btn-sm` | Sized primary button |
-| `btn-{size}-{variant}` | `btn-sm-outline` | Sized button with a visual variant |
-| `btn-icon` | `btn-icon` | Default-size icon-only primary button |
-| `btn-icon-{variant}` | `btn-icon-outline` | Default-size icon-only button with a visual variant |
-| `btn-{size}-icon` | `btn-sm-icon` | Sized icon-only primary button |
-| `btn-{size}-icon-{variant}` | `btn-sm-icon-outline` | Sized icon-only button with a visual variant |
+#### HTML structure
 
-Do not stack button classes like `btn-sm btn-outline`. Use the composed class, such as `btn-sm-outline`.
+<dl>
+  <dt><code>&lt;button class="btn"&gt;</code></dt>
+  <dd>Button root. Use a native <code>&lt;button&gt;</code> for actions and <code>&lt;a&gt;</code> for navigation.</dd>
+  <dt><code>data-variant="primary|secondary|outline|ghost|link|destructive"</code> <span class="badge" data-variant="secondary">Optional</span></dt>
+  <dd>Visual variant. Omit it for the primary variant.</dd>
+  <dt><code>data-size="xs|sm|default|lg|icon|icon-xs|icon-sm|icon-lg"</code> <span class="badge" data-variant="secondary">Optional</span></dt>
+  <dd>Button size. Omit it for the default size.</dd>
+</dl>
 
 ### Variants
 
-| Variant | Classes |
+| Variant | Markup |
 | --- | --- |
-| Primary | `btn`, `btn-primary` |
-| Secondary | `btn-secondary` |
-| Outline | `btn-outline` |
-| Ghost | `btn-ghost` |
-| Link | `btn-link` |
-| Destructive | `btn-destructive` |
-
-Every variant can be combined with a size or icon shape. For example: `btn-xs-secondary`, `btn-lg-destructive`, `btn-icon-ghost`, `btn-sm-icon-outline`.
+| Primary | `<button class="btn">` |
+| Secondary | `<button class="btn" data-variant="secondary">` |
+| Outline | `<button class="btn" data-variant="outline">` |
+| Ghost | `<button class="btn" data-variant="ghost">` |
+| Link | `<button class="btn" data-variant="link">` |
+| Destructive | `<button class="btn" data-variant="destructive">` |
 
 ### Sizes
 
-| Size | Text button | Icon-only button |
-| --- | --- | --- |
-| Extra small | `btn-xs` | `btn-xs-icon` |
-| Small | `btn-sm` | `btn-sm-icon` |
-| Default | `btn` | `btn-icon` |
-| Large | `btn-lg` | `btn-lg-icon` |
+| Size | Markup |
+| --- | --- |
+| Extra small | `<button class="btn" data-size="xs">` |
+| Small | `<button class="btn" data-size="sm">` |
+| Default | `<button class="btn">` |
+| Large | `<button class="btn" data-size="lg">` |
+| Icon extra small | `<button class="btn" data-size="icon-xs">` |
+| Icon small | `<button class="btn" data-size="icon-sm">` |
+| Icon | `<button class="btn" data-size="icon">` |
+| Icon large | `<button class="btn" data-size="icon-lg">` |
 
-Use icon-only classes only when the button has no visible text. Icon-only buttons must have an accessible name, usually with `aria-label`.
+Use `data-size="icon"` or one of the icon size variants for square buttons. Icon-only buttons need an accessible name, usually with `aria-label`.
 
-Mark inline icons with `data-icon="inline-start"` or `data-icon="inline-end"` when a text button should use icon-aware spacing.
+Use `data-icon="inline-start"` or `data-icon="inline-end"` on inline icons when a text button needs icon-aware spacing. Use icon size variants only for icon-only buttons.
 
 To group related buttons, use the [Button Group](/components/button-group/) component.
 
@@ -62,14 +62,14 @@ To group related buttons, use the [Button Group](/components/button-group/) comp
 
 ### Size
 
-Use size-specific classes to change the size of the button.
+Use `data-size` to change the size of the button.
 
 <Preview>
 <div class="flex flex-wrap items-center gap-2">
-  <button type="button" class="btn-xs">Extra Small</button>
-  <button type="button" class="btn-sm">Small</button>
+  <button type="button" class="btn" data-size="xs">Extra Small</button>
+  <button type="button" class="btn" data-size="sm">Small</button>
   <button type="button" class="btn">Default</button>
-  <button type="button" class="btn-lg">Large</button>
+  <button type="button" class="btn" data-size="lg">Large</button>
 </div>
 </Preview>
 
@@ -82,44 +82,44 @@ Use size-specific classes to change the size of the button.
 ### Outline
 
 <Preview>
-<button type="button" class="btn-outline">Outline</button>
+<button type="button" class="btn" data-variant="outline">Outline</button>
 </Preview>
 
 ### Secondary
 
 <Preview>
-<button type="button" class="btn-secondary">Secondary</button>
+<button type="button" class="btn" data-variant="secondary">Secondary</button>
 </Preview>
 
 ### Ghost
 
 <Preview>
-<button type="button" class="btn-ghost">Ghost</button>
+<button type="button" class="btn" data-variant="ghost">Ghost</button>
 </Preview>
 
 ### Destructive
 
 <Preview>
-<button type="button" class="btn-destructive">Destructive</button>
+<button type="button" class="btn" data-variant="destructive">Destructive</button>
 </Preview>
 
 ### Link
 
 <Preview>
-<button type="button" class="btn-link">Link</button>
+<button type="button" class="btn" data-variant="link">Link</button>
 </Preview>
 
 ### Icon
 
 <Preview>
-<button type="button" class="btn-icon-outline" aria-label="Open">
+<button type="button" class="btn" data-variant="outline" data-size="icon" aria-label="Open">
   <svg class="lucide lucide-chevron-right" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="m9 18 6-6-6-6" /></svg>
 </button>
 </Preview>
 
 ### With Icon
 
-Mark inline icons with `data-icon="inline-start"` or `data-icon="inline-end"` when the button should use icon-aware spacing.
+Use `data-icon="inline-start"` or `data-icon="inline-end"` on inline icons to match upstream icon-aware spacing.
 
 <Preview>
 <button type="button" class="btn">
@@ -144,12 +144,12 @@ Use standard Tailwind classes to override the button radius.
 <Preview>
 <div class="flex flex-wrap items-center gap-2">
   <button type="button" class="btn" disabled>
-    <svg class="animate-spin lucide lucide-loader" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M12 2v4" /><path d="m16.2 7.8 2.9-2.9" /><path d="M18 12h4" /><path d="m16.2 16.2 2.9 2.9" /><path d="M12 18v4" /><path d="m4.9 19.1 2.9-2.9" /><path d="M2 12h4" /><path d="m4.9 4.9 2.9 2.9" /></svg>
+    <svg data-icon="inline-start" class="animate-spin lucide lucide-loader" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M12 2v4" /><path d="m16.2 7.8 2.9-2.9" /><path d="M18 12h4" /><path d="m16.2 16.2 2.9 2.9" /><path d="M12 18v4" /><path d="m4.9 19.1 2.9-2.9" /><path d="M2 12h4" /><path d="m4.9 4.9 2.9 2.9" /></svg>
     Generating
   </button>
-  <button type="button" class="btn-outline">
+  <button type="button" class="btn" data-variant="outline">
     Downloading
-    <svg class="animate-spin lucide lucide-loader" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M12 2v4" /><path d="m16.2 7.8 2.9-2.9" /><path d="M18 12h4" /><path d="m16.2 16.2 2.9 2.9" /><path d="M12 18v4" /><path d="m4.9 19.1 2.9-2.9" /><path d="M2 12h4" /><path d="m4.9 4.9 2.9 2.9" /></svg>
+    <svg data-icon="inline-end" class="animate-spin lucide lucide-loader" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M12 2v4" /><path d="m16.2 7.8 2.9-2.9" /><path d="M18 12h4" /><path d="m16.2 16.2 2.9 2.9" /><path d="M12 18v4" /><path d="m4.9 19.1 2.9-2.9" /><path d="M2 12h4" /><path d="m4.9 4.9 2.9 2.9" /></svg>
   </button>
 </div>
 </Preview>
@@ -161,12 +161,12 @@ To group related buttons, use the [Button Group](/components/button-group/) comp
 <Preview>
 <div class="flex w-fit items-stretch gap-2">
   <div role="group" class="button-group">
-    <button type="button" class="btn-outline">Archive</button>
-    <button type="button" class="btn-outline">Report</button>
+    <button type="button" class="btn" data-variant="outline">Archive</button>
+    <button type="button" class="btn" data-variant="outline">Report</button>
   </div>
   <div role="group" class="button-group">
-    <button type="button" class="btn-outline">Snooze</button>
-    <button type="button" class="btn-icon-outline" aria-label="More options">
+    <button type="button" class="btn" data-variant="outline">Snooze</button>
+    <button type="button" class="btn" data-variant="outline" data-size="icon" aria-label="More options">
       <svg class="lucide lucide-ellipsis" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="1" /><circle cx="19" cy="12" r="1" /><circle cx="5" cy="12" r="1" /></svg>
     </button>
   </div>
@@ -179,13 +179,13 @@ Add `dir="rtl"` to the button or an ancestor. Flip directional icons explicitly.
 
 <Preview>
 <div dir="rtl" class="flex flex-wrap items-center gap-2">
-  <button type="button" class="btn-outline">زر</button>
-  <button type="button" class="btn-destructive">حذف</button>
-  <button type="button" class="btn-outline">
+  <button type="button" class="btn" data-variant="outline">زر</button>
+  <button type="button" class="btn" data-variant="destructive">حذف</button>
+  <button type="button" class="btn" data-variant="outline">
     إرسال
     <svg data-icon="inline-end" class="rtl:rotate-180 lucide lucide-arrow-right" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
   </button>
-  <button type="button" class="btn-secondary" disabled>
+  <button type="button" class="btn" data-variant="secondary" disabled>
     <svg class="animate-spin lucide lucide-loader" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M12 2v4" /><path d="m16.2 7.8 2.9-2.9" /><path d="M18 12h4" /><path d="m16.2 16.2 2.9 2.9" /><path d="M12 18v4" /><path d="m4.9 19.1 2.9-2.9" /><path d="M2 12h4" /><path d="m4.9 4.9 2.9 2.9" /></svg>
     جاري التحميل
   </button>

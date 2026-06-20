@@ -1,118 +1,181 @@
-
 # Installation
 
-## Install using the CDN
+Basecoat can be used from a CDN or installed with npm. Use the CDN for simple static pages and prototypes. Use npm when your project already has a Tailwind CSS build step.
 
-### Install all components
+## CDN
 
-Add the following to the `` of your HTML file. This loads the default CDN stylesheet and the JavaScript bundle for every JavaScript component:
+<Steps>
+  <Step title="Add the stylesheet">
 
-<Code lang="html">{`<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.2/dist/basecoat.cdn.min.css" />
-<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.2/dist/js/all.min.js" defer></script>`}</Code>
+Use the default bundled stylesheet, or choose one standalone style bundle.
 
-The default CDN stylesheet is the Basecoat backward-compatible default. To use a specific style, load the matching standalone stylesheet instead:
+```html
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.3/dist/basecoat.cdn.min.css" />
+```
 
-<Code lang="html">{`<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.2/dist/basecoat-sera.cdn.min.css" />`}</Code>
+```html
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.3/dist/basecoat-maia.cdn.min.css" />
+```
 
-### Install specific components
+  </Step>
+  <Step title="Add JavaScript when needed">
 
-The CDN style bundles are aggregated. If you want to cherry-pick CSS, use the package component files through npm or your own asset pipeline.
+Most components are CSS-only. Interactive components need JavaScript. Use the all-in-one bundle when file size is not a concern.
 
-For JavaScript, you can cherry-pick the components you need as instructed in each component page. Include `basecoat.min.js` once, then include the component script.
+```html
+<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.3/dist/js/all.min.js" defer></script>
+```
 
-<Code lang="html">{`<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.2/dist/basecoat.cdn.min.css" />
-<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.2/dist/js/basecoat.min.js" defer></script> <!-- Only needed once to register and initialize components -->
-<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.2/dist/js/dropdown-menu.min.js" defer></script>`}</Code>
+Or load the Basecoat runtime once, then only the component scripts you use.
 
-## Install using NPM
+```html
+<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.3/dist/js/basecoat.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.3/dist/js/dropdown-menu.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.3/dist/js/select.min.js" defer></script>
+```
 
-<div class="grid gap-8 mb-12">
-  <section>
-    <h3 class="mb-4 scroll-m-20 font-semibold tracking-tight" id="install-npm-tailwind"><a href="#install-npm-tailwind">Step 1: Add Tailwind CSS</a></h3>
-    Basecoat uses Tailwind CSS. You need to install it in your project.
+  </Step>
+  <Step title="Use the markup">
 
-[Follow the Tailwind CSS installation instructions to get started.](https://tailwindcss.com/docs/installation)
-  </section>
-  <section>
-    <h3 class="mb-4 scroll-m-20 font-semibold tracking-tight" id="install-npm-basecoat"><a href="#install-npm-basecoat">Step 2: Add Basecoat</a></h3>
-    Add Basecoat to your Tailwind CSS file.
-    
-    
-    
-    
-    
-    <CodeGroup defaultTab="npm">
+```html
+<button class="btn">Button</button>
+
+<div class="card">
+  <header>
+    <h3>Card title</h3>
+    <p>Card description.</p>
+  </header>
+  <section>Card content.</section>
+</div>
+```
+
+  </Step>
+</Steps>
+
+### CDN files
+
+| File | Description |
+| --- | --- |
+| `dist/basecoat.cdn.min.css` | Default standalone CDN stylesheet. |
+| `dist/basecoat-{style}.cdn.min.css` | Standalone CDN stylesheet for `vega`, `nova`, `maia`, `lyra`, `mira`, `luma`, `sera`, or `rhea`. |
+| `dist/basecoat-base.cdn.min.css` | Base tokens, utilities, and component structure without a style pack. |
+| `dist/basecoat-compat.cdn.min.css` | Optional pre-1.0 compatibility aliases. Load after Basecoat. |
+| `dist/js/all.min.js` | All JavaScript components. |
+| `dist/js/basecoat.min.js` | Runtime only. Load once before individual component scripts. |
+| `dist/js/{component}.min.js` | Individual JavaScript component file. |
+
+## NPM
+
+<Steps>
+  <Step title="Install Tailwind CSS">
+
+Basecoat is authored for Tailwind CSS. Install Tailwind first if your project does not already use it.
+
+[Follow the Tailwind CSS installation guide](https://tailwindcss.com/docs/installation).
+
+  </Step>
+  <Step title="Install Basecoat">
+
+<CodeGroup defaultTab="npm">
   <Code title="npm" lang="bash">{`npm install basecoat-css`}</Code>
   <Code title="pnpm" lang="bash">{`pnpm add basecoat-css`}</Code>
   <Code title="bun" lang="bash">{`bun add basecoat-css`}</Code>
   <Code title="yarn" lang="bash">{`yarn add basecoat-css`}</Code>
 </CodeGroup>
-    Alternatively, you can directly <a href="https://github.com/hunvreus/basecoat/blob/main/src/css/basecoat.css" target="_blank">copy the <code>basecoat.css</code> file</a> into your project.
-  </section>
-  <section>
-    <h3 class="mb-4 scroll-m-20 font-semibold tracking-tight" id="install-npm-import"><a href="#install-npm-import">Step 3: Import Basecoat</a></h3>
-    
-    <Code lang="css">{`@import "tailwindcss";
-@import "basecoat-css";`}</Code>
-    The default import is the Basecoat backward-compatible default. To use a specific style, import the standalone style bundle instead:
-    
-    <Code lang="css">{`@import "tailwindcss";
-@import "basecoat-css/sera";`}</Code>
-    You can also import lower-level bundles or individual component CSS files:
-    
-    <Code lang="css">{`@import "tailwindcss";
 
-/* Base tokens and global utilities only. */
-@import "basecoat-css/base";
+  </Step>
+  <Step title="Import CSS">
 
-/* All component structure without a style pack. */
-@import "basecoat-css/components";
+Import Tailwind, then import one Basecoat bundle.
 
-/* Individual component CSS. */
-@import "basecoat-css/components/button";
-@import "basecoat-css/components/select";
+```css
+@import "tailwindcss";
+@import "basecoat-css";
+```
 
-/* One standalone style pack. */
-@import "basecoat-css/styles/sera";`}</Code>
-  </section>
-  <section>
-    <h3 class="mb-4 scroll-m-20 font-semibold tracking-tight" id="install-npm-js"><a href="#install-npm-js">Step 4: Add JavaScript files</a></h3>
-    Some components [need JavaScript](#install-js). You can either import the all-in-one bundle or only the components you use.
+To choose a specific style, import that style bundle instead.
 
-#### Using a build tool (Vite, Webpack…)
+```css
+@import "tailwindcss";
+@import "basecoat-css/maia";
+```
 
-To include all JavaScript components:
-    
-    <Code lang="js">{`import 'basecoat-css/all';`}</Code>
-    Or cherry-pick specific components. Import `basecoat-css/basecoat` once, then import the component scripts:
-    
-    <Code lang="js">{`import 'basecoat-css/basecoat';
-import 'basecoat-css/popover';
-import 'basecoat-css/tabs';`}</Code>
-    #### Without a build tool
+<Callout type="warning" title="Stylesheet order matters" icon="triangle-alert">
+  Load Basecoat after any stylesheet that includes Tailwind base/preflight. Loading another full Tailwind build after Basecoat can reset borders, inputs, and other component defaults.
+</Callout>
 
-Copy the pre-built files from `node_modules` into your public directory:
-    
-    <Code lang="bash">{`npx copyfiles -u 1 "node_modules/basecoat-css/dist/js/**/*" public/js/basecoat`}</Code>
-    Then reference the script you need as well as the `basecoat.min.js` file (used to register and initialize components):
-    
-    <Code lang="html">{`<script src="/js/basecoat/basecoat.min.js" defer></script>
-<script src="/js/basecoat/tabs.min.js" defer></script>`}</Code>
-    See each component page for the minimal script required.
-  </section>
-  <section>
-    <h3 class="mb-4 scroll-m-20 font-semibold tracking-tight" id="install-npm-done"><a href="#install-npm-done">Step 5: Use components</a></h3>
-    You can now use any of the Basecoat classes in your project (e.g. `btn`, `card`, `input`, etc). Read the documentation about each component to get started (e.g. [button](/components/button), [card](/components/card), [input](/components/input), etc).
+  </Step>
+  <Step title="Import JavaScript when needed">
 
-Some components (e.g. [Select](/components/select)) require [JavaScript code to work](#install-js).
-  </section>
-</div>
+Use the all-in-one import:
 
-## Components with JavaScript
+```js
+import "basecoat-css/all";
+```
 
-**A handful of components require JavaScript code to work**, specifically [Combobox](/components/combobox), [Command](/components/command), [Dropdown Menu](/components/dropdown-menu), [Popover](/components/popover), [Select](/components/select), [Sidebar](/components/sidebar), [Slider](/components/slider), [Tabs](/components/tabs) and [Toast](/components/toast).
+Or import the runtime once, then individual components.
 
-If a component requires JavaScript, the documentation page provides the minimal scripts. There are two options:
+```js
+import "basecoat-css/basecoat";
+import "basecoat-css/dropdown-menu";
+import "basecoat-css/select";
+```
 
-- **All-in-one**: use `dist/js/all.min.js` from the CDN or `import "basecoat-css/all"` with a build tool.
-- **Per component**: load `basecoat.min.js` once, then load or import each component script, such as `select.min.js` or `basecoat-css/select`.
+  </Step>
+</Steps>
+
+### CSS imports
+
+| Import | Description |
+| --- | --- |
+| `basecoat-css` | Default full stylesheet. |
+| `basecoat-css/{style}` | Full stylesheet for `vega`, `nova`, `maia`, `lyra`, `mira`, `luma`, `sera`, or `rhea`. |
+| `basecoat-css/base` | Base tokens, utilities, and component structure without a style pack. Use this before a custom style. |
+| `basecoat-css/components` | All component structure without a style pack. |
+| `basecoat-css/components/button` | Individual component CSS. Replace `button` with any component file. |
+| `basecoat-css/styles/maia` | Individual style-pack CSS. Use with `basecoat-css/base` or `basecoat-css/components`. |
+| `basecoat-css/compat` | Optional pre-1.0 compatibility aliases. Load after Basecoat. |
+
+### JavaScript imports
+
+| Import | Description |
+| --- | --- |
+| `basecoat-css/all` | All JavaScript components. |
+| `basecoat-css/basecoat` | Runtime only. Import once before individual component scripts. |
+| `basecoat-css/combobox` | Combobox controller. |
+| `basecoat-css/command` | Command controller. |
+| `basecoat-css/dropdown-menu` | Dropdown Menu controller. |
+| `basecoat-css/popover` | Popover controller. |
+| `basecoat-css/range` | Slider/range controller. |
+| `basecoat-css/select` | Select controller. |
+| `basecoat-css/sidebar` | Sidebar controller. |
+| `basecoat-css/tabs` | Tabs controller. |
+| `basecoat-css/toast` | Toast controller. |
+
+## JavaScript components
+
+These components need JavaScript for behavior:
+
+- [Combobox](/components/combobox)
+- [Command](/components/command)
+- [Dropdown Menu](/components/dropdown-menu)
+- [Popover](/components/popover)
+- [Select](/components/select)
+- [Sidebar](/components/sidebar)
+- [Slider](/components/slider)
+- [Tabs](/components/tabs)
+- [Toast](/components/toast)
+
+Each component page shows the minimal scripts or imports required for that component.
+
+## Compatibility
+
+Basecoat 1.0 introduces new style packs and a smaller public API based on root classes plus semantic HTML and documented attributes. If you need pre-1.0 class aliases while migrating, load the compatibility stylesheet after your Basecoat stylesheet.
+
+```css
+@import "tailwindcss";
+@import "basecoat-css";
+@import "basecoat-css/compat";
+```
+
+The compatibility stylesheet is intended for the default Basecoat style. It is not a separate style pack.

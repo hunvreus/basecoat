@@ -2,7 +2,7 @@
 
 <Preview>
 <div id="demo-popover" class="popover">
-  <button id="demo-popover-trigger" type="button" aria-expanded="false" aria-controls="demo-popover-popover" class="btn-outline">Open popover</button>
+  <button id="demo-popover-trigger" type="button" aria-expanded="false" aria-controls="demo-popover-popover" class="btn" data-variant="outline">Open popover</button>
   <div id="demo-popover-popover" data-popover aria-hidden="true" class="w-72">
     <header>
       <h4>Dimensions</h4>
@@ -42,8 +42,8 @@ Basecoat popovers are inline-positioned relative to the `.popover` wrapper. This
   <Step title="Include the JavaScript files">
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.2/dist/js/basecoat.min.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.2/dist/js/popover.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.3/dist/js/basecoat.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.3/dist/js/popover.min.js" defer></script>
 ```
 
   </Step>
@@ -51,7 +51,7 @@ Basecoat popovers are inline-positioned relative to the `.popover` wrapper. This
 
 ```html
 <div id="demo-popover" class="popover">
-  <button id="demo-popover-trigger" type="button" aria-expanded="false" aria-controls="demo-popover-popover" class="btn-outline">Open popover</button>
+  <button id="demo-popover-trigger" type="button" aria-expanded="false" aria-controls="demo-popover-popover" class="btn" data-variant="outline">Open popover</button>
   <div id="demo-popover-popover" data-popover aria-hidden="true" class="w-72">
     <header>
       <h4>Dimensions</h4>
@@ -85,13 +85,13 @@ Basecoat popovers are inline-positioned relative to the `.popover` wrapper. This
 ### HTML structure
 
 <dl>
-  <dt><code class="highlight language-html">&lt;div class="popover"&gt;</code></dt>
+  <dt><code>&lt;div class="popover"&gt;</code></dt>
   <dd>
     Relative wrapper for the trigger and inline popover content.
     <dl>
-      <dt><code class="highlight language-html">&lt;button type="button" aria-expanded="false" aria-controls="&#123; POPOVER_ID &#125;"&gt;</code></dt>
+      <dt><code>&lt;button type="button" aria-expanded="false" aria-controls="&#123; POPOVER_ID &#125;"&gt;</code></dt>
       <dd>Trigger button. The script toggles <code>aria-expanded</code> and opens or closes the content.</dd>
-      <dt><code class="highlight language-html">&lt;div data-popover id="&#123; POPOVER_ID &#125;" aria-hidden="true"&gt;</code></dt>
+      <dt><code>&lt;div data-popover id="&#123; POPOVER_ID &#125;" aria-hidden="true"&gt;</code></dt>
       <dd>Popover content. Supports <code>data-side="top|right|bottom|left"</code> and <code>data-align="start|center|end"</code>.</dd>
     </dl>
   </dd>
@@ -103,7 +103,7 @@ Basecoat popovers are inline-positioned relative to the `.popover` wrapper. This
 
 <Preview>
 <div id="popover-basic" class="popover">
-  <button id="popover-basic-trigger" type="button" aria-expanded="false" aria-controls="popover-basic-popover" class="btn-outline">Open</button>
+  <button id="popover-basic-trigger" type="button" aria-expanded="false" aria-controls="popover-basic-popover" class="btn" data-variant="outline">Open</button>
   <div id="popover-basic-popover" data-popover aria-hidden="true" class="w-72">
     <header>
       <h4>Title</h4>
@@ -118,23 +118,57 @@ Basecoat popovers are inline-positioned relative to the `.popover` wrapper. This
 <Preview>
 <div class="flex flex-wrap gap-3">
   <div id="popover-align-start" class="popover">
-    <button id="popover-align-start-trigger" type="button" aria-expanded="false" aria-controls="popover-align-start-popover" class="btn-outline">Start</button>
+    <button id="popover-align-start-trigger" type="button" aria-expanded="false" aria-controls="popover-align-start-popover" class="btn" data-variant="outline">Start</button>
     <div id="popover-align-start-popover" data-popover aria-hidden="true" class="w-56" data-align="start">
       <p>Aligned to start.</p>
     </div>
   </div>
 
   <div id="popover-align-center" class="popover">
-    <button id="popover-align-center-trigger" type="button" aria-expanded="false" aria-controls="popover-align-center-popover" class="btn-outline">Center</button>
+    <button id="popover-align-center-trigger" type="button" aria-expanded="false" aria-controls="popover-align-center-popover" class="btn" data-variant="outline">Center</button>
     <div id="popover-align-center-popover" data-popover aria-hidden="true" class="w-56" data-align="center">
       <p>Aligned to center.</p>
     </div>
   </div>
 
   <div id="popover-align-end" class="popover">
-    <button id="popover-align-end-trigger" type="button" aria-expanded="false" aria-controls="popover-align-end-popover" class="btn-outline">End</button>
+    <button id="popover-align-end-trigger" type="button" aria-expanded="false" aria-controls="popover-align-end-popover" class="btn" data-variant="outline">End</button>
     <div id="popover-align-end-popover" data-popover aria-hidden="true" class="w-56" data-align="end">
       <p>Aligned to end.</p>
+    </div>
+  </div>
+</div>
+</Preview>
+
+### Sides
+
+<Preview>
+<div class="flex flex-wrap gap-3">
+  <div id="popover-side-top" class="popover">
+    <button id="popover-side-top-trigger" type="button" aria-expanded="false" aria-controls="popover-side-top-popover" class="btn" data-variant="outline">Top</button>
+    <div id="popover-side-top-popover" data-popover aria-hidden="true" data-side="top" data-align="center" class="w-40">
+      <p>Top side.</p>
+    </div>
+  </div>
+
+  <div id="popover-side-right" class="popover">
+    <button id="popover-side-right-trigger" type="button" aria-expanded="false" aria-controls="popover-side-right-popover" class="btn" data-variant="outline">Right</button>
+    <div id="popover-side-right-popover" data-popover aria-hidden="true" data-side="right" data-align="center" class="w-40">
+      <p>Right side.</p>
+    </div>
+  </div>
+
+  <div id="popover-side-bottom" class="popover">
+    <button id="popover-side-bottom-trigger" type="button" aria-expanded="false" aria-controls="popover-side-bottom-popover" class="btn" data-variant="outline">Bottom</button>
+    <div id="popover-side-bottom-popover" data-popover aria-hidden="true" data-side="bottom" data-align="center" class="w-40">
+      <p>Bottom side.</p>
+    </div>
+  </div>
+
+  <div id="popover-side-left" class="popover">
+    <button id="popover-side-left-trigger" type="button" aria-expanded="false" aria-controls="popover-side-left-popover" class="btn" data-variant="outline">Left</button>
+    <div id="popover-side-left-popover" data-popover aria-hidden="true" data-side="left" data-align="center" class="w-40">
+      <p>Left side.</p>
     </div>
   </div>
 </div>
@@ -144,7 +178,7 @@ Basecoat popovers are inline-positioned relative to the `.popover` wrapper. This
 
 <Preview>
 <div id="popover-form" class="popover">
-  <button id="popover-form-trigger" type="button" aria-expanded="false" aria-controls="popover-form-popover" class="btn-outline">Open popover</button>
+  <button id="popover-form-trigger" type="button" aria-expanded="false" aria-controls="popover-form-popover" class="btn" data-variant="outline">Open popover</button>
   <div id="popover-form-popover" data-popover aria-hidden="true" class="w-72">
     <header>
       <h4>Dimensions</h4>
@@ -179,7 +213,7 @@ Popover alignment uses logical start and end offsets. Set `dir="rtl"` on a paren
 <Preview>
 <div dir="rtl">
   <div id="popover-rtl" class="popover">
-    <button id="popover-rtl-trigger" type="button" aria-expanded="false" aria-controls="popover-rtl-popover" class="btn-outline">فتح</button>
+    <button id="popover-rtl-trigger" type="button" aria-expanded="false" aria-controls="popover-rtl-popover" class="btn" data-variant="outline">فتح</button>
     <div id="popover-rtl-popover" data-popover aria-hidden="true" class="w-72" data-align="start">
       <header>
         <h4>العنوان</h4>

@@ -27,8 +27,8 @@
   <Step title="Include the JavaScript files">
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.2/dist/js/basecoat.min.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.2/dist/js/select.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.3/dist/js/basecoat.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.3/dist/js/select.min.js" defer></script>
 ```
 
   </Step>
@@ -57,33 +57,33 @@
 ### HTML structure
 
 <dl>
-  <dt><code class="highlight language-html">&lt;div class="select"&gt;</code></dt>
+  <dt><code>&lt;div class="select"&gt;</code></dt>
   <dd>
     Select root. Supports <code>data-placeholder</code>, <code>data-close-on-select="true"</code>, and <code>data-format="object"</code>.
     <dl>
-      <dt><code class="highlight language-html">&lt;button type="button"&gt;</code></dt>
+      <dt><code>&lt;button type="button"&gt;</code></dt>
       <dd>Trigger button. Use <code>aria-haspopup="listbox"</code>, <code>aria-expanded</code>, and <code>aria-controls</code>.</dd>
-      <dt><code class="highlight language-html">&lt;div data-popover aria-hidden="true"&gt;</code></dt>
+      <dt><code>&lt;div data-popover aria-hidden="true"&gt;</code></dt>
       <dd>
         Popover content. Supports <code>data-side</code> and <code>data-align</code> through the shared popover rules.
         <dl>
-          <dt><code class="highlight language-html">&lt;div role="listbox"&gt;</code></dt>
+          <dt><code>&lt;div role="listbox"&gt;</code></dt>
           <dd>
             Options container. Add <code>aria-multiselectable="true"</code> for multiple selection.
             <dl>
-              <dt><code class="highlight language-html">&lt;div role="option" data-value="..."&gt;</code></dt>
-              <dd>Selectable option. Use <code>data-label</code> when selected text should differ from rendered content.</dd>
-              <dt><code class="highlight language-html">&lt;hr role="separator"&gt;</code> <span class="badge-secondary">Optional</span></dt>
+              <dt><code>&lt;div role="option" data-value="..." data-label="..."&gt;</code></dt>
+              <dd>Selectable option. <code>data-value</code> is submitted. <code>data-label</code> is optional and controls the selected display label and <code>data-format="object"</code> label; when omitted, Basecoat uses trimmed text content.</dd>
+              <dt><code>&lt;hr role="separator"&gt;</code> <span class="badge" data-variant="secondary">Optional</span></dt>
               <dd>Separator between groups or options.</dd>
-              <dt><code class="highlight language-html">&lt;div role="group"&gt;</code> <span class="badge-secondary">Optional</span></dt>
+              <dt><code>&lt;div role="group"&gt;</code> <span class="badge" data-variant="secondary">Optional</span></dt>
               <dd>Option group. Use <code>aria-labelledby</code> to connect it to its heading.</dd>
-              <dt><code class="highlight language-html">&lt;span role="heading"&gt;</code> <span class="badge-secondary">Optional</span></dt>
+              <dt><code>&lt;span role="heading"&gt;</code> <span class="badge" data-variant="secondary">Optional</span></dt>
               <dd>Group heading.</dd>
             </dl>
           </dd>
         </dl>
       </dd>
-      <dt><code class="highlight language-html">&lt;input type="hidden"&gt;</code></dt>
+      <dt><code>&lt;input type="hidden"&gt;</code></dt>
       <dd>Submitted value. Single select stores a string; multiselect stores a JSON array. With <code>data-format="object"</code>, values are serialized as <code>&#123; value, label &#125;</code> objects.</dd>
     </dl>
   </dd>
@@ -109,7 +109,7 @@ Use `data-align` on the popover to align the list to the trigger edge. Basecoat 
       <span class="truncate">Light</span>
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down text-muted-foreground opacity-50 shrink-0"><path d="m6 9 6 6 6-6" /></svg>
     </button>
-    <div id="select-align-start-popover" data-popover aria-hidden="true" data-align="start">
+    <div id="select-align-start-popover" data-popover aria-hidden="true" data-align="start" class="w-72">
       <div role="listbox" id="select-align-start-listbox" aria-orientation="vertical" aria-labelledby="select-align-start-trigger">
         <div id="select-align-start-items-1" role="option" data-value="light">Light</div>
         <div id="select-align-start-items-2" role="option" data-value="dark">Dark</div>
@@ -123,7 +123,7 @@ Use `data-align` on the popover to align the list to the trigger edge. Basecoat 
       <span class="truncate">Light</span>
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down text-muted-foreground opacity-50 shrink-0"><path d="m6 9 6 6 6-6" /></svg>
     </button>
-    <div id="select-align-end-popover" data-popover aria-hidden="true" data-align="end">
+    <div id="select-align-end-popover" data-popover aria-hidden="true" data-align="end" class="w-72">
       <div role="listbox" id="select-align-end-listbox" aria-orientation="vertical" aria-labelledby="select-align-end-trigger">
         <div id="select-align-end-items-1" role="option" data-value="light">Light</div>
         <div id="select-align-end-items-2" role="option" data-value="dark">Dark</div>
@@ -138,9 +138,9 @@ Use `data-align` on the popover to align the list to the trigger edge. Basecoat 
 ### Groups
 
 <Preview>
-<div id="select-groups" class="select">
+<div id="select-groups" class="select" data-placeholder="Select food...">
   <button type="button" class="w-[220px]" id="select-groups-trigger" aria-haspopup="listbox" aria-expanded="false" aria-controls="select-groups-listbox">
-    <span class="truncate"></span>
+    <span class="truncate">Banana</span>
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down text-muted-foreground opacity-50 shrink-0"><path d="m6 9 6 6 6-6" /></svg>
   </button>
   <div id="select-groups-popover" data-popover aria-hidden="true">
@@ -148,7 +148,7 @@ Use `data-align` on the popover to align the list to the trigger edge. Basecoat 
       <div role="group" aria-labelledby="select-groups-fruits">
         <div role="heading" id="select-groups-fruits">Fruits</div>
         <div role="option" data-value="apple">Apple</div>
-        <div role="option" data-value="banana">Banana</div>
+        <div role="option" data-value="banana" aria-selected="true">Banana</div>
         <div role="option" data-value="blueberry">Blueberry</div>
       </div>
       <hr role="separator" />
@@ -160,21 +160,21 @@ Use `data-align` on the popover to align the list to the trigger edge. Basecoat 
       </div>
     </div>
   </div>
-  <input type="hidden" name="select-groups-value" value="" />
+  <input type="hidden" name="select-groups-value" value="banana" />
 </div>
 </Preview>
 
 ### Scrollable
 
 <Preview>
-<div id="select-679828" class="select">
-  <button type="button" class="" id="select-679828-trigger" aria-haspopup="listbox" aria-expanded="false" aria-controls="select-679828-listbox">
-    <span class="truncate"></span>
+<div id="select-679828" class="select" data-placeholder="Select an item...">
+  <button type="button" class="w-[180px]" id="select-679828-trigger" aria-haspopup="listbox" aria-expanded="false" aria-controls="select-679828-listbox">
+    <span class="truncate">Item 0</span>
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down text-muted-foreground opacity-50 shrink-0"><path d="m6 9 6 6 6-6" /></svg>
   </button>
   <div id="select-679828-popover" data-popover aria-hidden="true">
     <div role="listbox" id="select-679828-listbox" aria-orientation="vertical" aria-labelledby="select-679828-trigger" class="scrollbar-thin overflow-y-auto max-h-64">
-      <div role="option">Item 0</div>
+      <div role="option" data-value="item-0" aria-selected="true">Item 0</div>
       <div role="option" data-value="item-1">Item 1</div>
       <div role="option" data-value="item-2">Item 2</div>
       <div role="option" data-value="item-3">Item 3</div>
@@ -275,7 +275,7 @@ Use `data-align` on the popover to align the list to the trigger edge. Basecoat 
       <div role="option" data-value="item-98">Item 98</div>
     </div>
   </div>
-  <input type="hidden" name="select-679828-value" value="" />
+  <input type="hidden" name="select-679828-value" value="item-0" />
 </div>
 </Preview>
 
@@ -283,23 +283,23 @@ Use `data-align` on the popover to align the list to the trigger edge. Basecoat 
 
 <Preview>
 <div id="select-877925" class="select">
-  <button type="button" class="" id="select-877925-trigger" aria-haspopup="listbox" aria-expanded="false" aria-controls="select-877925-listbox" disabled="disabled">
-    <span class="truncate"></span>
+  <button type="button" class="w-[180px]" id="select-877925-trigger" aria-haspopup="listbox" aria-expanded="false" aria-controls="select-877925-listbox" disabled="disabled">
+    <span class="truncate">Disabled</span>
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down text-muted-foreground opacity-50 shrink-0"><path d="m6 9 6 6 6-6" /></svg>
   </button>
   <div id="select-877925-popover" data-popover aria-hidden="true">
     <div role="listbox" id="select-877925-listbox" aria-orientation="vertical" aria-labelledby="select-877925-trigger">
-      <div role="option" data-value="disabled">Disabled</div>
+      <div role="option" data-value="disabled" aria-selected="true">Disabled</div>
     </div>
   </div>
-  <input type="hidden" name="select-877925-value" value="" />
+  <input type="hidden" name="select-877925-value" value="disabled" />
 </div>
 </Preview>
 
 ### Invalid
 
-<Preview class="w-full max-w-sm">
-<div role="group" class="field" data-invalid="true">
+<Preview>
+<div role="group" class="field w-full max-w-sm" data-invalid="true">
   <label for="select-invalid-trigger">Role</label>
   <div id="select-invalid" class="select">
     <button type="button" class="w-[220px]" id="select-invalid-trigger" aria-haspopup="listbox" aria-expanded="false" aria-controls="select-invalid-listbox" aria-invalid="true">
@@ -317,7 +317,7 @@ Use `data-align` on the popover to align the list to the trigger edge. Basecoat 
     </div>
     <input type="hidden" name="select-invalid-value" value="" />
   </div>
-  <p class="field-error" role="alert">Select a role to continue.</p>
+  <p role="alert">Select a role to continue.</p>
 </div>
 </Preview>
 
@@ -326,24 +326,24 @@ Use `data-align` on the popover to align the list to the trigger edge. Basecoat 
 <Preview>
 <div id="select-with-icons" class="select">
   <button type="button" class="w-[180px]" id="select-with-icons-trigger" aria-haspopup="listbox" aria-expanded="false" aria-controls="select-with-icons-listbox">
-    <span class="truncate"></span>
+    <span class="truncate">Bar</span>
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down text-muted-foreground opacity-50 shrink-0"><path d="m6 9 6 6 6-6" /></svg>
   </button>
   <div id="select-with-icons-popover" data-popover aria-hidden="true">
     <div role="listbox" id="select-with-icons-listbox" aria-orientation="vertical" aria-labelledby="select-with-icons-trigger">
-      <div role="option" data-value="bar">
+      <div role="option" data-value="bar" data-label="Bar" aria-selected="true">
         <span class="flex items-center gap-2">
           <svg class="text-muted-foreground lucide lucide-chart-bar" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v16a2 2 0 0 0 2 2h16" /><path d="M7 16h8" /><path d="M7 11h12" /><path d="M7 6h3" /></svg>
           Bar
         </span>
       </div>
-      <div role="option" data-value="line">
+      <div role="option" data-value="line" data-label="Line">
         <span class="flex items-center gap-2">
           <svg class="text-muted-foreground lucide lucide-chart-line" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v16a2 2 0 0 0 2 2h16" /><path d="m19 9-5 5-4-4-3 3" /></svg>
           Line
         </span>
       </div>
-      <div role="option" data-value="pie">
+      <div role="option" data-value="pie" data-label="Pie">
         <span class="flex items-center gap-2">
           <svg class="text-muted-foreground lucide lucide-chart-pie" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12c.552 0 1.005-.449.95-.998a10 10 0 0 0-8.953-8.951c-.55-.055-.998.398-.998.95v8a1 1 0 0 0 1 1z" /><path d="M21.21 15.89A10 10 0 1 1 8 2.83" /></svg>
           Pie
@@ -351,7 +351,7 @@ Use `data-align` on the popover to align the list to the trigger edge. Basecoat 
       </div>
     </div>
   </div>
-  <input type="hidden" name="select-with-icons-value" value="" />
+  <input type="hidden" name="select-with-icons-value" value="bar" />
 </div>
 </Preview>
 

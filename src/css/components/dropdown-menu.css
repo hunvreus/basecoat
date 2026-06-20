@@ -24,8 +24,16 @@
     @apply border-0;
   }
 
+  .dropdown-menu :is([data-shortcut], kbd:last-child, .kbd:last-child) {
+    @apply ms-auto shrink-0 text-end;
+  }
+
   .dropdown-menu [data-shortcut] {
-    @apply ms-auto;
+    @apply ps-8;
+  }
+
+  .dropdown-menu :is(kbd:last-child, .kbd:last-child):not([data-shortcut]) {
+    @apply ms-8;
   }
 
   .dropdown-menu [data-indicator] {

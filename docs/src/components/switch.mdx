@@ -1,7 +1,7 @@
 # Switch
 
 <Preview>
-<div role="group" class="field flex-row items-center gap-2">
+<div role="group" class="field" data-orientation="horizontal">
   <input type="checkbox" id="airplane-mode" role="switch" class="input" />
   <label for="airplane-mode">Airplane Mode</label>
 </div>
@@ -9,18 +9,18 @@
 
 ## Usage
 
-Add `role="switch"` and the `input` class to a native `<input type="checkbox">`. Use a native `<label>` or `aria-label` for accessible naming.
+Add `class="input"` and `role="switch"` to a native checkbox. Use a native `<label>` or `aria-label` for accessible naming.
 
 ```html
 <input type="checkbox" role="switch" class="input" />
 ```
 
-#### HTML structure
+### HTML structure
 
 <dl>
-  <dt><code class="highlight language-html">&lt;input type="checkbox" role="switch" class="input"&gt;</code></dt>
+  <dt><code>&lt;input type="checkbox" role="switch" class="input"&gt;</code></dt>
   <dd>The switch control. Use native checkbox state: add <code>checked</code> for an initially enabled switch, <code>disabled</code> for a disabled switch, and <code>aria-invalid="true"</code> for invalid state.</dd>
-  <dt><code>data-size="sm"</code> <span class="badge-secondary">Optional</span></dt>
+  <dt><code>data-size="sm"</code> <span class="badge" data-variant="secondary">Optional</span></dt>
   <dd>Renders the smaller switch size.</dd>
 </dl>
 
@@ -29,42 +29,55 @@ Add `role="switch"` and the `input` class to a native `<input type="checkbox">`.
 ### Description
 
 <Preview class="w-full max-w-sm">
-<div role="group" class="field flex-row items-start justify-between gap-3">
-  <div class="grid gap-1.5">
+<div role="group" class="field" data-orientation="horizontal">
+  <section>
     <label for="switch-focus-mode">Share across devices</label>
-    <p id="switch-focus-mode-description" class="field-description">Focus is shared across devices, and turns off when you leave the app.</p>
-  </div>
+    <p id="switch-focus-mode-description">Focus is shared across devices, and turns off when you leave the app.</p>
+  </section>
   <input type="checkbox" id="switch-focus-mode" role="switch" class="input" aria-describedby="switch-focus-mode-description" />
 </div>
 </Preview>
 
 ### Choice Card
 
-Card-style selection where a native `<label>` wraps the entire field for a clickable card pattern.
+Use a wrapping `<label>` when the whole card should toggle the switch.
 
-<Preview class="w-full max-w-md">
-<label class="field flex-row items-start justify-between gap-3 rounded-lg border p-4">
-  <span class="grid gap-1.5">
-    <span>Share across devices</span>
-    <span class="field-description">Focus is shared across devices, and turns off when you leave the app.</span>
-  </span>
-  <input type="checkbox" role="switch" class="input" checked />
-</label>
+<Preview class="w-full max-w-sm">
+<div role="group" class="grid w-full gap-3" aria-label="Focus settings">
+  <label>
+    <div role="group" class="field" data-orientation="horizontal">
+      <section>
+        <h3>Share across devices</h3>
+        <p>Focus is shared across devices, and turns off when you leave the app.</p>
+      </section>
+      <input type="checkbox" role="switch" class="input" />
+    </div>
+  </label>
+  <label>
+    <div role="group" class="field" data-orientation="horizontal">
+      <section>
+        <h3>Enable notifications</h3>
+        <p>Receive notifications when focus mode changes.</p>
+      </section>
+      <input type="checkbox" role="switch" class="input" checked />
+    </div>
+  </label>
+</div>
 </Preview>
 
 ### Disabled
 
-Use the native `disabled` attribute on the switch and `data-disabled="true"` on the field wrapper when the surrounding field should use disabled styling.
+Add `disabled` to the switch and `data-disabled="true"` to the field wrapper when the surrounding field should use disabled styling.
 
-<Preview class="w-full max-w-sm">
-<div class="grid gap-4">
-  <div role="group" class="field flex-row items-center justify-between" data-disabled="true">
-    <label for="switch-disabled-unchecked">Disabled (Unchecked)</label>
+<Preview>
+<div class="grid gap-12">
+  <div role="group" class="field" data-orientation="horizontal" data-disabled="true">
     <input type="checkbox" id="switch-disabled-unchecked" role="switch" class="input" disabled />
+    <label for="switch-disabled-unchecked">Disabled (Unchecked)</label>
   </div>
-  <div role="group" class="field flex-row items-center justify-between" data-disabled="true">
-    <label for="switch-disabled-checked">Disabled (Checked)</label>
+  <div role="group" class="field" data-orientation="horizontal" data-disabled="true">
     <input type="checkbox" id="switch-disabled-checked" role="switch" class="input" checked disabled />
+    <label for="switch-disabled-checked">Disabled (Checked)</label>
   </div>
 </div>
 </Preview>
@@ -74,11 +87,11 @@ Use the native `disabled` attribute on the switch and `data-disabled="true"` on 
 Add `aria-invalid="true"` to the switch and `data-invalid="true"` to the field wrapper.
 
 <Preview class="w-full max-w-sm">
-<div role="group" class="field flex-row items-start justify-between gap-3" data-invalid="true">
-  <div class="grid gap-1.5">
-    <label for="switch-invalid">Accept terms and conditions</label>
-    <p class="field-error">You must accept the terms and conditions to continue.</p>
-  </div>
+<div role="group" class="field" data-orientation="horizontal" data-invalid="true">
+  <section>
+    <label for="switch-invalid">Enable notifications</label>
+    <p role="alert">You must enable notifications to continue.</p>
+  </section>
   <input type="checkbox" id="switch-invalid" role="switch" class="input" aria-invalid="true" />
 </div>
 </Preview>
@@ -87,15 +100,15 @@ Add `aria-invalid="true"` to the switch and `data-invalid="true"` to the field w
 
 Use `data-size="sm"` to render the smaller switch size.
 
-<Preview class="w-full max-w-sm">
-<div class="grid gap-4">
-  <div role="group" class="field flex-row items-center justify-between">
-    <label for="switch-size-sm">Small</label>
+<Preview class="w-full max-w-[10rem]">
+<div role="group" class="grid w-full gap-4" aria-label="Switch sizes">
+  <div role="group" class="field" data-orientation="horizontal">
     <input type="checkbox" id="switch-size-sm" role="switch" class="input" data-size="sm" />
+    <label for="switch-size-sm">Small</label>
   </div>
-  <div role="group" class="field flex-row items-center justify-between">
-    <label for="switch-size-default">Default</label>
+  <div role="group" class="field" data-orientation="horizontal">
     <input type="checkbox" id="switch-size-default" role="switch" class="input" />
+    <label for="switch-size-default">Default</label>
   </div>
 </div>
 </Preview>
@@ -105,11 +118,11 @@ Use `data-size="sm"` to render the smaller switch size.
 Switch field layout uses document direction. Set `dir="rtl"` on the field or an ancestor.
 
 <Preview class="w-full max-w-sm">
-<div dir="rtl" role="group" class="field flex-row items-start justify-between gap-3">
-  <div class="grid gap-1.5">
+<div dir="rtl" role="group" class="field" data-orientation="horizontal">
+  <section>
     <label for="switch-rtl">المشاركة عبر الأجهزة</label>
-    <p id="switch-rtl-description" class="field-description">يتم مشاركة التركيز عبر الأجهزة، ويتم إيقاف تشغيله عند مغادرة التطبيق.</p>
-  </div>
+    <p id="switch-rtl-description">يتم مشاركة التركيز عبر الأجهزة، ويتم إيقاف تشغيله عند مغادرة التطبيق.</p>
+  </section>
   <input type="checkbox" id="switch-rtl" role="switch" class="input" aria-describedby="switch-rtl-description" checked />
 </div>
 </Preview>

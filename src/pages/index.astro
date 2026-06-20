@@ -1,0 +1,730 @@
+---
+import "../css/landing.css";
+
+import basecoatJsUrl from "basecoat-css/basecoat.min?url";
+import dropdownMenuJsUrl from "basecoat-css/dropdown-menu.min?url";
+import vegaUrl from "../../docs/src/assets/styles/style-vega.css?url";
+import novaUrl from "../../docs/src/assets/styles/style-nova.css?url";
+import maiaUrl from "../../docs/src/assets/styles/style-maia.css?url";
+import lyraUrl from "../../docs/src/assets/styles/style-lyra.css?url";
+import miraUrl from "../../docs/src/assets/styles/style-mira.css?url";
+import lumaUrl from "../../docs/src/assets/styles/style-luma.css?url";
+import seraUrl from "../../docs/src/assets/styles/style-sera.css?url";
+import rheaUrl from "../../docs/src/assets/styles/style-rhea.css?url";
+import socialImage from "../../docs/src/assets/social.png";
+import favicon from "../../docs/src/assets/favicon.svg";
+import ArrowRight from "lucide-static/icons/arrow-right.svg?raw";
+import Activity from "lucide-static/icons/activity.svg?raw";
+import BanknoteArrowUp from "lucide-static/icons/banknote-arrow-up.svg?raw";
+import Bell from "lucide-static/icons/bell.svg?raw";
+import BookOpen from "lucide-static/icons/book-open.svg?raw";
+import Calendar from "lucide-static/icons/calendar-days.svg?raw";
+import Chart from "lucide-static/icons/chart-no-axes-combined.svg?raw";
+import ChevronRight from "lucide-static/icons/chevron-right.svg?raw";
+import ChevronUp from "lucide-static/icons/chevron-up.svg?raw";
+import Code from "lucide-static/icons/code.svg?raw";
+import CreditCard from "lucide-static/icons/credit-card.svg?raw";
+import Ellipsis from "lucide-static/icons/ellipsis.svg?raw";
+import FileText from "lucide-static/icons/file-text.svg?raw";
+import Globe from "lucide-static/icons/globe.svg?raw";
+import HelpCircle from "lucide-static/icons/circle-help.svg?raw";
+import Info from "lucide-static/icons/info.svg?raw";
+import Landmark from "lucide-static/icons/landmark.svg?raw";
+import Lock from "lucide-static/icons/lock.svg?raw";
+import MessageCircle from "lucide-static/icons/message-circle.svg?raw";
+import Moon from "lucide-static/icons/moon.svg?raw";
+import Paintbrush from "lucide-static/icons/paintbrush.svg?raw";
+import PieChart from "lucide-static/icons/chart-pie.svg?raw";
+import Plus from "lucide-static/icons/plus.svg?raw";
+import Refresh from "lucide-static/icons/refresh-cw.svg?raw";
+import Search from "lucide-static/icons/search.svg?raw";
+import Shield from "lucide-static/icons/shield.svg?raw";
+import Settings from "lucide-static/icons/settings.svg?raw";
+import Target from "lucide-static/icons/target.svg?raw";
+import TrendingUp from "lucide-static/icons/trending-up.svg?raw";
+import User from "lucide-static/icons/user.svg?raw";
+import Wallet from "lucide-static/icons/wallet.svg?raw";
+import Sun from "lucide-static/icons/sun.svg?raw";
+
+const title = "All of the shadcn/ui magic, none of the React";
+const description = "A component library built with Tailwind CSS that works with any web stack.";
+const styleUrls = {
+  vega: vegaUrl,
+  nova: novaUrl,
+  maia: maiaUrl,
+  lyra: lyraUrl,
+  mira: miraUrl,
+  luma: lumaUrl,
+  sera: seraUrl,
+  rhea: rheaUrl,
+};
+
+const logoSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true"><rect width="256" height="256" fill="none"></rect><line x1="208" y1="128" x2="128" y2="208" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"></line><line x1="192" y1="40" x2="40" y2="192" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"></line></svg>`;
+const qrRows = [
+  "111111100101101111111",
+  "100000101001001000001",
+  "101110101111101011101",
+  "101110100100001011101",
+  "101110101010101011101",
+  "100000100111001000001",
+  "111111101010101111111",
+  "000000001101000000000",
+  "101011111001111010110",
+  "010100001110010101001",
+  "111010111011101111010",
+  "001101000101000010101",
+  "110111101111010111011",
+  "000000001001010001010",
+  "111111101101111101001",
+  "100000100010001001111",
+  "101110101011101110100",
+  "101110100110100010011",
+  "101110101000111101110",
+  "100000101101000011001",
+  "111111101011101101111",
+];
+const holdings = [
+  ["Vanguard", "450 Shares", "$1,842.10", [58, 64, 60, 100]],
+  ["S&P 500 VOO", "112 Shares", "$928.40", [56, 66, 100, 68]],
+  ["Apple AAPL", "85 Shares", "$340.00", [50, 58, 100, 75]],
+  ["Realty Income", "320 Shares", "$1,139.50", [67, 72, 78, 100]],
+];
+const sidebarSections = [
+  {
+    label: "Overview",
+    className: "xl:col-start-1 xl:row-start-2",
+    active: "Analytics",
+    items: [
+      ["Analytics", Chart],
+      ["Transactions", BanknoteArrowUp],
+      ["Investments", TrendingUp],
+      ["Accounts", Landmark],
+      ["Spending", PieChart],
+    ],
+  },
+  {
+    label: "Planning",
+    className: "xl:col-start-1 xl:row-start-1",
+    items: [
+      ["Documents", FileText],
+      ["Budget", Wallet],
+      ["Reports", Chart],
+      ["Goals", Target],
+      ["Calendar", Calendar],
+    ],
+  },
+  {
+    label: "Support",
+    className: "xl:col-start-2 xl:row-start-1",
+    items: [
+      ["Help Center", HelpCircle],
+      ["Docs", BookOpen],
+      ["Contact Us", MessageCircle],
+      ["Status", Activity],
+      ["Community", Globe],
+    ],
+  },
+  {
+    label: "Account",
+    className: "xl:col-start-2 xl:row-start-2",
+    active: "Billing",
+    items: [
+      ["Profile", User],
+      ["Billing", CreditCard],
+      ["Notifications", Bell],
+      ["Security", Shield],
+      ["Appearance", Paintbrush],
+    ],
+  },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <script is:inline>
+      (() => {
+        const media = matchMedia("(prefers-color-scheme: dark)");
+        const getStoredTheme = () => {
+          try {
+            return localStorage.getItem("themeMode");
+          } catch (_) {
+            return null;
+          }
+        };
+        const syncTheme = () => {
+          const stored = getStoredTheme();
+          document.documentElement.classList.toggle("dark", stored ? stored === "dark" : media.matches);
+        };
+        try {
+          syncTheme();
+        } catch (_) {}
+        media.addEventListener("change", () => {
+          if (!getStoredTheme()) syncTheme();
+        });
+        document.addEventListener("basecoat:theme", (event) => {
+          const mode = event.detail?.mode;
+          if (mode === "system") {
+            try {
+              localStorage.removeItem("themeMode");
+            } catch (_) {}
+            syncTheme();
+            return;
+          }
+          const dark = mode === "dark" || (!mode && !document.documentElement.classList.contains("dark"));
+          document.documentElement.classList.toggle("dark", dark);
+          try {
+            localStorage.setItem("themeMode", dark ? "dark" : "light");
+          } catch (_) {}
+          document.dispatchEvent(new CustomEvent("basecoat:themechange", { detail: { mode: dark ? "dark" : "light" } }));
+        });
+      })();
+    </script>
+    <style id="docs-style-gate" is:inline>
+      html[data-style-pending] body {
+        visibility: hidden;
+      }
+    </style>
+    <script is:inline define:vars={{ styleUrls }}>
+      (() => {
+        const styleGateId = "docs-style-gate";
+        const styleLinkId = "docs-style-variant";
+        const getStoredStyle = () => {
+          try {
+            return localStorage.getItem("styleVariant") || "vega";
+          } catch (_) {
+            return "vega";
+          }
+        };
+        const getStyleHref = (style) => {
+          const href = styleUrls[style];
+          return href?.startsWith("/docs/src/assets/styles/") ? `${href}?direct` : href;
+        };
+        const nextStyle = Object.prototype.hasOwnProperty.call(styleUrls, getStoredStyle()) ? getStoredStyle() : "vega";
+        const href = getStyleHref(nextStyle);
+        document.documentElement.dataset.styleVariant = nextStyle;
+        if (!href) return;
+        document.documentElement.setAttribute("data-style-pending", "");
+        document.write(
+          `<link id="${styleLinkId}" rel="stylesheet" href="${href}" onload="document.documentElement.removeAttribute('data-style-pending');document.getElementById('${styleGateId}')?.remove()" onerror="document.documentElement.removeAttribute('data-style-pending');document.getElementById('${styleGateId}')?.remove()">`,
+        );
+      })();
+    </script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title} | Basecoat</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href={favicon.src} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={`${title} | Basecoat`} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={socialImage.src} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={`${title} | Basecoat`} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage.src} />
+    <script src={basecoatJsUrl} defer></script>
+    <script src={dropdownMenuJsUrl} defer></script>
+  </head>
+  <body class="min-h-dvh overflow-x-clip bg-background text-foreground antialiased">
+    <header class="bg-background sticky inset-x-0 top-0 isolate z-30 flex shrink-0 items-center gap-2">
+      <div class="flex h-14 w-full items-center justify-between gap-2 px-4">
+        <div class="flex min-w-0 items-center gap-1">
+          <a href="/" class="btn" data-variant="ghost" aria-label="Basecoat home">
+            <span class="[&_svg]:size-4" set:html={logoSvg} />
+            <span class="truncate font-semibold">Basecoat</span>
+          </a>
+          <nav class="hidden items-center gap-1 sm:flex" aria-label="Primary">
+            <a class="btn" data-variant="ghost" href="/introduction">Docs</a>
+            <a class="btn" data-variant="ghost" href="https://github.com/hunvreus/basecoat" target="_blank" rel="noopener">GitHub</a>
+            <a class="btn" data-variant="ghost" href="https://basecoatui.com/chat" target="_blank" rel="noopener">Discord</a>
+          </nav>
+        </div>
+
+        <div class="ml-auto flex min-w-0 flex-1 items-center justify-end gap-2">
+          <select id="style-variant-select" class="select hidden h-8 w-28 shrink-0 text-sm leading-none sm:block" aria-label="Style pack">
+            <option value="vega">Vega</option>
+            <option value="nova">Nova</option>
+            <option value="maia">Maia</option>
+            <option value="lyra">Lyra</option>
+            <option value="mira">Mira</option>
+            <option value="luma">Luma</option>
+            <option value="sera">Sera</option>
+            <option value="rhea">Rhea</option>
+          </select>
+          <button
+            type="button"
+            aria-label="Toggle dark mode"
+            data-tooltip="Toggle dark mode"
+            data-side="bottom"
+            data-align="end"
+            onclick="document.dispatchEvent(new CustomEvent('basecoat:theme'))"
+            class="btn hidden sm:inline-flex"
+            data-size="icon"
+            data-variant="ghost"
+          >
+            <span class="hidden dark:block"><Fragment set:html={Sun} /></span>
+            <span class="block dark:hidden"><Fragment set:html={Moon} /></span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="flex flex-1 flex-col">
+      <section class="md:**:[.container]:pb-8 lg:**:[.container]:pb-12">
+        <div class="container-wrapper">
+          <div class="container mx-auto flex flex-col items-center gap-2 px-6 py-8 text-center md:py-16 lg:py-20 xl:gap-4">
+            <h1 class="leading-tighter text-3xl font-semibold tracking-tight text-balance text-primary lg:leading-[1.1] lg:font-semibold xl:text-5xl xl:tracking-tighter max-w-4xl">
+              {title}
+            </h1>
+            <p class="max-w-4xl text-base text-balance text-foreground sm:text-lg">
+              {description}
+            </p>
+            <div class="flex w-full items-center justify-center gap-2 pt-2">
+              <a class="btn" href="/installation">Get started</a>
+              <a class="btn" data-variant="outline" href="https://github.com/hunvreus/basecoat" target="_blank" rel="noopener">Source code</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="flex-1 p-0">
+        <div class="w-full overflow-hidden">
+          <div class="theme-neutral relative flex h-[980px] max-h-[calc(100svh-14rem)] min-h-[680px] w-full max-w-none flex-col gap-(--gap) overflow-hidden bg-muted p-12 pb-0! [--gap:--spacing(8)] min-[1900px]:h-[1120px] min-[1900px]:p-12 min-[1900px]:[--gap:--spacing(10)]! lg:p-6 lg:[--gap:--spacing(6)] dark:bg-background">
+            <div class="relative z-10 mx-auto grid w-full grid-cols-1 gap-(--gap) [&_.card]:w-full md:max-w-3xl md:grid-cols-2 lg:max-w-none lg:grid-cols-3 xl:max-w-[1600px] min-[1400px]:grid-cols-4! 2xl:max-w-[1900px] min-[1900px]:grid-cols-5!">
+              <div class="flex min-w-0 flex-col gap-(--gap)">
+                <article class="card relative">
+                  <section class="flex flex-col gap-6">
+                    <div class="flex flex-wrap gap-2">
+                      <button class="btn" type="button">Button <span data-icon="inline-end"><Fragment set:html={ArrowRight} /></span></button>
+                      <button class="btn" data-variant="secondary" type="button">Secondary</button>
+                      <button class="btn" data-variant="outline" type="button">Outline</button>
+                    </div>
+                    <div class="field">
+                      <div class="input-group">
+                        <input placeholder="Name" />
+                        <span data-align="end"><Fragment set:html={Search} /></span>
+                      </div>
+                    </div>
+                    <div class="field flex-1">
+                      <textarea class="textarea min-h-20 resize-none" placeholder="Message"></textarea>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <div class="flex gap-2">
+                        <span class="badge">Badge</span>
+                        <span class="badge" data-variant="secondary">Secondary</span>
+                        <span class="badge hidden min-[1900px]:flex" data-variant="outline">Outline</span>
+                      </div>
+                      <div class="ml-auto flex w-fit gap-3" role="radiogroup" aria-label="Fruit preference">
+                        <input class="input" type="radio" name="fruit" aria-label="Apple" checked />
+                        <input class="input" type="radio" name="fruit" aria-label="Banana" />
+                      </div>
+                      <div class="flex gap-3">
+                        <input class="input" type="checkbox" aria-label="Enable email alerts" checked />
+                        <input class="input hidden min-[1900px]:flex" type="checkbox" aria-label="Enable push alerts" />
+                      </div>
+                      <input class="input flex min-[1900px]:hidden" type="checkbox" role="switch" aria-label="Enable compact notifications" checked />
+                    </div>
+                    <div class="flex flex-wrap items-center gap-3">
+                      <button class="btn" data-variant="outline" type="button" onclick="document.getElementById('landing-alert-dialog').showModal()">Alert Dialog</button>
+                      <div class="button-group ml-auto max-w-full">
+                        <button class="btn min-w-0" data-variant="outline" type="button"><span class="truncate">Button Group</span></button>
+                        <div id="landing-quick-actions" class="dropdown-menu">
+                          <button id="landing-quick-actions-trigger" class="btn" data-size="icon" data-variant="outline" type="button" aria-label="Open quick actions" aria-haspopup="menu" aria-controls="landing-quick-actions-menu" aria-expanded="false"><Fragment set:html={ChevronUp} /></button>
+                          <div id="landing-quick-actions-popover" data-popover data-side="top" data-align="end" aria-hidden="true" class="w-40">
+                            <div role="menu" id="landing-quick-actions-menu" aria-labelledby="landing-quick-actions-trigger">
+                              <div role="group" aria-labelledby="landing-quick-actions-heading">
+                                <div role="heading" id="landing-quick-actions-heading">Quick Actions</div>
+                                <div role="menuitem">Mute Conversation</div>
+                                <div role="menuitem">Mark as Read</div>
+                                <div role="menuitem">Block User</div>
+                              </div>
+                              <hr role="separator" />
+                              <div role="group">
+                                <div role="menuitem" data-variant="destructive">Delete Conversation</div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+                  <dialog id="landing-alert-dialog" class="dialog" aria-labelledby="landing-alert-dialog-title" aria-describedby="landing-alert-dialog-description">
+                    <div>
+                      <header>
+                        <h2 id="landing-alert-dialog-title">Allow accessory to connect?</h2>
+                        <p id="landing-alert-dialog-description">Do you want to allow the USB accessory to connect to this device and your data?</p>
+                      </header>
+                      <footer>
+                        <button class="btn" data-variant="outline" type="button" onclick="document.getElementById('landing-alert-dialog').close()">Don't allow</button>
+                        <button class="btn" type="button" onclick="document.getElementById('landing-alert-dialog').close()">Allow</button>
+                      </footer>
+                    </div>
+                  </dialog>
+                </article>
+
+                <div class="grid w-full grid-cols-2 gap-4 xl:gap-6">
+                  {sidebarSections.map((section) => (
+                    <article data-size="sm" class:list={["card", section.className]}>
+                      <section>
+                        <h3 class="mb-2 text-xs font-medium text-muted-foreground">{section.label}</h3>
+                        <ul class="grid gap-1">
+                          {section.items.map(([item, icon]) => (
+                            <li>
+                              <a href="#" class:list={["btn w-full min-w-0 justify-start", section.active === item && "bg-muted font-medium"]} data-size="sm" data-variant="ghost">
+                                <span class="shrink-0" set:html={icon} /> <span class="truncate">{item}</span>
+                              </a>
+                            </li>
+                          ))}
+                        </ul>
+                      </section>
+                    </article>
+                  ))}
+                </div>
+
+                <article class="card relative">
+                  <header>
+                    <h2>Savings Targets</h2>
+                    <p>Active milestones for 2024 across your portfolio. Monitor how close you are to each savings goal.</p>
+                  </header>
+                  <section class="grid gap-3">
+                    {[
+                      ["Retirement", "$420,000", "65% achieved", "$273,000", "65%"],
+                      ["Real Estate", "$85,000", "32% achieved", "$27,200", "32%"],
+                    ].map(([label, amount, progress, value, width]) => (
+                      <div class="landing-demo-surface bg-muted/50 p-4">
+                        <p class="text-xs font-medium tracking-wider text-muted-foreground uppercase">{label}</p>
+                        <p class="mt-3 text-3xl font-semibold tabular-nums">{amount}</p>
+                        <div class="progress mt-3" role="progressbar" aria-label={`${label} savings progress`} aria-valuenow={parseInt(width, 10)} aria-valuemin="0" aria-valuemax="100"><span style={`width:${width}`}></span></div>
+                        <div class="mt-3 flex justify-between text-sm"><span class="text-muted-foreground">{progress}</span><span class="font-medium tabular-nums">{value}</span></div>
+                      </div>
+                    ))}
+                  </section>
+                  <footer><p class="mx-auto text-center text-sm text-muted-foreground">You have not met your targets for this year.</p></footer>
+                </article>
+              </div>
+
+              <div class="hidden min-w-0 flex-col gap-(--gap) lg:flex">
+                <article class="card relative">
+                  <header><h2>Contribution History</h2><p>Last 6 months of activity</p></header>
+                  <section>
+                    <div class="flex h-[200px] w-full items-end gap-3" role="img" aria-label="Last 6 months of contribution activity">
+                      {[
+                        ["Dec", 57],
+                        ["Jan", 79],
+                        ["Feb", 64],
+                        ["Mar", 93],
+                        ["Apr", 54],
+                        ["May", 100],
+                      ].map(([month, height]) => (
+                        <div class="flex h-full flex-1 flex-col justify-end gap-2">
+                          <div class="landing-demo-chart-bar min-h-2 bg-chart-2" style={`height:${height}%`}></div>
+                          <span class="text-center text-xs text-muted-foreground">{month}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </section>
+                  <section>
+                    <div class="grid w-full grid-cols-1 gap-3 xl:grid-cols-2">
+                      <div class="landing-demo-surface bg-muted/50 p-4"><p class="text-xs font-medium tracking-wider text-muted-foreground uppercase">Upcoming</p><p class="text-base font-semibold">May 2024</p><p class="text-sm text-muted-foreground">Scheduled</p></div>
+                      <div class="landing-demo-surface hidden bg-muted/50 p-4 xl:block"><p class="text-xs font-medium tracking-wider text-muted-foreground uppercase">Savings Plan</p><p class="text-base font-semibold">Accelerated</p><p class="text-sm text-muted-foreground">Recurring</p></div>
+                    </div>
+                  </section>
+                  <footer><button class="btn w-full" type="button">View Full Report</button></footer>
+                </article>
+
+                <article class="card relative">
+                  <header>
+                    <p class="text-sm text-muted-foreground">Claimable Balance</p>
+                    <h2 class="text-4xl tabular-nums">$1,211.29</h2>
+                    <span class="badge" data-variant="outline"><span class="size-2 rounded-full bg-yellow-500"></span> Pending Setup</span>
+                  </header>
+                  <section class="flex flex-1 flex-col justify-end">
+                    <article class="item landing-demo-surface" data-variant="muted">
+                      <section class="gap-3">
+                      <div class="flex justify-between"><span class="text-muted-foreground">Net Royalties</span><span class="font-medium tabular-nums">$1,248.75</span></div>
+                      <div class="mt-3 flex justify-between"><span class="text-muted-foreground">Processing Fee</span><span class="font-medium tabular-nums">-$37.46</span></div>
+                      <hr class="my-3 border-border" />
+                      <div class="flex justify-between"><span class="text-muted-foreground">Total Ready to Claim</span><span class="font-semibold tabular-nums">$1,211.29 USD</span></div>
+                      </section>
+                    </article>
+                  </section>
+                  <footer><p>Once your bank is connected, balances over $10.00 are automatically eligible for monthly distribution on the 15th of each month.</p></footer>
+                </article>
+
+                <article class="card relative hidden lg:flex">
+                  <header>
+                    <h2>Q2 Dividend Income</h2>
+                    <p>Quarterly dividend payouts across your portfolio holdings.</p>
+                  </header>
+                  <section>
+                    <div class="grid gap-2">
+                      {holdings.map(([name, shares, _amount, data]) => (
+                        <div class="landing-demo-surface flex items-center gap-3 bg-muted/50 p-3">
+                          <div class="mr-auto"><p class="text-sm font-medium">{name}</p><p class="text-sm text-muted-foreground">{shares}</p></div>
+                          <div class="hidden h-8 w-24 items-end gap-1 md:flex">{data.map((height) => <span class="landing-demo-chart-bar min-h-1 flex-1 bg-chart-2" style={`height:${height}%`}></span>)}</div>
+                        </div>
+                      ))}
+                    </div>
+                  </section>
+                </article>
+              </div>
+
+              <div class="hidden min-w-0 flex-col gap-(--gap) min-[1900px]:flex">
+                <article class="card relative">
+                  <header><h2>Set a new milestone</h2><p>Define your financial target and we'll help you pace your savings.</p></header>
+                  <section class="grid gap-4">
+                    <div class="field"><label for="goal-name">Goal Name</label><input id="goal-name" class="input" placeholder="e.g. New Car, Home Downpayment" /></div>
+                    <div class="grid grid-cols-2 gap-3">
+                      <div class="field"><label for="target-amount">Target Amount</label><input id="target-amount" class="input" value="$15,000" /></div>
+                      <div class="field"><label for="target-date">Target Date</label><input id="target-date" class="input" value="Dec 2025" /></div>
+                    </div>
+                  </section>
+                  <footer class="flex-col gap-2"><button class="btn w-full" type="button">Create Goal</button><button class="btn w-full" data-variant="outline" type="button">Cancel</button></footer>
+                </article>
+
+                <article class="card relative">
+                  <header><h2>Payout Threshold</h2><p>Set the minimum balance required before a payout is triggered.</p></header>
+                  <section class="grid gap-4">
+                    <div class="field"><label for="preferred-currency">Preferred Currency</label><select id="preferred-currency" class="select"><option>USD — United States Dollar</option></select></div>
+                    <div class="field"><div class="flex items-baseline justify-between"><label id="min-payout-label">Minimum Payout Amount</label><span class="text-2xl font-semibold tabular-nums">$2500.00</span></div><div class="progress" role="progressbar" aria-labelledby="min-payout-label" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" aria-valuetext="$2,500 of $10,000"><span style="width:25%"></span></div><div class="flex justify-between text-sm text-muted-foreground"><span>$50 (MIN)</span><span>$10,000 (MAX)</span></div></div>
+                    <div class="field"><label for="payout-notes">Notes</label><textarea id="payout-notes" class="textarea min-h-[100px]" placeholder="Add any notes for this payout configuration..."></textarea></div>
+                  </section>
+                  <footer><button class="btn w-full" type="button">Save Threshold</button></footer>
+                </article>
+
+                <article class="card relative">
+                  <header><h2>Account Access</h2><p>Update your credentials or re-authenticate.</p></header>
+                  <section class="grid gap-4">
+                    <div class="field"><label for="email-address">Email Address</label><input id="email-address" class="input" type="email" placeholder="artist@studio.inc" /></div>
+                    <div class="field"><div class="flex items-center justify-between"><label for="current-password">Current Password</label><a href="#" class="text-xs font-medium tracking-wider text-muted-foreground uppercase hover:text-foreground">Forgot?</a></div><input id="current-password" class="input" type="password" placeholder="••••••••••••••••••••••••" /></div>
+                  </section>
+                  <footer class="flex-col gap-4"><button class="btn w-full" type="button"><Fragment set:html={Lock} /> Update Security</button><a href="#" class="item landing-demo-surface" data-variant="muted"><figure class="text-destructive"><Fragment set:html={Info} /></figure><section><h3>Danger Zone</h3><p class="line-clamp-1">Archive account and remove catalog</p></section><aside class="text-muted-foreground [&_svg]:size-4"><Fragment set:html={ChevronRight} /></aside></a></footer>
+                </article>
+              </div>
+
+              <div class="hidden min-w-0 flex-col gap-(--gap) md:flex">
+                <article class="card relative">
+                  <section class="flex justify-center pt-6">
+                    <div class="landing-demo-surface border border-border bg-white p-4">
+                      <svg viewBox="0 0 21 21" class="size-40 text-black" role="img" aria-label="Connect device QR code" shape-rendering="crispEdges">
+                        <rect width="21" height="21" fill="white" />
+                        {qrRows.map((row, y) => [...row].map((cell, x) => cell === "1" && <rect x={x} y={y} width="1" height="1" />))}
+                      </svg>
+                    </div>
+                  </section>
+                  <header class="text-center"><h2>Scan to connect your mobile device</h2><p class="text-balance">Open the Ledger mobile app and scan this code to link your device.</p></header>
+                </article>
+
+                <article class="card relative">
+                  <header><h2>Transfer Funds</h2><p>Move money between your connected accounts.</p></header>
+                  <section class="grid gap-4">
+                    <div class="field w-full"><label for="transfer-amount">Amount to Transfer</label><div class="input-group w-full"><span data-align="start">$</span><input id="transfer-amount" class="w-full" value="1,200.00" /></div></div>
+                    <div class="field w-full"><label for="from-account">From Account</label><select id="from-account" class="select w-full"><option>Main Checking (··8402) — $12,450.00</option></select></div>
+                    <div class="field w-full"><label for="to-account">To Account</label><select id="to-account" class="select w-full"><option>High Yield Savings (··1192) — $42,100.00</option></select></div>
+                    <article class="item landing-demo-surface" data-variant="muted">
+                      <section class="gap-3">
+                      <div class="flex justify-between"><span class="text-muted-foreground">Estimated arrival</span><span class="font-medium">Today, Apr 14</span></div><hr class="my-3 border-border" />
+                      <div class="flex justify-between"><span class="text-muted-foreground">Transaction fee</span><span class="font-medium tabular-nums">$0.00</span></div><hr class="my-3 border-border" />
+                      <div class="flex justify-between"><span class="font-medium">Total amount</span><span class="font-semibold tabular-nums">$1,200.00</span></div>
+                      </section>
+                    </article>
+                  </section>
+                  <footer><button class="btn w-full" type="button">Confirm Transfer</button></footer>
+                </article>
+
+                <article class="card">
+                  <header class="flex flex-col gap-3">
+                    <nav aria-label="Breadcrumb">
+                      <ol class="text-muted-foreground flex flex-wrap items-center gap-1.5 text-sm break-words sm:gap-2.5">
+                        <li class="inline-flex items-center gap-1.5">
+                          <a href="#" class="hover:text-foreground transition-colors">Home</a>
+                        </li>
+                        <li aria-hidden="true" class="text-muted-foreground">
+                          <span class="[&_svg]:size-3.5" set:html={ChevronRight} />
+                        </li>
+                        <li class="inline-flex items-center gap-1.5">
+                          <div id="landing-payments-breadcrumb" class="dropdown-menu">
+                            <button type="button" id="landing-payments-breadcrumb-trigger" aria-haspopup="menu" aria-controls="landing-payments-breadcrumb-menu" aria-expanded="false" class="flex size-9 h-4 w-4 cursor-pointer items-center justify-center hover:text-foreground [&_svg]:size-4" aria-label="Account options"><Fragment set:html={Ellipsis} /></button>
+                            <div id="landing-payments-breadcrumb-popover" data-popover aria-hidden="true">
+                              <div role="menu" id="landing-payments-breadcrumb-menu" aria-labelledby="landing-payments-breadcrumb-trigger">
+                                <nav role="menu">
+                                  <button type="button" role="menuitem">Profile</button>
+                                  <button type="button" role="menuitem">Statements</button>
+                                  <button type="button" role="menuitem">Documents</button>
+                                </nav>
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+                        <li aria-hidden="true" class="text-muted-foreground">
+                          <span class="[&_svg]:size-3.5" set:html={ChevronRight} />
+                        </li>
+                        <li class="inline-flex items-center gap-1.5">
+                          <span class="font-normal text-foreground">Payments</span>
+                        </li>
+                      </ol>
+                    </nav>
+                  </header>
+                  <section>
+                    <div class="grid gap-2">
+                      {[
+                        ["Change transfer limit", "Adjust how much you can send from your balance."],
+                        ["Scheduled transfers", "Set up a transfer to send at a later date."],
+                        ["Recurring card payments", "Manage your repeated card transactions."],
+                      ].map(([name, desc], index) => (
+                        <a href="#" class="item landing-demo-surface" data-variant="muted">
+                          <figure><Fragment set:html={index === 0 ? Settings : index === 1 ? Calendar : Refresh} /></figure>
+                          <section><h3>{name}</h3><p>{desc}</p></section>
+                          <aside class="text-muted-foreground [&_svg]:size-4"><Fragment set:html={ChevronRight} /></aside>
+                        </a>
+                      ))}
+                    </div>
+                  </section>
+                </article>
+              </div>
+
+              <div class="hidden min-w-0 flex-col gap-(--gap) min-[1400px]:flex">
+                <article class="card hidden min-[1400px]:flex">
+                  <section>
+                    <section class="empty p-4">
+                      <header>
+                        <figure><Fragment set:html={Plus} /></figure>
+                        <h2>Distribute Track</h2>
+                        <p>Upload your first master to start reaching listeners on Spotify, Apple Music, and more.</p>
+                      </header>
+                      <footer><button class="btn" type="button">Create Release</button></footer>
+                    </section>
+                  </section>
+                </article>
+
+                <article class="card relative w-full pb-0">
+                  <header>
+                    <h2>Analytics</h2>
+                    <p>418.2K Visitors <span class="badge">+10%</span></p>
+                    <a class="btn absolute end-4 top-4" data-size="sm" data-variant="outline" href="/components/chart">View Analytics</a>
+                  </header>
+                  <svg viewBox="0 0 100 86" preserveAspectRatio="none" class="aspect-[1/0.35] w-full text-chart-1" role="img" aria-label="Visitor trend"><path d="M0 52L18 40L36 46L54 70L72 50L100 49V86H0Z" fill="currentColor" opacity="0.28" /><path d="M0 52L18 40L36 46L54 70L72 50L100 49" fill="none" stroke="currentColor" stroke-width="1.5" vector-effect="non-scaling-stroke" /></svg>
+                </article>
+
+                <article class="card hidden min-[1400px]:flex">
+                  <header><h2>Notifications</h2><p>Choose which email and push alerts you want to receive.</p></header>
+                  <section class="grid gap-4">
+                    {[
+                      ["transactions", "Transaction alerts", "Deposits, withdrawals, and transfers.", true],
+                      ["security", "Security alerts", "Login attempts and account changes.", true],
+                      ["goals", "Goal milestones", "Updates at 25%, 50%, 75%, and 100%.", false],
+                      ["market", "Market updates", "Daily portfolio summary and price alerts.", false],
+                    ].map(([id, label, desc, checked]) => (
+                      <label class="field" data-orientation="horizontal">
+                        <input class="input" type="checkbox" checked={checked} />
+                        <section><span class="font-medium">{label}</span><p>{desc}</p></section>
+                      </label>
+                    ))}
+                  </section>
+                  <footer><button class="btn w-full" type="button">Save Preferences</button></footer>
+                </article>
+
+                <article class="card hidden min-[1400px]:flex">
+                  <header><h2>Power Usage</h2><p>Whole Home</p></header>
+                  <section class="flex flex-col gap-4">
+                    <div class="flex h-[140px] w-full items-end gap-2" role="img" aria-label="Power usage by hour">
+                      {[32, 74, 82, 63, 89, 76, 100, 84].map((height, index) => (
+                        <div class="flex h-full flex-1 flex-col justify-end gap-1.5"><div class="landing-demo-chart-bar min-h-2 bg-chart-2" style={`height:${height}%`}></div><span class="text-center text-xs text-muted-foreground">{["6a", "8a", "10a", "12p", "2p", "4p", "6p", "8p"][index]}</span></div>
+                      ))}
+                    </div>
+                    <hr class="border-border" />
+                    <div class="grid grid-cols-2 gap-4">
+                      <div><span class="text-sm text-muted-foreground">Currently Using</span><p class="text-lg font-semibold tabular-nums">3.4 kW</p></div>
+                      <div><span class="text-sm text-muted-foreground">Solar Gen</span><p class="text-lg font-semibold tabular-nums">+1.2 kW</p></div>
+                    </div>
+                  </section>
+                </article>
+              </div>
+            </div>
+            <div class="absolute inset-x-0 top-0 z-1 h-120 bg-linear-to-b from-background via-muted to-transparent dark:hidden"></div>
+            <div class="absolute inset-x-0 bottom-0 z-20 h-48 bg-linear-to-t from-background via-muted/80 to-transparent lg:h-80 xl:h-64 dark:via-background/80"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script is:inline define:vars={{ styleUrls }}>
+      (() => {
+        const styleSelect = document.getElementById("style-variant-select");
+        const styleLinkId = "docs-style-variant";
+        const pendingStyleLinkId = "docs-style-variant-pending";
+        const styleGateId = "docs-style-gate";
+        const getStyleLink = () => document.getElementById(styleLinkId);
+        const clearStylePending = () => {
+          document.documentElement.removeAttribute("data-style-pending");
+          document.getElementById(styleGateId)?.remove();
+        };
+        const applyStyle = (style) => {
+          const nextStyle = Object.prototype.hasOwnProperty.call(styleUrls, style) ? style : "vega";
+          const href = styleUrls[nextStyle]?.startsWith("/docs/src/assets/styles/")
+            ? `${styleUrls[nextStyle]}?direct`
+            : styleUrls[nextStyle];
+          const link = getStyleLink();
+          if (!href) {
+            link?.remove();
+            document.getElementById(pendingStyleLinkId)?.remove();
+            clearStylePending();
+            return;
+          }
+
+          const sameHref = link?.getAttribute("href") === href;
+          if (sameHref || link?.sheet) {
+            clearStylePending();
+          }
+          if (sameHref) return;
+
+          document.getElementById(pendingStyleLinkId)?.remove();
+
+          const pendingLink = document.createElement("link");
+          pendingLink.id = pendingStyleLinkId;
+          pendingLink.rel = "stylesheet";
+          pendingLink.addEventListener(
+            "load",
+            () => {
+              link?.remove();
+              pendingLink.id = styleLinkId;
+              document.documentElement.dataset.styleVariant = nextStyle;
+              clearStylePending();
+              document.dispatchEvent(new CustomEvent("basecoat:stylechange", { detail: { style: nextStyle } }));
+            },
+            { once: true },
+          );
+          pendingLink.addEventListener(
+            "error",
+            () => {
+              pendingLink.remove();
+              clearStylePending();
+            },
+            { once: true },
+          );
+          pendingLink.href = href;
+          document.head.appendChild(pendingLink);
+        };
+        const getStoredStyle = () => {
+          try {
+            return localStorage.getItem("styleVariant") || "vega";
+          } catch (_) {
+            return "vega";
+          }
+        };
+        const initialStyle = getStoredStyle();
+        if (styleSelect) styleSelect.value = initialStyle;
+        applyStyle(initialStyle);
+        styleSelect?.addEventListener("change", () => {
+          const nextStyle = styleSelect.value || "vega";
+          applyStyle(nextStyle);
+          try {
+            localStorage.setItem("styleVariant", nextStyle);
+          } catch (_) {}
+        });
+      })();
+    </script>
+
+  </body>
+</html>

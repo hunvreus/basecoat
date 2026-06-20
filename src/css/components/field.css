@@ -10,29 +10,26 @@
   }
 
   .field {
-    @apply flex w-full flex-col data-[invalid=true]:text-destructive [&>*]:w-full [&>.sr-only]:w-auto;
+    @apply flex w-full flex-col data-invalid:text-destructive data-[invalid=true]:text-destructive [&>*]:w-full [&>.sr-only]:w-auto;
 
     &[data-orientation='horizontal'] {
-      @apply flex-row items-center [&>label]:flex-auto has-[>section]:items-start has-[>section]:[&>[type=checkbox],[type=radio]]:mt-px [&_p]:text-balance;
+      @apply flex-row items-center [&>*]:w-auto [&>label]:flex-auto has-[>section]:items-start has-[>section]:[&>section]:flex-1 has-[>section]:[&>[type=checkbox],[type=radio]]:mt-px [&_p]:text-balance;
     }
 
     &[data-orientation='responsive'] {
       @apply flex-col @md/field-group:flex-row @md/field-group:items-center @md/field-group:[&>*]:w-auto @md/field-group:has-[>section]:items-start @md/field-group:[&>label]:flex-auto @md/field-group:has-[>section]:[&>[type=checkbox],[type=radio]]:mt-px;
     }
 
-    section,
-    .field-content {
+    section {
       @apply flex flex-1 flex-col leading-snug;
     }
 
     h2,
-    h3,
-    .field-title {
+    h3 {
       @apply flex w-fit items-center;
     }
 
-    [role='alert'],
-    .field-error {
+    [role='alert'] {
       @apply font-normal;
 
       ul {
@@ -42,6 +39,7 @@
   }
 
   .field > label,
+  .field > section > label,
   label:has(> .field) {
     @apply w-fit;
   }
@@ -59,7 +57,6 @@
     @apply flex-col;
   }
 
-  .field-description,
   .fieldset legend + p,
   .field > p,
   .field section > p {
@@ -67,8 +64,7 @@
   }
 
   .field > p,
-  .field section > p,
-  .field-description {
+  .field section > p {
     @apply last:mt-0 nth-last-2:-mt-1;
   }
 

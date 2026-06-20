@@ -16,7 +16,7 @@
       @apply relative z-10;
     }
 
-    > :is(hr[role='separator'], .button-group-separator) {
+    > hr[role='separator'] {
       @apply relative w-px h-auto self-stretch shrink-0 border-0 my-px mx-0;
     }
 
@@ -33,7 +33,7 @@
     &[data-orientation='vertical'] {
       @apply flex-col;
 
-      > :is(hr[role='separator'], .button-group-separator) {
+      > hr[role='separator'] {
         @apply w-auto h-px mx-px my-0;
       }
       
@@ -50,9 +50,5 @@
 
   .button-group > :is(span, label, output) {
     @apply flex items-center [&_svg]:pointer-events-none;
-  }
-
-  .button-group-separator {
-    @apply relative self-stretch shrink-0;
   }
 }

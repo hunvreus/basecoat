@@ -12,9 +12,9 @@
   <footer>
     <div class="flex gap-2">
       <button class="btn">Create Project</button>
-      <button class="btn-outline">Import Project</button>
+      <button class="btn" data-variant="outline">Import Project</button>
     </div>
-    <a href="#" class="btn-link text-muted-foreground">
+    <a href="#" class="btn text-muted-foreground" data-variant="link">
       Learn More
       <svg class="lucide lucide-arrow-up-right" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M7 7h10v10" /><path d="M7 17 17 7" /></svg>
     </a>
@@ -24,7 +24,7 @@
 
 ## Usage
 
-Use `.empty` on a semantic container. The component styles common children like `header`, `figure`, headings, descriptions, and `footer`.
+Add `class="empty"` to a semantic container. The component styles common children like `header`, `figure`, headings, descriptions, and `footer`.
 
 ```html
 <section class="empty">
@@ -38,9 +38,9 @@ Use `.empty` on a semantic container. The component styles common children like 
   <footer>
     <div class="flex gap-2">
       <button class="btn">Create Project</button>
-      <button class="btn-outline">Import Project</button>
+      <button class="btn" data-variant="outline">Import Project</button>
     </div>
-    <a href="#" class="btn-link text-muted-foreground">
+    <a href="#" class="btn text-muted-foreground" data-variant="link">
       Learn More
 <svg class="lucide lucide-arrow-up-right" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M7 7h10v10" /><path d="M7 17 17 7" /></svg>
     </a>
@@ -51,23 +51,23 @@ Use `.empty` on a semantic container. The component styles common children like 
 #### HTML structure
 
 <dl>
-  <dt><code class="highlight language-html">&lt;section class="empty"&gt;</code></dt>
+  <dt><code>&lt;section class="empty"&gt;</code></dt>
   <dd>
     The empty-state container.
     <dl>
-      <dt><code class="highlight language-html">&lt;header&gt;</code></dt>
+      <dt><code>&lt;header&gt;</code></dt>
       <dd>
         Groups the media, title, and description.
         <dl>
-          <dt><code class="highlight language-html">&lt;figure&gt;</code> <span class="badge-secondary">Optional</span></dt>
+          <dt><code>&lt;figure&gt;</code> <span class="badge" data-variant="secondary">Optional</span></dt>
           <dd>Icon, avatar, image, or avatar group. An icon-only figure is styled automatically with <code>:has(&gt; svg:only-child)</code>.</dd>
-          <dt><code class="highlight language-html">&lt;h2&gt;</code>, <code class="highlight language-html">&lt;h3&gt;</code>, or <code class="highlight language-html">&lt;h4&gt;</code></dt>
+          <dt><code>&lt;h2&gt;</code>, <code>&lt;h3&gt;</code>, or <code>&lt;h4&gt;</code></dt>
           <dd>The empty-state title.</dd>
-          <dt><code class="highlight language-html">&lt;p&gt;</code> <span class="badge-secondary">Optional</span></dt>
+          <dt><code>&lt;p&gt;</code> <span class="badge" data-variant="secondary">Optional</span></dt>
           <dd>The empty-state description.</dd>
         </dl>
       </dd>
-      <dt><code class="highlight language-html">&lt;section&gt;</code> or <code class="highlight language-html">&lt;footer&gt;</code> <span class="badge-secondary">Optional</span></dt>
+      <dt><code>&lt;section&gt;</code> or <code>&lt;footer&gt;</code> <span class="badge" data-variant="secondary">Optional</span></dt>
       <dd>Actions and supporting content.</dd>
     </dl>
   </dd>
@@ -87,7 +87,7 @@ Use `.empty` on a semantic container. The component styles common children like 
     <p>Upload files to your cloud storage to access them anywhere.</p>
   </header>
   <footer>
-    <button class="btn-sm-outline">Upload Files</button>
+    <button class="btn" data-variant="outline" data-size="sm">Upload Files</button>
   </footer>
 </section>
 </Preview>
@@ -104,7 +104,7 @@ Use `.empty` on a semantic container. The component styles common children like 
     <p>This user is currently offline. You can leave a message or try again later.</p>
   </header>
   <footer>
-    <button class="btn-sm">Leave Message</button>
+    <button class="btn" data-size="sm">Leave Message</button>
   </footer>
 </section>
 </Preview>
@@ -123,9 +123,9 @@ Use `.empty` on a semantic container. The component styles common children like 
     <p>Invite your team to collaborate on this project.</p>
   </header>
   <footer>
-    <button class="btn-sm">
+    <button class="btn" data-size="sm">
       <svg class="lucide lucide-plus" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M5 12h14" /><path d="M12 5v14" /></svg>
-      Invite Members
+      <span>Invite Members</span>
     </button>
   </footer>
 </section>
@@ -140,7 +140,7 @@ Use `.empty` on a semantic container. The component styles common children like 
     <p>The page you're looking for doesn't exist. Try searching for what you need below.</p>
   </header>
   <footer>
-    <div class="input-group w-full">
+    <div class="input-group sm:w-3/4">
       <svg class="lucide lucide-search" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="m21 21-4.34-4.34" /><circle cx="11" cy="11" r="8" /></svg>
       <input type="search" placeholder="Try searching for pages..." />
       <kbd class="kbd">/</kbd>
@@ -162,7 +162,7 @@ Use `.empty` on a semantic container. The component styles common children like 
     <p>ابدأ بإنشاء مشروعك الأول.</p>
   </header>
   <footer>
-    <button class="btn-sm">إنشاء مشروع</button>
+    <button class="btn" data-size="sm">إنشاء مشروع</button>
   </footer>
 </section>
 </Preview>

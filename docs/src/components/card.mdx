@@ -23,7 +23,7 @@
   </section>
   <footer class="flex flex-col items-center gap-2">
     <button type="button" class="btn w-full">Login</button>
-    <button type="button" class="btn-outline w-full">Login with Google</button>
+    <button type="button" class="btn w-full" data-variant="outline">Login with Google</button>
     <p class="mt-4 text-center text-sm">Don't have an account? <a href="#" class="underline-offset-4 hover:underline">Sign up</a></p>
   </footer>
 </div>
@@ -49,23 +49,23 @@
 ### HTML structure
 
 <dl>
-  <dt><code class="highlight language-html">&lt;div class="card|card-sm"&gt;</code></dt>
+  <dt><code>&lt;div class="card"&gt;</code></dt>
   <dd>
-    The card container. Use <code>.card-sm</code> for a denser layout.
+    The card container. Use <code>data-size="sm"</code> for a denser layout.
     <dl>
-      <dt><code class="highlight language-html">&lt;header&gt;</code></dt>
+      <dt><code>&lt;header&gt;</code></dt>
       <dd>
         The header of the card.
         <dl>
-          <dt><code class="highlight language-html">&lt;h2&gt;</code></dt>
+          <dt><code>&lt;h2&gt;</code></dt>
           <dd>The title of the card.</dd>
-          <dt><code class="highlight language-html">&lt;p&gt;</code> <span class="badge-secondary">Optional</span></dt>
+          <dt><code>&lt;p&gt;</code> <span class="badge" data-variant="secondary">Optional</span></dt>
           <dd>The description of the card.</dd>
         </dl>
       </dd>
-      <dt><code class="highlight language-html">&lt;section&gt;</code></dt>
+      <dt><code>&lt;section&gt;</code></dt>
       <dd>The content of the card.</dd>
-      <dt><code class="highlight language-html">&lt;footer&gt;</code> <span class="badge-secondary">Optional</span></dt>
+      <dt><code>&lt;footer&gt;</code> <span class="badge" data-variant="secondary">Optional</span></dt>
       <dd>The footer of the card.</dd>
     </dl>
   </dd>
@@ -76,13 +76,13 @@
 ### Size
 
 <Preview>
-<div class="card-sm">
+<div class="card" data-size="sm">
   <header>
     <h2>Small Card</h2>
     <p>A compact card with reduced spacing.</p>
   </header>
   <section>
-    <p class="text-sm">Use <code>.card-sm</code> for denser layouts.</p>
+    <p class="text-sm">Use <code>data-size="sm"</code> for denser layouts.</p>
   </section>
 </div>
 </Preview>
@@ -138,15 +138,15 @@
     />
   </section>
   <footer class="flex items-center gap-2">
-    <span class="badge-outline">
+    <span class="badge" data-variant="outline">
      <svg class="lucide lucide-bed" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M2 4v16" /><path d="M2 8h18a2 2 0 0 1 2 2v10" /><path d="M2 17h20" /><path d="M6 8v9" /></svg>
       1
     </span>
-    <span class="badge-outline">
+    <span class="badge" data-variant="outline">
       <svg class="lucide lucide-bath" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M10 4 8 6" /><path d="M17 19v2" /><path d="M2 12h20" /><path d="M7 19v2" /><path d="M9 5 7.621 3.621A2.121 2.121 0 0 0 4 5v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5" /></svg>
       2
     </span>
-    <span class="badge-outline">
+    <span class="badge" data-variant="outline">
       <svg class="lucide lucide-land-plot" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="m12 8 6-3-6-3v10" /><path d="m8 11.99-5.5 3.14a1 1 0 0 0 0 1.74l8.5 4.86a2 2 0 0 0 2 0l8.5-4.86a1 1 0 0 0 0-1.74L16 12" /><path d="m6.49 12.85 11.02 6.3" /><path d="M17.51 12.85 6.5 19.15" /></svg>
       350m²
     </span>

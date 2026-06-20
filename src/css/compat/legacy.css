@@ -1,0 +1,429 @@
+/* Legacy Basecoat class API compatibility.
+   This layer preserves pre-1.0 visual classes for the default Basecoat style only. */
+
+@layer components {
+  .btn-primary,
+  .btn-secondary,
+  .btn-outline,
+  .btn-ghost,
+  .btn-link,
+  .btn-destructive,
+  .btn-xs,
+  .btn-xs-primary,
+  .btn-xs-secondary,
+  .btn-xs-outline,
+  .btn-xs-ghost,
+  .btn-xs-link,
+  .btn-xs-destructive,
+  .btn-sm,
+  .btn-sm-primary,
+  .btn-sm-secondary,
+  .btn-sm-outline,
+  .btn-sm-ghost,
+  .btn-sm-link,
+  .btn-sm-destructive,
+  .btn-lg,
+  .btn-lg-primary,
+  .btn-lg-secondary,
+  .btn-lg-outline,
+  .btn-lg-ghost,
+  .btn-lg-link,
+  .btn-lg-destructive,
+  .btn-icon,
+  .btn-icon-primary,
+  .btn-icon-secondary,
+  .btn-icon-outline,
+  .btn-icon-ghost,
+  .btn-icon-link,
+  .btn-icon-destructive,
+  .btn-xs-icon,
+  .btn-xs-icon-primary,
+  .btn-xs-icon-secondary,
+  .btn-xs-icon-outline,
+  .btn-xs-icon-ghost,
+  .btn-xs-icon-link,
+  .btn-xs-icon-destructive,
+  .btn-sm-icon,
+  .btn-sm-icon-primary,
+  .btn-sm-icon-secondary,
+  .btn-sm-icon-outline,
+  .btn-sm-icon-ghost,
+  .btn-sm-icon-link,
+  .btn-sm-icon-destructive,
+  .btn-lg-icon,
+  .btn-lg-icon-primary,
+  .btn-lg-icon-secondary,
+  .btn-lg-icon-outline,
+  .btn-lg-icon-ghost,
+  .btn-lg-icon-link,
+  .btn-lg-icon-destructive {
+    @apply inline-flex shrink-0 items-center justify-center whitespace-nowrap transition-all outline-none select-none disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0;
+  }
+}
+
+/* Button */
+@layer components {
+  .btn-primary,
+  .btn-secondary,
+  .btn-outline,
+  .btn-ghost,
+  .btn-link,
+  .btn-destructive,
+  .btn-xs,
+  .btn-xs-primary,
+  .btn-xs-secondary,
+  .btn-xs-outline,
+  .btn-xs-ghost,
+  .btn-xs-link,
+  .btn-xs-destructive,
+  .btn-sm,
+  .btn-sm-primary,
+  .btn-sm-secondary,
+  .btn-sm-outline,
+  .btn-sm-ghost,
+  .btn-sm-link,
+  .btn-sm-destructive,
+  .btn-lg,
+  .btn-lg-primary,
+  .btn-lg-secondary,
+  .btn-lg-outline,
+  .btn-lg-ghost,
+  .btn-lg-link,
+  .btn-lg-destructive,
+  .btn-icon,
+  .btn-icon-primary,
+  .btn-icon-secondary,
+  .btn-icon-outline,
+  .btn-icon-ghost,
+  .btn-icon-link,
+  .btn-icon-destructive,
+  .btn-xs-icon,
+  .btn-xs-icon-primary,
+  .btn-xs-icon-secondary,
+  .btn-xs-icon-outline,
+  .btn-xs-icon-ghost,
+  .btn-xs-icon-link,
+  .btn-xs-icon-destructive,
+  .btn-sm-icon,
+  .btn-sm-icon-primary,
+  .btn-sm-icon-secondary,
+  .btn-sm-icon-outline,
+  .btn-sm-icon-ghost,
+  .btn-sm-icon-link,
+  .btn-sm-icon-destructive,
+  .btn-lg-icon,
+  .btn-lg-icon-primary,
+  .btn-lg-icon-secondary,
+  .btn-lg-icon-outline,
+  .btn-lg-icon-ghost,
+  .btn-lg-icon-link,
+  .btn-lg-icon-destructive {
+    @apply rounded-md border border-transparent bg-clip-padding text-sm font-medium focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive aria-invalid:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 active:not-aria-[haspopup]:translate-y-px [&_svg:not([class*='size-'])]:size-4;
+  }
+
+  .btn-primary,
+  .btn-secondary,
+  .btn-outline,
+  .btn-ghost,
+  .btn-link,
+  .btn-destructive {
+    @apply h-9 gap-1.5 px-2.5;
+  }
+
+  .btn-xs,
+  .btn-xs-primary,
+  .btn-xs-secondary,
+  .btn-xs-outline,
+  .btn-xs-ghost,
+  .btn-xs-link,
+  .btn-xs-destructive {
+    @apply h-6 gap-1 px-2 text-xs rounded-[min(var(--radius-md),8px)] [&_svg:not([class*='size-'])]:size-3;
+  }
+
+  .btn-sm,
+  .btn-sm-primary,
+  .btn-sm-secondary,
+  .btn-sm-outline,
+  .btn-sm-ghost,
+  .btn-sm-link,
+  .btn-sm-destructive {
+    @apply h-8 gap-1 px-2.5 rounded-[min(var(--radius-md),10px)];
+  }
+
+  .btn-lg,
+  .btn-lg-primary,
+  .btn-lg-secondary,
+  .btn-lg-outline,
+  .btn-lg-ghost,
+  .btn-lg-link,
+  .btn-lg-destructive {
+    @apply h-10 gap-1.5 px-2.5;
+  }
+
+  .btn-icon,
+  .btn-icon-primary,
+  .btn-icon-secondary,
+  .btn-icon-outline,
+  .btn-icon-ghost,
+  .btn-icon-link,
+  .btn-icon-destructive {
+    @apply size-9;
+  }
+
+  .btn-xs-icon,
+  .btn-xs-icon-primary,
+  .btn-xs-icon-secondary,
+  .btn-xs-icon-outline,
+  .btn-xs-icon-ghost,
+  .btn-xs-icon-link,
+  .btn-xs-icon-destructive {
+    @apply size-6 rounded-[min(var(--radius-md),8px)] [&_svg:not([class*='size-'])]:size-3;
+  }
+
+  .btn-sm-icon,
+  .btn-sm-icon-primary,
+  .btn-sm-icon-secondary,
+  .btn-sm-icon-outline,
+  .btn-sm-icon-ghost,
+  .btn-sm-icon-link,
+  .btn-sm-icon-destructive {
+    @apply size-8 rounded-[min(var(--radius-md),10px)];
+  }
+
+  .btn-lg-icon,
+  .btn-lg-icon-primary,
+  .btn-lg-icon-secondary,
+  .btn-lg-icon-outline,
+  .btn-lg-icon-ghost,
+  .btn-lg-icon-link,
+  .btn-lg-icon-destructive {
+    @apply size-10;
+  }
+
+  .btn-primary,
+  .btn-xs,
+  .btn-xs-primary,
+  .btn-sm,
+  .btn-sm-primary,
+  .btn-lg,
+  .btn-lg-primary,
+  .btn-icon,
+  .btn-icon-primary,
+  .btn-xs-icon,
+  .btn-xs-icon-primary,
+  .btn-sm-icon,
+  .btn-sm-icon-primary,
+  .btn-lg-icon,
+  .btn-lg-icon-primary {
+    @apply bg-primary text-primary-foreground hover:bg-primary/80;
+  }
+
+  .btn-secondary,
+  .btn-xs-secondary,
+  .btn-sm-secondary,
+  .btn-lg-secondary,
+  .btn-icon-secondary,
+  .btn-xs-icon-secondary,
+  .btn-sm-icon-secondary,
+  .btn-lg-icon-secondary {
+    @apply bg-secondary text-secondary-foreground hover:bg-[color-mix(in_oklch,var(--secondary),var(--foreground)_5%)] aria-expanded:bg-secondary aria-expanded:text-secondary-foreground;
+  }
+
+  .btn-outline,
+  .btn-xs-outline,
+  .btn-sm-outline,
+  .btn-lg-outline,
+  .btn-icon-outline,
+  .btn-xs-icon-outline,
+  .btn-sm-icon-outline,
+  .btn-lg-icon-outline {
+    @apply border-border bg-background shadow-xs hover:bg-muted hover:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50 aria-expanded:bg-muted aria-expanded:text-foreground;
+  }
+
+  .btn-ghost,
+  .btn-xs-ghost,
+  .btn-sm-ghost,
+  .btn-lg-ghost,
+  .btn-icon-ghost,
+  .btn-xs-icon-ghost,
+  .btn-sm-icon-ghost,
+  .btn-lg-icon-ghost {
+    @apply hover:bg-muted hover:text-foreground dark:hover:bg-muted/50 aria-expanded:bg-muted aria-expanded:text-foreground;
+  }
+
+  .btn-link,
+  .btn-xs-link,
+  .btn-sm-link,
+  .btn-lg-link,
+  .btn-icon-link,
+  .btn-xs-icon-link,
+  .btn-sm-icon-link,
+  .btn-lg-icon-link {
+    @apply text-primary underline-offset-4 hover:underline;
+  }
+
+  .btn-destructive,
+  .btn-xs-destructive,
+  .btn-sm-destructive,
+  .btn-lg-destructive,
+  .btn-icon-destructive,
+  .btn-xs-icon-destructive,
+  .btn-sm-icon-destructive,
+  .btn-lg-icon-destructive {
+    @apply bg-destructive/10 text-destructive hover:bg-destructive/20 dark:bg-destructive/20 dark:hover:bg-destructive/30 focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40;
+  }
+
+}
+
+/* Badge legacy aliases */
+@layer components {
+  .badge-primary,
+  .badge-secondary,
+  .badge-destructive,
+  .badge-outline,
+  .badge-ghost,
+  .badge-link {
+    @apply inline-flex w-fit shrink-0 items-center justify-center overflow-hidden whitespace-nowrap focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&>svg]:pointer-events-none;
+    @apply h-5 gap-1 rounded-4xl border border-transparent px-2 py-0.5 text-xs font-medium transition-all [&>svg]:size-3!;
+  }
+
+  .badge-primary {
+    @apply bg-primary text-primary-foreground [a]:hover:bg-primary/80;
+  }
+
+  .badge-secondary {
+    @apply bg-secondary text-secondary-foreground [a]:hover:bg-secondary/80;
+  }
+
+  .badge-outline {
+    @apply border-border text-foreground [a]:hover:bg-muted [a]:hover:text-muted-foreground;
+  }
+
+  .badge-destructive {
+    @apply bg-destructive/10 [a]:hover:bg-destructive/20 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 text-destructive dark:bg-destructive/20;
+  }
+
+  .badge-ghost {
+    @apply hover:bg-muted hover:text-muted-foreground dark:hover:bg-muted/50;
+  }
+
+  .badge-link {
+    @apply text-primary underline-offset-4 hover:underline;
+  }
+}
+
+/* Alert legacy aliases */
+@layer components {
+  .alert-destructive {
+    @apply relative w-full;
+    @apply grid gap-0.5 rounded-lg border px-4 py-3 text-start text-sm has-[>svg]:grid-cols-[auto_1fr] has-[>svg]:gap-x-2.5 [&>svg]:row-span-2 [&>svg]:translate-y-0.5 [&>svg]:text-current [&>svg:not([class*='size-'])]:size-4;
+    @apply text-destructive bg-card;
+  }
+
+  .alert-destructive:has(> footer) {
+    @apply pe-18;
+  }
+
+  .alert-destructive > :is(h2, h3, h4, h5, h6, strong, [data-title]) {
+    @apply min-h-4 font-medium;
+  }
+
+  .alert-destructive:has(> svg) > :is(h2, h3, h4, h5, h6, strong, [data-title]) {
+    @apply col-start-2;
+  }
+
+  .alert-destructive > section {
+    @apply grid justify-items-start gap-1 text-destructive/90 text-sm text-balance md:text-pretty [&_p:not(:last-child)]:mb-4;
+
+    ul {
+      @apply list-inside list-disc;
+    }
+  }
+
+  .alert-destructive > footer {
+    @apply absolute top-2.5 end-3;
+  }
+}
+
+/* Card legacy aliases */
+@layer components {
+  .card-sm {
+    @apply flex flex-col;
+    @apply ring-foreground/10 bg-card text-card-foreground overflow-hidden rounded-xl text-sm shadow-xs ring-1 has-[>img:first-child]:pt-0 [&>img:first-child]:rounded-t-xl [&>img:last-child]:rounded-b-xl;
+    @apply gap-4 py-4;
+
+    > header {
+      @apply @container/card-header grid auto-rows-min items-start has-[>[data-slot=card-action],>.card-action]:grid-cols-[1fr_auto] has-[>p]:grid-rows-[auto_auto];
+      @apply gap-1 rounded-t-xl px-4 [.border-b]:pb-4;
+    }
+
+    > header > :is(h2, h3, [data-title], .card-title) {
+      @apply text-sm leading-normal font-medium;
+    }
+
+    > header > :is(p, [data-description], .card-description) {
+      @apply text-muted-foreground text-sm;
+    }
+
+    > header > :is([data-slot='card-action'], .card-action) {
+      @apply col-start-2 row-span-2 row-start-1 self-start justify-self-end;
+    }
+
+    > section {
+      @apply px-4;
+    }
+
+    > footer {
+      @apply flex items-center rounded-b-xl px-4 [.border-t]:pt-4;
+    }
+  }
+}
+
+/* Avatar legacy aliases */
+@layer components {
+  .avatar-sm,
+  .avatar-lg {
+    @apply relative inline-flex shrink-0 select-none appearance-none border-0 bg-transparent p-0 align-middle outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 after:absolute after:inset-0 after:rounded-[inherit] after:border after:border-border after:mix-blend-darken dark:after:mix-blend-lighten;
+    @apply rounded-full after:rounded-[inherit];
+  }
+
+  .avatar-sm {
+    @apply size-6;
+  }
+
+  .avatar-lg {
+    @apply size-10;
+  }
+
+  .avatar-sm > img,
+  .avatar-lg > img {
+    @apply absolute inset-0 aspect-square size-full rounded-[inherit] object-cover;
+  }
+
+  .avatar-sm > span:not([data-badge]),
+  .avatar-lg > span:not([data-badge]) {
+    @apply flex size-full items-center justify-center rounded-[inherit] bg-muted text-muted-foreground;
+  }
+
+  .avatar-sm > span:not([data-badge]) {
+    @apply text-xs;
+  }
+
+  .avatar-sm > [data-badge],
+  .avatar-lg > [data-badge] {
+    @apply absolute end-0 bottom-0 z-10 inline-flex items-center justify-center rounded-full bg-blend-color ring-2 select-none;
+    @apply bg-primary text-primary-foreground ring-background;
+  }
+
+  .avatar-sm > [data-badge] {
+    @apply size-2 [&>svg]:hidden;
+  }
+
+  .avatar-lg > [data-badge] {
+    @apply size-3 [&>svg]:size-2;
+  }
+
+  .avatar-group > :is(.avatar-sm, .avatar-lg) {
+    @apply ring-2 ring-background;
+  }
+}

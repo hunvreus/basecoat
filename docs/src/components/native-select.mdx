@@ -1,7 +1,7 @@
 # Native Select
 
-<Preview>
-<select class="select w-[180px]" aria-label="Fruit">
+<Preview class="w-full max-w-48">
+<select class="select w-full" aria-label="Fruit">
   <option value="">Select a fruit</option>
   <option value="apple">Apple</option>
   <option value="banana">Banana</option>
@@ -10,14 +10,12 @@
 </select>
 </Preview>
 
-For a custom listbox with richer styling and JavaScript behavior, see [Select](/components/select).
-
 ## Usage
 
-Add `select` to a native `<select>`. Use standard `<option>` and `<optgroup>` elements.
+Add `class="select"` to a native `<select>`. Use standard `<option>` and `<optgroup>` elements.
 
 ```html
-<select class="select w-[180px]" aria-label="Fruit">
+<select class="select" aria-label="Fruit">
   <option value="">Select a fruit</option>
   <option value="apple">Apple</option>
   <option value="banana">Banana</option>
@@ -26,14 +24,14 @@ Add `select` to a native `<select>`. Use standard `<option>` and `<optgroup>` el
 </select>
 ```
 
-Use **Native Select** for native browser behavior, form integration, and mobile-optimized pickers. Use [Select](/components/select/) for custom option content, multi-select behavior, or JavaScript APIs.
+Use Native Select for native browser behavior, form integration, and mobile-optimized pickers. Use [Select](/components/select/) for custom option content, multi-select behavior, or JavaScript APIs.
 
 ## Examples
 
 ### Groups
 
-<Preview>
-<select class="select w-[220px]" aria-label="Food">
+<Preview class="w-full max-w-48">
+<select class="select w-full" aria-label="Food">
   <option value="">Select food</option>
   <optgroup label="Fruits">
     <option value="apple">Apple</option>
@@ -50,8 +48,8 @@ Use **Native Select** for native browser behavior, form integration, and mobile-
 
 ### Disabled
 
-<Preview>
-<select class="select w-[220px]" aria-label="Fruit" disabled>
+<Preview class="w-full max-w-48">
+<select class="select w-full" aria-label="Fruit" disabled>
   <option value="">Select a fruit</option>
   <option value="apple">Apple</option>
   <option value="banana">Banana</option>
@@ -60,7 +58,7 @@ Use **Native Select** for native browser behavior, form integration, and mobile-
 
 ### Invalid
 
-<Preview class="w-full max-w-sm">
+<Preview class="w-full max-w-48">
 <div role="group" class="field" data-invalid="true">
   <label for="native-select-invalid">Fruit</label>
   <select id="native-select-invalid" class="select w-full" aria-invalid="true" aria-describedby="native-select-invalid-error">
@@ -68,7 +66,7 @@ Use **Native Select** for native browser behavior, form integration, and mobile-
     <option value="apple">Apple</option>
     <option value="banana">Banana</option>
   </select>
-  <p id="native-select-invalid-error" class="field-error">Select a fruit to continue.</p>
+  <p id="native-select-invalid-error" role="alert">Select a fruit to continue.</p>
 </div>
 </Preview>
 
@@ -76,12 +74,12 @@ Use **Native Select** for native browser behavior, form integration, and mobile-
 
 <Preview>
 <div class="flex flex-wrap items-center gap-3">
-  <select class="select w-[180px]" aria-label="Default size">
+  <select class="select w-42" aria-label="Default size">
     <option>Default</option>
     <option>Apple</option>
     <option>Banana</option>
   </select>
-  <select class="select w-[180px]" data-size="sm" aria-label="Small size">
+  <select class="select w-42" data-size="sm" aria-label="Small size">
     <option>Small</option>
     <option>Apple</option>
     <option>Banana</option>
@@ -93,8 +91,8 @@ Use **Native Select** for native browser behavior, form integration, and mobile-
 
 Set `dir="rtl"` on the select or a parent element.
 
-<Preview>
-<select dir="rtl" class="select w-[220px]" aria-label="الفاكهة">
+<Preview class="w-full max-w-48">
+<select dir="rtl" class="select w-full" aria-label="الفاكهة">
   <option value="">اختر فاكهة</option>
   <option value="apple">تفاح</option>
   <option value="banana">موز</option>

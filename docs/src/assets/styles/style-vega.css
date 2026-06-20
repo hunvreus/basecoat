@@ -1,0 +1,5 @@
+@import "tailwindcss" source(none);
+@reference "tailwindcss";
+@reference "../../../../src/css/base/base.css";
+@import "../../../../src/css/basecoat-vega.css";
+@import "../../../../node_modules/reallysimpledocs/src/css/styles/vega.css";

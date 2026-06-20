@@ -1,3 +1,4 @@
+# Sidebar
 
 ## Usage
 
@@ -5,20 +6,18 @@
   This component ships a `sidebar()` macro for Jinja and Nunjucks.
 </Callout>
 
+Sidebar uses a native `<aside>` next to your page content. Basecoat owns the fixed positioning, overlay behavior, active states, nested lists, and `details` submenu styling. Your app still owns the navigation data and current route.
 
 <Steps>
   <Step title="Include the JavaScript files">
-
 ```html
-<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.2/dist/js/basecoat.min.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.2/dist/js/sidebar.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.3/dist/js/basecoat.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.3/dist/js/sidebar.min.js" defer></script>
 ```
-
   </Step>
   <Step title="Add your sidebar HTML">
-
 ```html
-<aside class="sidebar" data-side="left" aria-hidden="false">
+<aside id="sidebar" class="sidebar" data-side="left">
   <nav aria-label="Sidebar navigation">
     <section class="scrollbar-thin">
       <div role="group" aria-labelledby="group-label-content-1">
@@ -76,43 +75,114 @@
   <h1>Content</h1>
 </main>
 ```
-
   </Step>
 </Steps>
 
-#### HTML structure
+### RTL
+
+Set `dir="rtl"` on the sidebar or a parent element. Logical spacing, nested borders, and item content follow document direction. `data-side` is physical: `left` and `right` refer to viewport sides.
+
+<Callout type="warning" title="Differences with shadcn/ui" icon="triangle-alert">
+  Basecoat intentionally supports the stable HTML sidebar surface: fixed left/right sidebars, mobile overlay behavior, grouped navigation, active states, and native `details` submenus. It does not expose shadcn/ui's React provider, rail, inset/floating variants, icon-only collapse mode, menu actions, menu badges, or menu skeleton API.
+</Callout>
+
+### HTML structure
+
+Basecoat maps shadcn/ui's sidebar composition to regular navigation HTML: an `<aside>` root, one `<nav>`, optional header/footer regions, grouped lists, item controls, and native `<details>` for nested menus.
 
 ```html
-<!-- Server-side or router-driven current item -->
-<nav aria-label="Sidebar navigation">
-  <ul>
-    <li><a href="/my-path?page=overview">Overview</a></li>
-    <li><a href="/my-path?page=settings" aria-current="page">Settings</a></li>
-    <li><button type="button" data-active="true">Active action</button></li>
-  </ul>
-</nav>
+<aside id="app-sidebar" class="sidebar" data-side="left">
+  <nav aria-label="Sidebar navigation">
+    <header>
+      <a href="/" aria-label="Home">
+        <svg aria-hidden="true"><!-- ... --></svg>
+        <span>Acme</span>
+      </a>
+    </header>
+
+    <section>
+      <div role="group" aria-labelledby="sidebar-main">
+        <h3 id="sidebar-main">Main</h3>
+        <ul>
+          <li>
+            <a href="/dashboard" aria-current="page">
+              <svg aria-hidden="true"><!-- ... --></svg>
+              <span>Dashboard</span>
+            </a>
+          </li>
+          <li>
+            <button type="button" data-active="true">
+              <svg aria-hidden="true"><!-- ... --></svg>
+              <span>Search</span>
+            </button>
+          </li>
+          <li>
+            <details id="sidebar-settings" open>
+              <summary aria-controls="sidebar-settings-menu">
+                <svg aria-hidden="true"><!-- ... --></svg>
+                <span>Settings</span>
+              </summary>
+              <ul id="sidebar-settings-menu">
+                <li><a href="/settings/profile">Profile</a></li>
+                <li><a href="/settings/team">Team</a></li>
+                <li><a href="/settings/billing">Billing</a></li>
+              </ul>
+            </details>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <footer>
+      <button type="button">
+        <span>Ronan Berder</span>
+      </button>
+    </footer>
+  </nav>
+</aside>
+<main>...</main>
 ```
 
 <dl>
-  <dt><code class="highlight language-html">&lt;aside class="sidebar" aria-hidden="false"&gt;</code></dt>
-  <dd>Sidebar root. Supports <code>id</code>, <code>aria-hidden</code>, <code>data-side="left|right"</code>, <code>data-initial-open</code>, <code>data-initial-mobile-open</code>, and <code>data-breakpoint</code>.</dd>
-  <dt><code class="highlight language-html">&lt;nav aria-label="..."&gt;</code></dt>
-  <dd>Navigation landmark inside the sidebar.</dd>
-  <dt><code class="highlight language-html">&lt;section&gt;</code></dt>
-  <dd>Scrollable sidebar content.</dd>
-  <dt><code class="highlight language-html">&lt;a aria-current="page"&gt;</code></dt>
-  <dd>Current-page link. Use <code>data-active="true"</code> for active non-link items.</dd>
-  <dt><code class="highlight language-html">&lt;details&gt;</code> / <code class="highlight language-html">&lt;summary&gt;</code></dt>
-  <dd>Native disclosure for submenus.</dd>
-  <dt><code class="highlight language-html">&lt;main&gt;</code></dt>
+  <dt><code>&lt;aside class="sidebar"&gt;</code></dt>
+  <dd>
+    Sidebar root. Supports <code>id</code>, <code>data-side="left|right"</code>, <code>data-initial-open</code>, <code>data-initial-mobile-open</code>, and <code>data-breakpoint</code>. JavaScript manages <code>aria-hidden</code>.
+    <dl>
+      <dt><code>&lt;nav aria-label="..."&gt;</code></dt>
+      <dd>
+        Navigation landmark inside the sidebar.
+        <dl>
+          <dt><code>&lt;header&gt;</code></dt>
+          <dd>Optional header for branding, workspace controls, user controls, or persistent actions.</dd>
+          <dt><code>&lt;section&gt;</code></dt>
+          <dd>
+            Scrollable content region between the optional header and footer.
+            <dl>
+              <dt><code>&lt;div role="group" aria-labelledby="..."&gt;</code></dt>
+              <dd>Named navigation group. Use a heading element as the group label.</dd>
+              <dt><code>&lt;ul&gt;</code> + <code>&lt;li&gt;</code></dt>
+              <dd>
+                Menu and menu item structure. Top-level lists and nested submenu lists receive different spacing and borders.
+                <dl>
+                  <dt><code>&lt;a&gt;</code> / <code>&lt;button&gt;</code></dt>
+                  <dd>Menu item control. Use links for navigation and buttons for actions. Supports <code>data-variant="default|outline"</code> and <code>data-size="default|sm|lg"</code>. For links, use <code>&lt;a aria-current="page"&gt;</code> for the current page, otherwise use <code>data-active="true"</code> for active action state.</dd>
+                  <dt><code>&lt;details&gt;</code> / <code>&lt;summary&gt;</code></dt>
+                  <dd>Native disclosure for collapsible submenus. Put the nested <code>&lt;ul&gt;</code> directly after <code>&lt;summary&gt;</code>. Add <code>id</code> and <code>aria-controls</code> when the relationship is not obvious from nearby markup.</dd>
+                  <dt><code>&lt;hr role="separator"&gt;</code></dt>
+                  <dd>Optional separator between groups or menu sections.</dd>
+                </dl>
+              </dd>
+            </dl>
+          </dd>
+          <dt><code>&lt;footer&gt;</code></dt>
+          <dd>Optional footer for account controls, status, or persistent actions.</dd>
+        </dl>
+      </dd>
+    </dl>
+  </dd>
+  <dt><code>&lt;main&gt;</code></dt>
   <dd>Sibling content wrapper. The desktop margin applies to the sibling immediately after the sidebar.</dd>
 </dl>
-
-#### Basecoat differences
-
-Basecoat supports fixed left/right sidebars, mobile overlay behavior, grouped navigation, active states, and native `details` submenus. It does not expose shadcn/ui's React provider, rail, inset/floating variants, icon-only collapse mode, menu actions, menu badges, or menu skeleton API.
-
-RTL content is supported through logical spacing and borders. `data-side` remains physical: `left` means the left side of the viewport and `right` means the right side.
 
 ### JavaScript API
 

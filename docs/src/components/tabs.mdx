@@ -65,8 +65,8 @@
   <Step title="Include the JavaScript files">
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.2/dist/js/basecoat.min.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.2/dist/js/tabs.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.3/dist/js/basecoat.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.3/dist/js/tabs.min.js" defer></script>
 ```
 
   </Step>
@@ -133,19 +133,19 @@
 ### HTML structure
 
 <dl>
-  <dt><code class="highlight language-html">&lt;div class="tabs"&gt;</code></dt>
+  <dt><code>&lt;div class="tabs"&gt;</code></dt>
   <dd>
     Root tabs container. It becomes horizontal or vertical based on the child tablist's <code>aria-orientation</code>.
     <dl>
-      <dt><code class="highlight language-html">&lt;nav role="tablist" aria-orientation="horizontal"&gt;</code></dt>
+      <dt><code>&lt;nav role="tablist" aria-orientation="horizontal"&gt;</code></dt>
       <dd>
         Tablist containing tab buttons. Set <code>aria-orientation="vertical"</code> for vertical tabs and <code>data-variant="line"</code> for the line style.
         <dl>
-          <dt><code class="highlight language-html">&lt;button role="tab" id="&#123; TAB_ID &#125;" aria-controls="&#123; PANEL_ID &#125;" aria-selected="true" tabindex="0"&gt;</code></dt>
+          <dt><code>&lt;button role="tab" id="&#123; TAB_ID &#125;" aria-controls="&#123; PANEL_ID &#125;" aria-selected="true" tabindex="0"&gt;</code></dt>
           <dd>Tab trigger. The active tab has <code>aria-selected="true"</code> and <code>tabindex="0"</code>. Inactive tabs use <code>tabindex="-1"</code>. Disabled tabs use <code>disabled</code> or <code>aria-disabled="true"</code>.</dd>
         </dl>
       </dd>
-      <dt><code class="highlight language-html">&lt;div role="tabpanel" id="&#123; PANEL_ID &#125;" aria-labelledby="&#123; TAB_ID &#125;"&gt;</code></dt>
+      <dt><code>&lt;div role="tabpanel" id="&#123; PANEL_ID &#125;" aria-labelledby="&#123; TAB_ID &#125;"&gt;</code></dt>
       <dd>Panel controlled by a tab. Inactive panels are hidden.</dd>
     </dl>
   </dd>
@@ -162,7 +162,7 @@
 
 ### Line
 
-<Preview class="w-full max-w-md">
+<Preview>
 <div class="tabs" id="tabs-line">
   <nav role="tablist" aria-orientation="horizontal" data-variant="line">
     <button type="button" role="tab" id="tabs-line-tab-1" aria-controls="tabs-line-panel-1" aria-selected="true" tabindex="0">Account</button>
@@ -177,7 +177,7 @@
 
 ### Vertical
 
-<Preview class="w-full max-w-md">
+<Preview>
 <div class="tabs w-full" id="tabs-vertical">
   <nav role="tablist" aria-orientation="vertical">
     <button type="button" role="tab" id="tabs-vertical-tab-1" aria-controls="tabs-vertical-panel-1" aria-selected="true" tabindex="0">Account</button>
@@ -192,7 +192,7 @@
 
 ### Disabled
 
-<Preview class="w-full max-w-md">
+<Preview>
 <div class="tabs" id="tabs-disabled">
   <nav role="tablist" aria-orientation="horizontal">
     <button type="button" role="tab" id="tabs-disabled-tab-1" aria-controls="tabs-disabled-panel-1" aria-selected="true" tabindex="0">Account</button>
@@ -207,7 +207,7 @@
 
 ### Icons
 
-<Preview class="w-full max-w-md">
+<Preview>
 <div class="tabs" id="tabs-icons">
   <nav role="tablist" aria-orientation="horizontal">
     <button type="button" role="tab" id="tabs-icons-tab-1" aria-controls="tabs-icons-panel-1" aria-selected="true" tabindex="0">
@@ -233,7 +233,7 @@
 
 Tabs support document direction. Set `dir="rtl"` on the tabs root or a parent element.
 
-<Preview class="w-full max-w-md">
+<Preview>
 <div dir="rtl">
   <div class="tabs" id="tabs-rtl">
     <nav role="tablist" aria-orientation="horizontal" data-variant="line">

@@ -1,9 +1,47 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'astro/config';
 import reallySimpleDocs from 'reallysimpledocs/astro';
+
+const rsdCssPath = (relativePath) =>
+  fileURLToPath(new URL(`./node_modules/reallysimpledocs/src/css/${relativePath}`, import.meta.url));
+
+function basecoatDocsStyles() {
+  return {
+    name: 'basecoat-docs-styles',
+    hooks: {
+      'astro:config:setup': ({ config }) => {
+        const root = fileURLToPath(config.root);
+        const generatedStyles = path.join(root, '.astro', 'reallysimpledocs', 'styles.css');
+
+        fs.mkdirSync(path.dirname(generatedStyles), { recursive: true });
+        fs.writeFileSync(
+          generatedStyles,
+          [
+            '@import "tailwindcss/theme";',
+            '@import "tailwindcss/utilities";',
+            '@reference "basecoat-css/base";',
+            `@import ${JSON.stringify(rsdCssPath('components.css'))};`,
+            `@import ${JSON.stringify(rsdCssPath('sources.css'))};`,
+            `@import ${JSON.stringify(rsdCssPath('custom.css'))};`,
+            `@import ${JSON.stringify(rsdCssPath('overrides.css'))};`,
+            `@source ${JSON.stringify(fileURLToPath(new URL('./node_modules/reallysimpledocs/src/runtime/**/*.{astro,js,ts}', import.meta.url)))};`,
+            `@source ${JSON.stringify(path.join(root, 'docs/src/**/*.{md,mdx}'))};`,
+            '',
+          ].join('\n'),
+        );
+      },
+    },
+  };
+}
 
 export default defineConfig({
   site: process.env.SITE_URL || 'https://basecoatui.com',
   vite: {
+    build: {
+      assetsInlineLimit: 0,
+    },
     resolve: {
       dedupe: ['basecoat-css'],
     },
@@ -14,6 +52,7 @@ export default defineConfig({
       routeBase: '/',
       style: 'vega',
       components: {
+        Head: './docs/src/site/StyleHead.astro',
         ContentHeader: './docs/src/site/ContentHeader.astro',
       },
       site: {
@@ -36,5 +75,6 @@ export default defineConfig({
         },
       },
     }),
+    basecoatDocsStyles(),
   ],
 });

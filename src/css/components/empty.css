@@ -20,7 +20,7 @@
     @apply flex w-full max-w-sm min-w-0 flex-col items-center text-balance;
   }
 
-  .empty p {
+  .empty > header > p {
     @apply [&>a]:underline [&>a]:underline-offset-4 [&>a:hover]:text-primary;
   }
 }
