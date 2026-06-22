@@ -49,7 +49,7 @@
     "lucide-static": "^1.17.0",
     "nunjucks": "^3.2.4",
     "prettier": "^3.5.3",
-    "reallysimpledocs": "file:../reallysimpledocs",
+    "reallysimpledocs": "^1.0.0-beta.5",
     "tailwindcss": "^4.1.17",
     "terser": "^5.42.0",
     "wrangler": "^4.50.0"
