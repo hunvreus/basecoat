@@ -146,7 +146,18 @@
     const handleMenuMouseleave = () => setActiveItem(state, -1);
     const handleMenuClick = (event) => {
       const menuItem = event.target.closest('[role^="menuitem"]');
-      if (menuItem && !isDisabled(menuItem)) root.close();
+      if (!menuItem || isDisabled(menuItem)) return;
+
+      if (menuItem.getAttribute('role') === 'menuitemcheckbox') {
+        menuItem.setAttribute('aria-checked', menuItem.getAttribute('aria-checked') !== 'true');
+      } else if (menuItem.getAttribute('role') === 'menuitemradio') {
+        const group = menuItem.closest('[role="group"], [role="menu"]');
+        group?.querySelectorAll('[role="menuitemradio"]').forEach((item) => {
+          if (!isDisabled(item)) item.setAttribute('aria-checked', item === menuItem ? 'true' : 'false');
+        });
+      }
+
+      root.close();
     };
 
     const handleDocumentClick = (event) => {

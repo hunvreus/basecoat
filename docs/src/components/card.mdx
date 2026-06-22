@@ -1,30 +1,32 @@
 # Card
 
 <Preview class="w-full max-w-sm">
-<div class="card w-full">
+<div class="card">
   <header>
     <h2>Login to your account</h2>
-    <p>Enter your details below to login to your account</p>
+    <p>Enter your email below to login to your account</p>
+    <div class="card-action">
+      <button type="button" class="btn" data-variant="link">Sign Up</button>
+    </div>
   </header>
   <section>
     <form class="grid gap-6">
       <div class="grid gap-2">
-        <label class="label" for="demo-card-form-email">Email</label>
-        <input class="input" type="email" id="demo-card-form-email" />
+        <label class="label" for="demo-card-email">Email</label>
+        <input class="input" type="email" id="demo-card-email" placeholder="m@example.com" required />
       </div>
       <div class="grid gap-2">
-        <div class="flex items-center gap-2">
-          <label class="label" for="demo-card-form-password">Password</label>
+        <div class="flex items-center">
+          <label class="label" for="demo-card-password">Password</label>
           <a href="#" class="ms-auto inline-block text-sm underline-offset-4 hover:underline">Forgot your password?</a>
         </div>
-        <input class="input" type="password" id="demo-card-form-password" />
+        <input class="input" type="password" id="demo-card-password" required />
       </div>
     </form>
   </section>
-  <footer class="flex flex-col items-center gap-2">
+  <footer class="flex-col gap-2">
     <button type="button" class="btn w-full">Login</button>
     <button type="button" class="btn w-full" data-variant="outline">Login with Google</button>
-    <p class="mt-4 text-center text-sm">Don't have an account? <a href="#" class="underline-offset-4 hover:underline">Sign up</a></p>
   </footer>
 </div>
 </Preview>
@@ -36,6 +38,7 @@
   <header>
     <h2>Card Title</h2>
     <p>Card Description</p>
+    <div class="card-action">Card Action</div>
   </header>
   <section>
     <p>Card Content</p>
@@ -46,7 +49,7 @@
 </div>
 ```
 
-### HTML structure
+## HTML structure
 
 <dl>
   <dt><code>&lt;div class="card"&gt;</code></dt>
@@ -55,18 +58,20 @@
     <dl>
       <dt><code>&lt;header&gt;</code></dt>
       <dd>
-        The header of the card.
+        The card header.
         <dl>
-          <dt><code>&lt;h2&gt;</code></dt>
-          <dd>The title of the card.</dd>
+          <dt><code>&lt;h2&gt;</code> or <code>&lt;h3&gt;</code></dt>
+          <dd>The card title.</dd>
           <dt><code>&lt;p&gt;</code> <span class="badge" data-variant="secondary">Optional</span></dt>
-          <dd>The description of the card.</dd>
+          <dd>The card description.</dd>
+          <dt><code>&lt;div class="card-action"&gt;</code> <span class="badge" data-variant="secondary">Optional</span></dt>
+          <dd>Action or metadata placed in the top-right of the header. Use <code>&lt;menu class="card-action"&gt;</code> when the content is a list of commands.</dd>
         </dl>
       </dd>
       <dt><code>&lt;section&gt;</code></dt>
-      <dd>The content of the card.</dd>
+      <dd>The main card content.</dd>
       <dt><code>&lt;footer&gt;</code> <span class="badge" data-variant="secondary">Optional</span></dt>
-      <dd>The footer of the card.</dd>
+      <dd>Footer actions or secondary content at the bottom of the card.</dd>
     </dl>
   </dd>
 </dl>
@@ -75,103 +80,78 @@
 
 ### Size
 
-<Preview>
+Use `data-size="sm"` to set the size of the card to small. The small size variant uses smaller spacing.
+
+<Preview class="w-full max-w-sm">
 <div class="card" data-size="sm">
   <header>
     <h2>Small Card</h2>
-    <p>A compact card with reduced spacing.</p>
+    <p>This card uses the small size variant.</p>
+    <div class="card-action">
+      <button type="button" class="btn" data-size="sm" data-variant="outline">Action</button>
+    </div>
   </header>
   <section>
-    <p class="text-sm">Use <code>data-size="sm"</code> for denser layouts.</p>
+    <p>The card component supports a size attribute that can be set to <code>sm</code> for a more compact appearance.</p>
   </section>
 </div>
 </Preview>
 
-### With content and footer
+### Image
 
-<Preview>
+Add an image before the card header to create a card with an image.
+
+<Preview class="w-full max-w-sm">
 <div class="card">
+  <img
+    alt="Event cover"
+    class="aspect-video w-full object-cover"
+    src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=1200&auto=format&fit=crop&q=80"
+  />
   <header>
-    <h2>Meeting Notes</h2>
-    <p>Transcript from the meeting with the client.</p>
-  </header>
-  <section class="text-sm">
-    <p>Client requested dashboard redesign with focus on mobile responsiveness.</p>
-    <ol class="mt-4 flex list-decimal flex-col gap-2 ps-6">
-      <li>New analytics widgets for daily/weekly metrics</li>
-      <li>Simplified navigation menu</li>
-      <li>Dark mode support</li>
-      <li>Timeline: 6 weeks</li>
-      <li>Follow-up meeting scheduled for next Tuesday</li>
-    </ol>
-  </section>
-  <footer class="flex items-center">
-    <div class="flex -space-x-2 [&_img]:ring-card [&_img]:ring-2 [&_img]:grayscale [&_img]:size-8 [&_img]:shrink-0 [&_img]:object-cover [&_img]:rounded-full">
-      <img alt="@hunvreus" src="https://github.com/hunvreus.png" />
-      <img alt="@shadcn" src="https://github.com/shadcn.png" />
-      <img alt="@adamwathan" src="https://github.com/adamwathan.png" />
+    <h2>Design systems meetup</h2>
+    <p>A practical talk on component APIs, accessibility, and shipping faster.</p>
+    <div class="card-action">
+      <span class="badge" data-variant="secondary">Featured</span>
     </div>
-  </footer>
-</div>
-</Preview>
-
-### With image
-
-<Preview>
-<div class="card">
-  <header>
-    <h2>Is this an image?</h2>
-    <p>This is a card with an image.</p>
   </header>
-  <section class="px-0">
-    <img
-      alt="Photo by Drew Beamer"
-      loading="lazy"
-      width="500"
-      height="500"
-      class="aspect-video object-cover" style="color:transparent"
-      srcset="
-        https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80&w=640&q=75 1x,
-        https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80&w=1080&q=75 2x
-      "
-      src="https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80&w=1080&q=75"
-    />
-  </section>
-  <footer class="flex items-center gap-2">
-    <span class="badge" data-variant="outline">
-     <svg class="lucide lucide-bed" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M2 4v16" /><path d="M2 8h18a2 2 0 0 1 2 2v10" /><path d="M2 17h20" /><path d="M6 8v9" /></svg>
-      1
-    </span>
-    <span class="badge" data-variant="outline">
-      <svg class="lucide lucide-bath" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M10 4 8 6" /><path d="M17 19v2" /><path d="M2 12h20" /><path d="M7 19v2" /><path d="M9 5 7.621 3.621A2.121 2.121 0 0 0 4 5v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5" /></svg>
-      2
-    </span>
-    <span class="badge" data-variant="outline">
-      <svg class="lucide lucide-land-plot" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="m12 8 6-3-6-3v10" /><path d="m8 11.99-5.5 3.14a1 1 0 0 0 0 1.74l8.5 4.86a2 2 0 0 0 2 0l8.5-4.86a1 1 0 0 0 0-1.74L16 12" /><path d="m6.49 12.85 11.02 6.3" /><path d="M17.51 12.85 6.5 19.15" /></svg>
-      350m²
-    </span>
-    <span class="ms-auto font-medium tabular-nums">
-      $135,000
-    </span>
+  <footer>
+    <button type="button" class="btn w-full">View Event</button>
   </footer>
 </div>
 </Preview>
 
-### RTL
+## RTL
 
 Add `dir="rtl"` to the card or an ancestor.
 
-<Preview>
+<Preview class="w-full max-w-sm">
 <div class="card" dir="rtl">
   <header>
-    <h2>إعدادات الحساب</h2>
-    <p>راجع إعدادات الأمان والإشعارات.</p>
+    <h2>تسجيل الدخول إلى حسابك</h2>
+    <p>أدخل بريدك الإلكتروني أدناه لتسجيل الدخول إلى حسابك</p>
+    <div class="card-action">
+      <button type="button" class="btn" data-variant="link">إنشاء حساب</button>
+    </div>
   </header>
   <section>
-    <p class="text-sm">يمكنك تعديل هذه الإعدادات في أي وقت.</p>
+    <form class="grid gap-6">
+      <div class="grid gap-2">
+        <label class="label" for="demo-card-rtl-email">البريد الإلكتروني</label>
+        <input class="input" type="email" id="demo-card-rtl-email" placeholder="m@example.com" required />
+      </div>
+      <div class="grid gap-2">
+        <div class="flex items-center">
+          <label class="label" for="demo-card-rtl-password">كلمة المرور</label>
+          <a href="#" class="ms-auto inline-block text-sm underline-offset-4 hover:underline">نسيت كلمة المرور؟</a>
+        </div>
+        <input class="input" type="password" id="demo-card-rtl-password" required />
+      </div>
+    </form>
   </section>
-  <footer>
-    <button type="button" class="btn">حفظ</button>
+  <footer class="flex-col gap-2">
+    <button type="button" class="btn w-full">تسجيل الدخول</button>
+    <button type="button" class="btn w-full" data-variant="outline">تسجيل الدخول باستخدام Google</button>
   </footer>
 </div>
 </Preview>

@@ -2,7 +2,9 @@
   const states = new WeakMap();
 
   const isDisabled = (item) =>
-    item.hasAttribute('disabled') || item.getAttribute('aria-disabled') === 'true';
+    item.hasAttribute('disabled') ||
+    item.getAttribute('aria-disabled') === 'true' ||
+    item.getAttribute('data-disabled') === 'true';
 
   const getElements = (container) => ({
     input: container.querySelector('header input'),

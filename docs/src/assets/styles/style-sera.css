@@ -1,5 +1,8 @@
 @import "tailwindcss" source(none);
+@source "../../../../docs/src/**/*.{astro,html,js,md,mdx}";
+@source "../../../../src/pages/**/*.{astro,html,js}";
 @reference "tailwindcss";
 @reference "../../../../src/css/base/base.css";
 @import "../../../../src/css/basecoat-sera.css";
-@import "../../../../node_modules/reallysimpledocs/src/css/styles/sera.css";
+@import "reallysimpledocs/css";
+@import "reallysimpledocs/css/styles/sera";

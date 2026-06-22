@@ -1,0 +1,27 @@
+/* Accordion */
+@layer components {
+  .accordion {
+    @apply flex w-full flex-col;
+  }
+
+  .accordion > details > summary {
+    @apply relative flex w-full flex-1 cursor-pointer list-none items-start justify-between border border-transparent transition-all outline-none;
+  }
+
+  .accordion > details > summary > svg:last-child {
+    @apply pointer-events-none shrink-0 transition-transform;
+  }
+
+  .accordion > details[open] > summary > svg:last-child {
+    @apply rotate-180;
+  }
+
+  .accordion > details[aria-disabled='true'] > summary,
+  .accordion > details > summary[aria-disabled='true'] {
+    @apply pointer-events-none opacity-50;
+  }
+
+  .accordion > details > :not(summary) {
+    @apply overflow-hidden;
+  }
+}

@@ -8,9 +8,30 @@
     @apply w-full min-w-0 outline-hidden placeholder:text-muted-foreground disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50;
   }
 
+  .combobox .input-group input[role='combobox'],
+  .combobox [data-popover] input[role='combobox'] {
+    @apply min-w-0 outline-hidden placeholder:text-muted-foreground disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
   .combobox > svg,
   .combobox-trigger-icon {
     @apply pointer-events-none absolute shrink-0;
+  }
+
+  .combobox:has(> .combobox-chips) > .combobox-trigger-icon {
+    @apply hidden;
+  }
+
+  .combobox [data-clear] {
+    @apply inline-flex size-6 shrink-0 cursor-default appearance-none items-center justify-center border-0 bg-transparent p-0 text-current disabled:pointer-events-none disabled:opacity-50;
+  }
+
+  .combobox [data-clear][hidden] {
+    @apply hidden;
+  }
+
+  .combobox .input-group:has([data-clear]:not([hidden])) button[aria-haspopup='listbox'] {
+    @apply hidden;
   }
 
   .combobox [data-popover] {
@@ -19,7 +40,7 @@
   }
 
   .combobox [role='listbox'] {
-    @apply outline-hidden overflow-y-auto;
+    @apply outline-hidden overflow-x-hidden overflow-y-auto;
   }
 
   .combobox [role='listbox'] [role='group']:not(:has([role='option']:not([aria-hidden='true']))) {
@@ -73,6 +94,6 @@
   }
 
   .combobox-chip-remove {
-    @apply inline-flex items-center justify-center;
+    @apply inline-flex shrink-0 items-center justify-center;
   }
 }

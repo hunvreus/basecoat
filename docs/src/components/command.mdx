@@ -1,12 +1,12 @@
 # Command
 
 <Preview class="w-full max-w-sm">
-<div id="demo-command-standalone" class="command border" aria-label="Command menu">
+<div id="demo-command-standalone" class="command rounded-lg border" aria-label="Command menu">
   <header>
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search-icon lucide-search"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /></svg>
     <input type="text" id="demo-command-standalone-input" placeholder="Type a command or search..." autocomplete="off" autocorrect="off" spellcheck="false" aria-autocomplete="list" role="combobox" aria-expanded="true" aria-controls="demo-command-standalone-menu" />
   </header>
-  <div role="menu" id="demo-command-standalone-menu" aria-orientation="vertical" data-empty="No results found." class="scrollbar-sm">
+  <div role="menu" id="demo-command-standalone-menu" aria-orientation="vertical" data-empty="No results found.">
     <div role="group" aria-labelledby="suggestions">
       <span role="heading" id="suggestions">Suggestions</span>
       <div role="menuitem" data-filter="Calendar" data-keywords="date event schedule">
@@ -28,23 +28,22 @@
       <div role="menuitem" data-filter="Profile" data-keywords="user account">
         <svg class="lucide lucide-user" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>
         <span>Profile</span>
+        <span data-shortcut>⌘P</span>
       </div>
       <div role="menuitem" data-filter="Billing" data-keywords="invoice payment">
         <svg class="lucide lucide-credit-card" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2" /><line x1="2" x2="22" y1="10" y2="10" /></svg>
         <span>Billing</span>
+        <span data-shortcut>⌘B</span>
       </div>
       <div role="menuitem" data-filter="Settings" data-keywords="config preferences">
         <svg class="lucide lucide-settings" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915" /><circle cx="12" cy="12" r="3" /></svg>
         <span>Settings</span>
+        <span data-shortcut>⌘S</span>
       </div>
     </div>
   </div>
 </div>
 </Preview>
-
-## About
-
-shadcn/ui's Command component is built on `cmdk`. Basecoat implements the same command-menu pattern with vanilla HTML, CSS, and a small JavaScript controller for filtering, active item navigation, and dialog closing.
 
 ## Usage
 
@@ -69,7 +68,7 @@ shadcn/ui's Command component is built on `cmdk`. Basecoat implements the same c
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search-icon lucide-search"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /></svg>
     <input type="text" id="demo-command-standalone-input" placeholder="Type a command or search..." autocomplete="off" autocorrect="off" spellcheck="false" aria-autocomplete="list" role="combobox" aria-expanded="true" aria-controls="demo-command-standalone-menu" />
   </header>
-  <div role="menu" id="demo-command-standalone-menu" aria-orientation="vertical" data-empty="No results found." class="scrollbar-sm">
+  <div role="menu" id="demo-command-standalone-menu" aria-orientation="vertical" data-empty="No results found.">
     <div role="group" aria-labelledby="suggestions">
       <span role="heading" id="suggestions">Suggestions</span>
       <div role="menuitem" data-filter="Calendar" data-keywords="date event schedule">
@@ -91,14 +90,17 @@ shadcn/ui's Command component is built on `cmdk`. Basecoat implements the same c
       <div role="menuitem" data-filter="Profile" data-keywords="user account">
         <svg class="lucide lucide-user" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>
         <span>Profile</span>
+        <span data-shortcut>⌘P</span>
       </div>
       <div role="menuitem" data-filter="Billing" data-keywords="invoice payment">
         <svg class="lucide lucide-credit-card" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2" /><line x1="2" x2="22" y1="10" y2="10" /></svg>
         <span>Billing</span>
+        <span data-shortcut>⌘B</span>
       </div>
       <div role="menuitem" data-filter="Settings" data-keywords="config preferences">
         <svg class="lucide lucide-settings" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915" /><circle cx="12" cy="12" r="3" /></svg>
         <span>Settings</span>
+        <span data-shortcut>⌘S</span>
       </div>
     </div>
   </div>
@@ -126,7 +128,7 @@ The command menu can be used standalone or inside a native dialog. The structure
 <dl>
   <dt><code>&lt;dialog class="command-dialog"&gt;</code> <span class="badge" data-variant="secondary">Optional</span></dt>
   <dd>
-    Dialog variant. Wraps one <code>&lt;div class="command"&gt;</code>. Add <code>aria-label</code> or <code>aria-labelledby</code> for an accessible name.
+    Dialog variant. Wraps one direct child <code>&lt;div class="command"&gt;</code>. Add <code>aria-label</code> or <code>aria-labelledby</code> for an accessible name.
     <dl>
       <dt><code>&lt;div class="command"&gt;</code></dt>
       <dd>
@@ -149,7 +151,7 @@ The command menu can be used standalone or inside a native dialog. The structure
               <dt><code>&lt;span role="heading" id="&#123; HEADING_ID &#125;"&gt;</code> <span class="badge" data-variant="secondary">Optional</span></dt>
               <dd>Group heading. Use an <code>id</code> when the parent group uses <code>aria-labelledby</code>.</dd>
               <dt><code>&lt;div role="menuitem"&gt;</code> or <code>&lt;a role="menuitem"&gt;</code></dt>
-              <dd>Selectable command item. Use <code>&lt;a&gt;</code> for navigation and <code>&lt;div&gt;</code> for actions. Supports <code>data-filter</code>, <code>data-keywords</code>, <code>data-force</code>, <code>data-keep-command-open</code>, and <code>aria-disabled="true"</code>.</dd>
+              <dd>Selectable command item. Use <code>&lt;a&gt;</code> for navigation and <code>&lt;div&gt;</code> for actions. Supports <code>data-filter</code>, <code>data-keywords</code>, <code>data-force</code>, <code>data-keep-command-open</code>, <code>aria-disabled="true"</code>, and <code>data-disabled="true"</code>.</dd>
               <dt><code>&lt;span data-shortcut&gt;</code> <span class="badge" data-variant="secondary">Optional</span></dt>
               <dd>Shortcut hint aligned to the inline end of the item.</dd>
               <dt><code>&lt;span data-indicator&gt;</code> <span class="badge" data-variant="secondary">Optional</span></dt>
@@ -174,22 +176,75 @@ The command menu can be used standalone or inside a native dialog. The structure
 
 ### Basic
 
-A simple command menu in a dialog. The button also shows the keyboard shortcut used in this example.
+A simple command menu in a dialog.
 
 <Preview>
-<button type="button" class="btn" data-variant="outline" onclick="document.getElementById('command-basic').showModal()">
-  Open command menu
-  <kbd class="kbd">⌘J</kbd>
-</button>
+<button type="button" class="btn" data-variant="outline" onclick="document.getElementById('command-basic').showModal()">Open Menu</button>
 <dialog id="command-basic" class="command-dialog" aria-label="Command menu" onclick="if (event.target === this) this.close()">
   <div class="command">
     <header>
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search-icon lucide-search"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /></svg>
       <input type="text" id="command-basic-input" placeholder="Type a command or search..." autocomplete="off" autocorrect="off" spellcheck="false" aria-autocomplete="list" role="combobox" aria-expanded="true" aria-controls="command-basic-menu" />
     </header>
-    <div role="menu" id="command-basic-menu" aria-orientation="vertical" data-empty="No results found." class="scrollbar-sm">
+    <div role="menu" id="command-basic-menu" aria-orientation="vertical" data-empty="No results found.">
       <div role="group" aria-labelledby="command-basic-suggestions">
         <span role="heading" id="command-basic-suggestions">Suggestions</span>
+        <div role="menuitem" data-filter="Calendar">Calendar</div>
+        <div role="menuitem" data-filter="Search Emoji">Search Emoji</div>
+        <div role="menuitem" data-filter="Calculator">Calculator</div>
+      </div>
+    </div>
+  </div>
+</dialog>
+</Preview>
+
+### Shortcuts
+
+<Preview>
+<button type="button" class="btn" data-variant="outline" onclick="document.getElementById('command-shortcuts-dialog').showModal()">Open Menu</button>
+<dialog id="command-shortcuts-dialog" class="command-dialog" aria-label="Command menu" onclick="if (event.target === this) this.close()">
+  <div class="command">
+    <header>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search-icon lucide-search"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /></svg>
+      <input type="text" id="command-shortcuts-input" placeholder="Type a command or search..." autocomplete="off" autocorrect="off" spellcheck="false" aria-autocomplete="list" role="combobox" aria-expanded="true" aria-controls="command-shortcuts-menu" />
+    </header>
+    <div role="menu" id="command-shortcuts-menu" aria-orientation="vertical" data-empty="No results found.">
+      <div role="group" aria-labelledby="command-shortcuts-settings">
+        <span role="heading" id="command-shortcuts-settings">Settings</span>
+        <div role="menuitem" data-filter="Profile" data-keywords="user account">
+          <svg class="lucide lucide-user" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>
+          <span>Profile</span>
+          <span data-shortcut>⌘P</span>
+        </div>
+        <div role="menuitem" data-filter="Billing" data-keywords="invoice payment">
+          <svg class="lucide lucide-credit-card" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2" /><line x1="2" x2="22" y1="10" y2="10" /></svg>
+          <span>Billing</span>
+          <span data-shortcut>⌘B</span>
+        </div>
+        <div role="menuitem" data-filter="Settings" data-keywords="config preferences">
+          <svg class="lucide lucide-settings" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915" /><circle cx="12" cy="12" r="3" /></svg>
+          <span>Settings</span>
+          <span data-shortcut>⌘S</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</dialog>
+</Preview>
+
+### Groups
+
+<Preview>
+<button type="button" class="btn" data-variant="outline" onclick="document.getElementById('command-groups-dialog').showModal()">Open Menu</button>
+<dialog id="command-groups-dialog" class="command-dialog" aria-label="Command menu" onclick="if (event.target === this) this.close()">
+  <div class="command">
+    <header>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search-icon lucide-search"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /></svg>
+      <input type="text" id="command-groups-input" placeholder="Type a command or search..." autocomplete="off" autocorrect="off" spellcheck="false" aria-autocomplete="list" role="combobox" aria-expanded="true" aria-controls="command-groups-menu" />
+    </header>
+    <div role="menu" id="command-groups-menu" aria-orientation="vertical" data-empty="No results found.">
+      <div role="group" aria-labelledby="command-groups-suggestions">
+        <span role="heading" id="command-groups-suggestions">Suggestions</span>
         <div role="menuitem" data-filter="Calendar" data-keywords="date event schedule">
           <svg class="lucide lucide-calendar" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4" /><path d="M16 2v4" /><rect width="18" height="18" x="3" y="4" rx="2" /><path d="M3 10h18" /></svg>
           <span>Calendar</span>
@@ -198,241 +253,133 @@ A simple command menu in a dialog. The button also shows the keyboard shortcut u
           <svg class="lucide lucide-smile" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="M8 14s1.5 2 4 2 4-2 4-2" /><line x1="9" x2="9.01" y1="9" y2="9" /><line x1="15" x2="15.01" y1="9" y2="9" /></svg>
           <span>Search Emoji</span>
         </div>
-        <div role="menuitem" aria-disabled="true">
+        <div role="menuitem" data-filter="Calculator">
           <svg class="lucide lucide-calculator" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="20" x="4" y="2" rx="2" /><line x1="8" x2="16" y1="6" y2="6" /><line x1="16" x2="16" y1="14" y2="18" /><path d="M16 10h.01" /><path d="M12 10h.01" /><path d="M8 10h.01" /><path d="M12 14h.01" /><path d="M8 14h.01" /><path d="M12 18h.01" /><path d="M8 18h.01" /></svg>
           <span>Calculator</span>
         </div>
       </div>
       <hr role="separator" />
-      <div role="group" aria-labelledby="command-basic-settings">
-        <span role="heading" id="command-basic-settings">Settings</span>
+      <div role="group" aria-labelledby="command-groups-settings">
+        <span role="heading" id="command-groups-settings">Settings</span>
         <div role="menuitem" data-filter="Profile" data-keywords="user account">
           <svg class="lucide lucide-user" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>
           <span>Profile</span>
+          <span data-shortcut>⌘P</span>
         </div>
         <div role="menuitem" data-filter="Billing" data-keywords="invoice payment">
           <svg class="lucide lucide-credit-card" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2" /><line x1="2" x2="22" y1="10" y2="10" /></svg>
           <span>Billing</span>
+          <span data-shortcut>⌘B</span>
         </div>
         <div role="menuitem" data-filter="Settings" data-keywords="config preferences">
           <svg class="lucide lucide-settings" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915" /><circle cx="12" cy="12" r="3" /></svg>
           <span>Settings</span>
+          <span data-shortcut>⌘S</span>
         </div>
       </div>
     </div>
   </div>
 </dialog>
-<script>
-  document.addEventListener("keydown", (event) => {
-    if ((event.metaKey || event.ctrlKey) && event.key === "j") {
-      event.preventDefault();
-      const dialog = document.getElementById("command-basic");
-      dialog.open ? dialog.close() : dialog.showModal();
-      dialog.querySelector("header input")?.focus();
-    }
-  });
-</script>
-</Preview>
-
-### Shortcuts
-
-<Preview class="w-full max-w-sm">
-<div id="command-shortcuts" class="command border" aria-label="Command menu">
-  <header>
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search-icon lucide-search"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /></svg>
-    <input type="text" id="command-shortcuts-input" placeholder="Type a command or search..." autocomplete="off" autocorrect="off" spellcheck="false" aria-autocomplete="list" role="combobox" aria-expanded="true" aria-controls="command-shortcuts-menu" />
-  </header>
-  <div role="menu" id="command-shortcuts-menu" aria-orientation="vertical" data-empty="No results found." class="scrollbar-sm">
-    <div role="group" aria-labelledby="command-shortcuts-suggestions">
-      <span role="heading" id="command-shortcuts-suggestions">Suggestions</span>
-      <div role="menuitem" data-filter="Calendar" data-keywords="date event schedule">
-        <svg class="lucide lucide-calendar" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4" /><path d="M16 2v4" /><rect width="18" height="18" x="3" y="4" rx="2" /><path d="M3 10h18" /></svg>
-        <span>Calendar</span>
-        <span data-shortcut>⌘K</span>
-      </div>
-      <div role="menuitem" data-filter="Search Emoji" data-keywords="emoji smile reaction">
-        <svg class="lucide lucide-smile" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="M8 14s1.5 2 4 2 4-2 4-2" /><line x1="9" x2="9.01" y1="9" y2="9" /><line x1="15" x2="15.01" y1="9" y2="9" /></svg>
-        <span>Search Emoji</span>
-        <span data-shortcut>⌘E</span>
-      </div>
-      <div role="menuitem" aria-disabled="true">
-        <svg class="lucide lucide-calculator" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="20" x="4" y="2" rx="2" /><line x1="8" x2="16" y1="6" y2="6" /><line x1="16" x2="16" y1="14" y2="18" /><path d="M16 10h.01" /><path d="M12 10h.01" /><path d="M8 10h.01" /><path d="M12 14h.01" /><path d="M8 14h.01" /><path d="M12 18h.01" /><path d="M8 18h.01" /></svg>
-        <span>Calculator</span>
-      </div>
-    </div>
-    <hr role="separator" />
-    <div role="group" aria-labelledby="command-shortcuts-settings">
-      <span role="heading" id="command-shortcuts-settings">Settings</span>
-      <div role="menuitem" data-filter="Profile" data-keywords="user account">
-        <svg class="lucide lucide-user" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>
-        <span>Profile</span>
-        <span data-shortcut>⌘P</span>
-      </div>
-      <div role="menuitem" data-filter="Billing" data-keywords="invoice payment">
-        <svg class="lucide lucide-credit-card" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2" /><line x1="2" x2="22" y1="10" y2="10" /></svg>
-        <span>Billing</span>
-        <span data-shortcut>⌘B</span>
-      </div>
-      <div role="menuitem" data-filter="Settings" data-keywords="config preferences">
-        <svg class="lucide lucide-settings" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915" /><circle cx="12" cy="12" r="3" /></svg>
-        <span>Settings</span>
-        <span data-shortcut>⌘S</span>
-      </div>
-    </div>
-  </div>
-</div>
-</Preview>
-
-### Groups
-
-<Preview class="w-full max-w-sm">
-<div id="command-groups" class="command border" aria-label="Command menu">
-  <header>
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search-icon lucide-search"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /></svg>
-    <input type="text" id="command-groups-input" placeholder="Type a command or search..." autocomplete="off" autocorrect="off" spellcheck="false" aria-autocomplete="list" role="combobox" aria-expanded="true" aria-controls="command-groups-menu" />
-  </header>
-  <div role="menu" id="command-groups-menu" aria-orientation="vertical" data-empty="No results found." class="scrollbar-sm">
-    <div role="group" aria-labelledby="command-groups-suggestions">
-      <span role="heading" id="command-groups-suggestions">Suggestions</span>
-      <div role="menuitem" data-filter="Calendar" data-keywords="date event schedule">
-        <svg class="lucide lucide-calendar" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4" /><path d="M16 2v4" /><rect width="18" height="18" x="3" y="4" rx="2" /><path d="M3 10h18" /></svg>
-        <span>Calendar</span>
-      </div>
-      <div role="menuitem" data-filter="Search Emoji" data-keywords="emoji smile reaction">
-        <svg class="lucide lucide-smile" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="M8 14s1.5 2 4 2 4-2 4-2" /><line x1="9" x2="9.01" y1="9" y2="9" /><line x1="15" x2="15.01" y1="9" y2="9" /></svg>
-        <span>Search Emoji</span>
-      </div>
-      <div role="menuitem" aria-disabled="true">
-        <svg class="lucide lucide-calculator" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="20" x="4" y="2" rx="2" /><line x1="8" x2="16" y1="6" y2="6" /><line x1="16" x2="16" y1="14" y2="18" /><path d="M16 10h.01" /><path d="M12 10h.01" /><path d="M8 10h.01" /><path d="M12 14h.01" /><path d="M8 14h.01" /><path d="M12 18h.01" /><path d="M8 18h.01" /></svg>
-        <span>Calculator</span>
-      </div>
-    </div>
-    <hr role="separator" />
-    <div role="group" aria-labelledby="command-groups-settings">
-      <span role="heading" id="command-groups-settings">Settings</span>
-      <div role="menuitem" data-filter="Profile" data-keywords="user account">
-        <svg class="lucide lucide-user" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>
-        <span>Profile</span>
-      </div>
-      <div role="menuitem" data-filter="Billing" data-keywords="invoice payment">
-        <svg class="lucide lucide-credit-card" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2" /><line x1="2" x2="22" y1="10" y2="10" /></svg>
-        <span>Billing</span>
-      </div>
-      <div role="menuitem" data-filter="Settings" data-keywords="config preferences">
-        <svg class="lucide lucide-settings" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915" /><circle cx="12" cy="12" r="3" /></svg>
-        <span>Settings</span>
-      </div>
-    </div>
-  </div>
-</div>
 </Preview>
 
 ### Scrollable
 
-<Preview class="w-full max-w-sm">
-<div id="command-scrollable" class="command border" aria-label="Command menu">
-  <header>
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search-icon lucide-search"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /></svg>
-    <input type="text" id="command-scrollable-input" placeholder="Type a command or search..." autocomplete="off" autocorrect="off" spellcheck="false" aria-autocomplete="list" role="combobox" aria-expanded="true" aria-controls="command-scrollable-menu" />
-  </header>
-  <div role="menu" id="command-scrollable-menu" aria-orientation="vertical" data-empty="No results found." class="scrollbar-sm">
-    <div role="group" aria-labelledby="command-scrollable-heading">
-      <span role="heading" id="command-scrollable-heading">Pages</span>
-      <div role="menuitem" data-filter="Page 1">
-        <svg class="lucide lucide-file" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" /><path d="M14 2v5a1 1 0 0 0 1 1h5" /></svg>
-        <span>Page 1</span>
+<Preview>
+<button type="button" class="btn" data-variant="outline" onclick="document.getElementById('command-scrollable-dialog').showModal()">Open Menu</button>
+<dialog id="command-scrollable-dialog" class="command-dialog" aria-label="Command menu" onclick="if (event.target === this) this.close()">
+  <div class="command">
+    <header>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search-icon lucide-search"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /></svg>
+      <input type="text" id="command-scrollable-input" placeholder="Type a command or search..." autocomplete="off" autocorrect="off" spellcheck="false" aria-autocomplete="list" role="combobox" aria-expanded="true" aria-controls="command-scrollable-menu" />
+    </header>
+    <div role="menu" id="command-scrollable-menu" aria-orientation="vertical" data-empty="No results found.">
+      <div role="group" aria-labelledby="command-scrollable-navigation">
+        <span role="heading" id="command-scrollable-navigation">Navigation</span>
+        <div role="menuitem" data-filter="Home"><svg class="lucide lucide-home" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8" /><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /></svg><span>Home</span><span data-shortcut>⌘H</span></div>
+        <div role="menuitem" data-filter="Inbox"><svg class="lucide lucide-inbox" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12" /><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z" /></svg><span>Inbox</span><span data-shortcut>⌘I</span></div>
+        <div role="menuitem" data-filter="Documents"><svg class="lucide lucide-file-text" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" /><path d="M14 2v5a1 1 0 0 0 1 1h5" /><path d="M10 9H8" /><path d="M16 13H8" /><path d="M16 17H8" /></svg><span>Documents</span><span data-shortcut>⌘D</span></div>
+        <div role="menuitem" data-filter="Folders"><svg class="lucide lucide-folder" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z" /></svg><span>Folders</span><span data-shortcut>⌘F</span></div>
       </div>
-      <div role="menuitem" data-filter="Page 2">
-        <svg class="lucide lucide-file" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" /><path d="M14 2v5a1 1 0 0 0 1 1h5" /></svg>
-        <span>Page 2</span>
+      <hr role="separator" />
+      <div role="group" aria-labelledby="command-scrollable-actions">
+        <span role="heading" id="command-scrollable-actions">Actions</span>
+        <div role="menuitem" data-filter="New File"><svg class="lucide lucide-plus" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14" /><path d="M12 5v14" /></svg><span>New File</span><span data-shortcut>⌘N</span></div>
+        <div role="menuitem" data-filter="New Folder"><svg class="lucide lucide-folder-plus" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 10v6" /><path d="M9 13h6" /><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z" /></svg><span>New Folder</span><span data-shortcut>⇧⌘N</span></div>
+        <div role="menuitem" data-filter="Copy"><svg class="lucide lucide-copy" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2" /><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" /></svg><span>Copy</span><span data-shortcut>⌘C</span></div>
+        <div role="menuitem" data-filter="Cut"><svg class="lucide lucide-scissors" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3" /><path d="M8.12 8.12 12 12" /><path d="M20 4 8.12 15.88" /><circle cx="6" cy="18" r="3" /><path d="M14.8 14.8 20 20" /></svg><span>Cut</span><span data-shortcut>⌘X</span></div>
+        <div role="menuitem" data-filter="Paste"><svg class="lucide lucide-clipboard-paste" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 14h10" /><path d="M16 4h2a2 2 0 0 1 2 2v1.344" /><path d="m17 18 4-4-4-4" /><path d="M8 4H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 1.793-1.113" /><rect x="8" y="2" width="8" height="4" rx="1" /></svg><span>Paste</span><span data-shortcut>⌘V</span></div>
+        <div role="menuitem" data-filter="Delete"><svg class="lucide lucide-trash" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" /><path d="M3 6h18" /><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" /></svg><span>Delete</span><span data-shortcut>⌫</span></div>
       </div>
-      <div role="menuitem" data-filter="Page 3">
-        <svg class="lucide lucide-file" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" /><path d="M14 2v5a1 1 0 0 0 1 1h5" /></svg>
-        <span>Page 3</span>
+      <hr role="separator" />
+      <div role="group" aria-labelledby="command-scrollable-view">
+        <span role="heading" id="command-scrollable-view">View</span>
+        <div role="menuitem" data-filter="Grid View"><svg class="lucide lucide-layout-grid" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="7" x="3" y="3" rx="1" /><rect width="7" height="7" x="14" y="3" rx="1" /><rect width="7" height="7" x="14" y="14" rx="1" /><rect width="7" height="7" x="3" y="14" rx="1" /></svg><span>Grid View</span></div>
+        <div role="menuitem" data-filter="List View"><svg class="lucide lucide-list" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h.01" /><path d="M3 12h.01" /><path d="M3 19h.01" /><path d="M8 5h13" /><path d="M8 12h13" /><path d="M8 19h13" /></svg><span>List View</span></div>
+        <div role="menuitem" data-filter="Zoom In"><svg class="lucide lucide-zoom-in" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8" /><line x1="21" x2="16.65" y1="21" y2="16.65" /><line x1="11" x2="11" y1="8" y2="14" /><line x1="8" x2="14" y1="11" y2="11" /></svg><span>Zoom In</span><span data-shortcut>⌘+</span></div>
+        <div role="menuitem" data-filter="Zoom Out"><svg class="lucide lucide-zoom-out" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8" /><line x1="21" x2="16.65" y1="21" y2="16.65" /><line x1="8" x2="14" y1="11" y2="11" /></svg><span>Zoom Out</span><span data-shortcut>⌘-</span></div>
       </div>
-      <div role="menuitem" data-filter="Page 4">
-        <svg class="lucide lucide-file" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" /><path d="M14 2v5a1 1 0 0 0 1 1h5" /></svg>
-        <span>Page 4</span>
+      <hr role="separator" />
+      <div role="group" aria-labelledby="command-scrollable-account">
+        <span role="heading" id="command-scrollable-account">Account</span>
+        <div role="menuitem" data-filter="Profile"><svg class="lucide lucide-user" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg><span>Profile</span><span data-shortcut>⌘P</span></div>
+        <div role="menuitem" data-filter="Billing"><svg class="lucide lucide-credit-card" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2" /><line x1="2" x2="22" y1="10" y2="10" /></svg><span>Billing</span><span data-shortcut>⌘B</span></div>
+        <div role="menuitem" data-filter="Settings"><svg class="lucide lucide-settings" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915" /><circle cx="12" cy="12" r="3" /></svg><span>Settings</span><span data-shortcut>⌘S</span></div>
+        <div role="menuitem" data-filter="Notifications"><svg class="lucide lucide-bell" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.268 21a2 2 0 0 0 3.464 0" /><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326" /></svg><span>Notifications</span></div>
+        <div role="menuitem" data-filter="Help & Support"><svg class="lucide lucide-circle-help" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" /><path d="M12 17h.01" /></svg><span>Help &amp; Support</span></div>
       </div>
-      <div role="menuitem" data-filter="Page 5">
-        <svg class="lucide lucide-file" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" /><path d="M14 2v5a1 1 0 0 0 1 1h5" /></svg>
-        <span>Page 5</span>
-      </div>
-      <div role="menuitem" data-filter="Page 6">
-        <svg class="lucide lucide-file" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" /><path d="M14 2v5a1 1 0 0 0 1 1h5" /></svg>
-        <span>Page 6</span>
-      </div>
-      <div role="menuitem" data-filter="Page 7">
-        <svg class="lucide lucide-file" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" /><path d="M14 2v5a1 1 0 0 0 1 1h5" /></svg>
-        <span>Page 7</span>
-      </div>
-      <div role="menuitem" data-filter="Page 8">
-        <svg class="lucide lucide-file" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" /><path d="M14 2v5a1 1 0 0 0 1 1h5" /></svg>
-        <span>Page 8</span>
-      </div>
-      <div role="menuitem" data-filter="Page 9">
-        <svg class="lucide lucide-file" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" /><path d="M14 2v5a1 1 0 0 0 1 1h5" /></svg>
-        <span>Page 9</span>
-      </div>
-      <div role="menuitem" data-filter="Page 10">
-        <svg class="lucide lucide-file" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" /><path d="M14 2v5a1 1 0 0 0 1 1h5" /></svg>
-        <span>Page 10</span>
-      </div>
-      <div role="menuitem" data-filter="Page 11">
-        <svg class="lucide lucide-file" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" /><path d="M14 2v5a1 1 0 0 0 1 1h5" /></svg>
-        <span>Page 11</span>
-      </div>
-      <div role="menuitem" data-filter="Page 12">
-        <svg class="lucide lucide-file" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" /><path d="M14 2v5a1 1 0 0 0 1 1h5" /></svg>
-        <span>Page 12</span>
-      </div>
-      <div role="menuitem" data-filter="Page 13">
-        <svg class="lucide lucide-file" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" /><path d="M14 2v5a1 1 0 0 0 1 1h5" /></svg>
-        <span>Page 13</span>
-      </div>
-      <div role="menuitem" data-filter="Page 14">
-        <svg class="lucide lucide-file" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" /><path d="M14 2v5a1 1 0 0 0 1 1h5" /></svg>
-        <span>Page 14</span>
-      </div>
-      <div role="menuitem" data-filter="Page 15">
-        <svg class="lucide lucide-file" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" /><path d="M14 2v5a1 1 0 0 0 1 1h5" /></svg>
-        <span>Page 15</span>
-      </div>
-      <div role="menuitem" data-filter="Page 16">
-        <svg class="lucide lucide-file" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" /><path d="M14 2v5a1 1 0 0 0 1 1h5" /></svg>
-        <span>Page 16</span>
-      </div>
-      <div role="menuitem" data-filter="Page 17">
-        <svg class="lucide lucide-file" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" /><path d="M14 2v5a1 1 0 0 0 1 1h5" /></svg>
-        <span>Page 17</span>
-      </div>
-      <div role="menuitem" data-filter="Page 18">
-        <svg class="lucide lucide-file" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" /><path d="M14 2v5a1 1 0 0 0 1 1h5" /></svg>
-        <span>Page 18</span>
+      <hr role="separator" />
+      <div role="group" aria-labelledby="command-scrollable-tools">
+        <span role="heading" id="command-scrollable-tools">Tools</span>
+        <div role="menuitem" data-filter="Calculator"><svg class="lucide lucide-calculator" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="20" x="4" y="2" rx="2" /><line x1="8" x2="16" y1="6" y2="6" /><line x1="16" x2="16" y1="14" y2="18" /><path d="M16 10h.01" /><path d="M12 10h.01" /><path d="M8 10h.01" /><path d="M12 14h.01" /><path d="M8 14h.01" /><path d="M12 18h.01" /><path d="M8 18h.01" /></svg><span>Calculator</span></div>
+        <div role="menuitem" data-filter="Calendar"><svg class="lucide lucide-calendar" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4" /><path d="M16 2v4" /><rect width="18" height="18" x="3" y="4" rx="2" /><path d="M3 10h18" /></svg><span>Calendar</span></div>
+        <div role="menuitem" data-filter="Image Editor"><svg class="lucide lucide-image" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" ry="2" /><circle cx="9" cy="9" r="2" /><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" /></svg><span>Image Editor</span></div>
+        <div role="menuitem" data-filter="Code Editor"><svg class="lucide lucide-code" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 18 6-6-6-6" /><path d="m8 6-6 6 6 6" /></svg><span>Code Editor</span></div>
       </div>
     </div>
   </div>
-</div>
+</dialog>
 </Preview>
 
-### RTL
+## RTL
 
-Command supports document direction. Set `dir="rtl"` on the command root or a parent element.
+Add `dir="rtl"` to the command root or an ancestor.
 
 <Preview class="w-full max-w-sm">
 <div dir="rtl">
   <div id="command-rtl" class="command border" aria-label="Command menu">
     <header>
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search-icon lucide-search"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /></svg>
-      <input type="text" id="command-rtl-input" placeholder="اكتب أمراً أو ابحث..." autocomplete="off" autocorrect="off" spellcheck="false" aria-autocomplete="list" role="combobox" aria-expanded="true" aria-controls="command-rtl-menu" />
+      <input type="text" id="command-rtl-input" placeholder="اكتب أمرًا أو ابحث..." autocomplete="off" autocorrect="off" spellcheck="false" aria-autocomplete="list" role="combobox" aria-expanded="true" aria-controls="command-rtl-menu" />
     </header>
-    <div role="menu" id="command-rtl-menu" aria-orientation="vertical" data-empty="No results found." class="scrollbar-sm">
+    <div role="menu" id="command-rtl-menu" aria-orientation="vertical" data-empty="لم يتم العثور على نتائج.">
       <div role="group" aria-labelledby="command-rtl-suggestions">
         <span role="heading" id="command-rtl-suggestions">اقتراحات</span>
         <div role="menuitem" data-filter="Calendar">
           <svg class="lucide lucide-calendar" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4" /><path d="M16 2v4" /><rect width="18" height="18" x="3" y="4" rx="2" /><path d="M3 10h18" /></svg>
           <span>التقويم</span>
           <span data-shortcut>⌘K</span>
+        </div>
+        <div role="menuitem" data-filter="Search Emoji">
+          <svg class="lucide lucide-smile" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="M8 14s1.5 2 4 2 4-2 4-2" /><line x1="9" x2="9.01" y1="9" y2="9" /><line x1="15" x2="15.01" y1="9" y2="9" /></svg>
+          <span>البحث عن الرموز التعبيرية</span>
+        </div>
+        <div role="menuitem" aria-disabled="true" data-filter="Calculator">
+          <svg class="lucide lucide-calculator" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="20" x="4" y="2" rx="2" /><line x1="8" x2="16" y1="6" y2="6" /><line x1="16" x2="16" y1="14" y2="18" /><path d="M16 10h.01" /><path d="M12 10h.01" /><path d="M8 10h.01" /><path d="M12 14h.01" /><path d="M8 14h.01" /><path d="M12 18h.01" /><path d="M8 18h.01" /></svg>
+          <span>الآلة الحاسبة</span>
+        </div>
+      </div>
+      <hr role="separator" />
+      <div role="group" aria-labelledby="command-rtl-settings">
+        <span role="heading" id="command-rtl-settings">الإعدادات</span>
+        <div role="menuitem" data-filter="Profile">
+          <svg class="lucide lucide-user" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>
+          <span>الملف الشخصي</span>
+          <span data-shortcut>⌘P</span>
+        </div>
+        <div role="menuitem" data-filter="Billing">
+          <svg class="lucide lucide-credit-card" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2" /><line x1="2" x2="22" y1="10" y2="10" /></svg>
+          <span>الفوترة</span>
+          <span data-shortcut>⌘B</span>
         </div>
         <div role="menuitem" data-filter="Settings">
           <svg class="lucide lucide-settings" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915" /><circle cx="12" cy="12" r="3" /></svg>

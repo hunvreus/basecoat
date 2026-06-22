@@ -50,7 +50,7 @@
     id="{{ id }}-menu"
     aria-orientation="vertical"
     data-empty="{{ empty_text }}"
-    class="scrollbar-sm {{ menu_attrs.class }}"
+    class="{{ menu_attrs.class }}"
     {% for key, value in menu_attrs.items() %}
       {% if key != 'class' %}{{ key }}="{{ value }}"{% endif %}
     {% endfor %}
@@ -121,7 +121,7 @@
       id="{{ id }}-menu"
       aria-orientation="vertical"
       data-empty="{{ empty_text }}"
-      class="scrollbar-sm {{ menu_attrs.class }}"
+      class="{{ menu_attrs.class }}"
       {% for key, value in menu_attrs.items() %}
         {% if key != 'class' %}{{ key }}="{{ value }}"{% endif %}
       {% endfor %}

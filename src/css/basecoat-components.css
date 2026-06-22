@@ -1,7 +1,9 @@
 /* Components */
+@import "./components/accordion.css";
 @import "./components/alert.css";
 @import "./components/avatar.css";
 @import "./components/badge.css";
+@import "./components/breadcrumb.css";
 @import "./components/button.css";
 @import "./components/button-group.css";
 @import "./components/card.css";

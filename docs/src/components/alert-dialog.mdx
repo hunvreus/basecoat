@@ -1,16 +1,18 @@
 # Alert Dialog
 
+A modal dialog that interrupts the user with important content and expects a response.
+
 <Preview>
-<button type="button" onclick="document.getElementById('demo-alert-dialog').showModal()" class="btn" data-variant="outline">Open alert dialog</button>
-<dialog id="demo-alert-dialog" class="dialog" aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
+<button type="button" onclick="document.getElementById('demo-alert-dialog').showModal()" class="btn" data-variant="outline">Show Dialog</button>
+<dialog id="demo-alert-dialog" class="alert-dialog" aria-labelledby="demo-alert-dialog-title" aria-describedby="demo-alert-dialog-description">
   <div>
     <header>
-      <h2 id="alert-dialog-title">Are you absolutely sure?</h2>
-      <p id="alert-dialog-description">This action cannot be undone. This will permanently delete your account and remove your data from our servers.</p>
+      <h2 id="demo-alert-dialog-title">Are you absolutely sure?</h2>
+      <p id="demo-alert-dialog-description">This action cannot be undone. This will permanently delete your account and remove your data from our servers.</p>
     </header>
     <footer>
-      <button class="btn" data-variant="outline" onclick="document.getElementById('demo-alert-dialog').close()">Cancel</button>
-      <button class="btn" data-variant="primary" onclick="document.getElementById('demo-alert-dialog').close()">Continue</button>
+      <button class="btn" data-variant="outline" onclick="this.closest('dialog').close()">Cancel</button>
+      <button class="btn" onclick="this.closest('dialog').close()">Continue</button>
     </footer>
   </div>
 </dialog>
@@ -18,23 +20,19 @@
 
 ## Usage
 
-<Callout title="Template macros available" icon="code" action={{ label: "Read more", href: "/cli#dialog" }}>
-  This component can use the `dialog()` macro for Jinja and Nunjucks.
-</Callout>
-
-Alert Dialog uses the same `.dialog` class as [Dialog](/components/dialog), but the example omits the close button and does not close on backdrop click.
+Alert Dialog uses a native `<dialog class="alert-dialog">` element. Omit the close button and backdrop-click handler when the user must choose an explicit action.
 
 ```html
-<button type="button" onclick="document.getElementById('demo-alert-dialog').showModal()" class="btn" data-variant="outline">Open alert dialog</button>
-<dialog id="demo-alert-dialog" class="dialog" aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
+<button type="button" onclick="document.getElementById('demo-alert-dialog').showModal()" class="btn" data-variant="outline">Show Dialog</button>
+<dialog id="demo-alert-dialog" class="alert-dialog" aria-labelledby="demo-alert-dialog-title" aria-describedby="demo-alert-dialog-description">
   <div>
     <header>
-      <h2 id="alert-dialog-title">Are you absolutely sure?</h2>
-      <p id="alert-dialog-description">This action cannot be undone. This will permanently delete your account and remove your data from our servers.</p>
+      <h2 id="demo-alert-dialog-title">Are you absolutely sure?</h2>
+      <p id="demo-alert-dialog-description">This action cannot be undone. This will permanently delete your account and remove your data from our servers.</p>
     </header>
     <footer>
-      <button class="btn" data-variant="outline" onclick="document.getElementById('demo-alert-dialog').close()">Cancel</button>
-      <button class="btn" data-variant="primary" onclick="document.getElementById('demo-alert-dialog').close()">Continue</button>
+      <button class="btn" data-variant="outline" onclick="this.closest('dialog').close()">Cancel</button>
+      <button class="btn" onclick="this.closest('dialog').close()">Continue</button>
     </footer>
   </div>
 </dialog>
@@ -43,32 +41,122 @@ Alert Dialog uses the same `.dialog` class as [Dialog](/components/dialog), but 
 ### HTML structure
 
 <dl>
-  <dt><code>&lt;button type="button"&gt;</code> <span class="badge" data-variant="secondary">Optional</span></dt>
-  <dd>The trigger button to open the alert dialog (using <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLDialogElement/showModal" target="_blank">the native <code>showModal()</code> method</a>).</dd>
-  <dt><code>&lt;dialog class="dialog" id="&#123; DIALOG_ID &#125;"&gt;</code></dt>
+  <dt><code>&lt;button type="button" onclick="dialog.showModal()"&gt;</code> <span class="badge" data-variant="secondary">Optional</span></dt>
+  <dd>Trigger button. Basecoat uses the native <code>HTMLDialogElement.showModal()</code> method.</dd>
+  <dt><code>&lt;dialog class="alert-dialog" id="&#123; DIALOG_ID &#125;"&gt;</code></dt>
   <dd>
     Native modal dialog. Add <code>aria-labelledby</code> and <code>aria-describedby</code> when title and description are present.
     <dl>
       <dt><code>&lt;div&gt;</code></dt>
       <dd>
-        Wraps the content of the alert dialog.
+        Dialog content surface.
         <dl>
           <dt><code>&lt;header&gt;</code></dt>
           <dd>
-            Contains the header for the alert dialog:
+            Alert dialog header.
             <dl>
-              <dt><code>&lt;h2&gt;</code></dt>
-              <dd>The title of the alert dialog, must have an <code>id</code> if you use the <code>aria-labelledby</code> attribute on the <code>&lt;dialog&gt;</code>.</dd>
-              <dt><code>&lt;p&gt;</code> <span class="badge" data-variant="secondary">Optional</span></dt>
-              <dd>The description of the alert dialog, must have an <code>id</code> if you use the <code>aria-describedby</code> attribute on the <code>&lt;dialog&gt;</code>.</dd>
+              <dt><code>&lt;figure&gt;</code> <span class="badge" data-variant="secondary">Optional</span></dt>
+              <dd>Media area for an icon or image.</dd>
+              <dt><code>&lt;h2 id="&#123; TITLE_ID &#125;"&gt;</code></dt>
+              <dd>Alert dialog title. Reference it from <code>aria-labelledby</code>.</dd>
+              <dt><code>&lt;p id="&#123; DESCRIPTION_ID &#125;"&gt;</code> <span class="badge" data-variant="secondary">Optional</span></dt>
+              <dd>Alert dialog description. Reference it from <code>aria-describedby</code>.</dd>
             </dl>
           </dd>
-          <dt><code>&lt;section&gt;</code> <span class="badge" data-variant="secondary">Optional</span></dt>
-          <dd>For the content.</dd>
-          <dt><code>&lt;footer&gt;</code> <span class="badge" data-variant="secondary">Optional</span></dt>
-          <dd>Usually contains actions.</dd>
+          <dt><code>&lt;footer&gt;</code></dt>
+          <dd>Action area. Include a cancel action and the primary action.</dd>
         </dl>
       </dd>
     </dl>
   </dd>
 </dl>
+
+## Examples
+
+### Basic
+
+A basic alert dialog with a title, description, and cancel and continue buttons.
+
+<Preview>
+<button type="button" onclick="document.getElementById('alert-dialog-basic').showModal()" class="btn" data-variant="outline">Show Dialog</button>
+<dialog id="alert-dialog-basic" class="alert-dialog" aria-labelledby="alert-dialog-basic-title" aria-describedby="alert-dialog-basic-description">
+  <div>
+    <header>
+      <h2 id="alert-dialog-basic-title">Are you absolutely sure?</h2>
+      <p id="alert-dialog-basic-description">This action cannot be undone. This will permanently delete your account and remove your data from our servers.</p>
+    </header>
+    <footer>
+      <button class="btn" data-variant="outline" onclick="this.closest('dialog').close()">Cancel</button>
+      <button class="btn" onclick="this.closest('dialog').close()">Continue</button>
+    </footer>
+  </div>
+</dialog>
+</Preview>
+
+### Media
+
+Use a `<figure>` in the header to add a media element such as an icon or image to the alert dialog.
+
+<Preview>
+<button type="button" onclick="document.getElementById('alert-dialog-media').showModal()" class="btn" data-variant="outline">Share Project</button>
+<dialog id="alert-dialog-media" class="alert-dialog" aria-labelledby="alert-dialog-media-title" aria-describedby="alert-dialog-media-description">
+  <div>
+    <header>
+      <figure>
+        <svg class="lucide lucide-circle-fading-plus" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 0 1 7.38 16.75" /><path d="M12 8v8" /><path d="M16 12H8" /><path d="M2.5 8.88a10 10 0 0 0 0 6.24" /><path d="M4.64 4.64a10 10 0 0 0 0 14.72" /></svg>
+      </figure>
+      <h2 id="alert-dialog-media-title">Share this project?</h2>
+      <p id="alert-dialog-media-description">Anyone with the link will be able to view and edit this project.</p>
+    </header>
+    <footer>
+      <button class="btn" data-variant="outline" onclick="this.closest('dialog').close()">Cancel</button>
+      <button class="btn" onclick="this.closest('dialog').close()">Share</button>
+    </footer>
+  </div>
+</dialog>
+</Preview>
+
+### Destructive
+
+Use a destructive action button when the alert dialog confirms a destructive operation.
+
+<Preview>
+<button type="button" onclick="document.getElementById('alert-dialog-destructive').showModal()" class="btn" data-variant="destructive">Delete Chat</button>
+<dialog id="alert-dialog-destructive" class="alert-dialog" aria-labelledby="alert-dialog-destructive-title" aria-describedby="alert-dialog-destructive-description">
+  <div>
+    <header>
+      <figure>
+        <svg class="lucide lucide-trash-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 11v6" /><path d="M14 11v6" /><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" /><path d="M3 6h18" /><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" /></svg>
+      </figure>
+      <h2 id="alert-dialog-destructive-title">Delete this chat?</h2>
+      <p id="alert-dialog-destructive-description">This action cannot be undone. This will permanently delete the chat and remove it from your history.</p>
+    </header>
+    <footer>
+      <button class="btn" data-variant="outline" onclick="this.closest('dialog').close()">Cancel</button>
+      <button class="btn" data-variant="destructive" onclick="this.closest('dialog').close()">Delete</button>
+    </footer>
+  </div>
+</dialog>
+</Preview>
+
+### RTL
+
+Alert Dialog supports document direction. Set `dir="rtl"` on the dialog or a parent element.
+
+<Preview>
+<div dir="rtl">
+  <button type="button" onclick="document.getElementById('alert-dialog-rtl').showModal()" class="btn" data-variant="outline">إظهار الحوار</button>
+  <dialog id="alert-dialog-rtl" class="alert-dialog" aria-labelledby="alert-dialog-rtl-title" aria-describedby="alert-dialog-rtl-description">
+    <div>
+      <header>
+        <h2 id="alert-dialog-rtl-title">هل أنت متأكد تماماً؟</h2>
+        <p id="alert-dialog-rtl-description">لا يمكن التراجع عن هذا الإجراء. سيتم حذف حسابك نهائياً وإزالة بياناتك من خوادمنا.</p>
+      </header>
+      <footer>
+        <button class="btn" data-variant="outline" onclick="this.closest('dialog').close()">إلغاء</button>
+        <button class="btn" onclick="this.closest('dialog').close()">متابعة</button>
+      </footer>
+    </div>
+  </dialog>
+</div>
+</Preview>

@@ -15,6 +15,10 @@
       @apply col-start-2 row-span-2 row-start-1 self-start justify-self-end;
     }
 
+    > header > menu.card-action {
+      @apply m-0 list-none p-0;
+    }
+
     > footer {
       @apply flex items-center;
     }

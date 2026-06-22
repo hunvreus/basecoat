@@ -1,7 +1,7 @@
 # Field
 
-<Preview>
-<form class="w-full max-w-md">
+<Preview class="w-full max-w-md">
+<form>
   <div role="group" aria-label="Checkout fields" class="fieldset">
     <fieldset class="fieldset">
       <legend>Payment Method</legend>
@@ -186,23 +186,6 @@ Use `class="field"` for one control and `class="fieldset"` for related controls.
   <p id="price-range-description">Set your maximum budget <span id="price-range-output">(up to $800)</span>.</p>
   <input id="price-range" type="range" min="0" max="1000" step="10" value="800" aria-describedby="price-range-description" class="input" />
 </div>
-<script>
-  (() => {
-    const input = document.getElementById("price-range");
-    const output = document.getElementById("price-range-output");
-    if (!input || !output) return;
-    const updateRange = () => {
-      const min = Number(input.min || 0);
-      const max = Number(input.max || 100);
-      const value = Number(input.value || 0);
-      const percent = max === min ? 0 : ((value - min) / (max - min)) * 100;
-      input.style.setProperty("--slider-value", `${percent}%`);
-      output.textContent = `(up to $${value})`;
-    };
-    input.addEventListener("input", updateRange);
-    updateRange();
-  })();
-</script>
 </Preview>
 
 ### Fieldset
@@ -304,7 +287,7 @@ Use `class="field"` for one control and `class="fieldset"` for related controls.
 </div>
 </Preview>
 
-### Choice Card
+### Choice card
 
 Wrap a `.field` inside a `<label>` to create selectable field cards. This works with radio, checkbox, and switch controls.
 
@@ -335,7 +318,7 @@ Wrap a `.field` inside a `<label>` to create selectable field cards. This works 
 </fieldset>
 </Preview>
 
-### Field Group
+### Field group
 
 Stack fields inside a group and use `.field-separator` to divide sections.
 
@@ -371,7 +354,7 @@ Stack fields inside a group and use `.field-separator` to divide sections.
 </div>
 </Preview>
 
-### Responsive Layout
+### Responsive layout
 
 Use `data-orientation="responsive"` to stack by default and switch to horizontal in wider containers.
 

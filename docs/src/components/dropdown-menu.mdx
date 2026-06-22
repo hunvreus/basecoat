@@ -3,7 +3,7 @@
 <Preview>
 <div id="demo-dropdown-menu" class="dropdown-menu">
   <button type="button" id="demo-dropdown-menu-trigger" aria-haspopup="menu" aria-controls="demo-dropdown-menu-menu" aria-expanded="false" class="btn" data-variant="outline">Open</button>
-  <div id="demo-dropdown-menu-popover" data-popover aria-hidden="true" class="min-w-56">
+  <div id="demo-dropdown-menu-popover" data-popover aria-hidden="true" class="w-40">
     <div role="menu" id="demo-dropdown-menu-menu" aria-labelledby="demo-dropdown-menu-trigger">
       <div role="group" aria-labelledby="demo-dropdown-account">
         <div role="heading" id="demo-dropdown-account">My Account</div>
@@ -15,15 +15,32 @@
           <span>Billing</span>
           <kbd>⌘B</kbd>
         </div>
-        <div role="menuitem">Settings</div>
-        <div role="menuitem">Keyboard shortcuts</div>
+        <div role="menuitem">
+          <span>Settings</span>
+          <kbd>⌘S</kbd>
+        </div>
       </div>
       <hr role="separator" />
-      <div role="menuitem">GitHub</div>
-      <div role="menuitem">Support</div>
-      <div role="menuitem" aria-disabled="true">API</div>
+      <div role="group">
+        <div role="menuitem">Team</div>
+        <div role="menuitem">
+          <span>New Team</span>
+          <kbd>⌘+T</kbd>
+        </div>
+      </div>
       <hr role="separator" />
-      <div role="menuitem">Log out</div>
+      <div role="group">
+        <div role="menuitem">GitHub</div>
+        <div role="menuitem">Support</div>
+        <div role="menuitem" aria-disabled="true">API</div>
+      </div>
+      <hr role="separator" />
+      <div role="group">
+        <div role="menuitem">
+          <span>Log out</span>
+          <kbd>⇧⌘Q</kbd>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -48,7 +65,7 @@ Basecoat dropdown menus are inline-positioned relative to the `.dropdown-menu` w
 ```html
 <div id="demo-dropdown-menu" class="dropdown-menu">
   <button type="button" id="demo-dropdown-menu-trigger" aria-haspopup="menu" aria-controls="demo-dropdown-menu-menu" aria-expanded="false" class="btn" data-variant="outline">Open</button>
-  <div id="demo-dropdown-menu-popover" data-popover aria-hidden="true" class="min-w-56">
+  <div id="demo-dropdown-menu-popover" data-popover aria-hidden="true" class="w-40">
     <div role="menu" id="demo-dropdown-menu-menu" aria-labelledby="demo-dropdown-menu-trigger">
       <div role="group" aria-labelledby="demo-dropdown-account">
         <div role="heading" id="demo-dropdown-account">My Account</div>
@@ -60,15 +77,32 @@ Basecoat dropdown menus are inline-positioned relative to the `.dropdown-menu` w
           <span>Billing</span>
           <kbd>⌘B</kbd>
         </div>
-        <div role="menuitem">Settings</div>
-        <div role="menuitem">Keyboard shortcuts</div>
+        <div role="menuitem">
+          <span>Settings</span>
+          <kbd>⌘S</kbd>
+        </div>
       </div>
       <hr role="separator" />
-      <div role="menuitem">GitHub</div>
-      <div role="menuitem">Support</div>
-      <div role="menuitem" aria-disabled="true">API</div>
+      <div role="group">
+        <div role="menuitem">Team</div>
+        <div role="menuitem">
+          <span>New Team</span>
+          <kbd>⌘+T</kbd>
+        </div>
+      </div>
       <hr role="separator" />
-      <div role="menuitem">Log out</div>
+      <div role="group">
+        <div role="menuitem">GitHub</div>
+        <div role="menuitem">Support</div>
+        <div role="menuitem" aria-disabled="true">API</div>
+      </div>
+      <hr role="separator" />
+      <div role="group">
+        <div role="menuitem">
+          <span>Log out</span>
+          <kbd>⇧⌘Q</kbd>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -141,7 +175,8 @@ Basecoat dropdown menus are inline-positioned relative to the `.dropdown-menu` w
         <div role="menuitem">Settings</div>
       </div>
       <hr role="separator" />
-      <div role="menuitem">Team</div>
+      <div role="menuitem">GitHub</div>
+      <div role="menuitem">Support</div>
       <div role="menuitem" aria-disabled="true">API</div>
     </div>
   </div>
@@ -155,22 +190,25 @@ Basecoat dropdown menus are inline-positioned relative to the `.dropdown-menu` w
   <button type="button" id="dropdown-shortcuts-trigger" aria-haspopup="menu" aria-controls="dropdown-shortcuts-menu" aria-expanded="false" class="btn" data-variant="outline">Open</button>
   <div id="dropdown-shortcuts-popover" data-popover aria-hidden="true" class="min-w-46">
     <div role="menu" id="dropdown-shortcuts-menu" aria-labelledby="dropdown-shortcuts-trigger">
-      <div role="menuitem">
-        <span>New Tab</span>
-        <kbd>⌘T</kbd>
-      </div>
-      <div role="menuitem">
-        <span>New Window</span>
-        <kbd>⌘N</kbd>
-      </div>
-      <div role="menuitem">
-        <span>New Private Window</span>
-        <kbd>⇧⌘N</kbd>
+      <div role="group" aria-labelledby="dropdown-shortcuts-account">
+        <div role="heading" id="dropdown-shortcuts-account">My Account</div>
+        <div role="menuitem">
+          <span>Profile</span>
+          <kbd>⇧⌘P</kbd>
+        </div>
+        <div role="menuitem">
+          <span>Billing</span>
+          <kbd>⌘B</kbd>
+        </div>
+        <div role="menuitem">
+          <span>Settings</span>
+          <kbd>⌘S</kbd>
+        </div>
       </div>
       <hr role="separator" />
       <div role="menuitem">
-        <span>Print</span>
-        <kbd>⌘P</kbd>
+        <span>Log out</span>
+        <kbd>⇧⌘Q</kbd>
       </div>
     </div>
   </div>
@@ -211,7 +249,7 @@ Basecoat dropdown menus are inline-positioned relative to the `.dropdown-menu` w
 <Preview>
 <div id="dropdown-checkboxes" class="dropdown-menu">
   <button type="button" id="dropdown-checkboxes-trigger" aria-haspopup="menu" aria-controls="dropdown-checkboxes-menu" aria-expanded="false" class="btn" data-variant="outline">Open</button>
-  <div id="dropdown-checkboxes-popover" data-popover aria-hidden="true" class="min-w-32">
+  <div id="dropdown-checkboxes-popover" data-popover aria-hidden="true" class="w-40">
     <div role="menu" id="dropdown-checkboxes-menu" aria-labelledby="dropdown-checkboxes-trigger">
       <div role="group" aria-labelledby="dropdown-checkboxes-label">
         <div role="heading" id="dropdown-checkboxes-label">Appearance</div>
@@ -219,42 +257,63 @@ Basecoat dropdown menus are inline-positioned relative to the `.dropdown-menu` w
           <span data-indicator>
             <svg class="lucide lucide-check" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
           </span>
-          <span>Status Bar</span>
-          <kbd>⌘S</kbd>
-        </div>
-        <div role="menuitemcheckbox" aria-checked="false">
-          <span data-indicator>
-            <svg class="lucide lucide-check" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
-          </span>
-          <span>Activity Bar</span>
-          <kbd>⌘A</kbd>
+          Status Bar
         </div>
         <div role="menuitemcheckbox" aria-checked="false" aria-disabled="true">
           <span data-indicator>
             <svg class="lucide lucide-check" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
           </span>
-          <span>Panel</span>
-          <kbd>⌘P</kbd>
+          Activity Bar
+        </div>
+        <div role="menuitemcheckbox" aria-checked="false">
+          <span data-indicator>
+            <svg class="lucide lucide-check" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
+          </span>
+          Panel
         </div>
       </div>
     </div>
   </div>
 </div>
-<script>
-  (() => {
-    const dropdownMenu = document.querySelector("#dropdown-checkboxes");
-    const checkboxes = dropdownMenu.querySelectorAll('[role="menuitemcheckbox"]');
-    checkboxes.forEach((checkbox) => {
-      checkbox.addEventListener("click", () => {
-        if (checkbox.getAttribute("aria-disabled") === "true") return;
-        checkbox.setAttribute("aria-checked", checkbox.getAttribute("aria-checked") !== "true");
-      });
-    });
-  })();
-</script>
 </Preview>
 
-### Radio Group
+### Checkboxes Icons
+
+<Preview>
+<div id="dropdown-checkboxes-icons" class="dropdown-menu">
+  <button type="button" id="dropdown-checkboxes-icons-trigger" aria-haspopup="menu" aria-controls="dropdown-checkboxes-icons-menu" aria-expanded="false" class="btn" data-variant="outline">Notifications</button>
+  <div id="dropdown-checkboxes-icons-popover" data-popover aria-hidden="true" class="w-48">
+    <div role="menu" id="dropdown-checkboxes-icons-menu" aria-labelledby="dropdown-checkboxes-icons-trigger">
+      <div role="group" aria-labelledby="dropdown-checkboxes-icons-label">
+        <div role="heading" id="dropdown-checkboxes-icons-label">Notification Preferences</div>
+        <div role="menuitemcheckbox" aria-checked="true">
+          <span data-indicator>
+            <svg class="lucide lucide-check" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
+          </span>
+          <svg class="lucide lucide-mail" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7" /><rect x="2" y="4" width="20" height="16" rx="2" /></svg>
+          Email notifications
+        </div>
+        <div role="menuitemcheckbox" aria-checked="false">
+          <span data-indicator>
+            <svg class="lucide lucide-check" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
+          </span>
+          <svg class="lucide lucide-message-square" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" /></svg>
+          SMS notifications
+        </div>
+        <div role="menuitemcheckbox" aria-checked="true">
+          <span data-indicator>
+            <svg class="lucide lucide-check" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
+          </span>
+          <svg class="lucide lucide-bell" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.268 21a2 2 0 0 0 3.464 0" /><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326" /></svg>
+          Push notifications
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</Preview>
+
+### Radio group
 
 <Preview>
 <div id="dropdown-radio-group" class="dropdown-menu">
@@ -285,33 +344,103 @@ Basecoat dropdown menus are inline-positioned relative to the `.dropdown-menu` w
     </div>
   </div>
 </div>
-<script>
-  (() => {
-    const dropdownMenu = document.querySelector("#dropdown-radio-group");
-    const radios = dropdownMenu.querySelectorAll('[role="menuitemradio"]');
-    radios.forEach((radio) => {
-      radio.addEventListener("click", () => {
-        radios.forEach((item) => item.setAttribute("aria-checked", "false"));
-        radio.setAttribute("aria-checked", "true");
-      });
-    });
-  })();
-</script>
+</Preview>
+
+### Radio Icons
+
+<Preview>
+<div id="dropdown-radio-icons" class="dropdown-menu">
+  <button type="button" id="dropdown-radio-icons-trigger" aria-haspopup="menu" aria-controls="dropdown-radio-icons-menu" aria-expanded="false" class="btn" data-variant="outline">Payment Method</button>
+  <div id="dropdown-radio-icons-popover" data-popover aria-hidden="true" class="min-w-56">
+    <div role="menu" id="dropdown-radio-icons-menu" aria-labelledby="dropdown-radio-icons-trigger">
+      <div role="group" aria-labelledby="dropdown-radio-icons-label">
+        <div role="heading" id="dropdown-radio-icons-label">Select Payment Method</div>
+        <div role="menuitemradio" aria-checked="true">
+          <span data-indicator>
+            <svg class="lucide lucide-check" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
+          </span>
+          <svg class="lucide lucide-credit-card" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2" /><line x1="2" x2="22" y1="10" y2="10" /></svg>
+          Credit Card
+        </div>
+        <div role="menuitemradio" aria-checked="false">
+          <span data-indicator>
+            <svg class="lucide lucide-check" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
+          </span>
+          <svg class="lucide lucide-wallet" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1" /><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4" /></svg>
+          PayPal
+        </div>
+        <div role="menuitemradio" aria-checked="false">
+          <span data-indicator>
+            <svg class="lucide lucide-check" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
+          </span>
+          <svg class="lucide lucide-building-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z" /><path d="M6 12H4a2 2 0 0 0-2 2v8h20v-8a2 2 0 0 0-2-2h-2" /><path d="M10 6h4" /><path d="M10 10h4" /><path d="M10 14h4" /><path d="M10 18h4" /></svg>
+          Bank Transfer
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 </Preview>
 
 ### Destructive
 
 <Preview>
 <div id="dropdown-destructive" class="dropdown-menu">
-  <button type="button" id="dropdown-destructive-trigger" aria-haspopup="menu" aria-controls="dropdown-destructive-menu" aria-expanded="false" class="btn" data-variant="outline">Open</button>
+  <button type="button" id="dropdown-destructive-trigger" aria-haspopup="menu" aria-controls="dropdown-destructive-menu" aria-expanded="false" class="btn" data-variant="outline">Actions</button>
   <div id="dropdown-destructive-popover" data-popover aria-hidden="true" class="min-w-32">
     <div role="menu" id="dropdown-destructive-menu" aria-labelledby="dropdown-destructive-trigger">
-      <div role="menuitem">Edit</div>
-      <div role="menuitem">Duplicate</div>
+      <div role="group">
+        <div role="menuitem">
+          <svg class="lucide lucide-pencil" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9" /><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4Z" /></svg>
+          Edit
+        </div>
+        <div role="menuitem">
+          <svg class="lucide lucide-share" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" /><polyline points="16 6 12 2 8 6" /><line x1="12" x2="12" y1="2" y2="15" /></svg>
+          Share
+        </div>
+      </div>
       <hr role="separator" />
-      <div role="menuitem" data-variant="destructive">
-        <svg class="lucide lucide-trash-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 11v6" /><path d="M14 11v6" /><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" /><path d="M3 6h18" /><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" /></svg>
-        Delete
+      <div role="group">
+        <div role="menuitem" data-variant="destructive">
+          <svg class="lucide lucide-trash" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18" /><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" /><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" /></svg>
+          Delete
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</Preview>
+
+### Avatar
+
+<Preview>
+<div id="dropdown-avatar" class="dropdown-menu">
+  <button type="button" id="dropdown-avatar-trigger" aria-haspopup="menu" aria-controls="dropdown-avatar-menu" aria-expanded="false" class="btn rounded-full" data-variant="ghost" data-size="icon">
+    <span class="avatar">
+      <img src="https://github.com/shadcn.png" alt="shadcn" />
+      <span>LR</span>
+    </span>
+  </button>
+  <div id="dropdown-avatar-popover" data-popover aria-hidden="true" data-align="end">
+    <div role="menu" id="dropdown-avatar-menu" aria-labelledby="dropdown-avatar-trigger">
+      <div role="group">
+        <div role="menuitem">
+          <svg class="lucide lucide-badge-check" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z" /><path d="m9 12 2 2 4-4" /></svg>
+          Account
+        </div>
+        <div role="menuitem">
+          <svg class="lucide lucide-credit-card" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2" /><line x1="2" x2="22" y1="10" y2="10" /></svg>
+          Billing
+        </div>
+        <div role="menuitem">
+          <svg class="lucide lucide-bell" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.268 21a2 2 0 0 0 3.464 0" /><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326" /></svg>
+          Notifications
+        </div>
+      </div>
+      <hr role="separator" />
+      <div role="menuitem">
+        <svg class="lucide lucide-log-out" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 17 5-5-5-5" /><path d="M21 12H9" /><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" /></svg>
+        Sign Out
       </div>
     </div>
   </div>
@@ -325,20 +454,71 @@ Dropdown menus support document direction. Set `dir="rtl"` on the dropdown root 
 <Preview>
 <div dir="rtl">
   <div id="dropdown-rtl" class="dropdown-menu">
-    <button type="button" id="dropdown-rtl-trigger" aria-haspopup="menu" aria-controls="dropdown-rtl-menu" aria-expanded="false" class="btn" data-variant="outline">فتح</button>
-    <div id="dropdown-rtl-popover" data-popover aria-hidden="true" class="min-w-32" data-align="end">
+    <button type="button" id="dropdown-rtl-trigger" aria-haspopup="menu" aria-controls="dropdown-rtl-menu" aria-expanded="false" class="btn" data-variant="outline">افتح القائمة</button>
+    <div id="dropdown-rtl-popover" data-popover aria-hidden="true" class="w-36" data-align="end">
       <div role="menu" id="dropdown-rtl-menu" aria-labelledby="dropdown-rtl-trigger">
-        <div role="heading" id="dropdown-rtl-label">الحساب</div>
-        <div role="menuitem">
-          <span>الملف الشخصي</span>
-          <kbd>⌘P</kbd>
-        </div>
-        <div role="menuitem">
-          <span>الإعدادات</span>
-          <kbd>⌘S</kbd>
+        <div role="group" aria-labelledby="dropdown-rtl-team">
+          <div role="heading" id="dropdown-rtl-team">الفريق</div>
+          <div role="menuitem">الفريق</div>
+          <div role="menuitem">
+            <span>فريق جديد</span>
+            <kbd>⌘+T</kbd>
+          </div>
         </div>
         <hr role="separator" />
-        <div role="menuitem" data-variant="destructive">حذف</div>
+        <div role="group" aria-labelledby="dropdown-rtl-view">
+          <div role="heading" id="dropdown-rtl-view">عرض</div>
+          <div role="menuitemcheckbox" aria-checked="true">
+            <span data-indicator>
+              <svg class="lucide lucide-check" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
+            </span>
+            شريط الحالة
+          </div>
+          <div role="menuitemcheckbox" aria-checked="false">
+            <span data-indicator>
+              <svg class="lucide lucide-check" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
+            </span>
+            شريط النشاط
+          </div>
+          <div role="menuitemcheckbox" aria-checked="false">
+            <span data-indicator>
+              <svg class="lucide lucide-check" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
+            </span>
+            اللوحة
+          </div>
+        </div>
+        <hr role="separator" />
+        <div role="group" aria-labelledby="dropdown-rtl-position">
+          <div role="heading" id="dropdown-rtl-position">الموضع</div>
+          <div role="menuitemradio" aria-checked="false">
+            <span data-indicator>
+              <svg class="lucide lucide-check" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
+            </span>
+            أعلى
+          </div>
+          <div role="menuitemradio" aria-checked="true">
+            <span data-indicator>
+              <svg class="lucide lucide-check" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
+            </span>
+            أسفل
+          </div>
+          <div role="menuitemradio" aria-checked="false">
+            <span data-indicator>
+              <svg class="lucide lucide-check" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
+            </span>
+            يمين
+          </div>
+          <div role="menuitemradio" aria-checked="false">
+            <span data-indicator>
+              <svg class="lucide lucide-check" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
+            </span>
+            يسار
+          </div>
+        </div>
+        <hr role="separator" />
+        <div role="group">
+          <div role="menuitem" data-variant="destructive">تسجيل الخروج</div>
+        </div>
       </div>
     </div>
   </div>

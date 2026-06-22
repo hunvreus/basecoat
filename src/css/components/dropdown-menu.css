@@ -33,7 +33,7 @@
   }
 
   .dropdown-menu :is(kbd:last-child, .kbd:last-child):not([data-shortcut]) {
-    @apply ms-8;
+    @apply ps-8;
   }
 
   .dropdown-menu [data-indicator] {

@@ -7,6 +7,7 @@ import miraUrl from "../assets/styles/style-mira.css?url";
 import lumaUrl from "../assets/styles/style-luma.css?url";
 import seraUrl from "../assets/styles/style-sera.css?url";
 import rheaUrl from "../assets/styles/style-rhea.css?url";
+import demoInteractionsUrl from "./demo-interactions.js?url";
 
 const styleUrls = {
   vega: vegaUrl,
@@ -78,3 +79,5 @@ const styleUrls = {
     if (!existing) document.head.appendChild(link);
   })();
 </script>
+
+<script type="module" src={demoInteractionsUrl}></script>

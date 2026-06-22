@@ -1,8 +1,7 @@
 ---
-import "../css/landing.css";
-
-import basecoatJsUrl from "basecoat-css/basecoat.min?url";
-import dropdownMenuJsUrl from "basecoat-css/dropdown-menu.min?url";
+import { CommandDialog } from "reallysimpledocs/components";
+import basecoatJsUrl from "basecoat-css/all.min?url";
+import StyleHead from "../../docs/src/site/StyleHead.astro";
 import vegaUrl from "../../docs/src/assets/styles/style-vega.css?url";
 import novaUrl from "../../docs/src/assets/styles/style-nova.css?url";
 import maiaUrl from "../../docs/src/assets/styles/style-maia.css?url";
@@ -180,36 +179,7 @@ const sidebarSections = [
         });
       })();
     </script>
-    <style id="docs-style-gate" is:inline>
-      html[data-style-pending] body {
-        visibility: hidden;
-      }
-    </style>
-    <script is:inline define:vars={{ styleUrls }}>
-      (() => {
-        const styleGateId = "docs-style-gate";
-        const styleLinkId = "docs-style-variant";
-        const getStoredStyle = () => {
-          try {
-            return localStorage.getItem("styleVariant") || "vega";
-          } catch (_) {
-            return "vega";
-          }
-        };
-        const getStyleHref = (style) => {
-          const href = styleUrls[style];
-          return href?.startsWith("/docs/src/assets/styles/") ? `${href}?direct` : href;
-        };
-        const nextStyle = Object.prototype.hasOwnProperty.call(styleUrls, getStoredStyle()) ? getStoredStyle() : "vega";
-        const href = getStyleHref(nextStyle);
-        document.documentElement.dataset.styleVariant = nextStyle;
-        if (!href) return;
-        document.documentElement.setAttribute("data-style-pending", "");
-        document.write(
-          `<link id="${styleLinkId}" rel="stylesheet" href="${href}" onload="document.documentElement.removeAttribute('data-style-pending');document.getElementById('${styleGateId}')?.remove()" onerror="document.documentElement.removeAttribute('data-style-pending');document.getElementById('${styleGateId}')?.remove()">`,
-        );
-      })();
-    </script>
+    <StyleHead />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title} | Basecoat</title>
@@ -224,9 +194,9 @@ const sidebarSections = [
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={socialImage.src} />
     <script src={basecoatJsUrl} defer></script>
-    <script src={dropdownMenuJsUrl} defer></script>
   </head>
   <body class="min-h-dvh overflow-x-clip bg-background text-foreground antialiased">
+    <CommandDialog />
     <header class="bg-background sticky inset-x-0 top-0 isolate z-30 flex shrink-0 items-center gap-2">
       <div class="flex h-14 w-full items-center justify-between gap-2 px-4">
         <div class="flex min-w-0 items-center gap-1">
@@ -242,6 +212,18 @@ const sidebarSections = [
         </div>
 
         <div class="ml-auto flex min-w-0 flex-1 items-center justify-end gap-2">
+          <div
+            class="input-group h-8 w-full min-w-0 max-w-72 cursor-text sm:ml-auto"
+            role="button"
+            tabindex="0"
+            aria-label="Search docs"
+            onclick="window.rsdOpenCommandSearch?.()"
+            onkeydown="if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); window.rsdOpenCommandSearch?.(); }"
+          >
+            <input type="text" placeholder="Search..." readonly tabindex="-1" aria-hidden="true" />
+            <span data-align="start" aria-hidden="true"><Fragment set:html={Search} /></span>
+            <span data-align="end" aria-hidden="true"><kbd class="kbd">⌘K</kbd></span>
+          </div>
           <select id="style-variant-select" class="select hidden h-8 w-28 shrink-0 text-sm leading-none sm:block" aria-label="Style pack">
             <option value="vega">Vega</option>
             <option value="nova">Nova</option>
@@ -290,7 +272,7 @@ const sidebarSections = [
 
       <section class="flex-1 p-0">
         <div class="w-full overflow-hidden">
-          <div class="theme-neutral relative flex h-[980px] max-h-[calc(100svh-14rem)] min-h-[680px] w-full max-w-none flex-col gap-(--gap) overflow-hidden bg-muted p-12 pb-0! [--gap:--spacing(8)] min-[1900px]:h-[1120px] min-[1900px]:p-12 min-[1900px]:[--gap:--spacing(10)]! lg:p-6 lg:[--gap:--spacing(6)] dark:bg-background">
+          <div class="relative flex h-[980px] max-h-[calc(100svh-14rem)] min-h-[680px] w-full max-w-none flex-col gap-(--gap) overflow-hidden bg-muted p-12 pb-0! [--gap:--spacing(8)] min-[1900px]:h-[1120px] min-[1900px]:p-12 min-[1900px]:[--gap:--spacing(10)]! lg:p-6 lg:[--gap:--spacing(6)] dark:bg-background" style="--chart-1: oklch(0.87 0 0); --chart-2: oklch(0.556 0 0); --color-chart-1: var(--chart-1); --color-chart-2: var(--chart-2);">
             <div class="relative z-10 mx-auto grid w-full grid-cols-1 gap-(--gap) [&_.card]:w-full md:max-w-3xl md:grid-cols-2 lg:max-w-none lg:grid-cols-3 xl:max-w-[1600px] min-[1400px]:grid-cols-4! 2xl:max-w-[1900px] min-[1900px]:grid-cols-5!">
               <div class="flex min-w-0 flex-col gap-(--gap)">
                 <article class="card relative">
@@ -392,7 +374,7 @@ const sidebarSections = [
                       ["Retirement", "$420,000", "65% achieved", "$273,000", "65%"],
                       ["Real Estate", "$85,000", "32% achieved", "$27,200", "32%"],
                     ].map(([label, amount, progress, value, width]) => (
-                      <div class="landing-demo-surface bg-muted/50 p-4">
+                      <div class="rounded-md [html[data-style-variant=nova]_&]:rounded-lg [html[data-style-variant=maia]_&]:rounded-2xl [html[data-style-variant=luma]_&]:rounded-2xl [html[data-style-variant=rhea]_&]:rounded-2xl [html[data-style-variant=lyra]_&]:rounded-none [html[data-style-variant=sera]_&]:rounded-none bg-muted/50 p-4">
                         <p class="text-xs font-medium tracking-wider text-muted-foreground uppercase">{label}</p>
                         <p class="mt-3 text-3xl font-semibold tabular-nums">{amount}</p>
                         <div class="progress mt-3" role="progressbar" aria-label={`${label} savings progress`} aria-valuenow={parseInt(width, 10)} aria-valuemin="0" aria-valuemax="100"><span style={`width:${width}`}></span></div>
@@ -418,7 +400,7 @@ const sidebarSections = [
                         ["May", 100],
                       ].map(([month, height]) => (
                         <div class="flex h-full flex-1 flex-col justify-end gap-2">
-                          <div class="landing-demo-chart-bar min-h-2 bg-chart-2" style={`height:${height}%`}></div>
+                          <div class="rounded-t-md [html[data-style-variant=lyra]_&]:rounded-t-none [html[data-style-variant=sera]_&]:rounded-t-none min-h-2 bg-chart-2" style={`height:${height}%`}></div>
                           <span class="text-center text-xs text-muted-foreground">{month}</span>
                         </div>
                       ))}
@@ -426,8 +408,8 @@ const sidebarSections = [
                   </section>
                   <section>
                     <div class="grid w-full grid-cols-1 gap-3 xl:grid-cols-2">
-                      <div class="landing-demo-surface bg-muted/50 p-4"><p class="text-xs font-medium tracking-wider text-muted-foreground uppercase">Upcoming</p><p class="text-base font-semibold">May 2024</p><p class="text-sm text-muted-foreground">Scheduled</p></div>
-                      <div class="landing-demo-surface hidden bg-muted/50 p-4 xl:block"><p class="text-xs font-medium tracking-wider text-muted-foreground uppercase">Savings Plan</p><p class="text-base font-semibold">Accelerated</p><p class="text-sm text-muted-foreground">Recurring</p></div>
+                      <div class="rounded-md [html[data-style-variant=nova]_&]:rounded-lg [html[data-style-variant=maia]_&]:rounded-2xl [html[data-style-variant=luma]_&]:rounded-2xl [html[data-style-variant=rhea]_&]:rounded-2xl [html[data-style-variant=lyra]_&]:rounded-none [html[data-style-variant=sera]_&]:rounded-none bg-muted/50 p-4"><p class="text-xs font-medium tracking-wider text-muted-foreground uppercase">Upcoming</p><p class="text-base font-semibold">May 2024</p><p class="text-sm text-muted-foreground">Scheduled</p></div>
+                      <div class="rounded-md [html[data-style-variant=nova]_&]:rounded-lg [html[data-style-variant=maia]_&]:rounded-2xl [html[data-style-variant=luma]_&]:rounded-2xl [html[data-style-variant=rhea]_&]:rounded-2xl [html[data-style-variant=lyra]_&]:rounded-none [html[data-style-variant=sera]_&]:rounded-none hidden bg-muted/50 p-4 xl:block"><p class="text-xs font-medium tracking-wider text-muted-foreground uppercase">Savings Plan</p><p class="text-base font-semibold">Accelerated</p><p class="text-sm text-muted-foreground">Recurring</p></div>
                     </div>
                   </section>
                   <footer><button class="btn w-full" type="button">View Full Report</button></footer>
@@ -440,7 +422,7 @@ const sidebarSections = [
                     <span class="badge" data-variant="outline"><span class="size-2 rounded-full bg-yellow-500"></span> Pending Setup</span>
                   </header>
                   <section class="flex flex-1 flex-col justify-end">
-                    <article class="item landing-demo-surface" data-variant="muted">
+                    <article class="item rounded-md [html[data-style-variant=nova]_&]:rounded-lg [html[data-style-variant=maia]_&]:rounded-2xl [html[data-style-variant=luma]_&]:rounded-2xl [html[data-style-variant=rhea]_&]:rounded-2xl [html[data-style-variant=lyra]_&]:rounded-none [html[data-style-variant=sera]_&]:rounded-none" data-variant="muted">
                       <section class="gap-3">
                       <div class="flex justify-between"><span class="text-muted-foreground">Net Royalties</span><span class="font-medium tabular-nums">$1,248.75</span></div>
                       <div class="mt-3 flex justify-between"><span class="text-muted-foreground">Processing Fee</span><span class="font-medium tabular-nums">-$37.46</span></div>
@@ -460,9 +442,9 @@ const sidebarSections = [
                   <section>
                     <div class="grid gap-2">
                       {holdings.map(([name, shares, _amount, data]) => (
-                        <div class="landing-demo-surface flex items-center gap-3 bg-muted/50 p-3">
+                        <div class="rounded-md [html[data-style-variant=nova]_&]:rounded-lg [html[data-style-variant=maia]_&]:rounded-2xl [html[data-style-variant=luma]_&]:rounded-2xl [html[data-style-variant=rhea]_&]:rounded-2xl [html[data-style-variant=lyra]_&]:rounded-none [html[data-style-variant=sera]_&]:rounded-none flex items-center gap-3 bg-muted/50 p-3">
                           <div class="mr-auto"><p class="text-sm font-medium">{name}</p><p class="text-sm text-muted-foreground">{shares}</p></div>
-                          <div class="hidden h-8 w-24 items-end gap-1 md:flex">{data.map((height) => <span class="landing-demo-chart-bar min-h-1 flex-1 bg-chart-2" style={`height:${height}%`}></span>)}</div>
+                          <div class="hidden h-8 w-24 items-end gap-1 md:flex">{data.map((height) => <span class="rounded-t-md [html[data-style-variant=lyra]_&]:rounded-t-none [html[data-style-variant=sera]_&]:rounded-t-none min-h-1 flex-1 bg-chart-2" style={`height:${height}%`}></span>)}</div>
                         </div>
                       ))}
                     </div>
@@ -499,14 +481,14 @@ const sidebarSections = [
                     <div class="field"><label for="email-address">Email Address</label><input id="email-address" class="input" type="email" placeholder="artist@studio.inc" /></div>
                     <div class="field"><div class="flex items-center justify-between"><label for="current-password">Current Password</label><a href="#" class="text-xs font-medium tracking-wider text-muted-foreground uppercase hover:text-foreground">Forgot?</a></div><input id="current-password" class="input" type="password" placeholder="••••••••••••••••••••••••" /></div>
                   </section>
-                  <footer class="flex-col gap-4"><button class="btn w-full" type="button"><Fragment set:html={Lock} /> Update Security</button><a href="#" class="item landing-demo-surface" data-variant="muted"><figure class="text-destructive"><Fragment set:html={Info} /></figure><section><h3>Danger Zone</h3><p class="line-clamp-1">Archive account and remove catalog</p></section><aside class="text-muted-foreground [&_svg]:size-4"><Fragment set:html={ChevronRight} /></aside></a></footer>
+                  <footer class="flex-col gap-4"><button class="btn w-full" type="button"><Fragment set:html={Lock} /> Update Security</button><a href="#" class="item rounded-md [html[data-style-variant=nova]_&]:rounded-lg [html[data-style-variant=maia]_&]:rounded-2xl [html[data-style-variant=luma]_&]:rounded-2xl [html[data-style-variant=rhea]_&]:rounded-2xl [html[data-style-variant=lyra]_&]:rounded-none [html[data-style-variant=sera]_&]:rounded-none" data-variant="muted"><figure class="text-destructive"><Fragment set:html={Info} /></figure><section><h3>Danger Zone</h3><p class="line-clamp-1">Archive account and remove catalog</p></section><aside class="text-muted-foreground [&_svg]:size-4"><Fragment set:html={ChevronRight} /></aside></a></footer>
                 </article>
               </div>
 
               <div class="hidden min-w-0 flex-col gap-(--gap) md:flex">
                 <article class="card relative">
                   <section class="flex justify-center pt-6">
-                    <div class="landing-demo-surface border border-border bg-white p-4">
+                    <div class="rounded-md [html[data-style-variant=nova]_&]:rounded-lg [html[data-style-variant=maia]_&]:rounded-2xl [html[data-style-variant=luma]_&]:rounded-2xl [html[data-style-variant=rhea]_&]:rounded-2xl [html[data-style-variant=lyra]_&]:rounded-none [html[data-style-variant=sera]_&]:rounded-none border border-border bg-white p-4">
                       <svg viewBox="0 0 21 21" class="size-40 text-black" role="img" aria-label="Connect device QR code" shape-rendering="crispEdges">
                         <rect width="21" height="21" fill="white" />
                         {qrRows.map((row, y) => [...row].map((cell, x) => cell === "1" && <rect x={x} y={y} width="1" height="1" />))}
@@ -522,7 +504,7 @@ const sidebarSections = [
                     <div class="field w-full"><label for="transfer-amount">Amount to Transfer</label><div class="input-group w-full"><span data-align="start">$</span><input id="transfer-amount" class="w-full" value="1,200.00" /></div></div>
                     <div class="field w-full"><label for="from-account">From Account</label><select id="from-account" class="select w-full"><option>Main Checking (··8402) — $12,450.00</option></select></div>
                     <div class="field w-full"><label for="to-account">To Account</label><select id="to-account" class="select w-full"><option>High Yield Savings (··1192) — $42,100.00</option></select></div>
-                    <article class="item landing-demo-surface" data-variant="muted">
+                    <article class="item rounded-md [html[data-style-variant=nova]_&]:rounded-lg [html[data-style-variant=maia]_&]:rounded-2xl [html[data-style-variant=luma]_&]:rounded-2xl [html[data-style-variant=rhea]_&]:rounded-2xl [html[data-style-variant=lyra]_&]:rounded-none [html[data-style-variant=sera]_&]:rounded-none" data-variant="muted">
                       <section class="gap-3">
                       <div class="flex justify-between"><span class="text-muted-foreground">Estimated arrival</span><span class="font-medium">Today, Apr 14</span></div><hr class="my-3 border-border" />
                       <div class="flex justify-between"><span class="text-muted-foreground">Transaction fee</span><span class="font-medium tabular-nums">$0.00</span></div><hr class="my-3 border-border" />
@@ -573,7 +555,7 @@ const sidebarSections = [
                         ["Scheduled transfers", "Set up a transfer to send at a later date."],
                         ["Recurring card payments", "Manage your repeated card transactions."],
                       ].map(([name, desc], index) => (
-                        <a href="#" class="item landing-demo-surface" data-variant="muted">
+                        <a href="#" class="item rounded-md [html[data-style-variant=nova]_&]:rounded-lg [html[data-style-variant=maia]_&]:rounded-2xl [html[data-style-variant=luma]_&]:rounded-2xl [html[data-style-variant=rhea]_&]:rounded-2xl [html[data-style-variant=lyra]_&]:rounded-none [html[data-style-variant=sera]_&]:rounded-none" data-variant="muted">
                           <figure><Fragment set:html={index === 0 ? Settings : index === 1 ? Calendar : Refresh} /></figure>
                           <section><h3>{name}</h3><p>{desc}</p></section>
                           <aside class="text-muted-foreground [&_svg]:size-4"><Fragment set:html={ChevronRight} /></aside>
@@ -630,7 +612,7 @@ const sidebarSections = [
                   <section class="flex flex-col gap-4">
                     <div class="flex h-[140px] w-full items-end gap-2" role="img" aria-label="Power usage by hour">
                       {[32, 74, 82, 63, 89, 76, 100, 84].map((height, index) => (
-                        <div class="flex h-full flex-1 flex-col justify-end gap-1.5"><div class="landing-demo-chart-bar min-h-2 bg-chart-2" style={`height:${height}%`}></div><span class="text-center text-xs text-muted-foreground">{["6a", "8a", "10a", "12p", "2p", "4p", "6p", "8p"][index]}</span></div>
+                        <div class="flex h-full flex-1 flex-col justify-end gap-1.5"><div class="rounded-t-md [html[data-style-variant=lyra]_&]:rounded-t-none [html[data-style-variant=sera]_&]:rounded-t-none min-h-2 bg-chart-2" style={`height:${height}%`}></div><span class="text-center text-xs text-muted-foreground">{["6a", "8a", "10a", "12p", "2p", "4p", "6p", "8p"][index]}</span></div>
                       ))}
                     </div>
                     <hr class="border-border" />
@@ -648,6 +630,26 @@ const sidebarSections = [
         </div>
       </section>
     </main>
+
+    <footer class="px-6 py-8 text-center text-sm text-muted-foreground">
+      Built by
+      <a
+        href="https://x.com/hunvreus"
+        target="_blank"
+        rel="noopener"
+        class="underline underline-offset-2 decoration-muted-foreground/50 transition-all hover:decoration-foreground/50"
+      >
+        Ronan Berder</a
+      >.
+      <a
+        href="https://github.com/sponsors/hunvreus"
+        target="_blank"
+        rel="noopener"
+        class="underline underline-offset-2 decoration-muted-foreground/50 transition-all hover:decoration-foreground/50"
+      >
+        Sponsor me</a
+      >.
+    </footer>
 
     <script is:inline define:vars={{ styleUrls }}>
       (() => {

@@ -2,6 +2,20 @@
 
 ## Unreleased
 
+## [1.0.0-beta.5] - 2026-06-22
+
+### Added
+
+- Added a dedicated Accordion component with native `<details>` markup, single-item JavaScript behavior, `data-multiple`, disabled item handling, style-pack spacing, and docs.
+- Added a dedicated Breadcrumb component with semantic `nav`/`ol` markup, style-pack visuals, collapsed and dropdown examples, and docs.
+- Added documented Card action support with `.card-action`.
+- Added Combobox clear button, popup trigger, and input-group support, with docs aligned to upstream examples.
+
+### Fixed
+
+- Fixed Combobox single selection reopening immediately after selection and filtering the reopened list to the selected value.
+- Improved Combobox multiple chips and remove buttons to match style-pack button sizing more closely.
+
 ## [1.0.0-beta.4] - 2026-06-20
 
 ### Changed

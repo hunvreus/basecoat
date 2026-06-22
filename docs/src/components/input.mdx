@@ -27,17 +27,17 @@ Use native HTML attributes for behavior: `disabled` for disabled inputs, `requir
 Use `field` with a label and description to create an accessible field.
 
 <Preview class="w-full max-w-xs">
-<div role="group" class="field w-full max-w-xs">
+<div role="group" class="field">
   <label for="input-field">Email</label>
   <input id="input-field" type="email" placeholder="m@example.com" />
   <p>Enter your email address.</p>
 </div>
 </Preview>
 
-### Field Group
+### Field group
 
 <Preview class="w-full max-w-xs">
-<div class="grid w-full max-w-xs gap-4">
+<div class="grid gap-4">
   <div role="group" class="field">
     <label for="input-first-name">First name</label>
     <input id="input-first-name" type="text" placeholder="Jane" />
@@ -58,7 +58,7 @@ Use `field` with a label and description to create an accessible field.
 ### Invalid
 
 <Preview class="w-full max-w-xs">
-<div role="group" class="field w-full max-w-xs">
+<div role="group" class="field">
   <label for="input-invalid">Email</label>
   <input class="input" id="input-invalid" type="email" placeholder="Email" aria-invalid="true" />
   <p>Please enter a valid email address.</p>
@@ -74,7 +74,7 @@ Use `field` with a label and description to create an accessible field.
 ### Inline
 
 <Preview class="w-full max-w-xs">
-<div class="flex w-full max-w-xs items-center gap-2">
+<div class="flex items-center gap-2">
   <input class="input" type="search" placeholder="Search..." />
   <button type="submit" class="btn">Search</button>
 </div>
@@ -82,8 +82,8 @@ Use `field` with a label and description to create an accessible field.
 
 ### Grid
 
-<Preview class="w-full max-w-xl">
-<div class="grid w-full gap-4 md:grid-cols-2">
+<Preview class="w-full max-w-sm">
+<div class="grid gap-4 md:grid-cols-2">
   <input class="input" type="text" placeholder="First name" />
   <input class="input" type="text" placeholder="Last name" />
   <input class="input md:col-span-2" type="email" placeholder="Email" />
@@ -93,7 +93,7 @@ Use `field` with a label and description to create an accessible field.
 ### Required
 
 <Preview class="w-full max-w-xs">
-<div role="group" class="field w-full max-w-xs">
+<div role="group" class="field">
   <label for="input-required">Username <span class="text-destructive">*</span></label>
   <input id="input-required" type="text" placeholder="hunvreus" required />
 </div>
@@ -102,7 +102,7 @@ Use `field` with a label and description to create an accessible field.
 ### Badge
 
 <Preview class="w-full max-w-xs">
-<div role="group" class="field w-full max-w-xs">
+<div role="group" class="field">
   <label for="input-badge" class="flex w-full items-center gap-2">
     Email
     <span class="badge ml-auto" data-variant="secondary">Recommended</span>
@@ -111,12 +111,12 @@ Use `field` with a label and description to create an accessible field.
 </div>
 </Preview>
 
-### Input Group
+### Input group
 
 Use the [Input Group](/components/input-group/) patterns to add icons, text, or buttons inside an input.
 
 <Preview class="w-full max-w-xs">
-<div class="relative w-full max-w-xs">
+<div class="relative">
   <input class="input ps-9" type="search" placeholder="Search..." />
   <div class="pointer-events-none absolute start-3 top-1/2 -translate-y-1/2 text-muted-foreground [&>svg]:size-4">
     <svg class="lucide lucide-search" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="m21 21-4.34-4.34" /><circle cx="11" cy="11" r="8" /></svg>
@@ -124,12 +124,12 @@ Use the [Input Group](/components/input-group/) patterns to add icons, text, or 
 </div>
 </Preview>
 
-### Button Group
+### Button group
 
 Use [Button Group](/components/button-group/) when an input should be grouped with adjacent buttons.
 
 <Preview class="w-full max-w-xs">
-<div role="group" aria-label="Search" class="button-group w-full max-w-xs">
+<div role="group" aria-label="Search" class="button-group">
   <input class="input" type="search" placeholder="Search..." />
   <button type="submit" class="btn" data-variant="outline" data-size="icon" aria-label="Search">
     <svg class="lucide lucide-search" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="m21 21-4.34-4.34" /><circle cx="11" cy="11" r="8" /></svg>
@@ -140,7 +140,7 @@ Use [Button Group](/components/button-group/) when an input should be grouped wi
 ### Form
 
 <Preview class="w-full max-w-sm">
-<form class="w-full max-w-sm space-y-6">
+<form class="space-y-6">
   <div role="group" class="field">
     <label for="input-form-username">Username</label>
     <input id="input-form-username" type="text" placeholder="hunvreus" required />
@@ -159,7 +159,7 @@ Use [Button Group](/components/button-group/) when an input should be grouped wi
 Inputs support right-to-left layouts through native browser direction handling. Add `dir="rtl"` to the input, field, or an ancestor.
 
 <Preview class="w-full max-w-xs">
-<div role="group" class="field w-full max-w-xs" dir="rtl">
+<div role="group" class="field" dir="rtl">
   <label for="input-rtl-api-key">مفتاح API</label>
   <input id="input-rtl-api-key" type="password" placeholder="sk-..." />
   <p>مفتاح API الخاص بك مشفر ومخزن بأمان.</p>

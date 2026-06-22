@@ -1,22 +1,11 @@
 # Badge
 
 <Preview>
-<div class="flex flex-col items-center gap-2">
-  <div class="flex w-full flex-wrap gap-2">
-    <span class="badge">Badge</span>
-    <span class="badge" data-variant="secondary">Secondary</span>
-    <span class="badge" data-variant="destructive">Destructive</span>
-    <span class="badge" data-variant="outline">Outline</span>
-  </div>
-  <div class="flex w-full flex-wrap gap-2">
-    <span class="badge bg-blue-500 text-white dark:bg-blue-600"> 
-      <svg class="lucide lucide-badge-check" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z" /><path d="m9 12 2 2 4-4" /></svg>
-      Verified
-    </span>
-    <span class="badge rounded-full h-5 min-w-5 px-1 font-mono tabular-nums">8</span>
-    <span class="badge rounded-full h-5 min-w-5 px-1 font-mono tabular-nums" data-variant="destructive">99</span>
-    <span class="badge rounded-full h-5 min-w-5 px-1 font-mono tabular-nums" data-variant="outline">20+</span>
-  </div>
+<div class="flex flex-wrap gap-2">
+  <span class="badge">Badge</span>
+  <span class="badge" data-variant="secondary">Secondary</span>
+  <span class="badge" data-variant="destructive">Destructive</span>
+  <span class="badge" data-variant="outline">Outline</span>
 </div>
 </Preview>
 
@@ -27,76 +16,101 @@ Add `class="badge"` to an inline element. Add `data-variant` when the badge is n
 Inline SVG icons are spaced automatically by the badge gap.
 
 ```html
-<span class="badge">Badge</span>
+<span class="badge">Default</span>
 <span class="badge" data-variant="secondary">Secondary</span>
 <span class="badge" data-variant="destructive">Destructive</span>
 <span class="badge" data-variant="outline">Outline</span>
+<span class="badge" data-variant="ghost">Ghost</span>
 ```
 
 Badges support right-to-left layouts through native text flow. Flip directional icons explicitly.
 
 ## Examples
 
-### Primary
+### Variants
+
+Use `data-variant` to change the badge variant.
 
 <Preview>
-<span class="badge">Primary</span>
-</Preview>
-
-### Secondary
-
-<Preview>
-<span class="badge" data-variant="secondary">Secondary</span>
-</Preview>
-
-### Destructive
-
-<Preview>
-<span class="badge" data-variant="destructive">Destructive</span>
-</Preview>
-
-### Outline
-
-<Preview>
-<span class="badge" data-variant="outline">Outline</span>
+<div class="flex flex-wrap gap-2">
+  <span class="badge">Default</span>
+  <span class="badge" data-variant="secondary">Secondary</span>
+  <span class="badge" data-variant="destructive">Destructive</span>
+  <span class="badge" data-variant="outline">Outline</span>
+  <span class="badge" data-variant="ghost">Ghost</span>
+</div>
 </Preview>
 
 ### With icon
 
+Use `data-icon="inline-start"` or `data-icon="inline-end"` on the icon for icon-aware spacing.
+
 <Preview>
-<span class="badge" data-variant="destructive">
-  <svg class="lucide lucide-circle-alert" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10" /><line x1="12" x2="12" y1="8" y2="12" /><line x1="12" x2="12.01" y1="16" y2="16" /></svg>
-  With icon
-</span>
+<div class="flex flex-wrap gap-2">
+  <span class="badge">
+    <svg data-icon="inline-start" class="lucide lucide-badge-check" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z" /><path d="m9 12 2 2 4-4" /></svg>
+    Verified
+  </span>
+  <span class="badge" data-variant="secondary">
+    Bookmark
+    <svg data-icon="inline-end" class="lucide lucide-bookmark" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z" /></svg>
+  </span>
+</div>
+</Preview>
+
+### With spinner
+
+Use an inline loading icon with `data-icon="inline-start"` or `data-icon="inline-end"`.
+
+<Preview>
+<div class="flex flex-wrap gap-2">
+  <span class="badge" data-variant="destructive">
+    <svg aria-label="Loading" role="status" data-icon="inline-start" class="animate-spin lucide lucide-loader-circle" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56" /></svg>
+    Deleting
+  </span>
+  <span class="badge" data-variant="secondary">
+    Generating
+    <svg aria-label="Loading" role="status" data-icon="inline-end" class="animate-spin lucide lucide-loader-circle" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56" /></svg>
+  </span>
+</div>
 </Preview>
 
 ### Link
 
 <Preview>
-<a href="#" class="badge" data-variant="outline">
-  Link
-  <svg class="rtl:rotate-180 lucide lucide-arrow-right" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
+<a href="#" class="badge">
+  Open Link
+  <svg data-icon="inline-end" class="lucide lucide-arrow-up-right" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10" /><path d="M7 17 17 7" /></svg>
 </a>
 </Preview>
 
-### Custom Colors
+### Custom colors
 
 <Preview>
-<span class="badge bg-green-50 text-green-700 dark:bg-green-950 dark:text-green-300">
-  Custom
-</span>
+<div class="flex flex-wrap gap-2">
+  <span class="badge bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">Blue</span>
+  <span class="badge bg-green-50 text-green-700 dark:bg-green-950 dark:text-green-300">Green</span>
+  <span class="badge bg-sky-50 text-sky-700 dark:bg-sky-950 dark:text-sky-300">Sky</span>
+  <span class="badge bg-purple-50 text-purple-700 dark:bg-purple-950 dark:text-purple-300">Purple</span>
+  <span class="badge bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-300">Red</span>
+</div>
 </Preview>
 
 ### RTL
 
-Flip directional icons explicitly.
-
 <Preview>
 <div dir="rtl" class="flex flex-wrap gap-2">
-  <span class="badge">نشط</span>
-  <a href="#" class="badge" data-variant="outline">
-    التفاصيل
-  <svg class="rtl:rotate-180 lucide lucide-arrow-right" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
-  </a>
+  <span class="badge">شارة</span>
+  <span class="badge" data-variant="secondary">ثانوي</span>
+  <span class="badge" data-variant="destructive">مدمر</span>
+  <span class="badge" data-variant="outline">مخطط</span>
+  <span class="badge">
+    <svg data-icon="inline-start" class="lucide lucide-badge-check" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z" /><path d="m9 12 2 2 4-4" /></svg>
+    متحقق
+  </span>
+  <span class="badge" data-variant="secondary">
+    إشارة مرجعية
+    <svg data-icon="inline-end" class="lucide lucide-bookmark" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z" /></svg>
+  </span>
 </div>
 </Preview>

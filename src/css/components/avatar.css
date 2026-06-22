@@ -8,27 +8,27 @@
     @apply absolute inset-0 aspect-square size-full rounded-[inherit] object-cover;
   }
 
-  .avatar > span:not([data-badge]) {
+  .avatar > span:not(.avatar-badge) {
     @apply flex size-full items-center justify-center rounded-[inherit] text-sm;
   }
 
-  .avatar[data-size='sm'] > span:not([data-badge]) {
+  .avatar[data-size='sm'] > span:not(.avatar-badge) {
     @apply text-xs;
   }
 
-  .avatar > [data-badge] {
+  .avatar > .avatar-badge {
     @apply absolute end-0 bottom-0 z-10 inline-flex items-center justify-center rounded-full bg-blend-color ring-2 select-none;
   }
 
-  .avatar[data-size='sm'] > [data-badge] {
+  .avatar[data-size='sm'] > .avatar-badge {
     @apply size-2 [&>svg]:hidden;
   }
 
-  .avatar > [data-badge] {
+  .avatar > .avatar-badge {
     @apply size-2.5 [&>svg]:size-2;
   }
 
-  .avatar[data-size='lg'] > [data-badge] {
+  .avatar[data-size='lg'] > .avatar-badge {
     @apply size-3 [&>svg]:size-2;
   }
 

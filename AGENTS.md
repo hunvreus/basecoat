@@ -76,7 +76,10 @@
 - Do not include React-only APIs such as `asChild`.
 - Do not add "Composition" sections unless they describe stable Basecoat markup.
 - Do not add API Reference sections for native/CSS-only components unless there is a real Basecoat API.
+- Structure component docs as: title and preview, `## Usage`, optional `### HTML structure` for stable markup requirements, optional `### JavaScript API` for components with Basecoat JS methods/events/options, then `## Examples`.
+- Keep `Usage` focused on the minimal working snippet and important Basecoat/upstream differences; put variants, states, RTL, and richer patterns under `Examples`.
 - Keep snippets minimal and aligned with current behavior.
+- In HTML snippets, keep text-only elements on one line, such as `<p>Text</p>`; use multiline formatting when the element contains child elements or when line length would hurt readability.
 - Document intentional differences from upstream near the relevant example.
 
 ## Validation

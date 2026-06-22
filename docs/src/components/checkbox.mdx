@@ -1,9 +1,31 @@
 # Checkbox
 
 <Preview>
-<div role="group" class="field" data-orientation="horizontal">
-  <input type="checkbox" id="terms" class="input" />
-  <label for="terms">Accept terms and conditions</label>
+<div role="group" class="fieldset">
+  <div role="group" class="field" data-orientation="horizontal">
+    <input type="checkbox" id="terms-checkbox" name="terms-checkbox" class="input" />
+    <label for="terms-checkbox">Accept terms and conditions</label>
+  </div>
+  <div role="group" class="field" data-orientation="horizontal">
+    <input type="checkbox" id="terms-checkbox-2" name="terms-checkbox-2" class="input" checked />
+    <section>
+      <label for="terms-checkbox-2">Accept terms and conditions</label>
+      <p>By clicking this checkbox, you agree to the terms.</p>
+    </section>
+  </div>
+  <div role="group" class="field" data-orientation="horizontal" data-disabled>
+    <input type="checkbox" id="toggle-checkbox" name="toggle-checkbox" class="input" disabled />
+    <label for="toggle-checkbox">Enable notifications</label>
+  </div>
+  <label>
+    <div role="group" class="field" data-orientation="horizontal">
+      <input type="checkbox" id="toggle-checkbox-2" name="toggle-checkbox-2" class="input" />
+      <section>
+        <h3>Enable notifications</h3>
+        <p>You can enable or disable notifications at any time.</p>
+      </section>
+    </div>
+  </label>
 </div>
 </Preview>
 
@@ -19,65 +41,83 @@ Add `class="input"` to checkbox inputs. Pair it with [Field](/components/field) 
 
 ### Basic
 
+Pair the checkbox with `field` and a native `<label>` for proper layout and labeling.
+
 <Preview>
-<div role="group" class="field" data-orientation="horizontal">
-  <input type="checkbox" id="checkbox-basic" class="input" />
-  <label for="checkbox-basic">Accept terms and conditions</label>
+<div role="group" class="fieldset">
+  <div role="group" class="field" data-orientation="horizontal">
+    <input type="checkbox" id="terms-checkbox-basic" name="terms-checkbox-basic" class="input" />
+    <label for="terms-checkbox-basic">Accept terms and conditions</label>
+  </div>
 </div>
 </Preview>
 
 ### Description
 
-<Preview>
-<div role="group" class="field" data-orientation="horizontal">
-  <input type="checkbox" id="checkbox-description" class="input" aria-describedby="checkbox-description-text" />
-  <section>
-    <label for="checkbox-description">Accept terms and conditions</label>
-    <p id="checkbox-description-text">By clicking this checkbox, you agree to the terms and conditions.</p>
-  </section>
-</div>
-</Preview>
-
-### Invalid
+Use a `section` and paragraph for helper text.
 
 <Preview>
-<div role="group" class="field" data-orientation="horizontal" data-invalid="true">
-  <input type="checkbox" id="checkbox-invalid" class="input" aria-invalid="true" />
-  <label for="checkbox-invalid">Accept terms and conditions</label>
+<div role="group" class="fieldset">
+  <div role="group" class="field" data-orientation="horizontal">
+    <input type="checkbox" id="terms-checkbox-desc" name="terms-checkbox-desc" class="input" checked aria-describedby="terms-checkbox-desc-description" />
+    <section>
+      <label for="terms-checkbox-desc">Accept terms and conditions</label>
+      <p id="terms-checkbox-desc-description">By clicking this checkbox, you agree to the terms and conditions.</p>
+    </section>
+  </div>
 </div>
 </Preview>
 
 ### Disabled
 
+Use the `disabled` attribute to prevent interaction and add `data-disabled` to the `.field` component for disabled styles.
+
 <Preview>
-<div role="group" class="field" data-orientation="horizontal" data-disabled="true">
-  <input type="checkbox" id="checkbox-disabled" class="input" disabled />
-  <label for="checkbox-disabled">Accept terms and conditions</label>
+<div role="group" class="fieldset">
+  <div role="group" class="field" data-orientation="horizontal" data-disabled>
+    <input type="checkbox" id="toggle-checkbox-disabled" name="toggle-checkbox-disabled" class="input" disabled />
+    <label for="toggle-checkbox-disabled">Enable notifications</label>
+  </div>
+</div>
+</Preview>
+
+### Invalid
+
+Set `aria-invalid="true"` on the checkbox and `data-invalid` on the field wrapper to show invalid styles.
+
+<Preview>
+<div role="group" class="fieldset">
+  <div role="group" class="field" data-orientation="horizontal" data-invalid>
+    <input type="checkbox" id="terms-checkbox-invalid" name="terms-checkbox-invalid" class="input" aria-invalid="true" />
+    <label for="terms-checkbox-invalid">Accept terms and conditions</label>
+  </div>
 </div>
 </Preview>
 
 ### Group
 
+Use multiple fields to create a checkbox list.
+
 <Preview>
 <fieldset class="fieldset">
-  <legend>Sidebar</legend>
-  <p>Select the items you want to display in the sidebar.</p>
-  <div role="group" aria-label="Sidebar items" data-slot="checkbox-group">
+  <legend data-variant="label">Show these items on the desktop:</legend>
+  <p>Select the items you want to show on the desktop.</p>
+  <div role="group" aria-label="Desktop items" data-slot="checkbox-group">
     <div role="group" class="field" data-orientation="horizontal">
-      <input class="input" type="checkbox" id="checkbox-recents" checked />
-      <label for="checkbox-recents">Recents</label>
+      <input class="input" type="checkbox" id="finder-pref-9k2-hard-disks-ljj-checkbox" name="finder-pref-9k2-hard-disks-ljj-checkbox" checked />
+      <label for="finder-pref-9k2-hard-disks-ljj-checkbox" class="font-normal">Hard disks</label>
     </div>
     <div role="group" class="field" data-orientation="horizontal">
-      <input class="input" type="checkbox" id="checkbox-home" checked />
-      <label for="checkbox-home">Home</label>
+      <input class="input" type="checkbox" id="finder-pref-9k2-external-disks-1yg-checkbox" name="finder-pref-9k2-external-disks-1yg-checkbox" checked />
+      <label for="finder-pref-9k2-external-disks-1yg-checkbox" class="font-normal">External disks</label>
     </div>
     <div role="group" class="field" data-orientation="horizontal">
-      <input class="input" type="checkbox" id="checkbox-applications" />
-      <label for="checkbox-applications">Applications</label>
+      <input class="input" type="checkbox" id="finder-pref-9k2-cds-dvds-fzt-checkbox" name="finder-pref-9k2-cds-dvds-fzt-checkbox" />
+      <label for="finder-pref-9k2-cds-dvds-fzt-checkbox" class="font-normal">CDs, DVDs, and iPods</label>
     </div>
     <div role="group" class="field" data-orientation="horizontal">
-      <input class="input" type="checkbox" id="checkbox-desktop" />
-      <label for="checkbox-desktop">Desktop</label>
+      <input class="input" type="checkbox" id="finder-pref-9k2-connected-servers-6l2-checkbox" name="finder-pref-9k2-connected-servers-6l2-checkbox" />
+      <label for="finder-pref-9k2-connected-servers-6l2-checkbox" class="font-normal">Connected servers</label>
     </div>
   </div>
 </fieldset>
@@ -85,42 +125,76 @@ Add `class="input"` to checkbox inputs. Pair it with [Field](/components/field) 
 
 ### Table
 
-<Preview>
+<Preview class="w-full">
 <div class="table-container">
-  <table class="table">
+  <table class="table" data-checkbox-table>
     <thead>
       <tr>
-        <th><input type="checkbox" class="input" aria-label="Select all" /></th>
-        <th>Status</th>
+        <th class="w-8"><input type="checkbox" id="select-all-checkbox" name="select-all-checkbox" class="input" aria-label="Select all" /></th>
+        <th>Name</th>
         <th>Email</th>
+        <th>Role</th>
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td><input type="checkbox" class="input" aria-label="Select row 1" checked /></td>
-        <td>Active</td>
-        <td>olivia@example.com</td>
+      <tr data-state="selected">
+        <td><input type="checkbox" id="row-1-checkbox" name="row-1-checkbox" class="input" aria-label="Select Sarah Chen" checked /></td>
+        <td class="font-medium">Sarah Chen</td>
+        <td>sarah.chen@example.com</td>
+        <td>Admin</td>
       </tr>
       <tr>
-        <td><input type="checkbox" class="input" aria-label="Select row 2" /></td>
-        <td>Inactive</td>
-        <td>noah@example.com</td>
+        <td><input type="checkbox" id="row-2-checkbox" name="row-2-checkbox" class="input" aria-label="Select Marcus Rodriguez" /></td>
+        <td class="font-medium">Marcus Rodriguez</td>
+        <td>marcus.rodriguez@example.com</td>
+        <td>User</td>
+      </tr>
+      <tr>
+        <td><input type="checkbox" id="row-3-checkbox" name="row-3-checkbox" class="input" aria-label="Select Priya Patel" /></td>
+        <td class="font-medium">Priya Patel</td>
+        <td>priya.patel@example.com</td>
+        <td>User</td>
+      </tr>
+      <tr>
+        <td><input type="checkbox" id="row-4-checkbox" name="row-4-checkbox" class="input" aria-label="Select David Kim" /></td>
+        <td class="font-medium">David Kim</td>
+        <td>david.kim@example.com</td>
+        <td>Editor</td>
       </tr>
     </tbody>
   </table>
 </div>
 </Preview>
 
-### RTL
+## RTL
 
-Checkbox layout uses document direction and logical spacing. Set `dir="rtl"` on a parent to render right-to-left.
+Add `dir="rtl"` to the field group or an ancestor.
 
 <Preview>
-<div dir="rtl" class="field" data-orientation="horizontal">
-  <input type="checkbox" id="checkbox-rtl" class="input" aria-describedby="checkbox-rtl-description" checked />
-  <section>
-    <label for="checkbox-rtl">قبول الشروط والأحكام</label>
-    <p id="checkbox-rtl-description">يمكنك تغيير هذا الخيار في أي وقت.</p>
-  </section>
+<div role="group" class="fieldset" dir="rtl">
+  <div role="group" class="field" data-orientation="horizontal">
+    <input type="checkbox" id="terms-checkbox-rtl" name="terms-checkbox" class="input" />
+    <label for="terms-checkbox-rtl">قبول الشروط والأحكام</label>
+  </div>
+  <div role="group" class="field" data-orientation="horizontal">
+    <input type="checkbox" id="terms-checkbox-2-rtl" name="terms-checkbox-2" class="input" checked aria-describedby="terms-checkbox-2-rtl-description" />
+    <section>
+      <label for="terms-checkbox-2-rtl">قبول الشروط والأحكام</label>
+      <p id="terms-checkbox-2-rtl-description">بالنقر على هذا المربع، فإنك توافق على الشروط.</p>
+    </section>
+  </div>
+  <div role="group" class="field" data-orientation="horizontal" data-disabled>
+    <input type="checkbox" id="toggle-checkbox-rtl" name="toggle-checkbox" class="input" disabled />
+    <label for="toggle-checkbox-rtl">تفعيل الإشعارات</label>
+  </div>
+  <label>
+    <div role="group" class="field" data-orientation="horizontal">
+      <input type="checkbox" id="toggle-checkbox-2-rtl" name="toggle-checkbox-2" class="input" />
+      <section>
+        <h3>تفعيل الإشعارات</h3>
+        <p>يمكنك تفعيل أو إلغاء تفعيل الإشعارات في أي وقت.</p>
+      </section>
+    </div>
+  </label>
 </div>
 </Preview>

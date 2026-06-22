@@ -1,0 +1,30 @@
+/* Breadcrumb */
+@layer components {
+  .breadcrumb > ol {
+    @apply m-0 flex list-none flex-wrap items-center p-0 break-words;
+  }
+
+  .breadcrumb li {
+    @apply inline-flex items-center;
+  }
+
+  .breadcrumb a {
+    @apply rounded-sm outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50;
+  }
+
+  .breadcrumb [aria-current='page'] {
+    @apply cursor-default;
+  }
+
+  .breadcrumb li[aria-hidden='true'] {
+    @apply select-none;
+  }
+
+  .breadcrumb li > span[aria-hidden='true'] {
+    @apply flex items-center justify-center;
+  }
+
+  .breadcrumb [data-rtl-flip] {
+    @apply rtl:rotate-180;
+  }
+}

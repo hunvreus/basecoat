@@ -1,7 +1,7 @@
 # Progress
 
-<Preview class="w-full max-w-sm">
-<div class="progress" role="progressbar" aria-label="Loading" aria-valuenow="66" aria-valuemin="0" aria-valuemax="100">
+<Preview>
+<div class="progress max-w-sm" role="progressbar" aria-label="Loading" aria-valuenow="66" aria-valuemin="0" aria-valuemax="100">
   <span style="width: 66%"></span>
 </div>
 </Preview>
@@ -29,11 +29,11 @@ Add `class="progress"` and `role="progressbar"` to the root. Use one child `<spa
 
 ### Label
 
-<Preview class="w-full max-w-sm">
-<div class="field">
-  <div class="flex items-center gap-3">
+<Preview>
+<div class="field max-w-sm">
+  <div class="flex items-center gap-3 text-sm">
     <label id="progress-label">Upload progress</label>
-    <output class="text-muted-foreground ms-auto text-sm tabular-nums">66%</output>
+    <output class="ms-auto tabular-nums">66%</output>
   </div>
   <div class="progress" role="progressbar" aria-labelledby="progress-label" aria-valuenow="66" aria-valuemin="0" aria-valuemax="100">
     <span style="width: 66%"></span>
@@ -45,8 +45,8 @@ Add `class="progress"` and `role="progressbar"` to the root. Use one child `<spa
 
 Progress uses logical direction. Set `dir="rtl"` on the progress root or a parent to fill from the right.
 
-<Preview class="w-full max-w-sm">
-<div dir="rtl" class="progress" role="progressbar" aria-label="تحميل" aria-valuenow="66" aria-valuemin="0" aria-valuemax="100">
+<Preview>
+<div dir="rtl" class="progress max-w-sm" role="progressbar" aria-label="تحميل" aria-valuenow="66" aria-valuemin="0" aria-valuemax="100">
   <span style="width: 66%"></span>
 </div>
 </Preview>

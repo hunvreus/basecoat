@@ -15,8 +15,20 @@
   .alert > section {
     @apply grid justify-items-start gap-1;
 
+    :where(p, ul, ol) {
+      @apply m-0;
+    }
+
+    :where(p, ul, ol):not(:last-child) {
+      @apply mb-4;
+    }
+
     ul {
       @apply list-inside list-disc;
+    }
+
+    ol {
+      @apply list-inside list-decimal;
     }
   }
 

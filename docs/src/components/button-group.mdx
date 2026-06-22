@@ -70,7 +70,7 @@ Use `data-orientation="vertical"` to stack items. Use `<hr role="separator" />` 
 Use `data-orientation="vertical"` to stack buttons vertically.
 
 <Preview>
-<div role="group" class="button-group" data-orientation="vertical">
+<div role="group" aria-label="Media controls" class="button-group h-fit" data-orientation="vertical">
   <button type="button" class="btn" data-variant="outline" data-size="icon" aria-label="Zoom in">
     <svg class="lucide lucide-plus" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14" /><path d="M12 5v14" /></svg>
   </button>
@@ -113,6 +113,8 @@ Use `data-orientation="vertical"` to stack buttons vertically.
 
 ### Nested
 
+Nest `button-group` components to keep controls joined within each group while adding spacing between groups.
+
 <Preview>
 <div role="group" aria-label="Pagination controls" class="button-group">
   <div role="group" class="button-group">
@@ -124,10 +126,10 @@ Use `data-orientation="vertical"` to stack buttons vertically.
   </div>
   <div role="group" class="button-group">
     <button type="button" class="btn" data-variant="outline" data-size="icon-sm" aria-label="Previous page">
-      <svg class="lucide lucide-chevron-left" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6" /></svg>
+      <svg class="lucide lucide-arrow-left" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7" /><path d="M19 12H5" /></svg>
     </button>
     <button type="button" class="btn" data-variant="outline" data-size="icon-sm" aria-label="Next page">
-      <svg class="lucide lucide-chevron-right" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6" /></svg>
+      <svg class="lucide lucide-arrow-right" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
     </button>
   </div>
 </div>
@@ -139,58 +141,60 @@ Use `<hr role="separator" />` to visually divide buttons within a group.
 
 <Preview>
 <div role="group" class="button-group">
-  <button type="button" class="btn" data-variant="secondary">Copy</button>
+  <button type="button" class="btn" data-variant="secondary" data-size="sm">Copy</button>
   <hr role="separator" />
-  <button type="button" class="btn" data-variant="secondary">Paste</button>
+  <button type="button" class="btn" data-variant="secondary" data-size="sm">Paste</button>
 </div>
 </Preview>
 
 ### Split
 
-Use a separator to create a split action with a primary action and a secondary menu trigger.
+Use a separator to create a split action.
 
 <Preview>
-<div role="group" aria-label="Split save actions" class="button-group">
-  <button type="button" class="btn" data-variant="secondary">Save</button>
+<div role="group" class="button-group">
+  <button type="button" class="btn" data-variant="secondary">Button</button>
   <hr role="separator" />
-
-  <div id="dropdown-menu-465061" class="dropdown-menu">
-    <button type="button" id="dropdown-menu-465061-trigger" aria-haspopup="menu" aria-controls="dropdown-menu-465061-menu" aria-expanded="false" class="btn" data-variant="secondary" data-size="icon" aria-label="More save options">
-      <svg class="lucide lucide-chevron-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6" /></svg>
-    </button>
-    <div id="dropdown-menu-465061-popover" data-popover aria-hidden="true" data-align="end">
-      <div role="menu" id="dropdown-menu-465061-menu" aria-labelledby="dropdown-menu-465061-trigger">
-        <div role="menuitem">Save as draft</div>
-        <div role="menuitem">Save and publish</div>
-        <div role="menuitem">Save as template</div>
-      </div>
-    </div>
-  </div>
+  <button type="button" class="btn" data-variant="secondary" data-size="icon" aria-label="Add">
+    <svg class="lucide lucide-plus" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14" /><path d="M12 5v14" /></svg>
+  </button>
 </div>
 </Preview>
 
 ### Input
 
 <Preview>
-<div role="group" aria-label="Search" class="button-group w-full max-w-sm">
+<div role="group" aria-label="Search" class="button-group">
   <input type="text" class="input" placeholder="Search..." />
-  <button type="button" class="btn" data-variant="outline" data-size="icon" aria-label="Search">
+  <button type="button" class="btn" data-variant="outline" aria-label="Search">
     <svg class="lucide lucide-search" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21 21-4.34-4.34" /><circle cx="11" cy="11" r="8" /></svg>
   </button>
 </div>
 </Preview>
 
-### Input Group
+### Input group
 
 <Preview>
-<div role="group" aria-label="Amount" class="button-group w-full max-w-sm">
-  <span>$</span>
-  <input type="text" class="input" placeholder="0.00" />
-  <span>USD</span>
+<div role="group" class="button-group">
+  <div role="group" class="button-group">
+    <button type="button" class="btn" data-variant="outline" data-size="icon" aria-label="Add attachment">
+      <svg class="lucide lucide-plus" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14" /><path d="M12 5v14" /></svg>
+    </button>
+  </div>
+  <div role="group" class="button-group">
+    <div class="input-group">
+      <input type="text" placeholder="Send a message..." />
+      <div role="group" data-align="inline-end">
+        <button type="button" class="btn" data-variant="ghost" data-size="icon-xs" aria-label="Voice mode" aria-pressed="false">
+          <svg class="lucide lucide-audio-lines" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 10v3" /><path d="M6 6v11" /><path d="M10 3v18" /><path d="M14 8v7" /><path d="M18 5v13" /><path d="M22 10v3" /></svg>
+        </button>
+      </div>
+    </div>
+  </div>
 </div>
 </Preview>
 
-### Dropdown Menu
+### Dropdown menu
 
 <Preview>
 <div role="group" class="button-group">
@@ -240,7 +244,7 @@ Use a separator to create a split action with a primary action and a secondary m
 ### Select
 
 <Preview>
-<div class="flex w-fit items-stretch gap-2">
+<div class="flex items-stretch gap-2">
   <div role="group" aria-label="Currency amount" class="button-group">
     <div id="select-797405" class="select">
       <button type="button" class="[&amp;_[data-name]]:hidden" id="select-797405-trigger" aria-haspopup="listbox" aria-expanded="false" aria-controls="select-797405-listbox">
@@ -282,16 +286,16 @@ Use a separator to create a split action with a primary action and a secondary m
     Copilot
   </button>
   <div id="popover-788465" class="popover">
-    <button id="popover-788465-trigger" type="button" aria-label="Open copilot tasks" aria-expanded="false" aria-controls="popover-788465-popover" class="btn" data-variant="outline" data-size="icon">
+    <button id="popover-788465-trigger" type="button" aria-label="Open Popover" aria-expanded="false" aria-controls="popover-788465-popover" class="btn" data-variant="outline" data-size="icon">
       <svg class="lucide lucide-chevron-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6" /></svg>
     </button>
-    <div id="popover-788465-popover" data-popover aria-hidden="true" class="w-72 p-0" data-align="end">
-      <header class="px-4 py-3 text-sm font-medium border-b">Agent Tasks</header>
-      <section class="p-4 text-sm space-y-2">
-        <textarea class="textarea w-full mb-4" placeholder="Describe your task in natural language"></textarea>
+    <div id="popover-788465-popover" data-popover aria-hidden="true" class="w-72 text-sm" data-align="end">
+      <div>
         <p class="font-medium">Start a new task with Copilot</p>
-        <p class="text-muted-foreground">Describe your task in natural language. Copilot will work in the background and open a pull request for your review.</p>
-      </section>
+        <p class="text-muted-foreground">Describe your task in natural language.</p>
+      </div>
+      <textarea class="textarea min-h-16 w-full resize-none" placeholder="I need to..."></textarea>
+      <p class="text-muted-foreground text-xs">Copilot will open a pull request for review.</p>
     </div>
   </div>
 </div>
@@ -304,12 +308,21 @@ Add `dir="rtl"` to the group or an ancestor. Flip directional icons explicitly.
 <Preview>
 <div dir="rtl">
   <div role="group" aria-label="إجراءات الرسالة" class="button-group">
-    <button type="button" class="btn" data-variant="outline">أرشفة</button>
-    <button type="button" class="btn" data-variant="outline">تقرير</button>
-    <button type="button" class="btn" data-variant="outline">
-      إرسال
-      <svg class="rtl:rotate-180 lucide lucide-arrow-right" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
-    </button>
+    <div role="group" class="button-group">
+      <button type="button" class="btn" data-variant="outline" data-size="icon" aria-label="رجوع">
+        <svg class="rtl:rotate-180 lucide lucide-arrow-left" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7" /><path d="M19 12H5" /></svg>
+      </button>
+    </div>
+    <div role="group" class="button-group">
+      <button type="button" class="btn" data-variant="outline">أرشفة</button>
+      <button type="button" class="btn" data-variant="outline">تقرير</button>
+    </div>
+    <div role="group" class="button-group">
+      <button type="button" class="btn" data-variant="outline">تأجيل</button>
+      <button type="button" class="btn" data-variant="outline" data-size="icon" aria-label="المزيد من الخيارات">
+        <svg class="lucide lucide-ellipsis" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1" /><circle cx="19" cy="12" r="1" /><circle cx="5" cy="12" r="1" /></svg>
+      </button>
+    </div>
   </div>
 </div>
 </Preview>

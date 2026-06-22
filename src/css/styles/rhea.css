@@ -1,5 +1,26 @@
-/* Button */
+/* Accordion */
 @layer components {
+  .accordion {
+    @apply overflow-hidden rounded-2xl border;
+  }
+
+  .accordion > details {
+    @apply open:bg-muted/50 not-last:border-b;
+  }
+
+  .accordion > details > summary {
+    @apply gap-6 p-4 text-left text-sm font-medium hover:underline;
+  }
+
+  .accordion > details > summary > svg:last-child {
+    @apply text-muted-foreground ms-auto size-4;
+  }
+
+  .accordion > details > :not(summary) {
+    @apply px-4 pt-0 pb-4 text-sm;
+  }
+
+  /* Button */
   .btn {
     @apply rounded-2xl border border-transparent bg-clip-padding text-sm font-medium focus-visible:border-ring focus-visible:ring-ring/30 focus-visible:ring-[3px] aria-invalid:border-destructive aria-invalid:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 active:not-aria-[haspopup]:translate-y-px [&_svg:not([class*='size-'])]:size-4;
   }
@@ -255,7 +276,7 @@
     @apply size-10;
   }
 
-  .avatar > span:not([data-badge]) {
+  .avatar > span:not(.avatar-badge) {
     @apply bg-muted text-muted-foreground rounded-[inherit];
   }
 
@@ -263,7 +284,7 @@
     @apply rounded-[inherit];
   }
 
-  .avatar > [data-badge] {
+  .avatar > .avatar-badge {
     @apply bg-primary text-primary-foreground ring-background;
   }
 
@@ -309,17 +330,42 @@
     @apply text-primary underline-offset-4 hover:underline;
   }
 
-  /* Command */
-  .command {
-    @apply bg-popover text-popover-foreground rounded-3xl p-1;
+  /* Breadcrumb */
+  .breadcrumb > ol {
+    @apply text-muted-foreground gap-1.5 text-sm sm:gap-2.5;
   }
 
-  .command-dialog > * {
-    @apply rounded-3xl p-0;
+  .breadcrumb li {
+    @apply gap-1.5;
+  }
+
+  .breadcrumb a {
+    @apply transition-colors hover:text-foreground;
+  }
+
+  .breadcrumb [aria-current='page'] {
+    @apply font-normal text-foreground;
+  }
+
+  .breadcrumb li[aria-hidden='true'] > svg {
+    @apply size-3.5;
+  }
+
+  .breadcrumb li > span[aria-hidden='true'] {
+    @apply size-5 [&>svg]:size-4;
+  }
+
+  /* Command */
+  .command {
+    @apply bg-popover text-popover-foreground rounded-3xl! p-1;
+  }
+
+  .command-dialog > .command {
+    @apply bg-popover text-popover-foreground ring-foreground/5 dark:ring-foreground/10 rounded-3xl! shadow-xl ring-1 duration-100;
   }
 
   .command > header {
-    @apply m-1 mb-0 h-8 gap-2 rounded-2xl bg-input/50 px-2;
+    @apply m-1 mb-0 h-8 gap-0 rounded-2xl bg-input/50 px-2;
   }
 
   .command > header svg {
@@ -327,7 +373,7 @@
   }
 
   .command > header input {
-    @apply h-full text-sm placeholder:text-muted-foreground;
+    @apply ps-1.5 text-sm placeholder:text-muted-foreground;
   }
 
   .command [role='menu'] {
@@ -355,7 +401,7 @@
   }
 
   .command [role='menuitem'].active {
-    @apply bg-accent text-accent-foreground [&_svg]:text-accent-foreground;
+    @apply bg-muted text-foreground [&_svg]:text-foreground;
   }
 
   .command [data-shortcut] {
@@ -378,11 +424,15 @@
   }
 
   .combobox [data-popover] {
-    @apply bg-popover text-popover-foreground ring-foreground/5 dark:ring-foreground/10 max-h-72 rounded-2xl p-1 shadow-lg ring-1 duration-100;
+    @apply bg-popover text-popover-foreground ring-foreground/5 dark:ring-foreground/10 max-h-72 gap-0 rounded-2xl p-0 shadow-lg ring-1 duration-100;
   }
 
   .combobox [role='listbox'] {
-    @apply max-h-[min(18rem,var(--available-height,18rem))] scroll-py-1 overflow-y-auto;
+    @apply max-h-[min(18rem,var(--available-height,18rem))] scroll-py-1 overflow-y-auto p-1;
+  }
+
+  .combobox [role='listbox']:not(:has([data-value]:not([aria-hidden='true']))) {
+    @apply p-0;
   }
 
   .combobox [role='listbox']:not(:has([data-value]:not([aria-hidden='true'])))::before {
@@ -399,7 +449,7 @@
 
   .combobox [role='option'].active,
   .combobox [role='option']:focus-visible {
-    @apply bg-muted text-foreground [&_svg]:text-foreground;
+    @apply bg-accent text-accent-foreground [&_svg]:text-accent-foreground;
   }
 
   .combobox [role='group'] {
@@ -420,6 +470,14 @@
 
   .combobox-chip-remove {
     @apply -ms-0.5 size-4.5 opacity-50 hover:opacity-100 [&_svg]:size-3.5;
+  }
+
+  .combobox [data-popover] > .input-group {
+    @apply m-1 mb-0 h-8 w-auto border-input/30 bg-input/50 shadow-none focus-within:border-inherit focus-within:ring-0;
+  }
+
+  .combobox [data-popover] > input[role='combobox'] {
+    @apply mb-1 w-full;
   }
   /* Select */
   *:not(select).select > button {
@@ -473,12 +531,17 @@
 
   /* Dialog */
   .dialog::backdrop,
+  .alert-dialog::backdrop,
   .command-dialog::backdrop {
     @apply bg-black/30 backdrop-blur-sm duration-100;
   }
 
+  .alert-dialog > * {
+    @apply bg-popover text-popover-foreground ring-foreground/5 dark:ring-foreground/10 max-w-xs gap-6 rounded-3xl p-6 shadow-xl ring-1 duration-100 sm:max-w-md;
+  }
+
   .dialog > * {
-    @apply bg-popover text-popover-foreground ring-foreground/5 dark:ring-foreground/10 max-w-[calc(100%-2rem)] gap-6 rounded-[min(var(--radius-4xl),24px)] p-6 text-sm shadow-xl ring-1 duration-100 sm:max-w-md;
+    @apply bg-popover text-popover-foreground ring-foreground/5 dark:ring-foreground/10 max-w-[calc(100%-2rem)] gap-6 rounded-3xl p-6 text-sm shadow-xl ring-1 duration-100 sm:max-w-md;
   }
 
   .dialog > * > :is(button, form[method='dialog']) {
@@ -493,6 +556,15 @@
     @apply gap-1.5;
   }
 
+  .alert-dialog > * > header {
+    @apply gap-x-6 gap-y-1.5;
+  }
+
+  .alert-dialog > * > header > figure {
+    @apply bg-muted mb-2 inline-flex size-16 items-center justify-center rounded-full [&>svg:not([class*='size-'])]:size-8;
+  }
+
+  .alert-dialog > * > footer,
   .dialog > * > footer {
     @apply gap-2;
   }
@@ -502,9 +574,19 @@
     @apply text-base leading-none font-medium;
   }
 
+  .alert-dialog > * > header > h2,
+  .alert-dialog > * > [data-title] {
+    @apply text-lg font-medium;
+  }
+
   .dialog > * > header > p,
   .dialog > * > [data-description] {
     @apply text-muted-foreground text-sm leading-normal [&_a]:underline [&_a]:underline-offset-3 [&_a:hover]:text-foreground;
+  }
+
+  .alert-dialog > * > header > p,
+  .alert-dialog > * > [data-description] {
+    @apply text-muted-foreground text-sm text-balance md:text-pretty [&_a]:underline [&_a]:underline-offset-3 [&_a:hover]:text-foreground;
   }
 
   /* Dropdown Menu */
@@ -553,11 +635,11 @@
     @apply bg-border/50 -mx-1 my-1 h-px;
   }
 
-  .dropdown-menu :is([data-shortcut], kbd:last-child) {
+  .dropdown-menu :is([data-shortcut], kbd:last-child, .kbd:last-child) {
     @apply text-muted-foreground font-sans text-xs tracking-widest;
   }
 
-  .dropdown-menu :is([role='menuitem'], [role='menuitemcheckbox'], [role='menuitemradio']):is(:focus-visible, .active) :is([data-shortcut], kbd:last-child) {
+  .dropdown-menu :is([role='menuitem'], [role='menuitemcheckbox'], [role='menuitemradio']):is(:focus-visible, .active) :is([data-shortcut], kbd:last-child, .kbd:last-child) {
     @apply text-accent-foreground;
   }
 
@@ -582,7 +664,7 @@
 
   /* Card */
   .card {
-    @apply bg-card text-card-foreground ring-foreground/5 dark:ring-foreground/10 overflow-hidden rounded-[min(var(--radius-4xl),24px)] text-sm shadow-sm ring-1 has-[>img:first-child]:pt-0 [&>img:first-child]:rounded-t-[min(var(--radius-4xl),24px)] [&>img:last-child]:rounded-b-[min(var(--radius-4xl),24px)];
+    @apply bg-card text-card-foreground ring-foreground/5 dark:ring-foreground/10 overflow-hidden rounded-3xl text-sm shadow-sm ring-1 has-[>img:first-child]:pt-0 [&>img:first-child]:rounded-t-3xl [&>img:last-child]:rounded-b-3xl;
   }
 
   .card {
@@ -594,7 +676,7 @@
   }
 
   .card > header {
-    @apply gap-1.5 rounded-t-[min(var(--radius-4xl),24px)] px-5 [.border-b]:pb-5;
+    @apply gap-1.5 rounded-t-3xl px-5 [.border-b]:pb-5;
   }
 
   .card[data-size='sm'] > header {
@@ -618,7 +700,7 @@
   }
 
   .card > footer {
-    @apply rounded-b-[min(var(--radius-4xl),24px)] px-5 [.border-t]:pt-5;
+    @apply rounded-b-3xl px-5 [.border-t]:pt-5;
   }
 
   .card[data-size='sm'] > footer {

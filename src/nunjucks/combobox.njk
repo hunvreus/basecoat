@@ -7,6 +7,7 @@
   @param multiple {boolean} [optional] [default=false] - Enables multiple selection mode with chips.
   @param placeholder {string} [optional] - Placeholder text for the visible input.
   @param close_on_select {boolean} [optional] [default=false] - Closes the popover when selecting an option in multiple mode.
+  @param clear {boolean} [optional] [default=false] - Shows a clear button in single-select mode.
   @param auto_highlight {boolean} [optional] [default=false] - Highlights the first matching option while filtering.
   @param format {string} [optional] [default="value"] - Hidden input serialization format: "value" or "object".
   @param main_attrs {object} [optional] - Additional HTML attributes for the root div.
@@ -22,6 +23,7 @@
   multiple=false,
   placeholder=None,
   close_on_select=false,
+  clear=false,
   auto_highlight=false,
   format="value",
   main_attrs={},
@@ -65,7 +67,23 @@
   {% endfor %}
 >
   {% if multiple %}
-  <div class="combobox-chips {{ input_attrs.class }}">
+  <input
+    type="text"
+    role="combobox"
+    class="{{ input_attrs.class }}"
+    placeholder="{{ placeholder or '' }}"
+    autocomplete="off"
+    autocorrect="off"
+    spellcheck="false"
+    aria-autocomplete="list"
+    aria-expanded="false"
+    aria-controls="{{ id }}-listbox"
+    {% for key, value in input_attrs %}
+      {% if key != 'class' %}{{ key }}="{{ value }}"{% endif %}
+    {% endfor %}
+  >
+  {% elif clear %}
+  <div class="input-group {{ input_attrs.class }}">
     <input
       type="text"
       role="combobox"
@@ -80,6 +98,14 @@
         {% if key != 'class' %}{{ key }}="{{ value }}"{% endif %}
       {% endfor %}
     >
+    <span role="group" data-align="inline-end">
+      <button type="button" data-clear aria-label="Clear selection">
+        <svg class="size-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+      </button>
+      <button type="button" class="btn" data-variant="ghost" data-size="icon-xs" aria-label="Open suggestions" aria-haspopup="listbox" aria-expanded="false" aria-controls="{{ id }}-listbox">
+        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+      </button>
+    </span>
   </div>
   {% else %}
   <input

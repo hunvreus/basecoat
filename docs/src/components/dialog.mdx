@@ -77,7 +77,7 @@ Basecoat uses the native `<dialog>` element and `showModal()`. This differs from
   <dd>Trigger button. Basecoat intentionally uses the native <code>HTMLDialogElement.showModal()</code> method.</dd>
   <dt><code>&lt;dialog class="dialog" id="&#123; DIALOG_ID &#125;"&gt;</code></dt>
   <dd>
-    Native modal dialog. Add <code>aria-labelledby="&#123; TITLE_ID &#125;"</code> and <code>aria-describedby="&#123; DESCRIPTION_ID &#125;"</code> when title and description are present. The macro also adds backdrop-click close handling.
+    Native modal dialog. Add <code>aria-labelledby="&#123; TITLE_ID &#125;"</code> and <code>aria-describedby="&#123; DESCRIPTION_ID &#125;"</code> when title and description are present. Add width utilities to the inner <code>&lt;div&gt;</code> when a dialog needs a custom size. The macro also adds backdrop-click close handling.
     <dl>
       <dt><code>&lt;div&gt;</code></dt>
       <dd>
@@ -107,7 +107,7 @@ Basecoat uses the native `<dialog>` element and `showModal()`. This differs from
 
 ## Examples
 
-### Custom Close Button
+### Custom close button
 
 <Preview>
 <button type="button" onclick="document.getElementById('dialog-custom-close').showModal()" class="btn" data-variant="outline">Share</button>
@@ -120,7 +120,7 @@ Basecoat uses the native `<dialog>` element and `showModal()`. This differs from
     <section class="flex items-center gap-2">
       <div class="grid flex-1 gap-2">
         <label class="label sr-only" for="dialog-custom-close-link">Link</label>
-        <input class="input" id="dialog-custom-close-link" value="https://ui.shadcn.com/docs/installation" readonly />
+        <input class="input" id="dialog-custom-close-link" value="https://basecoatui.com/installation/" readonly />
       </div>
     </section>
     <footer class="sm:justify-start">
@@ -130,7 +130,7 @@ Basecoat uses the native `<dialog>` element and `showModal()`. This differs from
 </dialog>
 </Preview>
 
-### No Close Button
+### No close button
 
 <Preview>
 <button type="button" onclick="document.getElementById('dialog-no-close').showModal()" class="btn" data-variant="outline">No Close Button</button>
@@ -144,7 +144,7 @@ Basecoat uses the native `<dialog>` element and `showModal()`. This differs from
 </dialog>
 </Preview>
 
-### Sticky Footer
+### Sticky footer
 
 <Preview>
 <button type="button" onclick="document.getElementById('dialog-sticky-footer').showModal()" class="btn" data-variant="outline">Sticky Footer</button>
@@ -174,7 +174,7 @@ Basecoat uses the native `<dialog>` element and `showModal()`. This differs from
 </dialog>
 </Preview>
 
-### Scrollable Content
+### Scrollable content
 
 <Preview>
 <button type="button" onclick="document.getElementById('dialog-scrollable').showModal()" class="btn" data-variant="outline">Scrollable Content</button>
@@ -209,24 +209,28 @@ Dialog positioning and close button placement use logical properties. Set `dir="
 
 <Preview>
 <div dir="rtl">
-  <button type="button" onclick="document.getElementById('dialog-rtl').showModal()" class="btn" data-variant="outline">فتح</button>
+  <button type="button" onclick="document.getElementById('dialog-rtl').showModal()" class="btn" data-variant="outline">فتح الحوار</button>
   <dialog id="dialog-rtl" class="dialog" aria-labelledby="dialog-rtl-title" aria-describedby="dialog-rtl-description" onclick="if (event.target === this) this.close()">
-    <div>
+    <div class="sm:max-w-sm">
       <header>
         <h2 id="dialog-rtl-title">تعديل الملف الشخصي</h2>
-        <p id="dialog-rtl-description">قم بتحديث بياناتك ثم احفظ التغييرات.</p>
+        <p id="dialog-rtl-description">قم بإجراء تغييرات على ملفك الشخصي هنا. انقر فوق حفظ عند الانتهاء.</p>
       </header>
       <section>
         <form class="grid gap-4">
           <div class="grid gap-3">
             <label class="label" for="dialog-rtl-name">الاسم</label>
-            <input class="input" id="dialog-rtl-name" value="ليلى" />
+            <input class="input" id="dialog-rtl-name" name="name" value="Pedro Duarte" />
+          </div>
+          <div class="grid gap-3">
+            <label class="label" for="dialog-rtl-username">اسم المستخدم</label>
+            <input class="input" id="dialog-rtl-username" name="username" value="@peduarte" />
           </div>
         </form>
       </section>
       <footer>
         <button class="btn" data-variant="outline" onclick="this.closest('dialog').close()">إلغاء</button>
-        <button class="btn" onclick="this.closest('dialog').close()">حفظ</button>
+        <button class="btn" onclick="this.closest('dialog').close()">حفظ التغييرات</button>
       </footer>
       <button type="button" class="btn" data-variant="ghost" data-size="icon-sm" aria-label="Close dialog" onclick="this.closest('dialog').close()">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>

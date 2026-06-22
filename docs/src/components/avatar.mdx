@@ -9,7 +9,6 @@
   <span class="avatar rounded-lg">
     <img src="https://github.com/evilrabbit.png" alt="@evilrabbit" />
     <span>ER</span>
-    <span data-badge class="bg-green-600 dark:bg-green-800"></span>
   </span>
   <div class="avatar-group [&_.avatar]:grayscale">
     <span class="avatar">
@@ -24,14 +23,13 @@
       <img src="https://github.com/evilrabbit.png" alt="@evilrabbit" />
       <span>ER</span>
     </span>
-    <span data-count>+3</span>
   </div>
 </div>
 </Preview>
 
 ## Usage
 
-Add `class="avatar"` to a small inline container. Add `data-size="sm"` or `data-size="lg"` when needed. Put the image first and a fallback `<span>` after it.
+Add `class="avatar"` to a small inline container. Add `data-size="sm"` or `data-size="lg"` when needed. Put the image first and a fallback `<span>` after it. Add `.avatar-badge` for a status badge or badge icon.
 
 ```html
 <span class="avatar">
@@ -55,8 +53,8 @@ Add `class="avatar"` to a small inline container. Add `data-size="sm"` or `data-
           <dd>The avatar image. Provide meaningful <code>alt</code> text.</dd>
           <dt><code>&lt;span&gt;</code></dt>
           <dd>Fallback initials or icon.</dd>
-          <dt><code>&lt;span data-badge&gt;</code> <span class="badge" data-variant="secondary">Optional</span></dt>
-          <dd>Status badge positioned at the block-end inline-end corner.</dd>
+          <dt><code>&lt;span class="avatar-badge"&gt;</code> <span class="badge" data-variant="secondary">Optional</span></dt>
+          <dd>Status badge positioned at the block-end inline-end corner. It can be empty or contain an icon.</dd>
         </dl>
       </dd>
       <dt><code>&lt;span data-count&gt;</code> <span class="badge" data-variant="secondary">Optional</span></dt>
@@ -71,7 +69,7 @@ Add `class="avatar"` to a small inline container. Add `data-size="sm"` or `data-
 
 <Preview>
 <span class="avatar">
-  <img class="grayscale" src="https://github.com/shadcn.png" alt="@shadcn" />
+  <img src="https://github.com/shadcn.png" alt="@shadcn" />
   <span>CN</span>
 </span>
 </Preview>
@@ -82,36 +80,36 @@ Add `class="avatar"` to a small inline container. Add `data-size="sm"` or `data-
 <span class="avatar">
   <img src="https://github.com/shadcn.png" alt="@shadcn" />
   <span>CN</span>
-  <span data-badge class="bg-green-600 dark:bg-green-800"></span>
+  <span class="avatar-badge bg-green-600 dark:bg-green-800"></span>
 </span>
 </Preview>
 
-### Badge With Icon
+### Badge with icon
 
 <Preview>
-<span class="avatar grayscale">
+<span class="avatar">
   <img src="https://github.com/pranathip.png" alt="@pranathip" />
   <span>PP</span>
-  <span data-badge>
+  <span class="avatar-badge">
     <svg class="lucide lucide-plus" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14" /><path d="M12 5v14" /></svg>
   </span>
 </span>
 </Preview>
 
-### Avatar Group
+### Avatar group
 
 <Preview>
-<div class="avatar-group grayscale">
+<div class="avatar-group">
   <span class="avatar"><img src="https://github.com/shadcn.png" alt="@shadcn" /><span>CN</span></span>
   <span class="avatar"><img src="https://github.com/maxleiter.png" alt="@maxleiter" /><span>LR</span></span>
   <span class="avatar"><img src="https://github.com/evilrabbit.png" alt="@evilrabbit" /><span>ER</span></span>
 </div>
 </Preview>
 
-### Avatar Group Count
+### Avatar group count
 
 <Preview>
-<div class="avatar-group grayscale">
+<div class="avatar-group">
   <span class="avatar"><img src="https://github.com/shadcn.png" alt="@shadcn" /><span>CN</span></span>
   <span class="avatar"><img src="https://github.com/maxleiter.png" alt="@maxleiter" /><span>LR</span></span>
   <span class="avatar"><img src="https://github.com/evilrabbit.png" alt="@evilrabbit" /><span>ER</span></span>
@@ -119,10 +117,10 @@ Add `class="avatar"` to a small inline container. Add `data-size="sm"` or `data-
 </div>
 </Preview>
 
-### Avatar Group With Icon
+### Avatar group with icon
 
 <Preview>
-<div class="avatar-group grayscale">
+<div class="avatar-group">
   <span class="avatar"><img src="https://github.com/shadcn.png" alt="@shadcn" /><span>CN</span></span>
   <span class="avatar"><img src="https://github.com/maxleiter.png" alt="@maxleiter" /><span>LR</span></span>
   <span class="avatar"><img src="https://github.com/evilrabbit.png" alt="@evilrabbit" /><span>ER</span></span>
@@ -135,19 +133,32 @@ Add `class="avatar"` to a small inline container. Add `data-size="sm"` or `data-
 ### Sizes
 
 <Preview>
-<div class="flex flex-wrap items-center gap-2 grayscale">
-  <span class="avatar" data-size="sm">
-    <img src="https://github.com/shadcn.png" alt="@shadcn" />
-    <span>CN</span>
-  </span>
-  <span class="avatar">
-    <img src="https://github.com/shadcn.png" alt="@shadcn" />
-    <span>CN</span>
-  </span>
-  <span class="avatar" data-size="lg">
-    <img src="https://github.com/shadcn.png" alt="@shadcn" />
-    <span>CN</span>
-  </span>
+<div class="grid gap-2">
+  <div class="flex flex-wrap items-center gap-2">
+    <span class="avatar" data-size="sm">
+      <img src="https://github.com/shadcn.png" alt="@shadcn" />
+      <span>CN</span>
+    </span>
+    <span class="avatar">
+      <img src="https://github.com/shadcn.png" alt="@shadcn" />
+      <span>CN</span>
+    </span>
+    <span class="avatar" data-size="lg">
+      <img src="https://github.com/shadcn.png" alt="@shadcn" />
+      <span>CN</span>
+    </span>
+  </div>
+  <div class="flex flex-wrap items-center gap-2">
+    <span class="avatar" data-size="sm">
+      <span>CN</span>
+    </span>
+    <span class="avatar">
+      <span>CN</span>
+    </span>
+    <span class="avatar" data-size="lg">
+      <span>CN</span>
+    </span>
+  </div>
 </div>
 </Preview>
 
@@ -176,21 +187,19 @@ Add `class="avatar"` to a small inline container. Add `data-size="sm"` or `data-
 ### RTL
 
 <Preview>
-<div class="flex flex-row flex-wrap items-center gap-6 md:gap-12" dir="rtl">
+<div class="flex flex-row flex-wrap items-center gap-12" dir="rtl">
   <span class="avatar">
-    <img class="grayscale" src="https://github.com/shadcn.png" alt="@shadcn" />
+    <img src="https://github.com/shadcn.png" alt="@shadcn" />
     <span>CN</span>
   </span>
-  <span class="avatar">
+  <span class="avatar rounded-lg">
     <img src="https://github.com/evilrabbit.png" alt="@evilrabbit" />
     <span>ER</span>
-    <span data-badge class="bg-green-600 dark:bg-green-800"></span>
   </span>
-  <div class="avatar-group grayscale">
+  <div class="avatar-group [&_.avatar]:grayscale">
     <span class="avatar"><img src="https://github.com/shadcn.png" alt="@shadcn" /><span>CN</span></span>
     <span class="avatar"><img src="https://github.com/maxleiter.png" alt="@maxleiter" /><span>LR</span></span>
     <span class="avatar"><img src="https://github.com/evilrabbit.png" alt="@evilrabbit" /><span>ER</span></span>
-    <span data-count>+٣</span>
   </div>
 </div>
 </Preview>

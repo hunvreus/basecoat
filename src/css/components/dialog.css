@@ -1,6 +1,7 @@
 /* Dialog */
 @layer components {
-  .dialog {
+  .dialog,
+  .alert-dialog {
     @apply bg-transparent p-0 text-inherit opacity-0 transition-all transition-discrete backdrop:opacity-0 backdrop:transition-all backdrop:transition-discrete;
     max-width: none;
     max-height: none;
@@ -24,7 +25,9 @@
     > * {
       @apply fixed top-1/2 left-1/2 z-50 flex max-h-[calc(100%_-_2rem)] w-full -translate-x-1/2 -translate-y-1/2 scale-95 flex-col transition-all outline-hidden;
     }
+  }
 
+  .dialog {
     > * > header {
       @apply flex flex-col;
     }
@@ -47,6 +50,32 @@
 
     > * > :is(button, form[method='dialog'] > button) > svg:not([class*='size-']) {
       @apply size-4;
+    }
+  }
+
+  .alert-dialog {
+    > * > header {
+      @apply grid grid-rows-[auto_1fr] place-items-center text-center sm:place-items-start sm:text-start;
+    }
+
+    > * > header:has(> figure) {
+      @apply grid-rows-[auto_auto_1fr] sm:grid-rows-[auto_1fr];
+    }
+
+    > * > header > figure {
+      @apply m-0 shrink-0 sm:row-span-2 [&_svg]:pointer-events-none [&_svg]:shrink-0;
+    }
+
+    > * > header > figure:has(img) {
+      @apply overflow-hidden [&_img]:size-full [&_img]:object-cover;
+    }
+
+    > * > header:has(> figure) > :is(h2, p) {
+      @apply sm:col-start-2;
+    }
+
+    > * > footer {
+      @apply flex flex-col-reverse sm:flex-row sm:justify-end;
     }
   }
 }
