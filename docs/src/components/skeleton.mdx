@@ -1,16 +1,40 @@
 # Skeleton
 
 <Preview>
-<div class="flex w-fit items-center gap-4">
+<div class="flex items-center gap-4">
   <div class="skeleton size-10 shrink-0 rounded-full"></div>
   <div class="grid gap-2">
-    <div class="skeleton h-4 w-[150px]"></div>
-    <div class="skeleton h-4 w-[100px]"></div>
+    <div class="skeleton h-4 w-[250px]"></div>
+    <div class="skeleton h-4 w-[200px]"></div>
   </div>
 </div>
 </Preview>
 
 ## Usage
+
+<Steps>
+  <Step title="Include CSS">
+
+Import Tailwind and one full Basecoat style bundle.
+
+```css
+@import "tailwindcss";
+@import "basecoat-css/vega.css";
+```
+
+Or import only the base CSS, Skeleton component CSS, and one style pack.
+
+```css
+@import "tailwindcss";
+@import "basecoat-css/base.css";
+@import "basecoat-css/components/skeleton.css";
+@import "basecoat-css/styles/vega.css";
+```
+
+Using CDN or bundler imports? See the [Installation page](/installation).
+
+  </Step>
+  <Step title="Add your skeleton HTML">
 
 Add `class="skeleton"` with sizing utilities to create loading placeholders.
 
@@ -18,12 +42,15 @@ Add `class="skeleton"` with sizing utilities to create loading placeholders.
 <div class="skeleton h-4 w-[150px]"></div>
 ```
 
+  </Step>
+</Steps>
+
 ## Examples
 
 ### Avatar
 
 <Preview>
-<div class="flex w-fit items-center gap-4">
+<div class="flex items-center gap-4">
   <div class="skeleton size-10 shrink-0 rounded-full"></div>
   <div class="grid gap-2">
     <div class="skeleton h-4 w-[150px]"></div>
@@ -40,16 +67,14 @@ Add `class="skeleton"` with sizing utilities to create loading placeholders.
     <div class="skeleton h-4 w-2/3"></div>
     <div class="skeleton h-4 w-1/2"></div>
   </header>
-  <section>
-    <div class="skeleton aspect-square w-full"></div>
-  </section>
+  <section> <div class="skeleton aspect-video w-full"></div></section>
 </div>
 </Preview>
 
 ### Text
 
-<Preview class="w-full max-w-xs">
-<div class="flex w-full flex-col gap-2">
+<Preview class="w-full max-w-sm">
+<div class="flex flex-col gap-2">
   <div class="skeleton h-4 w-full"></div>
   <div class="skeleton h-4 w-full"></div>
   <div class="skeleton h-4 w-3/4"></div>
@@ -59,7 +84,7 @@ Add `class="skeleton"` with sizing utilities to create loading placeholders.
 ### Form
 
 <Preview class="w-full max-w-xs">
-<div class="flex w-full flex-col gap-7">
+<div class="flex flex-col gap-7">
   <div class="flex flex-col gap-3">
     <div class="skeleton h-4 w-20"></div>
     <div class="skeleton h-10 w-full"></div>
@@ -75,7 +100,7 @@ Add `class="skeleton"` with sizing utilities to create loading placeholders.
 ### Table
 
 <Preview class="w-full max-w-sm">
-<div class="flex w-full flex-col gap-2">
+<div class="flex flex-col gap-2">
   <div class="flex gap-4">
     <div class="skeleton h-4 flex-1"></div>
     <div class="skeleton h-4 w-24"></div>
@@ -99,7 +124,7 @@ Add `class="skeleton"` with sizing utilities to create loading placeholders.
 Skeleton blocks are direction-neutral. Use logical layout utilities around them when spacing depends on direction.
 
 <Preview>
-<div dir="rtl" class="flex w-fit items-center gap-4">
+<div dir="rtl" class="flex items-center gap-4">
   <div class="skeleton size-10 shrink-0 rounded-full"></div>
   <div class="grid gap-2">
     <div class="skeleton h-4 w-[150px]"></div>

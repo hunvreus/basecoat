@@ -29,6 +29,30 @@
 
 ## Usage
 
+<Steps>
+  <Step title="Include CSS">
+
+Import Tailwind and one full Basecoat style bundle.
+
+```css
+@import "tailwindcss";
+@import "basecoat-css/vega.css";
+```
+
+Or import only the base CSS, Avatar component CSS, and one style pack.
+
+```css
+@import "tailwindcss";
+@import "basecoat-css/base.css";
+@import "basecoat-css/components/avatar.css";
+@import "basecoat-css/styles/vega.css";
+```
+
+Using CDN or bundler imports? See the [Installation page](/installation).
+
+  </Step>
+  <Step title="Add your avatar HTML">
+
 Add `class="avatar"` to a small inline container. Add `data-size="sm"` or `data-size="lg"` when needed. Put the image first and a fallback `<span>` after it. Add `.avatar-badge` for a status badge or badge icon.
 
 ```html
@@ -37,6 +61,9 @@ Add `class="avatar"` to a small inline container. Add `data-size="sm"` or `data-
   <span>CN</span>
 </span>
 ```
+
+  </Step>
+</Steps>
 
 ### HTML structure
 
@@ -90,9 +117,7 @@ Add `class="avatar"` to a small inline container. Add `data-size="sm"` or `data-
 <span class="avatar">
   <img src="https://github.com/pranathip.png" alt="@pranathip" />
   <span>PP</span>
-  <span class="avatar-badge">
-    <svg class="lucide lucide-plus" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14" /><path d="M12 5v14" /></svg>
-  </span>
+  <span class="avatar-badge"><svg class="lucide lucide-plus" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14" /><path d="M12 5v14" /></svg></span>
 </span>
 </Preview>
 
@@ -124,9 +149,7 @@ Add `class="avatar"` to a small inline container. Add `data-size="sm"` or `data-
   <span class="avatar"><img src="https://github.com/shadcn.png" alt="@shadcn" /><span>CN</span></span>
   <span class="avatar"><img src="https://github.com/maxleiter.png" alt="@maxleiter" /><span>LR</span></span>
   <span class="avatar"><img src="https://github.com/evilrabbit.png" alt="@evilrabbit" /><span>ER</span></span>
-  <span data-count aria-label="Additional avatars">
-    <svg class="lucide lucide-plus" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14" /><path d="M12 5v14" /></svg>
-  </span>
+  <span data-count aria-label="Additional avatars"><svg class="lucide lucide-plus" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14" /><path d="M12 5v14" /></svg></span>
 </div>
 </Preview>
 
@@ -149,15 +172,9 @@ Add `class="avatar"` to a small inline container. Add `data-size="sm"` or `data-
     </span>
   </div>
   <div class="flex flex-wrap items-center gap-2">
-    <span class="avatar" data-size="sm">
-      <span>CN</span>
-    </span>
-    <span class="avatar">
-      <span>CN</span>
-    </span>
-    <span class="avatar" data-size="lg">
-      <span>CN</span>
-    </span>
+    <span class="avatar" data-size="sm"><span>CN</span></span>
+    <span class="avatar"><span>CN</span></span>
+    <span class="avatar" data-size="lg"><span>CN</span></span>
   </div>
 </div>
 </Preview>

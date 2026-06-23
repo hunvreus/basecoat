@@ -9,22 +9,40 @@
 
 ## Usage
 
+<Steps>
+  <Step title="Include CSS">
+
+Import Tailwind and one full Basecoat style bundle.
+
+```css
+@import "tailwindcss";
+@import "basecoat-css/vega.css";
+```
+
+Or import only the base CSS, Label component CSS, and one style pack.
+
+```css
+@import "tailwindcss";
+@import "basecoat-css/base.css";
+@import "basecoat-css/components/label.css";
+@import "basecoat-css/styles/vega.css";
+```
+
+Using CDN or bundler imports? See the [Installation page](/installation).
+
+  </Step>
+  <Step title="Add your label HTML">
+
 Add `class="label"` to a `<label>` element.
 
 ```html
 <label class="label" for="email">Your email address</label>
 ```
 
+  </Step>
+</Steps>
+
 ## Examples
-
-### Disabled
-
-<Preview>
-<div class="grid gap-3">
-  <label class="label" for="email">Email</label>
-  <input class="input" id="email" type="email" placeholder="Email" disabled />
-</div>
-</Preview>
 
 ### RTL
 

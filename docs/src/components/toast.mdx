@@ -1,7 +1,6 @@
 # Toast
 
 <div id="toaster" class="toaster"></div>
-<script src="/assets/js/htmx.min.js" defer></script>
 
 <Preview class="max-w-md">
 <button
@@ -11,9 +10,7 @@
   hx-get="/fragments/toast/success"
   hx-target="#toaster"
   hx-swap="beforeend"
->
-  Toast from backend (with HTMX)
-</button>
+>Toast from backend (with HTMX)</button>
 </Preview>
 
 <Preview class="max-w-md">
@@ -27,9 +24,7 @@
       label: 'Dismiss'
     }
   })"
->
-  Toast from front-end
-</button>
+>Toast from front-end</button>
 </Preview>
 
 ## Usage
@@ -39,12 +34,43 @@
 </Callout>
 
 <Steps>
-  <Step title="Include the JavaScript files">
+  <Step title="Include CSS">
+
+Import Tailwind and one full Basecoat style bundle.
+
+```css
+@import "tailwindcss";
+@import "basecoat-css/vega.css";
+```
+
+Or import only the base CSS, Toast component CSS, and one style pack.
+
+```css
+@import "tailwindcss";
+@import "basecoat-css/base.css";
+@import "basecoat-css/components/toast.css";
+@import "basecoat-css/styles/vega.css";
+```
+
+Using CDN or bundler imports? See the [Installation page](/installation).
+
+  </Step>
+  <Step title="Include JavaScript">
+
+Copy or serve the full Basecoat JavaScript bundle.
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.4/dist/js/basecoat.min.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.4/dist/js/toast.min.js" defer></script>
+<script src="/assets/js/all.min.js" defer></script>
 ```
+
+Or copy or serve the Basecoat runtime and Toast script.
+
+```html
+<script src="/assets/js/basecoat.min.js" defer></script>
+<script src="/assets/js/toast.min.js" defer></script>
+```
+
+Using CDN or bundler imports? See the [Installation page](/installation).
 
   </Step>
   <Step title="Add the toaster HTML">
@@ -65,8 +91,7 @@ Append server-rendered toast markup to the toaster, or create one from JavaScrip
 ```html
 <div id="toaster" class="toaster">
   <div class="toast" role="status" aria-atomic="true" aria-hidden="false" data-category="success">
-    <div class="toast-content">
-      <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="m9 12 2 2 4-4" /></svg>
+    <div class="toast-content"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="m9 12 2 2 4-4" /></svg>
       <section>
         <h2>Success</h2>
         <p>A success toast called from the front-end.</p>
@@ -89,9 +114,7 @@ Append server-rendered toast markup to the toaster, or create one from JavaScrip
     cancel: {
       label: 'Dismiss'
     }
-  })">
-  Toast from front-end
-</button>
+  })">Toast from front-end</button>
 ```
 
   </Step>

@@ -33,6 +33,30 @@
 
 ## Usage
 
+<Steps>
+  <Step title="Include CSS">
+
+Import Tailwind and one full Basecoat style bundle.
+
+```css
+@import "tailwindcss";
+@import "basecoat-css/vega.css";
+```
+
+Or import only the base CSS, Card component CSS, and one style pack.
+
+```css
+@import "tailwindcss";
+@import "basecoat-css/base.css";
+@import "basecoat-css/components/card.css";
+@import "basecoat-css/styles/vega.css";
+```
+
+Using CDN or bundler imports? See the [Installation page](/installation).
+
+  </Step>
+  <Step title="Add your card HTML">
+
 ```html
 <div class="card">
   <header>
@@ -40,14 +64,15 @@
     <p>Card Description</p>
     <div class="card-action">Card Action</div>
   </header>
-  <section>
-    <p>Card Content</p>
-  </section>
+  <section> <p>Card Content</p></section>
   <footer>
     <p>Card Footer</p>
   </footer>
 </div>
 ```
+
+  </Step>
+</Steps>
 
 ## HTML structure
 
@@ -91,9 +116,7 @@ Use `data-size="sm"` to set the size of the card to small. The small size varian
       <button type="button" class="btn" data-size="sm" data-variant="outline">Action</button>
     </div>
   </header>
-  <section>
-    <p>The card component supports a size attribute that can be set to <code>sm</code> for a more compact appearance.</p>
-  </section>
+  <section> <p>The card component supports a size attribute that can be set to <code>sm</code> for a more compact appearance.</p></section>
 </div>
 </Preview>
 

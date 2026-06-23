@@ -2,8 +2,7 @@
 
 <Preview>
 <div id="framework-combobox" class="combobox">
-  <input type="text" role="combobox" placeholder="Select a framework" autocomplete="off" autocorrect="off" spellcheck="false" aria-autocomplete="list" aria-expanded="false" aria-controls="framework-combobox-listbox" />
-  <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="combobox-trigger-icon"><path d="m6 9 6 6 6-6" /></svg>
+  <input type="text" role="combobox" placeholder="Select a framework" autocomplete="off" autocorrect="off" spellcheck="false" aria-autocomplete="list" aria-expanded="false" aria-controls="framework-combobox-listbox" /><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="combobox-trigger-icon"><path d="m6 9 6 6 6-6" /></svg>
   <div id="framework-combobox-popover" data-popover aria-hidden="true">
     <div role="listbox" id="framework-combobox-listbox" aria-orientation="vertical" data-empty="No items found.">
       <div role="option" data-value="Next.js">Next.js</div>
@@ -24,12 +23,43 @@
 </Callout>
 
 <Steps>
-  <Step title="Include the JavaScript files">
+  <Step title="Include CSS">
+
+Import Tailwind and one full Basecoat style bundle.
+
+```css
+@import "tailwindcss";
+@import "basecoat-css/vega.css";
+```
+
+Or import only the base CSS, Combobox component CSS, and one style pack.
+
+```css
+@import "tailwindcss";
+@import "basecoat-css/base.css";
+@import "basecoat-css/components/combobox.css";
+@import "basecoat-css/styles/vega.css";
+```
+
+Using CDN or bundler imports? See the [Installation page](/installation).
+
+  </Step>
+  <Step title="Include JavaScript">
+
+Copy or serve the full Basecoat JavaScript bundle.
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.4/dist/js/basecoat.min.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.4/dist/js/combobox.min.js" defer></script>
+<script src="/assets/js/all.min.js" defer></script>
 ```
+
+Or copy or serve the Basecoat runtime and Combobox script.
+
+```html
+<script src="/assets/js/basecoat.min.js" defer></script>
+<script src="/assets/js/combobox.min.js" defer></script>
+```
+
+Using CDN or bundler imports? See the [Installation page](/installation).
 
   </Step>
   <Step title="Add your combobox HTML">
@@ -38,8 +68,7 @@ Combobox is input-first. The visible input filters the list; the hidden input st
 
 ```html
 <div id="framework-combobox" class="combobox w-[240px]">
-  <input type="text" role="combobox" placeholder="Select a framework" autocomplete="off" autocorrect="off" spellcheck="false" aria-autocomplete="list" aria-expanded="false" aria-controls="framework-combobox-listbox" />
-  <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="combobox-trigger-icon"><path d="m6 9 6 6 6-6" /></svg>
+  <input type="text" role="combobox" placeholder="Select a framework" autocomplete="off" autocorrect="off" spellcheck="false" aria-autocomplete="list" aria-expanded="false" aria-controls="framework-combobox-listbox" /><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="combobox-trigger-icon"><path d="m6 9 6 6 6-6" /></svg>
   <div id="framework-combobox-popover" data-popover aria-hidden="true">
     <div role="listbox" id="framework-combobox-listbox" aria-orientation="vertical" data-empty="No items found.">
       <div role="option" data-value="Next.js">Next.js</div>
@@ -140,8 +169,7 @@ Combobox is input-first. The visible input filters the list; the hidden input st
 
 <Preview>
 <div id="timezone-combobox" class="combobox">
-  <input type="text" role="combobox" placeholder="Select a timezone" autocomplete="off" autocorrect="off" spellcheck="false" aria-autocomplete="list" aria-expanded="false" aria-controls="timezone-combobox-listbox" />
-  <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="combobox-trigger-icon"><path d="m6 9 6 6 6-6" /></svg>
+  <input type="text" role="combobox" placeholder="Select a timezone" autocomplete="off" autocorrect="off" spellcheck="false" aria-autocomplete="list" aria-expanded="false" aria-controls="timezone-combobox-listbox" /><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="combobox-trigger-icon"><path d="m6 9 6 6 6-6" /></svg>
   <div id="timezone-combobox-popover" data-popover aria-hidden="true">
     <div role="listbox" id="timezone-combobox-listbox" class="scrollbar-sm" aria-orientation="vertical" data-empty="No timezones found.">
       <div role="group" aria-labelledby="timezone-americas">
@@ -183,8 +211,7 @@ Combobox is input-first. The visible input filters the list; the hidden input st
 
 <Preview>
 <div id="country-combobox" class="combobox">
-  <input type="text" role="combobox" placeholder="Search countries" autocomplete="off" autocorrect="off" spellcheck="false" aria-autocomplete="list" aria-expanded="false" aria-controls="country-combobox-listbox" />
-  <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="combobox-trigger-icon"><path d="m6 9 6 6 6-6" /></svg>
+  <input type="text" role="combobox" placeholder="Search countries" autocomplete="off" autocorrect="off" spellcheck="false" aria-autocomplete="list" aria-expanded="false" aria-controls="country-combobox-listbox" /><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="combobox-trigger-icon"><path d="m6 9 6 6 6-6" /></svg>
   <div id="country-combobox-popover" data-popover aria-hidden="true">
     <div role="listbox" id="country-combobox-listbox" aria-orientation="vertical" data-empty="No items found.">
       <div role="option" data-value="argentina" data-label="Argentina" data-filter="Argentina South America"><span class="flex flex-col"><span>Argentina</span><span class="text-muted-foreground text-xs">South America</span></span></div>
@@ -202,8 +229,7 @@ Combobox is input-first. The visible input filters the list; the hidden input st
 <div role="group" class="field" data-invalid="true">
   <label for="invalid-combobox-input">Framework</label>
   <div id="invalid-combobox" class="combobox">
-    <input type="text" role="combobox" placeholder="Select a framework" autocomplete="off" autocorrect="off" spellcheck="false" aria-autocomplete="list" aria-expanded="false" aria-controls="invalid-combobox-listbox" id="invalid-combobox-input" aria-invalid="true" />
-    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="combobox-trigger-icon"><path d="m6 9 6 6 6-6" /></svg>
+    <input type="text" role="combobox" placeholder="Select a framework" autocomplete="off" autocorrect="off" spellcheck="false" aria-autocomplete="list" aria-expanded="false" aria-controls="invalid-combobox-listbox" id="invalid-combobox-input" aria-invalid="true" /><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="combobox-trigger-icon"><path d="m6 9 6 6 6-6" /></svg>
     <div id="invalid-combobox-popover" data-popover aria-hidden="true">
       <div role="listbox" id="invalid-combobox-listbox" aria-orientation="vertical" data-empty="No items found.">
         <div role="option" data-value="Next.js">Next.js</div>
@@ -223,8 +249,7 @@ Combobox is input-first. The visible input filters the list; the hidden input st
 
 <Preview>
 <div id="disabled-combobox" class="combobox">
-  <input type="text" role="combobox" placeholder="Select a framework" autocomplete="off" autocorrect="off" spellcheck="false" aria-autocomplete="list" aria-expanded="false" aria-controls="disabled-combobox-listbox" disabled />
-  <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="combobox-trigger-icon"><path d="m6 9 6 6 6-6" /></svg>
+  <input type="text" role="combobox" placeholder="Select a framework" autocomplete="off" autocorrect="off" spellcheck="false" aria-autocomplete="list" aria-expanded="false" aria-controls="disabled-combobox-listbox" disabled /><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="combobox-trigger-icon"><path d="m6 9 6 6 6-6" /></svg>
   <div id="disabled-combobox-popover" data-popover aria-hidden="true">
     <div role="listbox" id="disabled-combobox-listbox" aria-orientation="vertical">
       <div role="option" data-value="Next.js">Next.js</div>
@@ -240,8 +265,7 @@ Auto highlight makes the first visible option active when the list opens or filt
 
 <Preview>
 <div id="auto-highlight-combobox" class="combobox" data-auto-highlight="true">
-  <input type="text" role="combobox" placeholder="Select a framework" autocomplete="off" autocorrect="off" spellcheck="false" aria-autocomplete="list" aria-expanded="false" aria-controls="auto-highlight-combobox-listbox" />
-  <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="combobox-trigger-icon"><path d="m6 9 6 6 6-6" /></svg>
+  <input type="text" role="combobox" placeholder="Select a framework" autocomplete="off" autocorrect="off" spellcheck="false" aria-autocomplete="list" aria-expanded="false" aria-controls="auto-highlight-combobox-listbox" /><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="combobox-trigger-icon"><path d="m6 9 6 6 6-6" /></svg>
   <div id="auto-highlight-combobox-popover" data-popover aria-hidden="true">
     <div role="listbox" id="auto-highlight-combobox-listbox" aria-orientation="vertical" data-empty="No items found.">
       <div role="option" data-value="Next.js">Next.js</div>

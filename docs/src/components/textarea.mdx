@@ -6,6 +6,30 @@
 
 ## Usage
 
+<Steps>
+  <Step title="Include CSS">
+
+Import Tailwind and one full Basecoat style bundle.
+
+```css
+@import "tailwindcss";
+@import "basecoat-css/vega.css";
+```
+
+Or import only the base CSS, Textarea component CSS, and one style pack.
+
+```css
+@import "tailwindcss";
+@import "basecoat-css/base.css";
+@import "basecoat-css/components/textarea.css";
+@import "basecoat-css/styles/vega.css";
+```
+
+Using CDN or bundler imports? See the [Installation page](/installation).
+
+  </Step>
+  <Step title="Add your textarea HTML">
+
 Add `class="textarea"` to a `<textarea>` element. Textareas inside a `class="field"` container also receive the same styling automatically.
 
 Use native HTML attributes for behavior: `disabled` for disabled textareas and `aria-invalid="true"` for invalid state styling.
@@ -13,6 +37,9 @@ Use native HTML attributes for behavior: `disabled` for disabled textareas and `
 ```html
 <textarea class="textarea" placeholder="Type your message here"></textarea>
 ```
+
+  </Step>
+</Steps>
 
 Textareas support right-to-left layouts through native browser direction handling.
 

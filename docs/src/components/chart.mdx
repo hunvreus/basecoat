@@ -1,4 +1,6 @@
-import chartExamplesUrl from "../site/chart-examples.js?url"
+import basecoatRuntimeSource from "../../../src/js/basecoat.js?raw"
+import chartRuntimeSource from "../../../src/js/chart.js?raw"
+import chartExamplesSource from "../site/chart-examples.js?raw"
 
 # Chart
 
@@ -12,19 +14,49 @@ Use Chart.js with Basecoat defaults for themed colors, external tooltips, and op
   <canvas id="chart-example-overview" aria-label="Visitors by device"></canvas>
 </Preview>
 
-Chart is an optional JavaScript helper. Load Chart.js first, then `basecoat.js`, then `chart.js`.
+## Usage
 
-```html
-<script src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.4/dist/js/basecoat.min.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.4/dist/js/chart.min.js" defer></script>
+<Steps>
+  <Step title="Include CSS">
+
+Import Tailwind and one full Basecoat style bundle.
+
+```css
+@import "tailwindcss";
+@import "basecoat-css/vega.css";
 ```
 
-## Usage
+Or import only the base CSS, Chart component CSS, and one style pack.
+
+```css
+@import "tailwindcss";
+@import "basecoat-css/base.css";
+@import "basecoat-css/components/chart.css";
+@import "basecoat-css/styles/vega.css";
+```
+
+Using CDN or bundler imports? See the [Installation page](/installation).
+
+  </Step>
+  <Step title="Include JavaScript">
+
+Copy or serve Chart.js, the Basecoat runtime, and Chart script.
+
+```html
+<script src="/assets/js/chart.umd.min.js"></script>
+<script src="/assets/js/basecoat.min.js" defer></script>
+<script src="/assets/js/chart.min.js" defer></script>
+```
+
+Chart is not included in the full Basecoat JavaScript bundle.
+
+Using CDN or bundler imports? See the [Installation page](/installation).
+
+  </Step>
+  <Step title="Add your chart HTML">
 
 ```html
 <canvas id="visitors-chart" aria-label="Monthly visitors"></canvas>
-
 <script>
   document.addEventListener("DOMContentLoaded", () => {
     window.basecoat.chart("#visitors-chart", {
@@ -46,6 +78,9 @@ Chart is an optional JavaScript helper. Load Chart.js first, then `basecoat.js`,
   })
 </script>
 ```
+
+  </Step>
+</Steps>
 
 `basecoat.chart()` targets the `<canvas>` directly and creates Basecoat's internal `.chart` container for Chart.js sizing. You do not need to add a wrapper or class in your HTML.
 
@@ -186,7 +221,28 @@ window.basecoat.chart("#custom-chart", {
 </Preview>
 
 <script is:inline src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script>
-<script type="module" src={chartExamplesUrl}></script>
+<script is:inline>{`
+(() => {
+  const initChartPage = () => {
+    if (!window.Chart) {
+      requestAnimationFrame(initChartPage)
+      return
+    }
+
+    if (!window.basecoat) {
+${basecoatRuntimeSource}
+    }
+
+    if (!window.basecoat.chart) {
+${chartRuntimeSource}
+    }
+
+${chartExamplesSource}
+  }
+
+  initChartPage()
+})()
+`}</script>
 
 ## API
 

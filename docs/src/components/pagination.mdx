@@ -9,28 +9,18 @@
   <ul class="flex flex-row items-center gap-1">
     <li>
       <a href="#" class="btn" data-variant="ghost">
-        <svg class="lucide lucide-chevron-left" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="m15 18-6-6 6-6" /></svg>
+        <svg class="lucide lucide-chevron-left" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6" /></svg>
         <span>Previous</span>
       </a>
     </li>
-    <li>
-      <a href="#" class="btn" data-variant="ghost" data-size="icon">1</a>
-    </li>
-    <li>
-      <a href="#" class="btn" data-variant="outline" data-size="icon">2</a>
-    </li>
-    <li>
-      <a href="#" class="btn" data-variant="ghost" data-size="icon">3</a>
-    </li>
-    <li>
-      <div class="size-9 flex items-center justify-center">
-<svg class="size-4 shrink-0 lucide lucide-ellipsis" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="1" /><circle cx="19" cy="12" r="1" /><circle cx="5" cy="12" r="1" /></svg>
-</div>
-    </li>
+    <li><a href="#" class="btn" data-variant="ghost" data-size="icon">1</a></li>
+    <li><a href="#" class="btn" data-variant="outline" data-size="icon">2</a></li>
+    <li><a href="#" class="btn" data-variant="ghost" data-size="icon">3</a></li>
+    <li><div class="size-9 flex items-center justify-center"><svg class="size-4 shrink-0 lucide lucide-ellipsis" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1" /><circle cx="19" cy="12" r="1" /><circle cx="5" cy="12" r="1" /></svg></div></li>
     <li>
       <a href="#" class="btn" data-variant="ghost">
         <span>Next</span>
-<svg class="lucide lucide-chevron-right" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="m9 18 6-6-6-6" /></svg>
+        <svg class="lucide lucide-chevron-right" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6" /></svg>
       </a>
     </li>
   </ul>
@@ -39,6 +29,32 @@
 
 ## Usage
 
+<Steps>
+  <Step title="Include CSS">
+
+Import Tailwind and one full Basecoat style bundle.
+
+```css
+@import "tailwindcss";
+@import "basecoat-css/vega.css";
+```
+
+Or import only the base CSS, Pagination component CSS, and one style pack.
+
+```css
+@import "tailwindcss";
+@import "basecoat-css/base.css";
+@import "basecoat-css/components/button.css";
+@import "basecoat-css/styles/vega.css";
+```
+
+Pagination uses Button component CSS for its links and controls.
+
+Using CDN or bundler imports? See the [Installation page](/installation).
+
+  </Step>
+  <Step title="Add your pagination HTML">
+
 A pagination is fairly simple to implement with Tailwind using the Basecoat button classes:
 
 ```html
@@ -46,33 +62,26 @@ A pagination is fairly simple to implement with Tailwind using the Basecoat butt
   <ul class="flex flex-row items-center gap-1">
     <li>
       <a href="#" class="btn" data-variant="ghost">
-        <svg class="lucide lucide-chevron-left" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="m15 18-6-6 6-6" /></svg>
+        <svg class="lucide lucide-chevron-left" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6" /></svg>
         Previous
       </a>
     </li>
-    <li>
-      <a href="#" class="btn" data-variant="ghost" data-size="icon">1</a>
-    </li>
-    <li>
-      <a href="#" class="btn" data-variant="outline" data-size="icon">2</a>
-    </li>
-    <li>
-      <a href="#" class="btn" data-variant="ghost" data-size="icon">3</a>
-    </li>
-    <li>
-      <div class="size-9 flex items-center justify-center">
-        <svg class="size-4 shrink-0 lucide lucide-ellipsis" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="1" /><circle cx="19" cy="12" r="1" /><circle cx="5" cy="12" r="1" /></svg>
-      </div>
-    </li>
+    <li><a href="#" class="btn" data-variant="ghost" data-size="icon">1</a></li>
+    <li><a href="#" class="btn" data-variant="outline" data-size="icon">2</a></li>
+    <li><a href="#" class="btn" data-variant="ghost" data-size="icon">3</a></li>
+    <li><div class="size-9 flex items-center justify-center"><svg class="size-4 shrink-0 lucide lucide-ellipsis" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1" /><circle cx="19" cy="12" r="1" /><circle cx="5" cy="12" r="1" /></svg></div></li>
     <li>
       <a href="#" class="btn" data-variant="ghost">
-        Next 
-        <svg class="lucide lucide-chevron-right" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="m9 18 6-6-6-6" /></svg>
+        Next
+        <svg class="lucide lucide-chevron-right" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6" /></svg>
       </a>
     </li>
   </ul>
 </nav>
 ```
+
+  </Step>
+</Steps>
 
 ## Examples
 
@@ -85,28 +94,18 @@ Pagination uses document direction and logical spacing. Set `dir="rtl"` on the p
   <ul class="flex flex-row items-center gap-1">
     <li>
       <a href="#" class="btn" data-variant="ghost">
-        <svg class="lucide lucide-chevron-right" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="m9 18 6-6-6-6" /></svg>
+        <svg class="lucide lucide-chevron-right" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6" /></svg>
         <span>السابق</span>
       </a>
     </li>
-    <li>
-      <a href="#" class="btn" data-variant="ghost" data-size="icon">١</a>
-    </li>
-    <li>
-      <a href="#" class="btn" data-variant="outline" data-size="icon">٢</a>
-    </li>
-    <li>
-      <a href="#" class="btn" data-variant="ghost" data-size="icon">٣</a>
-    </li>
-    <li>
-      <div class="size-9 flex items-center justify-center">
-        <svg class="size-4 shrink-0 lucide lucide-ellipsis" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="1" /><circle cx="19" cy="12" r="1" /><circle cx="5" cy="12" r="1" /></svg>
-      </div>
-    </li>
+    <li><a href="#" class="btn" data-variant="ghost" data-size="icon">١</a></li>
+    <li><a href="#" class="btn" data-variant="outline" data-size="icon">٢</a></li>
+    <li><a href="#" class="btn" data-variant="ghost" data-size="icon">٣</a></li>
+    <li><div class="size-9 flex items-center justify-center"><svg class="size-4 shrink-0 lucide lucide-ellipsis" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1" /><circle cx="19" cy="12" r="1" /><circle cx="5" cy="12" r="1" /></svg></div></li>
     <li>
       <a href="#" class="btn" data-variant="ghost">
         <span>التالي</span>
-        <svg class="lucide lucide-chevron-left" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="m15 18-6-6 6-6" /></svg>
+        <svg class="lucide lucide-chevron-left" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6" /></svg>
       </a>
     </li>
   </ul>

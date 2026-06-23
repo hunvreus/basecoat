@@ -1,6 +1,3 @@
-import "../../../src/js/basecoat.js";
-import "../../../src/js/chart.js";
-
 const visitorsByDay = [
   { date: "Apr 1", desktop: 222, mobile: 150 },
   { date: "Apr 5", desktop: 373, mobile: 290 },
@@ -227,4 +224,22 @@ if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", initChartExamples, { once: true });
 } else {
   initChartExamples();
+}
+
+if (!window.__basecoatChartExamplesObserver) {
+  let pending = false;
+  const queueInitChartExamples = () => {
+    if (pending) return;
+    pending = true;
+    requestAnimationFrame(() => {
+      pending = false;
+      initChartExamples();
+    });
+  };
+
+  window.__basecoatChartExamplesObserver = new MutationObserver(queueInitChartExamples);
+  window.__basecoatChartExamplesObserver.observe(document.body, {
+    childList: true,
+    subtree: true,
+  });
 }

@@ -68,6 +68,30 @@
 
 ## Usage
 
+<Steps>
+  <Step title="Include CSS">
+
+Import Tailwind and one full Basecoat style bundle.
+
+```css
+@import "tailwindcss";
+@import "basecoat-css/vega.css";
+```
+
+Or import only the base CSS, Table component CSS, and one style pack.
+
+```css
+@import "tailwindcss";
+@import "basecoat-css/base.css";
+@import "basecoat-css/components/table.css";
+@import "basecoat-css/styles/vega.css";
+```
+
+Using CDN or bundler imports? See the [Installation page](/installation).
+
+  </Step>
+  <Step title="Add your table HTML">
+
 Add `class="table"` to your table element. Wrap it in `class="table-container"` when horizontal scrolling is needed.
 
 ```html
@@ -78,52 +102,107 @@ Add `class="table"` to your table element. Wrap it in `class="table-container"` 
 </div>
 ```
 
+  </Step>
+</Steps>
+
+<Callout type="warning" title="Scrollable tables clip overlays" icon="triangle-alert">
+  Do not place inline popovers, dropdown menus, selects, or tooltips inside `.table-container`. The table container uses horizontal overflow for wide tables, so absolutely positioned overlays can be clipped or create scrollbars. Keep overlay actions outside scrollable table regions, or omit `.table-container` when the table does not need horizontal scrolling.
+</Callout>
+
 ## Examples
 
-### Footer
+Examples below follow upstream table patterns where they map cleanly to Basecoat's non-portalled HTML model.
+
+### With Footer
 
 <Preview class="w-full">
+<div class="table-container">
 <table class="table">
+  <caption>A list of your recent invoices.</caption>
   <thead>
     <tr>
-      <th>Invoice</th>
+      <th class="w-[100px]">Invoice</th>
+      <th>Status</th>
+      <th>Method</th>
       <th class="text-end">Amount</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>INV001</td>
+      <td class="font-medium">INV001</td>
+      <td>Paid</td>
+      <td>Credit Card</td>
       <td class="text-end">$250.00</td>
+    </tr>
+    <tr>
+      <td class="font-medium">INV002</td>
+      <td>Pending</td>
+      <td>PayPal</td>
+      <td class="text-end">$150.00</td>
+    </tr>
+    <tr>
+      <td class="font-medium">INV003</td>
+      <td>Unpaid</td>
+      <td>Bank Transfer</td>
+      <td class="text-end">$350.00</td>
     </tr>
   </tbody>
   <tfoot>
     <tr>
-      <td>Total</td>
-      <td class="text-end">$250.00</td>
+      <td colspan="3">Total</td>
+      <td class="text-end">$2,500.00</td>
     </tr>
   </tfoot>
 </table>
+</div>
 </Preview>
 
-### Actions
+### With Actions
 
 <Preview class="w-full">
+<div class="table-container">
 <table class="table">
   <thead>
     <tr>
-      <th>Name</th>
+      <th>Product</th>
+      <th>Price</th>
       <th class="text-end">Actions</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td class="font-medium">Project Alpha</td>
+      <td class="font-medium">Wireless Mouse</td>
+      <td>$29.99</td>
       <td class="text-end">
-        <button type="button" class="btn" data-variant="outline" data-size="xs">Open</button>
+        <div class="inline-flex gap-2">
+          <button type="button" class="btn" data-variant="outline" data-size="sm">Edit</button>
+          <button type="button" class="btn" data-variant="destructive" data-size="sm">Delete</button>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="font-medium">Mechanical Keyboard</td>
+      <td>$129.99</td>
+      <td class="text-end">
+        <div class="inline-flex gap-2">
+          <button type="button" class="btn" data-variant="outline" data-size="sm">Edit</button>
+          <button type="button" class="btn" data-variant="destructive" data-size="sm">Delete</button>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="font-medium">USB-C Hub</td>
+      <td>$49.99</td>
+      <td class="text-end">
+        <div class="inline-flex gap-2">
+          <button type="button" class="btn" data-variant="outline" data-size="sm">Edit</button>
+          <button type="button" class="btn" data-variant="destructive" data-size="sm">Delete</button>
+        </div>
       </td>
     </tr>
   </tbody>
 </table>
+</div>
 </Preview>
 
 ### RTL

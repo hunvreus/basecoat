@@ -31,11 +31,38 @@
 
 ## Usage
 
+<Steps>
+  <Step title="Include CSS">
+
+Import Tailwind and one full Basecoat style bundle.
+
+```css
+@import "tailwindcss";
+@import "basecoat-css/vega.css";
+```
+
+Or import only the base CSS, Checkbox component CSS, and one style pack.
+
+```css
+@import "tailwindcss";
+@import "basecoat-css/base.css";
+@import "basecoat-css/components/checkbox.css";
+@import "basecoat-css/styles/vega.css";
+```
+
+Using CDN or bundler imports? See the [Installation page](/installation).
+
+  </Step>
+  <Step title="Add your checkbox HTML">
+
 Add `class="input"` to checkbox inputs. Pair it with [Field](/components/field) and a native `<label>` for layout and labeling.
 
 ```html
 <input type="checkbox" class="input" />
 ```
+
+  </Step>
+</Steps>
 
 ## Examples
 

@@ -81,6 +81,30 @@
 
 ## Usage
 
+<Steps>
+  <Step title="Include CSS">
+
+Import Tailwind and one full Basecoat style bundle.
+
+```css
+@import "tailwindcss";
+@import "basecoat-css/vega.css";
+```
+
+Or import only the base CSS, Field component CSS, and one style pack.
+
+```css
+@import "tailwindcss";
+@import "basecoat-css/base.css";
+@import "basecoat-css/components/field.css";
+@import "basecoat-css/styles/vega.css";
+```
+
+Using CDN or bundler imports? See the [Installation page](/installation).
+
+  </Step>
+  <Step title="Add your field HTML">
+
 Use `class="field"` for one control and `class="fieldset"` for related controls. Use a native `<fieldset>` when the group needs a `<legend>`; otherwise use a labelled `role="group"`.
 
 ```html
@@ -105,6 +129,9 @@ Use `class="field"` for one control and `class="fieldset"` for related controls.
   </div>
 </fieldset>
 ```
+
+  </Step>
+</Steps>
 
 ### HTML structure
 
@@ -396,6 +423,18 @@ Use `data-orientation="responsive"` to stack by default and switch to horizontal
 </form>
 </Preview>
 
+### Validation and errors
+
+Add `data-invalid` to `.field` and `aria-invalid="true"` to the invalid control.
+
+<Preview class="w-full max-w-xs">
+<div role="group" class="field" data-invalid>
+  <label for="invalid-email">Email</label>
+  <input id="invalid-email" type="email" value="wrong-email" aria-invalid="true" aria-describedby="invalid-email-error" />
+  <p id="invalid-email-error" role="alert">Enter a valid email address.</p>
+</div>
+</Preview>
+
 ### RTL
 
 Add `dir="rtl"` to the field, fieldset, or an ancestor.
@@ -412,24 +451,4 @@ Add `dir="rtl"` to the field, fieldset, or an ancestor.
     </div>
   </div>
 </fieldset>
-</Preview>
-
-## Validation and Errors
-
-Add `data-invalid` to `.field` and `aria-invalid="true"` to the invalid control.
-
-```html
-<div role="group" class="field" data-invalid>
-  <label for="email">Email</label>
-  <input id="email" type="email" aria-invalid="true" aria-describedby="email-error" />
-  <p id="email-error" role="alert">Enter a valid email address.</p>
-</div>
-```
-
-<Preview class="w-full max-w-xs">
-<div role="group" class="field" data-invalid>
-  <label for="invalid-email">Email</label>
-  <input id="invalid-email" type="email" value="wrong-email" aria-invalid="true" aria-describedby="invalid-email-error" />
-  <p id="invalid-email-error" role="alert">Enter a valid email address.</p>
-</div>
 </Preview>

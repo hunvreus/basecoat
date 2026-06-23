@@ -18,11 +18,44 @@
 
 ## Usage
 
+<Steps>
+  <Step title="Include CSS">
+
+Import Tailwind and one full Basecoat style bundle.
+
+```css
+@import "tailwindcss";
+@import "basecoat-css/vega.css";
+```
+
+Or import only the base CSS, Kbd component CSS, and one style pack.
+
+```css
+@import "tailwindcss";
+@import "basecoat-css/base.css";
+@import "basecoat-css/components/button.css";
+@import "basecoat-css/components/button-group.css";
+@import "basecoat-css/components/input-group.css";
+@import "basecoat-css/components/kbd.css";
+@import "basecoat-css/components/tooltip.css";
+@import "basecoat-css/styles/vega.css";
+```
+
+Kbd examples compose Button, Button Group, Input Group, and Tooltip styles.
+
+Using CDN or bundler imports? See the [Installation page](/installation).
+
+  </Step>
+  <Step title="Add your kbd HTML">
+
 Use `<kbd class="kbd">` for a key label. Use an inline wrapper with utilities when grouping multiple keys.
 
 ```html
 <kbd class="kbd">⌘K</kbd>
 ```
+
+  </Step>
+</Steps>
 
 Keyboard labels are direction-neutral. Surrounding spacing should use logical utilities when position matters.
 
@@ -31,52 +64,47 @@ Keyboard labels are direction-neutral. Surrounding spacing should use logical ut
 ### Group
 
 <Preview>
-<p class="text-muted-foreground text-sm">
-  Use
-  <span class="inline-flex items-center gap-1">
-    <kbd class="kbd">Ctrl + B</kbd>
-    <kbd class="kbd">Ctrl + K</kbd>
-  </span>
-  to open the command palette
-</p>
+<p class="text-muted-foreground text-sm">Use <span class="inline-flex items-center gap-1"><kbd class="kbd">Ctrl</kbd><span>+</span><kbd class="kbd">B</kbd></span> <span class="inline-flex items-center gap-1"><kbd class="kbd">Ctrl</kbd><span>+</span><kbd class="kbd">K</kbd></span> to open the command palette</p>
 </Preview>
 
 ### Button
 
 <Preview>
-<div class="flex flex-wrap items-center gap-x-4">
-  <button class="btn pe-2" data-variant="outline" data-size="sm">
-    Accept
-    <kbd class="kbd">⏎</kbd>
-  </button>
-  <button class="btn pe-2" data-variant="outline" data-size="sm">
-    Cancel
-    <kbd class="kbd">Esc</kbd>
-  </button>
+<button class="btn" data-variant="outline">
+  Accept
+  <kbd class="kbd translate-x-0.5" data-icon="inline-end">⏎</kbd>
+</button>
+</Preview>
+
+### Input Group
+
+<Preview class="w-full max-w-xs">
+<div class="input-group">
+  <input type="search" placeholder="Search..." />
+  <span data-align="start" aria-hidden="true"><svg class="lucide lucide-search" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21 21-4.34-4.34" /><circle cx="11" cy="11" r="8" /></svg></span>
+  <span class="inline-flex items-center gap-1" data-align="end">
+    <kbd class="kbd">⌘</kbd>
+    <kbd class="kbd">K</kbd>
+  </span>
 </div>
 </Preview>
 
-### Input group
-
-<Preview>
-<div class="relative w-full max-w-sm">
-  <input type="search" class="input ps-9 pe-12" placeholder="Search..." />
-  <svg class="absolute start-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground lucide lucide-search" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21 21-4.34-4.34" /><circle cx="11" cy="11" r="8" /></svg>
-  <kbd class="kbd absolute end-3 top-1/2 -translate-y-1/2">/</kbd>
-</div>
-</Preview>
-
-### RTL
+## RTL
 
 Keyboard labels are direction-neutral. Surrounding spacing should use logical utilities when position matters.
 
 <Preview>
-<p dir="rtl" class="text-muted-foreground text-sm">
-  استخدم
+<div class="flex flex-col items-center gap-4" dir="rtl">
+  <span class="inline-flex items-center gap-1">
+    <kbd class="kbd">⌘</kbd>
+    <kbd class="kbd">⇧</kbd>
+    <kbd class="kbd">⌥</kbd>
+    <kbd class="kbd">⌃</kbd>
+  </span>
   <span class="inline-flex items-center gap-1">
     <kbd class="kbd">Ctrl</kbd>
-    <kbd class="kbd">K</kbd>
+    <span>+</span>
+    <kbd class="kbd">B</kbd>
   </span>
-  لفتح البحث
-</p>
+</div>
 </Preview>

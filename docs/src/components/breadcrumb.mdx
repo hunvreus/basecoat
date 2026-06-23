@@ -4,13 +4,9 @@
 <nav class="breadcrumb" aria-label="Breadcrumb">
   <ol>
     <li><a href="#">Home</a></li>
-    <li aria-hidden="true">
-      <svg data-rtl-flip class="lucide lucide-chevron-right" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6" /></svg>
-    </li>
+    <li aria-hidden="true"><svg data-rtl-flip class="lucide lucide-chevron-right" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6" /></svg></li>
     <li><a href="#">Components</a></li>
-    <li aria-hidden="true">
-      <svg data-rtl-flip class="lucide lucide-chevron-right" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6" /></svg>
-    </li>
+    <li aria-hidden="true"><svg data-rtl-flip class="lucide lucide-chevron-right" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6" /></svg></li>
     <li><span aria-current="page">Breadcrumb</span></li>
   </ol>
 </nav>
@@ -18,19 +14,44 @@
 
 ## Usage
 
+<Steps>
+  <Step title="Include CSS">
+
+Import Tailwind and one full Basecoat style bundle.
+
+```css
+@import "tailwindcss";
+@import "basecoat-css/vega.css";
+```
+
+Or import only the base CSS, Breadcrumb component CSS, and one style pack.
+
+```css
+@import "tailwindcss";
+@import "basecoat-css/base.css";
+@import "basecoat-css/components/breadcrumb.css";
+@import "basecoat-css/styles/vega.css";
+```
+
+Using CDN or bundler imports? See the [Installation page](/installation).
+
+  </Step>
+  <Step title="Add your breadcrumb HTML">
+
 Use a navigation landmark with an ordered list. Mark the current page with `aria-current="page"`.
 
 ```html
 <nav class="breadcrumb" aria-label="Breadcrumb">
   <ol>
     <li><a href="#">Home</a></li>
-    <li aria-hidden="true">
-      <svg data-rtl-flip class="lucide lucide-chevron-right" ...></svg>
-    </li>
+    <li aria-hidden="true"><svg data-rtl-flip class="lucide lucide-chevron-right" ...></svg></li>
     <li><span aria-current="page">Breadcrumb</span></li>
   </ol>
 </nav>
 ```
+
+  </Step>
+</Steps>
 
 ## HTML structure
 
@@ -49,13 +70,9 @@ Use a navigation landmark with an ordered list. Mark the current page with `aria
 <nav class="breadcrumb" aria-label="Breadcrumb">
   <ol>
     <li><a href="#">Home</a></li>
-    <li aria-hidden="true">
-      <svg data-rtl-flip class="lucide lucide-chevron-right" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6" /></svg>
-    </li>
+    <li aria-hidden="true"><svg data-rtl-flip class="lucide lucide-chevron-right" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6" /></svg></li>
     <li><a href="#">Components</a></li>
-    <li aria-hidden="true">
-      <svg data-rtl-flip class="lucide lucide-chevron-right" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6" /></svg>
-    </li>
+    <li aria-hidden="true"><svg data-rtl-flip class="lucide lucide-chevron-right" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6" /></svg></li>
     <li><span aria-current="page">Breadcrumb</span></li>
   </ol>
 </nav>
@@ -67,13 +84,9 @@ Use a navigation landmark with an ordered list. Mark the current page with `aria
 <nav class="breadcrumb" aria-label="Breadcrumb">
   <ol>
     <li><a href="#">Home</a></li>
-    <li aria-hidden="true">
-      <svg class="lucide lucide-dot" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12.1" cy="12.1" r="1" /></svg>
-    </li>
+    <li aria-hidden="true"><svg class="lucide lucide-dot" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12.1" cy="12.1" r="1" /></svg></li>
     <li><a href="#">Components</a></li>
-    <li aria-hidden="true">
-      <svg class="lucide lucide-dot" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12.1" cy="12.1" r="1" /></svg>
-    </li>
+    <li aria-hidden="true"><svg class="lucide lucide-dot" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12.1" cy="12.1" r="1" /></svg></li>
     <li><span aria-current="page">Breadcrumb</span></li>
   </ol>
 </nav>
@@ -85,13 +98,10 @@ Use a navigation landmark with an ordered list. Mark the current page with `aria
 <nav class="breadcrumb" aria-label="Breadcrumb">
   <ol>
     <li><a href="#">Home</a></li>
-    <li aria-hidden="true">
-      <svg data-rtl-flip class="lucide lucide-chevron-right" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6" /></svg>
-    </li>
+    <li aria-hidden="true"><svg data-rtl-flip class="lucide lucide-chevron-right" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6" /></svg></li>
     <li>
       <div id="breadcrumb-dropdown" class="dropdown-menu">
-        <button type="button" id="breadcrumb-dropdown-trigger" class="btn" data-variant="ghost" data-size="icon-sm" aria-haspopup="menu" aria-controls="breadcrumb-dropdown-menu" aria-expanded="false">
-          <svg class="lucide lucide-ellipsis" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1" /><circle cx="19" cy="12" r="1" /><circle cx="5" cy="12" r="1" /></svg>
+        <button type="button" id="breadcrumb-dropdown-trigger" class="btn" data-variant="ghost" data-size="icon-sm" aria-haspopup="menu" aria-controls="breadcrumb-dropdown-menu" aria-expanded="false"><svg class="lucide lucide-ellipsis" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1" /><circle cx="19" cy="12" r="1" /><circle cx="5" cy="12" r="1" /></svg>
           <span class="sr-only">Toggle menu</span>
         </button>
         <div id="breadcrumb-dropdown-popover" data-popover aria-hidden="true">
@@ -105,13 +115,9 @@ Use a navigation landmark with an ordered list. Mark the current page with `aria
         </div>
       </div>
     </li>
-    <li aria-hidden="true">
-      <svg data-rtl-flip class="lucide lucide-chevron-right" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6" /></svg>
-    </li>
+    <li aria-hidden="true"><svg data-rtl-flip class="lucide lucide-chevron-right" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6" /></svg></li>
     <li><a href="#">Components</a></li>
-    <li aria-hidden="true">
-      <svg data-rtl-flip class="lucide lucide-chevron-right" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6" /></svg>
-    </li>
+    <li aria-hidden="true"><svg data-rtl-flip class="lucide lucide-chevron-right" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6" /></svg></li>
     <li><span aria-current="page">Breadcrumb</span></li>
   </ol>
 </nav>
@@ -123,21 +129,11 @@ Use a navigation landmark with an ordered list. Mark the current page with `aria
 <nav class="breadcrumb" aria-label="Breadcrumb">
   <ol>
     <li><a href="#">Home</a></li>
-    <li aria-hidden="true">
-      <svg data-rtl-flip class="lucide lucide-chevron-right" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6" /></svg>
-    </li>
-    <li>
-      <span aria-hidden="true">
-        <svg class="lucide lucide-ellipsis" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1" /><circle cx="19" cy="12" r="1" /><circle cx="5" cy="12" r="1" /></svg>
-      </span>
-    </li>
-    <li aria-hidden="true">
-      <svg data-rtl-flip class="lucide lucide-chevron-right" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6" /></svg>
-    </li>
+    <li aria-hidden="true"><svg data-rtl-flip class="lucide lucide-chevron-right" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6" /></svg></li>
+    <li> <span aria-hidden="true"><svg class="lucide lucide-ellipsis" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1" /><circle cx="19" cy="12" r="1" /><circle cx="5" cy="12" r="1" /></svg></span></li>
+    <li aria-hidden="true"><svg data-rtl-flip class="lucide lucide-chevron-right" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6" /></svg></li>
     <li><a href="#">Components</a></li>
-    <li aria-hidden="true">
-      <svg data-rtl-flip class="lucide lucide-chevron-right" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6" /></svg>
-    </li>
+    <li aria-hidden="true"><svg data-rtl-flip class="lucide lucide-chevron-right" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6" /></svg></li>
     <li><span aria-current="page">Breadcrumb</span></li>
   </ol>
 </nav>
@@ -149,13 +145,9 @@ Use a navigation landmark with an ordered list. Mark the current page with `aria
 <nav class="breadcrumb" aria-label="Breadcrumb" dir="rtl">
   <ol>
     <li><a href="#">الرئيسية</a></li>
-    <li aria-hidden="true">
-      <svg data-rtl-flip class="lucide lucide-chevron-right" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6" /></svg>
-    </li>
+    <li aria-hidden="true"><svg data-rtl-flip class="lucide lucide-chevron-right" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6" /></svg></li>
     <li><a href="#">المكونات</a></li>
-    <li aria-hidden="true">
-      <svg data-rtl-flip class="lucide lucide-chevron-right" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6" /></svg>
-    </li>
+    <li aria-hidden="true"><svg data-rtl-flip class="lucide lucide-chevron-right" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6" /></svg></li>
     <li><span aria-current="page">مسار التنقل</span></li>
   </ol>
 </nav>

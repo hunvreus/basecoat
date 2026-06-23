@@ -2,6 +2,19 @@
 
 ## Unreleased
 
+## [1.0.0-beta.6] - 2026-06-23
+
+### Changed
+
+- Updated docs dependency to the published `reallysimpledocs@1.0.0-beta.5` package.
+- Refined component documentation examples across the docs site, including Select, Table, Tabs, Switch, and Theme Switcher.
+- Clarified CDN and npm installation guidance for default and named style bundles.
+- Updated Table examples to avoid inline overlay menus inside scrollable table containers and documented the overflow limitation.
+
+### Fixed
+
+- Fixed dark-mode unchecked Switch thumb colors across all style packs to match upstream shadcn/ui behavior.
+
 ## [1.0.0-beta.5] - 2026-06-22
 
 ### Added

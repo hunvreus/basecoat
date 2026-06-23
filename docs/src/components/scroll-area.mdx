@@ -25,6 +25,31 @@
 
 ## Usage
 
+<Steps>
+  <Step title="Include CSS">
+
+Import Tailwind and one full Basecoat style bundle.
+
+```css
+@import "tailwindcss";
+@import "basecoat-css/vega.css";
+```
+
+Or import only the base CSS and one style pack.
+
+```css
+@import "tailwindcss";
+@import "basecoat-css/base.css";
+@import "basecoat-css/styles/vega.css";
+```
+
+Scroll Area uses Basecoat base scrollbar utilities and has no dedicated component CSS file.
+
+Using CDN or bundler imports? See the [Installation page](/installation).
+
+  </Step>
+  <Step title="Add your scroll area HTML">
+
 Use `scrollbar` or `scrollbar-sm` on an element that already scrolls with `overflow-auto`, `overflow-y-auto`, or `overflow-x-auto`.
 
 ```html
@@ -32,6 +57,9 @@ Use `scrollbar` or `scrollbar-sm` on an element that already scrolls with `overf
   Your scrollable content here.
 </div>
 ```
+
+  </Step>
+</Steps>
 
 Use `scrollbar` or `scrollbar-sm` on an element that already scrolls with `overflow-auto`, `overflow-y-auto`, or `overflow-x-auto`.
 

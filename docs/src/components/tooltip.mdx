@@ -6,6 +6,30 @@
 
 ## Usage
 
+<Steps>
+  <Step title="Include CSS">
+
+Import Tailwind and one full Basecoat style bundle.
+
+```css
+@import "tailwindcss";
+@import "basecoat-css/vega.css";
+```
+
+Or import only the base CSS, Tooltip component CSS, and one style pack.
+
+```css
+@import "tailwindcss";
+@import "basecoat-css/base.css";
+@import "basecoat-css/components/tooltip.css";
+@import "basecoat-css/styles/vega.css";
+```
+
+Using CDN or bundler imports? See the [Installation page](/installation).
+
+  </Step>
+  <Step title="Add your tooltip HTML">
+
 Add `data-tooltip` to the trigger element. Use `data-side` and `data-align` to change the position:
 
 - `data-tooltip`: Tooltip text.
@@ -17,6 +41,9 @@ Basecoat tooltips are CSS-only and text-only. This intentionally differs from sh
 ```html
 <button class="btn" data-variant="outline" data-tooltip="Tooltip text" data-side="bottom" data-align="center">Bottom</button>
 ```
+
+  </Step>
+</Steps>
 
 ## Examples
 
@@ -40,17 +67,13 @@ Basecoat tooltips are CSS-only and text-only. This intentionally differs from sh
 ### Icon button
 
 <Preview>
-<button class="btn" data-variant="ghost" data-size="icon" data-tooltip="Additional information" aria-label="Info">
-  <svg class="lucide lucide-info" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="M12 16v-4" /><path d="M12 8h.01" /></svg>
-</button>
+<button class="btn" data-variant="ghost" data-size="icon" data-tooltip="Additional information" aria-label="Info"><svg class="lucide lucide-info" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="M12 16v-4" /><path d="M12 8h.01" /></svg></button>
 </Preview>
 
 ### Disabled button
 
 <Preview>
-<span class="inline-block" data-tooltip="This feature is currently unavailable">
-  <button class="btn" data-variant="outline" disabled>Disabled</button>
-</span>
+<span class="inline-block" data-tooltip="This feature is currently unavailable"> <button class="btn" data-variant="outline" disabled>Disabled</button></span>
 </Preview>
 
 ### Link

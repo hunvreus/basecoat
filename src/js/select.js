@@ -59,6 +59,12 @@
     return state.isMultiple ? JSON.stringify(value) : (value[0] || '');
   };
 
+  const showPlaceholder = (state) => {
+    state.selectedLabel.textContent = state.placeholder || '';
+    state.selectedLabel.classList.toggle('text-muted-foreground', Boolean(state.placeholder));
+    state.input.value = state.isMultiple ? serializeSelection(state, []) : '';
+  };
+
   const scrollOptionIntoListbox = (state, option) => {
     const optionRect = option.getBoundingClientRect();
     const listboxRect = state.listbox.getBoundingClientRect();
@@ -114,19 +120,26 @@
       state.input.value = serializeSelection(state, selectedDetail);
     } else {
       const option = optionOrOptions;
-      if (!option) return;
-      if (option.dataset.label) {
-        state.selectedLabel.textContent = option.dataset.label;
+      if (!option) {
+        state.options.forEach(option => option.removeAttribute('aria-selected'));
+        showPlaceholder(state);
+        selectedDetail = null;
+        value = '';
       } else {
-        state.selectedLabel.innerHTML = option.innerHTML;
+        if (option.dataset.label) {
+          state.selectedLabel.textContent = option.dataset.label;
+        } else {
+          state.selectedLabel.innerHTML = option.innerHTML;
+        }
+        state.selectedLabel.classList.remove('text-muted-foreground');
+        selectedDetail = toSelected(option);
+        value = selectedDetail.value;
+        state.input.value = serializeSelection(state, [selectedDetail]);
       }
-      selectedDetail = toSelected(option);
-      value = selectedDetail.value;
-      state.input.value = serializeSelection(state, [selectedDetail]);
     }
 
     state.options.forEach(option => {
-      const isSelected = state.isMultiple ? state.selectedOptions.has(option) : option === optionOrOptions;
+      const isSelected = state.isMultiple ? state.selectedOptions.has(option) : optionOrOptions && option === optionOrOptions;
       if (isSelected) {
         option.setAttribute('aria-selected', 'true');
       } else {
@@ -171,7 +184,7 @@
     state.visibleOptions = [...state.options];
     state.isMultiple = state.listbox.getAttribute('aria-multiselectable') === 'true';
     state.format = getFormat(root);
-    state.placeholder = state.isMultiple ? (root.dataset.placeholder || '') : null;
+    state.placeholder = root.dataset.placeholder || '';
     state.closeOnSelect = root.dataset.closeOnSelect === 'true';
 
     if (state.isMultiple) {
@@ -183,10 +196,12 @@
       updateValue(root, selected, false);
     } else {
       const value = parseStoredValues(previousValue, state);
-      const selected = state.options.find(option => getValue(option) === value)
+      const selected = value === '' && state.placeholder
+        ? null
+        : state.options.find(option => getValue(option) === value)
         || state.options.find(option => option.getAttribute('aria-selected') === 'true');
       state.options.forEach(option => option.removeAttribute('aria-selected'));
-      if (selected) updateValue(root, selected, false);
+      updateValue(root, selected || null, false);
     }
 
     const selectedOption = state.listbox.querySelector('[role="option"][aria-selected="true"]');
@@ -213,6 +228,11 @@
     } else {
       const option = state.options.find(opt => getValue(opt) === value);
       if (!option) return;
+      if (state.placeholder && getValue(option) === '') {
+        updateValue(root, null);
+        closePopover(state);
+        return;
+      }
       if (root.value !== value) updateValue(root, option);
       closePopover(state);
     }
@@ -255,7 +275,11 @@
           toggleMultipleValue(root, option);
           if (state.closeOnSelect) root.close();
         } else {
-          if (root.value !== getValue(option)) updateValue(root, option);
+          if (state.placeholder && getValue(option) === '') {
+            updateValue(root, null);
+          } else if (root.value !== getValue(option)) {
+            updateValue(root, option);
+          }
           root.close();
         }
       }
@@ -337,7 +361,11 @@
           state.trigger.focus();
         }
       } else {
-        if (root.value !== getValue(option)) updateValue(root, option);
+        if (state.placeholder && getValue(option) === '') {
+          updateValue(root, null);
+        } else if (root.value !== getValue(option)) {
+          updateValue(root, option);
+        }
         root.close();
       }
     };
@@ -385,6 +413,11 @@
           const values = Array.isArray(value) ? value : (value != null ? [value] : []);
           updateValue(root, values.map(v => state.options.find(option => getValue(option) === v)).filter(Boolean));
         } else {
+          if (value == null || value === '') {
+            updateValue(root, null);
+            root.close();
+            return;
+          }
           const option = state.options.find(opt => getValue(opt) === value);
           if (option) {
             updateValue(root, option);

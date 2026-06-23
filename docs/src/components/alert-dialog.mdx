@@ -20,6 +20,32 @@ A modal dialog that interrupts the user with important content and expects a res
 
 ## Usage
 
+<Steps>
+  <Step title="Include CSS">
+
+Import Tailwind and one full Basecoat style bundle.
+
+```css
+@import "tailwindcss";
+@import "basecoat-css/vega.css";
+```
+
+Or import only the base CSS, Alert Dialog component CSS, and one style pack.
+
+```css
+@import "tailwindcss";
+@import "basecoat-css/base.css";
+@import "basecoat-css/components/dialog.css";
+@import "basecoat-css/styles/vega.css";
+```
+
+Alert Dialog uses the Dialog component CSS.
+
+Using CDN or bundler imports? See the [Installation page](/installation).
+
+  </Step>
+  <Step title="Add your alert dialog HTML">
+
 Alert Dialog uses a native `<dialog class="alert-dialog">` element. Omit the close button and backdrop-click handler when the user must choose an explicit action.
 
 ```html
@@ -37,6 +63,9 @@ Alert Dialog uses a native `<dialog class="alert-dialog">` element. Omit the clo
   </div>
 </dialog>
 ```
+
+  </Step>
+</Steps>
 
 ### HTML structure
 
@@ -102,9 +131,7 @@ Use a `<figure>` in the header to add a media element such as an icon or image t
 <dialog id="alert-dialog-media" class="alert-dialog" aria-labelledby="alert-dialog-media-title" aria-describedby="alert-dialog-media-description">
   <div>
     <header>
-      <figure>
-        <svg class="lucide lucide-circle-fading-plus" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 0 1 7.38 16.75" /><path d="M12 8v8" /><path d="M16 12H8" /><path d="M2.5 8.88a10 10 0 0 0 0 6.24" /><path d="M4.64 4.64a10 10 0 0 0 0 14.72" /></svg>
-      </figure>
+      <figure><svg class="lucide lucide-circle-fading-plus" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 0 1 7.38 16.75" /><path d="M12 8v8" /><path d="M16 12H8" /><path d="M2.5 8.88a10 10 0 0 0 0 6.24" /><path d="M4.64 4.64a10 10 0 0 0 0 14.72" /></svg></figure>
       <h2 id="alert-dialog-media-title">Share this project?</h2>
       <p id="alert-dialog-media-description">Anyone with the link will be able to view and edit this project.</p>
     </header>
@@ -125,9 +152,7 @@ Use a destructive action button when the alert dialog confirms a destructive ope
 <dialog id="alert-dialog-destructive" class="alert-dialog" aria-labelledby="alert-dialog-destructive-title" aria-describedby="alert-dialog-destructive-description">
   <div>
     <header>
-      <figure>
-        <svg class="lucide lucide-trash-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 11v6" /><path d="M14 11v6" /><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" /><path d="M3 6h18" /><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" /></svg>
-      </figure>
+      <figure><svg class="lucide lucide-trash-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 11v6" /><path d="M14 11v6" /><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" /><path d="M3 6h18" /><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" /></svg></figure>
       <h2 id="alert-dialog-destructive-title">Delete this chat?</h2>
       <p id="alert-dialog-destructive-description">This action cannot be undone. This will permanently delete the chat and remove it from your history.</p>
     </header>

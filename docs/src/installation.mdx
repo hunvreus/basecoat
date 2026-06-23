@@ -7,14 +7,16 @@ Basecoat can be used from a CDN or installed with npm. Use the CDN for simple st
 <Steps>
   <Step title="Add the stylesheet">
 
-Use the default bundled stylesheet, or choose one standalone style bundle.
+Use the default bundled stylesheet. It is an alias for the Vega style bundle.
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.4/dist/basecoat.cdn.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.6/dist/basecoat.cdn.min.css" />
 ```
 
+You can also use one of the named style bundles: `vega`, `nova`, `maia`, `lyra`, `mira`, `luma`, `sera`, or `rhea`.
+
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.4/dist/basecoat-maia.cdn.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.6/dist/basecoat-maia.cdn.min.css" />
 ```
 
   </Step>
@@ -23,15 +25,15 @@ Use the default bundled stylesheet, or choose one standalone style bundle.
 Most components are CSS-only. Interactive components need JavaScript. Use the all-in-one bundle when file size is not a concern.
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.4/dist/js/all.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.6/dist/js/all.min.js" defer></script>
 ```
 
 Or load the Basecoat runtime once, then only the component scripts you use.
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.4/dist/js/basecoat.min.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.4/dist/js/dropdown-menu.min.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.4/dist/js/select.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.6/dist/js/basecoat.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.6/dist/js/dropdown-menu.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.6/dist/js/select.min.js" defer></script>
 ```
 
   </Step>
@@ -39,7 +41,6 @@ Or load the Basecoat runtime once, then only the component scripts you use.
 
 ```html
 <button class="btn">Button</button>
-
 <div class="card">
   <header>
     <h3>Card title</h3>
@@ -60,7 +61,7 @@ Or load the Basecoat runtime once, then only the component scripts you use.
 
 | File | Description |
 | --- | --- |
-| `dist/basecoat.cdn.min.css` | Default standalone CDN stylesheet. |
+| `dist/basecoat.cdn.min.css` | Default standalone CDN stylesheet. Alias for the Vega style. |
 | `dist/basecoat-{style}.cdn.min.css` | Standalone CDN stylesheet for `vega`, `nova`, `maia`, `lyra`, `mira`, `luma`, `sera`, or `rhea`. |
 | `dist/basecoat-base.cdn.min.css` | Base tokens, utilities, and component structure without a style pack. |
 | `dist/basecoat-compat.cdn.min.css` | Optional pre-1.0 compatibility aliases. Load after Basecoat. |
@@ -87,17 +88,31 @@ Basecoat is authored for Tailwind CSS. Install Tailwind first if your project do
   <Code title="yarn" lang="bash">{`yarn add basecoat-css`}</Code>
 </CodeGroup>
 
-  </Step>
-  <Step title="Import CSS">
+If you are not using a bundler, copy or serve the files you need from `node_modules/basecoat-css/dist`.
 
-Import Tailwind, then import one Basecoat bundle.
+  </Step>
+  <Step title="Add CSS">
+
+Include one Basecoat stylesheet after your Tailwind CSS. The default stylesheet is an alias for the Vega style bundle.
+
+```html
+<link rel="stylesheet" href="/assets/basecoat.css" />
+```
+
+You can also use one of the named style bundles: `vega`, `nova`, `maia`, `lyra`, `mira`, `luma`, `sera`, or `rhea`.
+
+```html
+<link rel="stylesheet" href="/assets/basecoat-maia.css" />
+```
+
+If your build tool supports CSS package imports, import Tailwind and then one Basecoat bundle.
 
 ```css
 @import "tailwindcss";
 @import "basecoat-css";
 ```
 
-To choose a specific style, import that style bundle instead.
+Or import a named style bundle.
 
 ```css
 @import "tailwindcss";
@@ -109,9 +124,23 @@ To choose a specific style, import that style bundle instead.
 </Callout>
 
   </Step>
-  <Step title="Import JavaScript when needed">
+  <Step title="Add JavaScript when needed">
 
-Use the all-in-one import:
+Most components are CSS-only. Interactive components need JavaScript. Include the all-in-one script when file size is not a concern.
+
+```html
+<script src="/assets/js/all.min.js" defer></script>
+```
+
+Or include the Basecoat runtime once, then only the component scripts you use.
+
+```html
+<script src="/assets/js/basecoat.min.js" defer></script>
+<script src="/assets/js/dropdown-menu.min.js" defer></script>
+<script src="/assets/js/select.min.js" defer></script>
+```
+
+If your build tool supports JavaScript package imports, use the all-in-one import:
 
 ```js
 import "basecoat-css/all";
@@ -132,12 +161,13 @@ import "basecoat-css/select";
 
 | Import | Description |
 | --- | --- |
-| `basecoat-css` | Default full stylesheet. |
+| `basecoat-css` | Default full stylesheet. Alias for `basecoat-css/vega`. |
 | `basecoat-css/{style}` | Full stylesheet for `vega`, `nova`, `maia`, `lyra`, `mira`, `luma`, `sera`, or `rhea`. |
 | `basecoat-css/base` | Base tokens, utilities, and component structure without a style pack. Use this before a custom style. |
 | `basecoat-css/components` | All component structure without a style pack. |
 | `basecoat-css/components/button` | Individual component CSS. Replace `button` with any component file. |
 | `basecoat-css/styles/maia` | Individual style-pack CSS. Use with `basecoat-css/base` or `basecoat-css/components`. |
+| `basecoat-css/all.css` | Full default stylesheet plus all style-pack CSS. Use only when you need every style pack available at runtime. |
 | `basecoat-css/compat` | Optional pre-1.0 compatibility aliases. Load after Basecoat. |
 
 ### JavaScript imports

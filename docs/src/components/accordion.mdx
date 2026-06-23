@@ -9,27 +9,21 @@ A vertically stacked set of interactive headings that each reveal a section of c
       What are your shipping options?
       <svg class="lucide lucide-chevron-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6" /></svg>
     </summary>
-    <section>
-      We offer standard (5-7 days), express (2-3 days), and overnight shipping. Free shipping on international orders.
-    </section>
+    <section>We offer standard (5-7 days), express (2-3 days), and overnight shipping. Free shipping on international orders.</section>
   </details>
   <details>
     <summary>
       What is your return policy?
       <svg class="lucide lucide-chevron-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6" /></svg>
     </summary>
-    <section>
-      You can return items within 30 days of delivery. Items must be unused and in their original packaging.
-    </section>
+    <section>You can return items within 30 days of delivery. Items must be unused and in their original packaging.</section>
   </details>
   <details>
     <summary>
       How can I contact customer support?
       <svg class="lucide lucide-chevron-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6" /></svg>
     </summary>
-    <section>
-      Email support@example.com or use live chat during business hours.
-    </section>
+    <section>Email support@example.com or use live chat during business hours.</section>
   </details>
 </section>
 </Preview>
@@ -37,12 +31,43 @@ A vertically stacked set of interactive headings that each reveal a section of c
 ## Usage
 
 <Steps>
-  <Step title="Include the JavaScript files">
+  <Step title="Include CSS">
+
+Import Tailwind and one full Basecoat style bundle.
+
+```css
+@import "tailwindcss";
+@import "basecoat-css/vega.css";
+```
+
+Or import only the base CSS, Accordion component CSS, and one style pack.
+
+```css
+@import "tailwindcss";
+@import "basecoat-css/base.css";
+@import "basecoat-css/components/accordion.css";
+@import "basecoat-css/styles/vega.css";
+```
+
+Using CDN or bundler imports? See the [Installation page](/installation).
+
+  </Step>
+  <Step title="Include JavaScript">
+
+Copy or serve the full Basecoat JavaScript bundle.
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.4/dist/js/basecoat.min.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.4/dist/js/accordion.min.js" defer></script>
+<script src="/assets/js/all.min.js" defer></script>
 ```
+
+Or copy or serve the Basecoat runtime and Accordion script.
+
+```html
+<script src="/assets/js/basecoat.min.js" defer></script>
+<script src="/assets/js/accordion.min.js" defer></script>
+```
+
+Using CDN or bundler imports? See the [Installation page](/installation).
 
   </Step>
   <Step title="Add your accordion HTML">
@@ -54,9 +79,7 @@ A vertically stacked set of interactive headings that each reveal a section of c
       Is it accessible?
       <svg class="lucide lucide-chevron-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6" /></svg>
     </summary>
-    <section>
-      Yes. It uses native disclosure semantics.
-    </section>
+    <section>Yes. It uses native disclosure semantics.</section>
   </details>
 </section>
 ```
@@ -108,27 +131,21 @@ A basic accordion that shows one item at a time. The first item is open by defau
       How do I reset my password?
       <svg class="lucide lucide-chevron-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6" /></svg>
     </summary>
-    <section>
-      Click on 'Forgot Password' on the login page, enter your email address, and we'll send you a link to reset your password. The link will expire in 24 hours.
-    </section>
+    <section>Click on 'Forgot Password' on the login page, enter your email address, and we'll send you a link to reset your password. The link will expire in 24 hours.</section>
   </details>
   <details>
     <summary>
       Can I change my subscription plan?
       <svg class="lucide lucide-chevron-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6" /></svg>
     </summary>
-    <section>
-      Yes. You can upgrade or downgrade your plan from the billing settings page.
-    </section>
+    <section>Yes. You can upgrade or downgrade your plan from the billing settings page.</section>
   </details>
   <details>
     <summary>
       What payment methods do you accept?
       <svg class="lucide lucide-chevron-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6" /></svg>
     </summary>
-    <section>
-      We accept all major credit cards, PayPal, and bank transfers for annual plans.
-    </section>
+    <section>We accept all major credit cards, PayPal, and bank transfers for annual plans.</section>
   </details>
 </section>
 </Preview>
@@ -144,27 +161,21 @@ Use `data-multiple` to allow multiple items to be open at the same time.
       Notification Settings
       <svg class="lucide lucide-chevron-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6" /></svg>
     </summary>
-    <section>
-      Manage how you receive notifications. You can enable email alerts for updates or push notifications for mobile devices.
-    </section>
+    <section>Manage how you receive notifications. You can enable email alerts for updates or push notifications for mobile devices.</section>
   </details>
   <details>
     <summary>
       Privacy & Security
       <svg class="lucide lucide-chevron-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6" /></svg>
     </summary>
-    <section>
-      Control account security, session history, and privacy preferences.
-    </section>
+    <section>Control account security, session history, and privacy preferences.</section>
   </details>
   <details>
     <summary>
       Billing & Subscription
       <svg class="lucide lucide-chevron-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6" /></svg>
     </summary>
-    <section>
-      Review invoices, change plans, and update payment methods.
-    </section>
+    <section>Review invoices, change plans, and update payment methods.</section>
   </details>
 </section>
 </Preview>
@@ -180,27 +191,21 @@ Use `aria-disabled="true"` on an item to disable it.
       Can I access my account history?
       <svg class="lucide lucide-chevron-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6" /></svg>
     </summary>
-    <section>
-      Yes. Your account history is available from the activity page.
-    </section>
+    <section>Yes. Your account history is available from the activity page.</section>
   </details>
   <details aria-disabled="true">
     <summary>
       Premium feature information
       <svg class="lucide lucide-chevron-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6" /></svg>
     </summary>
-    <section>
-      This item is disabled.
-    </section>
+    <section>This item is disabled.</section>
   </details>
   <details>
     <summary>
       How do I update my email address?
       <svg class="lucide lucide-chevron-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6" /></svg>
     </summary>
-    <section>
-      Go to account settings, update your email, then confirm the change from your inbox.
-    </section>
+    <section>Go to account settings, update your email, then confirm the change from your inbox.</section>
   </details>
 </section>
 </Preview>
@@ -216,27 +221,21 @@ Add horizontal padding to the rows when using a bordered root.
       How does billing work?
       <svg class="lucide lucide-chevron-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6" /></svg>
     </summary>
-    <section>
-      We offer monthly and annual subscription plans. Billing is charged at the beginning of each cycle, and you can cancel anytime. All plans include automatic backups, 24/7 support, and unlimited team members.
-    </section>
+    <section>We offer monthly and annual subscription plans. Billing is charged at the beginning of each cycle, and you can cancel anytime. All plans include automatic backups, 24/7 support, and unlimited team members.</section>
   </details>
   <details>
     <summary>
       Is my data secure?
       <svg class="lucide lucide-chevron-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6" /></svg>
     </summary>
-    <section>
-      Data is encrypted in transit and at rest.
-    </section>
+    <section>Data is encrypted in transit and at rest.</section>
   </details>
   <details>
     <summary>
       What integrations do you support?
       <svg class="lucide lucide-chevron-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6" /></svg>
     </summary>
-    <section>
-      We support Slack, GitHub, Google Workspace, and webhooks.
-    </section>
+    <section>We support Slack, GitHub, Google Workspace, and webhooks.</section>
   </details>
 </section>
 </Preview>
@@ -258,27 +257,21 @@ Wrap the accordion in a card for grouped support or billing content.
           What subscription plans do you offer?
           <svg class="lucide lucide-chevron-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6" /></svg>
         </summary>
-        <section>
-          We offer three subscription tiers: Starter ($9/month), Professional ($29/month), and Enterprise ($99/month). Each plan includes increasing storage limits, API access, priority support, and team collaboration features.
-        </section>
+        <section>We offer three subscription tiers: Starter ($9/month), Professional ($29/month), and Enterprise ($99/month). Each plan includes increasing storage limits, API access, priority support, and team collaboration features.</section>
       </details>
       <details>
         <summary>
           How does billing work?
           <svg class="lucide lucide-chevron-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6" /></svg>
         </summary>
-        <section>
-          Billing is charged at the beginning of each cycle.
-        </section>
+        <section>Billing is charged at the beginning of each cycle.</section>
       </details>
       <details>
         <summary>
           How do I cancel my subscription?
           <svg class="lucide lucide-chevron-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6" /></svg>
         </summary>
-        <section>
-          Cancel from billing settings. Your plan remains active until the end of the current cycle.
-        </section>
+        <section>Cancel from billing settings. Your plan remains active until the end of the current cycle.</section>
       </details>
     </section>
   </section>
@@ -296,27 +289,21 @@ Accordion spacing uses logical properties. Set `dir="rtl"` on the accordion or a
       كيف يمكنني إعادة تعيين كلمة المرور؟
       <svg class="lucide lucide-chevron-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6" /></svg>
     </summary>
-    <section>
-      انقر على 'نسيت كلمة المرور' في صفحة تسجيل الدخول، أدخل عنوان بريدك الإلكتروني، وسنرسل لك رابطا لإعادة تعيين كلمة المرور. سينتهي صلاحية الرابط خلال 24 ساعة.
-    </section>
+    <section>انقر على 'نسيت كلمة المرور' في صفحة تسجيل الدخول، أدخل عنوان بريدك الإلكتروني، وسنرسل لك رابطا لإعادة تعيين كلمة المرور. سينتهي صلاحية الرابط خلال 24 ساعة.</section>
   </details>
   <details>
     <summary>
       هل يمكنني تغيير خطة الاشتراك الخاصة بي؟
       <svg class="lucide lucide-chevron-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6" /></svg>
     </summary>
-    <section>
-      نعم، يمكنك تغيير الخطة من إعدادات الفوترة.
-    </section>
+    <section>نعم، يمكنك تغيير الخطة من إعدادات الفوترة.</section>
   </details>
   <details>
     <summary>
       ما هي طرق الدفع التي تقبلونها؟
       <svg class="lucide lucide-chevron-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6" /></svg>
     </summary>
-    <section>
-      نقبل بطاقات الائتمان الرئيسية والتحويلات البنكية.
-    </section>
+    <section>نقبل بطاقات الائتمان الرئيسية والتحويلات البنكية.</section>
   </details>
 </section>
 </Preview>

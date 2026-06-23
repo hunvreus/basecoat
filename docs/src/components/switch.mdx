@@ -9,11 +9,38 @@
 
 ## Usage
 
+<Steps>
+  <Step title="Include CSS">
+
+Import Tailwind and one full Basecoat style bundle.
+
+```css
+@import "tailwindcss";
+@import "basecoat-css/vega.css";
+```
+
+Or import only the base CSS, Switch component CSS, and one style pack.
+
+```css
+@import "tailwindcss";
+@import "basecoat-css/base.css";
+@import "basecoat-css/components/switch.css";
+@import "basecoat-css/styles/vega.css";
+```
+
+Using CDN or bundler imports? See the [Installation page](/installation).
+
+  </Step>
+  <Step title="Add your switch HTML">
+
 Add `class="input"` and `role="switch"` to a native checkbox. Use a native `<label>` or `aria-label` for accessible naming.
 
 ```html
 <input type="checkbox" role="switch" class="input" />
 ```
+
+  </Step>
+</Steps>
 
 ### HTML structure
 
@@ -70,15 +97,9 @@ Use a wrapping `<label>` when the whole card should toggle the switch.
 Add `disabled` to the switch and `data-disabled="true"` to the field wrapper when the surrounding field should use disabled styling.
 
 <Preview>
-<div class="grid gap-12">
-  <div role="group" class="field" data-orientation="horizontal" data-disabled="true">
-    <input type="checkbox" id="switch-disabled-unchecked" role="switch" class="input" disabled />
-    <label for="switch-disabled-unchecked">Disabled (Unchecked)</label>
-  </div>
-  <div role="group" class="field" data-orientation="horizontal" data-disabled="true">
-    <input type="checkbox" id="switch-disabled-checked" role="switch" class="input" checked disabled />
-    <label for="switch-disabled-checked">Disabled (Checked)</label>
-  </div>
+<div role="group" class="field" data-orientation="horizontal" data-disabled="true">
+  <input type="checkbox" id="switch-disabled-unchecked" role="switch" class="input" disabled />
+  <label for="switch-disabled-unchecked">Disabled</label>
 </div>
 </Preview>
 
@@ -89,8 +110,8 @@ Add `aria-invalid="true"` to the switch and `data-invalid="true"` to the field w
 <Preview class="w-full max-w-sm">
 <div role="group" class="field" data-orientation="horizontal" data-invalid="true">
   <section>
-    <label for="switch-invalid">Enable notifications</label>
-    <p role="alert">You must enable notifications to continue.</p>
+    <label for="switch-invalid">Accept terms and conditions.</label>
+    <p>You must accept the terms and conditions to continue.</p>
   </section>
   <input type="checkbox" id="switch-invalid" role="switch" class="input" aria-invalid="true" />
 </div>

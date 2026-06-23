@@ -1,6 +1,6 @@
 # Native Select
 
-<Preview class="w-full max-w-48">
+<Preview>
 <select class="select w-full" aria-label="Fruit">
   <option value="">Select a fruit</option>
   <option value="apple">Apple</option>
@@ -11,6 +11,30 @@
 </Preview>
 
 ## Usage
+
+<Steps>
+  <Step title="Include CSS">
+
+Import Tailwind and one full Basecoat style bundle.
+
+```css
+@import "tailwindcss";
+@import "basecoat-css/vega.css";
+```
+
+Or import only the base CSS, Native Select component CSS, and one style pack.
+
+```css
+@import "tailwindcss";
+@import "basecoat-css/base.css";
+@import "basecoat-css/components/native-select.css";
+@import "basecoat-css/styles/vega.css";
+```
+
+Using CDN or bundler imports? See the [Installation page](/installation).
+
+  </Step>
+  <Step title="Add your native select HTML">
 
 Add `class="select"` to a native `<select>`. Use standard `<option>` and `<optgroup>` elements.
 
@@ -24,13 +48,16 @@ Add `class="select"` to a native `<select>`. Use standard `<option>` and `<optgr
 </select>
 ```
 
+  </Step>
+</Steps>
+
 Use Native Select for native browser behavior, form integration, and mobile-optimized pickers. Use [Select](/components/select/) for custom option content, multi-select behavior, or JavaScript APIs.
 
 ## Examples
 
 ### Groups
 
-<Preview class="w-full max-w-48">
+<Preview>
 <select class="select w-full" aria-label="Food">
   <option value="">Select food</option>
   <optgroup label="Fruits">
@@ -48,7 +75,7 @@ Use Native Select for native browser behavior, form integration, and mobile-opti
 
 ### Disabled
 
-<Preview class="w-full max-w-48">
+<Preview>
 <select class="select w-full" aria-label="Fruit" disabled>
   <option value="">Select a fruit</option>
   <option value="apple">Apple</option>
@@ -58,7 +85,7 @@ Use Native Select for native browser behavior, form integration, and mobile-opti
 
 ### Invalid
 
-<Preview class="w-full max-w-48">
+<Preview>
 <div role="group" class="field" data-invalid="true">
   <label for="native-select-invalid">Fruit</label>
   <select id="native-select-invalid" class="select w-full" aria-invalid="true" aria-describedby="native-select-invalid-error">
@@ -91,7 +118,7 @@ Use Native Select for native browser behavior, form integration, and mobile-opti
 
 Set `dir="rtl"` on the select or a parent element.
 
-<Preview class="w-full max-w-48">
+<Preview>
 <select dir="rtl" class="select w-full" aria-label="الفاكهة">
   <option value="">اختر فاكهة</option>
   <option value="apple">تفاح</option>

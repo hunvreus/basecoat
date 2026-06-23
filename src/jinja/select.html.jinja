@@ -5,7 +5,7 @@
   @param selected {string|array} [optional] - The initially selected value(s).
   @param name {string} [optional] - The name attribute for the hidden input storing the selected value.
   @param multiple {boolean} [optional] [default=false] - Enables multiple selection mode.
-  @param placeholder {string} [optional] - Placeholder text shown when no options are selected (multiple mode only).
+  @param placeholder {string} [optional] - Placeholder text shown when no option is selected.
   @param close_on_select {boolean} [optional] [default=false] - Closes the popover when selecting an option in multiple mode.
   @param main_attrs {object} [optional] - Additional HTML attributes for the main container div.
   @param trigger_attrs {object} [optional] - Additional HTML attributes for the trigger button.
@@ -62,14 +62,14 @@
   {% endfor %}
 {% endif %}
 
-{% set default_option = (selected_options.items[0] if selected_options.items else first_option.item) %}
+{% set default_option = (selected_options.items[0] if selected_options.items else (none if placeholder else first_option.item)) %}
 {% set labels = [] %}
 {% if multiple and selected_options.items %}
   {% for opt in selected_options.items %}
     {% set labels = labels + [opt.label] %}
   {% endfor %}
 {% endif %}
-{% set default_label = (', '.join(labels) if (multiple and selected_options.items) else ((placeholder or '') if (multiple and not selected_options.items) else (default_option.label if default_option else ''))) %}
+{% set default_label = (', '.join(labels) if (multiple and selected_options.items) else ((placeholder or '') if (placeholder and not selected_options.items) else (default_option.label if default_option else ''))) %}
 {% set selected_payload = namespace(items=[]) %}
 {% if multiple and selected_options.items %}
   {% for opt in selected_options.items %}
@@ -83,7 +83,7 @@
   id="{{ id }}"
   class="select {{ main_attrs.class }}"
   {% if format == "object" %}data-format="object"{% endif %}
-  {% if multiple and placeholder %}data-placeholder="{{ placeholder }}"{% endif %}
+  {% if placeholder %}data-placeholder="{{ placeholder }}"{% endif %}
   {% if multiple and close_on_select %}data-close-on-select="true"{% endif %}
   {% for key, value in main_attrs.items() %}
     {% if key != 'class' %}{{ key }}="{{ value }}"{% endif %}

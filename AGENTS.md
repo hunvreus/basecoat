@@ -80,6 +80,7 @@
 - Keep `Usage` focused on the minimal working snippet and important Basecoat/upstream differences; put variants, states, RTL, and richer patterns under `Examples`.
 - Keep snippets minimal and aligned with current behavior.
 - In HTML snippets, keep text-only elements on one line, such as `<p>Text</p>`; use multiline formatting when the element contains child elements or when line length would hurt readability.
+- In HTML examples, keep icons as single-line `<svg ...>...</svg>` elements, keep simple text-only or inline-formatting elements on one line, and avoid blank separator lines between adjacent markup parts.
 - Document intentional differences from upstream near the relevant example.
 
 ## Validation

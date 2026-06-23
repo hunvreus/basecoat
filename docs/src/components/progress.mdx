@@ -1,12 +1,45 @@
 # Progress
 
-<Preview>
-<div class="progress max-w-sm" role="progressbar" aria-label="Loading" aria-valuenow="66" aria-valuemin="0" aria-valuemax="100">
-  <span style="width: 66%"></span>
+<Preview class="w-full max-w-sm">
+<div id="progress-demo" class="progress" role="progressbar" aria-label="Loading" aria-valuenow="13" aria-valuemin="0" aria-valuemax="100">
+  <span style="width: 13%"></span>
 </div>
+<script>{`
+setTimeout(() => {
+  const progress = document.getElementById("progress-demo");
+  const indicator = progress?.querySelector("span");
+  if (!progress || !indicator) return;
+  progress.setAttribute("aria-valuenow", "66");
+  indicator.style.width = "66%";
+}, 500);
+`}</script>
 </Preview>
 
 ## Usage
+
+<Steps>
+  <Step title="Include CSS">
+
+Import Tailwind and one full Basecoat style bundle.
+
+```css
+@import "tailwindcss";
+@import "basecoat-css/vega.css";
+```
+
+Or import only the base CSS, Progress component CSS, and one style pack.
+
+```css
+@import "tailwindcss";
+@import "basecoat-css/base.css";
+@import "basecoat-css/components/progress.css";
+@import "basecoat-css/styles/vega.css";
+```
+
+Using CDN or bundler imports? See the [Installation page](/installation).
+
+  </Step>
+  <Step title="Add your progress HTML">
 
 Add `class="progress"` and `role="progressbar"` to the root. Use one child `<span>` as the visual indicator.
 
@@ -15,6 +48,9 @@ Add `class="progress"` and `role="progressbar"` to the root. Use one child `<spa
   <span style="width: 66%"></span>
 </div>
 ```
+
+  </Step>
+</Steps>
 
 ### HTML structure
 
@@ -29,8 +65,8 @@ Add `class="progress"` and `role="progressbar"` to the root. Use one child `<spa
 
 ### Label
 
-<Preview>
-<div class="field max-w-sm">
+<Preview class="w-full max-w-sm">
+<div class="field">
   <div class="flex items-center gap-3 text-sm">
     <label id="progress-label">Upload progress</label>
     <output class="ms-auto tabular-nums">66%</output>
@@ -43,10 +79,13 @@ Add `class="progress"` and `role="progressbar"` to the root. Use one child `<spa
 
 ### RTL
 
-Progress uses logical direction. Set `dir="rtl"` on the progress root or a parent to fill from the right.
+Progress supports `dir="rtl"` on the root or a parent.
 
-<Preview>
-<div dir="rtl" class="progress max-w-sm" role="progressbar" aria-label="تحميل" aria-valuenow="66" aria-valuemin="0" aria-valuemax="100">
-  <span style="width: 66%"></span>
+<Preview class="w-full max-w-sm">
+<div class="field w-full" dir="rtl">
+  <label id="progress-upload-rtl" for="progress-upload">تقدم الرفع <span class="ms-auto">٦٦%</span></label>
+  <div id="progress-upload" class="progress" role="progressbar" aria-labelledby="progress-upload-rtl" aria-valuenow="66" aria-valuemin="0" aria-valuemax="100">
+    <span style="width: 66%"></span>
+  </div>
 </div>
 </Preview>

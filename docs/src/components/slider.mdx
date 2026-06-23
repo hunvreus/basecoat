@@ -12,16 +12,58 @@
 
 ## Usage
 
-Use a native `<input type="range" class="input">`. Include `range.js` so Basecoat can keep the filled track in sync with the input value.
+<Steps>
+  <Step title="Include CSS">
+
+Import Tailwind and one full Basecoat style bundle.
+
+```css
+@import "tailwindcss";
+@import "basecoat-css/vega.css";
+```
+
+Or import only the base CSS, Slider component CSS, and one style pack.
+
+```css
+@import "tailwindcss";
+@import "basecoat-css/base.css";
+@import "basecoat-css/components/range.css";
+@import "basecoat-css/styles/vega.css";
+```
+
+Slider uses the Range component CSS.
+
+Using CDN or bundler imports? See the [Installation page](/installation).
+
+  </Step>
+  <Step title="Include JavaScript">
+
+Copy or serve the full Basecoat JavaScript bundle.
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.4/dist/js/basecoat.min.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.4/dist/js/range.min.js" defer></script>
+<script src="/assets/js/all.min.js" defer></script>
 ```
+
+Or copy or serve the Basecoat runtime and Slider script.
+
+```html
+<script src="/assets/js/basecoat.min.js" defer></script>
+<script src="/assets/js/range.min.js" defer></script>
+```
+
+Using CDN or bundler imports? See the [Installation page](/installation).
+
+  </Step>
+  <Step title="Add your slider HTML">
+
+Use a native `<input type="range" class="input">`. Include `range.js` so Basecoat can keep the filled track in sync with the input value.
 
 ```html
 <input type="range" class="input w-full" min="0" max="100" value="50" />
 ```
+
+  </Step>
+</Steps>
 
 ### HTML structure
 

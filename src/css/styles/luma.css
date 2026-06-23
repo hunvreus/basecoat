@@ -767,7 +767,15 @@
   }
 
   :is(.field > input[type='checkbox'][role='switch'], .input[type='checkbox'][role='switch']):before {
-    @apply bg-background dark:not-checked:bg-foreground dark:checked:bg-primary-foreground rounded-full shadow-sm not-dark:bg-clip-padding;
+    @apply bg-background rounded-full shadow-sm not-dark:bg-clip-padding;
+  }
+
+  .dark :is(.field > input[type='checkbox'][role='switch'], .input[type='checkbox'][role='switch']):not(:checked):before {
+    @apply bg-foreground;
+  }
+
+  .dark :is(.field > input[type='checkbox'][role='switch'], .input[type='checkbox'][role='switch']):checked:before {
+    @apply bg-primary-foreground;
   }
 
   :is(.field > input[type='checkbox'][role='switch'], .input[type='checkbox'][role='switch']):not([data-size='sm']):before {
