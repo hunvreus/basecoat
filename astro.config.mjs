@@ -19,6 +19,7 @@ export default defineConfig({
       css: false,
       components: {
         Head: './docs/src/site/StyleHead.astro',
+        SidebarHeader: './docs/src/site/SidebarHeader.astro',
         ContentHeader: './docs/src/site/ContentHeader.astro',
       },
       site: {
