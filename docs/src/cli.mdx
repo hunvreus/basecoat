@@ -4,11 +4,22 @@
 
 Use the CLI to copy Basecoat component assets into your project. It can install CSS, JavaScript, and the matching Nunjucks or Jinja macros for components that ship template helpers.
 
-<CodeGroup defaultTab="npm">
-  <Code title="npm" lang="bash">{`npx basecoat-cli add dialog`}</Code>
-  <Code title="pnpm" lang="bash">{`pnpm dlx basecoat-cli add dialog`}</Code>
-  <Code title="bun" lang="bash">{`bunx basecoat-cli add dialog`}</Code>
-  <Code title="yarn" lang="bash">{`yarn dlx basecoat-cli add dialog`}</Code>
+<CodeGroup>
+```bash title="npm"
+npx basecoat-cli add dialog
+```
+
+```bash title="pnpm"
+pnpm dlx basecoat-cli add dialog
+```
+
+```bash title="bun"
+bunx basecoat-cli add dialog
+```
+
+```bash title="yarn"
+yarn dlx basecoat-cli add dialog
+```
 </CodeGroup>
 
 The CLI asks which template engine you use and where it should copy JavaScript and macro files.
@@ -17,8 +28,9 @@ The CLI asks which template engine you use and where it should copy JavaScript a
 
 Nunjucks and Jinja macros are optional helpers for components with larger HTML structures. They generate the same semantic Basecoat markup shown in the component docs.
 
-<CodeGroup defaultTab="Nunjucks">
-  <Code title="Nunjucks" lang="jinja">{`{% from "select.njk" import select %}
+<CodeGroup>
+```jinja title="Nunjucks"
+{% from "select.njk" import select %}
 {{ select(
   name="fruit",
   items=[
@@ -26,8 +38,11 @@ Nunjucks and Jinja macros are optional helpers for components with larger HTML s
     { value: "banana", label: "Banana" },
     { value: "blueberry", label: "Blueberry" }
   ]
-) }}`}</Code>
-  <Code title="Jinja" lang="jinja">{`{% from "select.html.jinja" import select %}
+) }}
+```
+
+```jinja title="Jinja"
+{% from "select.html.jinja" import select %}
 {{ select(
   name="fruit",
   items=[
@@ -35,7 +50,8 @@ Nunjucks and Jinja macros are optional helpers for components with larger HTML s
     { "value": "banana", "label": "Banana" },
     { "value": "blueberry", "label": "Blueberry" }
   ]
-) }}`}</Code>
+) }}
+```
 </CodeGroup>
 
 ### Public Macros

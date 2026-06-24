@@ -17,6 +17,13 @@ export default defineConfig({
       routeBase: '/',
       style: 'vega',
       css: false,
+      bodyAttrs: {
+        'hx-boost': 'true',
+        'hx-target': '#content',
+        'hx-select': '#content',
+        'hx-swap': 'outerHTML',
+        'hx-push-url': 'true',
+      },
       components: {
         Head: './docs/src/site/StyleHead.astro',
         SidebarHeader: './docs/src/site/SidebarHeader.astro',

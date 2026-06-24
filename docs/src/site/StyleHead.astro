@@ -83,46 +83,29 @@ const styleUrls = {
 
 <script is:inline>
   (() => {
-    const pageKey = (href) => {
+    const key = (href) => {
       const url = new URL(href, window.location.origin);
       return `${url.pathname.replace(/\/$/, "")}${url.search}`;
     };
 
-    const updateSidebarState = () => {
-      const sidebar = document.getElementById("sidebar");
-      if (!sidebar) return;
-
-      const currentKey = pageKey(window.location.href);
-      sidebar.querySelectorAll("a[href]").forEach((link) => {
-        const isCurrent = pageKey(link.href) === currentKey;
+    const syncSidebar = () => {
+      for (const link of document.querySelectorAll("#sidebar a[href]")) {
+        const isCurrent = key(link.href) === key(window.location.href);
         if (isCurrent) {
           link.setAttribute("aria-current", "page");
           link.closest("details")?.setAttribute("open", "");
         } else {
           link.removeAttribute("aria-current");
         }
-      });
+      }
     };
 
-    document.addEventListener("DOMContentLoaded", () => {
-      const content = document.getElementById("content");
-      if (!content) return;
-
-      document.body.setAttribute("hx-boost", "true");
-      document.body.setAttribute("hx-target", "#content");
-      document.body.setAttribute("hx-select", "#content");
-      document.body.setAttribute("hx-swap", "outerHTML");
-      document.body.setAttribute("hx-push-url", "true");
-
-      window.htmx?.process(document.body);
-      updateSidebarState();
-    });
-
+    document.addEventListener("DOMContentLoaded", syncSidebar);
     document.addEventListener("htmx:afterSettle", () => {
       window.basecoat?.initAll?.();
-      updateSidebarState();
+      syncSidebar();
     });
-    window.addEventListener("popstate", updateSidebarState);
+    window.addEventListener("popstate", syncSidebar);
   })();
 </script>
 
