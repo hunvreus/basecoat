@@ -1,6 +1,6 @@
 {
   "name": "basecoat-css",
-  "version": "1.0.0-beta.6",
+  "version": "1.0.0-beta.7",
   "description": "Tailwind CSS for Basecoat components",
   "author": {
     "name": "hunvreus",
@@ -52,6 +52,8 @@
     "./command.min": "./dist/js/command.min.js",
     "./dropdown-menu": "./dist/js/dropdown-menu.js",
     "./dropdown-menu.min": "./dist/js/dropdown-menu.min.js",
+    "./drawer": "./dist/js/drawer.js",
+    "./drawer.min": "./dist/js/drawer.min.js",
     "./popover": "./dist/js/popover.js",
     "./popover.min": "./dist/js/popover.min.js",
     "./range": "./dist/js/range.js",

@@ -2,6 +2,23 @@
 
 ## Unreleased
 
+## [1.0.0-beta.7] - 2026-06-25
+
+### Added
+
+- Added a beta Drawer component with native `<dialog>` markup, side placement, animated close behavior, backdrop and Escape handling, style-pack visuals, JavaScript entrypoints, and docs.
+
+### Changed
+
+- Updated the docs dependency to `reallysimpledocs@^1.0.2`.
+- Marked Chart and Drawer as beta components in the docs navigation.
+- Promoted the Chart docs warning from alpha to beta.
+- Updated installation CDN examples for `basecoat-css@1.0.0-beta.7`.
+
+### Fixed
+
+- Aligned Drawer examples more closely with upstream shadcn/ui while avoiding Chart API coupling in Drawer docs.
+
 ## [1.0.0-beta.6] - 2026-06-23
 
 ### Changed

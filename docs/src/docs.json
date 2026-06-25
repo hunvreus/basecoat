@@ -68,12 +68,17 @@
         {
           "type": "item",
           "slug": "components/chart",
-          "badge": "Alpha"
+          "badge": "Beta"
         },
         "components/checkbox",
         "components/combobox",
         "components/command",
         "components/dialog",
+        {
+          "type": "item",
+          "slug": "components/drawer",
+          "badge": "Beta"
+        },
         "components/dropdown-menu",
         "components/empty",
         "components/field",

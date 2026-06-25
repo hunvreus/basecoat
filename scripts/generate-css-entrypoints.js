@@ -19,6 +19,7 @@ const componentOrder = [
   'command',
   'combobox',
   'dialog',
+  'drawer',
   'dropdown-menu',
   'empty',
   'field',

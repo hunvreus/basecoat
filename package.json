@@ -1,6 +1,6 @@
 {
   "name": "basecoat",
-  "version": "1.0.0-beta.6",
+  "version": "1.0.0-beta.7",
   "description": "shadcn/ui for the rest of us",
   "author": "hunvreus",
   "type": "module",
@@ -49,7 +49,7 @@
     "lucide-static": "^1.17.0",
     "nunjucks": "^3.2.4",
     "prettier": "^3.5.3",
-    "reallysimpledocs": "^1.0.1",
+    "reallysimpledocs": "^1.0.2",
     "tailwindcss": "^4.1.17",
     "terser": "^5.42.0",
     "wrangler": "^4.50.0"

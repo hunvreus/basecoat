@@ -589,6 +589,39 @@
     @apply text-muted-foreground text-sm text-balance md:text-pretty [&_a]:underline [&_a]:underline-offset-3 [&_a:hover]:text-foreground;
   }
 
+  /* Drawer */
+  .drawer::backdrop {
+    @apply bg-black/30 backdrop-blur-sm;
+  }
+
+  .drawer > * {
+    @apply before:bg-popover before:border-border relative bg-transparent p-4 text-sm before:absolute before:inset-2 before:-z-10 before:rounded-4xl before:border before:shadow-xl;
+  }
+
+  .drawer > * > header {
+    @apply gap-0.5 p-4 text-start md:gap-1.5;
+  }
+
+  .drawer:not([data-side]) > * > header,
+  .drawer[data-side='bottom'] > * > header,
+  .drawer[data-side='top'] > * > header {
+    @apply text-center;
+  }
+
+  .drawer > * > footer {
+    @apply gap-2 p-4;
+  }
+
+  .drawer > * > header > h2,
+  .drawer > * > [data-title] {
+    @apply text-lg font-semibold leading-none tracking-tight;
+  }
+
+  .drawer > * > header > p,
+  .drawer > * > [data-description] {
+    @apply text-muted-foreground text-sm;
+  }
+
   /* Dropdown Menu */
   .dropdown-menu > [data-popover] {
     @apply bg-popover text-popover-foreground ring-foreground/5 dark:ring-foreground/10 min-w-48 gap-0 overflow-x-hidden overflow-y-auto rounded-3xl p-1.5 shadow-lg ring-1 duration-100;

@@ -581,6 +581,39 @@
     @apply text-muted-foreground text-xs/relaxed text-balance md:text-pretty [&_a]:underline [&_a]:underline-offset-3 [&_a:hover]:text-foreground;
   }
 
+  /* Drawer */
+  .drawer::backdrop {
+    @apply bg-black/80 backdrop-blur-xs;
+  }
+
+  .drawer > * {
+    @apply before:bg-popover text-popover-foreground before:border-border relative bg-transparent p-2 text-xs/relaxed before:absolute before:inset-2 before:-z-10 before:rounded-xl before:border;
+  }
+
+  .drawer > * > header {
+    @apply gap-1 p-4 text-start;
+  }
+
+  .drawer:not([data-side]) > * > header,
+  .drawer[data-side='bottom'] > * > header,
+  .drawer[data-side='top'] > * > header {
+    @apply text-center;
+  }
+
+  .drawer > * > footer {
+    @apply gap-2 p-4;
+  }
+
+  .drawer > * > header > h2,
+  .drawer > * > [data-title] {
+    @apply text-sm font-medium;
+  }
+
+  .drawer > * > header > p,
+  .drawer > * > [data-description] {
+    @apply text-muted-foreground text-xs/relaxed;
+  }
+
   /* Dropdown Menu */
   .dropdown-menu > [data-popover] {
     @apply bg-popover text-popover-foreground ring-foreground/10 gap-0 overflow-x-hidden overflow-y-auto rounded-lg p-1 shadow-md ring-1 duration-100;

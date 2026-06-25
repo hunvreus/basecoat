@@ -1,0 +1,89 @@
+/* Drawer */
+@layer components {
+  .drawer {
+    @apply fixed inset-0 m-0 size-auto max-h-none max-w-none overflow-visible bg-transparent p-0 text-inherit opacity-0 transition-all transition-discrete duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] backdrop:opacity-0 backdrop:transition-all backdrop:transition-discrete backdrop:duration-500 backdrop:ease-[cubic-bezier(0.32,0.72,0,1)];
+
+    > * {
+      @apply fixed z-50 flex h-auto flex-col transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] will-change-transform outline-hidden;
+    }
+
+    &:not([data-side]) > *,
+    &[data-side='bottom'] > * {
+      @apply inset-x-0 bottom-0 mt-24 max-h-[80vh] translate-y-full;
+    }
+
+    &[data-side='top'] > * {
+      @apply inset-x-0 top-0 mb-24 max-h-[80vh] -translate-y-full;
+    }
+
+    &[data-side='left'] > * {
+      @apply inset-y-0 left-0 w-3/4 max-w-sm -translate-x-full;
+    }
+
+    &[data-side='right'] > * {
+      @apply inset-y-0 right-0 w-3/4 max-w-sm translate-x-full;
+    }
+
+    &[data-closing] {
+      @apply opacity-0 backdrop:opacity-0;
+    }
+
+    &[data-closing]:not([data-side]) > *,
+    &[data-closing][data-side='bottom'] > * {
+      @apply translate-y-full;
+    }
+
+    &[data-closing][data-side='top'] > * {
+      @apply -translate-y-full;
+    }
+
+    &[data-closing][data-side='left'] > * {
+      @apply -translate-x-full;
+    }
+
+    &[data-closing][data-side='right'] > * {
+      @apply translate-x-full;
+    }
+
+    &:is([open], :popover-open):not([data-closing]) {
+      @apply opacity-100 backdrop:opacity-100;
+
+      > * {
+        @apply translate-x-0 translate-y-0;
+      }
+
+      @starting-style {
+        @apply opacity-0 backdrop:opacity-0;
+
+        &:not([data-side]) > *,
+        &[data-side='bottom'] > * {
+          @apply translate-y-full;
+        }
+
+        &[data-side='top'] > * {
+          @apply -translate-y-full;
+        }
+
+        &[data-side='left'] > * {
+          @apply -translate-x-full;
+        }
+
+        &[data-side='right'] > * {
+          @apply translate-x-full;
+        }
+      }
+    }
+
+    > * > header {
+      @apply flex flex-col;
+    }
+
+    > * > section {
+      @apply min-h-0 flex-1 overflow-y-auto;
+    }
+
+    > * > footer {
+      @apply mt-auto flex flex-col;
+    }
+  }
+}

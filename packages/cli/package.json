@@ -1,12 +1,12 @@
 {
   "name": "basecoat-cli",
-  "version": "1.0.0-beta.6",
+  "version": "1.0.0-beta.7",
   "description": "Add Basecoat components to your project",
   "author": "hunvreus",
   "license": "MIT",
   "type": "module",
   "bin": {
-    "basecoat-cli": "./dist/index.js"
+    "basecoat-cli": "dist/index.js"
   },
   "files": [
     "dist/"
