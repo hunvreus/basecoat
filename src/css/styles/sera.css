@@ -361,11 +361,11 @@
 
   /* Command */
   .command {
-    @apply bg-popover text-popover-foreground rounded-none;
+    @apply bg-popover text-popover-foreground rounded-none!;
   }
 
   .command-dialog > .command {
-    @apply bg-popover text-popover-foreground ring-foreground/10 rounded-none shadow-md ring-1 duration-100;
+    @apply bg-popover text-popover-foreground ring-foreground/10 rounded-none! shadow-md ring-1 duration-100;
   }
 
   .command > header {
