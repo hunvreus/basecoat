@@ -1,4 +1,4 @@
-@custom-variant dark (&:is(.dark *));
+@custom-variant dark (&:is(html.dark *));
 
 :root {
   --radius: 0.625rem;

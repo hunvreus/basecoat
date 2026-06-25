@@ -791,11 +791,11 @@
     @apply bg-background rounded-full;
   }
 
-  .dark :is(.field > input[type='checkbox'][role='switch'], .input[type='checkbox'][role='switch']):not(:checked):before {
+  html.dark :is(.field > input[type='checkbox'][role='switch'], .input[type='checkbox'][role='switch']):not(:checked):before {
     @apply bg-foreground;
   }
 
-  .dark :is(.field > input[type='checkbox'][role='switch'], .input[type='checkbox'][role='switch']):checked:before {
+  html.dark :is(.field > input[type='checkbox'][role='switch'], .input[type='checkbox'][role='switch']):checked:before {
     @apply bg-primary-foreground;
   }
 

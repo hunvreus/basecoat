@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Changed
+
+- Narrowed dark-mode generated selectors to `html.dark` to reduce broad style recalculation work.
+
 ## [1.0.0-beta.7] - 2026-06-25
 
 ### Added
