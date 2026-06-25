@@ -587,7 +587,7 @@
   }
 
   .drawer > * {
-    @apply before:bg-popover text-popover-foreground before:border-border relative bg-transparent p-2 text-xs/relaxed before:absolute before:inset-2 before:-z-10 before:rounded-xl before:border;
+    @apply before:bg-popover text-popover-foreground before:border-border bg-transparent p-2 text-xs/relaxed before:absolute before:inset-2 before:-z-10 before:rounded-xl before:border;
   }
 
   .drawer > * > header {

@@ -595,7 +595,7 @@
   }
 
   .drawer > * {
-    @apply before:bg-popover before:border-border relative bg-transparent p-4 text-sm before:absolute before:inset-2 before:-z-10 before:rounded-[min(var(--radius-4xl),24px)] before:border before:shadow-xl;
+    @apply before:bg-popover before:border-border bg-transparent p-4 text-sm before:absolute before:inset-2 before:-z-10 before:rounded-[min(var(--radius-4xl),24px)] before:border before:shadow-xl;
   }
 
   .drawer > * > header {
