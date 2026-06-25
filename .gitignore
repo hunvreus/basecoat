@@ -11,6 +11,6 @@ packages/css/dist/
 npm-debug.log*
 dist/
 docs/generated/
-public/assets/
+public/assets/js/
 
 public/fragments/

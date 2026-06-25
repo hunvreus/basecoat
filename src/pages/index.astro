@@ -10,8 +10,6 @@ import miraUrl from "../../docs/src/assets/styles/style-mira.css?url";
 import lumaUrl from "../../docs/src/assets/styles/style-luma.css?url";
 import seraUrl from "../../docs/src/assets/styles/style-sera.css?url";
 import rheaUrl from "../../docs/src/assets/styles/style-rhea.css?url";
-import socialImage from "../../docs/src/assets/social.png";
-import favicon from "../../docs/src/assets/favicon.svg";
 import ArrowRight from "lucide-static/icons/arrow-right.svg?raw";
 import Activity from "lucide-static/icons/activity.svg?raw";
 import BanknoteArrowUp from "lucide-static/icons/banknote-arrow-up.svg?raw";
@@ -47,6 +45,8 @@ import Sun from "lucide-static/icons/sun.svg?raw";
 
 const title = "All of the shadcn/ui magic, none of the React";
 const description = "A component library built with Tailwind CSS that works with any web stack.";
+const favicon = "/assets/favicon.svg";
+const socialImage = "/assets/social.png";
 const styleUrls = {
   vega: vegaUrl,
   nova: novaUrl,
@@ -184,15 +184,15 @@ const sidebarSections = [
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title} | Basecoat</title>
     <meta name="description" content={description} />
-    <link rel="icon" type="image/svg+xml" href={favicon.src} />
+    <link rel="icon" type="image/svg+xml" href={favicon} />
     <meta property="og:type" content="website" />
     <meta property="og:title" content={`${title} | Basecoat`} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={socialImage.src} />
+    <meta property="og:image" content={socialImage} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={`${title} | Basecoat`} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={socialImage.src} />
+    <meta name="twitter:image" content={socialImage} />
     <script src={basecoatJsUrl} defer></script>
   </head>
   <body class="min-h-dvh overflow-x-clip bg-background text-foreground antialiased">

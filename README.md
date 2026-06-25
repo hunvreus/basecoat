@@ -2,7 +2,7 @@
 
 Basecoat is a Tailwind CSS, vanilla HTML/CSS/JavaScript implementation of the shadcn/ui design system. It provides shadcn-style components for any web stack without React, Radix, or framework runtime dependencies.
 
-![screenshot](docs/src/assets/images/screenshot.png)
+![screenshot](public/assets/images/screenshot.png)
 
 ## Features
 

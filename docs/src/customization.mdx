@@ -45,7 +45,7 @@ Learn more in the [shadcn/ui theming docs](https://ui.shadcn.com/docs/theming).
 
 ## Fonts
 
-Basecoat does not ship web fonts by default. The docs site uses the same font choices as the current shadcn/ui site: [Geist Sans](https://fonts.google.com/specimen/Geist) for sans and heading text, and [Geist Mono](https://fonts.google.com/specimen/Geist+Mono) for monospace text.
+Basecoat does not ship web font files by default. Its font tokens prefer [Geist Sans](https://fonts.google.com/specimen/Geist) and [Geist Mono](https://fonts.google.com/specimen/Geist+Mono) when those fonts are available, then fall back to the full Tailwind default sans and mono stacks.
 
 Install the fonts with Fontsource:
 
@@ -67,9 +67,9 @@ Then import the font files and override the font tokens after Basecoat:
 @import "@fontsource/geist-mono/600.css";
 @import "@fontsource/geist-mono/700.css";
 :root {
-  --font-sans: "Geist Sans", ui-sans-serif, system-ui, sans-serif;
-  --font-heading: "Geist Sans", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-sans: "Geist Sans", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-heading: "Geist Sans", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 ```
 
