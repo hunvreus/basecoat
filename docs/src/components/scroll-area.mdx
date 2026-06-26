@@ -1,23 +1,25 @@
 # Scroll Area
 
 <Preview class="w-full max-w-42">
-<div class="scrollbar h-72 overflow-y-auto rounded-md border p-4">
-  <div class="space-y-4">
-    <h4 class="text-sm leading-none font-medium">Tags</h4>
-    <div class="text-sm">
-      <div class="border-b py-2">v1.2.0-beta.50</div>
-      <div class="border-b py-2">v1.2.0-beta.49</div>
-      <div class="border-b py-2">v1.2.0-beta.48</div>
-      <div class="border-b py-2">v1.2.0-beta.47</div>
-      <div class="border-b py-2">v1.2.0-beta.46</div>
-      <div class="border-b py-2">v1.2.0-beta.45</div>
-      <div class="border-b py-2">v1.2.0-beta.44</div>
-      <div class="border-b py-2">v1.2.0-beta.43</div>
-      <div class="border-b py-2">v1.2.0-beta.42</div>
-      <div class="border-b py-2">v1.2.0-beta.41</div>
-      <div class="border-b py-2">v1.2.0-beta.40</div>
-      <div class="border-b py-2">v1.2.0-beta.39</div>
-      <div class="py-2">v1.2.0-beta.38</div>
+<div class="card h-72 p-0">
+  <div class="scrollbar h-full overflow-y-auto p-4">
+    <div class="space-y-4">
+      <h4 class="text-sm leading-none font-medium">Tags</h4>
+      <div class="text-sm">
+        <div class="border-b py-2">v1.2.0-beta.50</div>
+        <div class="border-b py-2">v1.2.0-beta.49</div>
+        <div class="border-b py-2">v1.2.0-beta.48</div>
+        <div class="border-b py-2">v1.2.0-beta.47</div>
+        <div class="border-b py-2">v1.2.0-beta.46</div>
+        <div class="border-b py-2">v1.2.0-beta.45</div>
+        <div class="border-b py-2">v1.2.0-beta.44</div>
+        <div class="border-b py-2">v1.2.0-beta.43</div>
+        <div class="border-b py-2">v1.2.0-beta.42</div>
+        <div class="border-b py-2">v1.2.0-beta.41</div>
+        <div class="border-b py-2">v1.2.0-beta.40</div>
+        <div class="border-b py-2">v1.2.0-beta.39</div>
+        <div class="py-2">v1.2.0-beta.38</div>
+      </div>
     </div>
   </div>
 </div>
@@ -67,25 +69,29 @@ The utility augments native scrolling for cross-browser styling. It does not wra
 
 ## Examples
 
+These examples use Card as the framed surface so border and radius come from the active style pack.
+
 ### Horizontal
 
 Use `scrollbar` with `overflow-x-auto` for horizontal scrolling.
 
 <Preview>
-<div class="scrollbar w-full max-w-sm overflow-x-auto rounded-md border">
-  <div class="flex w-max gap-4 p-4">
-    <figure class="shrink-0">
-      <div class="aspect-[3/4] w-40 rounded-md bg-muted"></div>
-      <figcaption class="text-muted-foreground pt-2 text-xs">Photo by Ornella Binni</figcaption>
-    </figure>
-    <figure class="shrink-0">
-      <div class="aspect-[3/4] w-40 rounded-md bg-muted"></div>
-      <figcaption class="text-muted-foreground pt-2 text-xs">Photo by Tom Byrom</figcaption>
-    </figure>
-    <figure class="shrink-0">
-      <div class="aspect-[3/4] w-40 rounded-md bg-muted"></div>
-      <figcaption class="text-muted-foreground pt-2 text-xs">Photo by Vladimir Malyavko</figcaption>
-    </figure>
+<div class="card w-full max-w-sm p-0">
+  <div class="scrollbar overflow-x-auto">
+    <div class="flex w-max gap-4 p-4">
+      <figure class="shrink-0">
+        <div class="aspect-[3/4] w-40 rounded-md bg-muted"></div>
+        <figcaption class="text-muted-foreground pt-2 text-xs">Photo by Ornella Binni</figcaption>
+      </figure>
+      <figure class="shrink-0">
+        <div class="aspect-[3/4] w-40 rounded-md bg-muted"></div>
+        <figcaption class="text-muted-foreground pt-2 text-xs">Photo by Tom Byrom</figcaption>
+      </figure>
+      <figure class="shrink-0">
+        <div class="aspect-[3/4] w-40 rounded-md bg-muted"></div>
+        <figcaption class="text-muted-foreground pt-2 text-xs">Photo by Vladimir Malyavko</figcaption>
+      </figure>
+    </div>
   </div>
 </div>
 </Preview>
@@ -95,7 +101,7 @@ Use `scrollbar` with `overflow-x-auto` for horizontal scrolling.
 Use `scrollbar-sm` for compact scrollable regions like menus, listboxes, sidebars, and command results.
 
 <Preview class="w-full max-w-64">
-<div class="w-full max-w-sm rounded-md border p-1">
+<div class="card w-full max-w-sm p-1">
   <div class="px-2 py-1.5 text-xs font-medium text-muted-foreground">Recent files</div>
   <div class="scrollbar-sm max-h-48 overflow-y-auto">
     <button type="button" class="flex w-full items-center justify-between rounded-sm px-2 py-1.5 text-sm hover:bg-accent">
@@ -135,23 +141,25 @@ Use `scrollbar-sm` for compact scrollable regions like menus, listboxes, sidebar
 Set `dir="rtl"` on the scrollable element or one of its ancestors to use right-to-left layout.
 
 <Preview class="w-full max-w-42">
-<div dir="rtl" class="scrollbar h-72 overflow-y-auto rounded-md border p-4">
-  <div class="space-y-4">
-    <h4 class="text-sm leading-none font-medium">العلامات</h4>
-    <div class="text-sm">
-      <div class="border-b py-2">v1.2.0-beta.50</div>
-      <div class="border-b py-2">v1.2.0-beta.49</div>
-      <div class="border-b py-2">v1.2.0-beta.48</div>
-      <div class="border-b py-2">v1.2.0-beta.47</div>
-      <div class="border-b py-2">v1.2.0-beta.46</div>
-      <div class="border-b py-2">v1.2.0-beta.45</div>
-      <div class="border-b py-2">v1.2.0-beta.44</div>
-      <div class="border-b py-2">v1.2.0-beta.43</div>
-      <div class="border-b py-2">v1.2.0-beta.42</div>
-      <div class="border-b py-2">v1.2.0-beta.41</div>
-      <div class="border-b py-2">v1.2.0-beta.40</div>
-      <div class="border-b py-2">v1.2.0-beta.39</div>
-      <div class="py-2">v1.2.0-beta.38</div>
+<div class="card h-72 p-0">
+  <div dir="rtl" class="scrollbar h-full overflow-y-auto p-4">
+    <div class="space-y-4">
+      <h4 class="text-sm leading-none font-medium">العلامات</h4>
+      <div class="text-sm">
+        <div class="border-b py-2">v1.2.0-beta.50</div>
+        <div class="border-b py-2">v1.2.0-beta.49</div>
+        <div class="border-b py-2">v1.2.0-beta.48</div>
+        <div class="border-b py-2">v1.2.0-beta.47</div>
+        <div class="border-b py-2">v1.2.0-beta.46</div>
+        <div class="border-b py-2">v1.2.0-beta.45</div>
+        <div class="border-b py-2">v1.2.0-beta.44</div>
+        <div class="border-b py-2">v1.2.0-beta.43</div>
+        <div class="border-b py-2">v1.2.0-beta.42</div>
+        <div class="border-b py-2">v1.2.0-beta.41</div>
+        <div class="border-b py-2">v1.2.0-beta.40</div>
+        <div class="border-b py-2">v1.2.0-beta.39</div>
+        <div class="py-2">v1.2.0-beta.38</div>
+      </div>
     </div>
   </div>
 </div>

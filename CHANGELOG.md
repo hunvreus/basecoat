@@ -6,6 +6,10 @@
 
 - Narrowed dark-mode generated selectors to `html.dark` to reduce broad style recalculation work.
 
+### Fixed
+
+- Updated Scroll Area examples to use Card surfaces so framed examples inherit style-pack radius and border treatment.
+
 ## [1.0.0-beta.7] - 2026-06-25
 
 ### Added
