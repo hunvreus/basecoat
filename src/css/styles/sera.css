@@ -484,51 +484,51 @@
     @apply mb-1 w-full;
   }
   /* Select */
-  *:not(select).select > button {
+  .select:not(select) > button {
     @apply border-transparent border-b-input bg-transparent focus-visible:border-b-ring aria-invalid:border-b-destructive dark:aria-invalid:border-b-destructive/50 h-10 data-[size=sm]:h-9 gap-1.5 rounded-none border px-0 py-2 text-sm transition-[color,border-color] [&_svg:not([class*='size-'])]:size-3.5;
   }
 
-  *:not(select).select > button > span {
+  .select:not(select) > button > span {
     @apply gap-1.5;
   }
 
-  *:not(select).select > button > svg {
+  .select:not(select) > button > svg {
     @apply text-muted-foreground size-3.5;
   }
 
-  *:not(select).select [data-popover] {
+  .select:not(select) [data-popover] {
     @apply bg-popover text-popover-foreground ring-foreground/10 rounded-none p-1.5 shadow-md ring-1 duration-100;
   }
 
 
 
 
-  *:not(select).select [role='listbox'] {
+  .select:not(select) [role='listbox'] {
     @apply scroll-py-1.5;
   }
 
-  *:not(select).select [role='listbox']:not(:has([data-value]:not([aria-hidden='true'])))::before {
+  .select:not(select) [role='listbox']:not(:has([data-value]:not([aria-hidden='true'])))::before {
     @apply py-6 text-center text-sm;
   }
 
-  *:not(select).select [role='heading'] {
+  .select:not(select) [role='heading'] {
     @apply px-3 py-2 text-xs font-semibold tracking-wider text-muted-foreground uppercase;
   }
 
-  *:not(select).select [role='option'] {
+  .select:not(select) [role='option'] {
     @apply gap-2.5 rounded-none py-2 ps-3 pe-8 text-sm [&_svg:not([class*='size-'])]:size-3.5;
   }
 
-  *:not(select).select [role='option'].active,
-  *:not(select).select [role='option']:focus-visible {
+  .select:not(select) [role='option'].active,
+  .select:not(select) [role='option']:focus-visible {
     @apply bg-muted text-foreground [&_svg]:text-foreground;
   }
 
-  *:not(select).select [role='group'] {
+  .select:not(select) [role='group'] {
     @apply scroll-my-1.5 p-1.5;
   }
 
-  *:not(select).select [role='separator'] {
+  .select:not(select) [role='separator'] {
     @apply bg-border/50 -mx-1.5 my-1.5 h-px;
   }
 

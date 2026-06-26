@@ -472,51 +472,51 @@
     @apply mb-1 w-full;
   }
   /* Select */
-  *:not(select).select > button {
+  .select:not(select) > button {
     @apply border-input bg-input/30 dark:hover:bg-input/50 focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:aria-invalid:border-destructive/50 h-9 data-[size=sm]:h-8 gap-1.5 rounded-4xl border px-3 py-2 text-sm transition-colors focus-visible:ring-[3px] aria-invalid:ring-[3px] [&_svg:not([class*='size-'])]:size-4;
   }
 
-  *:not(select).select > button > span {
+  .select:not(select) > button > span {
     @apply gap-1.5;
   }
 
-  *:not(select).select > button > svg {
+  .select:not(select) > button > svg {
     @apply text-muted-foreground size-4;
   }
 
-  *:not(select).select [data-popover] {
+  .select:not(select) [data-popover] {
     @apply bg-popover text-popover-foreground ring-foreground/5 rounded-2xl p-1 shadow-2xl ring-1 duration-100;
   }
 
 
 
 
-  *:not(select).select [role='listbox'] {
+  .select:not(select) [role='listbox'] {
     @apply scroll-py-1;
   }
 
-  *:not(select).select [role='listbox']:not(:has([data-value]:not([aria-hidden='true'])))::before {
+  .select:not(select) [role='listbox']:not(:has([data-value]:not([aria-hidden='true'])))::before {
     @apply py-6 text-center text-sm;
   }
 
-  *:not(select).select [role='heading'] {
+  .select:not(select) [role='heading'] {
     @apply text-muted-foreground px-3 py-2.5 text-xs;
   }
 
-  *:not(select).select [role='option'] {
+  .select:not(select) [role='option'] {
     @apply gap-2.5 rounded-xl py-2 ps-3 pe-8 text-sm [&_svg:not([class*='size-'])]:size-4;
   }
 
-  *:not(select).select [role='option'].active,
-  *:not(select).select [role='option']:focus-visible {
+  .select:not(select) [role='option'].active,
+  .select:not(select) [role='option']:focus-visible {
     @apply bg-muted text-foreground [&_svg]:text-foreground;
   }
 
-  *:not(select).select [role='group'] {
+  .select:not(select) [role='group'] {
     @apply scroll-my-1 p-1;
   }
 
-  *:not(select).select [role='separator'] {
+  .select:not(select) [role='separator'] {
     @apply bg-border/50 -mx-1 my-1 h-px;
   }
 
