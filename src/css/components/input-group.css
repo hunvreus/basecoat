@@ -1,11 +1,7 @@
 /* Input Group */
 @layer components {
   .input-group {
-    @apply relative isolate flex w-full min-w-0 items-center outline-none;
-
-    &:has(> :is(.dropdown-menu, .popover, .select, .combobox) > [data-popover][aria-hidden='false']) {
-      @apply z-50;
-    }
+    @apply relative flex w-full min-w-0 items-center outline-none;
 
     &[data-orientation='vertical'],
     &:has(> [data-align='block-start']),
