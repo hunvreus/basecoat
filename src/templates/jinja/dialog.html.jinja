@@ -6,7 +6,6 @@
   @param title {string} [optional] - Title text displayed in the dialog header.
   @param description {string} [optional] - Description text displayed below the title.
   @param footer {string} [optional] - HTML content for the dialog footer.
-  @param main_attrs {object} [optional] - Additional HTML attributes for the main container div.
   @param trigger_attrs {object} [optional] - Additional HTML attributes for the trigger button.
   @param dialog_attrs {object} [optional] - Additional HTML attributes for the dialog content container.
   @param header_attrs {object} [optional] - Additional HTML attributes for the dialog header.
@@ -32,6 +31,11 @@
   close_on_overlay_click=true
 ) %}
 {% set id = id or ("dialog-" + (range(100000, 999999) | random | string)) %}
+{% set dialog_attrs = dialog_attrs or {} %}
+{% set trigger_attrs = trigger_attrs or {} %}
+{% set header_attrs = header_attrs or {} %}
+{% set body_attrs = body_attrs or {} %}
+{% set footer_attrs = footer_attrs or {} %}
 {% if trigger %}
 <button
   type="button"
@@ -45,9 +49,10 @@
 {% endif %}
 <dialog
   id="{{ id }}"
-  class="dialog {{ dialog_attrs.class }}"
-  aria-labelledby="{{ id }}-title"
+  class="dialog {{ dialog_attrs.class | default('') }}"
+  {% if title %}aria-labelledby="{{ id }}-title"{% endif %}
   {% if description %}aria-describedby="{{ id }}-description"{% endif %}
+  {% if open %}open{% endif %}
   {% if close_on_overlay_click %}onclick="if (event.target === this) this.close()"{% endif %}
   {% for key, value in dialog_attrs.items() %}
     {% if key != 'class' %}{{ key }}="{{ value }}"{% endif %}
@@ -60,11 +65,11 @@
           {{ key }}="{{ value }}"
         {% endfor %}
       >
-        <h2 id="{{ id }}-title">{{ title | safe }}</h2>
+        {% if title %}<h2 id="{{ id }}-title">{{ title | safe }}</h2>{% endif %}
         {% if description %}<p id="{{ id }}-description">{{ description | safe }}</p>{% endif %}
       </header>
     {% endif %}
-    {% if caller %}
+    {% if caller is defined %}
       <section
         {% for key, value in body_attrs.items() %}
           {{ key }}="{{ value }}"

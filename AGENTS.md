@@ -14,10 +14,11 @@
 
 ## Source Boundaries
 - Do not hand-edit build outputs:
-  - `packages/*/dist/**`
   - `dist/**`
-  - `docs/generated/**`
-  - `public/assets/**`
+  - `templates/**`
+  - `site/dist/**`
+  - `site/public/assets/js/**`
+  - `site/public/fragments/**`
 - Generated source entrypoints such as `src/css/basecoat-vega.css` are committed, but must be regenerated through `scripts/generate-css-entrypoints.js` or build scripts, not manually maintained.
 
 ## Public API and Markup
@@ -64,8 +65,8 @@
   - component CSS: `src/css/components/<component>.css`
   - style packs: `src/css/styles/{vega,nova,maia,lyra,mira,luma,sera,rhea}.css`
   - JS: `src/js/<component>.js` when behavior changes
-  - templates: `src/nunjucks/*.njk` and `src/jinja/*.html.jinja` when markup changes
-  - docs: `docs/src/components/<component>.md`
+  - templates: `src/templates/nunjucks/*.njk` and `src/templates/jinja/*.html.jinja` when markup changes
+  - docs: `site/src/docs/components/<component>.mdx`
 - Map upstream concepts, not implementation details. Do not port `cn-*` selectors directly.
 - Classify differences as `drift fixed`, `intentional`, or `deferred`.
 

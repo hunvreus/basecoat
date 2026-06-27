@@ -14,9 +14,6 @@
     "dist/",
     "templates/"
   ],
-  "workspaces": [
-    "site"
-  ],
   "keywords": [
     "components",
     "component library",
@@ -125,11 +122,13 @@
   },
   "scripts": {
     "build": "node ./scripts/build.js",
-    "docs:build": "npm run build && npm run build --workspace site",
-    "docs:dev": "npm run dev --workspace site",
-    "workers:dev": "npm run build && npm run workers:dev --workspace site",
-    "workers:deploy": "npm run build && npm run workers:deploy --workspace site",
-    "workers:preview": "npm run build && npm run workers:preview --workspace site"
+    "prepack": "node ./scripts/build.js",
+    "docs:build": "npm run build && npm --prefix site run build",
+    "docs:dev": "npm --prefix site run dev",
+    "docs:preview": "npm run docs:build && npm --prefix site run preview",
+    "workers:dev": "npm run build && npm --prefix site run workers:dev",
+    "workers:deploy": "npm run build && npm --prefix site run workers:deploy",
+    "workers:preview": "npm run build && npm --prefix site run workers:preview"
   },
   "devDependencies": {
     "@tailwindcss/cli": "^4.1.17",

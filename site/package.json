@@ -1,0 +1,24 @@
+{
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "astro build",
+    "dev": "astro dev",
+    "preview": "astro preview",
+    "workers:dev": "npm run build && wrangler dev",
+    "workers:deploy": "npm run build && wrangler deploy",
+    "workers:preview": "npm run build && wrangler versions upload"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.3",
+    "basecoat-css": "file:..",
+    "htmx.org": "^2.0.10",
+    "lucide-static": "^1.17.0",
+    "nunjucks": "^3.2.4",
+    "reallysimpledocs": "^1.0.6"
+  },
+  "devDependencies": {
+    "astro": "^6.4.6",
+    "wrangler": "^4.50.0"
+  }
+}

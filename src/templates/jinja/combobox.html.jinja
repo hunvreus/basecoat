@@ -18,6 +18,11 @@
   hidden_input_attrs={}
 ) %}
 {% set id = id or ("combobox-" + (range(100000, 999999) | random | string)) %}
+{% set main_attrs = main_attrs or {} %}
+{% set input_attrs = input_attrs or {} %}
+{% set popover_attrs = popover_attrs or {} %}
+{% set listbox_attrs = listbox_attrs or {} %}
+{% set hidden_input_attrs = hidden_input_attrs or {} %}
 {% set selected_entries = namespace(items=[]) %}
 {% if selected is defined and selected is iterable and selected is not string %}
   {% set selected_values = selected %}
@@ -43,7 +48,7 @@
 
 <div
   id="{{ id }}"
-  class="combobox {{ main_attrs.class }}"
+  class="combobox {{ main_attrs.class | default('') }}"
   {% if format == "object" %}data-format="object"{% endif %}
   {% if multiple and close_on_select %}data-close-on-select="true"{% endif %}
   {% if auto_highlight %}data-auto-highlight="true"{% endif %}
@@ -55,7 +60,7 @@
   <input
     type="text"
     role="combobox"
-    class="{{ input_attrs.class }}"
+    class="{{ input_attrs.class | default('') }}"
     placeholder="{{ placeholder or '' }}"
     autocomplete="off"
     autocorrect="off"
@@ -68,7 +73,7 @@
     {% endfor %}
   >
   {% elif clear %}
-  <div class="input-group {{ input_attrs.class }}">
+  <div class="input-group {{ input_attrs.class | default('') }}">
     <input
       type="text"
       role="combobox"
@@ -103,7 +108,7 @@
     aria-autocomplete="list"
     aria-expanded="false"
     aria-controls="{{ id }}-listbox"
-    class="{{ input_attrs.class }}"
+    class="{{ input_attrs.class | default('') }}"
     {% for key, value in input_attrs.items() %}
       {% if key != 'class' %}{{ key }}="{{ value }}"{% endif %}
     {% endfor %}
@@ -127,7 +132,7 @@
         {{ key }}="{{ value }}"
       {% endfor %}
     >
-      {{ caller() if caller else '' }}
+      {{ caller() if caller is defined else '' }}
     </div>
   </div>
   <input

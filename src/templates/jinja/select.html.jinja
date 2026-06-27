@@ -7,6 +7,7 @@
   @param multiple {boolean} [optional] [default=false] - Enables multiple selection mode.
   @param placeholder {string} [optional] - Placeholder text shown when no option is selected.
   @param close_on_select {boolean} [optional] [default=false] - Closes the popover when selecting an option in multiple mode.
+  @param format {string} [optional] [default="value"] - Hidden input serialization format: "value" or "object".
   @param main_attrs {object} [optional] - Additional HTML attributes for the main container div.
   @param trigger_attrs {object} [optional] - Additional HTML attributes for the trigger button.
   @param popover_attrs {object} [optional] - Additional HTML attributes for the popover content div.
@@ -29,10 +30,15 @@
   input_attrs={}
 ) %}
 {% set id = id or ("select-" + (range(100000, 999999) | random | string)) %}
+{% set main_attrs = main_attrs or {} %}
+{% set trigger_attrs = trigger_attrs or {} %}
+{% set popover_attrs = popover_attrs or {} %}
+{% set listbox_attrs = listbox_attrs or {} %}
+{% set input_attrs = input_attrs or {} %}
 
-{% if selected is defined and selected is iterable and selected is not string %}
+{% if selected is defined and selected is not none and selected is iterable and selected is not string %}
   {% set selectedArray = selected %}
-{% elif selected is defined %}
+{% elif selected is defined and selected is not none %}
   {% set selectedArray = [selected] %}
 {% else %}
   {% set selectedArray = [] %}
@@ -42,8 +48,9 @@
 
 {% if items %}
   {% for item in items %}
-    {% if item.type == "group" %}
-      {% for sub_item in item['items'] %}
+    {% set item_type = item.type | default("item") %}
+    {% if item_type == "group" %}
+      {% for sub_item in item.get('items', []) %}
         {% if not first_option.item %}
           {% set first_option.item = sub_item %}
         {% endif %}
@@ -81,7 +88,7 @@
 
 <div
   id="{{ id }}"
-  class="select {{ main_attrs.class }}"
+  class="select {{ main_attrs.class | default('') }}"
   {% if format == "object" %}data-format="object"{% endif %}
   {% if placeholder %}data-placeholder="{{ placeholder }}"{% endif %}
   {% if multiple and close_on_select %}data-close-on-select="true"{% endif %}
@@ -91,7 +98,7 @@
 >
   <button
     type="button"
-    class="{{ trigger_attrs.class }}"
+    class="{{ trigger_attrs.class | default('') }}"
     id="{{ id }}-trigger"
     aria-haspopup="listbox"
     aria-expanded="false"
@@ -124,7 +131,7 @@
       {% if items %}
         {{ render_select_items(items, selectedArray, id ~ "-items" if id else "items") }}
       {% else %}
-        {{ caller() if caller }}
+        {{ caller() if caller is defined }}
       {% endif %}
     </div>
   </div>
@@ -148,35 +155,36 @@
 {% macro render_select_items(items, selectedArray, parent_id_prefix="items") %}
   {% for item in items %}
     {% set item_id = parent_id_prefix ~ "-" ~ loop.index %}
-    {% if item.type == "group" %}
-      {% set group_label_id = item.id if item.id else "group-label-" + item_id %}
+    {% set item_type = item.type | default("item") %}
+    {% if item_type == "group" %}
+      {% set group_label_id = item.id | default("group-label-" + item_id) %}
       <div
         role="group"
         aria-labelledby="{{ group_label_id }}"
-        {% if item.attrs %}
+        {% if item.attrs is defined and item.attrs %}
           {% for key, value in item.attrs.items() %}
             {{ key }}="{{ value }}"
           {% endfor %}
         {% endif %}
       >
-        <div role="heading" id="{{ group_label_id }}">{{ item.label }}</div>
-        {{ render_select_items(item['items'], selectedArray, item_id) if item['items'] }}
+        <div role="heading" id="{{ group_label_id }}">{{ item.label | default('') }}</div>
+        {{ render_select_items(item.get('items', []), selectedArray, item_id) if item.get('items') }}
       </div>
-    {% elif item.type == "separator" %}
+    {% elif item_type == "separator" %}
       <hr role="separator" />
-    {% elif item.type == "item" or not item.type %}
+    {% elif item_type == "item" %}
       <div
         id="{{ item_id }}"
         role="option"
         {% if item.value is defined and item.value is not none %}data-value="{{ item.value }}"{% endif %}
-        {% if item.value in selectedArray %}aria-selected="true"{% endif %}
-        {% if item.attrs %}
+        {% if item.value is defined and item.value in selectedArray %}aria-selected="true"{% endif %}
+        {% if item.attrs is defined and item.attrs %}
           {% for key, value in item.attrs.items() %}
             {{ key }}="{{ value }}"
           {% endfor %}
         {% endif %}
       >
-        {{ item.label | safe }}
+        {{ item.label | default(item.value | default('')) | safe }}
       </div>
     {% endif %}
   {% endfor %}

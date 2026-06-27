@@ -1,13 +1,13 @@
 ---
-import vegaUrl from "../assets/styles/style-vega.css?url";
-import novaUrl from "../assets/styles/style-nova.css?url";
-import maiaUrl from "../assets/styles/style-maia.css?url";
-import lyraUrl from "../assets/styles/style-lyra.css?url";
-import miraUrl from "../assets/styles/style-mira.css?url";
-import lumaUrl from "../assets/styles/style-luma.css?url";
-import seraUrl from "../assets/styles/style-sera.css?url";
-import rheaUrl from "../assets/styles/style-rhea.css?url";
-import demoInteractionsUrl from "./demo-interactions.js?url";
+import vegaUrl from "../docs/assets/styles/style-vega.css?url";
+import novaUrl from "../docs/assets/styles/style-nova.css?url";
+import maiaUrl from "../docs/assets/styles/style-maia.css?url";
+import lyraUrl from "../docs/assets/styles/style-lyra.css?url";
+import miraUrl from "../docs/assets/styles/style-mira.css?url";
+import lumaUrl from "../docs/assets/styles/style-luma.css?url";
+import seraUrl from "../docs/assets/styles/style-sera.css?url";
+import rheaUrl from "../docs/assets/styles/style-rhea.css?url";
+import demoInteractionsUrl from "../scripts/demo-interactions.js?url";
 import htmxUrl from "htmx.org/dist/htmx.min.js?url";
 
 const styleUrls = {
@@ -104,7 +104,7 @@ const styleUrls = {
     };
     const getStyleHref = (style) => {
       const href = styleUrls[style];
-      return href?.startsWith("/docs/src/assets/styles/") ? `${href}?direct` : href;
+      return href?.startsWith("/src/docs/assets/styles/") ? `${href}?direct` : href;
     };
 
     const style = getStoredStyle();

@@ -1,15 +1,15 @@
 ---
 import { CommandDialog } from "reallysimpledocs/components";
 import basecoatJsUrl from "basecoat-css/all.min?url";
-import StyleHead from "../../docs/src/site/StyleHead.astro";
-import vegaUrl from "../../docs/src/assets/styles/style-vega.css?url";
-import novaUrl from "../../docs/src/assets/styles/style-nova.css?url";
-import maiaUrl from "../../docs/src/assets/styles/style-maia.css?url";
-import lyraUrl from "../../docs/src/assets/styles/style-lyra.css?url";
-import miraUrl from "../../docs/src/assets/styles/style-mira.css?url";
-import lumaUrl from "../../docs/src/assets/styles/style-luma.css?url";
-import seraUrl from "../../docs/src/assets/styles/style-sera.css?url";
-import rheaUrl from "../../docs/src/assets/styles/style-rhea.css?url";
+import StyleHead from "../components/StyleHead.astro";
+import vegaUrl from "../docs/assets/styles/style-vega.css?url";
+import novaUrl from "../docs/assets/styles/style-nova.css?url";
+import maiaUrl from "../docs/assets/styles/style-maia.css?url";
+import lyraUrl from "../docs/assets/styles/style-lyra.css?url";
+import miraUrl from "../docs/assets/styles/style-mira.css?url";
+import lumaUrl from "../docs/assets/styles/style-luma.css?url";
+import seraUrl from "../docs/assets/styles/style-sera.css?url";
+import rheaUrl from "../docs/assets/styles/style-rhea.css?url";
 import ArrowRight from "lucide-static/icons/arrow-right.svg?raw";
 import Activity from "lucide-static/icons/activity.svg?raw";
 import BanknoteArrowUp from "lucide-static/icons/banknote-arrow-up.svg?raw";
@@ -664,7 +664,7 @@ const sidebarSections = [
         };
         const applyStyle = (style) => {
           const nextStyle = Object.prototype.hasOwnProperty.call(styleUrls, style) ? style : "vega";
-          const href = styleUrls[nextStyle]?.startsWith("/docs/src/assets/styles/")
+          const href = styleUrls[nextStyle]?.startsWith("/src/docs/assets/styles/")
             ? `${styleUrls[nextStyle]}?direct`
             : styleUrls[nextStyle];
           const link = getStyleLink();

@@ -31,9 +31,9 @@
 ) %}
 {% set id = id or ("select-" + (range(100000, 999999) | random | string)) %}
 
-{% if selected is defined and selected is iterable and selected is not string %}
+{% if selected is defined and selected is not none and selected is iterable and selected is not string %}
   {% set selectedArray = selected %}
-{% elif selected is defined %}
+{% elif selected is defined and selected is not none %}
   {% set selectedArray = [selected] %}
 {% else %}
   {% set selectedArray = [] %}

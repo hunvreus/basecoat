@@ -4,12 +4,11 @@
 _site/
 
 node_modules/
-packages/css/dist/
 
 # Logs
 npm-debug.log*
 dist/
-docs/generated/
-public/assets/js/
-
-public/fragments/
+templates/
+site/dist/
+site/public/assets/js/
+site/public/fragments/

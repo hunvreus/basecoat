@@ -64,23 +64,22 @@ async function copyDirRecursive(src, dest) {
   }
 }
 
-// Main build function to prepare packages for publishing.
+// Main build function to prepare the package for publishing.
 async function build() {
   console.log('Starting build process...');
   await generateCssEntrypoints();
 
   // Define all necessary paths
-  const cssPackageDir = path.join(projectRoot, 'packages', 'css');
-  const cssDistDir = path.join(cssPackageDir, 'dist'); 
-  const cssTemplatesDir = path.join(cssPackageDir, 'templates');
+  const cssDistDir = path.join(projectRoot, 'dist');
+  const cssTemplatesDir = path.join(projectRoot, 'templates');
 
   const srcDir = path.join(projectRoot, 'src');
   const srcCssDir = path.join(srcDir, 'css');
   const srcCssStylesDir = path.join(srcCssDir, 'styles');
   const srcCssCompatDir = path.join(srcCssDir, 'compat');
   const srcJsDir = path.join(srcDir, 'js');
-  const srcNunjucksDir = path.join(srcDir, 'nunjucks');
-  const srcJinjaDir = path.join(srcDir, 'jinja');
+  const srcNunjucksDir = path.join(srcDir, 'templates', 'nunjucks');
+  const srcJinjaDir = path.join(srcDir, 'templates', 'jinja');
 
   // Clean previous build artifacts
   console.log('Cleaning distribution directories...');
@@ -128,7 +127,7 @@ async function build() {
 
   // Build CSS package
   console.log('Building CSS package...');
-  await ensureDir(cssDistDir); // Ensure dist dir exists for css package
+  await ensureDir(cssDistDir);
   const styles = ['vega', 'nova', 'maia', 'lyra', 'mira', 'luma', 'sera', 'rhea'];
   await fs.copyFile(path.join(srcCssDir, 'basecoat.css'), path.join(cssDistDir, 'basecoat.css'));
   await fs.copyFile(path.join(srcCssDir, 'basecoat.all.css'), path.join(cssDistDir, 'basecoat.all.css'));

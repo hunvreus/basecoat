@@ -15,10 +15,13 @@
   popover_attrs={}
 ) %}
 {% set id = id or ("popover-" + (range(100000, 999999) | random | string)) %}
+{% set main_attrs = main_attrs or {} %}
+{% set trigger_attrs = trigger_attrs or {} %}
+{% set popover_attrs = popover_attrs or {} %}
 
 <div
   id="{{ id }}"
-  class="popover {{ main_attrs.class }}"
+  class="popover {{ main_attrs.class | default('') }}"
   {% for key, value in main_attrs.items() %}
     {% if key != 'class' %}{{ key }}="{{ value }}"{% endif %}
   {% endfor %}
@@ -42,7 +45,7 @@
       {{ key }}="{{ value }}"
     {% endfor %}
   > 
-    {{ caller() if caller }}
+    {{ caller() if caller is defined }}
   </div>
 </div>
 {% endmacro %}

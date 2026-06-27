@@ -26,9 +26,13 @@
   content_attrs={},
   footer_attrs={}
 ) %}
+{% set main_attrs = main_attrs or {} %}
+{% set header_attrs = header_attrs or {} %}
+{% set content_attrs = content_attrs or {} %}
+{% set footer_attrs = footer_attrs or {} %}
 <aside
   {% if id %}id="{{ id }}"{% endif %}
-  class="sidebar {{ main_attrs.class }}"
+  class="sidebar {{ main_attrs.class | default('') }}"
   data-side="{{ side if side else "left" }}"
   aria-hidden="{{ "true" if not open else "false" }}"
   {{ "inert" if not open }}
@@ -57,7 +61,7 @@
       {% if menu %}
         {{ render_sidebar_content(menu, id ~ "-content" if id else "content") }}
       {% else %}
-        {{ caller() if caller }}
+        {{ caller() if caller is defined }}
       {% endif %}
     </section>
 
@@ -84,59 +88,60 @@
   {% for item in items %}
     {% set item_id = parent_id_prefix ~ "-" ~ loop.index %}
 
-    {% if item.type == "group" %}
-      {% set group_label_id = item.id if item.id else "group-label-" + item_id %}
+    {% set item_type = item.type | default("item") %}
+    {% if item_type == "group" %}
+      {% set group_label_id = item.id | default("group-label-" + item_id) %}
       <div
         role="group"
-        {% if item.label %}aria-labelledby="{{ group_label_id }}"{% endif %}
-        {% if item.attrs %}
+        {% if item.label is defined and item.label %}aria-labelledby="{{ group_label_id }}"{% endif %}
+        {% if item.attrs is defined and item.attrs %}
           {% for key, value in item.attrs.items() %}
             {{ key }}="{{ value }}"
           {% endfor %}
         {% endif %}
       >
-        {% if item.label %}
+        {% if item.label is defined and item.label %}
           <h3 id="{{ group_label_id }}">{{ item.label }}</h3>
         {% endif %}
         <ul>
-          {{ render_sidebar_content(item["items"], item_id) if item["items"] }}
+          {{ render_sidebar_content(item.get("items", []), item_id) if item.get("items") }}
         </ul>
       </div>
-    {% elif item.type == "separator" %}
+    {% elif item_type == "separator" %}
       <hr role="separator"/>
-    {% elif item.type == "submenu" %}
+    {% elif item_type == "submenu" %}
       <li>
         <details
           id="submenu-{{ item_id }}"
-          {{ "open" if item.open }}
-          {% if item.attrs %}
+          {{ "open" if item.open is defined and item.open }}
+          {% if item.attrs is defined and item.attrs %}
             {% for key, value in item.attrs.items() %}
               {% if key != "open" %}{{ key }}="{{ value }}"{% endif %}
             {% endfor %}
           {% endif %}
         >
           <summary aria-controls="submenu-{{ item_id }}-content">
-            {% if item.icon %}{{ item.icon | safe }}{% endif %}
-            <span>{{ item.label | safe }}</span>
+            {% if item.icon is defined and item.icon %}{{ item.icon | safe }}{% endif %}
+            <span>{{ item.label | default('') | safe }}</span>
           </summary>
           <ul id="submenu-{{ item_id }}-content">
-            {{ render_sidebar_content(item["items"], item_id) if item["items"] }}
+            {{ render_sidebar_content(item.get("items", []), item_id) if item.get("items") }}
           </ul>
         </details>
       </li>
-    {% elif item.type == "item" or not item.type %}
+    {% elif item_type == "item" %}
        <li>
         <a
-          href="{{ item.url }}"
-          {% if item.current %}aria-current="page"{% endif %}
-          {% if item.attrs %}
+          href="{{ item.url | default('#') }}"
+          {% if item.current is defined and item.current %}aria-current="page"{% endif %}
+          {% if item.attrs is defined and item.attrs %}
             {% for key, value in item.attrs.items() %}
               {% if key != "href" and key != "aria-current" %}{{ key }}="{{ value }}"{% endif %}
             {% endfor %}
           {% endif %}
         >
-          {% if item.icon %}{{ item.icon | safe }}{% endif %}
-          <span>{{ item.label | safe }}</span>
+          {% if item.icon is defined and item.icon %}{{ item.icon | safe }}{% endif %}
+          <span>{{ item.label | default('') | safe }}</span>
         </a>
        </li>
     {% endif %}

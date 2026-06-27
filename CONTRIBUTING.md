@@ -14,7 +14,7 @@
 
 ## Cloudflare Workers deploys
 
-Docs are built with 11ty and deployed as Workers Static Assets from `_site`.
+Docs are built with ReallySimpleDocs/Astro and deployed as Workers Static Assets from `site/dist`.
 
 - Local preview: `npm run workers:dev`
 - Production deploy: `npm run workers:deploy`

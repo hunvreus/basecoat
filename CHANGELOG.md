@@ -11,10 +11,12 @@
 ### Added
 
 - Added Nunjucks and Jinja template files to the `basecoat-css` package.
+- Added a custom docs 404 page for Cloudflare static asset fallback.
 
 ### Changed
 
 - Narrowed dark-mode generated selectors to `html.dark` to reduce broad style recalculation work.
+- Switched the docs site to Astro's sitemap integration and updated `robots.txt` to point at the generated sitemap index.
 
 ### Fixed
 

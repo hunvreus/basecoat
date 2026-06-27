@@ -19,9 +19,12 @@
   menu_attrs={}
 ) %}
 {% set id = id or ("command-" ~ range(100000, 999999) | random | string) %}
+{% set main_attrs = main_attrs or {} %}
+{% set input_attrs = input_attrs or {} %}
+{% set menu_attrs = menu_attrs or {} %}
 <div
   id="{{ id }}"
-  class="command {{ main_attrs.class }}"
+  class="command {{ main_attrs.class | default('') }}"
   aria-label="Command menu"
   {% for key, value in main_attrs.items() %}
     {% if key != 'class' %}{{ key }}="{{ value }}"{% endif %}
@@ -50,7 +53,7 @@
     id="{{ id }}-menu"
     aria-orientation="vertical"
     data-empty="{{ empty_text }}"
-    class="{{ menu_attrs.class }}"
+    class="{{ menu_attrs.class | default('') }}"
     {% for key, value in menu_attrs.items() %}
       {% if key != 'class' %}{{ key }}="{{ value }}"{% endif %}
     {% endfor %}
@@ -58,7 +61,7 @@
     {% if items and items|length > 0 %}
       {{ render_command_items(items, id ~ "-items" if id else "items") }}
     {% else %}
-      {{ caller() if caller }}
+      {{ caller() if caller is defined }}
     {% endif %}
   </div>
 </div>
@@ -87,9 +90,12 @@
   open=False
 ) %}
 {% set id = id or ("command-dialog-" ~ range(100000, 999999) | random | string) %}
+{% set dialog_attrs = dialog_attrs or {} %}
+{% set input_attrs = input_attrs or {} %}
+{% set menu_attrs = menu_attrs or {} %}
 <dialog
   id="{{ id }}"
-  class="command-dialog {{ dialog_attrs.class }}"
+  class="command-dialog {{ dialog_attrs.class | default('') }}"
   aria-label="Command menu"
   {% if open %}open{% endif %}
   onclick="if (event.target === this) this.close()"
@@ -121,7 +127,7 @@
       id="{{ id }}-menu"
       aria-orientation="vertical"
       data-empty="{{ empty_text }}"
-      class="{{ menu_attrs.class }}"
+      class="{{ menu_attrs.class | default('') }}"
       {% for key, value in menu_attrs.items() %}
         {% if key != 'class' %}{{ key }}="{{ value }}"{% endif %}
       {% endfor %}
@@ -129,7 +135,7 @@
       {% if items and items|length > 0 %}
         {{ render_command_items(items, id ~ "-items" if id else "items") }}
       {% else %}
-        {{ caller() if caller }}
+        {{ caller() if caller is defined }}
       {% endif %}
     </div>
   </div>
@@ -149,53 +155,54 @@
 {% macro render_command_items(items, parent_id_prefix="items") %}
   {% for item in items %}
     {% set item_id = parent_id_prefix ~ "-" ~ loop.index %}
-    {% if item.type == "group" %}
-      {% set group_label_id = item.id if item.id else "group-label-" + item_id %}
+    {% set item_type = item.type | default("item") %}
+    {% if item_type == "group" %}
+      {% set group_label_id = item.id | default("group-label-" + item_id) %}
       <div
         role="group"
         aria-labelledby="{{ group_label_id }}"
-        {% if item.attrs %}
+        {% if item.attrs is defined and item.attrs %}
           {% for key, value in item.attrs.items() %}
             {{ key }}="{{ value }}"
           {% endfor %}
         {% endif %}
       >
-        <span role="heading" id="{{ group_label_id }}">{{ item.label | safe }}</span>
-        {{ render_command_items(item['items'], item_id) if item['items'] }}
+        <span role="heading" id="{{ group_label_id }}">{{ item.label | default('') | safe }}</span>
+        {{ render_command_items(item.get('items', []), item_id) if item.get('items') }}
       </div>
-    {% elif item.type == "separator" %}
+    {% elif item_type == "separator" %}
       <hr role="separator" />
-    {% elif item.type == "item" or not item.type %}
-      {% if item.url %}
+    {% elif item_type == "item" %}
+      {% if item.url is defined and item.url %}
         <a
           id="{{ item_id }}"
           href="{{ item.url }}"
           role="menuitem"
-          {% if item.keywords %}data-keywords="{{ item.keywords }}"{% endif %}
-          {% if item.disabled %}aria-disabled="true"{% endif %}
-          {% if item.attrs %}
+          {% if item.keywords is defined and item.keywords %}data-keywords="{{ item.keywords }}"{% endif %}
+          {% if item.disabled is defined and item.disabled %}aria-disabled="true"{% endif %}
+          {% if item.attrs is defined and item.attrs %}
             {% for key, value in item.attrs.items() %}
               {% if key != "href" %}{{ key }}="{{ value }}"{% endif %}
             {% endfor %}
           {% endif %}
         >
-          {% if item.icon %}{{ item.icon | safe }}{% endif %}
-          {{ item.label | safe }}
+          {% if item.icon is defined and item.icon %}{{ item.icon | safe }}{% endif %}
+          {{ item.label | default('') | safe }}
         </a>
       {% else %}
         <div
           id="{{ item_id }}"
           role="menuitem"
-          {% if item.keywords %}data-keywords="{{ item.keywords }}"{% endif %}
-          {% if item.disabled %}aria-disabled="true"{% endif %}
-          {% if item.attrs %}
+          {% if item.keywords is defined and item.keywords %}data-keywords="{{ item.keywords }}"{% endif %}
+          {% if item.disabled is defined and item.disabled %}aria-disabled="true"{% endif %}
+          {% if item.attrs is defined and item.attrs %}
             {% for key, value in item.attrs.items() %}
               {{ key }}="{{ value }}"
             {% endfor %}
           {% endif %}
         >
-          {% if item.icon %}{{ item.icon | safe }}{% endif %}
-          {{ item.label | safe }}
+          {% if item.icon is defined and item.icon %}{{ item.icon | safe }}{% endif %}
+          {{ item.label | default('') | safe }}
         </div>
       {% endif %}
     {% endif %}

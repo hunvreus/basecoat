@@ -27,7 +27,9 @@
     description=item.description,
     action=item.action,
     cancel=item.cancel,
-    attrs=item.attrs
+    duration=item.duration,
+    icon=item.icon,
+    attrs=item.attrs or {}
   ) }}
 {% endfor %}
 {{ caller() if caller }}
@@ -40,14 +42,16 @@
   @param category {string} [optional] [default="success"] - Type of toast ('success', 'error', 'info', 'warning'). Determines icon and ARIA role.
   @param title {string} [optional] - The main title text of the toast.
   @param description {string} [optional] - The secondary description text.
+  @param duration {number} [optional] - Timeout in milliseconds. Use -1 to keep the toast open.
+  @param icon {string} [optional] - Custom icon HTML. Defaults to the category icon.
   @param action {object} [optional] - Defines an action button.
     - label {string}: Button text.
     - onclick {string}: JavaScript code to execute on click.
-    - url {string}: URL for an anchor link button.
+    - href {string}: URL for an anchor link button.
   @param cancel {object} [optional] - Defines a cancel/dismiss button (similar structure to action).
     - label {string}: Button text.
     - onclick {string}: JavaScript code to execute on click.
-    - url {string}: URL for an anchor link button.
+    - href {string}: URL for an anchor link button.
   @param attrs {object} [optional] - Additional HTML attributes for the toast div.
 #}
 {% macro toast(
@@ -56,20 +60,27 @@
   description="",
   action=None,
   cancel=None,
+  duration=None,
+  icon=None,
   attrs={}
 ) %}
+{% set action_href = action.href if action and action.href else (action.url if action and action.url else None) %}
+{% set cancel_href = cancel.href if cancel and cancel.href else (cancel.url if cancel and cancel.url else None) %}
 <div
   class="toast {{ attrs.class }}"
   role="{{ 'alert' if category == 'error' else 'status' }}"
   aria-atomic="true"
   aria-hidden="false"
   {% if category %}data-category="{{ category }}"{% endif %}
+  {% if duration is not none %}data-duration="{{ duration }}"{% endif %}
   {% for key, value in attrs %}
     {% if key != 'class' %}{{ key }}="{{ value }}"{% endif %}
   {% endfor %}
 >
   <div class="toast-content">
-    {% if category in ["error", "success", "info", "warning"] %}
+    {% if icon %}
+      {{ icon | safe }}
+    {% elif category in ["error", "success", "info", "warning"] %}
       {% if category == "success" %}
         <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
       {% elif category == "error" %}
@@ -87,9 +98,9 @@
     {% if action or cancel %}
       <footer>
         {% if action %}
-          {% if action.href %}
+          {% if action_href %}
             <a
-              href="{{ action.href }}"
+              href="{{ action_href }}"
               class="btn" data-size="sm"
               data-toast-action
             >{{ action.label }}</a>
@@ -97,18 +108,27 @@
             <button
               type="button"
               class="btn"
+              data-size="sm"
               data-toast-action
               {% if action.onclick %}onclick="{{ action.onclick }}"{% endif %}
             >{{ action.label }}</button>
           {% endif %}
         {% endif %}
         {% if cancel %}
-          <button
-            type="button"
-            class="btn" data-variant="outline" data-size="sm"
-            data-toast-cancel
-            {% if cancel.onclick %}onclick="{{ cancel.onclick }}"{% endif %}
-          >{{ cancel.label }}</button>
+          {% if cancel_href %}
+            <a
+              href="{{ cancel_href }}"
+              class="btn" data-variant="outline" data-size="sm"
+              data-toast-cancel
+            >{{ cancel.label }}</a>
+          {% else %}
+            <button
+              type="button"
+              class="btn" data-variant="outline" data-size="sm"
+              data-toast-cancel
+              {% if cancel.onclick %}onclick="{{ cancel.onclick }}"{% endif %}
+            >{{ cancel.label }}</button>
+          {% endif %}
         {% endif %}
       </footer>
     {% endif %}

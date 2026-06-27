@@ -1,8 +1,8 @@
 @import "tailwindcss" source(none);
-@source "../../../../docs/src/**/*.{astro,html,js,md,mdx}";
-@source "../../../../src/pages/**/*.{astro,html,js}";
+@source "../../../**/*.{astro,html,js,md,mdx}";
+@source "../../../pages/**/*.{astro,html,js}";
 @reference "tailwindcss";
-@reference "../../../../src/css/base/base.css";
-@import "../../../../src/css/basecoat-vega.css";
+@reference "../../../../../src/css/base/base.css";
+@import "../../../../../src/css/basecoat-vega.css";
 @import "reallysimpledocs/css";
 @import "reallysimpledocs/css/styles/vega";

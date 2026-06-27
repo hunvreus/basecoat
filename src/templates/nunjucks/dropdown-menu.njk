@@ -7,6 +7,7 @@
   @param main_attrs {object} [optional] - Additional HTML attributes for the main container div.
   @param trigger_attrs {object} [optional] - Additional HTML attributes for the trigger button.
   @param popover_attrs {object} [optional] - Additional HTML attributes for the dropdown content div.
+  @param menu_attrs {object} [optional] - Additional HTML attributes for the menu div.
 #}
 {% macro dropdown_menu(
   trigger,
@@ -98,7 +99,7 @@
           href="{{ item.url }}"
           {% if item.attrs %}
             {% for key, value in item.attrs %}
-              {% if key != "url" %} {{ key }}="{{ value }}" {% endif %}
+              {% if key != "href" and key != "url" %} {{ key }}="{{ value }}" {% endif %}
             {% endfor %}
           {% endif %}
         >

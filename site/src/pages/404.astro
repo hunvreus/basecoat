@@ -1,0 +1,53 @@
+---
+import StyleHead from "../components/StyleHead.astro";
+
+const title = "Page not found";
+const description = "This page does not exist, or it may have moved.";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <script is:inline>
+      (() => {
+        const media = matchMedia("(prefers-color-scheme: dark)");
+        const getStoredTheme = () => {
+          try {
+            return localStorage.getItem("themeMode");
+          } catch (_) {
+            return null;
+          }
+        };
+        const syncTheme = () => {
+          const stored = getStoredTheme();
+          document.documentElement.classList.toggle("dark", stored ? stored === "dark" : media.matches);
+        };
+        try {
+          syncTheme();
+        } catch (_) {}
+      })();
+    </script>
+    <StyleHead />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title} | Basecoat</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+  </head>
+  <body class="min-h-dvh bg-background text-foreground antialiased">
+    <main class="grid min-h-dvh place-items-center px-6 py-16">
+      <section class="empty max-w-sm">
+        <header>
+          <h1>Page not found</h1>
+          <p>This page does not exist, or it may have moved. Try the docs or return home.</p>
+        </header>
+        <footer>
+          <div class="flex gap-2">
+            <a class="btn" data-size="sm" href="/">Home</a>
+            <a class="btn" data-variant="outline" data-size="sm" href="/introduction/">Docs</a>
+          </div>
+        </footer>
+      </section>
+    </main>
+  </body>
+</html>
