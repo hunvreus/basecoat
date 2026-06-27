@@ -35,6 +35,7 @@ const componentOrder = [
   'range',
   'select',
   'sidebar',
+  'scrollbar',
   'skeleton',
   'switch',
   'table',

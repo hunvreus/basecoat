@@ -1,0 +1,46 @@
+/* Scrollbar */
+@layer components {
+  .scrollbar {
+    scrollbar-width: auto;
+    scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+
+    &::-webkit-scrollbar {
+      width: var(--scrollbar-width);
+      height: var(--scrollbar-width);
+    }
+    &::-webkit-scrollbar-track {
+      background: var(--scrollbar-track);
+    }
+    &::-webkit-scrollbar-thumb {
+      background: var(--scrollbar-thumb);
+      border-radius: var(--scrollbar-radius);
+      border: 1px solid transparent;
+      background-clip: padding-box;
+    }
+    &::-webkit-scrollbar-corner {
+      background: var(--scrollbar-track);
+    }
+  }
+
+  .scrollbar-sm {
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+
+    &::-webkit-scrollbar {
+      width: var(--scrollbar-sm-width);
+      height: var(--scrollbar-sm-width);
+    }
+    &::-webkit-scrollbar-track {
+      background: var(--scrollbar-track);
+    }
+    &::-webkit-scrollbar-thumb {
+      background: var(--scrollbar-thumb);
+      border-radius: var(--scrollbar-radius);
+      border: 1px solid transparent;
+      background-clip: padding-box;
+    }
+    &::-webkit-scrollbar-corner {
+      background: var(--scrollbar-track);
+    }
+  }
+}

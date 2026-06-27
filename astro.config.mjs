@@ -1,5 +1,8 @@
 import { defineConfig } from 'astro/config';
+import { readFileSync } from 'node:fs';
 import reallySimpleDocs from 'reallysimpledocs/astro';
+
+const packageJson = JSON.parse(readFileSync(new URL('./package.json', import.meta.url), 'utf8'));
 
 export default defineConfig({
   site: process.env.SITE_URL || 'https://basecoatui.com',
@@ -31,7 +34,7 @@ export default defineConfig({
       },
       site: {
         title: 'Basecoat',
-        subtitle: 'v1.0.0-beta.4',
+        subtitle: `v${packageJson.version}`,
         description: 'A components library built with Tailwind CSS that works with any web stack.',
         url: process.env.SITE_URL || 'https://basecoatui.com',
         keywords: ['components', 'component library', 'component system', 'UI', 'UI kit', 'shadcn', 'shadcn/ui', 'Tailwind CSS', 'Tailwind', 'CSS', 'HTML', 'Jinja', 'Nunjucks', 'JS', 'JavaScript', 'vanilla JS', 'vanilla JavaScript'],

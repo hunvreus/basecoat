@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+## [1.0.0] - 2026-06-27
+
+### Breaking Changes
+
+- Removed the CLI workspace from the repo. Template files now ship with `basecoat-css` under `templates/nunjucks` and `templates/jinja`; copy them from `node_modules/basecoat-css/templates/*` instead of installing `basecoat-cli`.
+
+### Added
+
+- Added Nunjucks and Jinja template files to the `basecoat-css` package.
+
 ### Changed
 
 - Narrowed dark-mode generated selectors to `html.dark` to reduce broad style recalculation work.

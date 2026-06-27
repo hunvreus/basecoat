@@ -53,7 +53,7 @@ Install the fonts with Fontsource:
 npm install @fontsource/geist-sans @fontsource/geist-mono
 ```
 
-Then import the font files and override the font tokens after Basecoat:
+Then import the font files. Basecoat's default font tokens already reference Geist with full system fallbacks:
 
 ```css
 @import "tailwindcss";
@@ -66,10 +66,17 @@ Then import the font files and override the font tokens after Basecoat:
 @import "@fontsource/geist-mono/500.css";
 @import "@fontsource/geist-mono/600.css";
 @import "@fontsource/geist-mono/700.css";
+```
+
+If you use different fonts, override the font tokens after Basecoat:
+
+```css
+@import "tailwindcss";
+@import "basecoat-css/sera";
 :root {
-  --font-sans: "Geist Sans", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --font-heading: "Geist Sans", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-heading: "Inter", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 ```
 

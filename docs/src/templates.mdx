@@ -1,60 +1,14 @@
-# CLI
+# Templates
 
-## Install Components
+<Callout title="basecoat-cli is deprecated" icon="triangle-alert">
+Template files now ship with `basecoat-css`. If you previously copied templates with `basecoat-cli`, install `basecoat-css` instead and copy the files from `node_modules/basecoat-css/templates`.
+</Callout>
 
-Use the CLI to copy Basecoat component assets into your project. It can install CSS, JavaScript, and the matching Nunjucks or Jinja macros for components that ship template helpers.
+Basecoat ships optional Nunjucks and Jinja macros for components with larger HTML structures. They generate the same semantic Basecoat markup shown in the component docs, while keeping repeated server-rendered markup easier to maintain.
 
-<CodeGroup>
-```bash title="npm"
-npx basecoat-cli add dialog
-```
-
-```bash title="pnpm"
-pnpm dlx basecoat-cli add dialog
-```
-
-```bash title="bun"
-bunx basecoat-cli add dialog
-```
-
-```bash title="yarn"
-yarn dlx basecoat-cli add dialog
-```
-</CodeGroup>
-
-The CLI asks which template engine you use and where it should copy JavaScript and macro files.
+The templates are versioned with `basecoat-css`, so the generated markup matches the CSS and JavaScript files you installed.
 
 ## Macros
-
-Nunjucks and Jinja macros are optional helpers for components with larger HTML structures. They generate the same semantic Basecoat markup shown in the component docs.
-
-<CodeGroup>
-```jinja title="Nunjucks"
-{% from "select.njk" import select %}
-{{ select(
-  name="fruit",
-  items=[
-    { value: "apple", label: "Apple" },
-    { value: "banana", label: "Banana" },
-    { value: "blueberry", label: "Blueberry" }
-  ]
-) }}
-```
-
-```jinja title="Jinja"
-{% from "select.html.jinja" import select %}
-{{ select(
-  name="fruit",
-  items=[
-    { "value": "apple", "label": "Apple" },
-    { "value": "banana", "label": "Banana" },
-    { "value": "blueberry", "label": "Blueberry" }
-  ]
-) }}
-```
-</CodeGroup>
-
-### Public Macros
 
 | Component | Macro | Nunjucks | Jinja |
 | --- | --- | --- | --- |
@@ -71,6 +25,61 @@ Nunjucks and Jinja macros are optional helpers for components with larger HTML s
 | [Toast](/components/toast) | `toast()` | [toast.njk](https://github.com/hunvreus/basecoat/blob/main/src/nunjucks/toast.njk#L53) | [toast.html.jinja](https://github.com/hunvreus/basecoat/blob/main/src/jinja/toast.html.jinja#L53) |
 
 Some macro files include internal recursive helpers such as `render_select_items()`. Those helpers are implementation details and are not part of the public API.
+
+## Usage
+
+<Steps>
+  <Step>
+    ### Install Templates
+
+    Copy the template folder for your template engine from `basecoat-css`. Templates are meant to be app-owned, so you can edit them after copying.
+
+    <CodeGroup>
+    ```bash title="Nunjucks"
+    cp -R node_modules/basecoat-css/templates/nunjucks ./templates/basecoat
+    ```
+
+    ```bash title="Jinja"
+    cp -R node_modules/basecoat-css/templates/jinja ./templates/basecoat
+    ```
+    </CodeGroup>
+
+    Copy only the files you use if you do not want the full template folder.
+
+    You can also copy the [Nunjucks templates](https://github.com/hunvreus/basecoat/tree/main/src/nunjucks) or [Jinja templates](https://github.com/hunvreus/basecoat/tree/main/src/jinja) from GitHub.
+  </Step>
+  <Step>
+    ### Use a Macro
+
+    Import a macro from the copied template file, then call it with the props for that component.
+
+    <CodeGroup>
+    ```jinja title="Nunjucks"
+    {% from "basecoat/select.njk" import select %}
+    {{ select(
+      name="fruit",
+      items=[
+        { value: "apple", label: "Apple" },
+        { value: "banana", label: "Banana" },
+        { value: "blueberry", label: "Blueberry" }
+      ]
+    ) }}
+    ```
+
+    ```jinja title="Jinja"
+    {% from "basecoat/select.html.jinja" import select %}
+    {{ select(
+      name="fruit",
+      items=[
+        { "value": "apple", "label": "Apple" },
+        { "value": "banana", "label": "Banana" },
+        { "value": "blueberry", "label": "Blueberry" }
+      ]
+    ) }}
+    ```
+    </CodeGroup>
+  </Step>
+</Steps>
 
 ## Macro Reference
 

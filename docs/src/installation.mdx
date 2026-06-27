@@ -1,3 +1,7 @@
+import packageJson from "../../packages/css/package.json"
+
+export const basecoatVersion = packageJson.version
+
 # Installation
 
 Basecoat can be used from a CDN or installed with npm. Use the CDN for simple static pages and prototypes. Use npm when your project already has a Tailwind CSS build step.
@@ -9,32 +13,27 @@ Basecoat can be used from a CDN or installed with npm. Use the CDN for simple st
 
 Use the default bundled stylesheet. It is an alias for the Vega style bundle.
 
-```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.7/dist/basecoat.cdn.min.css" />
-```
+<Code lang="html" code={`<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@${basecoatVersion}/dist/basecoat.cdn.min.css" />`} />
 
 You can also use one of the named style bundles: `vega`, `nova`, `maia`, `lyra`, `mira`, `luma`, `sera`, or `rhea`.
 
-```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.7/dist/basecoat-maia.cdn.min.css" />
-```
+<Code lang="html" code={`<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@${basecoatVersion}/dist/basecoat-maia.cdn.min.css" />`} />
 
   </Step>
   <Step title="Add JavaScript when needed">
 
 Most components are CSS-only. Interactive components need JavaScript. Use the all-in-one bundle when file size is not a concern.
 
-```html
-<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.7/dist/js/all.min.js" defer></script>
-```
+<Code lang="html" code={`<script src="https://cdn.jsdelivr.net/npm/basecoat-css@${basecoatVersion}/dist/js/all.min.js" defer></script>`} />
 
 Or load the Basecoat runtime once, then only the component scripts you use.
 
-```html
-<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.7/dist/js/basecoat.min.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.7/dist/js/dropdown-menu.min.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.0-beta.7/dist/js/select.min.js" defer></script>
-```
+<Code
+  lang="html"
+  code={`<script src="https://cdn.jsdelivr.net/npm/basecoat-css@${basecoatVersion}/dist/js/basecoat.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/basecoat-css@${basecoatVersion}/dist/js/dropdown-menu.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/basecoat-css@${basecoatVersion}/dist/js/select.min.js" defer></script>`}
+/>
 
   </Step>
   <Step title="Use the markup">
@@ -65,7 +64,7 @@ Or load the Basecoat runtime once, then only the component scripts you use.
 | `dist/basecoat-{style}.cdn.min.css` | Standalone CDN stylesheet for `vega`, `nova`, `maia`, `lyra`, `mira`, `luma`, `sera`, or `rhea`. |
 | `dist/basecoat-base.cdn.min.css` | Base tokens, utilities, and component structure without a style pack. |
 | `dist/basecoat-compat.cdn.min.css` | Optional pre-1.0 compatibility aliases. Load after Basecoat. |
-| `dist/js/all.min.js` | All JavaScript components. |
+| `dist/js/all.min.js` | All auto-initialized JavaScript components except Chart. |
 | `dist/js/basecoat.min.js` | Runtime only. Load once before individual component scripts. |
 | `dist/js/{component}.min.js` | Individual JavaScript component file. |
 
@@ -168,6 +167,24 @@ import "basecoat-css/select";
   </Step>
 </Steps>
 
+### Templates
+
+Basecoat ships optional Nunjucks and Jinja templates with `basecoat-css`.
+
+If you previously used `basecoat-cli`, install `basecoat-css` instead and copy the template files from the package.
+
+<CodeGroup>
+```bash title="Nunjucks"
+cp -R node_modules/basecoat-css/templates/nunjucks ./templates/basecoat
+```
+
+```bash title="Jinja"
+cp -R node_modules/basecoat-css/templates/jinja ./templates/basecoat
+```
+</CodeGroup>
+
+See [Templates](/templates) for the available macros and arguments.
+
 ### CSS imports
 
 | Import | Description |
@@ -181,14 +198,23 @@ import "basecoat-css/select";
 | `basecoat-css/all.css` | Full default stylesheet plus all style-pack CSS. Use only when you need every style pack available at runtime. |
 | `basecoat-css/compat` | Optional pre-1.0 compatibility aliases. Load after Basecoat. |
 
+### Template files
+
+| Path | Description |
+| --- | --- |
+| `node_modules/basecoat-css/templates/nunjucks` | Nunjucks templates. |
+| `node_modules/basecoat-css/templates/jinja` | Jinja templates. |
+
 ### JavaScript imports
 
 | Import | Description |
 | --- | --- |
-| `basecoat-css/all` | All JavaScript components. |
+| `basecoat-css/all` | All auto-initialized JavaScript components except Chart. |
 | `basecoat-css/basecoat` | Runtime only. Import once before individual component scripts. |
+| `basecoat-css/chart` | Chart helper. Load Chart.js separately. |
 | `basecoat-css/combobox` | Combobox controller. |
 | `basecoat-css/command` | Command controller. |
+| `basecoat-css/drawer` | Drawer controller. |
 | `basecoat-css/dropdown-menu` | Dropdown Menu controller. |
 | `basecoat-css/popover` | Popover controller. |
 | `basecoat-css/range` | Slider/range controller. |
@@ -201,6 +227,7 @@ import "basecoat-css/select";
 
 These components need JavaScript for behavior:
 
+- [Accordion](/components/accordion)
 - [Combobox](/components/combobox)
 - [Command](/components/command)
 - [Drawer](/components/drawer)
@@ -211,6 +238,8 @@ These components need JavaScript for behavior:
 - [Slider](/components/slider)
 - [Tabs](/components/tabs)
 - [Toast](/components/toast)
+
+Chart uses a separate helper and is not included in `basecoat-css/all`.
 
 Each component page shows the minimal scripts or imports required for that component.
 

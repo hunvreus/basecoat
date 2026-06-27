@@ -24,9 +24,9 @@
       },
         {
           "type": "item",
-          "label": "CLI",
-          "slug": "cli",
-          "icon": "square-terminal"
+          "label": "Templates",
+          "slug": "templates",
+          "icon": "code"
         },
         {
           "type": "item",

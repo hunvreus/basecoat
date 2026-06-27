@@ -4,7 +4,6 @@
 _site/
 
 node_modules/
-packages/cli/dist/
 packages/css/dist/
 
 # Logs

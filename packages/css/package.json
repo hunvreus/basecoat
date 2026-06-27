@@ -1,6 +1,6 @@
 {
   "name": "basecoat-css",
-  "version": "1.0.0-beta.7",
+  "version": "1.0.0",
   "description": "Tailwind CSS for Basecoat components",
   "author": {
     "name": "hunvreus",
@@ -11,7 +11,8 @@
   "main": "dist/basecoat.css",
   "style": "dist/basecoat.css",
   "files": [
-    "dist/"
+    "dist/",
+    "templates/"
   ],
   "keywords": [
     "components",
@@ -36,7 +37,7 @@
   "bugs": {
     "url": "https://github.com/hunvreus/basecoat/issues"
   },
-  "homepage": "https://basecoatui.com/installation#install-npm",
+  "homepage": "https://basecoatui.com/installation#npm",
   "exports": {
     ".": "./dist/basecoat.css",
     "./css": "./dist/basecoat.css",
@@ -44,6 +45,8 @@
     "./basecoat.min": "./dist/js/basecoat.min.js",
     "./all": "./dist/js/all.js",
     "./all.min": "./dist/js/all.min.js",
+    "./accordion": "./dist/js/accordion.js",
+    "./accordion.min": "./dist/js/accordion.min.js",
     "./chart": "./dist/js/chart.js",
     "./chart.min": "./dist/js/chart.min.js",
     "./combobox": "./dist/js/combobox.js",
@@ -114,6 +117,8 @@
     "./styles/style-luma.css": "./dist/styles/luma.css",
     "./styles/style-sera.css": "./dist/styles/sera.css",
     "./styles/style-rhea.css": "./dist/styles/rhea.css",
-    "./styles/style-*.css": "./dist/styles/*.css"
+    "./styles/style-*.css": "./dist/styles/*.css",
+    "./templates/nunjucks/*": "./templates/nunjucks/*",
+    "./templates/jinja/*": "./templates/jinja/*"
   }
 }

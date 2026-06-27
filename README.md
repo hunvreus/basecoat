@@ -9,10 +9,10 @@ Basecoat is a Tailwind CSS, vanilla HTML/CSS/JavaScript implementation of the sh
 - Semantic HTML-first components.
 - Tailwind CSS v4 source files and generated CSS bundles.
 - Small vanilla JavaScript for components that need behavior.
-- Nunjucks and Jinja template macros.
+- Nunjucks and Jinja templates.
 - Standalone style packs: Vega, Nova, Maia, Lyra, Mira, Luma, Sera, and Rhea.
 - Dark mode and CSS variable theming.
-- CDN, npm, and CLI usage paths.
+- CDN, npm, and template usage paths.
 
 ## Documentation
 
@@ -22,15 +22,13 @@ Basecoat is a Tailwind CSS, vanilla HTML/CSS/JavaScript implementation of the sh
 
 ## Packages
 
-This repository publishes two workspace packages:
+This repository publishes one workspace package:
 
-- `basecoat-css`: CSS, JavaScript, Nunjucks macros, and Jinja macros.
-- `basecoat-cli`: CLI for adding Basecoat assets to a project.
+- `basecoat-css`: CSS, JavaScript, Nunjucks templates, and Jinja templates.
 
 Package details live in:
 
 - `packages/css/README.md`
-- `packages/cli/README.md`
 
 ## Install
 
@@ -68,7 +66,6 @@ Use the styleless base plus a custom style file:
 │   ├── generated/        Generated RSD/Astro docs input
 │   └── src/              Documentation source pages, examples, and fragments
 ├── packages/
-│   ├── cli/              Published CLI package
 │   └── css/              Published CSS package
 ├── public/               Generated docs assets for Astro
 ├── scripts/              Build and generation scripts
@@ -79,9 +76,9 @@ Use the styleless base plus a custom style file:
     │   ├── components/   Component structure and behavior hooks
     │   └── styles/       Style-pack visual rules
     ├── docs.css          Documentation-site CSS extension
-    ├── jinja/            Jinja component macros
+    ├── jinja/            Jinja component templates
     ├── js/               Vanilla JS components and registry
-    └── nunjucks/         Nunjucks component macros
+    └── nunjucks/         Nunjucks component templates
 ```
 
 ## CSS Architecture
@@ -123,12 +120,6 @@ npm run build
 
 # Build the static docs site.
 npm run docs:build
-
-# Run the Workers docs site locally.
-npm run workers:dev
-
-# Deploy the Workers docs site.
-npm run workers:deploy
 ```
 
 ## License

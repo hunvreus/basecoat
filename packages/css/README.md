@@ -1,6 +1,6 @@
 # basecoat-css
 
-This package provides the core CSS styles for [Basecoat](https://basecoatui.com), a component library built with Tailwind CSS.
+This package provides CSS, JavaScript helpers, and optional Nunjucks/Jinja templates for [Basecoat](https://basecoatui.com).
 
 ## Prerequisites
 
@@ -32,9 +32,9 @@ To use a specific style, import its standalone bundle instead:
 @import "basecoat-css/sera";
 ```
 
-### (Optional) JavaScript files
+### (Optional) JavaScript
 
-Some interactive components (Dropdown Menu, Popover, Select, Sidebar, Tabs, Toast) need some JavaScript.
+Some interactive components need JavaScript. Import all component scripts, or cherry-pick only the entrypoints you use.
 
 With a build tool (ESM):
 
@@ -61,9 +61,20 @@ Then reference what you need, e.g.
 <script src="/js/basecoat/tabs.min.js" defer></script>
 ```
 
+### (Optional) Templates
+
+Nunjucks and Jinja templates ship with the package. Copy the template folder for your engine into your app:
+
+```bash
+cp -R node_modules/basecoat-css/templates/nunjucks ./templates/basecoat
+cp -R node_modules/basecoat-css/templates/jinja ./templates/basecoat
+```
+
+Templates are meant to be copied into your app and customized.
+
 ## Documentation
 
-For more detailed information on components, their usage, and customization options, please refer to the [Basecoat documentation](https://basecoatui.com/installation/#install-css).
+For more detailed information on components, their usage, and customization options, see the [Basecoat documentation](https://basecoatui.com/installation).
 
 ## License
 

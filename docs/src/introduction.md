@@ -6,7 +6,7 @@
 
 Tailwind won. But building UIs with utility classes alone kinda sucks. Most Tailwind libraries like Flowbite, Preline, or even Tailwind UI ask you to copy walls of unreadable classes into your HTML. It works, but it's messy and hard to maintain.
 
-shadcn/ui avoids that by wrapping everything in React components. It also gives you a killer design system, theme support, a CLI, and a growing ecosystem.
+shadcn/ui avoids that by wrapping everything in React components. It also gives you a killer design system, theme support, and a growing ecosystem.
 
 But maybe you're not using React. Maybe your app is built with plain HTML. Or Flask. Or Rails. Or Laravel. Or Django. Or whatever.
 
@@ -28,7 +28,7 @@ Add a single CSS file to your Tailwind setup. Use components by dropping in simp
 
 Some components (like modals or dropdowns) use a tiny bit of vanilla JavaScript. You can skip it if you don't need interactivity.
 
-There's also a CLI to help you scaffold components and get set up fast.
+Optional Nunjucks and Jinja templates ship with the package for server-rendered apps.
 
 [Check out the installation guide](/installation) to get started.
 
