@@ -1,6 +1,3 @@
-import "../../../src/js/basecoat.js";
-import "../../../src/js/accordion.js";
-
 const initPriceRange = () => {
   const input = document.getElementById("price-range");
   const output = document.getElementById("price-range-output");
@@ -104,3 +101,5 @@ if (document.readyState === "loading") {
 } else {
   initDemos();
 }
+
+document.addEventListener("htmx:afterSettle", initDemos);

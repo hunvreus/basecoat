@@ -1,6 +1,6 @@
 (() => {
   const initSidebar = (sidebarComponent) => {
-    if (sidebarComponent.dataset.sidebarInitialized) return;
+    if (sidebarComponent.dataset.sidebarInitialized && typeof sidebarComponent.toggle === 'function') return;
 
     const initialOpen = sidebarComponent.dataset.initialOpen !== 'false';
     const initialMobileOpen = sidebarComponent.dataset.initialMobileOpen === 'true';
@@ -60,6 +60,6 @@
   };
 
   if (window.basecoat) {
-    window.basecoat.register('sidebar', '.sidebar:not([data-sidebar-initialized])', initSidebar);
+    window.basecoat.register('sidebar', '.sidebar', initSidebar);
   }
 })();
