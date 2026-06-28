@@ -4,6 +4,8 @@ on:
   release:
     types: [published]
 
+permissions: {}
+
 jobs:
   announce:
     if: ${{ !github.event.release.prerelease }}
@@ -21,26 +23,28 @@ jobs:
         run: |
           test -n "$DISCORD_WEBHOOK_URL"
 
-          BODY=$(printf '%s' "$RELEASE_BODY" | head -c 1400)
-
           jq -n \
             --arg repo "$REPO" \
             --arg name "$RELEASE_NAME" \
             --arg tag "$RELEASE_TAG" \
             --arg url "$RELEASE_URL" \
-            --arg body "$BODY" \
-            '{
+            --arg body "$RELEASE_BODY" \
+            '($body | if length > 1500 then .[:1500] + "...\n\n[Read more](" + $url + ")" else . end) as $description |
+            {
               username: "Basecoat Releases",
               allowed_mentions: { parse: [] },
               embeds: [{
                 title: ($repo + " " + $tag),
                 url: $url,
-                description: ((if $name != "" then "**" + $name + "**\n\n" else "" end) + $body),
+                description: ((if $name != "" then "**" + $name + "**\n\n" else "" end) + $description),
                 color: 5793266
               }]
             }' > payload.json
 
           curl --fail-with-body \
+            --retry 3 \
+            --retry-all-errors \
+            --retry-delay 2 \
             -H "Content-Type: application/json" \
             -X POST \
             -d @payload.json \
