@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## [1.0.1] - 2026-06-28
+
 ### Added
 
 - Added explicit `force: true` support to `window.basecoat.init()` and `window.basecoat.initAll()` for rehydrating restored DOM after framework or navigation cache restores.
