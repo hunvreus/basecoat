@@ -1,6 +1,10 @@
 .*
 !.gitignore
 !.gitattributes
+!.github/
+!.github/workflows/
+!.github/workflows/*.yml
+!.github/workflows/*.yaml
 _site/
 
 node_modules/
