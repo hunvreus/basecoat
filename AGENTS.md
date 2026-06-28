@@ -48,6 +48,7 @@
 ## JavaScript
 - JavaScript is behavior only; do not use JS to paper over CSS architecture issues.
 - Register JS components with `window.basecoat.register()` and make initialization idempotent with `data-*-initialized` flags.
+- Component init functions must return before attaching listeners or mutating DOM when the root already has its initialized flag.
 - Keep generated DOM minimal and aligned with documented HTML.
 - Prefer native browser APIs and events.
 - Keep scroll management scoped to component containers. Do not use `scrollIntoView()` when it can scroll the page unexpectedly.

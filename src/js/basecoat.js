@@ -63,9 +63,24 @@
     node.querySelectorAll('[data-basecoat-component]').forEach(destroyComponent);
   };
 
-  const initAllComponents = () => {
+  const uniqueElements = (elements) => Array.from(new Set(elements));
+
+  const getComponentElements = (componentName, selector, force = false) => {
+    const elements = Array.from(document.querySelectorAll(selector));
+    if (force) {
+      elements.push(...document.querySelectorAll(`[data-basecoat-component="${componentName}"]`));
+    }
+    return uniqueElements(elements);
+  };
+
+  const initAllComponents = (options = {}) => {
+    const force = options.force === true;
     Object.entries(componentRegistry).forEach(([name, { selector }]) => {
-      document.querySelectorAll(selector).forEach(element => initComponent(element, name));
+      getComponentElements(name, selector, force).forEach((element) => {
+        const wasComponent = element.dataset?.basecoatComponent === name;
+        if (force) destroyComponent(element);
+        if (wasComponent || element.matches(selector)) initComponent(element, name);
+      });
     });
   };
 
@@ -111,18 +126,23 @@
     observer = null;
   };
 
-  const initRegisteredComponent = (componentName) => {
+  const initRegisteredComponent = (componentName, options = {}) => {
     const component = componentRegistry[componentName];
     if (!component) {
       console.warn(`Component '${componentName}' not found in registry`);
       return;
     }
 
-    document.querySelectorAll(component.selector).forEach(element => initComponent(element, componentName));
+    const force = options.force === true;
+    getComponentElements(componentName, component.selector, force).forEach((element) => {
+      const wasComponent = element.dataset?.basecoatComponent === componentName;
+      if (force) destroyComponent(element);
+      if (wasComponent || element.matches(component.selector)) initComponent(element, componentName);
+    });
   };
 
-  const initAllRegisteredComponents = () => {
-    initAllComponents();
+  const initAllRegisteredComponents = (options = {}) => {
+    initAllComponents(options);
   };
 
   const setTheme = (mode) => {

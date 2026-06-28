@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+### Added
+
+- Added explicit `force: true` support to `window.basecoat.init()` and `window.basecoat.initAll()` for rehydrating restored DOM after framework or navigation cache restores.
+
+### Fixed
+
+- Reinitialized Basecoat components after HTMX history restores in the docs site.
+
 ## [1.0.0] - 2026-06-27
 
 ### Breaking Changes

@@ -243,6 +243,14 @@ Chart uses a separate helper and is not included in `basecoat-css/all`.
 
 Each component page shows the minimal scripts or imports required for that component.
 
+### JavaScript lifecycle
+
+Basecoat initializes registered components on page load and when new DOM is inserted.
+
+Use `window.basecoat.initAll()` after manually inserting HTML that contains Basecoat components. It only initializes components that are not already initialized.
+
+Use `window.basecoat.initAll({ force: true })` when a framework or navigation library restores previously initialized DOM from a cache, such as an HTMX history restore. Force mode destroys existing component instances before reinitializing them, so it also resets transient state such as open menus, focus state, and active interactions.
+
 ## Compatibility
 
 Basecoat 1.0 introduces new style packs and a smaller public API based on root classes plus semantic HTML and documented attributes. If you need pre-1.0 class aliases while migrating, load the compatibility stylesheet after your Basecoat stylesheet.
