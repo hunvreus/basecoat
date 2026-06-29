@@ -1,0 +1,60 @@
+/* Navigation Menu */
+@layer components {
+  .navigation-menu {
+    @apply relative flex w-full justify-center;
+  }
+
+  .navigation-menu-list {
+    @apply m-0 flex list-none flex-wrap items-center gap-1 p-0;
+  }
+
+  .navigation-menu-item {
+    @apply relative;
+  }
+
+  .navigation-menu :is(a, summary).navigation-menu-trigger,
+  .navigation-menu-link {
+    @apply inline-flex h-10 items-center justify-center gap-2 rounded-md px-3 text-sm font-medium outline-hidden transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:ring-[3px] focus-visible:ring-ring/50;
+  }
+
+  .navigation-menu :is(a, summary).navigation-menu-trigger {
+    @apply cursor-pointer select-none;
+  }
+
+  .navigation-menu-trigger::after {
+    @apply ms-1 block size-3.5 bg-current content-[''] transition-transform ease-linear rtl:rotate-180;
+    @apply mask-[image:var(--chevron-down-icon)] mask-size-[1rem] mask-no-repeat mask-center;
+  }
+
+  .navigation-menu-item > details[open] > .navigation-menu-trigger {
+    @apply bg-accent text-accent-foreground;
+  }
+
+  .navigation-menu-item > details > .navigation-menu-content {
+    @apply absolute start-0 top-full z-50 mt-2 hidden min-w-64 rounded-lg border bg-popover p-2 shadow-md;
+  }
+
+  .navigation-menu-item > details[open] > .navigation-menu-content {
+    @apply block;
+  }
+
+  .navigation-menu-content > ul {
+    @apply m-0 grid list-none gap-1 p-0;
+  }
+
+  .navigation-menu-content .navigation-menu-link {
+    @apply h-auto w-full items-start justify-start rounded-md px-3 py-2 text-start;
+  }
+
+  .navigation-menu-content .navigation-menu-link > span {
+    @apply block;
+  }
+
+  .navigation-menu-content [data-description] {
+    @apply block text-xs font-normal text-muted-foreground;
+  }
+
+  .navigation-menu [data-rtl-flip] {
+    @apply rtl:rotate-180;
+  }
+}

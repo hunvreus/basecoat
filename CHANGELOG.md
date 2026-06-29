@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Added
+
+- Added a new Navigation Menu component with semantic `<nav>`/`<details>` markup, docs, and server-rendered template macros.
+
 ## [1.0.1] - 2026-06-28
 
 ### Added

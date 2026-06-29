@@ -29,6 +29,7 @@ const componentOrder = [
   'kbd',
   'label',
   'native-select',
+  'navigation-menu',
   'popover',
   'progress',
   'radio',

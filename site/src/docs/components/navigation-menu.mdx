@@ -1,0 +1,186 @@
+# Navigation Menu
+
+<Preview>
+<nav class="navigation-menu" aria-label="Primary navigation">
+  <ul class="navigation-menu-list">
+    <li class="navigation-menu-item">
+      <a class="navigation-menu-link" href="#getting-started">Getting started</a>
+    </li>
+    <li class="navigation-menu-item">
+      <details open>
+        <summary class="navigation-menu-trigger">Components</summary>
+        <div class="navigation-menu-content">
+          <p data-description>Semantic HTML first, with native disclosure for dropdown content.</p>
+          <ul>
+            <li class="navigation-menu-item">
+              <a class="navigation-menu-link" href="#button">
+                <span>Button</span>
+                <span data-description>Flexible button styles and sizes</span>
+              </a>
+            </li>
+            <li class="navigation-menu-item">
+              <a class="navigation-menu-link" href="#dropdown-menu">
+                <span>Dropdown Menu</span>
+                <span data-description>Menu actions and checked items</span>
+              </a>
+            </li>
+            <li class="navigation-menu-item">
+              <a class="navigation-menu-link" href="#sidebar">
+                <span>Sidebar</span>
+                <span data-description>Vertical navigation with nested sections</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </details>
+    </li>
+    <li class="navigation-menu-item">
+      <a class="navigation-menu-link" href="#docs" aria-current="page">Docs</a>
+    </li>
+  </ul>
+</nav>
+</Preview>
+
+## Usage
+
+<Callout title="Template macros available" icon="code" action={{ label: "More", href: "/templates#navigation_menu" }}>
+  This component ships a `navigation_menu()` macro for Jinja and Nunjucks.
+</Callout>
+
+Basecoat navigation menus are semantic HTML navigation lists with native `<details>` dropdowns. That keeps the component framework-free and avoids the portal/state-machine layer used by shadcn/ui.
+
+<Steps>
+  <Step title="Include CSS">
+
+Import Tailwind and one full Basecoat style bundle.
+
+```css
+@import "tailwindcss";
+@import "basecoat-css/vega.css";
+```
+
+Or import only the base CSS, Navigation Menu component CSS, and one style pack.
+
+```css
+@import "tailwindcss";
+@import "basecoat-css/base.css";
+@import "basecoat-css/components/navigation-menu.css";
+@import "basecoat-css/styles/vega.css";
+```
+
+Using CDN or bundler imports? See the [Installation page](/installation).
+
+  </Step>
+  <Step title="Add your navigation menu HTML">
+```html
+<nav class="navigation-menu" aria-label="Primary navigation">
+  <ul class="navigation-menu-list">
+    <li class="navigation-menu-item">
+      <a class="navigation-menu-link" href="#">Home</a>
+    </li>
+    <li class="navigation-menu-item">
+      <details>
+        <summary class="navigation-menu-trigger">Components</summary>
+        <div class="navigation-menu-content">
+          <ul>
+            <li class="navigation-menu-item">
+              <a class="navigation-menu-link" href="#">
+                <span>Button</span>
+                <span data-description>Flexible button styles and sizes</span>
+              </a>
+            </li>
+            <li class="navigation-menu-item">
+              <a class="navigation-menu-link" href="#">
+                <span>Dropdown Menu</span>
+                <span data-description>Menu actions and checked items</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </details>
+    </li>
+    <li class="navigation-menu-item">
+      <a class="navigation-menu-link" href="#" aria-current="page">Docs</a>
+    </li>
+  </ul>
+</nav>
+```
+  </Step>
+</Steps>
+
+### HTML structure
+
+Basecoat maps shadcn/ui's `NavigationMenu` composition to regular HTML landmarks and native disclosure elements.
+
+<dl>
+  <dt><code>&lt;nav class="navigation-menu"&gt;</code></dt>
+  <dd>Navigation landmark root. Use <code>aria-label</code> to describe the menu.</dd>
+  <dt><code>&lt;ul class="navigation-menu-list"&gt;</code></dt>
+  <dd>Horizontal list of top-level menu items.</dd>
+  <dt><code>&lt;li class="navigation-menu-item"&gt;</code></dt>
+  <dd>Wraps each top-level item or dropdown.</dd>
+  <dt><code>&lt;a class="navigation-menu-link"&gt;</code></dt>
+  <dd>Top-level or panel link. Use <code>aria-current="page"</code> for the active destination.</dd>
+  <dt><code>&lt;details&gt;</code> / <code>&lt;summary class="navigation-menu-trigger"&gt;</code></dt>
+  <dd>Native dropdown trigger. Keep the panel content directly inside the same <code>&lt;details&gt;</code> element.</dd>
+  <dt><code>&lt;div class="navigation-menu-content"&gt;</code></dt>
+  <dd>Dropdown panel. Put a nested <code>&lt;ul&gt;</code> inside it for structured links.</dd>
+</dl>
+
+<Callout type="warning" title="Differences with shadcn/ui" icon="triangle-alert">
+  Basecoat does not port the Radix portal, indicator, or active-state wiring. Dropdowns use native `<details>` and render inline in the document flow so the markup stays portable across server-rendered stacks.
+</Callout>
+
+## Examples
+
+### Link row
+
+```html
+<nav class="navigation-menu" aria-label="Docs sections">
+  <ul class="navigation-menu-list">
+    <li class="navigation-menu-item"><a class="navigation-menu-link" href="#intro">Intro</a></li>
+    <li class="navigation-menu-item"><a class="navigation-menu-link" href="#install">Install</a></li>
+    <li class="navigation-menu-item"><a class="navigation-menu-link" href="#usage" aria-current="page">Usage</a></li>
+  </ul>
+</nav>
+```
+
+### Dropdown panel
+
+```html
+<nav class="navigation-menu" aria-label="Primary navigation">
+  <ul class="navigation-menu-list">
+    <li class="navigation-menu-item">
+      <details open>
+        <summary class="navigation-menu-trigger">Components</summary>
+        <div class="navigation-menu-content">
+          <ul>
+            <li class="navigation-menu-item"><a class="navigation-menu-link" href="#button"><span>Button</span><span data-description>Sizes, variants, and icon buttons</span></a></li>
+            <li class="navigation-menu-item"><a class="navigation-menu-link" href="#dropdown-menu"><span>Dropdown Menu</span><span data-description>Actions, groups, and separators</span></a></li>
+          </ul>
+        </div>
+      </details>
+    </li>
+  </ul>
+</nav>
+```
+
+### Template macro
+
+```jinja
+{% from "basecoat/navigation-menu.njk" import navigation_menu %}
+{{ navigation_menu(
+  label="Primary navigation",
+  items=[
+    { "label": "Home", "url": "/" },
+    {
+      "label": "Components",
+      "description": "Browse the available component docs.",
+      "items": [
+        { "label": "Button", "url": "/components/button" },
+        { "label": "Dropdown Menu", "url": "/components/dropdown-menu" }
+      ]
+    }
+  ]
+) }}
+```

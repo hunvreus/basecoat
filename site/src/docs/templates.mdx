@@ -17,6 +17,7 @@ The templates are versioned with `basecoat-css`, so the generated markup matches
 | [Command](/components/command) | `command_dialog()` | [command.njk](https://github.com/hunvreus/basecoat/blob/main/src/templates/nunjucks/command.njk) | [command.html.jinja](https://github.com/hunvreus/basecoat/blob/main/src/templates/jinja/command.html.jinja) |
 | [Dialog](/components/dialog) | `dialog()` | [dialog.njk](https://github.com/hunvreus/basecoat/blob/main/src/templates/nunjucks/dialog.njk) | [dialog.html.jinja](https://github.com/hunvreus/basecoat/blob/main/src/templates/jinja/dialog.html.jinja) |
 | [Dropdown Menu](/components/dropdown-menu) | `dropdown_menu()` | [dropdown-menu.njk](https://github.com/hunvreus/basecoat/blob/main/src/templates/nunjucks/dropdown-menu.njk) | [dropdown-menu.html.jinja](https://github.com/hunvreus/basecoat/blob/main/src/templates/jinja/dropdown-menu.html.jinja) |
+| [Navigation Menu](/components/navigation-menu) | `navigation_menu()` | [navigation-menu.njk](https://github.com/hunvreus/basecoat/blob/main/src/templates/nunjucks/navigation-menu.njk) | [navigation-menu.html.jinja](https://github.com/hunvreus/basecoat/blob/main/src/templates/jinja/navigation-menu.html.jinja) |
 | [Popover](/components/popover) | `popover()` | [popover.njk](https://github.com/hunvreus/basecoat/blob/main/src/templates/nunjucks/popover.njk) | [popover.html.jinja](https://github.com/hunvreus/basecoat/blob/main/src/templates/jinja/popover.html.jinja) |
 | [Select](/components/select) | `select()` | [select.njk](https://github.com/hunvreus/basecoat/blob/main/src/templates/nunjucks/select.njk) | [select.html.jinja](https://github.com/hunvreus/basecoat/blob/main/src/templates/jinja/select.html.jinja) |
 | [Sidebar](/components/sidebar) | `sidebar()` | [sidebar.njk](https://github.com/hunvreus/basecoat/blob/main/src/templates/nunjucks/sidebar.njk) | [sidebar.html.jinja](https://github.com/hunvreus/basecoat/blob/main/src/templates/jinja/sidebar.html.jinja) |
@@ -156,6 +157,20 @@ Some macro files include internal recursive helpers such as `render_select_items
 | `trigger_attrs` | `object` | `{}` | Extra attributes for the trigger button. |
 | `popover_attrs` | `object` | `{}` | Extra attributes for the popover element. |
 | `menu_attrs` | `object` | `{}` | Extra attributes for the menu element. |
+
+### `navigation_menu()`
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `id` | `string` | generated | Unique navigation menu id. |
+| `label` | `string` | `"Primary navigation"` | Navigation landmark label. |
+| `items` | `array` | `None` / `none` | Optional structured item data. Use caller content when omitted. |
+| `main_attrs` | `object` | `{}` | Extra attributes for the `.navigation-menu` root. |
+| `list_attrs` | `object` | `{}` | Extra attributes for the `.navigation-menu-list` element. |
+| `item_attrs` | `object` | `{}` | Extra attributes for each list item. |
+| `trigger_attrs` | `object` | `{}` | Extra attributes for dropdown triggers. |
+| `content_attrs` | `object` | `{}` | Extra attributes for dropdown content panels. |
+| `link_attrs` | `object` | `{}` | Extra attributes for links. |
 
 ### `popover()`
 
