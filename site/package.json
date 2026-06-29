@@ -15,7 +15,7 @@
     "htmx.org": "^2.0.10",
     "lucide-static": "^1.17.0",
     "nunjucks": "^3.2.4",
-    "reallysimpledocs": "^1.0.6"
+    "reallysimpledocs": "^1.0.11"
   },
   "devDependencies": {
     "astro": "^6.4.6",
