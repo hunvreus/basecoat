@@ -33,6 +33,7 @@ const componentOrder = [
   'progress',
   'radio',
   'range',
+  'resizable',
   'select',
   'sidebar',
   'scrollbar',

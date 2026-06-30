@@ -60,6 +60,8 @@
     "./popover.min": "./dist/js/popover.min.js",
     "./range": "./dist/js/range.js",
     "./range.min": "./dist/js/range.min.js",
+    "./resizable": "./dist/js/resizable.js",
+    "./resizable.min": "./dist/js/resizable.min.js",
     "./select": "./dist/js/select.js",
     "./select.min": "./dist/js/select.min.js",
     "./sidebar": "./dist/js/sidebar.js",

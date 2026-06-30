@@ -1,0 +1,57 @@
+/* Resizable */
+@layer components {
+  .resizable {
+    @apply flex min-h-0 min-w-0 overflow-hidden;
+
+    &[data-orientation='horizontal'] {
+      @apply flex-row;
+    }
+
+    &[data-orientation='vertical'] {
+      @apply flex-col;
+    }
+
+    > :not([role='separator']) {
+      @apply min-h-0 min-w-0 overflow-auto;
+      flex: 0 0 var(--resizable-size, auto);
+    }
+
+    > [role='separator'] {
+      @apply relative flex-none select-none touch-none outline-none transition-colors duration-150;
+
+      &:focus-visible {
+        @apply ring-2 ring-ring ring-offset-2 ring-offset-background;
+      }
+
+      &:hover::before,
+      &:focus-visible::before,
+      &[data-active='true']::before {
+        @apply bg-foreground/70;
+      }
+
+      &[aria-orientation='vertical'] {
+        @apply h-full w-4 cursor-col-resize;
+
+        &::before {
+          @apply absolute inset-y-0 left-1/2 w-px -translate-x-1/2 bg-border content-[''];
+        }
+
+        &::after {
+          @apply absolute left-1/2 top-1/2 h-8 w-1 -translate-x-1/2 -translate-y-1/2 rounded-full bg-border content-[''];
+        }
+      }
+
+      &[aria-orientation='horizontal'] {
+        @apply h-4 w-full cursor-row-resize;
+
+        &::before {
+          @apply absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-border content-[''];
+        }
+
+        &::after {
+          @apply absolute left-1/2 top-1/2 h-1 w-8 -translate-x-1/2 -translate-y-1/2 rounded-full bg-border content-[''];
+        }
+      }
+    }
+  }
+}

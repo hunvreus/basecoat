@@ -1,0 +1,162 @@
+# Resizable
+
+<Preview class="w-full max-w-3xl">
+<div class="resizable h-64 w-full rounded-lg border" data-orientation="horizontal">
+  <section class="flex min-w-0 flex-col gap-2 border-r p-4">
+    <h3 class="text-sm font-medium">Sidebar</h3>
+    <p class="text-sm text-muted-foreground">Drag the handle to change panel sizes.</p>
+  </section>
+  <div role="separator" tabindex="0" aria-label="Resize sidebar and content panels"></div>
+  <section class="flex min-w-0 flex-col gap-2 p-4">
+    <h3 class="text-sm font-medium">Content</h3>
+    <p class="text-sm text-muted-foreground">Panels use percentage sizes and stay within their min/max limits.</p>
+  </section>
+</div>
+</Preview>
+
+## Usage
+
+<Callout title="Template macros available" icon="code" action={{ label: "More", href: "/templates#resizable" }}>
+  This component ships a `resizable()` macro for Jinja and Nunjucks.
+</Callout>
+
+Resizable uses a root `.resizable` container, direct child panels, and focusable separator handles. Basecoat handles pointer dragging, keyboard resizing, and visible handle styling.
+
+<Steps>
+  <Step title="Include CSS">
+
+Import Tailwind and one full Basecoat style bundle.
+
+```css
+@import "tailwindcss";
+@import "basecoat-css/vega.css";
+```
+
+Or import only the base CSS, Resizable component CSS, and one style pack.
+
+```css
+@import "tailwindcss";
+@import "basecoat-css/base.css";
+@import "basecoat-css/components/resizable.css";
+@import "basecoat-css/styles/vega.css";
+```
+
+Using CDN or bundler imports? See the [Installation page](/installation).
+
+  </Step>
+  <Step title="Include JavaScript">
+
+Copy or serve the full Basecoat JavaScript bundle.
+
+```html
+<script src="/assets/js/all.min.js" defer></script>
+```
+
+Or copy or serve the Basecoat runtime and Resizable script.
+
+```html
+<script src="/assets/js/basecoat.min.js" defer></script>
+<script src="/assets/js/resizable.min.js" defer></script>
+```
+
+Using CDN or bundler imports? See the [Installation page](/installation).
+
+  </Step>
+  <Step title="Add your resizable HTML">
+
+Use a `.resizable` root with direct child panels and one or more focusable `role="separator"` handles between them. Set `data-orientation="vertical"` for a top/bottom split.
+
+```html
+<div class="resizable h-64 w-full rounded-lg border" data-orientation="horizontal">
+  <section class="flex min-w-0 flex-col gap-2 border-r p-4" style="--resizable-size: 30%">
+    <h3 class="text-sm font-medium">Sidebar</h3>
+    <p class="text-sm text-muted-foreground">Drag the handle to change panel sizes.</p>
+  </section>
+  <div role="separator" tabindex="0" aria-label="Resize sidebar and content panels"></div>
+  <section class="flex min-w-0 flex-col gap-2 p-4" style="--resizable-size: 70%">
+    <h3 class="text-sm font-medium">Content</h3>
+    <p class="text-sm text-muted-foreground">Panels use percentage sizes and stay within their min/max limits.</p>
+  </section>
+</div>
+```
+
+  </Step>
+</Steps>
+
+### HTML structure
+
+<dl>
+  <dt><code>&lt;div class="resizable" data-orientation="horizontal|vertical"&gt;</code></dt>
+  <dd>
+    Resizable root. Direct children that are not separators become panels. Each panel can set <code>--resizable-size</code> or <code>data-size</code> to define its initial percentage width or height.
+    <dl>
+      <dt><code>&lt;section&gt;</code> or other direct child panel</dt>
+      <dd>Panel content. Add <code>data-min-size</code> and <code>data-max-size</code> to constrain resizing, both expressed as percentages.</dd>
+      <dt><code>&lt;div role="separator" tabindex="0" aria-orientation="vertical|horizontal"&gt;</code></dt>
+      <dd>Focusable resize handle between panels. Use <code>aria-label</code> to describe the adjacent panes when the handle is not self-explanatory.</dd>
+    </dl>
+  </dd>
+</dl>
+
+Basecoat intentionally maps Resizable to plain HTML panels and separators instead of shadcn/ui's React panel primitives. The behavior is the same idea, but the surface is smaller and easier to use in non-React stacks.
+
+### JavaScript API
+
+| API | Type | Description |
+| --- | --- | --- |
+| `resizable.refresh()` | Method | Re-reads the panel and separator structure after direct children change. |
+
+## Examples
+
+### Vertical
+
+<Preview class="w-full max-w-3xl">
+<div class="resizable h-64 w-full rounded-lg border" data-orientation="vertical">
+  <section class="flex min-h-0 flex-col gap-2 border-b p-4" style="--resizable-size: 35%">
+    <h3 class="text-sm font-medium">Header</h3>
+    <p class="text-sm text-muted-foreground">This split resizes vertically.</p>
+  </section>
+  <div role="separator" tabindex="0" aria-label="Resize header and content panels"></div>
+  <section class="flex min-h-0 flex-col gap-2 p-4" style="--resizable-size: 65%">
+    <h3 class="text-sm font-medium">Content</h3>
+    <p class="text-sm text-muted-foreground">The separator is horizontal in vertical mode.</p>
+  </section>
+</div>
+</Preview>
+
+### Three panels
+
+<Preview class="w-full max-w-3xl">
+<div class="resizable h-64 w-full rounded-lg border" data-orientation="horizontal">
+  <section class="flex min-w-0 flex-col gap-2 border-r p-4" style="--resizable-size: 20%">
+    <h3 class="text-sm font-medium">Nav</h3>
+    <p class="text-sm text-muted-foreground">Panel one.</p>
+  </section>
+  <div role="separator" tabindex="0" aria-label="Resize nav and editor panels"></div>
+  <section class="flex min-w-0 flex-col gap-2 border-r p-4" style="--resizable-size: 40%">
+    <h3 class="text-sm font-medium">Editor</h3>
+    <p class="text-sm text-muted-foreground">Panel two.</p>
+  </section>
+  <div role="separator" tabindex="0" aria-label="Resize editor and preview panels"></div>
+  <section class="flex min-w-0 flex-col gap-2 p-4" style="--resizable-size: 40%">
+    <h3 class="text-sm font-medium">Preview</h3>
+    <p class="text-sm text-muted-foreground">Panel three.</p>
+  </section>
+</div>
+</Preview>
+
+### RTL
+
+<Preview class="w-full max-w-3xl" dir="rtl">
+<div class="resizable h-64 w-full rounded-lg border" data-orientation="horizontal">
+  <section class="flex min-w-0 flex-col gap-2 border-r p-4" style="--resizable-size: 30%">
+    <h3 class="text-sm font-medium">واحد</h3>
+    <p class="text-sm text-muted-foreground">Drag the handle in RTL mode too.</p>
+  </section>
+  <div role="separator" tabindex="0" aria-label="Resize panels"></div>
+  <section class="flex min-w-0 flex-col gap-2 p-4" style="--resizable-size: 70%">
+    <h3 class="text-sm font-medium">اثنان</h3>
+    <p class="text-sm text-muted-foreground">Arrow keys follow the document direction.</p>
+  </section>
+</div>
+</Preview>

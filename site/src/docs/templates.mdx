@@ -167,6 +167,15 @@ Some macro files include internal recursive helpers such as `render_select_items
 | `trigger_attrs` | `object` | `{}` | Extra attributes for the trigger button. |
 | `popover_attrs` | `object` | `{}` | Extra attributes for the popover element. |
 
+### `resizable()`
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `id` | `string` | generated | Unique resizable id. |
+| `panels` | `array` | `[]` | Panel definitions. Each item can include `content`, `panel_attrs`, and `tag`. |
+| `main_attrs` | `object` | `{}` | Extra attributes for the `.resizable` root. |
+| `default_sizes` | `array` | `[]` | Initial panel sizes as percentages. Missing values are distributed evenly. |
+
 ### `select()`
 
 | Prop | Type | Default | Description |

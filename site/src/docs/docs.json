@@ -92,6 +92,7 @@
         "components/popover",
         "components/progress",
         "components/radio-group",
+        "components/resizable",
         "components/select",
         "components/scroll-area",
         "components/sidebar",

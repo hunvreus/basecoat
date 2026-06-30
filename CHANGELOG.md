@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Added
+
+- Added a native resizable panel group with focusable separator handles, pointer and keyboard resizing, style-pack CSS, JavaScript entrypoints, templates, and docs.
+
 ## [1.0.1] - 2026-06-28
 
 ### Added
