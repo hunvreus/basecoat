@@ -156,14 +156,18 @@
 
 ### Migration Notes
 
-To keep the previous `.form` wrapper behavior, define it in your own Tailwind CSS:
+To keep the previous `.form` wrapper behavior, compose the current field structure directly instead of trying to `@apply` Basecoat component classes in Tailwind v4.
 
-```css
-.form label { @apply label; }
-.form input { @apply input; }
-.form textarea { @apply textarea; }
-.form select { @apply select; }
+```html
+<div class="field">
+  <label class="label" for="email">Email</label>
+  <input class="input" id="email" name="email" type="email" />
+  <textarea class="textarea" id="message" name="message"></textarea>
+  <select class="select" id="topic" name="topic"></select>
+</div>
 ```
+
+If you need a wrapper-specific variant, target the underlying Tailwind utilities in your own CSS rather than `@apply`ing `label`, `input`, `textarea`, or `select`.
 
 To keep the previous document-event command APIs, add bridge listeners in your app:
 
