@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Fixed
+
+- Prevented the Toast docs' HTMX backend example from pushing the current page URL in the docs site.
+
 ## [1.0.2] - 2026-07-06
 
 ### Added
