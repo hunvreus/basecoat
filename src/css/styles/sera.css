@@ -723,7 +723,7 @@
 
   /* Card */
   .card {
-    @apply bg-card text-card-foreground ring-foreground/5 overflow-hidden text-sm shadow-sm ring-1 has-[>img:first-child]:pt-0 [&>img:first-child]:rounded-none [&>img:last-child]:rounded-none;
+    @apply bg-card text-card-foreground ring-foreground/5 overflow-clip text-sm shadow-sm ring-1 has-[>img:first-child]:pt-0 [&>img:first-child]:rounded-none [&>img:last-child]:rounded-none;
   }
 
   .card {

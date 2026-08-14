@@ -703,7 +703,7 @@
 
   /* Card */
   .card {
-    @apply ring-foreground/10 bg-card text-card-foreground overflow-hidden rounded-xl text-sm ring-1 has-[>footer]:pb-0 has-[>img:first-child]:pt-0 [&>img:first-child]:rounded-t-xl [&>img:last-child]:rounded-b-xl;
+    @apply ring-foreground/10 bg-card text-card-foreground overflow-clip rounded-xl text-sm ring-1 has-[>footer]:pb-0 has-[>img:first-child]:pt-0 [&>img:first-child]:rounded-t-xl [&>img:last-child]:rounded-b-xl;
   }
 
   .card {
