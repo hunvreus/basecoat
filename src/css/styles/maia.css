@@ -690,7 +690,7 @@
 
   /* Card */
   .card {
-    @apply ring-foreground/10 bg-card text-card-foreground overflow-hidden rounded-2xl text-sm ring-1 has-[>img:first-child]:pt-0 [&>img:first-child]:rounded-t-xl [&>img:last-child]:rounded-b-xl;
+    @apply ring-foreground/10 bg-card text-card-foreground overflow-clip rounded-2xl text-sm ring-1 has-[>img:first-child]:pt-0 [&>img:first-child]:rounded-t-xl [&>img:last-child]:rounded-b-xl;
   }
 
   .card {

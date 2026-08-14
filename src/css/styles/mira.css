@@ -694,7 +694,7 @@
 
   /* Card */
   .card {
-    @apply ring-foreground/10 bg-card text-card-foreground overflow-hidden rounded-lg text-xs/relaxed ring-1 has-[>img:first-child]:pt-0 [&>img:first-child]:rounded-t-lg [&>img:last-child]:rounded-b-lg;
+    @apply ring-foreground/10 bg-card text-card-foreground overflow-clip rounded-lg text-xs/relaxed ring-1 has-[>img:first-child]:pt-0 [&>img:first-child]:rounded-t-lg [&>img:last-child]:rounded-b-lg;
   }
 
   .card {

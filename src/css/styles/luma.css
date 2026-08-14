@@ -702,7 +702,7 @@
 
   /* Card */
   .card {
-    @apply bg-card text-card-foreground ring-foreground/5 dark:ring-foreground/10 overflow-hidden rounded-4xl text-sm shadow-md ring-1 has-[>img:first-child]:pt-0 [&>img:first-child]:rounded-t-4xl [&>img:last-child]:rounded-b-4xl;
+    @apply bg-card text-card-foreground ring-foreground/5 dark:ring-foreground/10 overflow-clip rounded-4xl text-sm shadow-md ring-1 has-[>img:first-child]:pt-0 [&>img:first-child]:rounded-t-4xl [&>img:last-child]:rounded-b-4xl;
   }
 
   .card {
