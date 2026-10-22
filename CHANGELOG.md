@@ -1,6 +1,10 @@
 # Changelog
 
-## Unreleased
+## [Unreleased]
+
+### Fixed
+
+- Fixed long Tooltip text clipping instead of showing an ellipsis across all style packs.
 
 ## [1.0.2] - 2026-07-06
 
