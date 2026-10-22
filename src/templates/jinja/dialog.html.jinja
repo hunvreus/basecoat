@@ -53,7 +53,7 @@
   {% if title %}aria-labelledby="{{ id }}-title"{% endif %}
   {% if description %}aria-describedby="{{ id }}-description"{% endif %}
   {% if open %}open{% endif %}
-  {% if close_on_overlay_click %}onclick="if (event.target === this) this.close()"{% endif %}
+  {% if close_on_overlay_click %}onpointerdown="this.dataset.backdropPress = event.target === this" onclick="if (event.target === this && this.dataset.backdropPress === 'true') this.close()"{% endif %}
   {% for key, value in dialog_attrs.items() %}
     {% if key != 'class' %}{{ key }}="{{ value }}"{% endif %}
   {% endfor %}

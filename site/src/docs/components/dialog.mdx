@@ -2,7 +2,7 @@
 
 <Preview>
 <button type="button" onclick="document.getElementById('demo-dialog-edit-profile').showModal()" class="btn" data-variant="outline">Open Dialog</button>
-<dialog id="demo-dialog-edit-profile" class="dialog" aria-labelledby="demo-dialog-edit-profile-title" aria-describedby="demo-dialog-edit-profile-description" onclick="if (event.target === this) this.close()">
+<dialog id="demo-dialog-edit-profile" class="dialog" aria-labelledby="demo-dialog-edit-profile-title" aria-describedby="demo-dialog-edit-profile-description" onpointerdown="this.dataset.backdropPress = event.target === this" onclick="if (event.target === this && this.dataset.backdropPress === 'true') this.close()">
   <div class="sm:max-w-sm">
     <header>
       <h2 id="demo-dialog-edit-profile-title">Edit profile</h2>
@@ -63,7 +63,7 @@ Basecoat uses the native `<dialog>` element and `showModal()`. This differs from
 
 ```html
 <button type="button" onclick="document.getElementById('demo-dialog-edit-profile').showModal()" class="btn" data-variant="outline">Open Dialog</button>
-<dialog id="demo-dialog-edit-profile" class="dialog" aria-labelledby="demo-dialog-edit-profile-title" aria-describedby="demo-dialog-edit-profile-description" onclick="if (event.target === this) this.close()">
+<dialog id="demo-dialog-edit-profile" class="dialog" aria-labelledby="demo-dialog-edit-profile-title" aria-describedby="demo-dialog-edit-profile-description" onpointerdown="this.dataset.backdropPress = event.target === this" onclick="if (event.target === this && this.dataset.backdropPress === 'true') this.close()">
   <div class="sm:max-w-sm">
     <header>
       <h2 id="demo-dialog-edit-profile-title">Edit profile</h2>
@@ -134,7 +134,7 @@ Basecoat uses the native `<dialog>` element and `showModal()`. This differs from
 
 <Preview>
 <button type="button" onclick="document.getElementById('dialog-custom-close').showModal()" class="btn" data-variant="outline">Share</button>
-<dialog id="dialog-custom-close" class="dialog" aria-labelledby="dialog-custom-close-title" aria-describedby="dialog-custom-close-description" onclick="if (event.target === this) this.close()">
+<dialog id="dialog-custom-close" class="dialog" aria-labelledby="dialog-custom-close-title" aria-describedby="dialog-custom-close-description" onpointerdown="this.dataset.backdropPress = event.target === this" onclick="if (event.target === this && this.dataset.backdropPress === 'true') this.close()">
   <div class="sm:max-w-md">
     <header>
       <h2 id="dialog-custom-close-title">Share link</h2>
@@ -157,7 +157,7 @@ Basecoat uses the native `<dialog>` element and `showModal()`. This differs from
 
 <Preview>
 <button type="button" onclick="document.getElementById('dialog-no-close').showModal()" class="btn" data-variant="outline">No Close Button</button>
-<dialog id="dialog-no-close" class="dialog" aria-labelledby="dialog-no-close-title" aria-describedby="dialog-no-close-description" onclick="if (event.target === this) this.close()">
+<dialog id="dialog-no-close" class="dialog" aria-labelledby="dialog-no-close-title" aria-describedby="dialog-no-close-description" onpointerdown="this.dataset.backdropPress = event.target === this" onclick="if (event.target === this && this.dataset.backdropPress === 'true') this.close()">
   <div>
     <header>
       <h2 id="dialog-no-close-title">No Close Button</h2>
@@ -171,7 +171,7 @@ Basecoat uses the native `<dialog>` element and `showModal()`. This differs from
 
 <Preview>
 <button type="button" onclick="document.getElementById('dialog-sticky-footer').showModal()" class="btn" data-variant="outline">Sticky Footer</button>
-<dialog id="dialog-sticky-footer" class="dialog" aria-labelledby="dialog-sticky-footer-title" aria-describedby="dialog-sticky-footer-description" onclick="if (event.target === this) this.close()">
+<dialog id="dialog-sticky-footer" class="dialog" aria-labelledby="dialog-sticky-footer-title" aria-describedby="dialog-sticky-footer-description" onpointerdown="this.dataset.backdropPress = event.target === this" onclick="if (event.target === this && this.dataset.backdropPress === 'true') this.close()">
   <div>
     <header>
       <h2 id="dialog-sticky-footer-title">Sticky Footer</h2>
@@ -199,7 +199,7 @@ Basecoat uses the native `<dialog>` element and `showModal()`. This differs from
 
 <Preview>
 <button type="button" onclick="document.getElementById('dialog-scrollable').showModal()" class="btn" data-variant="outline">Scrollable Content</button>
-<dialog id="dialog-scrollable" class="dialog" aria-labelledby="dialog-scrollable-title" aria-describedby="dialog-scrollable-description" onclick="if (event.target === this) this.close()">
+<dialog id="dialog-scrollable" class="dialog" aria-labelledby="dialog-scrollable-title" aria-describedby="dialog-scrollable-description" onpointerdown="this.dataset.backdropPress = event.target === this" onclick="if (event.target === this && this.dataset.backdropPress === 'true') this.close()">
   <div>
     <header>
       <h2 id="dialog-scrollable-title">Scrollable Content</h2>
@@ -229,7 +229,7 @@ Dialog positioning and close button placement use logical properties. Set `dir="
 <Preview>
 <div dir="rtl">
   <button type="button" onclick="document.getElementById('dialog-rtl').showModal()" class="btn" data-variant="outline">فتح الحوار</button>
-  <dialog id="dialog-rtl" class="dialog" aria-labelledby="dialog-rtl-title" aria-describedby="dialog-rtl-description" onclick="if (event.target === this) this.close()">
+  <dialog id="dialog-rtl" class="dialog" aria-labelledby="dialog-rtl-title" aria-describedby="dialog-rtl-description" onpointerdown="this.dataset.backdropPress = event.target === this" onclick="if (event.target === this && this.dataset.backdropPress === 'true') this.close()">
     <div class="sm:max-w-sm">
       <header>
         <h2 id="dialog-rtl-title">تعديل الملف الشخصي</h2>

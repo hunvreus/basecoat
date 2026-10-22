@@ -98,7 +98,7 @@
   class="command-dialog {{ dialog_attrs.class | default('') }}"
   aria-label="Command menu"
   {% if open %}open{% endif %}
-  onclick="if (event.target === this) this.close()"
+  onpointerdown="this.dataset.backdropPress = event.target === this" onclick="if (event.target === this && this.dataset.backdropPress === 'true') this.close()"
   {% for key, value in dialog_attrs.items() %}
     {% if key != 'class' %}{{ key }}="{{ value }}"{% endif %}
   {% endfor %}
