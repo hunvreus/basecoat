@@ -377,7 +377,7 @@
   }
 
   .command > header input {
-    @apply h-9 ps-1.5 pe-2 text-base md:text-sm placeholder:text-muted-foreground;
+    @apply h-9 ps-1.5 pe-2 text-sm placeholder:text-muted-foreground;
   }
 
   .command [role='menu'] {
