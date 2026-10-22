@@ -131,6 +131,13 @@
     element.addEventListener('transitionend', () => element.remove(), { once: true });
   }
 
+  const escapeHtml = (value) => String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+
   function createToast(config) {
     const {
       category = 'info',
@@ -140,18 +147,22 @@
       cancel,
       duration,
       icon,
+      html: allowHtml = false,
     } = config;
 
+    // Text is escaped unless `html: true`. `icon` is always raw markup (SVG).
+    const text = (value) => (allowHtml ? String(value) : escapeHtml(value));
+
     const iconHtml = icon || (category && ICONS[category]) || '';
-    const titleHtml = title ? `<h2>${title}</h2>` : '';
-    const descriptionHtml = description ? `<p>${description}</p>` : '';
+    const titleHtml = title ? `<h2>${text(title)}</h2>` : '';
+    const descriptionHtml = description ? `<p>${text(description)}</p>` : '';
     const actionHtml = action?.href
-      ? `<a href="${action.href}" class="btn" data-toast-action>${action.label}</a>`
+      ? `<a href="${escapeHtml(action.href)}" class="btn" data-toast-action>${text(action.label)}</a>`
       : action?.onclick
-        ? `<button type="button" class="btn" data-toast-action onclick="${action.onclick}">${action.label}</button>`
+        ? `<button type="button" class="btn" data-toast-action onclick="${escapeHtml(action.onclick)}">${text(action.label)}</button>`
         : '';
     const cancelHtml = cancel
-      ? `<button type="button" class="btn h-6 text-xs px-2.5 rounded-sm" data-variant="outline" data-toast-cancel onclick="${cancel?.onclick || ''}">${cancel.label}</button>`
+      ? `<button type="button" class="btn h-6 text-xs px-2.5 rounded-sm" data-variant="outline" data-toast-cancel onclick="${escapeHtml(cancel?.onclick || '')}">${text(cancel.label)}</button>`
       : '';
 
     const footerHtml = actionHtml || cancelHtml ? `<footer>${actionHtml}${cancelHtml}</footer>` : '';
@@ -161,8 +172,8 @@
         class="toast"
         role="${category === 'error' ? 'alert' : 'status'}"
         aria-atomic="true"
-        ${category ? `data-category="${category}"` : ''}
-        ${duration !== undefined ? `data-duration="${duration}"` : ''}
+        ${category ? `data-category="${escapeHtml(category)}"` : ''}
+        ${duration !== undefined ? `data-duration="${escapeHtml(duration)}"` : ''}
       >
         <div class="toast-content">
           ${iconHtml}

@@ -164,6 +164,10 @@ Append server-rendered toast markup to the toaster, or create one from JavaScrip
 
 ### Config object
 
+<Callout type="warning" title="Text is escaped by default" icon="triangle-alert">
+  `title`, `description`, and action labels are inserted as plain text. With `html: true` they are inserted as HTML, so never pass untrusted user input with it. `onclick` is JavaScript code and must never contain user input. `icon` is always inserted as raw HTML (it is meant for SVG markup).
+</Callout>
+
 <dl>
   <dt><code>duration</code> <span class="badge" data-variant="secondary">Optional</span></dt>
   <dd>Timeout in milliseconds. Defaults to <code>3000</code>, or <code>5000</code> for error toasts. Use <code>-1</code> to keep it open.</dd>
@@ -177,4 +181,10 @@ Append server-rendered toast markup to the toaster, or create one from JavaScrip
   <dd>Primary action. Supports <code>label</code> with either <code>href</code> or <code>onclick</code>.</dd>
   <dt><code>cancel</code> <span class="badge" data-variant="secondary">Optional</span></dt>
   <dd>Secondary action. Supports <code>label</code> and optional <code>onclick</code>.</dd>
+  <dt><code>icon</code> <span class="badge" data-variant="secondary">Optional</span></dt>
+  <dd>Custom icon markup, usually an SVG. Inserted as raw HTML. Defaults to the category icon.</dd>
+  <dt><code>html</code> <span class="badge" data-variant="secondary">Optional</span></dt>
+  <dd>Set to <code>true</code> to insert <code>title</code>, <code>description</code>, and action labels as HTML instead of plain text. Defaults to <code>false</code>. Only use it with trusted content.</dd>
 </dl>
+
+The Jinja and Nunjucks `toast()` macros render on your server, so your template engine's autoescaping applies to `title`, `description`, and labels there when it is enabled. Nunjucks enables it by default. With Jinja, make sure your environment's `autoescape` setting covers the Basecoat template files (for example `.html.jinja`). `icon` is output with `safe`, and `onclick` is output as an attribute, so neither should contain user input.
