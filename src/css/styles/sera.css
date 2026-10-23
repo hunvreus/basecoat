@@ -221,7 +221,7 @@
   /* Native Select */
   .field > select,
   select.select {
-    @apply border-transparent border-b-input bg-transparent placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground focus-visible:border-b-ring aria-invalid:border-b-destructive dark:aria-invalid:border-b-destructive/50 h-10 w-fit rounded-none border py-2 ps-0 pe-8 text-sm transition-[color,border-color] data-[size=sm]:h-9;
+    @apply border-transparent border-b-input bg-transparent placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground focus-visible:border-b-ring aria-invalid:border-b-destructive dark:aria-invalid:border-b-destructive/50 h-10 w-fit rounded-none border py-2 ps-0 pe-8 text-base md:text-sm transition-[color,border-color] data-[size=sm]:h-9;
     @apply bg-[image:var(--chevron-down-icon-50)] bg-no-repeat bg-position-[center_right_0] bg-size-[0.875rem];
   }
 
@@ -377,7 +377,7 @@
   }
 
   .command > header input {
-    @apply h-9 ps-1.5 pe-2 text-sm placeholder:text-muted-foreground;
+    @apply h-9 ps-1.5 pe-2 text-base md:text-sm placeholder:text-muted-foreground;
   }
 
   .command [role='menu'] {
@@ -466,6 +466,10 @@
 
   .combobox-chips {
     @apply border-transparent border-b-input bg-transparent focus-within:border-b-ring has-[[aria-invalid=true]]:border-b-destructive dark:has-[[aria-invalid=true]]:border-b-destructive/50 min-h-10 gap-1.5 rounded-none border bg-clip-padding px-0 py-1.5 text-sm transition-[color,border-color];
+  }
+
+  .combobox-chips > input[role='combobox'] {
+    @apply text-base md:text-sm;
   }
 
   .combobox-chip {
@@ -970,7 +974,7 @@
     @apply opacity-50;
   }
   .input-group > :is(input, select, [data-control]) {
-    @apply px-0 py-1 text-sm;
+    @apply px-0 py-1 text-base md:text-sm;
   }
 
   .input-group:not([data-orientation='vertical']):has(> :is([data-align='start'], [data-align='inline-start'])) > :is(input, select, [data-control]) {
@@ -982,7 +986,7 @@
   }
 
   .input-group > textarea {
-    @apply px-0 py-2.5 text-sm;
+    @apply px-0 py-2.5 text-base md:text-sm;
   }
 
   .input-group > :is(span, [role='group'], header, footer),

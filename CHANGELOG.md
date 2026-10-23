@@ -29,7 +29,7 @@
 - Kept a parent Popover, Dropdown Menu, Select or Combobox open when a nested one opens inside it. Sibling components still close each other.
 - Scoped Sidebar navigation styles to the sidebar's direct child `nav` (`.sidebar > nav`), so other `nav` elements inside a sidebar, such as a Tabs list, are no longer fixed and stacked.
 - Stopped Dialogs and Command Dialogs from closing when a press starts inside the dialog and the drag ends on the backdrop. Updated the Nunjucks and Jinja templates and the docs examples. Based on [#104](https://github.com/hunvreus/basecoat/pull/104) by [@PhilipdeRijk](https://github.com/PhilipdeRijk).
-- Fixed iOS auto-zoom when tapping the Select and Command search inputs by using `text-base` below the `md` breakpoint, like regular inputs.
+- Fixed iOS auto-zoom when tapping the Combobox input, the Combobox chips input, the Command search input, native Selects, and Input Group inputs and textareas by using `text-base` below the `md` breakpoint, like regular inputs. The compact Lyra and Mira styles keep their smaller sizes.
 - Stopped the Toast docs example from pushing its fragment URL into the browser history with HTMX.
 - Replaced the `.form` migration snippet in the 1.0.0 notes, which fails in Tailwind v4, with markup that works.
 
