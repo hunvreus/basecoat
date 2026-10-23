@@ -70,6 +70,32 @@ Or load the Basecoat runtime once, then only the component scripts you use.
 | `dist/js/basecoat.min.js` | Runtime only. Load once before individual component scripts. |
 | `dist/js/{component}.min.js` | Individual JavaScript component file. |
 
+### Tailwind utilities with the CDN
+
+The CDN stylesheets only include the utilities Basecoat uses, so classes like `bg-primary` or `text-muted-foreground` are not available. If you add the [Tailwind Play CDN](https://tailwindcss.com/docs/installation/play-cdn) for utilities, map Basecoat's theme tokens to Tailwind colors and restore the border color after Tailwind's preflight. Load this after the Basecoat stylesheet.
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-border: var(--border);
+  }
+  @layer base {
+    *, ::before, ::after { border-color: var(--border); }
+  }
+</style>
+```
+
+Add any other tokens you use the same way, for example `--color-destructive: var(--destructive);`. The Play CDN is meant for prototypes. For production, use the [Tailwind CLI with a bundle file](#npm) instead.
+
 ## NPM
 
 <Steps>
