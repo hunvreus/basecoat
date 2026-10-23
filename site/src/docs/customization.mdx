@@ -45,12 +45,12 @@ Learn more in the [shadcn/ui theming docs](https://ui.shadcn.com/docs/theming).
 
 ## Fonts
 
-Basecoat does not ship web font files by default. Its font tokens prefer [Geist Sans](https://fonts.google.com/specimen/Geist) and [Geist Mono](https://fonts.google.com/specimen/Geist+Mono) when those fonts are available, then fall back to the full Tailwind default sans and mono stacks.
+Basecoat does not ship web font files by default. Its font tokens prefer [Geist](https://fonts.google.com/specimen/Geist) and [Geist Mono](https://fonts.google.com/specimen/Geist+Mono) when those fonts are available, then fall back to the full Tailwind default sans and mono stacks.
 
 Install the fonts with Fontsource:
 
 ```bash
-npm install @fontsource/geist-sans @fontsource/geist-mono
+npm install @fontsource/geist @fontsource/geist-mono
 ```
 
 Then import the font files. Basecoat's default font tokens already reference Geist with full system fallbacks:
@@ -58,10 +58,10 @@ Then import the font files. Basecoat's default font tokens already reference Gei
 ```css
 @import "tailwindcss";
 @import "basecoat-css/sera";
-@import "@fontsource/geist-sans/400.css";
-@import "@fontsource/geist-sans/500.css";
-@import "@fontsource/geist-sans/600.css";
-@import "@fontsource/geist-sans/700.css";
+@import "@fontsource/geist/400.css";
+@import "@fontsource/geist/500.css";
+@import "@fontsource/geist/600.css";
+@import "@fontsource/geist/700.css";
 @import "@fontsource/geist-mono/400.css";
 @import "@fontsource/geist-mono/500.css";
 @import "@fontsource/geist-mono/600.css";
