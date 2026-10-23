@@ -123,6 +123,8 @@
   "scripts": {
     "build": "node ./scripts/build.js",
     "prepack": "node ./scripts/build.js",
+    "check": "npm run build && node ./scripts/check.js && npm pack --dry-run --ignore-scripts",
+    "check:site": "npm run docs:build && node ./scripts/check.js site",
     "docs:build": "npm run build && npm --prefix site clean-install --progress=false && npm --prefix site run build",
     "docs:dev": "npm --prefix site run dev",
     "docs:preview": "npm run docs:build && npm --prefix site run preview",

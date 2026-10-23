@@ -1,0 +1,196 @@
+name: Release
+
+# Publishing a GitHub release (not a prerelease):
+#   1. publish: checks the tag is on main and matches package.json, runs the checks,
+#      then stages the version on npm with `npm stage publish`, using trusted publishing
+#      (OIDC, no token). A maintainer then approves it on npmjs.com (Staged Packages tab)
+#      or with `npm stage approve <stage-id>`, with 2FA. Until then the version is not
+#      installable.
+#   2. deploy-site: waits until the version is live on npm (polls every 30 seconds for
+#      up to about 5h50m), then points the `release` branch at the tag. Cloudflare
+#      Workers Builds deploys basecoatui.com from `release`, so the docs never describe
+#      a version npm does not serve. If you approve later than that, re-run the failed
+#      deploy-site job.
+#
+# Running this workflow manually only moves `release` to the given tag (redeploy or
+# roll back the site), and only if that version is already on npm. It never publishes.
+#
+# Prereleases are ignored. discord-release.yml announces releases separately.
+#
+# npm trusted publisher settings (allow `npm stage publish` only): repository
+# hunvreus/basecoat, workflow release.yml, no environment. Renaming this file breaks
+# publishing.
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Tag to deploy to the site (for example 1.1.0). Must already be on npm. Does not publish to npm.
+        required: true
+        type: string
+
+permissions: {}
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'release' && github.event.release.prerelease == false
+    permissions:
+      contents: read
+      id-token: write
+    env:
+      TAG: ${{ github.event.release.tag_name }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: refs/tags/${{ github.event.release.tag_name }}
+          persist-credentials: false
+          fetch-depth: 0
+
+      - name: Check the tag is on main
+        run: |
+          git fetch --no-tags origin main
+          if ! git merge-base --is-ancestor HEAD FETCH_HEAD; then
+            echo "::error::Tag $TAG is not on main. Release from a commit on main."
+            exit 1
+          fi
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+          # No dependency cache in a publishing job (cache poisoning).
+          package-manager-cache: false
+
+      - name: Ensure npm supports staged publishing (>= 11.15.0)
+        run: |
+          if ! node -e 'const [a,b]=process.argv[1].split(".").map(Number);process.exit(a>11||(a===11&&b>=15)?0:1)' "$(npm --version)"; then
+            npm install -g npm@^11.15.0
+          fi
+          npm --version
+
+      - name: Check package.json version matches the tag
+        id: version
+        run: |
+          NAME=$(node -p 'require("./package.json").name')
+          VERSION=$(node -p 'require("./package.json").version')
+          if [ "$VERSION" != "${TAG#v}" ]; then
+            echo "::error::package.json version is $VERSION but the release tag is $TAG. Bump package.json and tag that commit."
+            exit 1
+          fi
+          echo "name=$NAME" >> "$GITHUB_OUTPUT"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Check whether this version is already on npm
+        id: npm
+        env:
+          NAME: ${{ steps.version.outputs.name }}
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          STATUS=$(curl -sS -o /dev/null -w '%{http_code}' "https://registry.npmjs.org/$NAME/$VERSION")
+          case "$STATUS" in
+            200)
+              echo "::notice::$NAME@$VERSION is already on npm. Skipping publish."
+              echo "published=true" >> "$GITHUB_OUTPUT" ;;
+            404)
+              echo "published=false" >> "$GITHUB_OUTPUT" ;;
+            *)
+              echo "::error::Unexpected HTTP $STATUS from the npm registry."
+              exit 1 ;;
+          esac
+
+      - name: Install dependencies
+        if: steps.npm.outputs.published == 'false'
+        run: npm ci
+
+      # Builds dist/ and templates/, checks every export exists, and lists the tarball.
+      # `npm stage publish` builds again through the prepack script.
+      - name: Run checks
+        if: steps.npm.outputs.published == 'false'
+        run: npm run check
+
+      # Short-lived OIDC tokens cannot run `npm stage list`, so an already-staged version
+      # is detected from the registry's conflict error instead: staged and published
+      # versions share one version index, so re-staging the same version is refused.
+      - name: Stage on npm
+        if: steps.npm.outputs.published == 'false'
+        run: |
+          set +e
+          npm stage publish --provenance 2>&1 | tee "$RUNNER_TEMP/stage.log"
+          STATUS=${PIPESTATUS[0]}
+          set -e
+          if [ "$STATUS" -eq 0 ]; then
+            echo "::notice::Staged. Approve it on npmjs.com (Staged Packages tab) or with npm stage approve, using 2FA. The site deploys once it is live."
+          elif grep -Eqi 'E409|EPUBLISHCONFLICT|previously published|already (been )?(staged|published|exists)|cannot (publish|stage) over' "$RUNNER_TEMP/stage.log"; then
+            echo "::notice::This version is already staged or published on npm. Skipping."
+          else
+            exit "$STATUS"
+          fi
+
+  deploy-site:
+    runs-on: ubuntu-latest
+    needs: publish
+    if: >-
+      always() &&
+      (needs.publish.result == 'success' || needs.publish.result == 'skipped') &&
+      (github.event_name == 'workflow_dispatch' || github.event.release.prerelease == false)
+    # GitHub-hosted jobs stop at 6 hours. The wait below gives up before that.
+    timeout-minutes: 355
+    permissions:
+      contents: write
+    env:
+      TAG: ${{ inputs.tag || github.event.release.tag_name }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Check the tag is on main
+        id: tag
+        run: |
+          SHA=$(git rev-parse --verify "refs/tags/$TAG^{commit}")
+          if ! git merge-base --is-ancestor "$SHA" origin/main; then
+            echo "::error::Tag $TAG is not on main. Only tags on main can go live."
+            exit 1
+          fi
+          {
+            echo "sha=$SHA"
+            echo "name=$(git show "$SHA:package.json" | jq -r .name)"
+            echo "version=$(git show "$SHA:package.json" | jq -r .version)"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Wait until the version is live on npm
+        env:
+          NAME: ${{ steps.tag.outputs.name }}
+          VERSION: ${{ steps.tag.outputs.version }}
+          # Manual runs do not wait: the version must already be on npm.
+          MAX_WAIT: ${{ github.event_name == 'release' && '21000' || '0' }}
+        run: |
+          while :; do
+            STATUS=$(curl -sS -o /dev/null -w '%{http_code}' "https://registry.npmjs.org/$NAME/$VERSION" || echo 000)
+            if [ "$STATUS" = "200" ]; then
+              echo "$NAME@$VERSION is live on npm."
+              exit 0
+            fi
+            if [ "$SECONDS" -ge "$MAX_WAIT" ]; then
+              if [ "$MAX_WAIT" = "0" ]; then
+                echo "::error::$NAME@$VERSION is not on npm (HTTP $STATUS). A manual run only deploys versions that are already published."
+              else
+                echo "::error::$NAME@$VERSION is still not live on npm after $((MAX_WAIT / 60)) minutes. Approve the staged package on npmjs.com (Staged Packages tab), then re-run this deploy-site job (Re-run failed jobs). If you rejected it, nothing needs to happen: the site was not deployed."
+              fi
+              exit 1
+            fi
+            echo "Waiting for $NAME@$VERSION on npm (HTTP $STATUS). Approve the staged package on npmjs.com. Checking again in 30 seconds."
+            sleep 30
+          done
+
+      - name: Point release branch at tag
+        env:
+          SHA: ${{ steps.tag.outputs.sha }}
+        run: git push --force origin "$SHA:refs/heads/release"
