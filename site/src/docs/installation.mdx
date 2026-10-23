@@ -64,6 +64,8 @@ Or load the Basecoat runtime once, then only the component scripts you use.
 | `dist/basecoat-{style}.cdn.min.css` | Standalone CDN stylesheet for `vega`, `nova`, `maia`, `lyra`, `mira`, `luma`, `sera`, or `rhea`. |
 | `dist/basecoat-base.cdn.min.css` | Base tokens, utilities, and component structure without a style pack. |
 | `dist/basecoat-compat.cdn.min.css` | Optional pre-1.0 compatibility aliases. Load after Basecoat. |
+| `dist/basecoat.bundle.css` | Uncompiled single-file source for use with your own Tailwind build. Alias for the Vega style. |
+| `dist/basecoat-{style}.bundle.css` | Uncompiled single-file source for use with your own Tailwind build, for `vega`, `nova`, `maia`, `lyra`, `mira`, `luma`, `sera`, or `rhea`. |
 | `dist/js/all.min.js` | All auto-initialized JavaScript components except Chart. |
 | `dist/js/basecoat.min.js` | Runtime only. Load once before individual component scripts. |
 | `dist/js/{component}.min.js` | Individual JavaScript component file. |
@@ -128,6 +130,10 @@ Or import a named style bundle.
 @import "tailwindcss";
 @import "basecoat-css/maia";
 ```
+
+<Callout title="Using the Tailwind CLI without npm?" icon="info">
+  Download a single-file bundle, for example <a href={`https://cdn.jsdelivr.net/npm/basecoat-css@${basecoatVersion}/dist/basecoat-maia.bundle.css`}>{`basecoat-maia.bundle.css`}</a>. Save it next to your CSS and import it after Tailwind: `@import "tailwindcss"; @import "./basecoat-maia.bundle.css";`. Use `basecoat.bundle.css` for the default Vega style.
+</Callout>
 
 <Callout type="warning" title="Stylesheet order matters" icon="triangle-alert">
   Load Basecoat after any stylesheet that includes Tailwind base/preflight. Loading another full Tailwind build after Basecoat can reset borders, inputs, and other component defaults.
@@ -195,7 +201,7 @@ See [Templates](/templates) for the available macros and arguments.
 | `basecoat-css/components` | All component structure without a style pack. |
 | `basecoat-css/components/button` | Individual component CSS. Replace `button` with any component file. |
 | `basecoat-css/styles/maia` | Individual style-pack CSS. Use with `basecoat-css/base` or `basecoat-css/components`. |
-| `basecoat-css/all.css` | Full default stylesheet plus all style-pack CSS. Use only when you need every style pack available at runtime. |
+| `basecoat-css/all.css` | Alias for `basecoat-css`, the default Vega stylesheet. It does not include the other style packs. |
 | `basecoat-css/compat` | Optional pre-1.0 compatibility aliases. Load after Basecoat. |
 
 ### Template files
