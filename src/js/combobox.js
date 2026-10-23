@@ -507,7 +507,7 @@
       if (!root.contains(event.target)) root.close(false);
     };
     const handleDocumentPopover = (event) => {
-      if (event.detail.source !== root) root.close(false);
+      if (!root.contains(event.detail.source)) root.close(false);
     };
 
     state.input.addEventListener('focus', handleInputFocus);

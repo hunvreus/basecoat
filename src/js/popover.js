@@ -60,7 +60,7 @@
     };
 
     const handleDocumentPopover = (event) => {
-      if (event.detail.source !== popoverComponent) {
+      if (!popoverComponent.contains(event.detail.source)) {
         closePopover(false);
       }
     };
