@@ -1376,15 +1376,42 @@
   }
 
   :is(.field > input[type='range'], .input[type='range'])::-webkit-slider-thumb {
-    @apply border-primary ring-ring/50 size-4 rounded-full border bg-white shadow-sm transition-[color,box-shadow] hover:ring-4 focus-visible:ring-4 -mt-[calc((var(--slider-thumb-size)-var(--slider-track-height))/2)] focus-visible:outline-hidden;
+    @apply border-primary ring-ring/50 size-4 rounded-full border bg-white shadow-sm transition-[color,box-shadow] -mt-[calc((var(--slider-thumb-size)-var(--slider-track-height))/2)];
   }
 
   :is(.field > input[type='range'], .input[type='range'])::-moz-range-thumb {
-    @apply border-primary ring-ring/50 size-4 rounded-full border bg-white shadow-sm transition-[color,box-shadow] hover:ring-4 focus-visible:ring-4 focus-visible:outline-hidden;
+    @apply border-primary ring-ring/50 size-4 rounded-full border bg-white shadow-sm transition-[color,box-shadow];
   }
 
   :is(.field > input[type='range'], .input[type='range'])::-ms-thumb {
-    @apply border-primary ring-ring/50 size-4 rounded-full border bg-white shadow-sm transition-[color,box-shadow] hover:ring-4 focus-visible:ring-4 focus-visible:outline-hidden;
+    @apply border-primary ring-ring/50 size-4 rounded-full border bg-white shadow-sm transition-[color,box-shadow];
+  }
+
+  /* States go before the thumb pseudo-element so they still apply with native CSS nesting. */
+  @media (hover: hover) {
+    :is(.field > input[type='range'], .input[type='range']):hover::-webkit-slider-thumb {
+      @apply ring-4;
+    }
+
+    :is(.field > input[type='range'], .input[type='range']):hover::-moz-range-thumb {
+      @apply ring-4;
+    }
+
+    :is(.field > input[type='range'], .input[type='range']):hover::-ms-thumb {
+      @apply ring-4;
+    }
+  }
+
+  :is(.field > input[type='range'], .input[type='range']):focus-visible::-webkit-slider-thumb {
+    @apply ring-4 outline-hidden;
+  }
+
+  :is(.field > input[type='range'], .input[type='range']):focus-visible::-moz-range-thumb {
+    @apply ring-4 outline-hidden;
+  }
+
+  :is(.field > input[type='range'], .input[type='range']):focus-visible::-ms-thumb {
+    @apply ring-4 outline-hidden;
   }
 
 }

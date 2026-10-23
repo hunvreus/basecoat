@@ -791,7 +791,11 @@
   }
 
   :is(.field > input[type='radio'], .input[type='radio']):checked:before {
-    @apply bg-primary-foreground size-2 dark:size-2.5;
+    @apply bg-primary-foreground size-2;
+  }
+
+  html.dark :is(.field > input[type='radio'], .input[type='radio']):checked:before {
+    @apply size-2.5;
   }
 
   /* Switch */
@@ -809,7 +813,11 @@
   }
 
   :is(.field > input[type='checkbox'][role='switch'], .input[type='checkbox'][role='switch']):before {
-    @apply bg-background rounded-full shadow-sm not-dark:bg-clip-padding;
+    @apply bg-background rounded-full shadow-sm;
+  }
+
+  html:not(.dark) :is(.field > input[type='checkbox'][role='switch'], .input[type='checkbox'][role='switch']):before {
+    @apply bg-clip-padding;
   }
 
   html.dark :is(.field > input[type='checkbox'][role='switch'], .input[type='checkbox'][role='switch']):not(:checked):before {
@@ -1332,7 +1340,15 @@
   }
 
   [data-tooltip][data-arrow]::after {
-    @apply bg-foreground absolute z-[60] size-2.5 rotate-45 rounded-[2px] data-[side=left]:translate-x-[-1.5px] data-[side=right]:translate-x-[1.5px];
+    @apply bg-foreground absolute z-[60] size-2.5 rotate-45 rounded-[2px];
+  }
+
+  [data-tooltip][data-arrow][data-side='left']::after {
+    @apply translate-x-[-1.5px];
+  }
+
+  [data-tooltip][data-arrow][data-side='right']::after {
+    @apply translate-x-[1.5px];
   }
 
   /* Toast */
@@ -1366,15 +1382,54 @@
   }
 
   :is(.field > input[type='range'], .input[type='range'])::-webkit-slider-thumb {
-    @apply ring-black/10 not-dark:bg-clip-padding ring-1 h-4 w-6 rounded-full bg-white shadow-md transition-[color,box-shadow,background-color] hover:ring-4 hover:ring-ring/30 focus-visible:ring-4 focus-visible:ring-ring/30 -mt-[calc((var(--slider-thumb-size)-var(--slider-track-height))/2)] focus-visible:outline-hidden;
+    @apply ring-black/10 ring-1 h-4 w-6 rounded-full bg-white shadow-md transition-[color,box-shadow,background-color] -mt-[calc((var(--slider-thumb-size)-var(--slider-track-height))/2)];
   }
 
   :is(.field > input[type='range'], .input[type='range'])::-moz-range-thumb {
-    @apply ring-black/10 not-dark:bg-clip-padding ring-1 h-4 w-6 rounded-full bg-white shadow-md transition-[color,box-shadow,background-color] hover:ring-4 hover:ring-ring/30 focus-visible:ring-4 focus-visible:ring-ring/30 focus-visible:outline-hidden;
+    @apply ring-black/10 ring-1 h-4 w-6 rounded-full bg-white shadow-md transition-[color,box-shadow,background-color];
   }
 
   :is(.field > input[type='range'], .input[type='range'])::-ms-thumb {
-    @apply ring-black/10 not-dark:bg-clip-padding ring-1 h-4 w-6 rounded-full bg-white shadow-md transition-[color,box-shadow,background-color] hover:ring-4 hover:ring-ring/30 focus-visible:ring-4 focus-visible:ring-ring/30 focus-visible:outline-hidden;
+    @apply ring-black/10 ring-1 h-4 w-6 rounded-full bg-white shadow-md transition-[color,box-shadow,background-color];
+  }
+
+  /* States go before the thumb pseudo-element so they still apply with native CSS nesting. */
+  html:not(.dark) :is(.field > input[type='range'], .input[type='range'])::-webkit-slider-thumb {
+    @apply bg-clip-padding;
+  }
+
+  html:not(.dark) :is(.field > input[type='range'], .input[type='range'])::-moz-range-thumb {
+    @apply bg-clip-padding;
+  }
+
+  html:not(.dark) :is(.field > input[type='range'], .input[type='range'])::-ms-thumb {
+    @apply bg-clip-padding;
+  }
+
+  @media (hover: hover) {
+    :is(.field > input[type='range'], .input[type='range']):hover::-webkit-slider-thumb {
+      @apply ring-4 ring-ring/30;
+    }
+
+    :is(.field > input[type='range'], .input[type='range']):hover::-moz-range-thumb {
+      @apply ring-4 ring-ring/30;
+    }
+
+    :is(.field > input[type='range'], .input[type='range']):hover::-ms-thumb {
+      @apply ring-4 ring-ring/30;
+    }
+  }
+
+  :is(.field > input[type='range'], .input[type='range']):focus-visible::-webkit-slider-thumb {
+    @apply ring-4 ring-ring/30 outline-hidden;
+  }
+
+  :is(.field > input[type='range'], .input[type='range']):focus-visible::-moz-range-thumb {
+    @apply ring-4 ring-ring/30 outline-hidden;
+  }
+
+  :is(.field > input[type='range'], .input[type='range']):focus-visible::-ms-thumb {
+    @apply ring-4 ring-ring/30 outline-hidden;
   }
 
 }

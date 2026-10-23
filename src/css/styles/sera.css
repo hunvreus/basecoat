@@ -1387,15 +1387,42 @@
   }
 
   :is(.field > input[type='range'], .input[type='range'])::-webkit-slider-thumb {
-    @apply size-3 border-none bg-primary transition-colors hover:ring-2 hover:ring-ring/30 focus-visible:ring-2 focus-visible:ring-ring/30 -mt-[calc((var(--slider-thumb-size)-var(--slider-track-height))/2)] focus-visible:outline-hidden;
+    @apply size-3 border-none bg-primary transition-colors -mt-[calc((var(--slider-thumb-size)-var(--slider-track-height))/2)];
   }
 
   :is(.field > input[type='range'], .input[type='range'])::-moz-range-thumb {
-    @apply size-3 border-none bg-primary transition-colors hover:ring-2 hover:ring-ring/30 focus-visible:ring-2 focus-visible:ring-ring/30 focus-visible:outline-hidden;
+    @apply size-3 border-none bg-primary transition-colors;
   }
 
   :is(.field > input[type='range'], .input[type='range'])::-ms-thumb {
-    @apply size-3 border-none bg-primary transition-colors hover:ring-2 hover:ring-ring/30 focus-visible:ring-2 focus-visible:ring-ring/30 focus-visible:outline-hidden;
+    @apply size-3 border-none bg-primary transition-colors;
+  }
+
+  /* States go before the thumb pseudo-element so they still apply with native CSS nesting. */
+  @media (hover: hover) {
+    :is(.field > input[type='range'], .input[type='range']):hover::-webkit-slider-thumb {
+      @apply ring-2 ring-ring/30;
+    }
+
+    :is(.field > input[type='range'], .input[type='range']):hover::-moz-range-thumb {
+      @apply ring-2 ring-ring/30;
+    }
+
+    :is(.field > input[type='range'], .input[type='range']):hover::-ms-thumb {
+      @apply ring-2 ring-ring/30;
+    }
+  }
+
+  :is(.field > input[type='range'], .input[type='range']):focus-visible::-webkit-slider-thumb {
+    @apply ring-2 ring-ring/30 outline-hidden;
+  }
+
+  :is(.field > input[type='range'], .input[type='range']):focus-visible::-moz-range-thumb {
+    @apply ring-2 ring-ring/30 outline-hidden;
+  }
+
+  :is(.field > input[type='range'], .input[type='range']):focus-visible::-ms-thumb {
+    @apply ring-2 ring-ring/30 outline-hidden;
   }
 
 }

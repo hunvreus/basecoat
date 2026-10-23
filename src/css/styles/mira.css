@@ -1359,15 +1359,54 @@
   }
 
   :is(.field > input[type='range'], .input[type='range'])::-webkit-slider-thumb {
-    @apply border-ring ring-ring/30 relative size-3 rounded-md border bg-white transition-[color,box-shadow] hover:ring-2 focus-visible:ring-2 active:ring-2 -mt-[calc((var(--slider-thumb-size)-var(--slider-track-height))/2)] focus-visible:outline-hidden;
+    @apply border-ring ring-ring/30 relative size-3 rounded-md border bg-white transition-[color,box-shadow] -mt-[calc((var(--slider-thumb-size)-var(--slider-track-height))/2)];
   }
 
   :is(.field > input[type='range'], .input[type='range'])::-moz-range-thumb {
-    @apply border-ring ring-ring/30 relative size-3 rounded-md border bg-white transition-[color,box-shadow] hover:ring-2 focus-visible:ring-2 active:ring-2 focus-visible:outline-hidden;
+    @apply border-ring ring-ring/30 relative size-3 rounded-md border bg-white transition-[color,box-shadow];
   }
 
   :is(.field > input[type='range'], .input[type='range'])::-ms-thumb {
-    @apply border-ring ring-ring/30 relative size-3 rounded-md border bg-white transition-[color,box-shadow] hover:ring-2 focus-visible:ring-2 active:ring-2 focus-visible:outline-hidden;
+    @apply border-ring ring-ring/30 relative size-3 rounded-md border bg-white transition-[color,box-shadow];
+  }
+
+  /* States go before the thumb pseudo-element so they still apply with native CSS nesting. */
+  @media (hover: hover) {
+    :is(.field > input[type='range'], .input[type='range']):hover::-webkit-slider-thumb {
+      @apply ring-2;
+    }
+
+    :is(.field > input[type='range'], .input[type='range']):hover::-moz-range-thumb {
+      @apply ring-2;
+    }
+
+    :is(.field > input[type='range'], .input[type='range']):hover::-ms-thumb {
+      @apply ring-2;
+    }
+  }
+
+  :is(.field > input[type='range'], .input[type='range']):focus-visible::-webkit-slider-thumb {
+    @apply ring-2 outline-hidden;
+  }
+
+  :is(.field > input[type='range'], .input[type='range']):focus-visible::-moz-range-thumb {
+    @apply ring-2 outline-hidden;
+  }
+
+  :is(.field > input[type='range'], .input[type='range']):focus-visible::-ms-thumb {
+    @apply ring-2 outline-hidden;
+  }
+
+  :is(.field > input[type='range'], .input[type='range']):active::-webkit-slider-thumb {
+    @apply ring-2;
+  }
+
+  :is(.field > input[type='range'], .input[type='range']):active::-moz-range-thumb {
+    @apply ring-2;
+  }
+
+  :is(.field > input[type='range'], .input[type='range']):active::-ms-thumb {
+    @apply ring-2;
   }
 
 }
