@@ -1,6 +1,10 @@
 # Changelog
 
-## Unreleased
+## [Unreleased]
+
+### Fixed
+
+- Prevented Escape from dismissing an enclosing dialog while closing an open Combobox popup.
 
 ## [1.0.2] - 2026-07-06
 
