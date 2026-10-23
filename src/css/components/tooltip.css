@@ -4,7 +4,7 @@
     @apply relative;
 
     &:before {
-      @apply absolute z-[60] w-fit max-w-xs origin-(--transform-origin) scale-95 truncate invisible opacity-0 transition-all pointer-events-none content-[attr(data-tooltip)];
+      @apply absolute block z-[60] w-fit max-w-xs origin-(--transform-origin) scale-95 truncate invisible opacity-0 transition-all pointer-events-none content-[attr(data-tooltip)];
     }
 
     &:hover:before {

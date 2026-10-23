@@ -1345,7 +1345,7 @@
 
   /* Tooltip */
   [data-tooltip]::before {
-    @apply bg-foreground text-background inline-flex items-center gap-1.5 rounded-none px-3 py-1.5 text-xs has-[.kbd]:pe-1.5 [&_.kbd]:relative [&_.kbd]:isolate [&_.kbd]:z-50 [&_.kbd]:rounded-none;
+    @apply bg-foreground text-background rounded-none px-3 py-1.5 text-xs;
   }
 
   [data-tooltip][data-arrow]::after {
