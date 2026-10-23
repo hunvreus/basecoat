@@ -30,7 +30,7 @@
 
     const handleClick = (event) => {
       const target = event.target;
-      const nav = sidebarComponent.querySelector('nav');
+      const nav = sidebarComponent.querySelector(':scope > nav');
       const isMobile = window.innerWidth < breakpoint;
 
       if (isMobile && target.closest('a, button') && !target.closest('[data-keep-mobile-sidebar-open]')) {
