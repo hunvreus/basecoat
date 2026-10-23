@@ -27,24 +27,30 @@ Import Tailwind and one full Basecoat style bundle.
 @import "basecoat-css/vega.css";
 ```
 
-Or import only the base CSS, which sets the border color.
+Or import only the base CSS, which styles horizontal and vertical separators.
 
 ```css
 @import "tailwindcss";
 @import "basecoat-css/base.css";
 ```
 
-Separator is a native `<hr>` plus Tailwind utilities and has no dedicated component CSS file.
+Separator is a native `<hr>` and has no dedicated component CSS file.
 
 Using CDN or bundler imports? See the [Installation page](/installation).
 
   </Step>
   <Step title="Add your separator HTML">
 
-Use an `<hr>`. Tailwind's preflight and Basecoat's base CSS render it as a 1px line in the `border` color, matching shadcn/ui's Separator.
+Use an `<hr>` with `role="separator"`. It renders as a 1px line in the `border` color, matching shadcn/ui's Separator.
 
 ```html
 <hr role="separator" />
+```
+
+If the separator is purely decorative, use `role="none"` instead so assistive technologies skip it. This is what shadcn/ui's `decorative` prop does.
+
+```html
+<hr role="none" />
 ```
 
   </Step>
@@ -54,14 +60,14 @@ Use an `<hr>`. Tailwind's preflight and Basecoat's base CSS render it as a 1px l
 
 ### Vertical
 
-Add `aria-orientation="vertical"` and swap the top border for an inline-start border. `self-stretch` makes it fill the height of a flex row.
+Add `aria-orientation="vertical"` for a vertical separator. It fills the height of its row.
 
 <Preview>
 <div class="flex h-5 items-center gap-4 text-sm">
   <div>Blog</div>
-  <hr role="separator" aria-orientation="vertical" class="h-auto self-stretch border-t-0 border-s" />
+  <hr role="separator" aria-orientation="vertical" />
   <div>Docs</div>
-  <hr role="separator" aria-orientation="vertical" class="h-auto self-stretch border-t-0 border-s" />
+  <hr role="separator" aria-orientation="vertical" />
   <div>Source</div>
 </div>
 </Preview>
@@ -76,12 +82,12 @@ Vertical separators between menu items with descriptions.
     <span class="font-medium">Settings</span>
     <span class="text-xs text-muted-foreground">Manage preferences</span>
   </div>
-  <hr role="separator" aria-orientation="vertical" class="h-auto self-stretch border-t-0 border-s" />
+  <hr role="separator" aria-orientation="vertical" />
   <div class="flex flex-col gap-1">
     <span class="font-medium">Account</span>
     <span class="text-xs text-muted-foreground">Profile & security</span>
   </div>
-  <hr role="separator" aria-orientation="vertical" class="hidden h-auto self-stretch border-t-0 border-s md:block" />
+  <hr role="separator" aria-orientation="vertical" class="hidden md:block" />
   <div class="hidden flex-col gap-1 md:flex">
     <span class="font-medium">Help</span>
     <span class="text-xs text-muted-foreground">Support & docs</span>
@@ -114,14 +120,15 @@ Horizontal separators between list items.
 
 ### RTL
 
-The vertical separator uses the logical `border-s` utility, so it needs no changes for right-to-left layouts.
+Separators follow document direction. Vertical separators use a logical inline-start border, so they need no changes.
 
-<Preview>
-<div dir="rtl" class="flex h-5 items-center gap-4 text-sm">
-  <div>المدونة</div>
-  <hr role="separator" aria-orientation="vertical" class="h-auto self-stretch border-t-0 border-s" />
-  <div>المستندات</div>
-  <hr role="separator" aria-orientation="vertical" class="h-auto self-stretch border-t-0 border-s" />
-  <div>المصدر</div>
+<Preview class="w-full max-w-sm">
+<div dir="rtl" class="flex flex-col gap-4 text-sm">
+  <div class="flex flex-col gap-1.5">
+    <div class="leading-none font-medium">Basecoat</div>
+    <div class="text-muted-foreground">مكونات Tailwind لأي بيئة ويب</div>
+  </div>
+  <hr role="separator" />
+  <div>مجموعة من المكونات يمكنك إضافتها إلى أي صفحة HTML، بتصميم مثل shadcn/ui.</div>
 </div>
 </Preview>

@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Added
+
+- Added vertical separators: `<hr aria-orientation="vertical">` renders as a 1px line that fills its row.
+
 ### Fixed
 
 - Prevented Escape from dismissing an enclosing dialog while closing an open Combobox popup.
