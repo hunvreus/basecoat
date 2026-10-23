@@ -165,7 +165,7 @@
     };
 
     const handleDocumentPopover = (event) => {
-      if (event.detail.source !== root) root.close(false);
+      if (!root.contains(event.detail.source)) root.close(false);
     };
 
     state.trigger.addEventListener('click', handleTriggerClick);
