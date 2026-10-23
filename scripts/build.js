@@ -64,6 +64,37 @@ async function copyDirRecursive(src, dest) {
   }
 }
 
+// Recursively inlines relative `@import "./...";` lines into a single CSS string.
+// Each file is inlined at most once per bundle (tracked in `seen`).
+async function inlineCssImports(filePath, seen) {
+  const resolved = path.resolve(filePath);
+  if (seen.has(resolved)) return '';
+  seen.add(resolved);
+
+  const source = await fs.readFile(resolved, 'utf-8');
+  const lines = source.split('\n');
+  const out = [];
+  for (const line of lines) {
+    const match = line.match(/^\s*@import\s+["'](\.{1,2}\/[^"']+)["']\s*;\s*$/);
+    if (match) {
+      const inlined = await inlineCssImports(path.join(path.dirname(resolved), match[1]), seen);
+      if (inlined) out.push(inlined.replace(/\n+$/, ''));
+    } else if (/^\s*@import\s+["']\.{1,2}\//.test(line)) {
+      throw new Error(`Unsupported relative @import (with modifiers) in ${resolved}: ${line.trim()}`);
+    } else {
+      out.push(line);
+    }
+  }
+  return out.join('\n');
+}
+
+// Writes an uncompiled single-file bundle for a dist CSS entrypoint.
+async function writeCssBundle(entryPath, outPath, label, version) {
+  const body = await inlineCssImports(entryPath, new Set());
+  const header = `/* Basecoat v${version}, ${label}, single-file source. Import after tailwindcss. */\n`;
+  await fs.writeFile(outPath, `${header}${body.replace(/\n+$/, '')}\n`);
+}
+
 // Main build function to prepare the package for publishing.
 async function build() {
   console.log('Starting build process...');
@@ -154,6 +185,20 @@ async function build() {
   await copyDirRecursive(srcCssStylesDir, cssStylesDistDir);
   await copyDirRecursive(srcCssCompatDir, cssCompatDistDir);
   console.log(`Copied split CSS folders to ${cssDistDir}`);
+
+  // Create uncompiled single-file bundles for Tailwind users without a package manager.
+  const { version } = JSON.parse(await fs.readFile(path.join(projectRoot, 'package.json'), 'utf-8'));
+  for (const style of styles) {
+    await writeCssBundle(
+      path.join(cssDistDir, `basecoat-${style}.css`),
+      path.join(cssDistDir, `basecoat-${style}.bundle.css`),
+      style,
+      version,
+    );
+  }
+  await writeCssBundle(path.join(cssDistDir, 'basecoat.css'), path.join(cssDistDir, 'basecoat.bundle.css'), 'vega', version);
+  await writeCssBundle(path.join(cssDistDir, 'basecoat-base.css'), path.join(cssDistDir, 'basecoat-base.bundle.css'), 'base (no style pack)', version);
+  console.log(`Generated single-file CSS bundles in ${cssDistDir}`);
 
   await copyDirRecursive(srcNunjucksDir, path.join(cssTemplatesDir, 'nunjucks'));
   await copyDirRecursive(srcJinjaDir, path.join(cssTemplatesDir, 'jinja'));

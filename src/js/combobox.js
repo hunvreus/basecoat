@@ -390,7 +390,11 @@
     }
 
     if (event.key === 'Escape') {
-      root.close(true);
+      if (isOpen) {
+        event.preventDefault();
+        event.stopPropagation();
+        root.close(true);
+      }
       return;
     }
 

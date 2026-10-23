@@ -28,3 +28,15 @@ Workers Builds settings:
 - Enable builds for non-production branches for branch preview URLs.
 
 Thanks for helping!
+
+## Releases and the docs site
+
+The site at basecoatui.com deploys from the `release` branch, not `main`, so the docs always match the version on npm. Nobody commits to `release` directly.
+
+To release:
+
+1. Bump the version in `package.json`, commit, tag (for example `1.1.0`) and push.
+2. Run `npm publish`.
+3. Publish a GitHub release for the tag, for example `gh release create 1.1.0 --generate-notes`.
+
+Publishing the release runs `.github/workflows/deploy-site.yml`, which points `release` at the tag. Cloudflare then builds and deploys the site. To redeploy or roll back, run that workflow manually with the tag you want live.
