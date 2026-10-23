@@ -10,12 +10,17 @@ name: Release
 #      up to about 5h50m), then points the `release` branch at the tag. Cloudflare
 #      Workers Builds deploys basecoatui.com from `release`, so the docs never describe
 #      a version npm does not serve. If you approve later than that, re-run the failed
-#      deploy-site job.
+#      jobs once approved (deploy-site, then announce).
+#   3. announce: posts the release to Discord (DISCORD_WEBHOOK_URL secret), only after
+#      deploy-site succeeded: the version is on npm and `release` has moved.
 #
-# Running this workflow manually only moves `release` to the given tag (redeploy or
-# roll back the site), and only if that version is already on npm. It never publishes.
+# Running this workflow manually never publishes to npm. Pick a mode:
+#   deploy               move `release` to the tag (redeploy or roll back the site),
+#                        only if that version is already on npm. No Discord post.
+#   announce             post the tag's GitHub release to Discord again. No deploy.
+#   deploy and announce  both, announcing only if the deploy succeeded.
 #
-# Prereleases are ignored. discord-release.yml announces releases separately.
+# Prereleases are ignored by every job.
 #
 # npm trusted publisher settings (allow `npm stage publish` only): repository
 # hunvreus/basecoat, workflow release.yml, no environment. Renaming this file breaks
@@ -27,9 +32,18 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: Tag to deploy to the site (for example 1.1.0). Must already be on npm. Does not publish to npm.
+        description: Release tag (for example 1.1.0). Never publishes to npm.
         required: true
         type: string
+      mode:
+        description: "deploy: move the site to this tag (version must be on npm). announce: post the release to Discord again. deploy and announce: both."
+        required: true
+        type: choice
+        default: deploy
+        options:
+          - deploy
+          - announce
+          - deploy and announce
 
 permissions: {}
 
@@ -139,7 +153,8 @@ jobs:
     if: >-
       always() &&
       (needs.publish.result == 'success' || needs.publish.result == 'skipped') &&
-      (github.event_name == 'workflow_dispatch' || github.event.release.prerelease == false)
+      ((github.event_name == 'release' && github.event.release.prerelease == false) ||
+      (github.event_name == 'workflow_dispatch' && inputs.mode != 'announce'))
     # GitHub-hosted jobs stop at 6 hours. The wait below gives up before that.
     timeout-minutes: 355
     permissions:
@@ -194,3 +209,69 @@ jobs:
         env:
           SHA: ${{ steps.tag.outputs.sha }}
         run: git push --force origin "$SHA:refs/heads/release"
+
+  # Same message as the old discord-release.yml.
+  announce:
+    runs-on: ubuntu-latest
+    needs: deploy-site
+    if: >-
+      always() &&
+      ((needs.deploy-site.result == 'success' &&
+      ((github.event_name == 'release' && github.event.release.prerelease == false) ||
+      (github.event_name == 'workflow_dispatch' && inputs.mode == 'deploy and announce'))) ||
+      (github.event_name == 'workflow_dispatch' && inputs.mode == 'announce'))
+    permissions:
+      contents: read
+    steps:
+      - name: Send Discord announcement
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          RELEASE_TAG_INPUT: ${{ inputs.tag }}
+          REPO: ${{ github.repository }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          test -n "$DISCORD_WEBHOOK_URL"
+
+          if [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ]; then
+            test -n "$RELEASE_TAG_INPUT"
+            curl --fail-with-body \
+              -H "Accept: application/vnd.github+json" \
+              -H "Authorization: Bearer $GH_TOKEN" \
+              -H "X-GitHub-Api-Version: 2022-11-28" \
+              "$GITHUB_API_URL/repos/$REPO/releases/tags/$RELEASE_TAG_INPUT" \
+              > release.json
+          else
+            jq '.release' "$GITHUB_EVENT_PATH" > release.json
+          fi
+
+          if [ "$(jq -r '.prerelease' release.json)" = "true" ]; then
+            echo "Skipping prerelease."
+            exit 0
+          fi
+
+          jq -n \
+            --arg repo "$REPO" \
+            --arg name "$(jq -r '.name // ""' release.json)" \
+            --arg tag "$(jq -r '.tag_name' release.json)" \
+            --arg url "$(jq -r '.html_url' release.json)" \
+            --arg body "$(jq -r '.body // ""' release.json)" \
+            '($body | if length > 1500 then .[:1500] + "...\n\n[Read more](" + $url + ")" else . end) as $description |
+            {
+              username: "Basecoat Releases",
+              allowed_mentions: { parse: [] },
+              embeds: [{
+                title: ($repo + " " + $tag),
+                url: $url,
+                description: ((if $name != "" then "**" + $name + "**\n\n" else "" end) + $description),
+                color: 5793266
+              }]
+            }' > payload.json
+
+          curl --fail-with-body \
+            --retry 3 \
+            --retry-all-errors \
+            --retry-delay 2 \
+            -H "Content-Type: application/json" \
+            -X POST \
+            -d @payload.json \
+            "$DISCORD_WEBHOOK_URL"

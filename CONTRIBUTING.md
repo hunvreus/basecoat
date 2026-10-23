@@ -42,12 +42,15 @@ To cut a release:
 Publishing the release runs `.github/workflows/release.yml`:
 
 - **publish** checks that the tag is on `main` and matches the version in `package.json`, runs `npm run check`, and stages the version on npm with `npm stage publish`, using trusted publishing. A staged version is not installable until a maintainer approves it. If the version is already staged or published, this step is skipped.
-- **deploy-site** waits until the version is live on npm, then points `release` at the tag, and Cloudflare builds and deploys the site. It checks every 30 seconds for up to about 5h50m. If you approve later than that, the job fails with a message: re-run it from the Actions tab (Re-run failed jobs) after approving. If staging fails or you reject the version, the site is not deployed.
+- **deploy-site** waits until the version is live on npm, then points `release` at the tag, and Cloudflare builds and deploys the site. It checks every 30 seconds for up to about 5h50m. If you approve later than that, the job fails with a message: after approving, use Re-run failed jobs on that run, which re-runs deploy-site and then announce. If staging fails or you reject the version, the site is not deployed.
+- **announce** posts the release notes to Discord, only after deploy-site succeeded. By then the version is installable from npm and `release` has moved, so Cloudflare is building the new site (that takes a few minutes).
 
-`discord-release.yml` announces the release on Discord as soon as it is published, independently of npm.
+Do not run `npm publish` by hand. Versions reach npm only through this workflow and your approval. The workflow needs no npm token and adds a provenance statement linking each version to the commit it was built from. Prereleases are not staged, deployed or announced.
 
-Do not run `npm publish` by hand. Versions reach npm only through this workflow and your approval. The workflow needs no npm token and adds a provenance statement linking each version to the commit it was built from. Prereleases are neither staged nor deployed.
+You can also run the Release workflow manually from the Actions tab, with a tag and a mode. A manual run never publishes to npm.
 
-To redeploy or roll back the site, run the Release workflow manually from the Actions tab with the tag you want live. A manual run only moves `release`, and only to a version that is already on npm. It never publishes.
+- `deploy` (default) redeploys or rolls back the site: it moves `release` to the tag, only if that version is already on npm. It doesn't post to Discord.
+- `announce` posts the tag's GitHub release to Discord again, for example after a failed post. It doesn't deploy.
+- `deploy and announce` does both, and announces only if the deploy succeeded.
 
 Thanks for helping!
