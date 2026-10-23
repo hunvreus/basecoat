@@ -133,4 +133,13 @@
   body {
     @apply bg-background text-foreground overscroll-none;
   }
+  hr:where([aria-orientation='vertical']) {
+    flex-shrink: 0;
+    align-self: stretch;
+    inline-size: 1px;
+    block-size: auto;
+    margin: 0;
+    border-block-start-width: 0;
+    border-inline-start-width: 1px;
+  }
 }
