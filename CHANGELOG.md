@@ -156,14 +156,16 @@
 
 ### Migration Notes
 
-To keep the previous `.form` wrapper behavior, define it in your own Tailwind CSS:
+The `.form` wrapper can't be recreated with `@apply`: Tailwind v4 only applies utilities, not Basecoat's component classes. Wrap each label and control in a `.field` instead:
 
-```css
-.form label { @apply label; }
-.form input { @apply input; }
-.form textarea { @apply textarea; }
-.form select { @apply select; }
+```html
+<div class="field">
+  <label for="email">Email</label>
+  <input id="email" type="email">
+</div>
 ```
+
+Or add the component class to each element: `class="label"`, `class="input"`, `class="textarea"`, or `class="select"` on a native `<select>`.
 
 To keep the previous document-event command APIs, add bridge listeners in your app:
 
