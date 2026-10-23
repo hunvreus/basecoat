@@ -94,6 +94,7 @@
         "components/radio-group",
         "components/select",
         "components/scroll-area",
+        "components/separator",
         "components/sidebar",
         "components/skeleton",
         "components/slider",
