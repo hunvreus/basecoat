@@ -3,9 +3,15 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { exec } from 'child_process';
 import { promisify } from 'util';
+import { transform } from 'esbuild';
 import { generateCssEntrypoints } from './generate-css-entrypoints.js';
 
 const execPromise = promisify(exec);
+
+// Tailwind CSS v4 browser baseline (https://tailwindcss.com/docs/compatibility).
+// Minified CDN CSS uses esbuild because Tailwind's --minify (Lightning CSS) can
+// randomly drop rules (parcel-bundler/lightningcss#1235).
+const cssTargets = ['chrome111', 'safari16.4', 'firefox128'];
 
 // Resolve project root, assuming this script is in <project_root>/scripts/
 const __filename = fileURLToPath(import.meta.url);
@@ -214,7 +220,13 @@ async function build() {
 
     await execPromise(`npx tailwindcss -i "${cdnCssSrc}" -o "${cssDistCdnPath}"`);
     console.log(`Generated non-minified CSS: ${cssDistCdnPath}`);
-    await execPromise(`npx tailwindcss -i "${cdnCssSrc}" -o "${cssDistCdnMinPath}" --minify`);
+    const { code, warnings } = await transform(await fs.readFile(cssDistCdnPath, 'utf-8'), {
+      loader: 'css',
+      minify: true,
+      target: cssTargets,
+    });
+    if (warnings.length) throw new Error(`esbuild warnings for ${cssDistCdnPath}: ${warnings.map((w) => w.text).join('; ')}`);
+    await fs.writeFile(cssDistCdnMinPath, code);
     console.log(`Generated minified CSS: ${cssDistCdnMinPath}`);
   }
 

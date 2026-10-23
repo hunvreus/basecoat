@@ -134,6 +134,7 @@
   },
   "devDependencies": {
     "@tailwindcss/cli": "^4.1.17",
+    "esbuild": "0.28.2",
     "prettier": "^3.5.3",
     "tailwindcss": "^4.1.17",
     "terser": "^5.42.0"

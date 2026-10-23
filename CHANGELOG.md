@@ -31,6 +31,7 @@
 - Stopped Dialogs and Command Dialogs from closing when a press starts inside the dialog and the drag ends on the backdrop. Updated the Nunjucks and Jinja templates and the docs examples. Based on [#104](https://github.com/hunvreus/basecoat/pull/104) by [@PhilipdeRijk](https://github.com/PhilipdeRijk).
 - Fixed iOS auto-zoom when tapping the Combobox input, the Combobox chips input, the Command search input, native Selects, and Input Group inputs and textareas by using `text-base` below the `md` breakpoint, like regular inputs. The compact Lyra and Mira styles keep their smaller sizes.
 - Fixed Slider thumb hover and focus rings, the RTL Sidebar submenu chevron, and some dark mode and tooltip arrow styles not applying in the unminified CDN files, because the rules were nested under pseudo-elements.
+- Fixed CDN `.min.css` builds occasionally dropping rules (such as hidden Combobox, Command and Select options) by minifying with esbuild instead of Tailwind's minifier.
 - Stopped the Toast docs example from pushing its fragment URL into the browser history with HTMX.
 - Replaced the `.form` migration snippet in the 1.0.0 notes, which fails in Tailwind v4, with markup that works.
 
