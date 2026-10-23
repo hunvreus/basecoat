@@ -4,6 +4,10 @@
 
 ## [1.1.0] - 2026-10-23
 
+### Upgrading
+
+- Toast `title`, `description`, `action.label` and `cancel.label` are now escaped as text by default. If you pass HTML in any of them, add `html: true` to your `toaster.toast()` call.
+
 ### Added
 
 - Added vertical separators: `<hr aria-orientation="vertical">` renders as a 1px line that fills its row.
@@ -28,6 +32,10 @@
 - Fixed iOS auto-zoom when tapping the Select and Command search inputs by using `text-base` below the `md` breakpoint, like regular inputs.
 - Stopped the Toast docs example from pushing its fragment URL into the browser history with HTMX.
 - Replaced the `.form` migration snippet in the 1.0.0 notes, which fails in Tailwind v4, with markup that works.
+
+### Contributors
+
+- Thanks to [@ytsruh](https://github.com/ytsruh), [@PhilipdeRijk](https://github.com/PhilipdeRijk), [@sgruendel](https://github.com/sgruendel), [@alexander-posztos](https://github.com/alexander-posztos) and [@Jezda1337](https://github.com/Jezda1337) for their contributions to this release.
 
 ## [1.0.2] - 2026-07-06
 
