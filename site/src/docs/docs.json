@@ -16,12 +16,12 @@
           "slug": "installation",
           "icon": "download"
         },
-      {
-        "type": "item",
-        "label": "Customize",
-        "slug": "customization",
-        "icon": "sliders-horizontal"
-      },
+        {
+          "type": "item",
+          "label": "Customize",
+          "slug": "customization",
+          "icon": "sliders-horizontal"
+        },
         {
           "type": "item",
           "label": "Templates",
@@ -65,6 +65,7 @@
         "components/button",
         "components/button-group",
         "components/card",
+        "components/carousel",
         {
           "type": "item",
           "slug": "components/chart",

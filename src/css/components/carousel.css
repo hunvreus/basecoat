@@ -1,0 +1,78 @@
+/* Carousel */
+@layer components {
+  .carousel {
+    @apply relative;
+
+    /* Viewport: the child that holds the slides. Native scroll-snap does the swiping. */
+    > :has(> [aria-roledescription='slide']) {
+      @apply flex [scrollbar-width:none];
+
+      &::-webkit-scrollbar {
+        @apply hidden;
+      }
+
+      > [aria-roledescription='slide'] {
+        @apply min-w-0 shrink-0 grow-0 basis-full snap-center;
+      }
+    }
+
+    &:not([data-orientation='vertical']) > :has(> [aria-roledescription='slide']) {
+      @apply -ms-4 snap-x snap-mandatory overflow-x-auto overflow-y-hidden overscroll-x-contain;
+
+      > [aria-roledescription='slide'] {
+        @apply ps-4;
+      }
+    }
+
+    &[data-orientation='vertical'] > :has(> [aria-roledescription='slide']) {
+      @apply -mt-4 flex-col snap-y snap-mandatory overflow-x-hidden overflow-y-auto;
+
+      > [aria-roledescription='slide'] {
+        @apply pt-4;
+      }
+    }
+
+    &[data-align='start'] > :has(> [aria-roledescription='slide']) > [aria-roledescription='slide'] {
+      @apply snap-start;
+    }
+
+    &[data-align='end'] > :has(> [aria-roledescription='slide']) > [aria-roledescription='slide'] {
+      @apply snap-end;
+    }
+
+    [data-carousel-prev],
+    [data-carousel-next] {
+      @apply absolute touch-manipulation;
+    }
+
+    &:not([data-orientation='vertical']) {
+      [data-carousel-prev],
+      [data-carousel-next] {
+        @apply inset-y-0 my-auto rtl:[&>svg]:rotate-180;
+      }
+
+      [data-carousel-prev] {
+        @apply -start-12;
+      }
+
+      [data-carousel-next] {
+        @apply -end-12;
+      }
+    }
+
+    &[data-orientation='vertical'] {
+      [data-carousel-prev],
+      [data-carousel-next] {
+        @apply left-1/2 -translate-x-1/2 rotate-90;
+      }
+
+      [data-carousel-prev] {
+        @apply -top-12;
+      }
+
+      [data-carousel-next] {
+        @apply -bottom-12;
+      }
+    }
+  }
+}

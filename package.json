@@ -46,6 +46,8 @@
     "./all.min": "./dist/js/all.min.js",
     "./accordion": "./dist/js/accordion.js",
     "./accordion.min": "./dist/js/accordion.min.js",
+    "./carousel": "./dist/js/carousel.js",
+    "./carousel.min": "./dist/js/carousel.min.js",
     "./chart": "./dist/js/chart.js",
     "./chart.min": "./dist/js/chart.min.js",
     "./combobox": "./dist/js/combobox.js",

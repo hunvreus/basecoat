@@ -14,6 +14,7 @@ const componentOrder = [
   'button',
   'button-group',
   'card',
+  'carousel',
   'chart',
   'collapsible',
   'command',

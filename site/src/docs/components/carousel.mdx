@@ -1,0 +1,1406 @@
+# Carousel
+
+<Preview class="w-full max-w-[12rem] sm:max-w-xs">
+  <div
+    class="carousel w-full max-w-[12rem] sm:max-w-xs"
+    role="region"
+    aria-roledescription="carousel"
+    aria-label="Numbers"
+  >
+    <div>
+      <div role="group" aria-roledescription="slide" aria-label="1 of 5">
+        <div class="p-1">
+          <div class="card">
+            <section class="flex aspect-square items-center justify-center p-6">
+              <span class="text-4xl font-semibold">1</span>
+            </section>
+          </div>
+        </div>
+      </div>
+      <div role="group" aria-roledescription="slide" aria-label="2 of 5">
+        <div class="p-1">
+          <div class="card">
+            <section class="flex aspect-square items-center justify-center p-6">
+              <span class="text-4xl font-semibold">2</span>
+            </section>
+          </div>
+        </div>
+      </div>
+      <div role="group" aria-roledescription="slide" aria-label="3 of 5">
+        <div class="p-1">
+          <div class="card">
+            <section class="flex aspect-square items-center justify-center p-6">
+              <span class="text-4xl font-semibold">3</span>
+            </section>
+          </div>
+        </div>
+      </div>
+      <div role="group" aria-roledescription="slide" aria-label="4 of 5">
+        <div class="p-1">
+          <div class="card">
+            <section class="flex aspect-square items-center justify-center p-6">
+              <span class="text-4xl font-semibold">4</span>
+            </section>
+          </div>
+        </div>
+      </div>
+      <div role="group" aria-roledescription="slide" aria-label="5 of 5">
+        <div class="p-1">
+          <div class="card">
+            <section class="flex aspect-square items-center justify-center p-6">
+              <span class="text-4xl font-semibold">5</span>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button
+      type="button"
+      class="btn"
+      data-variant="outline"
+      data-size="icon-sm"
+      data-carousel-prev
+      aria-label="Previous slide"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="lucide lucide-chevron-left"
+      >
+        <path d="m15 18-6-6 6-6" />
+      </svg>
+    </button>
+    <button
+      type="button"
+      class="btn"
+      data-variant="outline"
+      data-size="icon-sm"
+      data-carousel-next
+      aria-label="Next slide"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="lucide lucide-chevron-right"
+      >
+        <path d="m9 18 6-6-6-6" />
+      </svg>
+    </button>
+  </div>
+</Preview>
+
+## Usage
+
+<Steps>
+  <Step title="Include CSS">
+
+Import Tailwind and one full Basecoat style bundle.
+
+```css
+@import "tailwindcss";
+@import "basecoat-css/vega.css";
+```
+
+Or import only the base CSS, Carousel component CSS, and one style pack.
+
+```css
+@import "tailwindcss";
+@import "basecoat-css/base.css";
+@import "basecoat-css/components/carousel.css";
+@import "basecoat-css/styles/vega.css";
+```
+
+Using CDN or bundler imports? See the [Installation page](/installation).
+
+  </Step>
+  <Step title="Include JavaScript">
+
+Copy or serve the full Basecoat JavaScript bundle.
+
+```html
+<script src="/assets/js/all.min.js" defer></script>
+```
+
+Or copy or serve the Basecoat runtime and Carousel script.
+
+```html
+<script src="/assets/js/basecoat.min.js" defer></script>
+<script src="/assets/js/carousel.min.js" defer></script>
+```
+
+Using CDN or bundler imports? See the [Installation page](/installation).
+
+  </Step>
+  <Step title="Add your carousel HTML">
+
+```html
+<div
+  class="carousel w-full max-w-xs"
+  role="region"
+  aria-roledescription="carousel"
+  aria-label="Numbers"
+>
+  <div>
+    <div role="group" aria-roledescription="slide" aria-label="1 of 3">...</div>
+    <div role="group" aria-roledescription="slide" aria-label="2 of 3">...</div>
+    <div role="group" aria-roledescription="slide" aria-label="3 of 3">...</div>
+  </div>
+  <button
+    type="button"
+    class="btn"
+    data-variant="outline"
+    data-size="icon-sm"
+    data-carousel-prev
+    aria-label="Previous slide"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-chevron-left"
+    >
+      <path d="m15 18-6-6 6-6" />
+    </svg>
+  </button>
+  <button
+    type="button"
+    class="btn"
+    data-variant="outline"
+    data-size="icon-sm"
+    data-carousel-next
+    aria-label="Next slide"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-chevron-right"
+    >
+      <path d="m9 18 6-6-6-6" />
+    </svg>
+  </button>
+</div>
+```
+
+  </Step>
+</Steps>
+
+Basecoat's carousel is built on native CSS scroll snapping instead of [Embla](https://www.embla-carousel.com/), so it swipes and scrolls without JavaScript. The script adds the previous and next buttons, arrow keys, and the JavaScript API. Desktop mouse dragging is not supported; trackpads, touch, and the keyboard work.
+
+The previous and next buttons sit outside the carousel, so leave room for them around it.
+
+### HTML structure
+
+<dl>
+  <dt>
+    <code>
+      &lt;div class="carousel" role="region" aria-roledescription="carousel"
+      aria-label="&#123; LABEL &#125;"&gt;
+    </code>
+  </dt>
+  <dd>
+    Root carousel container. Supports <code>data-orientation="vertical"</code>,{" "}
+    <code>data-align="start|center|end"</code> (default <code>center</code>),{" "}
+    <code>data-loop</code>, and{" "}
+    <code>data-start-index="&#123; INDEX &#125;"</code> (zero-based position to
+    start on).
+    <dl>
+      <dt>
+        <code>&lt;div&gt;</code>
+      </dt>
+      <dd>
+        Scrolling viewport: the direct child that contains the slides.
+        <dl>
+          <dt>
+            <code>
+              &lt;div role="group" aria-roledescription="slide" aria-label="1 of
+              3"&gt;
+            </code>
+          </dt>
+          <dd>
+            A slide. Slides are full width by default; set their size with{" "}
+            <code>basis-*</code> utilities.
+          </dd>
+        </dl>
+      </dd>
+      <dt>
+        <code>&lt;button data-carousel-prev&gt;</code> /{" "}
+        <code>&lt;button data-carousel-next&gt;</code>
+      </dt>
+      <dd>
+        Previous and next buttons. They are disabled at the first and last
+        positions unless <code>data-loop</code> is set.
+      </dd>
+    </dl>
+  </dd>
+</dl>
+
+### JavaScript API
+
+| API                             | Type     | Description                                                                                        |
+| ------------------------------- | -------- | -------------------------------------------------------------------------------------------------- |
+| `carousel.scrollPrev()`         | Method   | Scrolls to the previous position.                                                                  |
+| `carousel.scrollNext()`         | Method   | Scrolls to the next position.                                                                      |
+| `carousel.scrollToIndex(index)` | Method   | Scrolls to a zero-based position.                                                                  |
+| `carousel.index`                | Property | The current zero-based position.                                                                   |
+| `carousel.count`                | Property | The number of positions. Several slides share one position when more than one fits in view.        |
+| `carousel.refresh()`            | Method   | Rescans slides and buttons after children change.                                                  |
+| `change`                        | Event    | Dispatched when the position or count changes, with `event.detail.index` and `event.detail.count`. |
+
+Arrow keys move between positions while focus is inside the carousel: <kbd>←</kbd> and <kbd>→</kbd> horizontally (reversed in RTL), <kbd>↑</kbd> and <kbd>↓</kbd> vertically.
+
+## Examples
+
+### Sizes
+
+Set the size of the slides with `basis-*` utilities.
+
+<Preview class="w-full max-w-sm">
+  <div
+    class="carousel w-full max-w-sm"
+    role="region"
+    aria-roledescription="carousel"
+    aria-label="Numbers"
+    data-align="start"
+  >
+    <div>
+      <div
+        class="md:basis-1/2 lg:basis-1/3"
+        role="group"
+        aria-roledescription="slide"
+        aria-label="1 of 5"
+      >
+        <div class="p-1">
+          <div class="card">
+            <section class="flex aspect-square items-center justify-center p-6">
+              <span class="text-3xl font-semibold">1</span>
+            </section>
+          </div>
+        </div>
+      </div>
+      <div
+        class="md:basis-1/2 lg:basis-1/3"
+        role="group"
+        aria-roledescription="slide"
+        aria-label="2 of 5"
+      >
+        <div class="p-1">
+          <div class="card">
+            <section class="flex aspect-square items-center justify-center p-6">
+              <span class="text-3xl font-semibold">2</span>
+            </section>
+          </div>
+        </div>
+      </div>
+      <div
+        class="md:basis-1/2 lg:basis-1/3"
+        role="group"
+        aria-roledescription="slide"
+        aria-label="3 of 5"
+      >
+        <div class="p-1">
+          <div class="card">
+            <section class="flex aspect-square items-center justify-center p-6">
+              <span class="text-3xl font-semibold">3</span>
+            </section>
+          </div>
+        </div>
+      </div>
+      <div
+        class="md:basis-1/2 lg:basis-1/3"
+        role="group"
+        aria-roledescription="slide"
+        aria-label="4 of 5"
+      >
+        <div class="p-1">
+          <div class="card">
+            <section class="flex aspect-square items-center justify-center p-6">
+              <span class="text-3xl font-semibold">4</span>
+            </section>
+          </div>
+        </div>
+      </div>
+      <div
+        class="md:basis-1/2 lg:basis-1/3"
+        role="group"
+        aria-roledescription="slide"
+        aria-label="5 of 5"
+      >
+        <div class="p-1">
+          <div class="card">
+            <section class="flex aspect-square items-center justify-center p-6">
+              <span class="text-3xl font-semibold">5</span>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button
+      type="button"
+      class="btn"
+      data-variant="outline"
+      data-size="icon-sm"
+      data-carousel-prev
+      aria-label="Previous slide"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="lucide lucide-chevron-left"
+      >
+        <path d="m15 18-6-6 6-6" />
+      </svg>
+    </button>
+    <button
+      type="button"
+      class="btn"
+      data-variant="outline"
+      data-size="icon-sm"
+      data-carousel-next
+      aria-label="Next slide"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="lucide lucide-chevron-right"
+      >
+        <path d="m9 18 6-6-6-6" />
+      </svg>
+    </button>
+  </div>
+</Preview>
+
+### Spacing
+
+Slides are spaced with `ps-4` on each slide and `-ms-4` on the viewport (`pt-4` and `-mt-4` when vertical). Override both with the same value to change the spacing.
+
+<Preview class="w-full max-w-sm">
+  <div
+    class="carousel w-full max-w-sm"
+    role="region"
+    aria-roledescription="carousel"
+    aria-label="Numbers"
+    data-align="start"
+  >
+    <div class="-ms-1">
+      <div
+        class="ps-1 md:basis-1/2 lg:basis-1/3"
+        role="group"
+        aria-roledescription="slide"
+        aria-label="1 of 5"
+      >
+        <div class="p-1">
+          <div class="card">
+            <section class="flex aspect-square items-center justify-center p-6">
+              <span class="text-2xl font-semibold">1</span>
+            </section>
+          </div>
+        </div>
+      </div>
+      <div
+        class="ps-1 md:basis-1/2 lg:basis-1/3"
+        role="group"
+        aria-roledescription="slide"
+        aria-label="2 of 5"
+      >
+        <div class="p-1">
+          <div class="card">
+            <section class="flex aspect-square items-center justify-center p-6">
+              <span class="text-2xl font-semibold">2</span>
+            </section>
+          </div>
+        </div>
+      </div>
+      <div
+        class="ps-1 md:basis-1/2 lg:basis-1/3"
+        role="group"
+        aria-roledescription="slide"
+        aria-label="3 of 5"
+      >
+        <div class="p-1">
+          <div class="card">
+            <section class="flex aspect-square items-center justify-center p-6">
+              <span class="text-2xl font-semibold">3</span>
+            </section>
+          </div>
+        </div>
+      </div>
+      <div
+        class="ps-1 md:basis-1/2 lg:basis-1/3"
+        role="group"
+        aria-roledescription="slide"
+        aria-label="4 of 5"
+      >
+        <div class="p-1">
+          <div class="card">
+            <section class="flex aspect-square items-center justify-center p-6">
+              <span class="text-2xl font-semibold">4</span>
+            </section>
+          </div>
+        </div>
+      </div>
+      <div
+        class="ps-1 md:basis-1/2 lg:basis-1/3"
+        role="group"
+        aria-roledescription="slide"
+        aria-label="5 of 5"
+      >
+        <div class="p-1">
+          <div class="card">
+            <section class="flex aspect-square items-center justify-center p-6">
+              <span class="text-2xl font-semibold">5</span>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button
+      type="button"
+      class="btn"
+      data-variant="outline"
+      data-size="icon-sm"
+      data-carousel-prev
+      aria-label="Previous slide"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="lucide lucide-chevron-left"
+      >
+        <path d="m15 18-6-6 6-6" />
+      </svg>
+    </button>
+    <button
+      type="button"
+      class="btn"
+      data-variant="outline"
+      data-size="icon-sm"
+      data-carousel-next
+      aria-label="Next slide"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="lucide lucide-chevron-right"
+      >
+        <path d="m9 18 6-6-6-6" />
+      </svg>
+    </button>
+  </div>
+</Preview>
+
+### Alignment
+
+Set `data-align` to `start`, `center` (default) or `end` to choose where the current slide sits when slides are narrower than the carousel. The dashed line marks where the current slide lines up.
+
+<Preview class="grid w-full max-w-sm gap-8">
+  <div class="grid gap-2">
+    <p class="text-muted-foreground text-sm">
+      <code>data-align="start"</code>: the current slide lines up with the start
+      edge.
+    </p>
+    <div
+      class="carousel"
+      role="region"
+      aria-roledescription="carousel"
+      aria-label="Aligned to start"
+      data-align="start"
+      data-start-index="2"
+    >
+      <span
+        aria-hidden="true"
+        class="border-primary pointer-events-none absolute inset-y-0 start-1 z-10 border-s-2 border-dashed"
+      ></span>
+      <div>
+        <div
+          class="basis-2/3"
+          role="group"
+          aria-roledescription="slide"
+          aria-label="1 of 5"
+        >
+          <div class="p-1">
+            <div class="card">
+              <section class="flex items-center justify-center p-6">
+                <span class="text-2xl font-semibold">1</span>
+              </section>
+            </div>
+          </div>
+        </div>
+        <div
+          class="basis-2/3"
+          role="group"
+          aria-roledescription="slide"
+          aria-label="2 of 5"
+        >
+          <div class="p-1">
+            <div class="card">
+              <section class="flex items-center justify-center p-6">
+                <span class="text-2xl font-semibold">2</span>
+              </section>
+            </div>
+          </div>
+        </div>
+        <div
+          class="basis-2/3"
+          role="group"
+          aria-roledescription="slide"
+          aria-label="3 of 5"
+        >
+          <div class="p-1">
+            <div class="card">
+              <section class="flex items-center justify-center p-6">
+                <span class="text-2xl font-semibold">3</span>
+              </section>
+            </div>
+          </div>
+        </div>
+        <div
+          class="basis-2/3"
+          role="group"
+          aria-roledescription="slide"
+          aria-label="4 of 5"
+        >
+          <div class="p-1">
+            <div class="card">
+              <section class="flex items-center justify-center p-6">
+                <span class="text-2xl font-semibold">4</span>
+              </section>
+            </div>
+          </div>
+        </div>
+        <div
+          class="basis-2/3"
+          role="group"
+          aria-roledescription="slide"
+          aria-label="5 of 5"
+        >
+          <div class="p-1">
+            <div class="card">
+              <section class="flex items-center justify-center p-6">
+                <span class="text-2xl font-semibold">5</span>
+              </section>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button
+        type="button"
+        class="btn"
+        data-variant="outline"
+        data-size="icon-sm"
+        data-carousel-prev
+        aria-label="Previous slide"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="lucide lucide-chevron-left"
+        >
+          <path d="m15 18-6-6 6-6" />
+        </svg>
+      </button>
+      <button
+        type="button"
+        class="btn"
+        data-variant="outline"
+        data-size="icon-sm"
+        data-carousel-next
+        aria-label="Next slide"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="lucide lucide-chevron-right"
+        >
+          <path d="m9 18 6-6-6-6" />
+        </svg>
+      </button>
+    </div>
+  </div>
+  <div class="grid gap-2">
+    <p class="text-muted-foreground text-sm">
+      <code>data-align="center"</code>: the current slide is centered.
+    </p>
+    <div
+      class="carousel"
+      role="region"
+      aria-roledescription="carousel"
+      aria-label="Aligned to center"
+      data-align="center"
+      data-start-index="2"
+    >
+      <span
+        aria-hidden="true"
+        class="border-primary pointer-events-none absolute inset-y-0 left-1/2 z-10 border-s-2 border-dashed"
+      ></span>
+      <div>
+        <div
+          class="basis-2/3"
+          role="group"
+          aria-roledescription="slide"
+          aria-label="1 of 5"
+        >
+          <div class="p-1">
+            <div class="card">
+              <section class="flex items-center justify-center p-6">
+                <span class="text-2xl font-semibold">1</span>
+              </section>
+            </div>
+          </div>
+        </div>
+        <div
+          class="basis-2/3"
+          role="group"
+          aria-roledescription="slide"
+          aria-label="2 of 5"
+        >
+          <div class="p-1">
+            <div class="card">
+              <section class="flex items-center justify-center p-6">
+                <span class="text-2xl font-semibold">2</span>
+              </section>
+            </div>
+          </div>
+        </div>
+        <div
+          class="basis-2/3"
+          role="group"
+          aria-roledescription="slide"
+          aria-label="3 of 5"
+        >
+          <div class="p-1">
+            <div class="card">
+              <section class="flex items-center justify-center p-6">
+                <span class="text-2xl font-semibold">3</span>
+              </section>
+            </div>
+          </div>
+        </div>
+        <div
+          class="basis-2/3"
+          role="group"
+          aria-roledescription="slide"
+          aria-label="4 of 5"
+        >
+          <div class="p-1">
+            <div class="card">
+              <section class="flex items-center justify-center p-6">
+                <span class="text-2xl font-semibold">4</span>
+              </section>
+            </div>
+          </div>
+        </div>
+        <div
+          class="basis-2/3"
+          role="group"
+          aria-roledescription="slide"
+          aria-label="5 of 5"
+        >
+          <div class="p-1">
+            <div class="card">
+              <section class="flex items-center justify-center p-6">
+                <span class="text-2xl font-semibold">5</span>
+              </section>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button
+        type="button"
+        class="btn"
+        data-variant="outline"
+        data-size="icon-sm"
+        data-carousel-prev
+        aria-label="Previous slide"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="lucide lucide-chevron-left"
+        >
+          <path d="m15 18-6-6 6-6" />
+        </svg>
+      </button>
+      <button
+        type="button"
+        class="btn"
+        data-variant="outline"
+        data-size="icon-sm"
+        data-carousel-next
+        aria-label="Next slide"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="lucide lucide-chevron-right"
+        >
+          <path d="m9 18 6-6-6-6" />
+        </svg>
+      </button>
+    </div>
+  </div>
+  <div class="grid gap-2">
+    <p class="text-muted-foreground text-sm">
+      <code>data-align="end"</code>: the current slide lines up with the end
+      edge.
+    </p>
+    <div
+      class="carousel"
+      role="region"
+      aria-roledescription="carousel"
+      aria-label="Aligned to end"
+      data-align="end"
+      data-start-index="2"
+    >
+      <span
+        aria-hidden="true"
+        class="border-primary pointer-events-none absolute inset-y-0 end-1 z-10 border-s-2 border-dashed"
+      ></span>
+      <div>
+        <div
+          class="basis-2/3"
+          role="group"
+          aria-roledescription="slide"
+          aria-label="1 of 5"
+        >
+          <div class="p-1">
+            <div class="card">
+              <section class="flex items-center justify-center p-6">
+                <span class="text-2xl font-semibold">1</span>
+              </section>
+            </div>
+          </div>
+        </div>
+        <div
+          class="basis-2/3"
+          role="group"
+          aria-roledescription="slide"
+          aria-label="2 of 5"
+        >
+          <div class="p-1">
+            <div class="card">
+              <section class="flex items-center justify-center p-6">
+                <span class="text-2xl font-semibold">2</span>
+              </section>
+            </div>
+          </div>
+        </div>
+        <div
+          class="basis-2/3"
+          role="group"
+          aria-roledescription="slide"
+          aria-label="3 of 5"
+        >
+          <div class="p-1">
+            <div class="card">
+              <section class="flex items-center justify-center p-6">
+                <span class="text-2xl font-semibold">3</span>
+              </section>
+            </div>
+          </div>
+        </div>
+        <div
+          class="basis-2/3"
+          role="group"
+          aria-roledescription="slide"
+          aria-label="4 of 5"
+        >
+          <div class="p-1">
+            <div class="card">
+              <section class="flex items-center justify-center p-6">
+                <span class="text-2xl font-semibold">4</span>
+              </section>
+            </div>
+          </div>
+        </div>
+        <div
+          class="basis-2/3"
+          role="group"
+          aria-roledescription="slide"
+          aria-label="5 of 5"
+        >
+          <div class="p-1">
+            <div class="card">
+              <section class="flex items-center justify-center p-6">
+                <span class="text-2xl font-semibold">5</span>
+              </section>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button
+        type="button"
+        class="btn"
+        data-variant="outline"
+        data-size="icon-sm"
+        data-carousel-prev
+        aria-label="Previous slide"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="lucide lucide-chevron-left"
+        >
+          <path d="m15 18-6-6 6-6" />
+        </svg>
+      </button>
+      <button
+        type="button"
+        class="btn"
+        data-variant="outline"
+        data-size="icon-sm"
+        data-carousel-next
+        aria-label="Next slide"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="lucide lucide-chevron-right"
+        >
+          <path d="m9 18 6-6-6-6" />
+        </svg>
+      </button>
+    </div>
+  </div>
+</Preview>
+
+### Orientation
+
+Set `data-orientation="vertical"` on the carousel and give the viewport a height.
+
+<Preview class="w-full max-w-xs">
+  <div
+    class="carousel my-12 w-full max-w-xs"
+    role="region"
+    aria-roledescription="carousel"
+    aria-label="Numbers"
+    data-orientation="vertical"
+    data-align="start"
+  >
+    <div class="-mt-1 h-[270px]">
+      <div
+        class="basis-1/2 pt-1"
+        role="group"
+        aria-roledescription="slide"
+        aria-label="1 of 5"
+      >
+        <div class="h-full p-1">
+          <div class="card h-full">
+            <section class="flex flex-1 items-center justify-center">
+              <span class="text-3xl font-semibold">1</span>
+            </section>
+          </div>
+        </div>
+      </div>
+      <div
+        class="basis-1/2 pt-1"
+        role="group"
+        aria-roledescription="slide"
+        aria-label="2 of 5"
+      >
+        <div class="h-full p-1">
+          <div class="card h-full">
+            <section class="flex flex-1 items-center justify-center">
+              <span class="text-3xl font-semibold">2</span>
+            </section>
+          </div>
+        </div>
+      </div>
+      <div
+        class="basis-1/2 pt-1"
+        role="group"
+        aria-roledescription="slide"
+        aria-label="3 of 5"
+      >
+        <div class="h-full p-1">
+          <div class="card h-full">
+            <section class="flex flex-1 items-center justify-center">
+              <span class="text-3xl font-semibold">3</span>
+            </section>
+          </div>
+        </div>
+      </div>
+      <div
+        class="basis-1/2 pt-1"
+        role="group"
+        aria-roledescription="slide"
+        aria-label="4 of 5"
+      >
+        <div class="h-full p-1">
+          <div class="card h-full">
+            <section class="flex flex-1 items-center justify-center">
+              <span class="text-3xl font-semibold">4</span>
+            </section>
+          </div>
+        </div>
+      </div>
+      <div
+        class="basis-1/2 pt-1"
+        role="group"
+        aria-roledescription="slide"
+        aria-label="5 of 5"
+      >
+        <div class="h-full p-1">
+          <div class="card h-full">
+            <section class="flex flex-1 items-center justify-center">
+              <span class="text-3xl font-semibold">5</span>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button
+      type="button"
+      class="btn"
+      data-variant="outline"
+      data-size="icon-sm"
+      data-carousel-prev
+      aria-label="Previous slide"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="lucide lucide-chevron-left"
+      >
+        <path d="m15 18-6-6 6-6" />
+      </svg>
+    </button>
+    <button
+      type="button"
+      class="btn"
+      data-variant="outline"
+      data-size="icon-sm"
+      data-carousel-next
+      aria-label="Next slide"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="lucide lucide-chevron-right"
+      >
+        <path d="m9 18 6-6-6-6" />
+      </svg>
+    </button>
+  </div>
+</Preview>
+
+### Loop
+
+Add `data-loop` to go back to the first slide after the last one, and to the last slide before the first one.
+
+<Preview class="w-full max-w-[12rem] sm:max-w-xs">
+  <div
+    class="carousel w-full max-w-[12rem] sm:max-w-xs"
+    role="region"
+    aria-roledescription="carousel"
+    aria-label="Numbers"
+    data-loop
+  >
+    <div>
+      <div role="group" aria-roledescription="slide" aria-label="1 of 3">
+        <div class="p-1">
+          <div class="card">
+            <section class="flex aspect-square items-center justify-center p-6">
+              <span class="text-4xl font-semibold">1</span>
+            </section>
+          </div>
+        </div>
+      </div>
+      <div role="group" aria-roledescription="slide" aria-label="2 of 3">
+        <div class="p-1">
+          <div class="card">
+            <section class="flex aspect-square items-center justify-center p-6">
+              <span class="text-4xl font-semibold">2</span>
+            </section>
+          </div>
+        </div>
+      </div>
+      <div role="group" aria-roledescription="slide" aria-label="3 of 3">
+        <div class="p-1">
+          <div class="card">
+            <section class="flex aspect-square items-center justify-center p-6">
+              <span class="text-4xl font-semibold">3</span>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button
+      type="button"
+      class="btn"
+      data-variant="outline"
+      data-size="icon-sm"
+      data-carousel-prev
+      aria-label="Previous slide"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="lucide lucide-chevron-left"
+      >
+        <path d="m15 18-6-6 6-6" />
+      </svg>
+    </button>
+    <button
+      type="button"
+      class="btn"
+      data-variant="outline"
+      data-size="icon-sm"
+      data-carousel-next
+      aria-label="Next slide"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="lucide lucide-chevron-right"
+      >
+        <path d="m9 18 6-6-6-6" />
+      </svg>
+    </button>
+  </div>
+</Preview>
+
+### API
+
+Listen for `change` to do things like show the current slide number and total slides.
+
+```html
+<div class="carousel" id="my-carousel" …>…</div>
+<p id="my-carousel-status">Slide 1 of 5</p>
+```
+
+```js
+const carousel = document.getElementById("my-carousel");
+const status = document.getElementById("my-carousel-status");
+
+carousel.addEventListener("change", (event) => {
+  const { index, count } = event.detail;
+  status.textContent = `Slide ${index + 1} of ${count}`;
+});
+```
+
+<Preview class="w-full max-w-[12rem] sm:max-w-xs">
+  <div class="w-full max-w-[12rem] sm:max-w-xs">
+    <div
+      class="carousel"
+      id="carousel-api"
+      role="region"
+      aria-roledescription="carousel"
+      aria-label="Numbers"
+    >
+      <div>
+        <div role="group" aria-roledescription="slide" aria-label="1 of 5">
+          <div class="p-1">
+            <div class="card">
+              <section class="flex aspect-square items-center justify-center p-6">
+                <span class="text-4xl font-semibold">1</span>
+              </section>
+            </div>
+          </div>
+        </div>
+        <div role="group" aria-roledescription="slide" aria-label="2 of 5">
+          <div class="p-1">
+            <div class="card">
+              <section class="flex aspect-square items-center justify-center p-6">
+                <span class="text-4xl font-semibold">2</span>
+              </section>
+            </div>
+          </div>
+        </div>
+        <div role="group" aria-roledescription="slide" aria-label="3 of 5">
+          <div class="p-1">
+            <div class="card">
+              <section class="flex aspect-square items-center justify-center p-6">
+                <span class="text-4xl font-semibold">3</span>
+              </section>
+            </div>
+          </div>
+        </div>
+        <div role="group" aria-roledescription="slide" aria-label="4 of 5">
+          <div class="p-1">
+            <div class="card">
+              <section class="flex aspect-square items-center justify-center p-6">
+                <span class="text-4xl font-semibold">4</span>
+              </section>
+            </div>
+          </div>
+        </div>
+        <div role="group" aria-roledescription="slide" aria-label="5 of 5">
+          <div class="p-1">
+            <div class="card">
+              <section class="flex aspect-square items-center justify-center p-6">
+                <span class="text-4xl font-semibold">5</span>
+              </section>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button
+        type="button"
+        class="btn"
+        data-variant="outline"
+        data-size="icon-sm"
+        data-carousel-prev
+        aria-label="Previous slide"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="lucide lucide-chevron-left"
+        >
+          <path d="m15 18-6-6 6-6" />
+        </svg>
+      </button>
+      <button
+        type="button"
+        class="btn"
+        data-variant="outline"
+        data-size="icon-sm"
+        data-carousel-next
+        aria-label="Next slide"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="lucide lucide-chevron-right"
+        >
+          <path d="m9 18 6-6-6-6" />
+        </svg>
+      </button>
+    </div>
+    <p
+      class="text-muted-foreground py-2 text-center text-sm"
+      id="carousel-api-status"
+    >
+      Slide 1 of 5
+    </p>
+  </div>
+</Preview>
+
+### RTL
+
+Set `dir="rtl"` on the carousel or a parent element. Swiping, the buttons, and the arrow keys follow the reading direction.
+
+<Preview class="w-full max-w-[12rem] sm:max-w-xs">
+  <div
+    class="carousel w-full max-w-[12rem] sm:max-w-xs"
+    dir="rtl"
+    role="region"
+    aria-roledescription="carousel"
+    aria-label="أرقام"
+  >
+    <div>
+      <div role="group" aria-roledescription="slide" aria-label="1 من 3">
+        <div class="p-1">
+          <div class="card">
+            <section class="flex aspect-square items-center justify-center p-6">
+              <span class="text-4xl font-semibold">١</span>
+            </section>
+          </div>
+        </div>
+      </div>
+      <div role="group" aria-roledescription="slide" aria-label="2 من 3">
+        <div class="p-1">
+          <div class="card">
+            <section class="flex aspect-square items-center justify-center p-6">
+              <span class="text-4xl font-semibold">٢</span>
+            </section>
+          </div>
+        </div>
+      </div>
+      <div role="group" aria-roledescription="slide" aria-label="3 من 3">
+        <div class="p-1">
+          <div class="card">
+            <section class="flex aspect-square items-center justify-center p-6">
+              <span class="text-4xl font-semibold">٣</span>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button
+      type="button"
+      class="btn"
+      data-variant="outline"
+      data-size="icon-sm"
+      data-carousel-prev
+      aria-label="الشريحة السابقة"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="lucide lucide-chevron-left"
+      >
+        <path d="m15 18-6-6 6-6" />
+      </svg>
+    </button>
+    <button
+      type="button"
+      class="btn"
+      data-variant="outline"
+      data-size="icon-sm"
+      data-carousel-next
+      aria-label="الشريحة التالية"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="lucide lucide-chevron-right"
+      >
+        <path d="m9 18 6-6-6-6" />
+      </svg>
+    </button>
+  </div>
+</Preview>

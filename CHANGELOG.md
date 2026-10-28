@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Added
+
+- Added the Carousel component (`.carousel`), built on native CSS scroll snapping with no dependencies. It supports `basis-*` slide sizes, spacing utilities, `data-orientation="vertical"`, `data-align="start|center|end"`, `data-loop` (rewinds to the other end), `data-start-index`, arrow keys, RTL, and a JavaScript API (`scrollPrev()`, `scrollNext()`, `scrollToIndex()`, `index`, `count`, `refresh()` and a `change` event). Unlike shadcn/ui's Embla-based carousel, it does not support mouse dragging or endless looping at the moment.
+
 ## [1.1.0] - 2026-10-23
 
 ### Upgrading
@@ -198,7 +202,7 @@ The `.form` wrapper can't be recreated with `@apply`: Tailwind v4 only applies u
 ```html
 <div class="field">
   <label for="email">Email</label>
-  <input id="email" type="email">
+  <input id="email" type="email" />
 </div>
 ```
 
@@ -207,17 +211,17 @@ Or add the component class to each element: `class="label"`, `class="input"`, `c
 To keep the previous document-event command APIs, add bridge listeners in your app:
 
 ```js
-document.addEventListener('basecoat:toast', (event) => {
-  document.getElementById('toaster')?.toast(event.detail?.config || {});
+document.addEventListener("basecoat:toast", (event) => {
+  document.getElementById("toaster")?.toast(event.detail?.config || {});
 });
 
-document.addEventListener('basecoat:sidebar', (event) => {
-  const sidebar = document.getElementById(event.detail?.id || 'sidebar');
-  const action = event.detail?.action || 'toggle';
-  if (['open', 'close', 'toggle'].includes(action)) sidebar?.[action]();
+document.addEventListener("basecoat:sidebar", (event) => {
+  const sidebar = document.getElementById(event.detail?.id || "sidebar");
+  const action = event.detail?.action || "toggle";
+  if (["open", "close", "toggle"].includes(action)) sidebar?.[action]();
 });
 
-document.addEventListener('basecoat:theme', (event) => {
+document.addEventListener("basecoat:theme", (event) => {
   const mode = event.detail?.mode;
   mode ? window.basecoat.theme.set(mode) : window.basecoat.theme.toggle();
 });

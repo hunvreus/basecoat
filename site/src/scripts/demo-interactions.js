@@ -96,6 +96,15 @@ document.addEventListener("click", (event) => {
   }
 });
 
+document.addEventListener("change", (event) => {
+  const carousel = document.getElementById("carousel-api");
+  if (carousel) {
+    const status = document.getElementById("carousel-api-status");
+    const { index, count } = event.detail;
+    if (status) status.textContent = `Slide ${index + 1} of ${count}`;
+  }
+});
+
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", initDemos, { once: true });
 } else {

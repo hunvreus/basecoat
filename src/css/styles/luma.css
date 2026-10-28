@@ -749,6 +749,11 @@
     @apply px-4 [.border-t]:pt-4;
   }
 
+  /* Carousel */
+  .carousel :is([data-carousel-prev], [data-carousel-next]) {
+    @apply rounded-full;
+  }
+
   /* Chart */
   .chart {
     --chart-bar-radius: 6px;
