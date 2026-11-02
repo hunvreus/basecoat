@@ -283,6 +283,25 @@ Use `window.basecoat.initAll()` after manually inserting HTML that contains Base
 
 Use `window.basecoat.initAll({ force: true })` when a framework or navigation library restores previously initialized DOM from a cache, such as an HTMX history restore. Force mode destroys existing component instances before reinitializing them, so it also resets transient state such as open menus, focus state, and active interactions.
 
+#### Deferring mutations
+
+Use `window.basecoat.deferMutations()` when a library updates the DOM in steps, such as a swap followed by a settle phase, and components should only initialize once the DOM is final:
+
+```js
+const release = window.basecoat.deferMutations();
+try {
+  await updateDOMAndSettle();
+} finally {
+  release();
+}
+```
+
+- While a lease is held, Basecoat keeps observing the DOM but waits to initialize or clean up components. Each call returns its own release function; calling it again does nothing.
+- When the last lease is released, Basecoat destroys components that are still detached and initializes added components that are still in the document.
+- Page-load initialization, `init()`, `initAll()` and `refresh()` are not deferred.
+
+Unlike `stop()`, deferral keeps the removals Basecoat needs for cleanup. If `stop()` is called while a lease is held, the release still cleans up detached components but does not initialize added ones. Call `initAll()` after `start()` to initialize them.
+
 ## Compatibility
 
 Basecoat 1.0 introduces new style packs and a smaller public API based on root classes plus semantic HTML and documented attributes. If you need pre-1.0 class aliases while migrating, load the compatibility stylesheet after your Basecoat stylesheet.
