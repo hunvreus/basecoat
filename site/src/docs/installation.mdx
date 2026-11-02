@@ -285,7 +285,7 @@ Use `window.basecoat.initAll({ force: true })` when a framework or navigation li
 
 #### Deferring mutations
 
-Use `window.basecoat.deferMutations()` when a library updates the DOM in several steps and components should only initialize once the DOM is final, for example a swap followed by a settle phase that restores attributes. It returns a release function:
+Use `window.basecoat.deferMutations()` when a library updates the DOM in steps, such as a swap followed by a settle phase, and components should only initialize once the DOM is final:
 
 ```js
 const release = window.basecoat.deferMutations();
@@ -296,14 +296,11 @@ try {
 }
 ```
 
-- While a lease is held, Basecoat keeps observing the DOM but does not initialize added components or destroy removed ones. Already initialized components stay interactive.
-- Each call returns its own release function. Calling it more than once does nothing, so it never releases another caller's lease. Deferred work runs when the last lease is released, in any order.
-- The last release processes the queued work synchronously, including mutations the observer has not delivered yet. It checks the final DOM: components that are still detached are destroyed, and added components that are still in the document are initialized.
-- A component that is moved, or removed and reinserted, before the release keeps its instance. A component added and removed before the release is never initialized. A component replaced by a new element with the same `id` is destroyed, and the new element is initialized.
-- `init()`, `initAll()` and `refresh()` are not deferred. Do not call them while a lease is held.
-- Deferral does not cover the initial page load: Basecoat still initializes components on `DOMContentLoaded`. Acquire leases after that.
+- While a lease is held, Basecoat keeps observing the DOM but waits to initialize or clean up components. Each call returns its own release function; calling it again does nothing.
+- When the last lease is released, Basecoat destroys components that are still detached and initializes added components that are still in the document.
+- Page-load initialization, `init()`, `initAll()` and `refresh()` are not deferred.
 
-Deferral is different from `window.basecoat.stop()`. `stop()` disconnects the observer, so removals made while stopped are never cleaned up, and `start()` does not scan the existing DOM. If `stop()` is called while a lease is held, the last release still destroys detached components but does not initialize added ones. Call `window.basecoat.initAll()` after `start()` to initialize them.
+Unlike `stop()`, deferral keeps the removals Basecoat needs for cleanup. If `stop()` is called while a lease is held, the release still cleans up detached components but does not initialize added ones. Call `initAll()` after `start()` to initialize them.
 
 ## Compatibility
 
