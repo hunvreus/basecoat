@@ -2,6 +2,14 @@
 
 ## [Unreleased]
 
+### Added
+
+- Added `window.basecoat.deferMutations()`, which returns a release function. While a lease is held, Basecoat keeps observing the DOM but waits until the last release to destroy components that are still detached and initialize added components that are still in the document. This lets libraries that swap and then settle the DOM, such as htmx, keep the initialization markers that the settle phase would otherwise strip.
+
+### Changed
+
+- Basecoat no longer initializes a component that was added and removed again before the mutation observer ran.
+
 ## [1.1.0] - 2026-10-23
 
 ### Upgrading

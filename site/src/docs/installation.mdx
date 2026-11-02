@@ -283,6 +283,28 @@ Use `window.basecoat.initAll()` after manually inserting HTML that contains Base
 
 Use `window.basecoat.initAll({ force: true })` when a framework or navigation library restores previously initialized DOM from a cache, such as an HTMX history restore. Force mode destroys existing component instances before reinitializing them, so it also resets transient state such as open menus, focus state, and active interactions.
 
+#### Deferring mutations
+
+Use `window.basecoat.deferMutations()` when a library updates the DOM in several steps and components should only initialize once the DOM is final, for example a swap followed by a settle phase that restores attributes. It returns a release function:
+
+```js
+const release = window.basecoat.deferMutations();
+try {
+  await updateDOMAndSettle();
+} finally {
+  release();
+}
+```
+
+- While a lease is held, Basecoat keeps observing the DOM but does not initialize added components or destroy removed ones. Already initialized components stay interactive.
+- Each call returns its own release function. Calling it more than once does nothing, so it never releases another caller's lease. Deferred work runs when the last lease is released, in any order.
+- The last release processes the queued work synchronously, including mutations the observer has not delivered yet. It checks the final DOM: components that are still detached are destroyed, and added components that are still in the document are initialized.
+- A component that is moved, or removed and reinserted, before the release keeps its instance. A component added and removed before the release is never initialized. A component replaced by a new element with the same `id` is destroyed, and the new element is initialized.
+- `init()`, `initAll()` and `refresh()` are not deferred. Do not call them while a lease is held.
+- Deferral does not cover the initial page load: Basecoat still initializes components on `DOMContentLoaded`. Acquire leases after that.
+
+Deferral is different from `window.basecoat.stop()`. `stop()` disconnects the observer, so removals made while stopped are never cleaned up, and `start()` does not scan the existing DOM. If `stop()` is called while a lease is held, the last release still destroys detached components but does not initialize added ones. Call `window.basecoat.initAll()` after `start()` to initialize them.
+
 ## Compatibility
 
 Basecoat 1.0 introduces new style packs and a smaller public API based on root classes plus semantic HTML and documented attributes. If you need pre-1.0 class aliases while migrating, load the compatibility stylesheet after your Basecoat stylesheet.
