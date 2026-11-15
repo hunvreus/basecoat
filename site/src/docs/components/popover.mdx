@@ -38,6 +38,8 @@
 
 Basecoat popovers are inline-positioned relative to the `.popover` wrapper. This differs from shadcn/ui's portalled Base UI implementation, but keeps the markup dependency-free and works with Basecoat's existing dropdown/select positioning model.
 
+Clicking outside dismisses the popover and lets the clicked control keep focus. Pressing Escape inside the popover returns focus to its trigger.
+
 <Steps>
   <Step title="Include CSS">
 

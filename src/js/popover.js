@@ -55,7 +55,7 @@
 
     const handleDocumentClick = (event) => {
       if (!popoverComponent.contains(event.target)) {
-        closePopover();
+        closePopover(false);
       }
     };
 

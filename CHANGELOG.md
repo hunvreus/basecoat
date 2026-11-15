@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Fixed
+
+- Preserve focus on the clicked control when an outside click dismisses a Popover.
+
 ## [1.1.0] - 2026-10-23
 
 ### Upgrading
