@@ -15,7 +15,7 @@
 
 ## Cloudflare Workers deploys
 
-Docs are built with ReallySimpleDocs and Astro 7 and deployed as Workers Static Assets from `site/dist`. The docs lockfile pins the ReallySimpleDocs Astro 7 release candidate by commit until its 1.1.0 npm release.
+Docs are built with ReallySimpleDocs and Astro 7 and deployed as Workers Static Assets from `site/dist`.
 
 - Local preview: `npm run workers:dev`
 - Production deploy: `npm run workers:deploy`

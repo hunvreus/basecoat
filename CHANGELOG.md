@@ -22,7 +22,7 @@
 
 - Toast supports swipe dismissal, promise updates and an expandable three-toast stack. Hovering or focusing the stack pauses dismissal. Existing category names, timeout defaults and action attributes remain supported.
 - Accordion, Sidebar and Trace opt into animated disclosures with `transition-details`. Plain disclosures open immediately. Animated disclosures, Drawer and Sheet respect reduced motion.
-- Upgraded the docs build to Astro 7. Chart examples now load Chart.js locally on the Chart page and reinitialize on history navigation.
+- Upgraded the docs build to Astro 7 and ReallySimpleDocs 1.1.0. Chart examples now load Chart.js locally on the Chart page and reinitialize on history navigation.
 - Alert links have dotted underlines with stronger contrast on hover and keyboard focus. Documentation previews use the public Tabs and Code Block components. Chart and Data Table show browser setup in numbered steps.
 
 ### Fixed
