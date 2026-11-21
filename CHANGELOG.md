@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [1.2.1] - 2026-11-21
+
 ### Fixed
 
 - Clicking or tabbing out of a Popover dismisses it and preserves focus on the next control. Thanks to @memleakd for [reporting the issue](https://github.com/hunvreus/basecoat/issues/225) and @yuxino for [the outside-click fix](https://github.com/hunvreus/basecoat/pull/227).
