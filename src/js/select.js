@@ -247,20 +247,37 @@
     updateValue(root, state.options.filter(opt => state.selectedOptions.has(opt)));
   };
 
+  const chooseOption = (root, state, option) => {
+    if (state.isMultiple) {
+      toggleMultipleValue(root, option);
+    } else if (state.placeholder && getValue(option) === '') {
+      updateValue(root, null);
+    } else if (option.getAttribute('aria-selected') !== 'true') {
+      updateValue(root, option);
+    }
+  };
+
   const handleKeyNavigation = (event, root) => {
     const state = states.get(root);
     const isPopoverOpen = state.popover.getAttribute('aria-hidden') === 'false';
 
-    if (!['ArrowDown', 'ArrowUp', 'Enter', 'Home', 'End', 'Escape'].includes(event.key)) return;
-
     if (!isPopoverOpen) {
-      if (event.key !== 'Enter' && event.key !== 'Escape') {
+      // The native button opens on Enter and Space.
+      if (['ArrowDown', 'ArrowUp', 'Home', 'End'].includes(event.key)) {
         event.preventDefault();
         root.open();
       }
       return;
     }
 
+    const option = state.options[state.activeIndex];
+    if (event.key === 'Tab') {
+      if (option && !state.isMultiple) chooseOption(root, state, option);
+      root.close(false);
+      return;
+    }
+
+    if (!['ArrowDown', 'ArrowUp', 'Enter', ' ', 'Home', 'End', 'Escape'].includes(event.key)) return;
     event.preventDefault();
 
     if (event.key === 'Escape') {
@@ -268,20 +285,10 @@
       return;
     }
 
-    if (event.key === 'Enter') {
-      if (state.activeIndex > -1) {
-        const option = state.options[state.activeIndex];
-        if (state.isMultiple) {
-          toggleMultipleValue(root, option);
-          if (state.closeOnSelect) root.close();
-        } else {
-          if (state.placeholder && getValue(option) === '') {
-            updateValue(root, null);
-          } else if (root.value !== getValue(option)) {
-            updateValue(root, option);
-          }
-          root.close();
-        }
+    if (event.key === 'Enter' || event.key === ' ') {
+      if (option) {
+        chooseOption(root, state, option);
+        if (!state.isMultiple || state.closeOnSelect) root.close();
       }
       return;
     }
@@ -352,21 +359,12 @@
       const option = state.options.find(opt => opt === clickedOption);
       if (!option) return;
 
-      if (state.isMultiple) {
-        toggleMultipleValue(root, option);
-        if (state.closeOnSelect) {
-          root.close();
-        } else {
-          setActiveOption(state, state.options.indexOf(option));
-          state.trigger.focus();
-        }
-      } else {
-        if (state.placeholder && getValue(option) === '') {
-          updateValue(root, null);
-        } else if (root.value !== getValue(option)) {
-          updateValue(root, option);
-        }
+      chooseOption(root, state, option);
+      if (!state.isMultiple || state.closeOnSelect) {
         root.close();
+      } else {
+        setActiveOption(state, state.options.indexOf(option));
+        state.trigger.focus();
       }
     };
     const handleDocumentClick = (event) => {

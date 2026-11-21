@@ -141,44 +141,6 @@ const sidebarSections = [
 <!doctype html>
 <html lang="en">
   <head>
-    <script is:inline>
-      (() => {
-        const media = matchMedia("(prefers-color-scheme: dark)");
-        const getStoredTheme = () => {
-          try {
-            return localStorage.getItem("themeMode");
-          } catch (_) {
-            return null;
-          }
-        };
-        const syncTheme = () => {
-          const stored = getStoredTheme();
-          document.documentElement.classList.toggle("dark", stored ? stored === "dark" : media.matches);
-        };
-        try {
-          syncTheme();
-        } catch (_) {}
-        media.addEventListener("change", () => {
-          if (!getStoredTheme()) syncTheme();
-        });
-        document.addEventListener("basecoat:theme", (event) => {
-          const mode = event.detail?.mode;
-          if (mode === "system") {
-            try {
-              localStorage.removeItem("themeMode");
-            } catch (_) {}
-            syncTheme();
-            return;
-          }
-          const dark = mode === "dark" || (!mode && !document.documentElement.classList.contains("dark"));
-          document.documentElement.classList.toggle("dark", dark);
-          try {
-            localStorage.setItem("themeMode", dark ? "dark" : "light");
-          } catch (_) {}
-          document.dispatchEvent(new CustomEvent("basecoat:themechange", { detail: { mode: dark ? "dark" : "light" } }));
-        });
-      })();
-    </script>
     <StyleHead />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />

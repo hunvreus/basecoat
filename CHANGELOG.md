@@ -2,6 +2,13 @@
 
 ## [Unreleased]
 
+### Fixed
+
+- Clicking or tabbing out of a Popover dismisses it and preserves focus on the next control. Thanks to @memleakd for [reporting the issue](https://github.com/hunvreus/basecoat/issues/225) and @yuxino for [the outside-click fix](https://github.com/hunvreus/basecoat/pull/227).
+- In Select, Space selects the highlighted option and Tab closes the list. Tabbing out of a single Select also commits the highlighted option.
+- The optional CDN compatibility stylesheet preserves the theme’s default border color.
+- Documentation pages follow live system color scheme changes while respecting a saved light or dark preference.
+
 ## [1.2.0] - 2026-11-21
 
 ### Breaking changes

@@ -136,7 +136,11 @@ function checkMinifiedCss() {
     const minFile = path.join(dist, minName);
     if (!fs.existsSync(minFile)) { errors.push(`dist/${minName} is missing`); continue; }
     const min = flatSelectors(fs.readFileSync(minFile, 'utf8'));
-    const missing = [...flatSelectors(fs.readFileSync(path.join(dist, name), 'utf8'))].filter((key) => !min.has(key));
+    const source = flatSelectors(fs.readFileSync(path.join(dist, name), 'utf8'));
+    if (name === 'basecoat-compat.cdn.css' && (source.has('@layer base || *') || min.has('@layer base || *'))) {
+      errors.push('The compat CDN stylesheet includes a global base reset.');
+    }
+    const missing = [...source].filter((key) => !min.has(key));
     if (missing.length) errors.push(`dist/${minName} dropped ${missing.length} selector(s) from dist/${name}, e.g. ${missing.slice(0, Number(process.env.SHOW || 3)).join('; ')}`);
   }
 }

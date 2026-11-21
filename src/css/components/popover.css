@@ -103,5 +103,10 @@
 
   .popover {
     @apply relative inline-flex;
+
+    /* Make autofocus targets visible as soon as the panel opens. */
+    > [data-popover][aria-hidden='false'] {
+      transition-property: opacity, scale, translate;
+    }
   }
 }

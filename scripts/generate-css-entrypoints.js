@@ -99,7 +99,14 @@ export async function generateCssEntrypoints({ cssDir = path.resolve('src/css') 
   await writeIfChanged(path.join(cssDir, 'basecoat.all.css'), '@import "./basecoat.css";\n');
   await writeIfChanged(path.join(cssDir, 'basecoat.cdn.css'), '@import "tailwindcss" source(none);\n@import "./basecoat.css";\n');
   await writeIfChanged(path.join(cssDir, 'basecoat-compat.css'), '@import "./compat/legacy.css";\n');
-  await writeIfChanged(path.join(cssDir, 'basecoat-compat.cdn.css'), '@import "tailwindcss" source(none);\n@reference "./basecoat.css";\n@import "./basecoat-compat.css";\n');
+  await writeIfChanged(path.join(cssDir, 'basecoat-compat.cdn.css'), [
+    '@layer theme, base, components, utilities;',
+    '@import "tailwindcss/theme.css" layer(theme);',
+    '@import "tailwindcss/utilities.css" layer(utilities) source(none);',
+    '@reference "./basecoat.css";',
+    '@import "./basecoat-compat.css";',
+    '',
+  ].join('\n'));
   await writeIfChanged(path.join(cssDir, 'typeset.cdn.css'), '@import "./typeset.css";\n');
 
   return { components, styles };

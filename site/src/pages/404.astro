@@ -8,25 +8,6 @@ const description = "This page does not exist, or it may have moved.";
 <!doctype html>
 <html lang="en">
   <head>
-    <script is:inline>
-      (() => {
-        const media = matchMedia("(prefers-color-scheme: dark)");
-        const getStoredTheme = () => {
-          try {
-            return localStorage.getItem("themeMode");
-          } catch (_) {
-            return null;
-          }
-        };
-        const syncTheme = () => {
-          const stored = getStoredTheme();
-          document.documentElement.classList.toggle("dark", stored ? stored === "dark" : media.matches);
-        };
-        try {
-          syncTheme();
-        } catch (_) {}
-      })();
-    </script>
     <StyleHead />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />

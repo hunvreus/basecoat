@@ -26,16 +26,10 @@
       document.dispatchEvent(new CustomEvent('basecoat:popover', {
         detail: { source: popoverComponent }
       }));
-      
-      const elementToFocus = content.querySelector('[autofocus]');
-      if (elementToFocus) {
-        content.addEventListener('transitionend', () => {
-          elementToFocus.focus();
-        }, { once: true });
-      }
 
       trigger.setAttribute('aria-expanded', 'true');
       content.setAttribute('aria-hidden', 'false');
+      content.querySelector('[autofocus]')?.focus();
     };
 
     const handleTriggerClick = () => {
@@ -50,12 +44,17 @@
     const handleKeydown = (event) => {
       if (event.key === 'Escape') {
         closePopover();
+      } else if (event.key === 'Tab' && trigger.getAttribute('aria-expanded') === 'true') {
+        // Check focus after the browser has moved it to the next control.
+        requestAnimationFrame(() => {
+          if (!popoverComponent.contains(document.activeElement)) closePopover(false);
+        });
       }
     };
 
     const handleDocumentClick = (event) => {
       if (!popoverComponent.contains(event.target)) {
-        closePopover();
+        closePopover(false);
       }
     };
 
