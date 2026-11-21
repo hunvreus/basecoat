@@ -20,6 +20,7 @@ export default defineConfig({
     host: '127.0.0.1',
   },
   vite: {
+    optimizeDeps: { include: ['chart.js/auto'] },
     build: {
       assetsInlineLimit: 0,
     },

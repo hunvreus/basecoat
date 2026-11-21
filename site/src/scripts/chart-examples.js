@@ -1,3 +1,6 @@
+import Chart from "chart.js/auto";
+import "basecoat-css/chart";
+
 const visitorsByDay = [
   { date: "Apr 1", desktop: 222, mobile: 150 },
   { date: "Apr 5", desktop: 373, mobile: 290 },
@@ -40,12 +43,12 @@ const defaultScales = {
 
 const initChart = (id, config) => {
   const canvas = document.getElementById(id);
-  if (!canvas || canvas.dataset.chartInitialized) return;
-  window.basecoat.chart(canvas, config);
+  if (!canvas || canvas.chart) return;
+  window.basecoat.chart(canvas, { ...config, Chart });
 };
 
 const initChartExamples = () => {
-  if (!window.Chart || !window.basecoat?.chart) return;
+  if (!document.getElementById("chart-example-overview")) return;
 
   initChart("chart-example-overview", {
     type: "line",
@@ -220,26 +223,11 @@ const initChartExamples = () => {
   });
 };
 
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", initChartExamples, { once: true });
-} else {
-  initChartExamples();
-}
-
-if (!window.__basecoatChartExamplesObserver) {
-  let pending = false;
-  const queueInitChartExamples = () => {
-    if (pending) return;
-    pending = true;
-    requestAnimationFrame(() => {
-      pending = false;
-      initChartExamples();
-    });
-  };
-
-  window.__basecoatChartExamplesObserver = new MutationObserver(queueInitChartExamples);
-  window.__basecoatChartExamplesObserver.observe(document.body, {
-    childList: true,
-    subtree: true,
-  });
-}
+initChartExamples();
+document.addEventListener("htmx:afterSettle", initChartExamples);
+document.addEventListener("htmx:historyRestore", initChartExamples);
+document.addEventListener("htmx:beforeHistorySave", () => {
+  for (const canvas of document.querySelectorAll('canvas[id^="chart-example-"]')) {
+    canvas._destroy?.();
+  }
+});

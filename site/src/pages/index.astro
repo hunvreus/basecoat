@@ -193,7 +193,7 @@ const sidebarSections = [
     <meta name="twitter:title" content={`${title} | Basecoat`} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={socialImage} />
-    <script src={basecoatJsUrl} defer></script>
+    <script is:inline src={basecoatJsUrl} defer></script>
   </head>
   <body class="min-h-dvh overflow-x-clip bg-background text-foreground antialiased">
     <CommandDialog />

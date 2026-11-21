@@ -9,12 +9,13 @@
   - Issues are addressed in `issue/123-main-issue` branches.
   - When ready, open a PR against `main`.
 - Keep changes focused: one feature or fix per PR.
+- Use Node.js 24 for local builds to match CI.
 - Test locally before submitting: `npm run check` (package) and `npm run check:site` (docs site). CI runs both on every PR.
 - Follow existing code style.
 
 ## Cloudflare Workers deploys
 
-Docs are built with ReallySimpleDocs/Astro and deployed as Workers Static Assets from `site/dist`.
+Docs are built with ReallySimpleDocs and Astro 7 and deployed as Workers Static Assets from `site/dist`. The docs lockfile pins the ReallySimpleDocs Astro 7 release candidate by commit until its 1.1.0 npm release.
 
 - Local preview: `npm run workers:dev`
 - Production deploy: `npm run workers:deploy`

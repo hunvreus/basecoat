@@ -22,6 +22,7 @@
 
 - Toast supports swipe dismissal, promise updates and an expandable three-toast stack. Hovering or focusing the stack pauses dismissal. Existing category names, timeout defaults and action attributes remain supported.
 - Accordion, Sidebar and Trace opt into animated disclosures with `transition-details`. Plain disclosures open immediately. Animated disclosures, Drawer and Sheet respect reduced motion.
+- Upgraded the docs build to Astro 7. Chart examples now load Chart.js locally on the Chart page and reinitialize on history navigation.
 - Alert links have dotted underlines with stronger contrast on hover and keyboard focus. Documentation previews use the public Tabs and Code Block components. Chart and Data Table show browser setup in numbered steps.
 
 ### Fixed
@@ -29,6 +30,7 @@
 - Dialog, Command, Drawer and Sheet each include their modal scroll lock when imported individually. Reinitializing a closing Drawer or Sheet completes the close and preserves its return value.
 - Restored timed dismissal for standalone toasts and fixed timer, focus and swipe cleanup when replacing a toaster.
 - Removed stale selection attributes from tab panels in templates and documentation. Corrected arrow-key navigation in RTL Tabs, directional Button icon spacing and small Nova Button Group corners. Improved forced-colors focus indicators on Button, Toggle, Accordion, Slider and linked Items.
+- Fixed click and keyboard navigation after replacing a tablist and calling `tabs.refresh()`.
 - Fixed RTL Trace chevrons in the standalone CDN stylesheets.
 - Reserved space for the desktop table of contents and classic scrollbars during docs page loads.
 

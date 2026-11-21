@@ -1,6 +1,4 @@
-import basecoatRuntimeSource from "../../../../src/js/basecoat.js?raw"
-import chartRuntimeSource from "../../../../src/js/chart.js?raw"
-import chartExamplesSource from "../../scripts/chart-examples.js?raw"
+import ChartExamples from "../../components/ChartExamples.astro"
 
 # Chart
 
@@ -214,29 +212,7 @@ window.basecoat.chart("#custom-chart", {
   <canvas id="chart-example-radar" aria-label="Channel performance radar chart"></canvas>
 </Preview>
 
-<script is:inline src="https://cdn.jsdelivr.net/npm/chart.js@4.6.1/dist/chart.umd.min.js"></script>
-<script is:inline>{`
-(() => {
-  const initChartPage = () => {
-    if (!window.Chart) {
-      requestAnimationFrame(initChartPage)
-      return
-    }
-
-    if (!window.basecoat) {
-${basecoatRuntimeSource}
-    }
-
-    if (!window.basecoat.chart) {
-${chartRuntimeSource}
-    }
-
-${chartExamplesSource}
-  }
-
-  initChartPage()
-})()
-`}</script>
+<ChartExamples />
 
 ## API
 

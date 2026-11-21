@@ -1,59 +1,36 @@
 (() => {
-  const states = new WeakMap();
-
   const isDisabled = (tab) => tab.disabled || tab.getAttribute('aria-disabled') === 'true';
-
-  const getElements = (root) => {
-    const tablist = root.querySelector('[role="tablist"]');
-    const tabs = tablist ? Array.from(tablist.querySelectorAll('[role="tab"]')) : [];
-    const panels = tabs.map(tab => document.getElementById(tab.getAttribute('aria-controls'))).filter(Boolean);
-    return { tablist, tabs, panels };
-  };
-
-  const refreshTabs = (root) => {
-    const state = states.get(root);
-    if (!state) return;
-
-    Object.assign(state, getElements(root));
-    if (!state.tablist) return;
-
-    const selected = state.tabs.find(tab => tab.getAttribute('aria-selected') === 'true' && !isDisabled(tab))
-      || state.tabs.find(tab => !isDisabled(tab));
-    if (selected) root.select(selected, false);
-  };
 
   const initTabs = (root) => {
     if (root.dataset.tabsInitialized) return;
 
-    const state = {};
-    states.set(root, state);
-    root.refresh = () => refreshTabs(root);
-
+    let tablist;
+    let tabs = [];
     const selectTab = (tabToSelect, focus = false) => {
-      if (!tabToSelect || isDisabled(tabToSelect)) return;
+      if (!tabs.includes(tabToSelect) || isDisabled(tabToSelect)) return;
 
-      state.tabs.forEach((tab) => {
-        tab.setAttribute('aria-selected', 'false');
-        tab.setAttribute('tabindex', '-1');
+      const activePanelId = tabToSelect.getAttribute('aria-controls');
+      for (const tab of tabs) {
+        const selected = tab === tabToSelect;
+        tab.setAttribute('aria-selected', String(selected));
+        tab.tabIndex = selected ? 0 : -1;
         const panel = document.getElementById(tab.getAttribute('aria-controls'));
-        if (panel) panel.hidden = true;
-      });
-
-      tabToSelect.setAttribute('aria-selected', 'true');
-      tabToSelect.setAttribute('tabindex', '0');
-      const activePanel = document.getElementById(tabToSelect.getAttribute('aria-controls'));
-      if (activePanel) activePanel.hidden = false;
+        if (panel) panel.hidden = panel.id !== activePanelId;
+      }
       if (focus) tabToSelect.focus();
     };
+    const refresh = () => {
+      tablist = Array.from(root.querySelectorAll('[role="tablist"]')).find(list => list.closest('.tabs') === root);
+      tabs = tablist ? Array.from(tablist.querySelectorAll('[role="tab"]')) : [];
+      const selected = tabs.find(tab => tab.getAttribute('aria-selected') === 'true' && !isDisabled(tab))
+        || tabs.find(tab => !isDisabled(tab));
+      if (selected) selectTab(selected);
+    };
 
+    refresh();
+    if (!tablist) return;
     root.select = selectTab;
-    refreshTabs(root);
-    if (!state.tablist) {
-      states.delete(root);
-      delete root.refresh;
-      delete root.select;
-      return;
-    }
+    root.refresh = refresh;
 
     const handleClick = (event) => {
       const clickedTab = event.target.closest('[role="tab"]');
@@ -62,14 +39,14 @@
 
     const handleKeydown = (event) => {
       const currentTab = event.target;
-      if (!state.tabs.includes(currentTab)) return;
+      if (!tabs.includes(currentTab)) return;
 
-      const enabledTabs = state.tabs.filter(tab => !isDisabled(tab));
+      const enabledTabs = tabs.filter(tab => !isDisabled(tab));
       const currentIndex = enabledTabs.indexOf(currentTab);
-      const orientation = state.tablist.getAttribute('aria-orientation') || 'horizontal';
+      const orientation = tablist.getAttribute('aria-orientation') || 'horizontal';
       if (currentIndex === -1) return;
 
-      const forward = getComputedStyle(state.tablist).direction === 'rtl' ? -1 : 1;
+      const forward = getComputedStyle(tablist).direction === 'rtl' ? -1 : 1;
       let nextTab;
       if (event.key === 'ArrowRight' && orientation === 'horizontal') nextTab = enabledTabs[(currentIndex + forward + enabledTabs.length) % enabledTabs.length];
       if (event.key === 'ArrowLeft' && orientation === 'horizontal') nextTab = enabledTabs[(currentIndex - forward + enabledTabs.length) % enabledTabs.length];
@@ -83,13 +60,12 @@
       root.select(nextTab, true);
     };
 
-    state.tablist.addEventListener('click', handleClick);
-    state.tablist.addEventListener('keydown', handleKeydown);
+    root.addEventListener('click', handleClick);
+    root.addEventListener('keydown', handleKeydown);
 
     root._destroy = () => {
-      state.tablist.removeEventListener('click', handleClick);
-      state.tablist.removeEventListener('keydown', handleKeydown);
-      states.delete(root);
+      root.removeEventListener('click', handleClick);
+      root.removeEventListener('keydown', handleKeydown);
       delete root.refresh;
       delete root.select;
     };
@@ -99,10 +75,6 @@
   };
 
   if (window.basecoat) {
-    window.basecoat.register('tabs', {
-      selector: '.tabs:not([data-tabs-initialized])',
-      init: initTabs,
-      refresh: refreshTabs,
-    });
+    window.basecoat.register('tabs', '.tabs:not([data-tabs-initialized])', initTabs);
   }
 })();

@@ -1,6 +1,7 @@
 .*
 !.gitignore
 !.gitattributes
+!.node-version
 !.github/
 !.github/workflows/
 !.github/workflows/*.yml

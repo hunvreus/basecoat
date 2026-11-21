@@ -279,7 +279,7 @@ index 8f1ffc4..95ac5f4 100644
 -}
 +/* Compatibility import. Basecoat owns component styles. */
 diff --git a/node_modules/reallysimpledocs/src/runtime/components/DefaultHead.astro b/node_modules/reallysimpledocs/src/runtime/components/DefaultHead.astro
-index b3db1b9..3ddfaca 100644
+index 2f4cfdc..83224d8 100644
 --- a/node_modules/reallysimpledocs/src/runtime/components/DefaultHead.astro
 +++ b/node_modules/reallysimpledocs/src/runtime/components/DefaultHead.astro
 @@ -1,6 +1,4 @@
@@ -292,7 +292,7 @@ index b3db1b9..3ddfaca 100644
 @@ -19,92 +17,3 @@ import basecoatJsUrl from "basecoat-css/all.min?url";
    })();
  </script>
- <script src={basecoatJsUrl}></script>
+ <script is:inline src={basecoatJsUrl}></script>
 -<script is:inline define:vars={{ copyIcon: Copy, checkIcon: Check }}>
 -  const copyText = async (text) => {
 -    if (window.isSecureContext && navigator.clipboard?.writeText) {
@@ -383,10 +383,19 @@ index b3db1b9..3ddfaca 100644
 -  }).observe(document.documentElement, { childList: true, subtree: true });
 -</script>
 diff --git a/node_modules/reallysimpledocs/src/runtime/components/DocsLayout.astro b/node_modules/reallysimpledocs/src/runtime/components/DocsLayout.astro
-index db4a93d..65de622 100644
+index dcf4e40..cc089b6 100644
 --- a/node_modules/reallysimpledocs/src/runtime/components/DocsLayout.astro
 +++ b/node_modules/reallysimpledocs/src/runtime/components/DocsLayout.astro
-@@ -116,7 +116,7 @@ const actionItems = [
+@@ -85,7 +85,7 @@ const actionItems = [
+   <CommandDialog />
+   <Sidebar menu={sidebar} />
+ 
+-  <main id="content">
++  <main id="content" hx-history-elt>
+     <header
+       class="sticky inset-x-0 top-0 isolate z-30 flex shrink-0 items-center gap-2 border-b bg-background"
+     >
+@@ -132,7 +132,7 @@ const actionItems = [
        </div>
      </header>
  
@@ -708,6 +717,18 @@ index 8dba2ee..7f186f1 100644
 +  </div>
 +  <Code slot="code" code={code} lang={lang} />
 +</Tabs>
+diff --git a/node_modules/reallysimpledocs/src/runtime/components/mdx/Tabs.astro b/node_modules/reallysimpledocs/src/runtime/components/mdx/Tabs.astro
+index 9cd8bdf..b247fab 100644
+--- a/node_modules/reallysimpledocs/src/runtime/components/mdx/Tabs.astro
++++ b/node_modules/reallysimpledocs/src/runtime/components/mdx/Tabs.astro
+@@ -40,7 +40,6 @@ const defaultValue = normalizedTabs[0]?.value;
+             id={`${id}-panel-${index + 1}`}
+             aria-labelledby={`${id}-tab-${index + 1}`}
+             tabindex="-1"
+-            aria-selected={selected ? "true" : "false"}
+             hidden={!selected}
+           >
+             <Fragment set:html={await Astro.slots.render(tab.slot)} />
 diff --git a/node_modules/reallysimpledocs/src/runtime/lib/docs.js b/node_modules/reallysimpledocs/src/runtime/lib/docs.js
 index f7b7ca8..90f11d1 100644
 --- a/node_modules/reallysimpledocs/src/runtime/lib/docs.js
@@ -768,14 +789,3 @@ index 2d10024..cd29af8 100644
 +  const pre = html.replace('<pre class="', '<pre class="scrollbar ');
 +  return `<div${attrs({ class: ["code-block", className].filter(Boolean).join(" "), "data-code-title": title || undefined })}>${actions}${pre}</div>`;
  }
-diff --git a/node_modules/reallysimpledocs/src/runtime/components/mdx/Tabs.astro b/node_modules/reallysimpledocs/src/runtime/components/mdx/Tabs.astro
---- a/node_modules/reallysimpledocs/src/runtime/components/mdx/Tabs.astro
-+++ b/node_modules/reallysimpledocs/src/runtime/components/mdx/Tabs.astro
-@@ -40,7 +40,6 @@
-             id={`${id}-panel-${index + 1}`}
-             aria-labelledby={`${id}-tab-${index + 1}`}
-             tabindex="-1"
--            aria-selected={selected ? "true" : "false"}
-             hidden={!selected}
-           >
-             <Fragment set:html={await Astro.slots.render(tab.slot)} />
