@@ -142,10 +142,10 @@
     "workers:preview": "npm run build && npm --prefix site clean-install --progress=false && npm --prefix site run workers:preview"
   },
   "devDependencies": {
-    "@tailwindcss/cli": "^4.3.1",
+    "@tailwindcss/cli": "^4.3.5",
     "esbuild": "0.28.2",
-    "prettier": "^3.5.3",
-    "tailwindcss": "^4.3.1",
-    "terser": "^5.42.0"
+    "prettier": "^3.10.1",
+    "tailwindcss": "^4.3.5",
+    "terser": "^5.51.4"
   }
 }

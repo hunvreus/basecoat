@@ -11,16 +11,16 @@
     "postinstall": "patch-package --error-on-fail"
   },
   "dependencies": {
-    "@astrojs/sitemap": "^3.7.3",
+    "@astrojs/sitemap": "^3.7.6",
     "@fontsource-variable/geist": "^5.3.0",
     "@fontsource-variable/geist-mono": "^5.3.0",
     "basecoat-css": "file:..",
     "chart.js": "4.6.1",
-    "htmx.org": "^2.0.10",
-    "lucide-static": "^1.17.0",
+    "htmx.org": "^2.0.11",
+    "lucide-static": "^1.77.0",
     "nunjucks": "^3.2.4",
     "reallysimpledocs": "1.1.0",
-    "shiki": "4.3.0",
+    "shiki": "4.6.0",
     "simple-datatables": "10.3.0"
   },
   "devDependencies": {
