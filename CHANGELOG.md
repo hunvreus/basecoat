@@ -2,9 +2,12 @@
 
 ## [Unreleased]
 
-### Upgrading
+## [1.2.0] - 2026-11-21
 
-- Replace `scrollbar-sm` with `scrollbar scrollbar-thin`. Use Tailwind CSS 4.3 or later when compiling the source stylesheets. The CDN builds include both utilities.
+### Breaking changes
+
+- Removed `scrollbar-sm` from the standard stylesheet. Replace it with `scrollbar scrollbar-thin` in markup and Tailwind `@apply` rules.
+- Compiling the source stylesheets requires Tailwind CSS 4.3 or later. The prebuilt CDN stylesheets include both scrollbar utilities.
 
 ### Added
 
