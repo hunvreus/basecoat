@@ -1,0 +1,49 @@
+/* Input OTP: the input remains the only form control and keyboard target. */
+@keyframes otp-caret {
+  0%, 70%, 100% { opacity: 1; }
+  20%, 50% { opacity: 0; }
+}
+@layer components {
+  .input-otp {
+    @apply relative inline-flex max-w-full items-center has-disabled:opacity-50;
+  }
+  .input-otp > div { display: none; }
+  .input-otp[data-input-otp-initialized] > input {
+    @apply absolute inset-0 z-20 h-full w-full cursor-text opacity-0;
+    font: 16px/1 monospace;
+    letter-spacing: -.5em;
+    text-align: left;
+  }
+  .input-otp[data-input-otp-initialized] > input:disabled { cursor: not-allowed; }
+  .input-otp[data-input-otp-initialized] > div {
+    @apply pointer-events-none flex items-center;
+  }
+  /* Keep the native long-press paste menu available on iOS. */
+  @supports (-webkit-touch-callout: none) {
+    .input-otp[data-input-otp-initialized] > input[type='text'] {
+      @apply opacity-100 border-transparent bg-transparent text-transparent caret-transparent outline-none;
+      box-shadow: none;
+    }
+    .input-otp[data-input-otp-initialized] > input::selection { background: transparent; }
+    .input-otp[data-input-otp-initialized] > input[type='text']:autofill { opacity: 0; }
+  }
+  .input-otp > div > div { @apply flex items-center; }
+  .input-otp > div > div > span {
+    @apply relative flex shrink-0 items-center justify-center;
+  }
+  .input-otp > div > div > span[data-active] { @apply z-10; }
+  .input-otp > div > div > span[data-caret]::after {
+    content: '';
+    @apply pointer-events-none absolute;
+    animation: otp-caret 1s infinite;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .input-otp > div > div > span { transition: none; }
+    .input-otp > div > div > span[data-caret]::after { animation: none; }
+  }
+  @media (forced-colors: active) {
+    .input-otp:focus-within > div { outline: 2px solid Highlight; outline-offset: 3px; }
+    .input-otp > div > div > span[data-active] { outline: 2px solid Highlight; outline-offset: -2px; }
+    .input-otp > div > div > span[data-caret]::after { background: CanvasText; }
+  }
+}

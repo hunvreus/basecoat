@@ -32,7 +32,7 @@
   </nav>
   {% for tabset in tabsets %}
     {% if tabset.panel %}
-      <div role="tabpanel" id="{{ id }}-panel-{{ loop.index }}" aria-labelledby="{{ id }}-tab-{{ loop.index }}" tabindex="-1" aria-selected="{{ 'true' if loop.index == default_tab_index else 'false' }}"{% if loop.index != default_tab_index %} hidden{% endif %}{% if tabset.panel_attrs %}{% for key, value in tabset.panel_attrs %} {{ key }}="{{ value }}"{% endfor %}{% endif %}>{{ tabset.panel | safe }}</div>
+      <div role="tabpanel" id="{{ id }}-panel-{{ loop.index }}" aria-labelledby="{{ id }}-tab-{{ loop.index }}" tabindex="-1"{% if loop.index != default_tab_index %} hidden{% endif %}{% if tabset.panel_attrs %}{% for key, value in tabset.panel_attrs %} {{ key }}="{{ value }}"{% endfor %}{% endif %}>{{ tabset.panel | safe }}</div>
     {% endif %}
   {% endfor %}
 </div>

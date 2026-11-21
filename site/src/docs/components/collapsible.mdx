@@ -1,0 +1,316 @@
+# Collapsible
+
+A disclosure that expands to reveal additional content.
+
+<Preview class="w-full max-w-[350px]">
+<div class="relative w-full">
+  <h3 class="flex h-8 items-center px-4 text-sm font-semibold">Order #4189</h3>
+  <div class="mt-2 flex items-center justify-between rounded-md border px-4 py-2 text-sm">
+    <span class="text-muted-foreground">Status</span>
+    <span class="font-medium">Shipped</span>
+  </div>
+  <details>
+    <summary class="btn absolute end-4 top-0" data-variant="ghost" data-size="icon-sm" aria-label="Toggle details">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4" aria-hidden="true"><path d="m7 15 5 5 5-5" /><path d="m7 9 5-5 5 5" /></svg>
+    </summary>
+    <div class="mt-2 grid gap-2 text-sm">
+      <div class="rounded-md border px-4 py-2">
+        <p class="font-medium">Shipping address</p>
+        <p class="text-muted-foreground">100 Market St, San Francisco</p>
+      </div>
+      <div class="rounded-md border px-4 py-2">
+        <p class="font-medium">Items</p>
+        <p class="text-muted-foreground">2x Studio Headphones</p>
+      </div>
+    </div>
+  </details>
+</div>
+</Preview>
+
+## Usage
+
+<Steps>
+  <Step title="Include CSS">
+
+Import Tailwind and a Basecoat style bundle.
+
+```css
+@import 'tailwindcss';
+@import 'basecoat-css/vega.css';
+```
+
+  </Step>
+  <Step title="Add your disclosure HTML">
+
+Put the trigger text in a `<summary>` as the first child of `<details>`. The browser manages the open state and handles pointer and keyboard activation. Content opens and closes instantly. The order preview keeps its heading and status outside the disclosure. Its icon-only summary is positioned beside the heading, preserving native keyboard and pointer behavior.
+
+```html
+<details>
+  <summary>Shipping options</summary>
+  <p>Orders ship within two business days.</p>
+</details>
+```
+
+  </Step>
+</Steps>
+
+## Examples
+
+### Basic
+
+<Preview class="w-full max-w-sm">
+<div class="card w-full">
+  <section>
+    <details class="group rounded-md open:bg-muted">
+      <summary class="btn w-full justify-between" data-variant="ghost">
+        Product details
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-open:rotate-180" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
+      </summary>
+      <div class="grid justify-items-start gap-2 p-2.5 pt-0 text-sm">
+        <p>This panel can be expanded or collapsed to reveal additional content.</p>
+        <button type="button" class="btn" data-size="xs">Learn More</button>
+      </div>
+    </details>
+  </section>
+</div>
+</Preview>
+
+### Settings panel
+
+Keep the main settings visible and reveal additional controls with a native disclosure.
+
+<Preview class="w-full max-w-xs">
+<div class="card w-full" data-size="sm">
+  <header>
+    <h2>Radius</h2>
+    <p>Set the corner radius of the element.</p>
+  </header>
+  <section>
+    <div class="grid grid-cols-[minmax(0,1fr)_auto] gap-x-2">
+      <div class="col-start-1 row-start-1 grid grid-cols-2 gap-2">
+        <label class="sr-only" for="radius-x">Radius X</label>
+        <input class="input" id="radius-x" type="number" min="0" value="0" />
+        <label class="sr-only" for="radius-y">Radius Y</label>
+        <input class="input" id="radius-y" type="number" min="0" value="0" />
+      </div>
+      <details class="group col-span-2 col-start-1 row-start-1 grid grid-cols-subgrid pointer-events-none [&::details-content]:col-span-2 [&::details-content]:grid [&::details-content]:grid-cols-subgrid">
+        <summary class="btn col-start-2 row-start-1 pointer-events-auto" data-variant="outline" data-size="icon" aria-label="Toggle additional radius settings">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-open:hidden" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M21 16v3a2 2 0 0 1-2 2h-3M8 21H5a2 2 0 0 1-2-2v-3" /></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden group-open:block" aria-hidden="true"><path d="M8 3v3a2 2 0 0 1-2 2H3M21 8h-3a2 2 0 0 1-2-2V3M3 16h3a2 2 0 0 1 2 2v3M16 21v-3a2 2 0 0 1 2-2h3" /></svg>
+        </summary>
+        <div class="col-start-1 mt-2 grid grid-cols-2 gap-2 pointer-events-auto">
+          <label class="sr-only" for="radius-start">Start corner radius</label>
+          <input class="input" id="radius-start" type="number" min="0" value="0" />
+          <label class="sr-only" for="radius-end">End corner radius</label>
+          <input class="input" id="radius-end" type="number" min="0" value="0" />
+        </div>
+      </details>
+    </div>
+  </section>
+</div>
+</Preview>
+
+### File tree
+
+Nest disclosures to reveal branches independently. This example also uses [Tabs](/components/tabs), which requires the Basecoat runtime and Tabs script or the full JavaScript bundle.
+
+<Preview class="w-full max-w-[16rem]">
+<div class="card w-full gap-2" data-size="sm">
+  <section>
+    <div class="tabs">
+      <nav role="tablist" aria-label="File browser" class="w-full">
+        <button type="button" role="tab" id="files-explorer-tab" aria-controls="files-explorer" aria-selected="true" tabindex="0">Explorer</button>
+        <button type="button" role="tab" id="files-outline-tab" aria-controls="files-outline" aria-selected="false" tabindex="-1">Outline</button>
+      </nav>
+      <div role="tabpanel" id="files-explorer" aria-labelledby="files-explorer-tab" tabindex="-1" class="grid gap-1">
+        <details class="open:[&>summary>svg:first-child]:rotate-90">
+          <summary class="btn w-full justify-start" data-size="sm" data-variant="ghost">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4" aria-hidden="true"><path d="m9 18 6-6-6-6" /></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4 " aria-hidden="true"><path d="M20 20H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5l2 2h9a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2Z" /></svg>
+            components
+          </summary>
+          <div class="ms-5 mt-1 grid gap-1">
+            <details class="open:[&>summary>svg:first-child]:rotate-90">
+              <summary class="btn w-full justify-start" data-size="sm" data-variant="ghost">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4" aria-hidden="true"><path d="m9 18 6-6-6-6" /></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4 " aria-hidden="true"><path d="M20 20H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5l2 2h9a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2Z" /></svg>
+                ui
+              </summary>
+              <div class="ms-5 mt-1 grid gap-1">
+                <button type="button" class="btn w-full justify-start gap-2 text-foreground" data-size="sm" data-variant="link">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4 " aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z" /><path d="M14 2v6h6" /></svg>
+                  <span>button.html</span>
+                </button>
+                <button type="button" class="btn w-full justify-start gap-2 text-foreground" data-size="sm" data-variant="link">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4 " aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z" /><path d="M14 2v6h6" /></svg>
+                  <span>card.html</span>
+                </button>
+                <button type="button" class="btn w-full justify-start gap-2 text-foreground" data-size="sm" data-variant="link">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4 " aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z" /><path d="M14 2v6h6" /></svg>
+                  <span>dialog.html</span>
+                </button>
+                <button type="button" class="btn w-full justify-start gap-2 text-foreground" data-size="sm" data-variant="link">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4 " aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z" /><path d="M14 2v6h6" /></svg>
+                  <span>input.html</span>
+                </button>
+                <button type="button" class="btn w-full justify-start gap-2 text-foreground" data-size="sm" data-variant="link">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4 " aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z" /><path d="M14 2v6h6" /></svg>
+                  <span>select.html</span>
+                </button>
+                <button type="button" class="btn w-full justify-start gap-2 text-foreground" data-size="sm" data-variant="link">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4 " aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z" /><path d="M14 2v6h6" /></svg>
+                  <span>table.html</span>
+                </button>
+              </div>
+            </details>
+            <button type="button" class="btn w-full justify-start gap-2 text-foreground" data-size="sm" data-variant="link">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4 " aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z" /><path d="M14 2v6h6" /></svg>
+              <span>login-form.html</span>
+            </button>
+            <button type="button" class="btn w-full justify-start gap-2 text-foreground" data-size="sm" data-variant="link">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4 " aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z" /><path d="M14 2v6h6" /></svg>
+              <span>register-form.html</span>
+            </button>
+          </div>
+        </details>
+        <details class="open:[&>summary>svg:first-child]:rotate-90">
+          <summary class="btn w-full justify-start" data-size="sm" data-variant="ghost">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4" aria-hidden="true"><path d="m9 18 6-6-6-6" /></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4 " aria-hidden="true"><path d="M20 20H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5l2 2h9a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2Z" /></svg>
+            lib
+          </summary>
+          <div class="ms-5 mt-1 grid gap-1">
+            <button type="button" class="btn w-full justify-start gap-2 text-foreground" data-size="sm" data-variant="link">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4 " aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z" /><path d="M14 2v6h6" /></svg>
+              <span>utils.js</span>
+            </button>
+            <button type="button" class="btn w-full justify-start gap-2 text-foreground" data-size="sm" data-variant="link">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4 " aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z" /><path d="M14 2v6h6" /></svg>
+              <span>api.js</span>
+            </button>
+          </div>
+        </details>
+        <details class="open:[&>summary>svg:first-child]:rotate-90">
+          <summary class="btn w-full justify-start" data-size="sm" data-variant="ghost">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4" aria-hidden="true"><path d="m9 18 6-6-6-6" /></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4 " aria-hidden="true"><path d="M20 20H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5l2 2h9a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2Z" /></svg>
+            hooks
+          </summary>
+          <div class="ms-5 mt-1 grid gap-1">
+            <button type="button" class="btn w-full justify-start gap-2 text-foreground" data-size="sm" data-variant="link">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4 " aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z" /><path d="M14 2v6h6" /></svg>
+              <span>use-media-query.js</span>
+            </button>
+            <button type="button" class="btn w-full justify-start gap-2 text-foreground" data-size="sm" data-variant="link">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4 " aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z" /><path d="M14 2v6h6" /></svg>
+              <span>use-debounce.js</span>
+            </button>
+            <button type="button" class="btn w-full justify-start gap-2 text-foreground" data-size="sm" data-variant="link">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4 " aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z" /><path d="M14 2v6h6" /></svg>
+              <span>use-local-storage.js</span>
+            </button>
+          </div>
+        </details>
+        <details class="open:[&>summary>svg:first-child]:rotate-90">
+          <summary class="btn w-full justify-start" data-size="sm" data-variant="ghost">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4" aria-hidden="true"><path d="m9 18 6-6-6-6" /></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4 " aria-hidden="true"><path d="M20 20H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5l2 2h9a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2Z" /></svg>
+            types
+          </summary>
+          <div class="ms-5 mt-1 grid gap-1">
+            <button type="button" class="btn w-full justify-start gap-2 text-foreground" data-size="sm" data-variant="link">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4 " aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z" /><path d="M14 2v6h6" /></svg>
+              <span>index.d.ts</span>
+            </button>
+            <button type="button" class="btn w-full justify-start gap-2 text-foreground" data-size="sm" data-variant="link">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4 " aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z" /><path d="M14 2v6h6" /></svg>
+              <span>api.d.ts</span>
+            </button>
+          </div>
+        </details>
+        <details class="open:[&>summary>svg:first-child]:rotate-90">
+          <summary class="btn w-full justify-start" data-size="sm" data-variant="ghost">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4" aria-hidden="true"><path d="m9 18 6-6-6-6" /></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4 " aria-hidden="true"><path d="M20 20H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5l2 2h9a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2Z" /></svg>
+            public
+          </summary>
+          <div class="ms-5 mt-1 grid gap-1">
+            <button type="button" class="btn w-full justify-start gap-2 text-foreground" data-size="sm" data-variant="link">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4 " aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z" /><path d="M14 2v6h6" /></svg>
+              <span>favicon.ico</span>
+            </button>
+            <button type="button" class="btn w-full justify-start gap-2 text-foreground" data-size="sm" data-variant="link">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4 " aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z" /><path d="M14 2v6h6" /></svg>
+              <span>logo.svg</span>
+            </button>
+            <button type="button" class="btn w-full justify-start gap-2 text-foreground" data-size="sm" data-variant="link">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4 " aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z" /><path d="M14 2v6h6" /></svg>
+              <span>images</span>
+            </button>
+          </div>
+        </details>
+        <button type="button" class="btn w-full justify-start gap-2 text-foreground" data-size="sm" data-variant="link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4 " aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z" /><path d="M14 2v6h6" /></svg>
+          <span>app.html</span>
+        </button>
+        <button type="button" class="btn w-full justify-start gap-2 text-foreground" data-size="sm" data-variant="link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4 " aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z" /><path d="M14 2v6h6" /></svg>
+          <span>layout.html</span>
+        </button>
+        <button type="button" class="btn w-full justify-start gap-2 text-foreground" data-size="sm" data-variant="link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4 " aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z" /><path d="M14 2v6h6" /></svg>
+          <span>globals.css</span>
+        </button>
+        <button type="button" class="btn w-full justify-start gap-2 text-foreground" data-size="sm" data-variant="link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4 " aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z" /><path d="M14 2v6h6" /></svg>
+          <span>package.json</span>
+        </button>
+        <button type="button" class="btn w-full justify-start gap-2 text-foreground" data-size="sm" data-variant="link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4 " aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z" /><path d="M14 2v6h6" /></svg>
+          <span>tsconfig.json</span>
+        </button>
+        <button type="button" class="btn w-full justify-start gap-2 text-foreground" data-size="sm" data-variant="link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4 " aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z" /><path d="M14 2v6h6" /></svg>
+          <span>README.md</span>
+        </button>
+        <button type="button" class="btn w-full justify-start gap-2 text-foreground" data-size="sm" data-variant="link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4 " aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z" /><path d="M14 2v6h6" /></svg>
+          <span>.gitignore</span>
+        </button>
+      </div>
+      <div role="tabpanel" id="files-outline" aria-labelledby="files-outline-tab" tabindex="-1" hidden>
+        <p class="px-3 py-2 text-sm text-muted-foreground">Open a file to view its outline.</p>
+      </div>
+    </div>
+  </section>
+</div>
+</Preview>
+
+### RTL
+
+Set `dir="rtl"` on the disclosure or an ancestor.
+
+<Preview class="w-full max-w-[350px]">
+<div class="relative w-full" dir="rtl">
+  <h3 class="flex h-8 items-center px-4 text-sm font-semibold">الطلب #4189</h3>
+  <div class="mt-2 flex items-center justify-between rounded-md border px-4 py-2 text-sm">
+    <span class="text-muted-foreground">الحالة</span>
+    <span class="font-medium">تم الشحن</span>
+  </div>
+  <details>
+    <summary class="btn absolute end-4 top-0" data-variant="ghost" data-size="icon-sm" aria-label="Toggle details">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4" aria-hidden="true"><path d="m7 15 5 5 5-5" /><path d="m7 9 5-5 5 5" /></svg>
+    </summary>
+    <div class="mt-2 grid gap-2 text-sm">
+      <div class="rounded-md border px-4 py-2">
+        <p class="font-medium">عنوان الشحن</p>
+        <p class="text-muted-foreground">100 Market St, San Francisco</p>
+      </div>
+      <div class="rounded-md border px-4 py-2">
+        <p class="font-medium">العناصر</p>
+        <p class="text-muted-foreground">2x سماعات الاستوديو</p>
+      </div>
+    </div>
+  </details>
+</div>
+</Preview>

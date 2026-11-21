@@ -64,6 +64,7 @@ Or load the Basecoat runtime once, then only the component scripts you use.
 | `dist/basecoat-{style}.cdn.min.css` | Standalone CDN stylesheet for `vega`, `nova`, `maia`, `lyra`, `mira`, `luma`, `sera`, or `rhea`. |
 | `dist/basecoat-base.cdn.min.css` | Base tokens, utilities, and component structure without a style pack. |
 | `dist/basecoat-compat.cdn.min.css` | Optional pre-1.0 compatibility aliases. Load after Basecoat. |
+| `dist/typeset.cdn.min.css` | Optional Typeset stylesheet for semantic HTML and rendered Markdown. Load after Basecoat. |
 | `dist/basecoat.bundle.css` | Uncompiled single-file source for use with your own Tailwind build. Alias for the Vega style. |
 | `dist/basecoat-{style}.bundle.css` | Uncompiled single-file source for use with your own Tailwind build, for `vega`, `nova`, `maia`, `lyra`, `mira`, `luma`, `sera`, or `rhea`. |
 | `dist/js/all.min.js` | All auto-initialized JavaScript components except Chart. |
@@ -101,7 +102,7 @@ Add any other tokens you use the same way, for example `--color-destructive: var
 <Steps>
   <Step title="Install Tailwind CSS">
 
-Basecoat is authored for Tailwind CSS. Install Tailwind first if your project does not already use it.
+Use Tailwind CSS 4.3 or later to compile Basecoat’s source stylesheets. The prebuilt CDN stylesheets work without a Tailwind build.
 
 [Follow the Tailwind CSS installation guide](https://tailwindcss.com/docs/installation).
 
@@ -229,6 +230,7 @@ See [Templates](/templates) for the available macros and arguments.
 | `basecoat-css/styles/maia` | Individual style-pack CSS. Use with `basecoat-css/base` or `basecoat-css/components`. |
 | `basecoat-css/all.css` | Alias for `basecoat-css`, the default Vega stylesheet. It does not include the other style packs. |
 | `basecoat-css/compat` | Optional pre-1.0 compatibility aliases. Load after Basecoat. |
+| `basecoat-css/typeset.css` | Optional Typeset stylesheet. Import after a Basecoat style bundle. |
 
 ### Template files
 
@@ -243,11 +245,15 @@ See [Templates](/templates) for the available macros and arguments.
 | --- | --- |
 | `basecoat-css/all` | All auto-initialized JavaScript components except Chart. |
 | `basecoat-css/basecoat` | Runtime only. Import once before individual component scripts. |
+| `basecoat-css/accordion` | Accordion controller. |
+| `basecoat-css/carousel` | Optional Carousel previous/next controls. |
 | `basecoat-css/chart` | Chart helper. Load Chart.js separately. |
+| `basecoat-css/code-block` | Optional Code Block copy buttons. |
 | `basecoat-css/combobox` | Combobox controller. |
 | `basecoat-css/command` | Command controller. |
-| `basecoat-css/drawer` | Drawer controller. |
+| `basecoat-css/drawer` | Drawer and Sheet controller. |
 | `basecoat-css/dropdown-menu` | Dropdown Menu controller. |
+| `basecoat-css/input-otp` | Input OTP visual slots and editing. |
 | `basecoat-css/popover` | Popover controller. |
 | `basecoat-css/range` | Slider/range controller. |
 | `basecoat-css/select` | Select controller. |
@@ -260,12 +266,16 @@ See [Templates](/templates) for the available macros and arguments.
 These components need JavaScript for behavior:
 
 - [Accordion](/components/accordion)
+- [Carousel](/components/carousel) (optional buttons; native scrolling works without JavaScript)
+- [Code Block](/components/code-block) (copy buttons)
 - [Combobox](/components/combobox)
 - [Command](/components/command)
 - [Drawer](/components/drawer)
 - [Dropdown Menu](/components/dropdown-menu)
+- [Input OTP](/components/input-otp) (visual slots)
 - [Popover](/components/popover)
 - [Select](/components/select)
+- [Sheet](/components/sheet) (uses the Drawer script)
 - [Sidebar](/components/sidebar)
 - [Slider](/components/slider)
 - [Tabs](/components/tabs)

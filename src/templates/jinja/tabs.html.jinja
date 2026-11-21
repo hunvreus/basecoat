@@ -66,7 +66,6 @@
         id="{{ id }}-panel-{{ loop.index }}"
         aria-labelledby="{{ id }}-tab-{{ loop.index }}"
         tabindex="-1"
-        aria-selected="{{ 'true' if loop.index == default_tab_index else 'false' }}"
         {% if loop.index != default_tab_index %}hidden{% endif %}
         {% if tabset.panel_attrs is defined and tabset.panel_attrs %}
           {% for key, value in tabset.panel_attrs.items() %}

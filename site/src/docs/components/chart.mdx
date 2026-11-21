@@ -4,11 +4,11 @@ import chartExamplesSource from "../../scripts/chart-examples.js?raw"
 
 # Chart
 
-<Callout type="warning" title="Beta API" icon="triangle-alert">
-  Chart support is beta. The JavaScript API, generated markup, and option names may change before the stable 1.0 release.
-</Callout>
+Use Chart.js with Basecoat defaults for themed colors, tooltips, and legends.
 
-Use Chart.js with Basecoat defaults for themed colors, external tooltips, and optional generated legends.
+<Callout title="Required dependency: Chart.js" icon="info">
+  Load [Chart.js](https://www.chartjs.org/) on pages that render charts. Basecoat’s Chart API is in beta and may change.
+</Callout>
 
 <Preview class="w-full">
   <canvas id="chart-example-overview" aria-label="Visitors by device"></canvas>
@@ -17,46 +17,40 @@ Use Chart.js with Basecoat defaults for themed colors, external tooltips, and op
 ## Usage
 
 <Steps>
-  <Step title="Include CSS">
+  <Step title="Load the styles">
 
-Import Tailwind and one full Basecoat style bundle.
-
-```css
-@import "tailwindcss";
-@import "basecoat-css/vega.css";
-```
-
-Or import only the base CSS, Chart component CSS, and one style pack.
-
-```css
-@import "tailwindcss";
-@import "basecoat-css/base.css";
-@import "basecoat-css/components/chart.css";
-@import "basecoat-css/styles/vega.css";
-```
-
-Using CDN or bundler imports? See the [Installation page](/installation).
-
-  </Step>
-  <Step title="Include JavaScript">
-
-Copy or serve Chart.js, the Basecoat runtime, and Chart script.
+Serve the compiled Basecoat stylesheet from your assets directory, or use the [CDN installation](/installation#cdn).
 
 ```html
-<script src="/assets/js/chart.umd.min.js"></script>
+<link rel="stylesheet" href="/assets/css/basecoat.cdn.min.css" />
+```
+
+For a custom Tailwind build, import `basecoat-css/base.css`, `basecoat-css/components/chart.css`, and your style pack.
+
+  </Step>
+  <Step title="Load Chart.js and the Basecoat Chart script">
+
+Add the browser build of Chart.js, then load Basecoat’s runtime and Chart script in order. The Chart script is distributed separately from `all.js`. You can also serve Chart.js locally.
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.6.1/dist/chart.umd.min.js" defer></script>
 <script src="/assets/js/basecoat.min.js" defer></script>
 <script src="/assets/js/chart.min.js" defer></script>
 ```
 
-Chart is not included in the full Basecoat JavaScript bundle.
-
-Using CDN or bundler imports? See the [Installation page](/installation).
-
   </Step>
-  <Step title="Add your chart HTML">
+  <Step title="Add the chart canvas">
 
 ```html
 <canvas id="visitors-chart" aria-label="Monthly visitors"></canvas>
+```
+
+  </Step>
+  <Step title="Draw the chart">
+
+Pass the canvas selector, data, and series to Basecoat after the scripts have loaded.
+
+```html
 <script>
   document.addEventListener("DOMContentLoaded", () => {
     window.basecoat.chart("#visitors-chart", {
@@ -220,7 +214,7 @@ window.basecoat.chart("#custom-chart", {
   <canvas id="chart-example-radar" aria-label="Channel performance radar chart"></canvas>
 </Preview>
 
-<script is:inline src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script>
+<script is:inline src="https://cdn.jsdelivr.net/npm/chart.js@4.6.1/dist/chart.umd.min.js"></script>
 <script is:inline>{`
 (() => {
   const initChartPage = () => {

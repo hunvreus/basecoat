@@ -145,7 +145,7 @@ async function build() {
 
   // Create combined component files
   console.log('Creating combined component files...');
-  const componentsToCombine = ['basecoat.js', 'accordion.js', 'command.js', 'combobox.js', 'drawer.js', 'dropdown-menu.js', 'popover.js', 'range.js', 'select.js', 'sidebar.js', 'tabs.js', 'toast.js'];
+  const componentsToCombine = ['basecoat.js', 'accordion.js', 'carousel.js', 'code-block.js', 'command.js', 'combobox.js', 'drawer.js', 'dropdown-menu.js', 'input-otp.js', 'popover.js', 'range.js', 'select.js', 'sidebar.js', 'tabs.js', 'toast.js'];
   const componentPaths = componentsToCombine.map(f => path.join(srcJsDir, f));
 
   // Create non-minified bundle
@@ -172,6 +172,8 @@ async function build() {
   await fs.copyFile(path.join(srcCssDir, 'basecoat-base.cdn.css'), path.join(cssDistDir, 'basecoat-base.cdn.css'));
   await fs.copyFile(path.join(srcCssDir, 'basecoat-compat.css'), path.join(cssDistDir, 'basecoat-compat.css'));
   await fs.copyFile(path.join(srcCssDir, 'basecoat-compat.cdn.css'), path.join(cssDistDir, 'basecoat-compat.cdn.css'));
+  await fs.copyFile(path.join(srcCssDir, 'typeset.css'), path.join(cssDistDir, 'typeset.css'));
+  await fs.copyFile(path.join(srcCssDir, 'typeset.cdn.css'), path.join(cssDistDir, 'typeset.cdn.css'));
   await fs.copyFile(path.join(srcCssDir, 'basecoat-components.css'), path.join(cssDistDir, 'basecoat-components.css'));
   for (const style of styles) {
     await fs.copyFile(path.join(srcCssDir, `basecoat-${style}.css`), path.join(cssDistDir, `basecoat-${style}.css`));
@@ -211,7 +213,7 @@ async function build() {
   console.log(`Copied template assets to ${cssTemplatesDir}`);
 
   // Create Tailwind CSS builds for the CSS package.
-  const cdnEntries = ['basecoat.cdn.css', 'basecoat-base.cdn.css', 'basecoat-compat.cdn.css', ...styles.map((style) => `basecoat-${style}.cdn.css`)];
+  const cdnEntries = ['basecoat.cdn.css', 'basecoat-base.cdn.css', 'basecoat-compat.cdn.css', 'typeset.cdn.css', ...styles.map((style) => `basecoat-${style}.cdn.css`)];
   for (const entry of cdnEntries) {
     const cdnCssSrc = path.join(srcCssDir, entry);
     const baseName = path.basename(entry, '.css');

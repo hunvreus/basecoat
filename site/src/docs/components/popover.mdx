@@ -3,7 +3,7 @@
 <Preview>
 <div id="demo-popover" class="popover">
   <button id="demo-popover-trigger" type="button" aria-expanded="false" aria-controls="demo-popover-popover" class="btn" data-variant="outline">Open popover</button>
-  <div id="demo-popover-popover" data-popover aria-hidden="true" class="w-72">
+  <div id="demo-popover-popover" data-popover aria-hidden="true" data-align="center" class="w-72">
     <header>
       <h4>Dimensions</h4>
       <p>Set the dimensions for the layer.</p>
@@ -83,7 +83,7 @@ Using CDN or bundler imports? See the [Installation page](/installation).
 ```html
 <div id="demo-popover" class="popover">
   <button id="demo-popover-trigger" type="button" aria-expanded="false" aria-controls="demo-popover-popover" class="btn" data-variant="outline">Open popover</button>
-  <div id="demo-popover-popover" data-popover aria-hidden="true" class="w-72">
+  <div id="demo-popover-popover" data-popover aria-hidden="true" data-align="center" class="w-72">
     <header>
       <h4>Dimensions</h4>
       <p>Set the dimensions for the layer.</p>
@@ -135,7 +135,7 @@ Using CDN or bundler imports? See the [Installation page](/installation).
 <Preview>
 <div id="popover-basic" class="popover">
   <button id="popover-basic-trigger" type="button" aria-expanded="false" aria-controls="popover-basic-popover" class="btn" data-variant="outline">Open</button>
-  <div id="popover-basic-popover" data-popover aria-hidden="true" class="w-72">
+  <div id="popover-basic-popover" data-popover aria-hidden="true" data-align="center" class="w-72">
     <header>
       <h4>Title</h4>
       <p>Description text here.</p>
@@ -172,41 +172,41 @@ Using CDN or bundler imports? See the [Installation page](/installation).
 ### Sides
 
 <Preview>
-<div class="flex flex-wrap gap-3">
-  <div id="popover-side-inline-start" class="popover">
-    <button id="popover-side-inline-start-trigger" type="button" aria-expanded="false" aria-controls="popover-side-inline-start-popover" class="btn" data-variant="outline">Inline start</button>
-    <div id="popover-side-inline-start-popover" data-popover aria-hidden="true" data-side="inline-start" data-align="center" class="w-40">
-      <p>Inline start side.</p>
+<div class="grid grid-cols-[auto_auto] justify-center justify-items-center gap-3">
+  <div id="popover-side-inline-end" class="popover">
+    <button id="popover-side-inline-end-trigger" type="button" aria-expanded="false" aria-controls="popover-side-inline-end-popover" class="btn" data-variant="outline">Inline end</button>
+    <div id="popover-side-inline-end-popover" data-popover aria-hidden="true" data-side="inline-end" data-align="center" class="w-32 sm:w-40">
+      <p>Inline end side.</p>
     </div>
   </div>
-  <div id="popover-side-top" class="popover">
-    <button id="popover-side-top-trigger" type="button" aria-expanded="false" aria-controls="popover-side-top-popover" class="btn" data-variant="outline">Top</button>
-    <div id="popover-side-top-popover" data-popover aria-hidden="true" data-side="top" data-align="center" class="w-40">
-      <p>Top side.</p>
+  <div id="popover-side-inline-start" class="popover">
+    <button id="popover-side-inline-start-trigger" type="button" aria-expanded="false" aria-controls="popover-side-inline-start-popover" class="btn" data-variant="outline">Inline start</button>
+    <div id="popover-side-inline-start-popover" data-popover aria-hidden="true" data-side="inline-start" data-align="center" class="w-32 sm:w-40">
+      <p>Inline start side.</p>
     </div>
   </div>
   <div id="popover-side-right" class="popover">
     <button id="popover-side-right-trigger" type="button" aria-expanded="false" aria-controls="popover-side-right-popover" class="btn" data-variant="outline">Right</button>
-    <div id="popover-side-right-popover" data-popover aria-hidden="true" data-side="right" data-align="center" class="w-40">
+    <div id="popover-side-right-popover" data-popover aria-hidden="true" data-side="right" data-align="center" class="w-32 sm:w-40">
       <p>Right side.</p>
-    </div>
-  </div>
-  <div id="popover-side-bottom" class="popover">
-    <button id="popover-side-bottom-trigger" type="button" aria-expanded="false" aria-controls="popover-side-bottom-popover" class="btn" data-variant="outline">Bottom</button>
-    <div id="popover-side-bottom-popover" data-popover aria-hidden="true" data-side="bottom" data-align="center" class="w-40">
-      <p>Bottom side.</p>
     </div>
   </div>
   <div id="popover-side-left" class="popover">
     <button id="popover-side-left-trigger" type="button" aria-expanded="false" aria-controls="popover-side-left-popover" class="btn" data-variant="outline">Left</button>
-    <div id="popover-side-left-popover" data-popover aria-hidden="true" data-side="left" data-align="center" class="w-40">
+    <div id="popover-side-left-popover" data-popover aria-hidden="true" data-side="left" data-align="center" class="w-32 sm:w-40">
       <p>Left side.</p>
     </div>
   </div>
-  <div id="popover-side-inline-end" class="popover">
-    <button id="popover-side-inline-end-trigger" type="button" aria-expanded="false" aria-controls="popover-side-inline-end-popover" class="btn" data-variant="outline">Inline end</button>
-    <div id="popover-side-inline-end-popover" data-popover aria-hidden="true" data-side="inline-end" data-align="center" class="w-40">
-      <p>Inline end side.</p>
+  <div id="popover-side-top" class="popover">
+    <button id="popover-side-top-trigger" type="button" aria-expanded="false" aria-controls="popover-side-top-popover" class="btn" data-variant="outline">Top</button>
+    <div id="popover-side-top-popover" data-popover aria-hidden="true" data-side="top" data-align="center" class="w-32 sm:w-40">
+      <p>Top side.</p>
+    </div>
+  </div>
+  <div id="popover-side-bottom" class="popover">
+    <button id="popover-side-bottom-trigger" type="button" aria-expanded="false" aria-controls="popover-side-bottom-popover" class="btn" data-variant="outline">Bottom</button>
+    <div id="popover-side-bottom-popover" data-popover aria-hidden="true" data-side="bottom" data-align="center" class="w-32 sm:w-40">
+      <p>Bottom side.</p>
     </div>
   </div>
 </div>
@@ -217,7 +217,7 @@ Using CDN or bundler imports? See the [Installation page](/installation).
 <Preview>
 <div id="popover-form" class="popover">
   <button id="popover-form-trigger" type="button" aria-expanded="false" aria-controls="popover-form-popover" class="btn" data-variant="outline">Open popover</button>
-  <div id="popover-form-popover" data-popover aria-hidden="true" class="w-72">
+  <div id="popover-form-popover" data-popover aria-hidden="true" data-align="center" class="w-72">
     <header>
       <h4>Dimensions</h4>
       <p>Set the dimensions for the layer.</p>
@@ -248,7 +248,7 @@ Using CDN or bundler imports? See the [Installation page](/installation).
 
 Popover alignment uses logical start and end offsets. Set `dir="rtl"` on a parent to flip start/end alignment.
 
-<Preview>
+<Preview class="w-full max-w-72">
 <div dir="rtl">
   <div id="popover-rtl" class="popover">
     <button id="popover-rtl-trigger" type="button" aria-expanded="false" aria-controls="popover-rtl-popover" class="btn" data-variant="outline">فتح</button>

@@ -1,0 +1,273 @@
+# Sheet
+
+A modal panel for viewing or editing information alongside the current page.
+
+<Preview>
+<button type="button" onclick="document.getElementById('sheet-profile').showModal()" class="btn" data-variant="outline">Open</button>
+<dialog id="sheet-profile" class="sheet" data-side="right" aria-labelledby="sheet-profile-title" aria-describedby="sheet-profile-description">
+  <article>
+    <header>
+      <h2 id="sheet-profile-title">Edit profile</h2>
+      <p id="sheet-profile-description">Make changes to your profile here. Click save when you're done.</p>
+    </header>
+    <section class="px-4">
+      <form id="sheet-profile-form" method="dialog" class="grid gap-6">
+        <div class="grid gap-3">
+          <label class="label" for="sheet-profile-name">Name</label>
+          <input class="input" type="text" value="Pedro Duarte" id="sheet-profile-name" />
+        </div>
+        <div class="grid gap-3">
+          <label class="label" for="sheet-profile-username">Username</label>
+          <input class="input" type="text" value="@peduarte" id="sheet-profile-username" />
+        </div>
+      </form>
+    </section>
+    <footer>
+      <button type="submit" form="sheet-profile-form" class="btn">Save changes</button>
+      <button type="button" class="btn" data-variant="outline" onclick="this.closest('dialog').close()">Close</button>
+    </footer>
+    <button type="button" class="btn" data-variant="ghost" data-size="icon-sm" aria-label="Close sheet" onclick="this.closest('dialog').close()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4" aria-hidden="true"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+    </button>
+  </article>
+</dialog>
+</Preview>
+
+## Usage
+
+<Steps>
+  <Step title="Include CSS">
+
+Import Tailwind and one full Basecoat style bundle.
+
+```css
+@import 'tailwindcss';
+@import 'basecoat-css/vega.css';
+```
+
+For individual imports, include the base CSS, the components you use, and one style pack.
+
+```css
+@import 'tailwindcss';
+@import 'basecoat-css/base/base.css';
+@import 'basecoat-css/components/button.css';
+@import 'basecoat-css/components/sheet.css';
+@import 'basecoat-css/styles/vega.css';
+```
+
+Using CDN or bundler imports? See the [Installation page](/installation).
+
+  </Step>
+  <Step title="Include JavaScript">
+
+Copy or serve the full Basecoat JavaScript bundle.
+
+```html
+<script src="/assets/js/all.min.js" defer></script>
+```
+
+Or copy or serve the Basecoat runtime and Drawer script.
+
+```html
+<script src="/assets/js/basecoat.min.js" defer></script>
+<script src="/assets/js/drawer.min.js" defer></script>
+```
+
+Using CDN or bundler imports? See the [Installation page](/installation).
+
+  </Step>
+  <Step title="Add your sheet HTML">
+
+Use `class="sheet"` on a native `<dialog>`. Sheet has its own component CSS and style-pack visuals. It uses the [Drawer](/components/drawer) script for dialog interactions. Set the edge with `data-side` (right by default), open the dialog with `showModal()`, and associate its heading with `aria-labelledby`.
+
+```html
+<button type="button" class="btn" data-variant="outline" onclick="document.getElementById('sheet-example').showModal()">Project details</button>
+<dialog id="sheet-example" class="sheet" data-side="right" aria-labelledby="sheet-example-title">
+  <article>
+    <header>
+      <h2 id="sheet-example-title">Project details</h2>
+      <p>Review the information for this project.</p>
+    </header>
+    <footer>
+      <button type="button" class="btn" onclick="this.closest('dialog').close()">Done</button>
+    </footer>
+  </article>
+</dialog>
+```
+
+  </Step>
+</Steps>
+
+## Examples
+
+### Side
+
+Set `data-side` to `top`, `right`, `bottom`, or `left`. Make a scrolling body keyboard-focusable with `tabindex="0"` and give it a label. These examples keep a themed scrollbar visible for mouse users.
+
+<Preview>
+<div class="flex flex-wrap gap-2">
+  <button type="button" class="btn" data-variant="outline" onclick="document.getElementById('sheet-side-top').showModal()">Top</button>
+  <dialog id="sheet-side-top" class="sheet" data-side="top" aria-labelledby="sheet-side-top-title">
+    <article class="max-h-[50vh]">
+      <header>
+        <h2 id="sheet-side-top-title">Edit profile</h2>
+        <p>Make changes to your profile here. Click save when you're done.</p>
+      </header>
+      <section class="scrollbar px-4" tabindex="0" role="region" aria-label="Profile information">
+        <p class="mb-2 leading-relaxed">Your profile helps teammates identify you across the workspace. Keep your name, contact details, and preferences up to date. Changes apply to every project in this workspace.</p>
+        <p class="mb-2 leading-relaxed">Your profile helps teammates identify you across the workspace. Keep your name, contact details, and preferences up to date. Changes apply to every project in this workspace.</p>
+        <p class="mb-2 leading-relaxed">Your profile helps teammates identify you across the workspace. Keep your name, contact details, and preferences up to date. Changes apply to every project in this workspace.</p>
+        <p class="mb-2 leading-relaxed">Your profile helps teammates identify you across the workspace. Keep your name, contact details, and preferences up to date. Changes apply to every project in this workspace.</p>
+        <p class="mb-2 leading-relaxed">Your profile helps teammates identify you across the workspace. Keep your name, contact details, and preferences up to date. Changes apply to every project in this workspace.</p>
+        <p class="mb-2 leading-relaxed">Your profile helps teammates identify you across the workspace. Keep your name, contact details, and preferences up to date. Changes apply to every project in this workspace.</p>
+        <p class="mb-2 leading-relaxed">Your profile helps teammates identify you across the workspace. Keep your name, contact details, and preferences up to date. Changes apply to every project in this workspace.</p>
+        <p class="mb-2 leading-relaxed">Your profile helps teammates identify you across the workspace. Keep your name, contact details, and preferences up to date. Changes apply to every project in this workspace.</p>
+        <p class="mb-2 leading-relaxed">Your profile helps teammates identify you across the workspace. Keep your name, contact details, and preferences up to date. Changes apply to every project in this workspace.</p>
+        <p class="mb-2 leading-relaxed">Your profile helps teammates identify you across the workspace. Keep your name, contact details, and preferences up to date. Changes apply to every project in this workspace.</p>
+      </section>
+      <footer>
+        <button type="button" class="btn" onclick="this.closest('dialog').close()">Save changes</button>
+        <button type="button" class="btn" data-variant="outline" onclick="this.closest('dialog').close()">Cancel</button>
+      </footer>
+      <button type="button" class="btn" data-variant="ghost" data-size="icon-sm" aria-label="Close sheet" onclick="this.closest('dialog').close()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4" aria-hidden="true"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+      </button>
+    </article>
+  </dialog>
+  <button type="button" class="btn" data-variant="outline" onclick="document.getElementById('sheet-side-right').showModal()">Right</button>
+  <dialog id="sheet-side-right" class="sheet" data-side="right" aria-labelledby="sheet-side-right-title">
+    <article>
+      <header>
+        <h2 id="sheet-side-right-title">Edit profile</h2>
+        <p>Make changes to your profile here. Click save when you're done.</p>
+      </header>
+      <section class="scrollbar px-4" tabindex="0" role="region" aria-label="Profile information">
+        <p class="mb-2 leading-relaxed">Your profile helps teammates identify you across the workspace. Keep your name, contact details, and preferences up to date. Changes apply to every project in this workspace.</p>
+        <p class="mb-2 leading-relaxed">Your profile helps teammates identify you across the workspace. Keep your name, contact details, and preferences up to date. Changes apply to every project in this workspace.</p>
+        <p class="mb-2 leading-relaxed">Your profile helps teammates identify you across the workspace. Keep your name, contact details, and preferences up to date. Changes apply to every project in this workspace.</p>
+        <p class="mb-2 leading-relaxed">Your profile helps teammates identify you across the workspace. Keep your name, contact details, and preferences up to date. Changes apply to every project in this workspace.</p>
+        <p class="mb-2 leading-relaxed">Your profile helps teammates identify you across the workspace. Keep your name, contact details, and preferences up to date. Changes apply to every project in this workspace.</p>
+        <p class="mb-2 leading-relaxed">Your profile helps teammates identify you across the workspace. Keep your name, contact details, and preferences up to date. Changes apply to every project in this workspace.</p>
+        <p class="mb-2 leading-relaxed">Your profile helps teammates identify you across the workspace. Keep your name, contact details, and preferences up to date. Changes apply to every project in this workspace.</p>
+        <p class="mb-2 leading-relaxed">Your profile helps teammates identify you across the workspace. Keep your name, contact details, and preferences up to date. Changes apply to every project in this workspace.</p>
+        <p class="mb-2 leading-relaxed">Your profile helps teammates identify you across the workspace. Keep your name, contact details, and preferences up to date. Changes apply to every project in this workspace.</p>
+        <p class="mb-2 leading-relaxed">Your profile helps teammates identify you across the workspace. Keep your name, contact details, and preferences up to date. Changes apply to every project in this workspace.</p>
+      </section>
+      <footer>
+        <button type="button" class="btn" onclick="this.closest('dialog').close()">Save changes</button>
+        <button type="button" class="btn" data-variant="outline" onclick="this.closest('dialog').close()">Cancel</button>
+      </footer>
+      <button type="button" class="btn" data-variant="ghost" data-size="icon-sm" aria-label="Close sheet" onclick="this.closest('dialog').close()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4" aria-hidden="true"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+      </button>
+    </article>
+  </dialog>
+  <button type="button" class="btn" data-variant="outline" onclick="document.getElementById('sheet-side-bottom').showModal()">Bottom</button>
+  <dialog id="sheet-side-bottom" class="sheet" data-side="bottom" aria-labelledby="sheet-side-bottom-title">
+    <article class="max-h-[50vh]">
+      <header>
+        <h2 id="sheet-side-bottom-title">Edit profile</h2>
+        <p>Make changes to your profile here. Click save when you're done.</p>
+      </header>
+      <section class="scrollbar px-4" tabindex="0" role="region" aria-label="Profile information">
+        <p class="mb-2 leading-relaxed">Your profile helps teammates identify you across the workspace. Keep your name, contact details, and preferences up to date. Changes apply to every project in this workspace.</p>
+        <p class="mb-2 leading-relaxed">Your profile helps teammates identify you across the workspace. Keep your name, contact details, and preferences up to date. Changes apply to every project in this workspace.</p>
+        <p class="mb-2 leading-relaxed">Your profile helps teammates identify you across the workspace. Keep your name, contact details, and preferences up to date. Changes apply to every project in this workspace.</p>
+        <p class="mb-2 leading-relaxed">Your profile helps teammates identify you across the workspace. Keep your name, contact details, and preferences up to date. Changes apply to every project in this workspace.</p>
+        <p class="mb-2 leading-relaxed">Your profile helps teammates identify you across the workspace. Keep your name, contact details, and preferences up to date. Changes apply to every project in this workspace.</p>
+        <p class="mb-2 leading-relaxed">Your profile helps teammates identify you across the workspace. Keep your name, contact details, and preferences up to date. Changes apply to every project in this workspace.</p>
+        <p class="mb-2 leading-relaxed">Your profile helps teammates identify you across the workspace. Keep your name, contact details, and preferences up to date. Changes apply to every project in this workspace.</p>
+        <p class="mb-2 leading-relaxed">Your profile helps teammates identify you across the workspace. Keep your name, contact details, and preferences up to date. Changes apply to every project in this workspace.</p>
+        <p class="mb-2 leading-relaxed">Your profile helps teammates identify you across the workspace. Keep your name, contact details, and preferences up to date. Changes apply to every project in this workspace.</p>
+        <p class="mb-2 leading-relaxed">Your profile helps teammates identify you across the workspace. Keep your name, contact details, and preferences up to date. Changes apply to every project in this workspace.</p>
+      </section>
+      <footer>
+        <button type="button" class="btn" onclick="this.closest('dialog').close()">Save changes</button>
+        <button type="button" class="btn" data-variant="outline" onclick="this.closest('dialog').close()">Cancel</button>
+      </footer>
+      <button type="button" class="btn" data-variant="ghost" data-size="icon-sm" aria-label="Close sheet" onclick="this.closest('dialog').close()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4" aria-hidden="true"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+      </button>
+    </article>
+  </dialog>
+  <button type="button" class="btn" data-variant="outline" onclick="document.getElementById('sheet-side-left').showModal()">Left</button>
+  <dialog id="sheet-side-left" class="sheet" data-side="left" aria-labelledby="sheet-side-left-title">
+    <article>
+      <header>
+        <h2 id="sheet-side-left-title">Edit profile</h2>
+        <p>Make changes to your profile here. Click save when you're done.</p>
+      </header>
+      <section class="scrollbar px-4" tabindex="0" role="region" aria-label="Profile information">
+        <p class="mb-2 leading-relaxed">Your profile helps teammates identify you across the workspace. Keep your name, contact details, and preferences up to date. Changes apply to every project in this workspace.</p>
+        <p class="mb-2 leading-relaxed">Your profile helps teammates identify you across the workspace. Keep your name, contact details, and preferences up to date. Changes apply to every project in this workspace.</p>
+        <p class="mb-2 leading-relaxed">Your profile helps teammates identify you across the workspace. Keep your name, contact details, and preferences up to date. Changes apply to every project in this workspace.</p>
+        <p class="mb-2 leading-relaxed">Your profile helps teammates identify you across the workspace. Keep your name, contact details, and preferences up to date. Changes apply to every project in this workspace.</p>
+        <p class="mb-2 leading-relaxed">Your profile helps teammates identify you across the workspace. Keep your name, contact details, and preferences up to date. Changes apply to every project in this workspace.</p>
+        <p class="mb-2 leading-relaxed">Your profile helps teammates identify you across the workspace. Keep your name, contact details, and preferences up to date. Changes apply to every project in this workspace.</p>
+        <p class="mb-2 leading-relaxed">Your profile helps teammates identify you across the workspace. Keep your name, contact details, and preferences up to date. Changes apply to every project in this workspace.</p>
+        <p class="mb-2 leading-relaxed">Your profile helps teammates identify you across the workspace. Keep your name, contact details, and preferences up to date. Changes apply to every project in this workspace.</p>
+        <p class="mb-2 leading-relaxed">Your profile helps teammates identify you across the workspace. Keep your name, contact details, and preferences up to date. Changes apply to every project in this workspace.</p>
+        <p class="mb-2 leading-relaxed">Your profile helps teammates identify you across the workspace. Keep your name, contact details, and preferences up to date. Changes apply to every project in this workspace.</p>
+      </section>
+      <footer>
+        <button type="button" class="btn" onclick="this.closest('dialog').close()">Save changes</button>
+        <button type="button" class="btn" data-variant="outline" onclick="this.closest('dialog').close()">Cancel</button>
+      </footer>
+      <button type="button" class="btn" data-variant="ghost" data-size="icon-sm" aria-label="Close sheet" onclick="this.closest('dialog').close()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4" aria-hidden="true"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+      </button>
+    </article>
+  </dialog>
+</div>
+</Preview>
+
+### No Close Button
+
+Omit the close button to dismiss through the backdrop or Escape. Backdrop dismissal uses the Drawer script included in the setup above.
+
+<Preview>
+<button type="button" class="btn" data-variant="outline" onclick="document.getElementById('sheet-no-close').showModal()">Open Sheet</button>
+<dialog id="sheet-no-close" class="sheet" data-side="right" aria-labelledby="sheet-no-close-title" aria-describedby="sheet-no-close-description">
+  <article>
+    <header>
+      <h2 id="sheet-no-close-title">No Close Button</h2>
+      <p id="sheet-no-close-description">This sheet doesn't have a close button in the top-right corner. Click outside to close.</p>
+    </header>
+  </article>
+</dialog>
+</Preview>
+
+### RTL
+
+Set `dir="rtl"` on the dialog or an ancestor. Text and logical spacing follow that direction. This example uses `data-side="left"` to mirror the default right-side sheet.
+
+<Preview>
+<button type="button" onclick="document.getElementById('sheet-rtl-profile').showModal()" class="btn" data-variant="outline">فتح</button>
+<dialog id="sheet-rtl-profile" class="sheet" data-side="left" dir="rtl" lang="ar" aria-labelledby="sheet-rtl-profile-title" aria-describedby="sheet-rtl-profile-description">
+  <article>
+    <header>
+      <h2 id="sheet-rtl-profile-title">تعديل الملف الشخصي</h2>
+      <p id="sheet-rtl-profile-description">قم بإجراء تغييرات على ملفك الشخصي هنا. انقر حفظ عند الانتهاء.</p>
+    </header>
+    <section class="px-4">
+      <form id="sheet-rtl-profile-form" method="dialog" class="grid gap-6">
+        <div class="grid gap-3">
+          <label class="label" for="sheet-rtl-profile-name">الاسم</label>
+          <input class="input" type="text" value="Pedro Duarte" id="sheet-rtl-profile-name" />
+        </div>
+        <div class="grid gap-3">
+          <label class="label" for="sheet-rtl-profile-username">اسم المستخدم</label>
+          <input class="input" type="text" value="peduarte" id="sheet-rtl-profile-username" />
+        </div>
+      </form>
+    </section>
+    <footer>
+      <button type="submit" form="sheet-rtl-profile-form" class="btn">حفظ التغييرات</button>
+      <button type="button" class="btn" data-variant="outline" onclick="this.closest('dialog').close()">إغلاق</button>
+    </footer>
+    <button type="button" class="btn" data-variant="ghost" data-size="icon-sm" aria-label="إغلاق" onclick="this.closest('dialog').close()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4" aria-hidden="true"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+    </button>
+  </article>
+</dialog>
+</Preview>

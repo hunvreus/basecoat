@@ -1,0 +1,223 @@
+import packageJson from "../../../package.json"
+
+export const basecoatVersion = packageJson.version
+
+# Typography
+
+<Preview class="w-full">
+<article class="typeset w-full max-w-2xl">
+  <h1>Platform sync: week 27</h1>
+  <p><em>July 3, 2026 · 25 min · recording available</em></p>
+  <h2>Decisions</h2>
+  <ul>
+    <li>Ship the streaming endpoint behind a flag on Tuesday.</li>
+    <li>Adopt cursor pagination for the activity feed.</li>
+    <li>Postpone the queue migration until it solves a current failure.</li>
+  </ul>
+  <h2>Action items</h2>
+  <ul class="contains-task-list">
+    <li class="task-list-item">
+      <input type="checkbox" checked disabled />
+      Add the kill switch
+    </li>
+    <li class="task-list-item">
+      <input type="checkbox" disabled />
+      Publish the latency dashboard
+    </li>
+  </ul>
+  <blockquote>
+    <p>If an alert fires twelve times and is actioned zero times, it is a screensaver.</p>
+  </blockquote>
+</article>
+</Preview>
+
+Typeset is an optional stylesheet for semantic HTML and rendered Markdown. Add `typeset` to a container and its headings, paragraphs, lists, tables, code, media, and other content elements receive a consistent reading rhythm.
+
+It uses Basecoat's color, radius, and font tokens, supports dark mode and RTL, and requires no JavaScript. It is shipped separately so applications that do not render long-form content do not pay for it.
+
+## Usage
+
+<Steps>
+  <Step title="Include CSS">
+
+Import Typeset after Tailwind and a Basecoat style bundle.
+
+```css
+@import 'tailwindcss';
+@import 'basecoat-css/vega.css';
+@import 'basecoat-css/typeset.css';
+```
+
+With the CDN, load the optional Typeset build after Basecoat.
+
+<Code
+  lang="html"
+  code={`<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@${basecoatVersion}/dist/basecoat.cdn.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@${basecoatVersion}/dist/typeset.cdn.min.css" />`}
+/>
+
+  </Step>
+  <Step title="Wrap your content">
+
+Add `typeset` to the element containing your HTML or rendered Markdown.
+
+```html
+<article class="typeset">
+  <h1>Release notes</h1>
+  <p>Everything that changed in this release.</p>
+  <h2>Added</h2>
+  <ul>
+    <li>Typeset support for semantic HTML.</li>
+    <li>Configurable reading rhythm.</li>
+  </ul>
+</article>
+```
+
+Typeset does not set a maximum width. Your layout owns the measure, for example with `max-w-2xl`.
+
+  </Step>
+</Steps>
+
+## Examples
+
+### Custom presets
+
+Six custom properties control the fonts and reading rhythm. Define as many preset classes as your application needs.
+
+```css
+.typeset-chat {
+  --typeset-leading: 1.6;
+  --typeset-flow: 1em;
+}
+
+.typeset-docs {
+  --typeset-font-body: var(--font-sans);
+  --typeset-font-heading: var(--font-sans);
+  --typeset-font-mono: var(--font-mono);
+  --typeset-size: 15px;
+  --typeset-leading: 1.75;
+  --typeset-flow: 1.5em;
+}
+```
+
+```html
+<div class="typeset typeset-chat">
+  ...
+</div>
+<article class="typeset typeset-docs">
+  ...
+</article>
+```
+
+| Property | Default | Purpose |
+| --- | --- | --- |
+| `--typeset-font-body` | `inherit` | Body text family. |
+| `--typeset-font-heading` | `--font-heading` or inherited | Heading family. |
+| `--typeset-font-mono` | `--font-mono` | Inline and block code family. |
+| `--typeset-size` | `1em` | Base text size. Typeset renders it at `1.125` times this value below `48rem`. |
+| `--typeset-leading` | `1.75` | Body line height. |
+| `--typeset-flow` | `1.25em` | Space between content blocks. |
+
+### Rich content
+
+Typeset styles plain elements without requiring classes on each child.
+
+<Preview class="w-full">
+<article class="typeset w-full max-w-2xl">
+  <h2>Deploying safely</h2>
+  <p>Run <code>npm run check</code> before deploying. The command verifies the package, documentation, and generated assets.</p>
+  <details>
+    <summary>Why this matters</summary>
+    <p>A successful build catches missing exports and invalid CSS before release.</p>
+  </details>
+  <hr />
+  <dl>
+    <dt>Production</dt>
+    <dd>The environment serving customer traffic.</dd>
+    <dt>Preview</dt>
+    <dd>An isolated deployment used for verification.</dd>
+  </dl>
+</article>
+</Preview>
+
+### Opting out
+
+Add `not-typeset` or `data-not-typeset` to a subtree that should keep its own component styles. This also excludes automatic flow spacing; add `mt-(--typeset-flow)` when an embedded component follows text.
+
+```html
+<article class="typeset">
+  <p>This paragraph uses Typeset.</p>
+  <div class="card not-typeset mt-(--typeset-flow)">
+    <header>
+      <h3>Component content</h3>
+      <p>This card keeps its Basecoat styles.</p>
+    </header>
+  </div>
+</article>
+```
+
+Unlike shadcn/ui, Basecoat does not use `data-slot` markup. Embedded components are therefore excluded explicitly with `not-typeset` or `data-not-typeset`.
+
+### Wide tables
+
+Tables wrap to their available width by default. Wrap a table in `typeset-scroll` when horizontal scrolling is preferable.
+
+<Preview class="w-full">
+<article class="typeset w-full max-w-2xl">
+  <div class="typeset-scroll scrollbar scrollbar-thin" role="region" aria-label="Deployment environments" tabindex="0">
+    <table>
+      <thead>
+        <tr>
+          <th>Environment</th>
+          <th>Region</th>
+          <th>Version</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Production</td>
+          <td>Singapore</td>
+          <td>1.1.0</td>
+          <td>Healthy</td>
+        </tr>
+        <tr>
+          <td>Preview</td>
+          <td>Frankfurt</td>
+          <td>1.2.0-beta.1</td>
+          <td>Building</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</article>
+</Preview>
+
+```html
+<article class="typeset">
+  <div class="typeset-scroll" role="region" aria-label="Deployment environments" tabindex="0">
+    <table>
+      <!-- Table headings and rows -->
+    </table>
+  </div>
+</article>
+```
+
+### Streaming content
+
+Typeset uses start margins and avoids layout rules based on `:last-child`, `:has()`, or `:empty`. Appending a new block therefore does not restyle blocks that were already rendered, which makes it suitable for streaming chat and progressively rendered Markdown.
+
+### RTL
+
+Logical margins, padding, and borders follow the document direction automatically.
+
+<Preview class="w-full">
+<article class="typeset w-full max-w-2xl" dir="rtl">
+  <h2>ملاحظات الإصدار</h2>
+  <p>يوفر Typeset تنسيقًا متناسقًا للمحتوى الدلالي والنصوص المحولة من Markdown.</p>
+  <ul>
+    <li>يدعم الوضع الداكن تلقائيًا.</li>
+    <li>يتبع اتجاه المستند.</li>
+  </ul>
+</article>
+</Preview>

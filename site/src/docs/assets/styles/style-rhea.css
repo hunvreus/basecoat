@@ -4,5 +4,5 @@
 @reference "tailwindcss";
 @reference "../../../../../src/css/base/base.css";
 @import "../../../../../src/css/basecoat-rhea.css";
+@import "../../../../../src/css/typeset.css";
 @import "reallysimpledocs/css";
-@import "reallysimpledocs/css/styles/rhea";

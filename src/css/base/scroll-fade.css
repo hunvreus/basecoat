@@ -1,0 +1,41 @@
+/* Progressive scroll-edge fades. Unsupported browsers keep an unmasked scroller. */
+@property --_scroll-fade-start {
+  syntax: '<length-percentage>';
+  inherits: false;
+  initial-value: 0px;
+}
+@property --_scroll-fade-end {
+  syntax: '<length-percentage>';
+  inherits: false;
+  initial-value: 0px;
+}
+@keyframes basecoat-scroll-fade-start {
+  from { --_scroll-fade-start: 0px; }
+  to { --_scroll-fade-start: min(12%, 2.5rem); }
+}
+@keyframes basecoat-scroll-fade-end {
+  from { --_scroll-fade-end: min(12%, 2.5rem); }
+  to { --_scroll-fade-end: 0px; }
+}
+
+@source inline("scroll-fade scroll-fade-x");
+
+@utility scroll-fade {
+  --_fade-direction: to bottom;
+  --_fade-axis: y;
+  @supports (animation-timeline: scroll()) {
+    @media (forced-colors: none) {
+      mask-image: linear-gradient(var(--_fade-direction), transparent, #000 var(--_scroll-fade-start), #000 calc(100% - var(--_scroll-fade-end)), transparent);
+      animation: basecoat-scroll-fade-start 1ms ease-in-out both, basecoat-scroll-fade-end 1ms ease-in-out both;
+      animation-timeline: scroll(self var(--_fade-axis)), scroll(self var(--_fade-axis));
+      animation-range: 0 6rem, calc(100% - 6rem) 100%;
+    }
+  }
+}
+
+@utility scroll-fade-x {
+  @apply scroll-fade;
+  --_fade-axis: inline;
+  --_fade-direction: to right;
+  &:dir(rtl) { --_fade-direction: to left; }
+}

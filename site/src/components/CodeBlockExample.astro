@@ -1,0 +1,65 @@
+---
+import { Preview } from 'reallysimpledocs/components';
+import { codeToHtml } from 'shiki';
+import Copy from 'lucide-static/icons/copy.svg?raw';
+import Check from 'lucide-static/icons/check.svg?raw';
+import Wrap from 'lucide-static/icons/wrap-text.svg?raw';
+import Download from 'lucide-static/icons/download.svg?raw';
+import Terminal from 'lucide-static/icons/terminal.svg?raw';
+import FileCode from 'lucide-static/icons/file-code.svg?raw';
+
+const { code, title, lang, numbered = false, lineClasses = {}, sizes = [undefined], compareWrap = false, variant, description, floating = false, wrap = false, maxHeight = false, rtl = false, wrapControl = false, titleIcon, class: width = 'max-w-md', filename, copy = true } = Astro.props;
+const escape = (value) => String(value).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;');
+let content = escape(code);
+if (lang) {
+  const highlighted = await codeToHtml(code, {
+    lang,
+    themes: { light: 'github-light', dark: 'github-dark' },
+    defaultColor: 'light-dark()',
+    transformers: [{
+      line(node, index) {
+        delete node.properties.class;
+        if (lineClasses[index]) node.properties.class = lineClasses[index];
+      },
+    }],
+  });
+  content = highlighted.match(/<code>([\s\S]*)<\/code>/)[1];
+} else if (numbered || Object.keys(lineClasses).length) {
+  content = code.split('\n').map((line, i) => `<span${lineClasses[i + 1] ? ` class="${escape(lineClasses[i + 1])}"` : ''}>${escape(line)}</span>`).join('\n');
+}
+const icon = (svg) => svg.replace(/<!--[\s\S]*?-->/g, '').trim().replace(/\s*\n\s*/g, ' ').replace('<svg ', '<svg aria-hidden="true" ');
+const copyButton = `<button type="button" class="btn" data-variant="ghost" data-size="icon-xs" data-copy aria-label="Copy code" title="Copy code">
+  ${icon(Copy)}
+  ${icon(Check)}
+</button>`;
+const wrapButton = `<button type="button" class="btn" data-variant="ghost" data-size="icon-xs" aria-label="Wrap lines" title="Wrap lines" aria-pressed="${wrap}" onclick="const pre = this.closest('.code-block').querySelector('pre'); this.setAttribute('aria-pressed', pre.toggleAttribute('data-wrap'))">
+  ${icon(Wrap)}
+</button>`;
+const indent = (html, spaces) => html.split('\n').map(line => ' '.repeat(spaces) + line).join('\n');
+const downloadLink = filename && `<a class="btn" data-variant="ghost" data-size="icon-xs" aria-label="Download" title="Download" download="${escape(filename)}" href="data:text/plain;charset=utf-8,${encodeURIComponent(code)}">
+  ${icon(Download)}
+</a>`;
+const buttons = [wrapControl && wrapButton, downloadLink, copy && copyButton].filter(Boolean).join('\n');
+const controls = buttons ? `<div>\n${indent(buttons, 2)}\n</div>` : '';
+const iconSvg = { file: FileCode, terminal: Terminal }[titleIcon];
+const header = title ? `  <header>
+    <span>${iconSvg ? icon(iconSvg) : ''}${escape(title)}</span>
+${controls ? indent(controls, 4) + '\n' : ''}  </header>\n` : floating && controls ? indent(controls, 2) + '\n' : '';
+// Format the surrounding HTML, but preserve source whitespace inside <pre> exactly.
+function renderBlock(size, wrapped) {
+  return `<div class="code-block"${size ? ` data-size="${size}"` : ''}${variant ? ` data-variant="${variant}"` : ''}>
+${header}  <pre class="scrollbar${maxHeight ? ' max-h-48' : ''}" tabindex="0" aria-label="${escape(title || (compareWrap ? (wrapped ? 'Wrapped error message' : 'Scrollable error message') : 'Code'))}"${numbered ? ' data-line-numbers' : ''}${wrapped ? ' data-wrap' : ''}><code>${content}</code></pre>
+</div>`;
+}
+const blocks = compareWrap
+  ? [renderBlock(undefined, false), renderBlock(undefined, true)]
+  : sizes.map(size => renderBlock(size, wrap));
+const html = [
+  description && `<p>${escape(description)}</p>`,
+  ...blocks,
+].filter(Boolean).join('\n');
+const preview = rtl ? `<div dir="rtl" class="grid gap-3 text-sm">\n${html}\n</div>` : html;
+---
+<Preview code={preview} class="w-full">
+  <div class:list={['mx-auto grid w-full min-w-0 gap-4', width]}><Fragment set:html={preview} /></div>
+</Preview>

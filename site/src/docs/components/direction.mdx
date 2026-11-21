@@ -1,0 +1,46 @@
+# Direction
+
+Set text direction with the native `dir` attribute.
+
+<Preview class="w-full flex justify-center">
+<div class="card w-full max-w-sm" dir="rtl" lang="ar">
+  <header>
+    <h2>تسجيل الدخول إلى حسابك</h2>
+    <p>أدخل بريدك الإلكتروني أدناه لتسجيل الدخول إلى حسابك</p>
+    <div class="card-action">
+      <button type="button" class="btn" data-variant="link">إنشاء حساب</button>
+    </div>
+  </header>
+  <section>
+    <form id="direction-login" class="flex flex-col gap-6" onsubmit="event.preventDefault()">
+      <div class="grid gap-2">
+        <label class="label" for="direction-email">البريد الإلكتروني</label>
+        <input id="direction-email" class="input" type="email" name="email" placeholder="m@example.com" required />
+      </div>
+      <div class="grid gap-2">
+        <div class="flex items-center">
+          <label class="label" for="direction-password">كلمة المرور</label>
+          <a href="#" class="ms-auto inline-block text-sm underline-offset-4 hover:underline">نسيت كلمة المرور؟</a>
+        </div>
+        <input id="direction-password" class="input" type="password" name="password" required />
+      </div>
+    </form>
+  </section>
+  <footer class="flex-col gap-2">
+    <button type="submit" form="direction-login" class="btn w-full">تسجيل الدخول</button>
+    <button type="button" class="btn w-full" data-variant="outline">تسجيل الدخول باستخدام Google</button>
+  </footer>
+</div>
+</Preview>
+
+## Usage
+
+Set `dir="rtl"` on `<html>` for a right-to-left page, or on a container for a single region. Its descendants inherit the direction.
+
+```html
+<section lang="ar" dir="rtl">
+  <h2>تسجيل الدخول إلى حسابك</h2>
+</section>
+```
+
+Use logical utilities such as `ps-4` and `text-start` so spacing and alignment follow the direction. For user-entered text, `dir="auto"` lets the browser determine the direction from the content.

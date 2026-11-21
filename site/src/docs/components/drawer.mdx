@@ -40,11 +40,12 @@ Import Tailwind and one full Basecoat style bundle.
 @import "basecoat-css/vega.css";
 ```
 
-Or import only the base CSS, Drawer component CSS, and one style pack.
+For individual imports, include the base CSS, the components you use, and one style pack.
 
 ```css
 @import "tailwindcss";
-@import "basecoat-css/base.css";
+@import "basecoat-css/base/base.css";
+@import "basecoat-css/components/button.css";
 @import "basecoat-css/components/drawer.css";
 @import "basecoat-css/styles/vega.css";
 ```
@@ -107,7 +108,7 @@ Basecoat maps shadcn/ui's Vaul Drawer to a native `<dialog>` element. This keeps
 
 ### HTML structure
 
-<Callout type="warning" title="No drag handle" icon="triangle-alert">
+<Callout title="No drag handle" icon="info">
   Basecoat does not implement Vaul's drag-to-close gesture, snap points, or drag handle. Drawers close with outside click, Escape, or explicit close controls.
 </Callout>
 

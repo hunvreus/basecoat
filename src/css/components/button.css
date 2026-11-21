@@ -3,4 +3,27 @@
   .btn {
     @apply inline-flex shrink-0 items-center justify-center whitespace-nowrap transition-all outline-none select-none disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0;
   }
+  .btn:has(> input:is([type='checkbox'], [type='radio'])) {
+    @apply relative;
+  }
+  .btn > input:is([type='checkbox'], [type='radio']) {
+    @apply sr-only;
+  }
+  @media (forced-colors: active) {
+    .btn:has(> input:checked)::after {
+      content: '';
+      position: absolute;
+      inset: 4px;
+      border: 2px solid Highlight;
+      pointer-events: none;
+    }
+    .btn:focus-visible,
+    .btn:has(> input:focus-visible) {
+      outline: 2px solid Highlight;
+      outline-offset: 2px;
+    }
+  }
+  .btn:has(> input:disabled) {
+    @apply pointer-events-none opacity-50;
+  }
 }

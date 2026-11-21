@@ -1,0 +1,80 @@
+@import "../base/scroll-fade.css";
+
+/* Code Block */
+@layer components {
+  .code-block {
+    @apply relative m-0 flex w-full min-w-0 flex-col overflow-hidden;
+  }
+  .code-block > output { @apply sr-only; }
+  .code-block > header,
+  .code-block > footer {
+    @apply flex min-w-0 shrink-0 items-center;
+  }
+  .code-block > header > :first-child:not(div) {
+    @apply min-w-0 truncate [&_svg]:inline-block [&_svg]:align-middle;
+  }
+  .code-block > div,
+  .code-block > header > div {
+    @apply ms-auto flex shrink-0 items-center;
+  }
+  .code-block > div {
+    @apply absolute z-10 opacity-0 transition-opacity;
+  }
+  .code-block:is(:hover, :focus-within) > div {
+    @apply opacity-100;
+  }
+  @media (pointer: coarse) {
+    .code-block > div { opacity: 1; }
+  }
+  .code-block > pre {
+    @apply scroll-fade m-0 min-h-0 min-w-0 overflow-auto text-start font-mono outline-none;
+    direction: ltr;
+    color-scheme: light;
+    tab-size: 2;
+  }
+  html.dark .code-block > pre { color-scheme: dark; }
+  .code-block > pre > code {
+    @apply block w-auto min-h-lh min-w-max p-0;
+    font-size: inherit;
+    font-family: inherit;
+    counter-reset: line;
+  }
+  .code-block > pre > code > span {
+    /* Keep real newline text in the inline flow for native selection and copying. */
+    @apply relative inline-block min-h-lh align-top;
+    width: calc(100% + 2 * var(--_code-padding));
+    counter-increment: line;
+  }
+  .code-block > pre[data-line-numbers] > code > span {
+    padding-inline-start: calc(var(--_code-padding) + 4ch);
+  }
+  .code-block > pre[data-line-numbers] > code > span::before {
+    content: counter(line);
+    @apply absolute select-none;
+    inset-inline-start: var(--_code-padding);
+    width: 3ch;
+  }
+  @supports (content: counter(line) / '') {
+    .code-block > pre[data-line-numbers] > code > span::before { content: counter(line) / ''; }
+  }
+  .code-block > pre[data-wrap] {
+    @apply whitespace-pre-wrap break-words;
+  }
+  .code-block > pre[data-wrap] > code {
+    @apply min-w-0;
+  }
+  .code-block button[data-copy] > svg:last-child:not(:first-child) { display: none; }
+  .code-block button[data-copy][data-copied] > svg:first-child { display: none; }
+  .code-block button[data-copy][data-copied] > svg:last-child { display: block; }
+  .code-block > pre:not([data-wrap]) {
+    /* Source code always reads left to right, including in RTL documents. */
+    --_fade-axis: x;
+    --_fade-direction: to right;
+  }
+  @media (forced-colors: active) {
+    .code-block:has(> pre:focus-visible) { outline: 2px solid Highlight; outline-offset: 2px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .code-block > div { transition: none; }
+  }
+}

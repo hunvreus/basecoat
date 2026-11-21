@@ -1,0 +1,24 @@
+/* Message */
+@layer components {
+  .message-group {
+    @apply flex min-w-0 flex-col;
+  }
+  .message {
+    @apply flex w-full min-w-0;
+  }
+  .message > .avatar {
+    @apply shrink-0 self-end;
+  }
+  .message > div:last-child {
+    @apply flex min-w-0 flex-1 flex-col wrap-break-word;
+  }
+  .message > div:last-child > :is(header, footer) {
+    @apply flex max-w-full min-w-0 items-center;
+  }
+  .message[data-align='end'] {
+    @apply flex-row-reverse;
+  }
+  .message[data-align='end'] > div:last-child {
+    @apply items-end;
+  }
+}

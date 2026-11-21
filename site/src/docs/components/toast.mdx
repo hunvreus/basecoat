@@ -1,31 +1,10 @@
 # Toast
 
-<div id="toaster" class="toaster"></div>
+A short notification for an action, status update, or asynchronous task.
 
-<Preview class="max-w-md">
-<button
-  class="btn" data-variant="outline"
-  hx-trigger="click"
-  hx-select="unset"
-  hx-get="/fragments/toast/success"
-  hx-target="#toaster"
-  hx-swap="beforeend"
-  hx-push-url="false"
->Toast from backend (with HTMX)</button>
-</Preview>
-
-<Preview class="max-w-md">
-<button
-  class="btn" data-variant="outline"
-  onclick="document.getElementById('toaster').toast({
-    category: 'success',
-    title: 'Success',
-    description: 'A success toast called from the front-end.',
-    cancel: {
-      label: 'Dismiss'
-    }
-  })"
->Toast from front-end</button>
+<Preview>
+<button type="button" class="btn" data-variant="outline" onclick="document.getElementById('toaster').toast({ category: null, title: 'Event created', description: 'Sunday, December 3 at 9:00 AM', action: { label: 'Undo' } })">Show Toast</button>
+<ol id="toaster" class="toaster" role="list" aria-label="Notifications"></ol>
 </Preview>
 
 ## Usage
@@ -37,154 +16,203 @@
 <Steps>
   <Step title="Include CSS">
 
-Import Tailwind and one full Basecoat style bundle.
+Import Tailwind and one Basecoat style bundle.
 
 ```css
-@import "tailwindcss";
-@import "basecoat-css/vega.css";
+@import 'tailwindcss';
+@import 'basecoat-css/vega.css';
 ```
 
-Or import only the base CSS, Toast component CSS, and one style pack.
+Or import the base CSS, Toast and Button component CSS, and one style pack.
 
 ```css
-@import "tailwindcss";
-@import "basecoat-css/base.css";
-@import "basecoat-css/components/toast.css";
-@import "basecoat-css/styles/vega.css";
+@import 'tailwindcss';
+@import 'basecoat-css/base.css';
+@import 'basecoat-css/components/button.css';
+@import 'basecoat-css/components/toast.css';
+@import 'basecoat-css/styles/vega.css';
 ```
-
-Using CDN or bundler imports? See the [Installation page](/installation).
 
   </Step>
   <Step title="Include JavaScript">
 
-Copy or serve the full Basecoat JavaScript bundle.
-
-```html
-<script src="/assets/js/all.min.js" defer></script>
-```
-
-Or copy or serve the Basecoat runtime and Toast script.
+Copy or serve the full bundle, or the Basecoat runtime and Toast script:
 
 ```html
 <script src="/assets/js/basecoat.min.js" defer></script>
 <script src="/assets/js/toast.min.js" defer></script>
 ```
 
-Using CDN or bundler imports? See the [Installation page](/installation).
+For CDN and bundler imports, see [Installation](/installation).
 
   </Step>
-  <Step title="Add the toaster HTML">
+  <Step title="Add the toaster">
 
-Add one toaster near the end of your page body:
+Add one container near the end of the page body. Toasts can be created from JavaScript or appended as server-rendered HTML.
 
 ```html
-<div id="toaster" class="toaster"></div>
+<ol id="toaster" class="toaster" role="list" aria-label="Notifications"></ol>
 ```
-
-Set `data-align="start"`, `data-align="center"`, or `data-align="end"` on the toaster to change placement.
 
   </Step>
-  <Step title="Add your toasts">
+  <Step title="Show a toast">
 
-Append server-rendered toast markup to the toaster, or create one from JavaScript with `toaster.toast(config)`.
+Call the toaster after the Basecoat scripts initialize, for example when the user completes an action.
 
-```html
-<div id="toaster" class="toaster">
-  <div class="toast" role="status" aria-atomic="true" aria-hidden="false" data-category="success">
-    <div class="toast-content"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="m9 12 2 2 4-4" /></svg>
-      <section>
-        <h2>Success</h2>
-        <p>A success toast called from the front-end.</p>
-      </section>
-      <footer>
-        <button type="button" class="btn" data-toast-action>Dismiss</button>
-      </footer>
-    </div>
-  </div>
-</div>
+```js
+const toaster = document.getElementById('toaster');
+toaster.toast({
+  category: null,
+  title: 'Event created',
+  description: 'Sunday, December 3 at 9:00 AM',
+});
 ```
 
-```html
-<button
-  class="btn" data-variant="outline"
-  onclick="document.getElementById('toaster').toast({
-    category: 'success',
-    title: 'Success',
-    description: 'A success toast called from the front-end.',
-    cancel: {
-      label: 'Dismiss'
-    }
-  })">Toast from front-end</button>
-```
+Toasts include a close button by default. Footer buttons and links dismiss their toast after their own click handler runs; no extra action attributes are needed.
+
+The three newest toasts form a stack. Hover or focus it to expand them and pause dismissal. Swipe a toast down or toward its horizontal edge to dismiss it. Closing a focused toast moves focus to another toast control or back to the previously focused element. Motion follows the user's reduced-motion preference.
 
   </Step>
 </Steps>
 
 ### HTML structure
 
-<dl>
-  <dt><code>&lt;div id="toaster" class="toaster"&gt;</code></dt>
-  <dd>Toast container. Optional <code>data-align</code> values are <code>start</code>, <code>center</code>, and <code>end</code>.</dd>
-  <dt><code>&lt;div class="toast"&gt;</code></dt>
-  <dd>
-    Toast item. Use <code>data-category="success|info|warning|error"</code> for category styling and <code>data-duration</code> to override the timeout in milliseconds. Use <code>data-duration="-1"</code> to keep it open.
-    <dl>
-      <dt><code>&lt;div class="toast-content"&gt;</code></dt>
-      <dd>
-        Content wrapper.
-        <dl>
-          <dt><code>&lt;svg aria-hidden="true"&gt;</code> <span class="badge" data-variant="secondary">Optional</span></dt>
-          <dd>Icon.</dd>
-          <dt><code>&lt;section&gt;</code></dt>
-          <dd>
-            Message region.
-            <dl>
-              <dt><code>&lt;h2&gt;</code></dt>
-              <dd>Title.</dd>
-              <dt><code>&lt;p&gt;</code> <span class="badge" data-variant="secondary">Optional</span></dt>
-              <dd>Description.</dd>
-            </dl>
-          </dd>
-          <dt><code>&lt;footer&gt;</code> <span class="badge" data-variant="secondary">Optional</span></dt>
-          <dd>Action buttons or links. Clicking a footer button or link closes the toast.</dd>
-        </dl>
-      </dd>
-    </dl>
-  </dd>
-</dl>
+Use a `.toast` list item, a `.toast-content` wrapper for the message and its fade transition, a `<section>` for text, and an optional `<footer>` of ordinary [Button](/components/button) controls. An optional decorative SVG goes before the section. Existing non-list roots still initialize through the same classes; use list items for valid markup inside an `<ol>`.
+
+```html
+<li class="toast">
+  <div class="toast-content" role="status" aria-atomic="true">
+    <section>
+      <h2>Event created</h2>
+      <p>Sunday, December 3 at 9:00 AM</p>
+    </section>
+    <footer>
+      <button type="button" class="btn" data-variant="outline" data-size="sm">Undo</button>
+      <button type="button" class="btn" data-variant="ghost" data-size="icon-sm" aria-label="Close toast">
+        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+      </button>
+    </footer>
+  </div>
+</li>
+```
+
+Set `data-category="success|info|warning|error|loading"` on the toast when applicable. Use `role="alert"` for error content and `role="status"` for other notifications. Set `data-duration` in milliseconds, or `-1` to keep it open. A loading toast stays open until updated or dismissed.
 
 ### JavaScript API
 
-| API | Type | Description |
-| --- | --- | --- |
-| `toaster.toast(config)` | Method | Creates a toast from a config object and returns the inserted `.toast` element. [See "Config object" below](#config-object). |
-| `toaster.closeAll()` | Method | Closes every toast inside the toaster. |
-| `toast.close()` | Method | Closes one initialized toast element. |
+| API | Description |
+| --- | --- |
+| `toaster.toast(config)` | Creates and returns a toast element. |
+| `toaster.closeAll()` | Closes every toast in the container. |
+| `toast.close()` | Closes one initialized toast. |
+| `toast.update(config)` | Updates a toast created by `toaster.toast()`, retaining unspecified options and restarting its timer. Does nothing after dismissal. |
 
-### Config object
+#### Config object
+
+| Option | Description |
+| --- | --- |
+| `title` | Notification title. Optional for description-only toasts. |
+| `description` | Optional description. |
+| `category` | `success`, `info`, `warning`, `error`, or `loading`. Defaults to `info`; use `null` for no status icon. |
+| `duration` | Milliseconds before dismissal. Defaults to `3000`, or `5000` for errors. Loading toasts default to no timeout. Use `-1` to keep a toast open. |
+| `action` | Optional `{ label, href }` link or `{ label, onclick }` button. A label-only button simply dismisses the toast. |
+| `cancel` | Optional secondary `{ label, onclick }` button. |
+| `closeButton` | Whether to include the close icon button. Defaults to `true`. |
+| `icon` | Optional trusted SVG markup replacing the category icon. |
+| `html` | Allow HTML in the title, description, and labels. Defaults to `false`. |
+
+Basecoat keeps its existing `category`, `duration`, and DOM-element API. Its default category and timeout differ from upstream. The Promise example below uses native promises with `toast.update()` instead of a separate promise manager.
 
 <Callout type="warning" title="Text is escaped by default" icon="triangle-alert">
-  `title`, `description`, and action labels are inserted as plain text. With `html: true` they are inserted as HTML, so never pass untrusted user input with it. `onclick` is JavaScript code and must never contain user input. `icon` is always inserted as raw HTML (it is meant for SVG markup).
+  `title`, `description`, and labels are plain text unless `html: true`. Only use that option with trusted content. `icon` is raw markup and `onclick` is JavaScript code; neither should contain user input.
 </Callout>
 
-<dl>
-  <dt><code>duration</code> <span class="badge" data-variant="secondary">Optional</span></dt>
-  <dd>Timeout in milliseconds. Defaults to <code>3000</code>, or <code>5000</code> for error toasts. Use <code>-1</code> to keep it open.</dd>
-  <dt><code>category</code> <span class="badge" data-variant="secondary">Optional</span></dt>
-  <dd>Category of the toast, either <code>success</code>, <code>info</code>, <code>warning</code>, or <code>error</code>.</dd>
-  <dt><code>title</code></dt>
-  <dd>The title of the toast.</dd>
-  <dt><code>description</code> <span class="badge" data-variant="secondary">Optional</span></dt>
-  <dd>The description of the toast.</dd>
-  <dt><code>action</code> <span class="badge" data-variant="secondary">Optional</span></dt>
-  <dd>Primary action. Supports <code>label</code> with either <code>href</code> or <code>onclick</code>.</dd>
-  <dt><code>cancel</code> <span class="badge" data-variant="secondary">Optional</span></dt>
-  <dd>Secondary action. Supports <code>label</code> and optional <code>onclick</code>.</dd>
-  <dt><code>icon</code> <span class="badge" data-variant="secondary">Optional</span></dt>
-  <dd>Custom icon markup, usually an SVG. Inserted as raw HTML. Defaults to the category icon.</dd>
-  <dt><code>html</code> <span class="badge" data-variant="secondary">Optional</span></dt>
-  <dd>Set to <code>true</code> to insert <code>title</code>, <code>description</code>, and action labels as HTML instead of plain text. Defaults to <code>false</code>. Only use it with trusted content.</dd>
-</dl>
+The Jinja and Nunjucks macros use your template engine's autoescaping. For Jinja, enable autoescaping for `.html.jinja` files. Their optional `close_button` argument defaults to `true`; existing positional arguments are unchanged.
 
-The Jinja and Nunjucks `toast()` macros render on your server, so your template engine's autoescaping applies to `title`, `description`, and labels there when it is enabled. Nunjucks enables it by default. With Jinja, make sure your environment's `autoescape` setting covers the Basecoat template files (for example `.html.jinja`). `icon` is output with `safe`, and `onclick` is output as an attribute, so neither should contain user input.
+## Examples
+
+### Types
+
+Use `category` to choose a status icon. The Default example sets `category: null` to omit the icon.
+
+<Preview>
+<div class="flex flex-wrap gap-2">
+  <button type="button" class="btn" data-variant="outline" onclick="document.getElementById('toaster').toast({ category: null, description: 'Event has been created.' })">Default</button>
+  <button type="button" class="btn" data-variant="outline" onclick="document.getElementById('toaster').toast({ category: 'success', description: 'Event has been created.' })">Success</button>
+  <button type="button" class="btn" data-variant="outline" onclick="document.getElementById('toaster').toast({ category: 'info', description: 'Arrive 10 minutes before the event.' })">Info</button>
+  <button type="button" class="btn" data-variant="outline" onclick="document.getElementById('toaster').toast({ category: 'warning', description: 'The event cannot start before 8:00 AM.' })">Warning</button>
+  <button type="button" class="btn" data-variant="outline" onclick="document.getElementById('toaster').toast({ category: 'error', description: 'The event could not be created.' })">Error</button>
+</div>
+</Preview>
+
+### Action
+
+Add an action to the footer. Its handler runs before the toast closes.
+
+<Preview>
+<button type="button" class="btn" data-variant="outline" onclick="document.getElementById('toaster').toast({ category: null, title: 'Event created', action: { label: 'Undo', onclick: 'console.log(\'Undo event creation\')' } })">Show Action</button>
+</Preview>
+
+```js
+toaster.toast({
+  category: null,
+  title: 'Event created',
+  action: {
+    label: 'Undo',
+    onclick: 'undoEvent()',
+  },
+});
+```
+
+### Promise
+
+Update the same toast as a native promise settles. The loading state has no timeout; changing to success or error starts that category's default timeout. Dismissing the toast while the task runs does not cancel the task or recreate the notification later.
+
+<Preview>
+<button
+  type="button"
+  class="btn"
+  data-variant="outline"
+  onclick="const toast = document.getElementById('toaster').toast({ category: 'loading', description: 'Creating event…' });
+    new Promise(resolve => setTimeout(() => resolve({ name: 'Event' }), 2000)).then(
+      data => toast.update({ category: 'success', description: data.name + ' created.' }),
+      () => toast.update({ category: 'error', description: 'Could not create event.' })
+    )"
+>Create Event</button>
+</Preview>
+
+```js
+const toast = toaster.toast({
+  category: 'loading',
+  description: 'Creating event…',
+});
+
+createEvent().then(
+  (data) => toast.update({ category: 'success', description: `${data.name} created.` }),
+  () => toast.update({ category: 'error', description: 'Could not create event.' }),
+);
+```
+
+### From the server
+
+Append HTML from your backend. Basecoat initializes new toasts automatically; the same markup works without a JavaScript configuration object.
+
+<Preview>
+<button type="button" class="btn" data-variant="outline" hx-trigger="click" hx-select="unset" hx-get="/fragments/toast/success" hx-target="#toaster" hx-swap="beforeend" hx-push-url="false">Toast from backend (with HTMX)</button>
+</Preview>
+
+### Placement
+
+Set `data-align="start"`, `center`, or `end` on the toaster. The default is `end`; start and end follow the page's text direction.
+
+```html
+<ol id="toaster" class="toaster" data-align="start" role="list" aria-label="Notifications"></ol>
+```
+
+### Custom dismissal
+
+Keep a toast open and use a text button instead of the default close icon.
+
+<Preview>
+<button type="button" class="btn" data-variant="outline" onclick="document.getElementById('toaster').toast({ category: null, title: 'Changes saved', description: 'You can close this notification when you are ready.', duration: -1, closeButton: false, cancel: { label: 'Dismiss' } })">Persistent Toast</button>
+</Preview>

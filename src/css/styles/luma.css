@@ -27,19 +27,19 @@
 
   .btn:not([data-size]),
   .btn[data-size='default'] {
-    @apply h-9 gap-1.5 px-3 has-[[data-icon='inline-end']]:pr-2.5 has-[[data-icon='inline-start']]:pl-2.5;
+    @apply h-9 gap-1.5 px-3 has-[[data-icon='inline-end']]:pe-2.5 has-[[data-icon='inline-start']]:ps-2.5;
   }
 
   .btn[data-size='xs'] {
-    @apply h-6 gap-1 px-2.5 text-xs [&_svg:not([class*='size-'])]:size-3 has-[[data-icon='inline-end']]:pr-2 has-[[data-icon='inline-start']]:pl-2;
+    @apply h-6 gap-1 px-2.5 text-xs [&_svg:not([class*='size-'])]:size-3 has-[[data-icon='inline-end']]:pe-2 has-[[data-icon='inline-start']]:ps-2;
   }
 
   .btn[data-size='sm'] {
-    @apply h-8 gap-1 px-3 has-[[data-icon='inline-end']]:pr-2 has-[[data-icon='inline-start']]:pl-2;
+    @apply h-8 gap-1 px-3 has-[[data-icon='inline-end']]:pe-2 has-[[data-icon='inline-start']]:ps-2;
   }
 
   .btn[data-size='lg'] {
-    @apply h-10 gap-1.5 px-4 has-[[data-icon='inline-end']]:pr-3 has-[[data-icon='inline-start']]:pl-3;
+    @apply h-10 gap-1.5 px-4 has-[[data-icon='inline-end']]:pe-3 has-[[data-icon='inline-start']]:ps-3;
   }
 
   .btn[data-size='icon'] {
@@ -83,6 +83,13 @@
     @apply bg-destructive/10 text-destructive hover:bg-destructive/20 dark:bg-destructive/20 dark:hover:bg-destructive/30 focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40;
   }
 
+  .btn:has(> input:checked) {
+    @apply bg-muted text-foreground hover:bg-muted dark:bg-muted dark:hover:bg-muted;
+  }
+  .btn:has(> input:focus-visible) {
+    @apply border-ring ring-ring/30 ring-[3px] dark:border-ring;
+  }
+
   /* Button Group */
   .button-group {
     @apply has-[>.button-group]:gap-2;
@@ -110,7 +117,7 @@
     }
   }
 
-  .button-group > :is(span, label, output) {
+  .button-group > :is(span, label, output):not(.btn) {
     @apply bg-muted gap-2 rounded-4xl border px-2.5 text-sm font-medium [&_svg:not([class*='size-'])]:size-4;
   }
 
@@ -631,6 +638,52 @@
     @apply text-muted-foreground text-sm;
   }
 
+  /* Sheet */
+  .sheet::backdrop {
+    @apply bg-black/30 supports-backdrop-filter:backdrop-blur-sm;
+  }
+
+  .sheet > * {
+    @apply bg-popover text-popover-foreground bg-clip-padding text-sm shadow-xl;
+  }
+
+  .sheet[data-side='bottom'] > * {
+    @apply border-t;
+  }
+
+  .sheet[data-side='top'] > * {
+    @apply border-b;
+  }
+
+  .sheet[data-side='left'] > * {
+    @apply border-r;
+  }
+
+  .sheet:not([data-side]) > *,
+  .sheet[data-side='right'] > * {
+    @apply border-l;
+  }
+
+  .sheet > * > header {
+    @apply gap-1.5 p-6;
+  }
+
+  .sheet > * > footer {
+    @apply gap-2 p-6;
+  }
+
+  .sheet > * > header > h2 {
+    @apply text-foreground text-base font-medium;
+  }
+
+  .sheet > * > header > p {
+    @apply text-muted-foreground text-sm;
+  }
+
+  .sheet > * > button:last-child {
+    @apply top-4 end-4 bg-secondary;
+  }
+
   /* Dropdown Menu */
   .dropdown-menu > [data-popover] {
     @apply bg-popover text-popover-foreground ring-foreground/5 dark:ring-foreground/10 min-w-48 gap-0 overflow-x-hidden overflow-y-auto rounded-3xl p-1.5 shadow-lg ring-1 duration-100;
@@ -702,6 +755,17 @@
   .popover > [data-popover] > header > p,
   .popover > [data-popover] > [data-description] {
     @apply text-muted-foreground;
+  }
+
+  /* Carousel */
+  .carousel > ul > li {
+    @apply p-2.5;
+  }
+  .carousel > button.btn {
+    @apply rounded-full;
+  }
+  .carousel > ul:focus-visible {
+    @apply outline-2 outline-ring outline-offset-2;
   }
 
   /* Card */
@@ -1082,6 +1146,44 @@
     @apply gap-4 text-sm;
   }
 
+  /* Message */
+  .message-group { @apply gap-2; }
+  .message { @apply gap-2 text-sm; }
+  .message > div:last-child { @apply gap-2.5; }
+  .message > div:last-child > :is(header, footer) {
+    @apply px-3.5 text-xs font-medium text-muted-foreground;
+  }
+  .message:has(.bubble[data-variant='ghost']) > div:last-child > :is(header, footer) { @apply px-0; }
+  .message:has(> div:last-child > footer) > .avatar { @apply -translate-y-8; }
+
+  /* Trace */
+  .trace { @apply gap-3; }
+  .trace-line { @apply gap-2 text-sm text-muted-foreground; }
+  .trace-line > svg { @apply size-4; }
+  .trace-line > small { @apply [font-size:inherit] text-muted-foreground/70 tabular-nums; }
+  :is(a, button, summary).trace-line {
+    @apply rounded-lg transition-colors hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/30;
+  }
+  summary.trace-line + div {
+    @apply mt-2.5 mb-1 ms-[calc(--spacing(2)-1px)] border-s ps-4 pe-1 text-muted-foreground leading-relaxed;
+  }
+
+  /* Marker */
+  .marker {
+    @apply min-h-4 gap-2 text-sm text-muted-foreground text-start [&_svg:not([class*='size-'])]:size-4;
+  }
+  .marker[data-variant='border'] {
+    @apply border-b border-border pb-2;
+  }
+  .marker[data-variant='separator']::before,
+  .marker[data-variant='separator']::after {
+    @apply border-border;
+  }
+  .marker[data-variant='separator']::before { @apply me-1; }
+  .marker[data-variant='separator']::after { @apply ms-1; }
+  a.marker, .marker a { @apply underline underline-offset-3 hover:text-foreground; }
+  button.marker { @apply hover:text-foreground; }
+
   /* Item */
   .item {
     @apply rounded-2xl border text-sm;
@@ -1352,9 +1454,17 @@
   }
 
   /* Toast */
-  .toast-content {
+  .toast {
     @apply bg-popover text-popover-foreground border shadow-lg rounded-2xl;
   }
+  .toast > .toast-content { @apply gap-3 p-4; }
+  .toast > .toast-content > svg { @apply size-4; }
+  .toast > .toast-content > section { @apply gap-1; }
+  .toast > .toast-content > section > h2 { @apply text-sm font-medium; }
+  .toast > .toast-content > section > p { @apply text-sm text-muted-foreground; }
+  .toast > .toast-content > footer { @apply gap-3; }
+  .toast > .toast-content > footer > .btn[data-size='icon-sm'] { @apply text-muted-foreground hover:text-foreground; }
+  .toast[data-category='error'] > .toast-content > svg { @apply text-destructive; }
 
   /* Slider */
   .field > input[type='range'],
@@ -1431,5 +1541,237 @@
   :is(.field > input[type='range'], .input[type='range']):focus-visible::-ms-thumb {
     @apply ring-4 ring-ring/30 outline-hidden;
   }
+
+
+  /* Bubble */
+  .bubble-group {
+    @apply gap-2;
+  }
+  .bubble {
+    @apply gap-1 max-w-[80%];
+  }
+  .bubble[data-align='end'],
+  .bubble[data-align='end'] > :first-child {
+    @apply self-end;
+  }
+  .bubble > :first-child {
+    @apply rounded-3xl border border-transparent px-3.5 py-2.5 text-sm leading-relaxed;
+  }
+  .bubble > :is(a, button):first-child {
+    @apply focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/30;
+  }
+  .bubble:not([data-variant]) > :first-child,
+  .bubble[data-variant='default'] > :first-child {
+    @apply bg-primary text-primary-foreground;
+  }
+  .bubble:not([data-variant]) > :is(a, button):first-child:hover,
+  .bubble[data-variant='default'] > :is(a, button):first-child:hover {
+    @apply bg-primary/80;
+  }
+  .bubble[data-variant='secondary'] > :first-child {
+    @apply bg-secondary text-secondary-foreground;
+  }
+  .bubble[data-variant='secondary'] > :is(a, button):first-child:hover {
+    @apply bg-[color-mix(in_oklch,var(--secondary),var(--foreground)_5%)];
+  }
+  .bubble[data-variant='muted'] > :first-child {
+    @apply bg-muted;
+  }
+  .bubble[data-variant='muted'] > :is(a, button):first-child:hover {
+    @apply bg-[color-mix(in_oklch,var(--muted),var(--foreground)_5%)];
+  }
+  .bubble[data-variant='tinted'] > :first-child {
+    @apply bg-[color-mix(in_oklch,var(--primary)_15%,var(--background))] text-foreground;
+  }
+  .bubble[data-variant='tinted'] > :is(a, button):first-child:hover {
+    @apply bg-[color-mix(in_oklch,var(--primary)_25%,var(--background))];
+  }
+  /* Keep a tint in browsers without relative colors. */
+  @supports (color: oklch(from currentColor l c h)) {
+    .bubble[data-variant='tinted'] > :first-child {
+      @apply bg-[oklch(from_var(--primary)_0.93_calc(c*0.4)_h)] dark:bg-[oklch(from_var(--primary)_0.3_calc(c*0.4)_h)];
+    }
+    .bubble[data-variant='tinted'] > :is(a, button):first-child:hover {
+      @apply bg-[oklch(from_var(--primary)_0.88_calc(c*0.5)_h)] dark:bg-[oklch(from_var(--primary)_0.35_calc(c*0.5)_h)];
+    }
+  }
+  .bubble[data-variant='outline'] > :first-child {
+    @apply bg-background border-border;
+  }
+  .bubble[data-variant='outline'] > :is(a, button):first-child:hover {
+    @apply bg-muted text-foreground dark:bg-input/30;
+  }
+  .bubble[data-variant='ghost'] {
+    @apply max-w-full border-none;
+  }
+  .bubble[data-variant='ghost'] > :first-child {
+    @apply rounded-none bg-transparent p-0;
+  }
+  .bubble[data-variant='ghost'] > :is(a, button):first-child:hover {
+    @apply bg-muted text-foreground dark:bg-muted/50;
+  }
+  .bubble[data-variant='destructive'] > :first-child {
+    @apply bg-destructive/10 dark:bg-destructive/20 text-destructive;
+  }
+  .bubble[data-variant='destructive'] > :is(a, button):first-child:hover {
+    @apply bg-destructive/20 dark:bg-destructive/30;
+  }
+
+  .bubble > div:not(:first-child) {
+    @apply rounded-full ring-3 ring-card bg-muted gap-1 px-1.5 py-0.5 has-[button]:p-0 text-sm;
+  }
+
+  .bubble > div:not(:first-child):not([data-side='top']) {
+    @apply bottom-0 translate-y-3/4;
+  }
+
+  .bubble > div:not(:first-child)[data-side='top'] {
+    @apply top-0 -translate-y-3/4;
+  }
+
+  .bubble > div:not(:first-child):not([data-align='start']) {
+    @apply end-3;
+  }
+
+  .bubble > div:not(:first-child)[data-align='start'] {
+    @apply start-3;
+  }
+
+  /* Attachment */
+  .attachment {
+    @apply rounded-3xl w-fit has-[:focus-visible]:ring-1 has-[:focus-visible]:ring-ring/30 border bg-card text-card-foreground;
+  }
+  .attachment:has(> a, > button:enabled):hover {
+    @apply bg-muted/50;
+  }
+  .attachment[data-state='error'] {
+    @apply border-destructive/30;
+  }
+  .attachment[data-state='idle'] {
+    @apply border-dashed;
+  }
+  .attachment:not([data-orientation='vertical']) {
+    @apply min-w-40;
+  }
+  .attachment[data-orientation='vertical'] {
+    @apply w-24 has-[>section]:w-30;
+  }
+  .attachment:not([data-size]),
+  .attachment[data-size='default'] {
+    @apply gap-2 text-sm;
+  }
+  .attachment:not([data-size]):has(> section),
+  .attachment[data-size='default']:has(> section) {
+    @apply px-2.5 py-2;
+  }
+  .attachment:not([data-size]):has(> figure),
+  .attachment[data-size='default']:has(> figure) {
+    @apply p-2;
+  }
+  .attachment[data-size='sm'] {
+    @apply gap-2.5 text-xs;
+  }
+  .attachment[data-size='sm']:has(> section) {
+    @apply px-2 py-1.5;
+  }
+  .attachment[data-size='sm']:has(> figure) {
+    @apply p-1.5;
+  }
+  .attachment[data-size='xs'] {
+    @apply gap-1.5 text-xs rounded-2xl;
+  }
+  .attachment[data-size='xs']:has(> section) {
+    @apply px-1.5 py-1;
+  }
+  .attachment[data-size='xs']:has(> figure) {
+    @apply p-1;
+  }
+  .attachment > figure {
+    @apply bg-muted text-foreground w-10 rounded-2xl;
+  }
+  .attachment[data-size='sm'] > figure {
+    @apply w-8;
+  }
+  .attachment[data-size='xs'] > figure {
+    @apply w-7 rounded-xl;
+  }
+  .attachment > figure > svg {
+    @apply size-4;
+  }
+  .attachment[data-size='xs'] > figure > svg {
+    @apply size-3.5;
+  }
+  .attachment[data-orientation='vertical'] > figure {
+    @apply w-full;
+  }
+  .attachment[data-orientation='vertical'] > figure > svg {
+    @apply size-6;
+  }
+  .attachment:is([data-state='uploading'], [data-state='processing'], [data-state='error']) > figure:has(> img) {
+    @apply opacity-60;
+  }
+  .attachment[data-state='error'] > figure {
+    @apply bg-destructive/10 text-destructive;
+  }
+  .attachment > section {
+    @apply leading-tight;
+  }
+  .attachment[data-orientation='vertical'] > section {
+    @apply px-1;
+  }
+  .attachment > section > :first-child {
+    @apply font-medium;
+  }
+  .attachment > section > :not(:first-child) {
+    @apply mt-0.5 text-xs text-muted-foreground;
+  }
+  .attachment[data-state='error'] > section > :not(:first-child) {
+    @apply text-destructive/80;
+  }
+
+  .attachment[data-orientation='vertical'] > div {
+    @apply top-3 end-3 gap-1;
+  }
+  .attachment-group {
+    @apply gap-3 py-1;
+  }
+
+
+  /* Code Block */
+  .code-block {
+    @apply rounded-2xl text-sm data-[size=sm]:text-xs has-[>pre:focus-visible]:ring-3 has-[>pre:focus-visible]:ring-ring/30 data-[size=sm]:rounded-xl;
+    --_code-padding: calc(var(--spacing, 0.25rem) * 5);
+  }
+  .code-block:not([data-variant='destructive']) { @apply bg-muted text-foreground ring-1 ring-foreground/5 dark:ring-foreground/10; }
+  .code-block[data-variant='destructive'] { @apply bg-destructive/5 text-destructive ring-1 ring-destructive/15 dark:bg-destructive/10 dark:ring-destructive/20; }
+  .code-block[data-size='sm'] { --_code-padding: calc(var(--spacing, 0.25rem) * 3); }
+  .code-block > header { @apply gap-2 text-muted-foreground; padding: var(--_code-padding) var(--_code-padding) 0; }
+  .code-block > footer { @apply gap-2 text-muted-foreground; padding: 0 var(--_code-padding) var(--_code-padding); }
+  .code-block > header > :first-child:not(div) { @apply font-sans text-sm font-medium text-foreground [&_svg]:me-1.5 [&_svg:not([class*='size-'])]:size-4; }
+  .code-block[data-size='sm'] > header > :first-child:not(div) { @apply text-xs [&_svg:not([class*='size-'])]:size-3.5; }
+  .code-block[data-variant='destructive'] > :is(header, footer),
+  .code-block[data-variant='destructive'] > header > :first-child:not(div) { @apply text-destructive; }
+  .code-block > header > div { @apply -my-1 -me-1.5 gap-1; }
+  .code-block > div { @apply top-4 end-4 gap-1; }
+  .code-block[data-size='sm'] > div { @apply top-2 end-2; }
+  .code-block > div > button { @apply bg-background ring-1 ring-foreground/10; }
+  .code-block > pre { @apply leading-relaxed; padding: var(--_code-padding); }
+  .code-block:has(> header) > pre { @apply pt-2; }
+  .code-block:has(> footer) > pre { @apply pb-2; }
+  .code-block[data-size='sm']:has(> header) > pre { @apply pt-1.5; }
+  .code-block > pre > code > span { margin-inline: calc(-1 * var(--_code-padding)); padding-inline: var(--_code-padding); }
+  .code-block > pre > code > span::before { @apply text-end text-muted-foreground; }
+  .code-block > header > div > button.btn[data-variant='ghost'],
+  .code-block > div > button.btn[data-variant='ghost'] { @apply hover:bg-foreground/5 dark:hover:bg-foreground/10; }
+
+  /* Input OTP */
+  .input-otp > div { @apply gap-2; }
+  .input-otp > div > div { @apply rounded-3xl; }
+  .input-otp > div > div > span { @apply bg-input/50 border-input data-[active]:border-ring data-[active]:ring-ring/30 size-9 border-y border-e text-sm transition-all outline-none first:rounded-s-3xl first:border-s last:rounded-e-3xl data-[active]:ring-3; }
+  .input-otp > div > svg { @apply size-4 shrink-0; }
+  .input-otp > div > div > span[data-caret]::after { @apply h-4 w-px bg-foreground; }
+  .input-otp:has(> input[aria-invalid='true']) > div > div > span { @apply border-destructive; }
+  .input-otp:has(> input[aria-invalid='true']) > div > div { @apply ring-3 ring-destructive/20 dark:ring-destructive/40; }
+  .input-otp:has(> input[aria-invalid='true']) > div > div > span[data-active] { @apply border-destructive ring-destructive/20 dark:ring-destructive/40; }
 
 }

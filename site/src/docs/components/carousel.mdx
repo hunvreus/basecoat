@@ -1,0 +1,347 @@
+# Carousel
+
+A scrollable list with snap-aligned slides and optional previous/next buttons.
+
+<Preview class="w-full px-12 py-16">
+<div class="carousel mx-auto w-full max-w-[12rem] sm:max-w-xs" role="region" aria-roledescription="carousel" aria-label="Numbered cards">
+  <ul role="list" class="scrollbar gap-4" tabindex="0" aria-label="Slides">
+    <li>
+      <div class="card">
+        <section class="flex aspect-square items-center justify-center p-6">
+          <span class="text-4xl font-semibold">1</span>
+        </section>
+      </div>
+    </li>
+    <li>
+      <div class="card">
+        <section class="flex aspect-square items-center justify-center p-6">
+          <span class="text-4xl font-semibold">2</span>
+        </section>
+      </div>
+    </li>
+    <li>
+      <div class="card">
+        <section class="flex aspect-square items-center justify-center p-6">
+          <span class="text-4xl font-semibold">3</span>
+        </section>
+      </div>
+    </li>
+    <li>
+      <div class="card">
+        <section class="flex aspect-square items-center justify-center p-6">
+          <span class="text-4xl font-semibold">4</span>
+        </section>
+      </div>
+    </li>
+    <li>
+      <div class="card">
+        <section class="flex aspect-square items-center justify-center p-6">
+          <span class="text-4xl font-semibold">5</span>
+        </section>
+      </div>
+    </li>
+  </ul>
+  <button type="button" class="btn absolute inset-y-0 -start-12 my-auto" data-variant="outline" data-size="icon-sm" aria-label="Previous slide" hidden>
+    <svg class="rtl:rotate-180" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6" /></svg>
+  </button>
+  <button type="button" class="btn absolute inset-y-0 -end-12 my-auto" data-variant="outline" data-size="icon-sm" aria-label="Next slide" hidden>
+    <svg class="rtl:rotate-180" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6" /></svg>
+  </button>
+</div>
+</Preview>
+
+## Usage
+
+<Steps>
+  <Step title="Load the styles and scripts">
+
+Load a Basecoat style bundle and the Basecoat runtime with `carousel.js`, or use the full JavaScript bundle. See [Installation](/installation).
+
+```html
+<script src="/assets/js/basecoat.min.js" defer></script>
+<script src="/assets/js/carousel.min.js" defer></script>
+```
+
+  </Step>
+  <Step title="Add slides and controls">
+
+Use a `.carousel` root, a direct child `<ul>`, and `<li>` slides. Add `scrollbar` to the list for a themed scrollbar and `tabindex="0"` so keyboard users can scroll it. Native scrolling, touch gestures, and snapping work without JavaScript. Style packs give slides padding to leave room for card shadows; use padding utilities on the `<li>` to customize it.
+
+```html
+<div class="carousel" role="region" aria-roledescription="carousel" aria-label="Featured items">
+  <ul role="list" class="scrollbar" tabindex="0" aria-label="Slides">
+    <li>First slide</li>
+    <li>Second slide</li>
+    <li>Third slide</li>
+  </ul>
+  <button type="button" class="btn" data-variant="outline" hidden>Previous</button>
+  <button type="button" class="btn" data-variant="outline" hidden>Next</button>
+</div>
+```
+
+The two optional buttons are direct children: Previous first, then Next. Keep them `hidden` until the script initializes. The script scrolls to the next slide’s start and disables buttons at the ends. It also updates when slides are added, removed, or resized. Position the buttons with utilities, as in the preview.
+
+  </Step>
+</Steps>
+
+Unlike upstream’s Embla carousel, this uses browser scrolling. It does not provide looping, autoplay, mouse-drag handling, or Embla’s plugin/API system. Touch and trackpad scrolling remain native. Smooth scrolling respects reduced-motion preferences.
+
+Arrow keys work when the list or a previous/next button has focus, respecting orientation and RTL. Keys inside slide content are left alone. When a focused control becomes disabled at an end, focus moves to the other control (or the list if neither can scroll).
+
+Slides intentionally keep native list semantics instead of upstream’s ARIA slide groups. `role="list"` preserves those semantics in browsers that otherwise omit unstyled lists from the accessibility tree. Real buttons share Basecoat Button styles across themes; their shape follows the style pack: fully round in Vega, Nova, Maia, Mira, and Luma; `rounded-2xl` in Rhea; and the ordinary Button shape in Lyra and Sera. The script enhances native scrolling rather than using CSS-generated scroll buttons and maintaining a second fallback control system.
+
+## Examples
+
+### Sizes
+
+Use `basis-*` utilities on each slide to show multiple items. This example shows two items, or three at large widths. Subtract the list’s gaps when calculating each slide’s basis so the visible cards fit completely.
+
+<Preview class="w-full px-12 py-16">
+<div class="carousel mx-auto w-full max-w-[12rem] sm:max-w-xs md:max-w-sm" role="region" aria-roledescription="carousel" aria-label="Multiple cards">
+  <ul role="list" class="scrollbar gap-4" tabindex="0" aria-label="Slides">
+    <li class="basis-[calc((100%_-_1rem)/2)] lg:basis-[calc((100%_-_2rem)/3)]">
+      <div class="card">
+        <section class="flex aspect-square items-center justify-center p-6">
+          <span class="text-3xl font-semibold">1</span>
+        </section>
+      </div>
+    </li>
+    <li class="basis-[calc((100%_-_1rem)/2)] lg:basis-[calc((100%_-_2rem)/3)]">
+      <div class="card">
+        <section class="flex aspect-square items-center justify-center p-6">
+          <span class="text-3xl font-semibold">2</span>
+        </section>
+      </div>
+    </li>
+    <li class="basis-[calc((100%_-_1rem)/2)] lg:basis-[calc((100%_-_2rem)/3)]">
+      <div class="card">
+        <section class="flex aspect-square items-center justify-center p-6">
+          <span class="text-3xl font-semibold">3</span>
+        </section>
+      </div>
+    </li>
+    <li class="basis-[calc((100%_-_1rem)/2)] lg:basis-[calc((100%_-_2rem)/3)]">
+      <div class="card">
+        <section class="flex aspect-square items-center justify-center p-6">
+          <span class="text-3xl font-semibold">4</span>
+        </section>
+      </div>
+    </li>
+    <li class="basis-[calc((100%_-_1rem)/2)] lg:basis-[calc((100%_-_2rem)/3)]">
+      <div class="card">
+        <section class="flex aspect-square items-center justify-center p-6">
+          <span class="text-3xl font-semibold">5</span>
+        </section>
+      </div>
+    </li>
+  </ul>
+  <button type="button" class="btn absolute inset-y-0 -start-12 my-auto" data-variant="outline" data-size="icon-sm" aria-label="Previous slide" hidden>
+    <svg class="rtl:rotate-180" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6" /></svg>
+  </button>
+  <button type="button" class="btn absolute inset-y-0 -end-12 my-auto" data-variant="outline" data-size="icon-sm" aria-label="Next slide" hidden>
+    <svg class="rtl:rotate-180" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6" /></svg>
+  </button>
+</div>
+</Preview>
+
+### Spacing
+
+Use a normal gap utility on the list and account for it in each slide’s basis. This example uses `gap-1`, matching upstream’s smaller spacing.
+
+<Preview class="w-full px-12 py-16">
+<div class="carousel mx-auto w-full max-w-[12rem] sm:max-w-xs md:max-w-sm" role="region" aria-roledescription="carousel" aria-label="Cards with a small gap">
+  <ul role="list" class="scrollbar gap-1" tabindex="0" aria-label="Slides">
+    <li class="basis-[calc((100%_-_0.25rem)/2)] lg:basis-[calc((100%_-_0.5rem)/3)]">
+      <div class="card">
+        <section class="flex aspect-square items-center justify-center p-6">
+          <span class="text-2xl font-semibold">1</span>
+        </section>
+      </div>
+    </li>
+    <li class="basis-[calc((100%_-_0.25rem)/2)] lg:basis-[calc((100%_-_0.5rem)/3)]">
+      <div class="card">
+        <section class="flex aspect-square items-center justify-center p-6">
+          <span class="text-2xl font-semibold">2</span>
+        </section>
+      </div>
+    </li>
+    <li class="basis-[calc((100%_-_0.25rem)/2)] lg:basis-[calc((100%_-_0.5rem)/3)]">
+      <div class="card">
+        <section class="flex aspect-square items-center justify-center p-6">
+          <span class="text-2xl font-semibold">3</span>
+        </section>
+      </div>
+    </li>
+    <li class="basis-[calc((100%_-_0.25rem)/2)] lg:basis-[calc((100%_-_0.5rem)/3)]">
+      <div class="card">
+        <section class="flex aspect-square items-center justify-center p-6">
+          <span class="text-2xl font-semibold">4</span>
+        </section>
+      </div>
+    </li>
+    <li class="basis-[calc((100%_-_0.25rem)/2)] lg:basis-[calc((100%_-_0.5rem)/3)]">
+      <div class="card">
+        <section class="flex aspect-square items-center justify-center p-6">
+          <span class="text-2xl font-semibold">5</span>
+        </section>
+      </div>
+    </li>
+  </ul>
+  <button type="button" class="btn absolute inset-y-0 -start-12 my-auto" data-variant="outline" data-size="icon-sm" aria-label="Previous slide" hidden>
+    <svg class="rtl:rotate-180" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6" /></svg>
+  </button>
+  <button type="button" class="btn absolute inset-y-0 -end-12 my-auto" data-variant="outline" data-size="icon-sm" aria-label="Next slide" hidden>
+    <svg class="rtl:rotate-180" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6" /></svg>
+  </button>
+</div>
+</Preview>
+
+### Orientation
+
+Set `data-orientation="vertical"` and give the list a fixed height. Center the buttons with `inset-x-0 mx-auto` in either text direction. Subtract the gap from the available height before dividing it between two slides: `basis-[calc((100%_-_0.25rem)/2)]` with `gap-1`. This keeps both cards fully visible, including at the end.
+
+<Preview class="w-full px-12 py-16">
+<div class="carousel mx-auto w-full max-w-xs" role="region" aria-roledescription="carousel" aria-label="Vertical cards" data-orientation="vertical">
+  <ul role="list" class="scrollbar h-[270px] gap-1" tabindex="0" aria-label="Slides">
+    <li class="basis-[calc((100%_-_0.25rem)/2)]">
+      <div class="card h-full justify-center py-0">
+        <section class="flex items-center justify-center p-6">
+          <span class="text-3xl font-semibold">1</span>
+        </section>
+      </div>
+    </li>
+    <li class="basis-[calc((100%_-_0.25rem)/2)]">
+      <div class="card h-full justify-center py-0">
+        <section class="flex items-center justify-center p-6">
+          <span class="text-3xl font-semibold">2</span>
+        </section>
+      </div>
+    </li>
+    <li class="basis-[calc((100%_-_0.25rem)/2)]">
+      <div class="card h-full justify-center py-0">
+        <section class="flex items-center justify-center p-6">
+          <span class="text-3xl font-semibold">3</span>
+        </section>
+      </div>
+    </li>
+    <li class="basis-[calc((100%_-_0.25rem)/2)]">
+      <div class="card h-full justify-center py-0">
+        <section class="flex items-center justify-center p-6">
+          <span class="text-3xl font-semibold">4</span>
+        </section>
+      </div>
+    </li>
+    <li class="basis-[calc((100%_-_0.25rem)/2)]">
+      <div class="card h-full justify-center py-0">
+        <section class="flex items-center justify-center p-6">
+          <span class="text-3xl font-semibold">5</span>
+        </section>
+      </div>
+    </li>
+  </ul>
+  <button type="button" class="btn absolute -top-12 inset-x-0 mx-auto" data-variant="outline" data-size="icon-sm" aria-label="Previous slide" hidden>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 15-6-6-6 6" /></svg>
+  </button>
+  <button type="button" class="btn absolute -bottom-12 inset-x-0 mx-auto" data-variant="outline" data-size="icon-sm" aria-label="Next slide" hidden>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
+  </button>
+</div>
+</Preview>
+
+### Without buttons
+
+Omit the buttons and JavaScript when native scrolling is sufficient. Add `scrollbar` to the `<ul>` to reuse [Scroll Area](/components/scroll-area)'s themed scrollbar. Keep the list keyboard-focusable; touch and trackpad gestures also scroll it. Carousel hides the scrollbar once its previous/next controls initialize. This native scrolling fallback is an intentional addition to upstream's button-driven carousel.
+
+<Preview class="w-full px-12 py-16">
+<div class="carousel mx-auto w-full max-w-[12rem] sm:max-w-xs" role="region" aria-roledescription="carousel" aria-label="Scrollable cards">
+  <ul role="list" class="scrollbar gap-4" tabindex="0" aria-label="Slides">
+    <li>
+      <div class="card">
+        <section class="flex aspect-square items-center justify-center p-6">
+          <span class="text-4xl font-semibold">1</span>
+        </section>
+      </div>
+    </li>
+    <li>
+      <div class="card">
+        <section class="flex aspect-square items-center justify-center p-6">
+          <span class="text-4xl font-semibold">2</span>
+        </section>
+      </div>
+    </li>
+    <li>
+      <div class="card">
+        <section class="flex aspect-square items-center justify-center p-6">
+          <span class="text-4xl font-semibold">3</span>
+        </section>
+      </div>
+    </li>
+    <li>
+      <div class="card">
+        <section class="flex aspect-square items-center justify-center p-6">
+          <span class="text-4xl font-semibold">4</span>
+        </section>
+      </div>
+    </li>
+    <li>
+      <div class="card">
+        <section class="flex aspect-square items-center justify-center p-6">
+          <span class="text-4xl font-semibold">5</span>
+        </section>
+      </div>
+    </li>
+  </ul>
+</div>
+</Preview>
+
+### RTL
+
+Set `dir="rtl"` on the carousel or an ancestor. Logical positioning utilities place the controls correctly; flip horizontal arrow icons to match the reading direction.
+
+<Preview class="w-full px-12 py-16">
+<div class="carousel mx-auto w-full max-w-[12rem] sm:max-w-xs" role="region" aria-roledescription="carousel" aria-label="Right-to-left cards" dir="rtl" lang="ar">
+  <ul role="list" class="scrollbar gap-4" tabindex="0" aria-label="Slides">
+    <li>
+      <div class="card">
+        <section class="flex aspect-square items-center justify-center p-6">
+          <span class="text-4xl font-semibold">١</span>
+        </section>
+      </div>
+    </li>
+    <li>
+      <div class="card">
+        <section class="flex aspect-square items-center justify-center p-6">
+          <span class="text-4xl font-semibold">٢</span>
+        </section>
+      </div>
+    </li>
+    <li>
+      <div class="card">
+        <section class="flex aspect-square items-center justify-center p-6">
+          <span class="text-4xl font-semibold">٣</span>
+        </section>
+      </div>
+    </li>
+    <li>
+      <div class="card">
+        <section class="flex aspect-square items-center justify-center p-6">
+          <span class="text-4xl font-semibold">٤</span>
+        </section>
+      </div>
+    </li>
+    <li>
+      <div class="card">
+        <section class="flex aspect-square items-center justify-center p-6">
+          <span class="text-4xl font-semibold">٥</span>
+        </section>
+      </div>
+    </li>
+  </ul>
+  <button type="button" class="btn absolute inset-y-0 -start-12 my-auto" data-variant="outline" data-size="icon-sm" aria-label="Previous slide" hidden>
+    <svg class="rtl:rotate-180" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6" /></svg>
+  </button>
+  <button type="button" class="btn absolute inset-y-0 -end-12 my-auto" data-variant="outline" data-size="icon-sm" aria-label="Next slide" hidden>
+    <svg class="rtl:rotate-180" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6" /></svg>
+  </button>
+</div>
+</Preview>

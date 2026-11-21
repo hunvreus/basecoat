@@ -1,0 +1,416 @@
+# Bubble
+
+Display conversation content with message bubbles, reactions, and optional actions.
+
+<Preview class="w-full">
+<ol class="bubble-group mx-auto w-full max-w-sm py-12 [--color-primary:var(--primary)] [--color-primary-foreground:var(--primary-foreground)] [--color-secondary:var(--secondary)] [--color-secondary-foreground:var(--secondary-foreground)] [--primary:oklch(0.488_0.243_264.376)] dark:[--primary:oklch(0.424_0.199_265.638)] [--primary-foreground:oklch(0.97_0.014_254.604)] [--secondary:oklch(0.967_0.001_286.375)] dark:[--secondary:oklch(0.274_0.006_286.033)] [--secondary-foreground:oklch(0.21_0.006_285.885)] dark:[--secondary-foreground:oklch(0.985_0_0)]" role="list" aria-label="Conversation">
+  <li class="flex min-w-0 flex-col">
+    <p class="sr-only">You:</p>
+    <div class="bubble" data-align="end">
+      <p>Hey there! what's up?</p>
+    </div>
+  </li>
+  <li class="flex min-w-0 flex-col mt-6">
+    <p class="sr-only">Assistant:</p>
+    <div class="bubble" data-variant="muted">
+      <p>Hey! Want to see chat bubbles?</p>
+    </div>
+  </li>
+  <li class="flex min-w-0 flex-col">
+    <p class="sr-only">Assistant:</p>
+    <div class="bubble" data-variant="muted">
+      <p>I can group messages, switch sides, and keep the whole thread easy to scan.</p>
+      <div role="img" aria-label="Reaction: thumbs up">
+        <span>👍</span>
+      </div>
+    </div>
+  </li>
+  <li class="flex min-w-0 flex-col mt-6">
+    <p class="sr-only">You:</p>
+    <div class="bubble" data-align="end">
+      <p>Sure. Hit me with your best demo.</p>
+    </div>
+  </li>
+  <li class="flex min-w-0 flex-col mt-6">
+    <p class="sr-only">Assistant:</p>
+    <div class="bubble" data-variant="muted">
+      <p>Yes. You are reading a demo that is demoing itself. Very meta. Very on-brand.</p>
+      <div role="img" aria-label="Reactions: thumbs up, fire, eyes, and 2 more">
+        <span>👍</span>
+        <span>🔥</span>
+        <span>👀</span>
+        <span>+2</span>
+      </div>
+    </div>
+  </li>
+</ol>
+</Preview>
+
+## Usage
+
+With a [Basecoat style bundle](/installation) loaded, add `.bubble` to a `<div>`. Its first child is the content; an optional second `<div>` holds reactions. The root class does not require a particular HTML element. Use `.bubble-group` for closely spaced bubbles. No Bubble JavaScript is required.
+
+```html
+<div class="bubble">
+  <p>I checked the registry output and removed the stale route.</p>
+  <div role="img" aria-label="Reaction: thumbs up">
+    <span>👍</span>
+  </div>
+</div>
+```
+
+Bubbles size to their content, up to 80% of their container. Put them in a column flex layout so `data-align="end"` can align outgoing messages. Leave room between messages for overlapping reactions.
+
+The conversation examples use an ordered list with one `<li>` per message. Sender labels use `sr-only` to preserve upstream's appearance while identifying who spoke. Keep the list's `role="list"` so Safari exposes its semantics when Tailwind removes list markers. The static previews do not announce updates.
+
+These examples use upstream's blue theme through local CSS variables. Omit those variables to use your application's theme. Avatars, sender names, timestamps, and message-level controls belong outside the bubble.
+
+## Examples
+
+### Variants
+
+Use `data-variant="secondary"`, `muted`, `tinted`, `outline`, `ghost`, or `destructive`. The default uses your primary color. Ghost removes the frame and allows full-width content.
+
+<Preview class="w-full">
+<div class="mx-auto flex w-full max-w-sm flex-col gap-12 py-12 [--color-primary:var(--primary)] [--color-primary-foreground:var(--primary-foreground)] [--color-secondary:var(--secondary)] [--color-secondary-foreground:var(--secondary-foreground)] [--primary:oklch(0.488_0.243_264.376)] dark:[--primary:oklch(0.424_0.199_265.638)] [--primary-foreground:oklch(0.97_0.014_254.604)] [--secondary:oklch(0.967_0.001_286.375)] dark:[--secondary:oklch(0.274_0.006_286.033)] [--secondary-foreground:oklch(0.21_0.006_285.885)] dark:[--secondary-foreground:oklch(0.985_0_0)]">
+  <div class="bubble">
+    <p>This is the default primary bubble.</p>
+  </div>
+  <div class="bubble" data-variant="secondary" data-align="end">
+    <p>This is the secondary variant.</p>
+  </div>
+  <div class="bubble" data-variant="muted">
+    <p>This one is muted. It uses a lower emphasis color for the chat bubble.</p>
+    <div role="img" aria-label="Reaction: thumbs up">
+      <span>👍</span>
+    </div>
+  </div>
+  <div class="bubble" data-variant="tinted" data-align="end">
+    <p>This one is tinted. The tint is a softer color derived from the primary color.</p>
+  </div>
+  <div class="bubble" data-variant="outline">
+    <p>We can also use an outlined variant.</p>
+  </div>
+  <div class="bubble" data-variant="destructive" data-align="end">
+    <p>Or a destructive variant with a reaction.</p>
+    <div role="img" aria-label="Reaction: fire">
+      <span>🔥</span>
+    </div>
+  </div>
+  <div class="bubble" data-variant="ghost">
+    <div class="space-y-4">
+      <p>Ghost bubbles work for assistant text, <strong>markdown</strong>, and other content that should not be framed.</p>
+      <p>This is perfect for assistant messages that should not have a frame and can take the full width of the container. You can also render <code>code</code> in it.</p>
+      <p>Ghost bubbles are full width and can take the full width of the container.</p>
+    </div>
+  </div>
+</div>
+</Preview>
+
+### Alignment
+
+Alignment follows the document direction. The default is `start`; add `data-align="end"` for outgoing messages.
+
+<Preview class="w-full">
+<div class="mx-auto flex w-full max-w-sm flex-col gap-8 py-12 [--color-primary:var(--primary)] [--color-primary-foreground:var(--primary-foreground)] [--color-secondary:var(--secondary)] [--color-secondary-foreground:var(--secondary-foreground)] [--primary:oklch(0.488_0.243_264.376)] dark:[--primary:oklch(0.424_0.199_265.638)] [--primary-foreground:oklch(0.97_0.014_254.604)] [--secondary:oklch(0.967_0.001_286.375)] dark:[--secondary:oklch(0.274_0.006_286.033)] [--secondary-foreground:oklch(0.21_0.006_285.885)] dark:[--secondary-foreground:oklch(0.985_0_0)]">
+  <div class="bubble" data-variant="muted">
+    <p>This bubble is aligned to the start. This is the default alignment.</p>
+  </div>
+  <div class="bubble" data-align="end">
+    <p>This bubble is aligned to the end. Use this for user messages.</p>
+  </div>
+</div>
+</Preview>
+
+### Bubble group
+
+Use `.bubble-group` for closely spaced messages. In a conversation list, keep each message in its own `<li>` and add spacing when the sender changes. Set alignment on each bubble.
+
+<Preview class="w-full">
+<ol class="bubble-group mx-auto w-full max-w-sm py-12 [--color-primary:var(--primary)] [--color-primary-foreground:var(--primary-foreground)] [--color-secondary:var(--secondary)] [--color-secondary-foreground:var(--secondary-foreground)] [--primary:oklch(0.488_0.243_264.376)] dark:[--primary:oklch(0.424_0.199_265.638)] [--primary-foreground:oklch(0.97_0.014_254.604)] [--secondary:oklch(0.967_0.001_286.375)] dark:[--secondary:oklch(0.274_0.006_286.033)] [--secondary-foreground:oklch(0.21_0.006_285.885)] dark:[--secondary-foreground:oklch(0.985_0_0)]" role="list" aria-label="Conversation">
+  <li class="flex min-w-0 flex-col">
+    <p class="sr-only">Assistant:</p>
+    <div class="bubble" data-variant="muted">
+      <p>Can you tell me what's the issue?</p>
+    </div>
+  </li>
+  <li class="flex min-w-0 flex-col mt-6">
+    <p class="sr-only">You:</p>
+    <div class="bubble" data-align="end">
+      <p>You tell me!</p>
+    </div>
+  </li>
+  <li class="flex min-w-0 flex-col">
+    <p class="sr-only">You:</p>
+    <div class="bubble" data-align="end">
+      <p>It worked yesterday. You broke it!</p>
+    </div>
+  </li>
+  <li class="flex min-w-0 flex-col">
+    <p class="sr-only">You:</p>
+    <div class="bubble" data-align="end">
+      <p>Find the bug and fix it.</p>
+      <div role="img" aria-label="Reaction: eyes" data-align="start">
+        <span>👀</span>
+      </div>
+    </div>
+  </li>
+  <li class="flex min-w-0 flex-col mt-6">
+    <p class="sr-only">Assistant:</p>
+    <div class="bubble" data-variant="muted">
+      <p>Want me to diff yesterday's you against today's you? It's a bit embarrassing.</p>
+    </div>
+  </li>
+</ol>
+</Preview>
+
+### Links and buttons
+
+Use an `<a href="...">` or `<button type="button">` as the content child. The whole surface becomes interactive, with a keyboard focus indicator.
+
+This example uses [Toast](/components/toast). Include Basecoat's runtime and Toast script (or `all.min.js`), and one `#toaster` container per page.
+
+<Preview class="w-full">
+<div class="mx-auto flex w-full max-w-sm flex-col gap-8 py-12 [--color-primary:var(--primary)] [--color-primary-foreground:var(--primary-foreground)] [--color-secondary:var(--secondary)] [--color-secondary-foreground:var(--secondary-foreground)] [--primary:oklch(0.488_0.243_264.376)] dark:[--primary:oklch(0.424_0.199_265.638)] [--primary-foreground:oklch(0.97_0.014_254.604)] [--secondary:oklch(0.967_0.001_286.375)] dark:[--secondary:oklch(0.274_0.006_286.033)] [--secondary-foreground:oklch(0.21_0.006_285.885)] dark:[--secondary-foreground:oklch(0.985_0_0)]">
+  <ol role="list" aria-label="Conversation">
+    <li class="flex min-w-0 flex-col">
+      <p class="sr-only">Assistant:</p>
+      <div class="bubble" data-variant="muted">
+        <p>How can I help you today?</p>
+      </div>
+    </li>
+  </ol>
+  <ul class="bubble-group" role="list" aria-label="Suggested replies">
+    <li class="flex min-w-0 flex-col">
+      <div class="bubble" data-variant="tinted" data-align="end">
+        <button type="button" onclick="document.getElementById('toaster').toast({ title: 'You clicked forgot password' })">I forgot my password</button>
+      </div>
+    </li>
+    <li class="flex min-w-0 flex-col">
+      <div class="bubble" data-variant="tinted" data-align="end">
+        <button type="button" onclick="document.getElementById('toaster').toast({ title: 'You clicked help with subscription' })">I need help with my subscription</button>
+      </div>
+    </li>
+    <li class="flex min-w-0 flex-col">
+      <div class="bubble" data-variant="tinted" data-align="end">
+        <button type="button" onclick="document.getElementById('toaster').toast({ title: 'You clicked something else. Talk to a human.' })">Something else. Talk to a human.</button>
+      </div>
+    </li>
+  </ul>
+</div>
+<ol id="toaster" class="toaster" role="list" aria-label="Notifications"></ol>
+</Preview>
+
+```html
+<div class="bubble" data-variant="tinted">
+  <a href="/installation">Read the installation guide</a>
+</div>
+```
+
+### Reactions
+
+Reactions default to the bottom end edge. Use `data-side="top"` or `data-align="start"` on the second `<div>` to move them. Reuse [Button](/components/button) for actions. The action below shares the Toast setup from the previous example.
+
+<Preview class="w-full">
+<ol class="mx-auto flex w-full max-w-sm flex-col gap-12 py-12 [--color-primary:var(--primary)] [--color-primary-foreground:var(--primary-foreground)] [--color-secondary:var(--secondary)] [--color-secondary-foreground:var(--secondary-foreground)] [--primary:oklch(0.488_0.243_264.376)] dark:[--primary:oklch(0.424_0.199_265.638)] [--primary-foreground:oklch(0.97_0.014_254.604)] [--secondary:oklch(0.967_0.001_286.375)] dark:[--secondary:oklch(0.274_0.006_286.033)] [--secondary-foreground:oklch(0.21_0.006_285.885)] dark:[--secondary-foreground:oklch(0.985_0_0)]" role="list" aria-label="Conversation">
+  <li class="flex min-w-0 flex-col">
+    <p class="sr-only">You:</p>
+    <div class="bubble" data-variant="muted" data-align="end">
+      <p>I don't need tests, I know my code works.</p>
+      <div role="img" aria-label="Reactions: thumbs up, surprised" data-align="start">
+        <span>👍</span>
+        <span>😮</span>
+      </div>
+    </div>
+  </li>
+  <li class="flex min-w-0 flex-col">
+    <p class="sr-only">Assistant:</p>
+    <div class="bubble" data-variant="muted">
+      <p>Bold. Fine I'll add some tests. I'll let you know when they're done.</p>
+      <div role="img" aria-label="Reactions: eyes, rocket, and 2 more">
+        <span>👀</span>
+        <span>🚀</span>
+        <span>+2</span>
+      </div>
+    </div>
+  </li>
+  <li class="flex min-w-0 flex-col">
+    <p class="sr-only">You:</p>
+    <div class="bubble" data-align="end">
+      <p>Tests passed on the first try. All 142 of them. Looking good!</p>
+      <div role="img" aria-label="Reactions: party popper, clapping hands" data-side="top" data-align="start">
+        <span>🎉</span>
+        <span>👏</span>
+      </div>
+    </div>
+  </li>
+  <li class="flex min-w-0 flex-col">
+    <p class="sr-only">Assistant:</p>
+    <div class="bubble" data-variant="destructive">
+      <p>Are you sure I can run this command?</p>
+      <div>
+        <button type="button" class="btn" data-variant="ghost" data-size="xs" onclick="document.getElementById('toaster').toast({ category: 'success', title: 'You clicked yes, running command...' })">Yes, run it</button>
+      </div>
+    </div>
+  </li>
+</ol>
+</Preview>
+
+### Show more
+
+Use native `<details>` for optional expansion. The preview is hidden while the disclosure is open; no script or content animation is needed. Browsers supporting `::details-content` place the trigger below the expanded text. Older browsers retain the native trigger-first order.
+
+<Preview class="w-full">
+<ol class="mx-auto flex w-full max-w-sm flex-col gap-8 py-12 [--color-primary:var(--primary)] [--color-primary-foreground:var(--primary-foreground)] [--color-secondary:var(--secondary)] [--color-secondary-foreground:var(--secondary-foreground)] [--primary:oklch(0.488_0.243_264.376)] dark:[--primary:oklch(0.424_0.199_265.638)] [--primary-foreground:oklch(0.97_0.014_254.604)] [--secondary:oklch(0.967_0.001_286.375)] dark:[--secondary:oklch(0.274_0.006_286.033)] [--secondary-foreground:oklch(0.21_0.006_285.885)] dark:[--secondary-foreground:oklch(0.985_0_0)]" role="list" aria-label="Conversation">
+  <li class="flex min-w-0 flex-col">
+    <p class="sr-only">Assistant:</p>
+    <div class="bubble" data-variant="muted">
+      <p>How can I help you today?</p>
+    </div>
+  </li>
+  <li class="flex min-w-0 flex-col">
+    <p class="sr-only">You:</p>
+    <div class="bubble" data-variant="muted" data-align="end">
+      <div class="group/message">
+        <p class="whitespace-pre-line group-has-[details[open]]/message:hidden">The accessibility review found two focus states that were visually too subtle in dark mode.&#10;&#10;I checked the dialog, menu, and drawer paths because each one renders focusable control...</p>
+        <details class="group flex flex-col [&::details-content]:order-first">
+          <summary class="btn self-start gap-1 p-0 text-muted-foreground" data-variant="link">
+            <span class="group-open:hidden">Show more</span>
+            <span class="hidden group-open:inline">Show less</span>
+            <svg aria-hidden="true" class="group-open:rotate-180" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="m6 9 6 6 6-6" /></svg>
+          </summary>
+          <div class="space-y-[1.5em]">
+            <p>The accessibility review found two focus states that were visually too subtle in dark mode.</p>
+            <p>I checked the dialog, menu, and drawer paths because each one renders focusable controls inside a layered surface.</p>
+            <p>The dialog and drawer are fine. The menu needs the hover and focus tokens split so keyboard focus stays visible when the pointer is not involved.</p>
+            <p>I also recommend keeping the change in the style file instead of the primitive so the other themes can choose their own focus treatment later.</p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </li>
+</ol>
+</Preview>
+
+### Tooltip
+
+Reuse [Tooltip](/components/tooltip) on a reaction button. Its accessible label also exposes the read receipt without needing to hover.
+
+<Preview class="w-full">
+<ol class="mx-auto flex w-full max-w-sm flex-col gap-4 py-12 [--color-primary:var(--primary)] [--color-primary-foreground:var(--primary-foreground)] [--color-secondary:var(--secondary)] [--color-secondary-foreground:var(--secondary-foreground)] [--primary:oklch(0.488_0.243_264.376)] dark:[--primary:oklch(0.424_0.199_265.638)] [--primary-foreground:oklch(0.97_0.014_254.604)] [--secondary:oklch(0.967_0.001_286.375)] dark:[--secondary:oklch(0.274_0.006_286.033)] [--secondary-foreground:oklch(0.21_0.006_285.885)] dark:[--secondary-foreground:oklch(0.985_0_0)]" role="list" aria-label="Conversation">
+  <li class="flex min-w-0 flex-col">
+    <p class="sr-only">Assistant:</p>
+    <div class="bubble" data-variant="secondary">
+      <p>Did you remove the stale route?</p>
+    </div>
+  </li>
+  <li class="flex min-w-0 flex-col">
+    <p class="sr-only">You:</p>
+    <div class="bubble" data-align="end">
+      <p>Yes, removed it from the registry.</p>
+      <div>
+        <button type="button" class="btn" data-variant="ghost" data-size="icon-xs" aria-label="Read on Jan 5, 2026 at 4:32 PM" data-tooltip="Read on Jan 5, 2026 at 4:32 PM" data-align="end">
+          <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M20 6 9 17l-5-5" /></svg>
+        </button>
+      </div>
+    </div>
+  </li>
+</ol>
+</Preview>
+
+### Popover
+
+Reuse [Popover](/components/popover) for error details. Include Basecoat’s runtime and Popover script, or the full JavaScript bundle. This inline popover uses a narrower width on small screens.
+
+<Preview class="w-full">
+<ol class="mx-auto flex w-full max-w-sm flex-col gap-4 py-12 [--color-primary:var(--primary)] [--color-primary-foreground:var(--primary-foreground)] [--color-secondary:var(--secondary)] [--color-secondary-foreground:var(--secondary-foreground)] [--primary:oklch(0.488_0.243_264.376)] dark:[--primary:oklch(0.424_0.199_265.638)] [--primary-foreground:oklch(0.97_0.014_254.604)] [--secondary:oklch(0.967_0.001_286.375)] dark:[--secondary:oklch(0.274_0.006_286.033)] [--secondary-foreground:oklch(0.21_0.006_285.885)] dark:[--secondary-foreground:oklch(0.985_0_0)]" role="list" aria-label="Conversation">
+  <li class="flex min-w-0 flex-col">
+    <p class="sr-only">You:</p>
+    <div class="bubble" data-align="end">
+      <p>Run the build script.</p>
+    </div>
+  </li>
+  <li class="flex min-w-0 flex-col">
+    <p class="sr-only">Assistant:</p>
+    <div class="bubble" data-variant="destructive">
+      <p>Failed to run the command.</p>
+      <div>
+        <div class="popover">
+          <button type="button" class="btn aria-expanded:text-destructive" data-variant="ghost" data-size="icon-xs" aria-label="Show error details" id="bubble-error-trigger" onclick="this.focus()" aria-expanded="false" aria-controls="bubble-error-details">
+            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10" /><path d="M12 16v-4" /><path d="M12 8h.01" /></svg>
+          </button>
+          <div id="bubble-error-details" data-popover data-align="end" aria-hidden="true" class="w-72 max-sm:w-44" role="region" aria-labelledby="bubble-error-title">
+            <header>
+              <h4 id="bubble-error-title" class="text-sm">Command failed with exit code 1</h4>
+              <p class="text-sm">ENOENT: no such file or directory, open pnpm-lock.yaml</p>
+            </header>
+          </div>
+        </div>
+      </div>
+    </div>
+  </li>
+</ol>
+</Preview>
+
+### RTL
+
+Set `dir="rtl"` on the conversation. Message and reaction alignment use the inline start and end edges.
+
+<Preview class="w-full">
+<ol class="mx-auto flex w-full max-w-sm flex-col gap-8 py-12 [--color-primary:var(--primary)] [--color-primary-foreground:var(--primary-foreground)] [--color-secondary:var(--secondary)] [--color-secondary-foreground:var(--secondary-foreground)] [--primary:oklch(0.488_0.243_264.376)] dark:[--primary:oklch(0.424_0.199_265.638)] [--primary-foreground:oklch(0.97_0.014_254.604)] [--secondary:oklch(0.967_0.001_286.375)] dark:[--secondary:oklch(0.274_0.006_286.033)] [--secondary-foreground:oklch(0.21_0.006_285.885)] dark:[--secondary-foreground:oklch(0.985_0_0)]" dir="rtl" lang="ar" role="list" aria-label="محادثة">
+  <li class="flex min-w-0 flex-col">
+    <p class="sr-only">أنت:</p>
+    <div class="bubble" data-align="end">
+      <p>مرحباً! كيف حالك؟</p>
+    </div>
+  </li>
+  <li class="flex min-w-0 flex-col">
+    <p class="sr-only">المساعد:</p>
+    <div class="bubble" data-variant="muted">
+      <p>أهلاً! هل تريد مشاهدة فقاعات المحادثة؟</p>
+      <div role="img" aria-label="إعجاب">
+        <span>👍</span>
+      </div>
+    </div>
+  </li>
+</ol>
+</Preview>
+
+
+### Chat log
+
+Use an `<ol>` for chronological messages and one `<li>` per message. Keep the sender, timestamp, bubble, and any attachment list inside that message. An `<article>` is optional when the complete message makes sense as a standalone contribution; Bubble itself does not require it.
+
+<Preview class="w-full">
+<ol class="mx-auto flex w-full max-w-sm flex-col gap-6 py-6" role="list" aria-label="Conversation between Alice and Bob">
+  <li class="flex min-w-0 flex-col gap-2">
+    <p class="text-xs text-muted-foreground">Alice · <time datetime="2026-11-07T18:18:00+08:00">18:18</time></p>
+    <div class="bubble" data-variant="muted">
+      <p>Have you reviewed the updated document?</p>
+    </div>
+  </li>
+  <li class="flex min-w-0 flex-col gap-2">
+    <p class="self-end text-xs text-muted-foreground">Bob · <time datetime="2026-11-07T18:19:00+08:00">18:19</time></p>
+    <div class="bubble" data-align="end">
+      <p>Yes, the changes look good.</p>
+    </div>
+  </li>
+</ol>
+</Preview>
+
+For a live conversation, put the list inside a named `role="log"` wrapper. This [chat-log pattern](https://www.w3.org/WAI/WCAG22/Techniques/aria/ARIA23) announces new messages politely without moving focus. Keep the list role on the `<ol>`; do not replace it with `log`.
+
+```html
+<div role="log" aria-label="Conversation">
+  <ol role="list">
+    <li>
+      <p>Alice · <time datetime="2026-11-07T18:18:00+08:00">18:18</time></p>
+      <div class="bubble">
+        <p>Here is the updated document.</p>
+      </div>
+    </li>
+  </ol>
+</div>
+```
+
+Create the live-region wrapper before appending new messages. For streamed replies, batch announcements rather than announcing each token. A static transcript only needs the list, as in the preview above.

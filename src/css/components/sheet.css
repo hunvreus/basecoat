@@ -1,0 +1,123 @@
+@keyframes sheet-scroll-lock {
+  from, to {
+    scrollbar-gutter: stable;
+  }
+}
+
+/* Sheet */
+@layer components {
+  /* Reserve the scrollbar gutter only when the page can scroll. */
+  html:has(.sheet:modal) {
+    overflow: hidden;
+    animation: sheet-scroll-lock linear both;
+    animation-timeline: scroll(self);
+  }
+
+  .sheet {
+    --_sheet-duration: 200ms;
+    --_sheet-ease: ease-in-out;
+    --_sheet-travel: 2.5rem;
+    @apply fixed inset-0 m-0 size-auto max-h-none max-w-none overflow-visible bg-transparent p-0 text-inherit opacity-0 transition-all transition-discrete duration-(--_sheet-duration) ease-(--_sheet-ease) backdrop:opacity-0 backdrop:transition-all backdrop:transition-discrete backdrop:duration-200 backdrop:ease-in-out;
+
+    > * {
+      @apply fixed z-50 flex h-auto flex-col transition-transform duration-(--_sheet-duration) ease-(--_sheet-ease) will-change-transform outline-hidden;
+    }
+
+    &[data-side='bottom'] > * {
+      @apply inset-x-0 bottom-0 translate-y-(--_sheet-travel);
+    }
+
+    &[data-side='top'] > * {
+      @apply inset-x-0 top-0 -translate-y-(--_sheet-travel);
+    }
+
+    &[data-side='left'] > * {
+      @apply inset-y-0 left-0 w-3/4 -translate-x-(--_sheet-travel);
+    }
+
+    &:not([data-side]) > *,
+    &[data-side='right'] > * {
+      @apply inset-y-0 right-0 w-3/4 translate-x-(--_sheet-travel);
+    }
+
+    &[data-closing] {
+      @apply opacity-0 backdrop:opacity-0;
+    }
+
+    &[data-closing][data-side='bottom'] > * {
+      @apply translate-y-(--_sheet-travel);
+    }
+
+    &[data-closing][data-side='top'] > * {
+      @apply -translate-y-(--_sheet-travel);
+    }
+
+    &[data-closing][data-side='left'] > * {
+      @apply -translate-x-(--_sheet-travel);
+    }
+
+    &[data-closing]:not([data-side]) > *,
+    &[data-closing][data-side='right'] > * {
+      @apply translate-x-(--_sheet-travel);
+    }
+
+    &:is([open], :popover-open):not([data-closing]) {
+      @apply opacity-100 backdrop:opacity-100;
+
+      > * {
+        @apply translate-x-0 translate-y-0;
+      }
+
+      @starting-style {
+        @apply opacity-0 backdrop:opacity-0;
+
+        &[data-side='bottom'] > * {
+          @apply translate-y-(--_sheet-travel);
+        }
+
+        &[data-side='top'] > * {
+          @apply -translate-y-(--_sheet-travel);
+        }
+
+        &[data-side='left'] > * {
+          @apply -translate-x-(--_sheet-travel);
+        }
+
+        &:not([data-side]) > *,
+        &[data-side='right'] > * {
+          @apply translate-x-(--_sheet-travel);
+        }
+      }
+    }
+
+    > * > header {
+      @apply flex flex-col;
+    }
+
+    > * > section {
+      @apply min-h-0 flex-1 overflow-y-auto;
+    }
+
+    > * > footer {
+      @apply mt-auto flex flex-col;
+    }
+  }
+
+  .sheet:not([data-side]) > *,
+  .sheet:is([data-side='left'], [data-side='right']) > * {
+    @apply h-full sm:max-w-sm;
+  }
+  .sheet > * {
+    @apply max-h-dvh;
+  }
+  .sheet > * > button:last-child {
+    @apply absolute;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .sheet,
+    .sheet::backdrop,
+    .sheet > * {
+      transition: none;
+    }
+  }
+}

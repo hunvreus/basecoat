@@ -1,0 +1,12 @@
+@source inline("transition-details");
+
+@utility transition-details {
+  &::details-content {
+    block-size: 0;
+    @apply flow-root overflow-clip transition-[block-size,content-visibility,opacity] transition-discrete motion-reduce:transition-none;
+  }
+  &[open]::details-content {
+    block-size: auto;
+    block-size: calc-size(auto, size);
+  }
+}

@@ -1,0 +1,441 @@
+# Attachment
+
+Display files, image previews, upload states, and file actions.
+
+<Preview class="w-full">
+<div class="mx-auto flex w-full max-w-sm flex-col gap-3 py-12">
+  <ul class="attachment-group" tabindex="0" role="list" aria-label="Attached images">
+    <li class="attachment" data-orientation="vertical">
+      <figure>
+        <img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=900&amp;auto=format&amp;fit=crop&amp;q=80" alt="Workspace" loading="lazy" />
+      </figure>
+      <section>
+        <p dir="auto">workspace.png</p>
+        <p>PNG · 820 KB</p>
+      </section>
+    </li>
+    <li class="attachment" data-orientation="vertical">
+      <figure>
+        <img src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?w=900&amp;auto=format&amp;fit=crop&amp;q=80" alt="Desk" loading="lazy" />
+      </figure>
+      <section>
+        <p dir="auto">desk-reference.jpg</p>
+        <p>JPG · 1.1 MB</p>
+      </section>
+    </li>
+    <li class="attachment" data-orientation="vertical">
+      <figure>
+        <img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=900&amp;auto=format&amp;fit=crop&amp;q=80" alt="Office" loading="lazy" />
+      </figure>
+      <section>
+        <p dir="auto">office-reference.jpg</p>
+        <p>JPG · 940 KB</p>
+      </section>
+    </li>
+  </ul>
+  <div class="attachment w-full" data-state="uploading">
+    <figure aria-hidden="true">
+      <svg aria-hidden="true" class="animate-spin motion-reduce:animate-none" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M21 12a9 9 0 1 1-6.219-8.56" /></svg>
+    </figure>
+    <section>
+      <p dir="auto">sales-dashboard.pdf</p>
+      <p>Uploading · 64%</p>
+    </section>
+    <div>
+      <button type="button" class="btn" data-variant="ghost" data-size="icon-xs" aria-label="Cancel sales-dashboard.pdf upload" onclick="const attachment = this.closest('.attachment'); const parent = attachment.parentElement; if (!parent.hasAttribute('tabindex')) parent.tabIndex = -1; parent.focus({ preventScroll: true }); attachment.remove()">
+        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+      </button>
+    </div>
+  </div>
+  <div class="attachment w-full">
+    <figure aria-hidden="true">
+      <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M10 12.5 8 15l2 2.5" /><path d="m14 12.5 2 2.5-2 2.5" /><path d="M14 2v4a2 2 0 0 0 2 2h4" /><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z" /></svg>
+    </figure>
+    <section>
+      <p dir="auto">message-renderer.tsx</p>
+      <p>TypeScript · 12 KB</p>
+    </section>
+    <div>
+      <button type="button" class="btn" data-variant="ghost" data-size="icon-xs" aria-label="Remove message-renderer.tsx" onclick="const attachment = this.closest('.attachment'); const parent = attachment.parentElement; if (!parent.hasAttribute('tabindex')) parent.tabIndex = -1; parent.focus({ preventScroll: true }); attachment.remove()">
+        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+      </button>
+    </div>
+  </div>
+</div>
+</Preview>
+
+## Usage
+
+With a [Basecoat style bundle](/installation) loaded, use a `<div class="attachment">` with an optional `<figure>` for media, `<section>` for the filename and description, and `<div>` for action buttons. No Attachment JavaScript is required.
+
+```html
+<div class="attachment">
+  <figure aria-hidden="true">
+    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" /><path d="M14 2v5a1 1 0 0 0 1 1h5" /><path d="M10 9H8" /><path d="M16 13H8" /><path d="M16 17H8" /></svg>
+  </figure>
+  <section>
+    <p dir="auto">report.pdf</p>
+    <p>PDF · 2.4 MB</p>
+  </section>
+</div>
+```
+
+### HTML structure
+
+The root is not tied to an element: use `<div>` for a standalone attachment or `<li>` inside a file list. The first element in `<section>` is the filename; a `<p>` is sufficient unless the page needs a heading. Following elements contain metadata. Hide decorative icon figures with `aria-hidden="true"`. A neutral `<div>` wrapper avoids adding a page-footer landmark. Image media is detected from `<figure><img ...></figure>`; no extra variant is needed. Actions reuse [Button](/components/button) with `data-variant="ghost" data-size="icon-xs"`.
+
+An optional direct child `<a>` or `<button>` makes the entire card clickable. Give it an accessible name. Place the full-card trigger before the final `<div>` and keep action buttons inside that wrapper so they remain independent of the full-card trigger; do not nest buttons inside a link or another button.
+
+Attachment presents your files and upload status. Your application supplies the actual upload, cancellation, retry, and removal behavior. The demo removal buttons remove their sample cards and move focus to the containing list or example. In your application, return focus to the next attachment or file input after removal. These examples do not manage files on a server.
+
+## Examples
+
+### Image
+
+Use `data-orientation="vertical"` for thumbnails above their labels. Here the card opens the image, while its separate remove button removes the sample.
+
+<Preview class="w-full">
+<div class="mx-auto flex w-full max-w-sm flex-col gap-3 py-12">
+  <ul class="attachment-group w-full" tabindex="0" role="list" aria-label="Image attachments">
+    <li class="attachment" data-orientation="vertical">
+      <figure>
+        <img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=900&amp;auto=format&amp;fit=crop&amp;q=80" alt="Workspace" loading="lazy" />
+      </figure>
+      <section>
+        <p dir="auto">workspace.png</p>
+        <p>PNG · 820 KB</p>
+      </section>
+      <a href="https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=900&amp;auto=format&amp;fit=crop&amp;q=80" target="_blank" rel="noreferrer" aria-label="Open workspace.png"></a>
+      <div>
+        <button type="button" class="btn" data-variant="ghost" data-size="icon-xs" aria-label="Remove workspace.png" onclick="const attachment = this.closest('.attachment'); const parent = attachment.parentElement; if (!parent.hasAttribute('tabindex')) parent.tabIndex = -1; parent.focus({ preventScroll: true }); attachment.remove()">
+          <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+        </button>
+      </div>
+    </li>
+    <li class="attachment" data-orientation="vertical">
+      <figure>
+        <img src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?w=900&amp;auto=format&amp;fit=crop&amp;q=80" alt="Desk" loading="lazy" />
+      </figure>
+      <section>
+        <p dir="auto">desk-reference.jpg</p>
+        <p>JPG · 1.1 MB</p>
+      </section>
+      <a href="https://images.unsplash.com/photo-1497215728101-856f4ea42174?w=900&amp;auto=format&amp;fit=crop&amp;q=80" target="_blank" rel="noreferrer" aria-label="Open desk-reference.jpg"></a>
+      <div>
+        <button type="button" class="btn" data-variant="ghost" data-size="icon-xs" aria-label="Remove desk-reference.jpg" onclick="const attachment = this.closest('.attachment'); const parent = attachment.parentElement; if (!parent.hasAttribute('tabindex')) parent.tabIndex = -1; parent.focus({ preventScroll: true }); attachment.remove()">
+          <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+        </button>
+      </div>
+    </li>
+    <li class="attachment" data-orientation="vertical">
+      <figure>
+        <img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=900&amp;auto=format&amp;fit=crop&amp;q=80" alt="Office" loading="lazy" />
+      </figure>
+      <section>
+        <p dir="auto">office-reference.jpg</p>
+        <p>JPG · 940 KB</p>
+      </section>
+      <a href="https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=900&amp;auto=format&amp;fit=crop&amp;q=80" target="_blank" rel="noreferrer" aria-label="Open office-reference.jpg"></a>
+      <div>
+        <button type="button" class="btn" data-variant="ghost" data-size="icon-xs" aria-label="Remove office-reference.jpg" onclick="const attachment = this.closest('.attachment'); const parent = attachment.parentElement; if (!parent.hasAttribute('tabindex')) parent.tabIndex = -1; parent.focus({ preventScroll: true }); attachment.remove()">
+          <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+        </button>
+      </div>
+    </li>
+  </ul>
+</div>
+</Preview>
+
+### States
+
+Use `data-state="idle"`, `uploading`, `processing`, `error`, or `done`. The default is `done`. Uploading and processing titles reuse [Shimmer](/utils/shimmer); it stays readable without animation in reduced-motion and forced-colors modes. Include `components/shimmer.css` when importing individual component styles.
+
+The retry button resets this sample to the idle state. Connect it to your uploader in an application, and announce changing status through a live region when appropriate.
+
+<Preview class="w-full">
+<div class="mx-auto flex w-full max-w-sm flex-col gap-2 py-12">
+  <div class="attachment w-full" data-state="idle">
+    <figure aria-hidden="true">
+      <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10" /><path d="M12 6v6l4 2" /></svg>
+    </figure>
+    <section>
+      <p dir="auto">selected-file.pdf</p>
+      <p>Ready to upload</p>
+    </section>
+    <div>
+      <button type="button" class="btn" data-variant="ghost" data-size="icon-xs" aria-label="Remove selected-file.pdf" onclick="const attachment = this.closest('.attachment'); const parent = attachment.parentElement; if (!parent.hasAttribute('tabindex')) parent.tabIndex = -1; parent.focus({ preventScroll: true }); attachment.remove()">
+        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+      </button>
+    </div>
+  </div>
+  <div class="attachment w-full" data-state="uploading">
+    <figure aria-hidden="true">
+      <svg aria-hidden="true" class="animate-spin motion-reduce:animate-none" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M21 12a9 9 0 1 1-6.219-8.56" /></svg>
+    </figure>
+    <section>
+      <p dir="auto">design-system.zip</p>
+      <p>Uploading · 64%</p>
+    </section>
+    <div>
+      <button type="button" class="btn" data-variant="ghost" data-size="icon-xs" aria-label="Cancel design-system.zip upload" onclick="const attachment = this.closest('.attachment'); const parent = attachment.parentElement; if (!parent.hasAttribute('tabindex')) parent.tabIndex = -1; parent.focus({ preventScroll: true }); attachment.remove()">
+        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+      </button>
+    </div>
+  </div>
+  <div class="attachment w-full" data-state="processing">
+    <figure aria-hidden="true">
+      <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" /><path d="M14 2v5a1 1 0 0 0 1 1h5" /><path d="M10 9H8" /><path d="M16 13H8" /><path d="M16 17H8" /></svg>
+    </figure>
+    <section>
+      <p dir="auto">market-research.pdf</p>
+      <p>Processing document</p>
+    </section>
+    <div>
+      <button type="button" class="btn" data-variant="ghost" data-size="icon-xs" aria-label="Remove market-research.pdf" onclick="const attachment = this.closest('.attachment'); const parent = attachment.parentElement; if (!parent.hasAttribute('tabindex')) parent.tabIndex = -1; parent.focus({ preventScroll: true }); attachment.remove()">
+        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+      </button>
+    </div>
+  </div>
+  <div class="attachment w-full" data-state="error">
+    <figure aria-hidden="true">
+      <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" /><path d="M12 9v4" /><path d="M12 17h.01" /></svg>
+    </figure>
+    <section>
+      <p dir="auto">financial-model.xlsx</p>
+      <p>Upload failed. Try again.</p>
+    </section>
+    <div>
+      <button type="button" class="btn" data-variant="ghost" data-size="icon-xs" aria-label="Retry financial-model.xlsx upload" onclick="const attachment = this.closest('.attachment'); attachment.dataset.state = 'idle'; attachment.querySelector('section > :nth-child(2)').textContent = 'Ready to upload'; this.nextElementSibling.focus(); this.remove()">
+        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" /><path d="M21 3v5h-5" /><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" /><path d="M8 16H3v5" /></svg>
+      </button>
+      <button type="button" class="btn" data-variant="ghost" data-size="icon-xs" aria-label="Remove financial-model.xlsx" onclick="const attachment = this.closest('.attachment'); const parent = attachment.parentElement; if (!parent.hasAttribute('tabindex')) parent.tabIndex = -1; parent.focus({ preventScroll: true }); attachment.remove()">
+        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+      </button>
+    </div>
+  </div>
+  <div class="attachment w-full" data-state="done">
+    <figure aria-hidden="true">
+      <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M20 6 9 17l-5-5" /></svg>
+    </figure>
+    <section>
+      <p dir="auto">uploaded-report.pdf</p>
+      <p>Uploaded · 1.8 MB</p>
+    </section>
+    <div>
+      <button type="button" class="btn" data-variant="ghost" data-size="icon-xs" aria-label="Remove uploaded-report.pdf" onclick="const attachment = this.closest('.attachment'); const parent = attachment.parentElement; if (!parent.hasAttribute('tabindex')) parent.tabIndex = -1; parent.focus({ preventScroll: true }); attachment.remove()">
+        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+      </button>
+    </div>
+  </div>
+</div>
+</Preview>
+
+### Sizes
+
+Use the default size, `data-size="sm"`, or `data-size="xs"`. Sizing follows the active style pack.
+
+<Preview class="w-full">
+<div class="mx-auto flex w-full max-w-sm flex-col gap-3 py-12">
+  <div class="attachment w-full">
+    <figure aria-hidden="true">
+      <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" /><path d="M14 2v5a1 1 0 0 0 1 1h5" /><path d="M10 9H8" /><path d="M16 13H8" /><path d="M16 17H8" /></svg>
+    </figure>
+    <section>
+      <p dir="auto">Default attachment</p>
+      <p>PDF · 2.4 MB</p>
+    </section>
+  </div>
+  <div class="attachment w-full" data-size="sm">
+    <figure aria-hidden="true">
+      <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" /><path d="M14 2v5a1 1 0 0 0 1 1h5" /><path d="M10 9H8" /><path d="M16 13H8" /><path d="M16 17H8" /></svg>
+    </figure>
+    <section>
+      <p dir="auto">Small attachment</p>
+      <p>PDF · 2.4 MB</p>
+    </section>
+  </div>
+  <div class="attachment w-full" data-size="xs">
+    <figure aria-hidden="true">
+      <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" /><path d="M14 2v5a1 1 0 0 0 1 1h5" /><path d="M10 9H8" /><path d="M16 13H8" /><path d="M16 17H8" /></svg>
+    </figure>
+    <section>
+      <p dir="auto">Extra small attachment</p>
+    </section>
+  </div>
+</div>
+</Preview>
+
+### Group
+
+Use `<ul class="attachment-group" role="list">` with `<li class="attachment">` children for a native horizontally scrolling file list with scroll snapping. Give the group a label and `tabindex="0"` so keyboard users can scroll it. Unlike upstream, the row omits horizontal scroll padding so arrow keys advance reliably and the last card remains fully visible. Scroll-edge fades progressively enhance browsers with scroll-driven animations; other browsers show an unfaded row. Fades are disabled while the group has keyboard focus and in forced-colors mode.
+
+<Preview class="w-full">
+<div class="mx-auto flex w-full max-w-sm flex-col gap-3 py-12">
+  <ul class="attachment-group w-full" tabindex="0" role="list" aria-label="Attached files">
+    <li class="attachment w-64">
+      <figure aria-hidden="true">
+        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" /><path d="M14 2v5a1 1 0 0 0 1 1h5" /><path d="M10 9H8" /><path d="M16 13H8" /><path d="M16 17H8" /></svg>
+      </figure>
+      <section>
+        <p dir="auto">briefing-notes.pdf</p>
+        <p>PDF · 1.4 MB</p>
+      </section>
+      <div>
+        <button type="button" class="btn" data-variant="ghost" data-size="icon-xs" aria-label="Remove briefing-notes.pdf" onclick="const attachment = this.closest('.attachment'); const parent = attachment.parentElement; if (!parent.hasAttribute('tabindex')) parent.tabIndex = -1; parent.focus({ preventScroll: true }); attachment.remove()">
+          <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+        </button>
+      </div>
+    </li>
+    <li class="attachment w-64">
+      <figure>
+        <img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=900&amp;auto=format&amp;fit=crop&amp;q=80" alt="Workspace" loading="lazy" />
+      </figure>
+      <section>
+        <p dir="auto">workspace.png</p>
+        <p>PNG · 820 KB</p>
+      </section>
+      <div>
+        <button type="button" class="btn" data-variant="ghost" data-size="icon-xs" aria-label="Remove workspace.png" onclick="const attachment = this.closest('.attachment'); const parent = attachment.parentElement; if (!parent.hasAttribute('tabindex')) parent.tabIndex = -1; parent.focus({ preventScroll: true }); attachment.remove()">
+          <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+        </button>
+      </div>
+    </li>
+    <li class="attachment w-64">
+      <figure aria-hidden="true">
+        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M12 3v18" /><rect width="18" height="18" x="3" y="3" rx="2" /><path d="M3 9h18" /><path d="M3 15h18" /></svg>
+      </figure>
+      <section>
+        <p dir="auto">customers.csv</p>
+        <p>CSV · 18 KB</p>
+      </section>
+      <div>
+        <button type="button" class="btn" data-variant="ghost" data-size="icon-xs" aria-label="Remove customers.csv" onclick="const attachment = this.closest('.attachment'); const parent = attachment.parentElement; if (!parent.hasAttribute('tabindex')) parent.tabIndex = -1; parent.focus({ preventScroll: true }); attachment.remove()">
+          <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+        </button>
+      </div>
+    </li>
+    <li class="attachment w-64">
+      <figure aria-hidden="true">
+        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M10 12.5 8 15l2 2.5" /><path d="m14 12.5 2 2.5-2 2.5" /><path d="M14 2v4a2 2 0 0 0 2 2h4" /><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z" /></svg>
+      </figure>
+      <section>
+        <p dir="auto">renderer.tsx</p>
+        <p>TSX · 12 KB</p>
+      </section>
+      <div>
+        <button type="button" class="btn" data-variant="ghost" data-size="icon-xs" aria-label="Remove renderer.tsx" onclick="const attachment = this.closest('.attachment'); const parent = attachment.parentElement; if (!parent.hasAttribute('tabindex')) parent.tabIndex = -1; parent.focus({ preventScroll: true }); attachment.remove()">
+          <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+        </button>
+      </div>
+    </li>
+  </ul>
+</div>
+</Preview>
+
+### Trigger
+
+A direct child button opens a native [Dialog](/components/dialog). The copy and remove actions remain independently clickable. Copy link copies a link to this example.
+
+<Preview class="w-full">
+<div class="mx-auto flex w-full max-w-sm flex-col gap-3 py-12">
+  <div class="attachment w-full">
+    <figure aria-hidden="true">
+      <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M14 2v4a2 2 0 0 0 2 2h4" /><path d="M4.268 21a2 2 0 0 0 1.727 1H18a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v3" /><path d="m9 18-1.5-1.5" /><circle cx="5" cy="14" r="3" /></svg>
+    </figure>
+    <section>
+      <p dir="auto">research-summary.pdf</p>
+      <p>Open preview dialog</p>
+    </section>
+    <button type="button" aria-label="Preview research-summary.pdf" onclick="document.getElementById('attachment-preview').showModal()"></button>
+    <div>
+      <button type="button" class="btn" data-variant="ghost" data-size="icon-xs" aria-label="Copy link" onclick="navigator.clipboard.writeText(new URL('#trigger', location.href).href).then(() => this.setAttribute('aria-label', 'Link copied')).catch(() => this.setAttribute('aria-label', 'Could not copy link'))">
+        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><rect width="14" height="14" x="8" y="8" rx="2" ry="2" /><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" /></svg>
+      </button>
+      <button type="button" class="btn" data-variant="ghost" data-size="icon-xs" aria-label="Remove research-summary.pdf" onclick="const attachment = this.closest('.attachment'); const parent = attachment.parentElement; if (!parent.hasAttribute('tabindex')) parent.tabIndex = -1; parent.focus({ preventScroll: true }); attachment.remove()">
+        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+      </button>
+    </div>
+  </div>
+</div>
+<dialog id="attachment-preview" class="dialog" aria-labelledby="attachment-preview-title" aria-describedby="attachment-preview-description" onpointerdown="this.dataset.backdropPress = event.target === this" onclick="if (event.target === this && this.dataset.backdropPress === 'true') this.close()">
+  <div class="sm:max-w-md">
+    <header>
+      <h2 id="attachment-preview-title">research-summary.pdf</h2>
+      <p id="attachment-preview-description">The attachment trigger fills the card and opens the dialog, while the actions stay independently clickable above it.</p>
+    </header>
+    <button type="button" class="btn" data-variant="ghost" data-size="icon-sm" aria-label="Close dialog" onclick="this.closest('dialog').close()">
+      <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+    </button>
+  </div>
+</dialog>
+</Preview>
+
+### RTL
+
+Set `dir="rtl"` on the containing element. Media and actions follow the reading direction, including overlays on vertical thumbnails.
+
+<Preview class="w-full">
+<div class="mx-auto flex w-full max-w-sm flex-col gap-3 py-12" dir="rtl" lang="ar">
+  <div class="attachment w-full">
+    <figure aria-hidden="true">
+      <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" /><path d="M14 2v5a1 1 0 0 0 1 1h5" /><path d="M10 9H8" /><path d="M16 13H8" /><path d="M16 17H8" /></svg>
+    </figure>
+    <section>
+      <p dir="auto">تقرير-البحث.pdf</p>
+      <p>PDF · 1.4 MB</p>
+    </section>
+    <div>
+      <button type="button" class="btn" data-variant="ghost" data-size="icon-xs" aria-label="إزالة التقرير" onclick="const attachment = this.closest('.attachment'); const parent = attachment.parentElement; if (!parent.hasAttribute('tabindex')) parent.tabIndex = -1; parent.focus({ preventScroll: true }); attachment.remove()">
+        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+      </button>
+    </div>
+  </div>
+  <ul class="attachment-group" tabindex="0" role="list" aria-label="مرفقات الصور">
+    <li class="attachment" data-orientation="vertical">
+      <figure>
+        <img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=900&amp;auto=format&amp;fit=crop&amp;q=80" alt="Workspace" loading="lazy" />
+      </figure>
+      <section>
+        <p dir="auto">workspace.png</p>
+        <p>PNG · 820 KB</p>
+      </section>
+      <a href="https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=900&amp;auto=format&amp;fit=crop&amp;q=80" target="_blank" rel="noreferrer" aria-label="Open workspace.png"></a>
+      <div>
+        <button type="button" class="btn" data-variant="ghost" data-size="icon-xs" aria-label="Remove workspace.png" onclick="const attachment = this.closest('.attachment'); const parent = attachment.parentElement; if (!parent.hasAttribute('tabindex')) parent.tabIndex = -1; parent.focus({ preventScroll: true }); attachment.remove()">
+          <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+        </button>
+      </div>
+    </li>
+    <li class="attachment" data-orientation="vertical">
+      <figure>
+        <img src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?w=900&amp;auto=format&amp;fit=crop&amp;q=80" alt="Desk" loading="lazy" />
+      </figure>
+      <section>
+        <p dir="auto">desk-reference.jpg</p>
+        <p>JPG · 1.1 MB</p>
+      </section>
+      <a href="https://images.unsplash.com/photo-1497215728101-856f4ea42174?w=900&amp;auto=format&amp;fit=crop&amp;q=80" target="_blank" rel="noreferrer" aria-label="Open desk-reference.jpg"></a>
+      <div>
+        <button type="button" class="btn" data-variant="ghost" data-size="icon-xs" aria-label="Remove desk-reference.jpg" onclick="const attachment = this.closest('.attachment'); const parent = attachment.parentElement; if (!parent.hasAttribute('tabindex')) parent.tabIndex = -1; parent.focus({ preventScroll: true }); attachment.remove()">
+          <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+        </button>
+      </div>
+    </li>
+    <li class="attachment" data-orientation="vertical">
+      <figure>
+        <img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=900&amp;auto=format&amp;fit=crop&amp;q=80" alt="Office" loading="lazy" />
+      </figure>
+      <section>
+        <p dir="auto">office-reference.jpg</p>
+        <p>JPG · 940 KB</p>
+      </section>
+      <a href="https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=900&amp;auto=format&amp;fit=crop&amp;q=80" target="_blank" rel="noreferrer" aria-label="Open office-reference.jpg"></a>
+      <div>
+        <button type="button" class="btn" data-variant="ghost" data-size="icon-xs" aria-label="Remove office-reference.jpg" onclick="const attachment = this.closest('.attachment'); const parent = attachment.parentElement; if (!parent.hasAttribute('tabindex')) parent.tabIndex = -1; parent.focus({ preventScroll: true }); attachment.remove()">
+          <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+        </button>
+      </div>
+    </li>
+  </ul>
+</div>
+</Preview>

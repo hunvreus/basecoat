@@ -1,0 +1,30 @@
+/* Carousel */
+@layer components {
+  .carousel {
+    @apply relative min-w-0;
+
+    > ul {
+      @apply flex overflow-x-auto overscroll-x-contain snap-x snap-mandatory scroll-smooth motion-reduce:scroll-auto;
+    }
+    > button {
+      @apply touch-manipulation;
+    }
+    > ul > li {
+      @apply min-w-0 shrink-0 basis-full snap-start;
+    }
+    &[data-orientation='vertical'] > ul {
+      @apply flex-col overflow-x-hidden overflow-y-auto snap-y;
+    }
+    &[data-orientation='vertical'] > ul > li {
+      @apply min-h-0;
+    }
+  }
+}
+
+/* Initialized controls replace the optional scrollbar utility. */
+@layer utilities {
+  .carousel[data-carousel-initialized] > ul {
+    scrollbar-width: none;
+    &::-webkit-scrollbar { display: none; }
+  }
+}

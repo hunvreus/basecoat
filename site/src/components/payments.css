@@ -1,0 +1,13 @@
+[data-payments-example] td.datatable-empty {
+  height: 6rem;
+  text-align: center;
+}
+
+/* Reserve the first page until the table initializes. */
+@media (scripting: enabled) {
+  [data-payments-example]:has([data-table-controls][inert]) tbody tr:nth-child(3) { border-bottom-width: 0; }
+  [data-payments-example]:has([data-table-controls][inert]) tbody tr:nth-child(n+4) { display: none; }
+}
+@media (scripting: none) {
+  [data-payments-example] [data-table-controls] { display: none; }
+}

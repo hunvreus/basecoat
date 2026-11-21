@@ -1,5 +1,13 @@
+@import "../base/transition-details.css";
+
 /* Accordion */
 @layer components {
+  .accordion > details {
+    @apply transition-details;
+    &::details-content { @apply opacity-0; }
+    &[open]::details-content { @apply opacity-100; }
+  }
+
   .accordion {
     @apply flex w-full flex-col;
   }
@@ -9,7 +17,7 @@
   }
 
   .accordion > details > summary > svg:last-child {
-    @apply pointer-events-none shrink-0 transition-transform;
+    @apply pointer-events-none shrink-0 transition-transform motion-reduce:transition-none;
   }
 
   .accordion > details[open] > summary > svg:last-child {
@@ -23,5 +31,11 @@
 
   .accordion > details > :not(summary) {
     @apply overflow-hidden;
+  }
+  @media (forced-colors: active) {
+    .accordion > details > summary:focus-visible {
+      outline: 2px solid Highlight;
+      outline-offset: 2px;
+    }
   }
 }

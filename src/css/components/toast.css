@@ -1,57 +1,72 @@
-/* Toasts */
+/* Toasts: measured native content, CSS stacking and transitions. */
 @layer components {
   .toaster {
-    @apply pointer-events-none fixed bottom-0 z-50 flex w-full flex-col-reverse gap-4 p-4 sm:max-w-90;
+    @apply pointer-events-none fixed inset-x-4 bottom-4 z-50 m-0 mx-auto h-0 w-auto max-w-sm list-none p-0 outline-none sm:mx-0 sm:w-full;
 
     &:not([data-align]),
-    &[data-align='end'] {
-      @apply right-0;
-    }
-    &[data-align='start'] {
-      @apply left-0;
-    }
-    &[data-align='center'] {
-      @apply left-1/2 -translate-x-1/2;
-    }
+    &[data-align='end'] { @apply sm:start-auto sm:end-4; }
+    &[data-align='start'] { @apply sm:start-4 sm:end-auto; }
+    &[data-align='center'] { @apply sm:start-1/2 sm:end-auto sm:-translate-x-1/2 sm:rtl:translate-x-1/2; }
+
     .toast {
-      @apply pointer-events-auto grid w-full grid-rows-[1fr] animate-[toast-up_0.3s_ease-in-out] transition-[grid-template-rows,opacity] duration-300 ease-in-out;
-      
-      .toast-content {
-        @apply flex items-center gap-2.5 overflow-hidden p-3 text-[13px];
+      --toast-scale: max(0, calc(1 - var(--toast-index, 0) * 0.1));
+      --toast-lift: calc(var(--toast-index, 0) * -12px - (1 - var(--toast-scale)) * var(--toast-front-height, 0px));
+      --toast-swipe-x: 0px;
+      --toast-swipe-y: 0px;
+      @apply pointer-events-auto absolute inset-x-0 bottom-0 w-full list-none select-none outline-none;
+      height: var(--toast-front-height, auto);
+      z-index: calc(1000 - var(--toast-index, 0));
+      transform-origin: bottom center;
+      transform: translateX(var(--toast-swipe-x)) translateY(calc(var(--toast-lift) + var(--toast-swipe-y))) scale(var(--toast-scale));
+      transition: transform 500ms cubic-bezier(0.22, 1, 0.36, 1), opacity 500ms, height 150ms;
+      touch-action: none;
 
-        svg {
-          @apply size-4 shrink-0;
-        }
-        section {
-          h2 {
-            @apply font-medium tracking-tight;
-          }
-          p {
-            @apply text-muted-foreground break-all;
-          }
-        }
-        footer {
-          @apply ms-auto flex flex-col gap-2;
+      &::after {
+        content: '';
+        @apply absolute inset-x-0 top-full h-[13px];
+      }
 
-          [data-toast-action],
-          [data-toast-cancel] {
-            @apply h-6 px-2.5 text-xs;
-          }
+      > .toast-content {
+        @apply flex items-center overflow-hidden;
+        transition: opacity 250ms cubic-bezier(0.22, 1, 0.36, 1);
+        > svg { @apply pointer-events-none shrink-0; }
+        > section { @apply flex min-w-0 flex-1 flex-col wrap-break-word; }
+        > footer { @apply ms-auto flex shrink-0 items-center; }
+        > footer > .btn[data-size='icon-sm'] {
+          @apply relative after:absolute after:-inset-2 after:content-[''];
         }
       }
-      &[aria-hidden='true'] {
-        @apply grid-rows-[0fr] overflow-hidden border-0 p-0 opacity-0;
 
-        .toast-content {
-          @apply border-0;
-        }
-      }
+      &:where(:has(~ .toast:not([aria-hidden='true']))) > .toast-content { @apply opacity-0; }
+      &[data-toast-stack-overflow] { @apply pointer-events-none opacity-0; }
+      &[aria-hidden='true'] { @apply pointer-events-none; }
     }
-  }
-}
-@keyframes toast-up {
-  from {
-    opacity: 0;
-    transform: translateY(100%);
+
+    &:where(:hover, :focus-within, :has([data-toast-swiping])) .toast:not([aria-hidden='true']) {
+      height: var(--toast-height);
+      transform: translateX(var(--toast-swipe-x)) translateY(calc(var(--toast-offset, 0px) * -1 + var(--toast-swipe-y)));
+      > .toast-content { @apply opacity-100; }
+    }
+
+    .toast[data-toast-expanded][aria-hidden='true'] {
+      height: var(--toast-height);
+      > .toast-content { opacity: 1; }
+    }
+    .toast > .toast-content > footer > :is([data-toast-action], [data-toast-cancel]):not([data-size]) { @apply h-6 px-2.5 text-xs; }
+
+    .toast:not([data-toast-initialized]),
+    .toast[aria-hidden='true']:not([data-toast-stack-overflow]) {
+      transform: translateY(calc(var(--toast-swipe-y) + 150%));
+    }
+    .toast[aria-hidden='true'][data-toast-swipe='x'] {
+      transform: translateX(calc(var(--toast-swipe-x) + var(--toast-swipe-end))) translateY(calc(var(--toast-offset, 0px) * -1));
+    }
+    .toast[data-toast-swiping] { transition: none; }
+    .toast[data-category='loading'] > .toast-content > svg { @apply animate-spin; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .toast, .toast > .toast-content { transition: none; }
+      .toast[data-category='loading'] > .toast-content > svg { animation: none; }
+    }
   }
 }

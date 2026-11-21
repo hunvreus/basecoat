@@ -1,0 +1,20 @@
+/* Marker */
+@layer components {
+  .marker {
+    @apply relative flex w-full min-w-0 items-center;
+  }
+  .marker > svg {
+    @apply shrink-0;
+  }
+  .marker > span {
+    @apply min-w-0 wrap-break-word;
+  }
+  .marker[data-variant='separator']::before,
+  .marker[data-variant='separator']::after {
+    content: '';
+    @apply min-w-0 flex-1 border-t;
+  }
+  .marker[data-variant='separator'] > span {
+    @apply flex-none text-center;
+  }
+}

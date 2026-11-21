@@ -59,34 +59,57 @@
         "components/accordion",
         "components/alert",
         "components/alert-dialog",
+        {
+          "type": "item",
+          "slug": "components/aspect-ratio",
+          "badge": "New"
+        },
+        { "type": "item", "slug": "components/attachment", "badge": "New" },
         "components/avatar",
         "components/badge",
         "components/breadcrumb",
+        { "type": "item", "slug": "components/bubble", "badge": "New" },
         "components/button",
         "components/button-group",
         "components/card",
+        {
+          "type": "item",
+          "slug": "components/carousel",
+          "badge": "New"
+        },
         {
           "type": "item",
           "slug": "components/chart",
           "badge": "Beta"
         },
         "components/checkbox",
+        { "type": "item", "slug": "components/code-block", "badge": "New" },
+        {
+          "type": "item",
+          "slug": "components/collapsible",
+          "badge": "New"
+        },
         "components/combobox",
         "components/command",
+        { "type": "item", "slug": "components/data-table", "badge": "New" },
         "components/dialog",
         {
           "type": "item",
-          "slug": "components/drawer",
-          "badge": "Beta"
+          "slug": "components/direction",
+          "badge": "New"
         },
+        "components/drawer",
         "components/dropdown-menu",
         "components/empty",
         "components/field",
         "components/input",
         "components/input-group",
+        { "type": "item", "slug": "components/input-otp", "badge": "New" },
         "components/item",
         "components/kbd",
         "components/label",
+        { "type": "item", "slug": "components/marker", "badge": "New" },
+        { "type": "item", "slug": "components/message", "badge": "New" },
         "components/native-select",
         "components/pagination",
         "components/popover",
@@ -95,6 +118,11 @@
         "components/select",
         "components/scroll-area",
         "components/separator",
+        {
+          "type": "item",
+          "slug": "components/sheet",
+          "badge": "New"
+        },
         "components/sidebar",
         "components/skeleton",
         "components/slider",
@@ -104,8 +132,38 @@
         "components/tabs",
         "components/textarea",
         "components/theme-switcher",
-        "components/toast",
-        "components/tooltip"
+        {
+          "type": "item",
+          "slug": "components/toast",
+          "badge": "New"
+        },
+        {
+          "type": "item",
+          "slug": "components/toggle",
+          "badge": "New"
+        },
+        {
+          "type": "item",
+          "slug": "components/toggle-group",
+          "badge": "New"
+        },
+        "components/tooltip",
+        { "type": "item", "slug": "components/trace", "badge": "New" },
+        {
+          "type": "item",
+          "label": "Typography",
+          "slug": "typeset"
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "label": "Utilities",
+      "items": [
+        "utils/transition-details",
+        "utils/scrollbar",
+        "utils/scroll-fade",
+        "utils/shimmer"
       ]
     }
   ]

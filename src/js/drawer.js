@@ -21,6 +21,7 @@
     const nativeClose = drawer.close.bind(drawer);
     let pointerStartedOnBackdrop = false;
     let closeTimer = null;
+    let closeReturnValue = '';
 
     const finishClose = (returnValue) => {
       window.clearTimeout(closeTimer);
@@ -41,6 +42,7 @@
         return;
       }
 
+      closeReturnValue = returnValue;
       drawer.dataset.closing = 'true';
       closeTimer = window.setTimeout(() => finishClose(returnValue), duration + 50);
     };
@@ -66,7 +68,9 @@
     drawer.addEventListener('pointerup', handlePointerUp);
 
     drawer._destroy = () => {
-      window.clearTimeout(closeTimer);
+      // Finish an in-flight close before reinitialization cancels its animation.
+      if (closeTimer !== null) finishClose(closeReturnValue);
+      drawer.removeAttribute('data-closing');
       drawer.removeEventListener('cancel', handleCancel);
       drawer.removeEventListener('pointerdown', handlePointerDown);
       drawer.removeEventListener('pointerup', handlePointerUp);
@@ -79,6 +83,6 @@
   };
 
   if (window.basecoat) {
-    window.basecoat.register('drawer', '.drawer:not([data-drawer-initialized])', initDrawer);
+    window.basecoat.register('drawer', '.drawer:not([data-drawer-initialized]), .sheet:not([data-drawer-initialized])', initDrawer);
   }
 })();

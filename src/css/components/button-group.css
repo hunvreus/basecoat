@@ -12,6 +12,7 @@
     }
 
     > *:focus-visible,
+    > .btn:has(> input:focus-visible),
     > :is(.dropdown-menu, .popover, .select) > button:focus-visible {
       @apply relative z-10;
     }
@@ -48,7 +49,7 @@
     }
   }
 
-  .button-group > :is(span, label, output) {
+  .button-group > :is(span, label, output):not(.btn) {
     @apply flex items-center [&_svg]:pointer-events-none;
   }
 }

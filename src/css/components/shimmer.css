@@ -1,0 +1,49 @@
+/* Shimmer */
+@keyframes basecoat-shimmer {
+  from { background-position: 100% 0; }
+  to { background-position: 0 0; }
+}
+
+@source inline("shimmer");
+
+@utility shimmer {
+  -webkit-text-fill-color: currentColor;
+
+  /* Keep text readable where the relative-color gradient is unsupported. */
+  @supports (color: oklch(from currentColor l c h)) {
+    --_shimmer-spread: var(--shimmer-spread, calc(3ch + 40px));
+    --_shimmer-highlight: var(--shimmer-color, oklch(from currentColor l c h / calc(alpha * 0.2)));
+    background-image: linear-gradient(
+      calc(90deg + var(--shimmer-angle, 20deg)),
+      currentColor calc(50% - var(--_shimmer-spread)),
+      color-mix(in oklch, var(--_shimmer-highlight), currentColor 50%) calc(50% - var(--_shimmer-spread) * 0.5),
+      var(--_shimmer-highlight) 50%,
+      color-mix(in oklch, var(--_shimmer-highlight), currentColor 50%) calc(50% + var(--_shimmer-spread) * 0.5),
+      currentColor calc(50% + var(--_shimmer-spread))
+    );
+    background-repeat: no-repeat;
+    background-size: calc(200% + var(--_shimmer-spread) * 2) 100%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: basecoat-shimmer var(--shimmer-duration, 2s) linear infinite;
+
+    html.dark & {
+      --_shimmer-highlight: var(--shimmer-color, oklch(from currentColor max(0.8, calc(l + 0.4)) c h / calc(alpha + 0.4)));
+    }
+    &:dir(rtl) { animation-direction: reverse; }
+  }
+
+  @media (prefers-reduced-motion: reduce), (forced-colors: active) {
+    animation: none;
+    background-image: none;
+    -webkit-text-fill-color: currentColor;
+  }
+  @media (forced-colors: active) { -webkit-text-fill-color: CanvasText; }
+}
+
+@layer utilities {
+  :where(.attachment:is([data-state='uploading'], [data-state='processing']) > section > :first-child) {
+    @apply shimmer;
+  }
+}

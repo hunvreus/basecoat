@@ -1,0 +1,280 @@
+# Message
+
+A conversation turn with optional sender, avatar, attachments, and actions.
+
+<Preview class="w-full">
+<div class="mx-auto grid w-full max-w-sm gap-6 pb-12">
+  <ol role="list" aria-label="Conversation" class="mx-auto w-full max-w-sm pt-12 flex flex-col gap-6 [--color-primary:var(--primary)] [--color-primary-foreground:var(--primary-foreground)] [--color-secondary:var(--secondary)] [--color-secondary-foreground:var(--secondary-foreground)] [--primary:oklch(0.488_0.243_264.376)] dark:[--primary:oklch(0.424_0.199_265.638)] [--primary-foreground:oklch(0.97_0.014_254.604)] [--secondary:oklch(0.967_0.001_286.375)] dark:[--secondary:oklch(0.274_0.006_286.033)] [--secondary-foreground:oklch(0.21_0.006_285.885)] dark:[--secondary-foreground:oklch(0.985_0_0)]">
+    <li class="message" data-align="end">
+      <span class="avatar" aria-hidden="true">
+        <img src="/assets/images/avatar-1.png" alt="" />
+      </span>
+      <div>
+        <span class="sr-only">You</span>
+        <div class="bubble">
+          <p>Deploying to prod real quick.</p>
+        </div>
+      </div>
+    </li>
+    <li class="message">
+      <span class="avatar" aria-hidden="true">
+        <img src="/assets/images/avatar-2.png" alt="" />
+      </span>
+      <div>
+        <span class="sr-only">Oliver</span>
+        <div class="bubble" data-variant="muted">
+          <p>It's 4:55 PM. On a Friday.</p>
+        </div>
+      </div>
+    </li>
+    <li class="message" data-align="end">
+      <span class="avatar" aria-hidden="true">
+        <img src="/assets/images/avatar-1.png" alt="" />
+      </span>
+      <div>
+        <span class="sr-only">You</span>
+        <div class="bubble">
+          <p>It's a one-line change.</p>
+        </div>
+        <footer>Delivered</footer>
+      </div>
+    </li>
+    <li class="message">
+      <span class="avatar" aria-hidden="true">
+        <img src="/assets/images/avatar-2.png" alt="" />
+      </span>
+      <div>
+        <span class="sr-only">Oliver</span>
+        <div class="bubble-group">
+          <div class="bubble" data-variant="muted">
+            <p>It's always a one-line change 😭.</p>
+          </div>
+          <div class="bubble" data-variant="muted">
+            <p>Alright, let me take a look.</p>
+            <div><span role="img" aria-label="Thumbs up">👍</span></div>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ol>
+  <p class="marker" role="status">
+    <span class="shimmer"><strong>Oliver</strong> is typing…</span>
+  </p>
+</div>
+</Preview>
+
+## Usage
+
+With a [Basecoat style bundle](/installation) loaded, put each message in its own list item. The final child is a content wrapper. Place an optional [Avatar](/components/avatar) before it and a [Bubble](/components/bubble) or ordinary text inside it. Set `data-align="end"` on outgoing messages.
+
+```html
+<ol role="list" aria-label="Conversation">
+  <li class="message">
+    <div>
+      <header>Olivia</header>
+      <div class="bubble" data-variant="muted">
+        <p>I already checked the logs.</p>
+      </div>
+    </div>
+  </li>
+</ol>
+```
+
+Include the sender as text, visually hidden if necessary. Use a footer for timestamps, delivery status, or actions. Message supplies layout only. Your application owns delivery and retry behavior.
+
+## Examples
+
+### Avatar
+
+Use an empty image alternative when the message already identifies its sender.
+
+<Preview class="w-full">
+<ol role="list" aria-label="Conversation" class="mx-auto w-full max-w-sm py-12 flex flex-col gap-6 [--color-primary:var(--primary)] [--color-primary-foreground:var(--primary-foreground)] [--color-secondary:var(--secondary)] [--color-secondary-foreground:var(--secondary-foreground)] [--primary:oklch(0.488_0.243_264.376)] dark:[--primary:oklch(0.424_0.199_265.638)] [--primary-foreground:oklch(0.97_0.014_254.604)] [--secondary:oklch(0.967_0.001_286.375)] dark:[--secondary:oklch(0.274_0.006_286.033)] [--secondary-foreground:oklch(0.21_0.006_285.885)] dark:[--secondary-foreground:oklch(0.985_0_0)]">
+  <li class="message">
+    <span class="avatar" aria-hidden="true">
+      <img src="/assets/images/avatar-2.png" alt="" />
+    </span>
+    <div>
+      <span class="sr-only">Oliver</span>
+      <div class="bubble" data-variant="muted">
+        <p>The build failed during dependency installation.</p>
+      </div>
+    </div>
+  </li>
+  <li class="message" data-align="end">
+    <span class="avatar" aria-hidden="true">
+      <img src="/assets/images/avatar-1.png" alt="" />
+    </span>
+    <div>
+      <span class="sr-only">You</span>
+      <div class="bubble">
+        <p>Can you share the exact error?</p>
+      </div>
+    </div>
+  </li>
+  <li class="message">
+    <span class="avatar" aria-hidden="true">
+      <img src="/assets/images/avatar-2.png" alt="" />
+    </span>
+    <div>
+      <span class="sr-only">Oliver</span>
+      <div class="bubble-group">
+        <div class="bubble" data-variant="muted">
+          <p>Here’s the error from the logs.</p>
+        </div>
+        <div class="bubble" data-variant="muted">
+          <p>The libraries are not installed correctly. Try running the build again.</p>
+        </div>
+      </div>
+    </div>
+  </li>
+</ol>
+</Preview>
+
+### Group
+
+Use `message-group` to stack consecutive messages from one sender. An invisible avatar reserves the same space on earlier rows.
+
+<Preview class="w-full">
+<ol role="list" aria-label="Conversation" class="mx-auto w-full max-w-sm py-12 message-group [--color-primary:var(--primary)] [--color-primary-foreground:var(--primary-foreground)] [--color-secondary:var(--secondary)] [--color-secondary-foreground:var(--secondary-foreground)] [--primary:oklch(0.488_0.243_264.376)] dark:[--primary:oklch(0.424_0.199_265.638)] [--primary-foreground:oklch(0.97_0.014_254.604)] [--secondary:oklch(0.967_0.001_286.375)] dark:[--secondary:oklch(0.274_0.006_286.033)] [--secondary-foreground:oklch(0.21_0.006_285.885)] dark:[--secondary-foreground:oklch(0.985_0_0)]">
+  <li class="message">
+    <span class="avatar invisible" aria-hidden="true"></span>
+    <div>
+      <span class="sr-only">Oliver</span>
+      <div class="bubble" data-variant="muted">
+        <p>I checked the registry addresses.</p>
+      </div>
+    </div>
+  </li>
+  <li class="message">
+    <span class="avatar" aria-hidden="true">
+      <img src="/assets/images/avatar-2.png" alt="" />
+    </span>
+    <div>
+      <span class="sr-only">Oliver</span>
+      <div class="bubble" data-variant="muted">
+        <p>The component and example JSON now live under the UI registry.</p>
+      </div>
+    </div>
+  </li>
+</ol>
+</Preview>
+
+### Header and footer
+
+<Preview class="w-full">
+<ol role="list" aria-label="Conversation" class="mx-auto w-full max-w-sm py-12 flex flex-col gap-6 [--color-primary:var(--primary)] [--color-primary-foreground:var(--primary-foreground)] [--color-secondary:var(--secondary)] [--color-secondary-foreground:var(--secondary-foreground)] [--primary:oklch(0.488_0.243_264.376)] dark:[--primary:oklch(0.424_0.199_265.638)] [--primary-foreground:oklch(0.97_0.014_254.604)] [--secondary:oklch(0.967_0.001_286.375)] dark:[--secondary:oklch(0.274_0.006_286.033)] [--secondary-foreground:oklch(0.21_0.006_285.885)] dark:[--secondary-foreground:oklch(0.985_0_0)]">
+  <li class="message">
+    <div>
+      <header>Olivia</header>
+      <div class="bubble" data-variant="muted">
+        <p>I already checked the logs.</p>
+      </div>
+    </div>
+  </li>
+  <li class="message" data-align="end">
+    <div>
+      <span class="sr-only">You</span>
+      <div class="bubble">
+        <p>Send the report to the team. Ping @shadcn if you need help.</p>
+      </div>
+      <footer>Read yesterday</footer>
+    </div>
+  </li>
+</ol>
+</Preview>
+
+### Actions
+
+<Preview class="w-full">
+<ol role="list" aria-label="Conversation" class="mx-auto w-full max-w-sm py-12 flex flex-col gap-6 [--color-primary:var(--primary)] [--color-primary-foreground:var(--primary-foreground)] [--color-secondary:var(--secondary)] [--color-secondary-foreground:var(--secondary-foreground)] [--primary:oklch(0.488_0.243_264.376)] dark:[--primary:oklch(0.424_0.199_265.638)] [--primary-foreground:oklch(0.97_0.014_254.604)] [--secondary:oklch(0.967_0.001_286.375)] dark:[--secondary:oklch(0.274_0.006_286.033)] [--secondary-foreground:oklch(0.21_0.006_285.885)] dark:[--secondary-foreground:oklch(0.985_0_0)]">
+  <li class="message">
+    <div>
+      <span class="sr-only">Oliver</span>
+      <div class="bubble" data-variant="muted">
+        <p id="message-copy-text">The install failure is coming from the workspace package.</p>
+      </div>
+      <footer>
+        <button type="button" class="btn" data-variant="ghost" data-size="icon" aria-label="Copy message" title="Copy message" onclick="navigator.clipboard.writeText(document.getElementById('message-copy-text').textContent).then(() => this.nextElementSibling.textContent = 'Copied', () => this.nextElementSibling.textContent = 'Copy unavailable')">
+          <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2" /><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" /></svg>
+        </button>
+        <span role="status" class="sr-only"></span>
+        <label class="btn" data-variant="ghost" data-size="icon" title="Like">
+          <input type="radio" name="message-feedback" value="like" aria-label="Like" />
+          <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2a3.13 3.13 0 0 1 3 3.88Z" /><path d="M7 10v12" /></svg>
+        </label>
+        <label class="btn" data-variant="ghost" data-size="icon" title="Dislike">
+          <input type="radio" name="message-feedback" value="dislike" aria-label="Dislike" />
+          <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18.12 10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H20a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.76a2 2 0 0 0-1.79 1.11L12 22a3.13 3.13 0 0 1-3-3.88Z" /><path d="M17 14V2" /></svg>
+        </label>
+      </footer>
+    </div>
+  </li>
+  <li class="message" data-align="end">
+    <div>
+      <span class="sr-only">You</span>
+      <div class="bubble">
+        <p>Okay drop me a link. Taking a look…</p>
+      </div>
+      <footer class="gap-2">
+        <span class="text-destructive">Failed to send</span>
+        <button type="button" class="btn" data-variant="ghost" data-size="icon-xs" aria-label="Retry delivery" title="Retry delivery">
+          <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" /><path d="M3 3v5h5" /><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16" /><path d="M16 16h5v5" /></svg>
+        </button>
+      </footer>
+    </div>
+  </li>
+</ol>
+</Preview>
+
+### Attachment
+
+Place the file next to its bubble inside the same message.
+
+<Preview class="w-full">
+<ol role="list" aria-label="Conversation" class="mx-auto w-full max-w-sm py-12 flex flex-col gap-6 [--color-primary:var(--primary)] [--color-primary-foreground:var(--primary-foreground)] [--color-secondary:var(--secondary)] [--color-secondary-foreground:var(--secondary-foreground)] [--primary:oklch(0.488_0.243_264.376)] dark:[--primary:oklch(0.424_0.199_265.638)] [--primary-foreground:oklch(0.97_0.014_254.604)] [--secondary:oklch(0.967_0.001_286.375)] dark:[--secondary:oklch(0.274_0.006_286.033)] [--secondary-foreground:oklch(0.21_0.006_285.885)] dark:[--secondary-foreground:oklch(0.985_0_0)]">
+  <li class="message" data-align="end">
+    <div>
+      <span class="sr-only">You</span>
+      <div class="attachment" data-orientation="vertical">
+        <figure>
+          <img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=900&amp;auto=format&amp;fit=crop&amp;q=80" alt="Workspace" loading="lazy" />
+        </figure>
+      </div>
+      <div class="bubble">
+        <p>Here’s the image for the cover page.</p>
+      </div>
+    </div>
+  </li>
+  <li class="message">
+    <div>
+      <span class="sr-only">Oliver</span>
+      <div class="bubble" data-variant="muted">
+        <p>Here’s the sales report.</p>
+      </div>
+      <div class="attachment">
+        <figure aria-hidden="true">
+          <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" /><path d="M14 2v5a1 1 0 0 0 1 1h5" /><path d="M10 9H8" /><path d="M16 13H8" /><path d="M16 17H8" /></svg>
+        </figure>
+        <section>
+          <p>sales-report.txt</p>
+          <p>Text document</p>
+        </section>
+        <div>
+          <a class="btn" data-variant="ghost" data-size="icon-xs" href="data:text/plain;charset=utf-8,Quarterly%20sales%20report" download="sales-report.txt" aria-label="Download sales report">
+            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3" /><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><path d="m7 10 5 5 5-5" /></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </li>
+  <li class="message" data-align="end">
+    <div>
+      <span class="sr-only">You</span>
+      <div class="bubble">
+        <p>Thanks. Looks good.</p>
+      </div>
+    </div>
+  </li>
+</ol>
+</Preview>

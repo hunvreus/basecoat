@@ -69,9 +69,10 @@
       const orientation = state.tablist.getAttribute('aria-orientation') || 'horizontal';
       if (currentIndex === -1) return;
 
+      const forward = getComputedStyle(state.tablist).direction === 'rtl' ? -1 : 1;
       let nextTab;
-      if (event.key === 'ArrowRight' && orientation === 'horizontal') nextTab = enabledTabs[(currentIndex + 1) % enabledTabs.length];
-      if (event.key === 'ArrowLeft' && orientation === 'horizontal') nextTab = enabledTabs[(currentIndex - 1 + enabledTabs.length) % enabledTabs.length];
+      if (event.key === 'ArrowRight' && orientation === 'horizontal') nextTab = enabledTabs[(currentIndex + forward + enabledTabs.length) % enabledTabs.length];
+      if (event.key === 'ArrowLeft' && orientation === 'horizontal') nextTab = enabledTabs[(currentIndex - forward + enabledTabs.length) % enabledTabs.length];
       if (event.key === 'ArrowDown' && orientation === 'vertical') nextTab = enabledTabs[(currentIndex + 1) % enabledTabs.length];
       if (event.key === 'ArrowUp' && orientation === 'vertical') nextTab = enabledTabs[(currentIndex - 1 + enabledTabs.length) % enabledTabs.length];
       if (event.key === 'Home') nextTab = enabledTabs[0];

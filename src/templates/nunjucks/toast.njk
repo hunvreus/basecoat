@@ -2,9 +2,9 @@
   Renders a toaster container and individual toast messages.
   Can render the initial container or be used with htmx OOB swaps to add toasts dynamically.
 
-  @param id {string} [optional] [default="toaster"] - Unique identifier for the toaster container.
+  @param id {string} [optional] [default="toaster"] - Unique identifier for the toaster list.
   @param toasts {array} [optional] - An array of toast objects to render initially. See the <code>toast()</code> macro for more details.
-  @param attrs {object} [optional] - Additional HTML attributes for the main toaster container div.
+  @param attrs {object} [optional] - Additional HTML attributes for the main toaster list.
   
   Supports caller() for custom toast markup.
 #}
@@ -13,11 +13,13 @@
   toasts=[],
   attrs={}
 ) %}
-<div
+<ol
   id="{{ id }}"
   class="toaster {{ attrs.class }}"
+  role="list"
+  aria-label="{{ attrs['aria-label'] or 'Notifications' }}"
   {% for key, value in attrs %}
-    {% if key != 'class' %}{{ key }}="{{ value }}"{% endif %}
+    {% if key != 'class' and key != 'role' and key != 'aria-label' %}{{ key }}="{{ value }}"{% endif %}
   {% endfor %}
 >
 {% for item in toasts %}
@@ -29,17 +31,18 @@
     cancel=item.cancel,
     duration=item.duration,
     icon=item.icon,
+    close_button=item.close_button | default(true),
     attrs=item.attrs or {}
   ) }}
 {% endfor %}
 {{ caller() if caller }}
-</div>
+</ol>
 {% endmacro %}
 
 {#
   Renders a single toast message.
 
-  @param category {string} [optional] [default="success"] - Type of toast ('success', 'error', 'info', 'warning'). Determines icon and ARIA role.
+  @param category {string} [optional] [default="success"] - Type of toast ('success', 'error', 'info', 'warning', 'loading'). Determines icon and ARIA role.
   @param title {string} [optional] - The main title text of the toast.
   @param description {string} [optional] - The secondary description text.
   @param duration {number} [optional] - Timeout in milliseconds. Use -1 to keep the toast open.
@@ -52,7 +55,8 @@
     - label {string}: Button text.
     - onclick {string}: JavaScript code to execute on click.
     - href {string}: URL for an anchor link button.
-  @param attrs {object} [optional] - Additional HTML attributes for the toast div.
+  @param attrs {object} [optional] - Additional HTML attributes for the toast list item.
+  @param close_button {boolean} [optional] [default=true] - Render the close icon button.
 #}
 {% macro toast(
   category="success",
@@ -62,31 +66,31 @@
   cancel=None,
   duration=None,
   icon=None,
-  attrs={}
+  attrs={},
+  close_button=true
 ) %}
 {% set action_href = action.href if action and action.href else (action.url if action and action.url else None) %}
 {% set cancel_href = cancel.href if cancel and cancel.href else (cancel.url if cancel and cancel.url else None) %}
-<div
+<li
   class="toast {{ attrs.class }}"
-  role="{{ 'alert' if category == 'error' else 'status' }}"
-  aria-atomic="true"
-  aria-hidden="false"
   {% if category %}data-category="{{ category }}"{% endif %}
-  {% if duration is not none %}data-duration="{{ duration }}"{% endif %}
+  {% if duration is number %}data-duration="{{ duration }}"{% endif %}
   {% for key, value in attrs %}
     {% if key != 'class' %}{{ key }}="{{ value }}"{% endif %}
   {% endfor %}
 >
-  <div class="toast-content">
+  <div class="toast-content" role="{{ 'alert' if category == 'error' else 'status' }}" aria-atomic="true">
     {% if icon %}
       {{ icon | safe }}
-    {% elif category in ["error", "success", "info", "warning"] %}
+    {% elif category in ["error", "success", "info", "warning", "loading"] %}
       {% if category == "success" %}
         <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
       {% elif category == "error" %}
-        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>
+        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15.312 2a2 2 0 0 1 1.414.586l4.688 4.688A2 2 0 0 1 22 8.688v6.624a2 2 0 0 1-.586 1.414l-4.688 4.688a2 2 0 0 1-1.414.586H8.688a2 2 0 0 1-1.414-.586l-4.688-4.688A2 2 0 0 1 2 15.312V8.688a2 2 0 0 1 .586-1.414l4.688-4.688A2 2 0 0 1 8.688 2z"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>
       {% elif category == "info" %}
         <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+      {% elif category == "loading" %}
+        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
       {% elif category == "warning" %}
         <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
       {% endif %}
@@ -95,21 +99,19 @@
       {% if title %}<h2>{{ title }}</h2>{% endif %}
       {% if description %}<p>{{ description }}</p>{% endif %}
     </section>
-    {% if action or cancel %}
+    {% if action or cancel or close_button %}
       <footer>
         {% if action %}
           {% if action_href %}
             <a
               href="{{ action_href }}"
-              class="btn" data-size="sm"
-              data-toast-action
+              class="btn" data-variant="outline" data-size="sm" data-toast-action
             >{{ action.label }}</a>
           {% else %}
             <button
               type="button"
-              class="btn"
-              data-size="sm"
-              data-toast-action
+              class="btn" data-variant="outline"
+              data-size="sm" data-toast-action
               {% if action.onclick %}onclick="{{ action.onclick }}"{% endif %}
             >{{ action.label }}</button>
           {% endif %}
@@ -118,20 +120,21 @@
           {% if cancel_href %}
             <a
               href="{{ cancel_href }}"
-              class="btn" data-variant="outline" data-size="sm"
-              data-toast-cancel
+              class="btn" data-variant="outline" data-size="sm" data-toast-cancel
             >{{ cancel.label }}</a>
           {% else %}
             <button
               type="button"
-              class="btn" data-variant="outline" data-size="sm"
-              data-toast-cancel
+              class="btn" data-variant="outline" data-size="sm" data-toast-cancel
               {% if cancel.onclick %}onclick="{{ cancel.onclick }}"{% endif %}
             >{{ cancel.label }}</button>
           {% endif %}
         {% endif %}
+        {% if close_button %}
+          <button type="button" class="btn" data-variant="ghost" data-size="icon-sm" aria-label="Close toast"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+        {% endif %}
       </footer>
     {% endif %}
   </div>
-</div>
+</li>
 {% endmacro %}

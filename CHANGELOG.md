@@ -2,6 +2,33 @@
 
 ## [Unreleased]
 
+### Upgrading
+
+- Replace `scrollbar-sm` with `scrollbar scrollbar-thin`. Use Tailwind CSS 4.3 or later when compiling the source stylesheets. The CDN builds include both utilities.
+
+### Added
+
+- Code Block supports copy buttons, line numbers, wrapping and scroll-edge fades. Input OTP uses a single native input with visual slots, selection-based paste and form reset support.
+- Carousel uses native scroll snapping with optional previous and next buttons. Sheet shares Drawer’s native dialog behavior.
+- Added Attachment, Bubble, Marker, Message and Trace for files, conversations and activity, with examples across all eight style packs.
+- Added recipes for Aspect Ratio, Collapsible, Direction, Toggle and Toggle Group. Toggle buttons use native checkboxes and radios.
+- Added a Data Table example with Basecoat controls and optional browser-side sorting, filtering and pagination through simple-datatables.
+- Added optional Typeset styles for semantic HTML and Markdown. Documented the Scrollbar, Scroll Fade and Shimmer utilities.
+
+### Changed
+
+- Toast supports swipe dismissal, promise updates and an expandable three-toast stack. Hovering or focusing the stack pauses dismissal. Existing category names, timeout defaults and action attributes remain supported.
+- Accordion, Sidebar and Trace opt into animated disclosures with `transition-details`. Plain disclosures open immediately. Animated disclosures, Drawer and Sheet respect reduced motion.
+- Alert links have dotted underlines with stronger contrast on hover and keyboard focus. Documentation previews use the public Tabs and Code Block components. Chart and Data Table show browser setup in numbered steps.
+
+### Fixed
+
+- Dialog, Command, Drawer and Sheet each include their modal scroll lock when imported individually. Reinitializing a closing Drawer or Sheet completes the close and preserves its return value.
+- Restored timed dismissal for standalone toasts and fixed timer, focus and swipe cleanup when replacing a toaster.
+- Removed stale selection attributes from tab panels in templates and documentation. Corrected arrow-key navigation in RTL Tabs, directional Button icon spacing and small Nova Button Group corners. Improved forced-colors focus indicators on Button, Toggle, Accordion, Slider and linked Items.
+- Fixed RTL Trace chevrons in the standalone CDN stylesheets.
+- Reserved space for the desktop table of contents and classic scrollbars during docs page loads.
+
 ## [1.1.0] - 2026-10-23
 
 ### Upgrading

@@ -1,0 +1,37 @@
+# Shimmer
+
+Sweep a highlight across text to indicate ongoing work. The gradient follows the text color.
+
+<Preview>
+<p role="status" class="text-sm text-muted-foreground"><span class="shimmer">Checking the build…</span></p>
+</Preview>
+
+## Usage
+
+Add `shimmer` to the text that should animate. Every Basecoat style bundle includes the class. In a Tailwind stylesheet, use `@apply shimmer` to give an existing selector the same effect.
+
+```html
+<span class="shimmer">Checking the build…</span>
+```
+
+Set `--shimmer-duration` to change the length of a pass. The default is two seconds. The animation reverses in RTL and resolves to static text in reduced-motion and forced-colors modes.
+
+## Customization
+
+```css
+.build-status {
+  @apply shimmer;
+  --shimmer-duration: 1.5s;
+}
+```
+
+| Property | Controls |
+| --- | --- |
+| `--shimmer-duration` | Time for one pass |
+| `--shimmer-color` | Highlight color, derived from the text color by default |
+| `--shimmer-spread` | Width of the highlight |
+| `--shimmer-angle` | Tilt of the highlight |
+
+## Where Basecoat uses it
+
+[Attachment](/components/attachment) applies shimmer automatically to the filename while a file is uploading or processing. [Marker](/components/marker), [Message](/components/message), and [Trace](/components/trace) examples add the class directly to status text such as “Thinking…” or “Running tests.” Remove the class when the work finishes.

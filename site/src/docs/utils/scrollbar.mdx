@@ -1,0 +1,47 @@
+# Scrollbar
+
+Use `scrollbar` for a themed native scrollbar or `scrollbar scrollbar-thin` for a compact one.
+
+<Preview class="w-full max-w-xs">
+<ul class="scrollbar scrollbar-thin max-h-28 w-full overflow-y-auto rounded-md border p-3 text-sm leading-7" tabindex="0" aria-label="Project files">
+  <li>README.md</li>
+  <li>package.json</li>
+  <li>index.html</li>
+  <li>main.js</li>
+  <li>styles.css</li>
+  <li>LICENSE</li>
+</ul>
+</Preview>
+
+## Usage
+
+Set a height or width constraint and enable overflow on the same element as the scrollbar class.
+
+```html
+<pre class="scrollbar max-h-48 overflow-auto" tabindex="0" aria-label="Build output"><code>Build finished in 1.2 seconds.</code></pre>
+```
+
+Both utilities also work with `@apply`.
+
+```css
+@import "tailwindcss";
+@import "basecoat-css/vega.css";
+
+.file-list {
+  @apply scrollbar scrollbar-thin max-h-28 overflow-y-auto;
+}
+```
+
+Scrollbar visibility follows browser and operating system preferences. For horizontal scrolling and RTL examples, see [Scroll Area](/components/scroll-area).
+
+## Where Basecoat uses it
+
+| Class | Used on |
+| --- | --- |
+| `scrollbar` | [Code Block](/components/code-block) and [Trace](/components/trace) output, scrollable [Dialog](/components/dialog) and [Sheet](/components/sheet) content, and the [Carousel](/components/carousel) fallback |
+| `scrollbar scrollbar-thin` | Compact lists in [Select](/components/select), [Combobox](/components/combobox), and [Sidebar](/components/sidebar) |
+| Either size | Native [Scroll Area](/components/scroll-area) viewports |
+
+## Customization
+
+`--scrollbar-thumb` and `--scrollbar-track` control the colors. Browsers that use WebKit scrollbar styling also use `--scrollbar-width`, `--scrollbar-sm-width`, and `--scrollbar-radius`. Browsers using native scrollbar sizing choose the thickness for `auto` and `thin`.

@@ -37,3 +37,13 @@
 @import "./components/input-group.css";
 @import "./components/toast.css";
 @import "./components/tooltip.css";
+@import "./components/attachment.css";
+@import "./components/bubble.css";
+@import "./components/carousel.css";
+@import "./components/code-block.css";
+@import "./components/input-otp.css";
+@import "./components/marker.css";
+@import "./components/message.css";
+@import "./components/sheet.css";
+@import "./components/shimmer.css";
+@import "./components/trace.css";

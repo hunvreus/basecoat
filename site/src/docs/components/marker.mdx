@@ -1,0 +1,170 @@
+# Marker
+
+Display an inline status, note, bordered row, or labeled separator.
+
+<Preview class="w-full">
+<div class="mx-auto w-full max-w-sm flex flex-col gap-8 py-12">
+  <div class="marker">
+    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" x2="6" y1="3" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg>
+    <span>Switched to a new branch</span>
+  </div>
+  <div class="marker" role="status">
+    <svg aria-hidden="true" class="animate-spin motion-reduce:animate-none" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
+    <span class="shimmer">Thinking...</span>
+  </div>
+  <div class="marker" data-variant="separator">
+    <span>Conversation compacted</span>
+  </div>
+  <div class="marker">
+    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+    <span>Explored 4 files</span>
+  </div>
+</div>
+</Preview>
+
+## Usage
+
+Use `.marker` on a semantic element. Place an optional decorative SVG before a `<span>` containing the text. Add `data-variant="separator"` or `data-variant="border"` for the other layouts. No JavaScript is required.
+
+```html
+<div class="marker" role="status">
+  <svg aria-hidden="true" class="animate-spin motion-reduce:animate-none" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56" /></svg>
+  <span>Compacting conversation</span>
+</div>
+```
+
+Use `role="status"` when the text updates dynamically, and hide decorative icons from assistive technology. A labeled separator needs no `role="separator"`; its text remains available to screen readers. Use a real `<a>` or `<button>` for actions.
+
+## Examples
+
+### Variants
+
+<Preview class="w-full">
+<div class="mx-auto w-full max-w-sm flex flex-col gap-8 py-12">
+  <div class="marker">
+    <span>A default marker for inline notes.</span>
+  </div>
+  <div class="marker" data-variant="separator">
+    <span>A separator marker</span>
+  </div>
+  <div class="marker" data-variant="border">
+    <span>A border marker for row boundaries.</span>
+  </div>
+</div>
+</Preview>
+
+### Status
+
+<Preview class="w-full">
+<div class="mx-auto w-full max-w-sm flex flex-col gap-8 py-12">
+  <div class="marker" role="status">
+    <svg aria-hidden="true" class="animate-spin motion-reduce:animate-none" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
+    <span>Compacting conversation</span>
+  </div>
+  <div class="marker" data-variant="separator" role="status">
+    <svg aria-hidden="true" class="animate-spin motion-reduce:animate-none" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
+    <span>Running tests</span>
+  </div>
+</div>
+</Preview>
+
+### Shimmer
+
+Use `shimmer` on text for an animated highlight. Text stays static in browsers without relative-color support, with reduced motion enabled, or in forced-colors mode.
+
+<Preview class="w-full">
+<div class="mx-auto w-full max-w-sm flex flex-col gap-8 py-12">
+  <div class="marker" role="status">
+    <span class="shimmer">Thinking...</span>
+  </div>
+  <div class="marker" data-variant="separator" role="status">
+    <span class="shimmer">Reading 4 files</span>
+  </div>
+</div>
+</Preview>
+
+### Separator
+
+<Preview class="w-full">
+<div class="mx-auto w-full max-w-sm flex flex-col gap-8 py-12">
+  <div class="marker" data-variant="separator">
+    <span>Today</span>
+  </div>
+  <div class="marker" data-variant="separator">
+    <span>Worked for 42s</span>
+  </div>
+  <div class="marker" data-variant="separator">
+    <span>Conversation compacted</span>
+  </div>
+</div>
+</Preview>
+
+### Border
+
+<Preview class="w-full">
+<div class="mx-auto w-full max-w-sm flex flex-col gap-3 py-12">
+  <div class="marker" data-variant="border">
+    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" x2="6" y1="3" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg>
+    <span>Switched to release-candidate</span>
+  </div>
+  <div class="marker" data-variant="border">
+    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+    <span>Reviewed 8 related files</span>
+  </div>
+  <div class="marker" data-variant="border">
+    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>
+    <span>Opened implementation notes</span>
+  </div>
+</div>
+</Preview>
+
+### With icon
+
+<Preview class="w-full">
+<div class="mx-auto w-full max-w-sm flex flex-col gap-12 py-12">
+  <div class="marker">
+    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" x2="6" y1="3" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg>
+    <span>Switched to a new branch</span>
+  </div>
+  <div class="marker" data-variant="separator">
+    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+    <span>Explored 4 files</span>
+  </div>
+  <div class="marker flex-col">
+    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21V7"/><path d="m16 12 2 2 4-4"/><path d="M22 6V4a1 1 0 0 0-1-1h-5a4 4 0 0 0-4 4 4 4 0 0 0-4-4H3a1 1 0 0 0-1 1v13a1 1 0 0 0 1 1h6a3 3 0 0 1 3 3 3 3 0 0 1 3-3h6a1 1 0 0 0 1-1v-1.3"/></svg>
+    <span>Syncing completed</span>
+  </div>
+</div>
+</Preview>
+
+### Links and buttons
+
+The button uses [Toast](/components/toast/#usage) for feedback. Load the Basecoat runtime and Toast script, or the full JavaScript bundle, once on your page. Use the included toaster if your page does not already have one.
+
+<Preview class="w-full">
+<div class="mx-auto w-full max-w-sm flex flex-col gap-8 py-12">
+  <a class="marker" href="#links-and-buttons">
+    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" x2="6" y1="3" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg>
+    <span>View the pull request</span>
+  </a>
+  <button class="marker" type="button" onclick="document.getElementById('toaster').toast({ title: 'You clicked the revert button' })">
+    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+    <span>Revert this change</span>
+  </button>
+</div>
+<ol id="toaster" class="toaster" role="list" aria-label="Notifications"></ol>
+</Preview>
+
+### RTL
+
+<Preview class="w-full">
+<div class="mx-auto w-full max-w-sm flex flex-col gap-8 py-12">
+  <div class="marker" dir="rtl" lang="ar">
+    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" x2="6" y1="3" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg>
+    <span>تم التبديل إلى فرع جديد</span>
+  </div>
+  <div class="marker" data-variant="separator" dir="rtl" lang="ar">
+    <span>تم ضغط المحادثة</span>
+  </div>
+</div>
+</Preview>

@@ -4,7 +4,11 @@
   .input[type='checkbox']:not([role='switch']) {
     @apply relative shrink-0 appearance-none outline-none disabled:cursor-not-allowed disabled:opacity-50;
     
-    &:checked:after {
+    &:indeterminate::after {
+      @apply block h-0.5 w-2.5 bg-current content-[''];
+    }
+
+    &:checked:not(:indeterminate):after {
       @apply content-[''] block bg-current;
       @apply mask-[image:var(--check-icon)] mask-size-[0.875rem] mask-no-repeat mask-center;
     }

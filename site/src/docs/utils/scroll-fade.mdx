@@ -1,0 +1,94 @@
+# Scroll Fade
+
+Fade the edge of a scrollable region when more content lies beyond it. Scroll to the bottom to see the last row sharpen.
+
+<Preview class="w-full max-w-xs">
+<div class="mx-auto w-full max-w-xs overflow-hidden rounded-2xl border">
+  <div class="h-72 scroll-fade overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" role="region" tabindex="0" aria-label="Items">
+    <ol class="flex flex-col gap-1.5 p-1.5">
+      <li class="rounded-lg bg-muted px-3 py-2.5 text-sm">Item 1</li>
+      <li class="rounded-lg bg-muted px-3 py-2.5 text-sm">Item 2</li>
+      <li class="rounded-lg bg-muted px-3 py-2.5 text-sm">Item 3</li>
+      <li class="rounded-lg bg-muted px-3 py-2.5 text-sm">Item 4</li>
+      <li class="rounded-lg bg-muted px-3 py-2.5 text-sm">Item 5</li>
+      <li class="rounded-lg bg-muted px-3 py-2.5 text-sm">Item 6</li>
+      <li class="rounded-lg bg-muted px-3 py-2.5 text-sm">Item 7</li>
+      <li class="rounded-lg bg-muted px-3 py-2.5 text-sm">Item 8</li>
+      <li class="rounded-lg bg-muted px-3 py-2.5 text-sm">Item 9</li>
+      <li class="rounded-lg bg-muted px-3 py-2.5 text-sm">Item 10</li>
+      <li class="rounded-lg bg-muted px-3 py-2.5 text-sm">Item 11</li>
+      <li class="rounded-lg bg-muted px-3 py-2.5 text-sm">Item 12</li>
+    </ol>
+  </div>
+</div>
+</Preview>
+
+## Usage
+
+Use `scroll-fade` on a vertical scroller or `scroll-fade-x` on a horizontal one. Both ship with each Basecoat style bundle and work with Tailwind’s `@apply`. Put the border on a wrapper so the mask affects only the scrolling content.
+
+```html
+<div class="scroll-fade max-h-48 overflow-y-auto" tabindex="0" aria-label="Release notes">
+  <!-- Release notes -->
+</div>
+```
+
+The mask follows the native scroll position using CSS scroll-driven animations. Browsers without support show the content normally, as does forced-colors mode. The horizontal fade follows the reading direction in RTL.
+
+## Horizontal scrolling
+
+<Preview class="w-full max-w-xs">
+<div class="mx-auto w-full max-w-xs overflow-hidden rounded-2xl border">
+  <div class="scroll-fade-x overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" role="region" tabindex="0" aria-label="Departments">
+    <ul class="flex w-max gap-1.5 p-1.5">
+      <li class="rounded-lg bg-muted px-3 py-2.5 text-sm">Design</li>
+      <li class="rounded-lg bg-muted px-3 py-2.5 text-sm">Engineering</li>
+      <li class="rounded-lg bg-muted px-3 py-2.5 text-sm">Marketing</li>
+      <li class="rounded-lg bg-muted px-3 py-2.5 text-sm">Product</li>
+      <li class="rounded-lg bg-muted px-3 py-2.5 text-sm">Research</li>
+      <li class="rounded-lg bg-muted px-3 py-2.5 text-sm">Sales</li>
+      <li class="rounded-lg bg-muted px-3 py-2.5 text-sm">Support</li>
+      <li class="rounded-lg bg-muted px-3 py-2.5 text-sm">Operations</li>
+      <li class="rounded-lg bg-muted px-3 py-2.5 text-sm">Finance</li>
+      <li class="rounded-lg bg-muted px-3 py-2.5 text-sm">Legal</li>
+      <li class="rounded-lg bg-muted px-3 py-2.5 text-sm">People</li>
+      <li class="rounded-lg bg-muted px-3 py-2.5 text-sm">Security</li>
+    </ul>
+  </div>
+</div>
+</Preview>
+
+Use the same utility inside a Tailwind rule for a custom list:
+
+```css
+.file-strip {
+  @apply scroll-fade-x overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden;
+}
+```
+
+## RTL
+
+Set `dir="rtl"` on the container or an ancestor. At the start of this list the left edge fades. Scroll to the end and the right edge fades instead.
+
+<Preview class="w-full max-w-xs">
+<div class="mx-auto w-full max-w-xs overflow-hidden rounded-2xl border" dir="rtl" lang="ar">
+  <div class="scroll-fade-x overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" role="region" tabindex="0" aria-label="الأقسام">
+    <ul class="flex w-max gap-1.5 p-1.5">
+      <li class="rounded-lg bg-muted px-3 py-2.5 text-sm">تصميم</li>
+      <li class="rounded-lg bg-muted px-3 py-2.5 text-sm">هندسة</li>
+      <li class="rounded-lg bg-muted px-3 py-2.5 text-sm">تسويق</li>
+      <li class="rounded-lg bg-muted px-3 py-2.5 text-sm">منتج</li>
+      <li class="rounded-lg bg-muted px-3 py-2.5 text-sm">أبحاث</li>
+      <li class="rounded-lg bg-muted px-3 py-2.5 text-sm">مبيعات</li>
+      <li class="rounded-lg bg-muted px-3 py-2.5 text-sm">دعم</li>
+      <li class="rounded-lg bg-muted px-3 py-2.5 text-sm">عمليات</li>
+      <li class="rounded-lg bg-muted px-3 py-2.5 text-sm">مالية</li>
+      <li class="rounded-lg bg-muted px-3 py-2.5 text-sm">قانوني</li>
+    </ul>
+  </div>
+</div>
+</Preview>
+
+## Where Basecoat uses it
+
+[Attachment](/components/attachment) applies the horizontal fade to scrolling groups and clears the mask when focus enters the group. [Code Block](/components/code-block) applies a horizontal fade to long source lines and a vertical fade to wrapped output. Both components supply the fade in their CSS.

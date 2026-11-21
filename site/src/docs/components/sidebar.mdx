@@ -52,7 +52,7 @@ Using CDN or bundler imports? See the [Installation page](/installation).
 ```html
 <aside id="sidebar" class="sidebar" data-side="left">
   <nav aria-label="Sidebar navigation">
-    <section class="scrollbar-sm">
+    <section class="scrollbar scrollbar-thin">
       <div role="group" aria-labelledby="group-label-content-1">
         <h3 id="group-label-content-1">Getting started</h3>
         <ul>
@@ -98,7 +98,7 @@ Using CDN or bundler imports? See the [Installation page](/installation).
 
 Set `dir="rtl"` on the sidebar or a parent element. Logical spacing, nested borders, and item content follow document direction. `data-side` is physical: `left` and `right` refer to viewport sides.
 
-<Callout type="warning" title="Differences with shadcn/ui" icon="triangle-alert">
+<Callout title="Differences with shadcn/ui" icon="info">
   Basecoat intentionally supports the stable HTML sidebar surface: fixed left/right sidebars, mobile overlay behavior, grouped navigation, active states, and native `details` submenus. It does not expose shadcn/ui's React provider, rail, inset/floating variants, icon-only collapse mode, menu actions, menu badges, or menu skeleton API.
 </Callout>
 
@@ -156,3 +156,20 @@ Set `--sidebar-width` and `--sidebar-mobile-width` on `:root` or the sidebar roo
 | `sidebar.open()` | Method | Opens the sidebar. |
 | `sidebar.close()` | Method | Closes the sidebar. |
 | `sidebar.toggle()` | Method | Toggles the sidebar. |
+
+## Examples
+
+### Link with a trailing badge
+
+A sidebar link truncates its final direct-child `<span>` by default. When a badge follows the label inside the link, put `truncate` on the label so long text stays on one line with an ellipsis. The `badge` class already prevents the badge from shrinking. If you wrap the badge in another element, put `shrink-0` on that wrapper.
+
+```html
+<li>
+  <a href="/roles">
+    <span class="truncate">Roles and permissions</span>
+    <span class="badge ms-auto" data-variant="outline">Pro</span>
+  </a>
+</li>
+```
+
+In shadcn/ui, a `SidebarMenuItem` can also contain a separate badge alongside its menu button. See the [upstream sidebar badge example](https://ui.shadcn.com/docs/components/base/sidebar#sidebarmenubadge).

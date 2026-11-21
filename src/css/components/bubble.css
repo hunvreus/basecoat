@@ -1,0 +1,28 @@
+/* Bubble */
+@layer components {
+  .bubble-group {
+    @apply flex min-w-0 flex-col;
+  }
+  .bubble {
+    @apply relative flex w-fit min-w-0 flex-col;
+  }
+  .bubble > :first-child {
+    @apply w-fit max-w-full min-w-0 overflow-hidden wrap-break-word;
+  }
+  .bubble > :is(a, button):first-child {
+    @apply text-start transition-colors outline-none;
+  }
+  .bubble > button:disabled {
+    @apply pointer-events-none opacity-50;
+  }
+
+  .bubble > div:not(:first-child) {
+    @apply absolute z-10 flex w-fit shrink-0 items-center justify-center;
+  }
+  @media (forced-colors: active) {
+    .bubble > :is(a, button):first-child:focus-visible {
+      outline: 2px solid Highlight;
+      outline-offset: 2px;
+    }
+  }
+}

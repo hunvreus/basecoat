@@ -1,0 +1,121 @@
+import CodeBlockExample from '../../components/CodeBlockExample.astro';
+
+# Code Block
+
+Display code and terminal output with an optional header, line numbers, and copy button.
+
+<CodeBlockExample title="app/api/chat/route.ts" lang="ts" class="max-w-lg" titleIcon="file" wrapControl filename="route.ts" numbered lineClasses={Object.fromEntries([6, 7, 8, 9, 10].map(line => [line, 'bg-foreground/5 forced-colors:outline']))} code={'import { streamText } from "ai"\n\nexport async function POST(request: Request) {\n  const { messages } = await request.json()\n\n  const result = streamText({\n    model: "anthropic/claude-sonnet-4.5",\n    system: "You are a helpful assistant. Answer in one short paragraph.",\n    messages,\n  })\n\n  return result.toUIMessageStreamResponse()\n}'} />
+
+## Usage
+
+<Steps>
+  <Step title="Load the styles">
+
+Load a full Basecoat style bundle, or import `base/base.css`, `components/code-block.css`, `components/button.css`, `components/scrollbar.css`, and one style pack after Tailwind.
+
+  </Step>
+  <Step title="Add the code block">
+
+Use `.code-block` around native `<pre><code>`. Add a semantic `<header>` or `<footer>` when needed. Use Button for actions and Scroll Area's `.scrollbar` on the focusable `<pre>`.
+
+```html
+<div class="code-block">
+  <header>
+    <span>Terminal</span>
+    <div>
+      <button type="button" class="btn" data-variant="ghost" data-size="xs" data-copy>Copy</button>
+    </div>
+  </header>
+  <pre class="scrollbar" tabindex="0" aria-label="Terminal output"><code>npm run build</code></pre>
+</div>
+```
+
+For syntax colors, see [Syntax highlighting](#syntax-highlighting).
+
+  </Step>
+  <Step title="Enable copying (optional)">
+
+Add `data-copy` to the button that copies the block. Include the Basecoat runtime and `code-block.js`, or the full `all.js` bundle. Copy uses the Clipboard API, which requires HTTPS or localhost; failure is announced without pretending the copy succeeded. Without JavaScript, the code remains selectable.
+
+  </Step>
+</Steps>
+
+### HTML structure
+
+Use a `<span>` for the header title and a `<div>` for actions. An actions `<div>` directly inside `.code-block` floats at the top end, appearing on hover, keyboard focus, or touch devices.
+
+Scrollable code has a CSS edge fade in browsers with scroll-driven animations. Wrapping moves the fade to the vertical axis.
+
+Line numbers are off by default. To opt in, add `data-line-numbers` to `<pre>` and wrap each line in a direct `<span>` inside `<code>`. Preserve real newline characters between lines, including empty lines. CSS counters supply the visual numbers, which are excluded from both native selection and the Copy button. Plain text needs no line wrappers; use them only for numbering, highlighting, or line-specific utilities.
+
+## Examples
+
+### Basic
+
+<CodeBlockExample copy={false} code={'$ pnpm build\n> next build\n\n ✓ Compiled successfully in 4.2s\n ✓ Generating static pages (12/12)\n\nRoute (app)                Size  First Load JS\n┌ ○ /                    1.9 kB         112 kB\n├ ○ /_not-found           993 B         103 kB\n└ ƒ /api/chat             141 B         102 kB'} />
+
+### Header
+
+Use a header for a filename or a label. The Copy button here copies the displayed terminal output.
+
+<CodeBlockExample title="Terminal" titleIcon="terminal" code={"$ pnpm add ai @ai-sdk/react zod\nPackages: +14\nProgress: resolved 412, reused 398, downloaded 14, added 14, done\nDone in 2.8s using pnpm v10.18.0"} />
+
+### Actions
+
+The header can hold any buttons or links your app needs. Try **Wrap lines** to switch the lint output between wrapped lines and horizontal scrolling. **Download** saves the output as `lint.log` using a native download link. **Copy** copies the same text to the clipboard. Basecoat handles Copy. Your app supplies the behavior for custom actions.
+
+<CodeBlockExample title="Terminal" titleIcon="terminal" wrap wrapControl filename="lint.log" code={"$ pnpm lint\napps/web/components/message-list.tsx\n  18:22  error  'messages' is possibly 'undefined'. Add a guard before calling map  @typescript-eslint/no-unsafe-call\n  42:7   warning  React Hook React.useEffect has a missing dependency: 'scrollToBottom'  react-hooks/exhaustive-deps\n\n✖ 2 problems (1 error, 1 warning)"} />
+
+### Floating actions
+
+<CodeBlockExample floating code={"$ pnpm add ai @ai-sdk/react zod\nProgress: resolved 412, reused 398, downloaded 14, added 14, done\ndependencies:\n+ @ai-sdk/react 3.0.12\n+ ai 6.0.12\n+ zod 4.1.12\nDone in 2.8s using pnpm v10.18.0"} />
+
+### Line numbers
+
+Add `data-line-numbers` to opt in. Like upstream, unnumbered code is the default.
+
+<CodeBlockExample numbered copy={false} code={"{\n  \"name\": \"chat\",\n  \"private\": true,\n  \"scripts\": {\n    \"dev\": \"next dev\",\n    \"build\": \"next build\"\n  }\n}"} />
+
+### Wrapping
+
+The first block scrolls horizontally. Adding `data-wrap` to the second block lets the same error message fit its width.
+
+<CodeBlockExample compareWrap code={"Error: The model \"anthropic/claude-sonnet-4.5\" returned an error: Request too large. The prompt is 212,431 tokens and the context window is 200,000 tokens. Remove some messages or summarize the conversation and try again."} />
+
+### Highlighted lines
+
+Apply ordinary utilities to the lines you want to emphasize. This recipe uses `bg-foreground/5` and an outline in forced-colors mode. Unlike upstream’s line variants, these are example classes, not a Code Block API.
+
+<CodeBlockExample numbered copy={false} lineClasses={{ 3: 'bg-foreground/5 forced-colors:outline', 4: 'bg-foreground/5 forced-colors:outline' }} code={"export default {\n  experimental: {\n    reactCompiler: true,\n    viewTransition: true,\n  },\n  images: {\n    remotePatterns: [{ hostname: \"avatars.githubusercontent.com\" }],\n  },\n}"} />
+
+### Diff
+
+Render the patch as text, including its `+` and `-` prefixes, and use utilities for line backgrounds. The prefixes keep changes distinguishable without color. Native selection and the Copy button both copy the displayed patch, including its prefixes. No diff parser or dedicated variants are included.
+
+<CodeBlockExample title="components/greeting.tsx" lineClasses={{ 2: 'bg-destructive/10', 3: 'bg-foreground/5', 4: 'bg-foreground/5', 5: 'bg-foreground/5' }} code={' export function Greeting({ name }: { name: string }) {\n-  return <p>Hello, {name}</p>\n+  return <p className="text-sm text-muted-foreground">\n+    Hello, {name}!\n+  </p>\n }'} />
+
+### Height
+
+Use ordinary height utilities to constrain a block. The native scroll area remains keyboard-accessible.
+
+<CodeBlockExample title="Logs" maxHeight code={Array.from({ length: 40 }, (_, i) => `[${String(i + 1).padStart(2, '0')}] GET /api/chat 200 in ${12 + (i * 7) % 40}ms`).join('\n')} />
+
+### Size
+
+<CodeBlockExample title="Terminal" titleIcon="terminal" sizes={[undefined, "sm"]} wrap code={"$ pnpm add ai @ai-sdk/react zod\nProgress: resolved 412, reused 398, downloaded 14, added 14, done\nDone in 2.8s using pnpm v10.18.0"} />
+
+### Destructive
+
+<CodeBlockExample title="Error" variant="destructive" wrap code={"TypeError: Cannot read properties of undefined (reading 'map')\n    at MessageList (components/message-list.tsx:18:22)\n    at renderWithHooks (react-dom.development.js:16305:18)"} />
+
+### Syntax highlighting
+
+Code Block displays plain text by default. To color the keys, strings, and numbers in this JSON example, the docs run [Shiki](https://shiki.style/guide/install) at build time and place its colored spans inside `<pre><code>`. The browser receives ordinary HTML. Basecoat styles the block, and the Shiki theme supplies the token colors.
+
+<CodeBlockExample title="getWeather output" lang="json" copy={false} code={"{\n  \"location\": \"San Francisco\",\n  \"temperature\": 18,\n  \"unit\": \"celsius\",\n  \"conditions\": [\"fog\", \"wind\"]\n}"} />
+
+### RTL
+
+The header follows the page direction. Code always reads left to right.
+
+<CodeBlockExample title="الطرفية" titleIcon="terminal" description="ثبّت الحزم، ثم شغّل خادم التطوير." rtl numbered lang="bash" code={'pnpm add ai @ai-sdk/react zod\npnpm dev'} />

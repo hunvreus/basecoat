@@ -6,7 +6,7 @@
     <button type="button" role="tab" id="demo-tabs-with-panels-tab-1" aria-controls="demo-tabs-with-panels-panel-1" aria-selected="true" tabindex="0">Account</button>
     <button type="button" role="tab" id="demo-tabs-with-panels-tab-2" aria-controls="demo-tabs-with-panels-panel-2" aria-selected="false" tabindex="-1">Password</button>
   </nav>
-  <div role="tabpanel" id="demo-tabs-with-panels-panel-1" aria-labelledby="demo-tabs-with-panels-tab-1" tabindex="-1" aria-selected="true">
+  <div role="tabpanel" id="demo-tabs-with-panels-panel-1" aria-labelledby="demo-tabs-with-panels-tab-1" tabindex="-1">
     <div class="card">
       <header>
         <h2>Account</h2>
@@ -29,7 +29,7 @@
       </footer>
     </div>
   </div>
-  <div role="tabpanel" id="demo-tabs-with-panels-panel-2" aria-labelledby="demo-tabs-with-panels-tab-2" tabindex="-1" aria-selected="false" hidden>
+  <div role="tabpanel" id="demo-tabs-with-panels-panel-2" aria-labelledby="demo-tabs-with-panels-tab-2" tabindex="-1" hidden>
     <div class="card">
       <header>
         <h2>Password</h2>
@@ -109,7 +109,7 @@ Using CDN or bundler imports? See the [Installation page](/installation).
     <button type="button" role="tab" id="demo-tabs-with-panels-tab-1" aria-controls="demo-tabs-with-panels-panel-1" aria-selected="true" tabindex="0">Account</button>
     <button type="button" role="tab" id="demo-tabs-with-panels-tab-2" aria-controls="demo-tabs-with-panels-panel-2" aria-selected="false" tabindex="-1">Password</button>
   </nav>
-  <div role="tabpanel" id="demo-tabs-with-panels-panel-1" aria-labelledby="demo-tabs-with-panels-tab-1" tabindex="-1" aria-selected="true">
+  <div role="tabpanel" id="demo-tabs-with-panels-panel-1" aria-labelledby="demo-tabs-with-panels-tab-1" tabindex="-1">
     <div class="card">
       <header>
         <h2>Account</h2>
@@ -132,7 +132,7 @@ Using CDN or bundler imports? See the [Installation page](/installation).
       </footer>
     </div>
   </div>
-  <div role="tabpanel" id="demo-tabs-with-panels-panel-2" aria-labelledby="demo-tabs-with-panels-tab-2" tabindex="-1" aria-selected="false" hidden>
+  <div role="tabpanel" id="demo-tabs-with-panels-panel-2" aria-labelledby="demo-tabs-with-panels-tab-2" tabindex="-1" hidden>
     <div class="card">
       <header>
         <h2>Password</h2>
@@ -249,7 +249,7 @@ Using CDN or bundler imports? See the [Installation page](/installation).
 
 ## RTL
 
-To enable RTL support, set `dir="rtl"` on the tabs root or a parent element.
+To enable RTL support, set `dir="rtl"` on the tabs root or a parent element. Horizontal arrow keys follow the text direction; vertical tabs keep Up/Down navigation.
 
 <Preview>
 <div class="tabs w-full max-w-sm" id="tabs-rtl" dir="rtl">

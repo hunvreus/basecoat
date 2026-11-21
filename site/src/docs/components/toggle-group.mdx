@@ -1,0 +1,252 @@
+# Toggle Group
+
+A set of related choices styled as toggle buttons.
+
+<Preview>
+<fieldset>
+  <legend class="sr-only">Text formatting</legend>
+  <div class="flex gap-2">
+    <label class="btn" data-variant="outline" data-size="icon">
+      <input type="checkbox" name="toggle-group-1" value="bold" aria-label="Bold" />
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 12h9a4 4 0 0 1 0 8H6V4h8a4 4 0 0 1 0 8" /></svg>
+    </label>
+    <label class="btn" data-variant="outline" data-size="icon">
+      <input type="checkbox" name="toggle-group-1" value="italic" aria-label="Italic" />
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 4h-9M14 20H5M15 4 9 20" /></svg>
+    </label>
+    <label class="btn" data-variant="outline" data-size="icon">
+      <input type="checkbox" name="toggle-group-1" value="underline" aria-label="Underline" />
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4v6a6 6 0 0 0 12 0V4M4 20h16" /></svg>
+    </label>
+  </div>
+</fieldset>
+</Preview>
+
+## Usage
+
+Use a Basecoat style bundle. No JavaScript is required. See [Installation](/installation).
+
+```html
+<fieldset>
+  <legend class="sr-only">Text formatting</legend>
+  <div class="flex gap-2">
+    <label class="btn" data-variant="outline" data-size="icon">
+      <input type="checkbox" name="toggle-group-2" value="bold" aria-label="Bold" />
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 12h9a4 4 0 0 1 0 8H6V4h8a4 4 0 0 1 0 8" /></svg>
+    </label>
+    <label class="btn" data-variant="outline" data-size="icon">
+      <input type="checkbox" name="toggle-group-2" value="italic" aria-label="Italic" />
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 4h-9M14 20H5M15 4 9 20" /></svg>
+    </label>
+    <label class="btn" data-variant="outline" data-size="icon">
+      <input type="checkbox" name="toggle-group-2" value="underline" aria-label="Underline" />
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4v6a6 6 0 0 0 12 0V4M4 20h16" /></svg>
+    </label>
+  </div>
+</fieldset>
+```
+
+Use checkboxes for independent choices or radios with the same `name` for a single choice. Give each radio group a unique name. Set `checked` for an initial selection and `disabled` on an input or the whole fieldset.
+
+Unlike upstream’s pressed buttons, these expose checkbox/radio semantics. A selected radio cannot be cleared by clicking it again. Native radio arrow-key navigation and checkbox Tab/Space behavior apply.
+
+### HTML structure
+
+Group the inputs in a fieldset with a legend. Use `flex gap-2` for separated controls, or wrap `.btn` labels in `.button-group` for joined controls. Set Button variants and sizes on each label. Inputs support native form submission, reset, and `change` events.
+
+## Examples
+
+### Outline
+
+<Preview>
+<fieldset>
+  <legend class="sr-only">Call filter</legend>
+  <div class="flex gap-2">
+    <label class="btn" data-variant="outline">
+      <input type="radio" name="toggle-group-outline" value="all" checked />
+      All
+    </label>
+    <label class="btn" data-variant="outline">
+      <input type="radio" name="toggle-group-outline" value="missed" />
+      Missed
+    </label>
+  </div>
+</fieldset>
+</Preview>
+
+### Size
+
+<Preview>
+<div class="flex flex-col gap-4">
+  <fieldset>
+    <legend class="sr-only">Position</legend>
+    <div class="flex gap-2">
+      <label class="btn" data-variant="outline" data-size="sm">
+        <input type="radio" name="toggle-group-small" value="top" checked />
+        Top
+      </label>
+      <label class="btn" data-variant="outline" data-size="sm">
+        <input type="radio" name="toggle-group-small" value="bottom" />
+        Bottom
+      </label>
+      <label class="btn" data-variant="outline" data-size="sm">
+        <input type="radio" name="toggle-group-small" value="left" />
+        Left
+      </label>
+      <label class="btn" data-variant="outline" data-size="sm">
+        <input type="radio" name="toggle-group-small" value="right" />
+        Right
+      </label>
+    </div>
+  </fieldset>
+  <fieldset>
+    <legend class="sr-only">Position</legend>
+    <div class="flex gap-2">
+      <label class="btn" data-variant="outline">
+        <input type="radio" name="toggle-group-default" value="top" checked />
+        Top
+      </label>
+      <label class="btn" data-variant="outline">
+        <input type="radio" name="toggle-group-default" value="bottom" />
+        Bottom
+      </label>
+      <label class="btn" data-variant="outline">
+        <input type="radio" name="toggle-group-default" value="left" />
+        Left
+      </label>
+      <label class="btn" data-variant="outline">
+        <input type="radio" name="toggle-group-default" value="right" />
+        Right
+      </label>
+    </div>
+  </fieldset>
+</div>
+</Preview>
+
+### Spacing
+
+Use `gap-2` for an 8px gap. To join the same controls, replace `flex gap-2` with `button-group`.
+
+<Preview>
+<fieldset>
+  <legend class="sr-only">Position</legend>
+  <div class="flex gap-2">
+    <label class="btn" data-variant="outline" data-size="sm">
+      <input type="radio" name="toggle-group-spacing" value="top" checked />
+      Top
+    </label>
+    <label class="btn" data-variant="outline" data-size="sm">
+      <input type="radio" name="toggle-group-spacing" value="bottom" />
+      Bottom
+    </label>
+    <label class="btn" data-variant="outline" data-size="sm">
+      <input type="radio" name="toggle-group-spacing" value="left" />
+      Left
+    </label>
+    <label class="btn" data-variant="outline" data-size="sm">
+      <input type="radio" name="toggle-group-spacing" value="right" />
+      Right
+    </label>
+  </div>
+</fieldset>
+</Preview>
+
+### Vertical
+
+Use `flex flex-col gap-1` for separated vertical controls. For joined controls, use `.button-group` with `data-orientation="vertical"`.
+
+<Preview>
+<fieldset>
+  <legend class="sr-only">Text formatting</legend>
+  <div class="flex flex-col gap-1">
+    <label class="btn" data-variant="ghost" data-size="icon">
+      <input type="checkbox" name="toggle-group-vertical" value="bold" aria-label="Bold" checked />
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 12h9a4 4 0 0 1 0 8H6V4h8a4 4 0 0 1 0 8" /></svg>
+    </label>
+    <label class="btn" data-variant="ghost" data-size="icon">
+      <input type="checkbox" name="toggle-group-vertical" value="italic" aria-label="Italic" checked />
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 4h-9M14 20H5M15 4 9 20" /></svg>
+    </label>
+    <label class="btn" data-variant="ghost" data-size="icon">
+      <input type="checkbox" name="toggle-group-vertical" value="underline" aria-label="Underline" />
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4v6a6 6 0 0 0 12 0V4M4 20h16" /></svg>
+    </label>
+  </div>
+</fieldset>
+</Preview>
+
+### Disabled
+
+Disable the entire group with `<fieldset disabled>`.
+
+<Preview>
+<fieldset disabled>
+  <legend class="sr-only">Text formatting</legend>
+  <div class="flex gap-2">
+    <label class="btn" data-variant="ghost" data-size="icon">
+      <input type="checkbox" name="toggle-group-disabled" value="bold" aria-label="Bold" />
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 12h9a4 4 0 0 1 0 8H6V4h8a4 4 0 0 1 0 8" /></svg>
+    </label>
+    <label class="btn" data-variant="ghost" data-size="icon">
+      <input type="checkbox" name="toggle-group-disabled" value="italic" aria-label="Italic" />
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 4h-9M14 20H5M15 4 9 20" /></svg>
+    </label>
+    <label class="btn" data-variant="ghost" data-size="icon">
+      <input type="checkbox" name="toggle-group-disabled" value="underline" aria-label="Underline" />
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4v6a6 6 0 0 0 12 0V4M4 20h16" /></svg>
+    </label>
+  </div>
+</fieldset>
+</Preview>
+
+### Custom
+
+<Preview>
+<fieldset>
+  <legend class="label mb-3">Font Weight</legend>
+  <div class="flex gap-2">
+    <label class="btn size-16 flex-col rounded-xl px-0 normal-case" data-variant="outline" data-size="lg">
+      <input type="radio" name="toggle-group-10" value="light" />
+      <span class="text-2xl leading-none font-light">Aa</span>
+      <span class="text-xs text-muted-foreground">Light</span>
+    </label>
+    <label class="btn size-16 flex-col rounded-xl px-0 normal-case" data-variant="outline" data-size="lg">
+      <input type="radio" name="toggle-group-10" value="normal" checked />
+      <span class="text-2xl leading-none font-normal">Aa</span>
+      <span class="text-xs text-muted-foreground">Normal</span>
+    </label>
+    <label class="btn size-16 flex-col rounded-xl px-0 normal-case" data-variant="outline" data-size="lg">
+      <input type="radio" name="toggle-group-10" value="medium" />
+      <span class="text-2xl leading-none font-medium">Aa</span>
+      <span class="text-xs text-muted-foreground">Medium</span>
+    </label>
+    <label class="btn size-16 flex-col rounded-xl px-0 normal-case" data-variant="outline" data-size="lg">
+      <input type="radio" name="toggle-group-10" value="bold" />
+      <span class="text-2xl leading-none font-bold">Aa</span>
+      <span class="text-xs text-muted-foreground">Bold</span>
+    </label>
+  </div>
+</fieldset>
+</Preview>
+
+### RTL
+
+<Preview>
+<fieldset dir="rtl" lang="ar">
+  <legend class="sr-only">طريقة العرض</legend>
+  <div class="flex gap-2">
+    <label class="btn" data-variant="outline">
+      <input type="radio" name="toggle-group-rtl" value="list" checked />
+      قائمة
+    </label>
+    <label class="btn" data-variant="outline">
+      <input type="radio" name="toggle-group-rtl" value="grid" />
+      شبكة
+    </label>
+    <label class="btn" data-variant="outline">
+      <input type="radio" name="toggle-group-rtl" value="cards" />
+      بطاقات
+    </label>
+  </div>
+</fieldset>
+</Preview>

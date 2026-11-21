@@ -1,0 +1,52 @@
+import DataTableExample from '../../components/DataTableExample.astro';
+import paymentsModule from '../../scripts/data-table-example.js?url';
+
+# Data Table
+
+Filter payments by email, sort the results, and select rows across pages.
+
+<Callout title="This example uses simple-datatables" icon="info">
+[Simple-datatables](https://github.com/fiduswriter/simple-datatables) handles sorting, filtering, and pagination in the browser. Basecoat supplies the table and controls. If your server handles those operations, use [Table](/components/table) on its own.
+</Callout>
+
+<DataTableExample />
+
+## Usage
+
+<Steps>
+  <Step title="Load Basecoat and simple-datatables">
+
+Include the [Basecoat stylesheet and JavaScript bundle](/installation#cdn) on your page. Add this script to the page head for sorting, filtering, and pagination.
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@10.3.0/dist/umd/simple-datatables.js" defer></script>
+```
+
+  </Step>
+  <Step title="Copy the payments table">
+
+Copy the table and its controls from the **Code** tab into your page body. Put the accompanying style rules in your stylesheet. For each payment, use the same ID on the row and as its checkbox value.
+
+  </Step>
+  <Step title="Connect the controls">
+
+<a href={paymentsModule} download="payments.js" hx-boost="false">Download payments.js</a> and save it beside your HTML file. This is the script the preview uses to connect the controls to the table and keep rows selected across pages. Add this at the end of the page body:
+
+```html
+<script type="module">
+  import { mountPayments } from "./payments.js";
+
+  mountPayments(document.getElementById("payments-demo"), simpleDatatables.DataTable);
+</script>
+```
+
+  </Step>
+</Steps>
+
+## Examples
+
+### RTL
+
+Basecoat uses logical alignment. Email addresses and amounts retain their content, while the toolbar, table, and footer follow the container direction.
+
+<DataTableExample rtl />

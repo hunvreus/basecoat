@@ -1,5 +1,18 @@
+@keyframes command-scroll-lock {
+  from, to {
+    scrollbar-gutter: stable;
+  }
+}
+
 /* Command */
 @layer components {
+  /* Reserve the scrollbar gutter only when the page can scroll. */
+  html:has(.command-dialog:modal) {
+    overflow: hidden;
+    animation: command-scroll-lock linear both;
+    animation-timeline: scroll(self);
+  }
+
   .command-dialog {
     @apply inset-y-0 bg-transparent p-0 text-inherit opacity-0 transition-all transition-discrete;
     max-width: none;

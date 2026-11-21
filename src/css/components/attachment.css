@@ -1,0 +1,66 @@
+@import "../base/scroll-fade.css";
+
+/* Attachment */
+@layer components {
+  .attachment {
+    @apply relative flex max-w-full min-w-0 shrink-0 flex-wrap transition-colors;
+  }
+  .attachment:not([data-orientation='vertical']) {
+    @apply items-center;
+  }
+  .attachment[data-orientation='vertical'] {
+    @apply flex-col;
+  }
+  .attachment > figure {
+    @apply relative flex aspect-square shrink-0 items-center justify-center overflow-hidden;
+  }
+  .attachment > figure > svg {
+    @apply pointer-events-none;
+  }
+  .attachment > figure > img {
+    @apply aspect-square w-full object-cover;
+  }
+  .attachment > section {
+    @apply max-w-full min-w-0 flex-1;
+  }
+  .attachment > section > * {
+    @apply block max-w-full min-w-0 truncate;
+  }
+
+  .attachment > div {
+    @apply relative z-20 flex shrink-0 items-center;
+  }
+
+  .attachment[data-orientation='vertical'] > div {
+    @apply absolute;
+  }
+  .attachment > :is(a, button) {
+    @apply absolute inset-0 z-10 outline-none;
+  }
+  /* An inset focus indicator stays visible at the clipped edges of a file row. */
+  .attachment:has(> :is(a, button):focus-visible) {
+    outline: 2px solid currentColor;
+    outline-offset: -2px;
+  }
+  .attachment > button:disabled {
+    @apply cursor-not-allowed;
+  }
+  .attachment-group {
+    @apply flex min-w-0 snap-x snap-mandatory overflow-x-auto overscroll-x-contain;
+    @apply scroll-fade-x;
+    scrollbar-width: none;
+  }
+  .attachment-group:focus-within { mask-image: none; }
+  .attachment-group::-webkit-scrollbar { display: none; }
+  .attachment-group > .attachment {
+    @apply flex-none snap-start;
+  }
+  @media (forced-colors: active) {
+    .attachment:has(> :is(a, button):focus-visible),
+    .attachment-group:focus-visible {
+      outline: 2px solid Highlight;
+      outline-offset: -2px;
+    }
+    .attachment-group { mask-image: none; }
+  }
+}

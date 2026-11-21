@@ -7,7 +7,7 @@ Basecoat is a Tailwind CSS, vanilla HTML/CSS/JavaScript implementation of the sh
 ## Features
 
 - Semantic HTML-first components.
-- Tailwind CSS v4 source files and generated CSS bundles.
+- Tailwind CSS 4.3+ source files and generated CSS bundles.
 - Small vanilla JavaScript for components that need behavior.
 - Standalone style packs: Vega, Nova, Maia, Lyra, Mira, Luma, Sera, and Rhea.
 - Compatible with shadcn/ui themes.

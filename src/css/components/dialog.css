@@ -1,4 +1,3 @@
-/* Dialog */
 @keyframes dialog-scroll-lock {
   from, to {
     scrollbar-gutter: stable;
@@ -6,9 +5,8 @@
 }
 
 @layer components {
-  /* Lock page scroll while a modal dialog is open. The scroll timeline only
-     reserves the scrollbar gutter if the page can scroll, so nothing shifts. */
-  html:has(:is(.dialog, .alert-dialog, .command-dialog, .drawer):modal) {
+  /* Reserve the scrollbar gutter only when the page can scroll. */
+  html:has(:is(.dialog, .alert-dialog):modal) {
     overflow: hidden;
     animation: dialog-scroll-lock linear both;
     animation-timeline: scroll(self);

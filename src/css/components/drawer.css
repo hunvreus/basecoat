@@ -1,27 +1,43 @@
+@keyframes drawer-scroll-lock {
+  from, to {
+    scrollbar-gutter: stable;
+  }
+}
+
 /* Drawer */
 @layer components {
+  /* Reserve the scrollbar gutter only when the page can scroll. */
+  html:has(.drawer:modal) {
+    overflow: hidden;
+    animation: drawer-scroll-lock linear both;
+    animation-timeline: scroll(self);
+  }
+
   .drawer {
-    @apply fixed inset-0 m-0 size-auto max-h-none max-w-none overflow-visible bg-transparent p-0 text-inherit opacity-0 transition-all transition-discrete duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] backdrop:opacity-0 backdrop:transition-all backdrop:transition-discrete backdrop:duration-500 backdrop:ease-[cubic-bezier(0.32,0.72,0,1)];
+    --_drawer-duration: 500ms;
+    --_drawer-ease: cubic-bezier(0.32, 0.72, 0, 1);
+    --_drawer-travel: 100%;
+    @apply fixed inset-0 m-0 size-auto max-h-none max-w-none overflow-visible bg-transparent p-0 text-inherit opacity-0 transition-all transition-discrete duration-(--_drawer-duration) ease-(--_drawer-ease) backdrop:opacity-0 backdrop:transition-all backdrop:transition-discrete backdrop:duration-500 backdrop:ease-[cubic-bezier(0.32,0.72,0,1)];
 
     > * {
-      @apply fixed z-50 flex h-auto flex-col transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] will-change-transform outline-hidden;
+      @apply fixed z-50 flex h-auto flex-col transition-transform duration-(--_drawer-duration) ease-(--_drawer-ease) will-change-transform outline-hidden;
     }
 
     &:not([data-side]) > *,
     &[data-side='bottom'] > * {
-      @apply inset-x-0 bottom-0 mt-24 max-h-[80vh] translate-y-full;
+      @apply inset-x-0 bottom-0 translate-y-(--_drawer-travel);
     }
 
     &[data-side='top'] > * {
-      @apply inset-x-0 top-0 mb-24 max-h-[80vh] -translate-y-full;
+      @apply inset-x-0 top-0 -translate-y-(--_drawer-travel);
     }
 
     &[data-side='left'] > * {
-      @apply inset-y-0 left-0 w-3/4 max-w-sm -translate-x-full;
+      @apply inset-y-0 left-0 w-3/4 -translate-x-(--_drawer-travel);
     }
 
     &[data-side='right'] > * {
-      @apply inset-y-0 right-0 w-3/4 max-w-sm translate-x-full;
+      @apply inset-y-0 right-0 w-3/4 translate-x-(--_drawer-travel);
     }
 
     &[data-closing] {
@@ -30,19 +46,19 @@
 
     &[data-closing]:not([data-side]) > *,
     &[data-closing][data-side='bottom'] > * {
-      @apply translate-y-full;
+      @apply translate-y-(--_drawer-travel);
     }
 
     &[data-closing][data-side='top'] > * {
-      @apply -translate-y-full;
+      @apply -translate-y-(--_drawer-travel);
     }
 
     &[data-closing][data-side='left'] > * {
-      @apply -translate-x-full;
+      @apply -translate-x-(--_drawer-travel);
     }
 
     &[data-closing][data-side='right'] > * {
-      @apply translate-x-full;
+      @apply translate-x-(--_drawer-travel);
     }
 
     &:is([open], :popover-open):not([data-closing]) {
@@ -57,19 +73,19 @@
 
         &:not([data-side]) > *,
         &[data-side='bottom'] > * {
-          @apply translate-y-full;
+          @apply translate-y-(--_drawer-travel);
         }
 
         &[data-side='top'] > * {
-          @apply -translate-y-full;
+          @apply -translate-y-(--_drawer-travel);
         }
 
         &[data-side='left'] > * {
-          @apply -translate-x-full;
+          @apply -translate-x-(--_drawer-travel);
         }
 
         &[data-side='right'] > * {
-          @apply translate-x-full;
+          @apply translate-x-(--_drawer-travel);
         }
       }
     }
@@ -84,6 +100,24 @@
 
     > * > footer {
       @apply mt-auto flex flex-col;
+    }
+  }
+
+  .drawer:not([data-side]) > *,
+  .drawer[data-side='bottom'] > * {
+    @apply mt-24 max-h-[80vh];
+  }
+  .drawer[data-side='top'] > * {
+    @apply mb-24 max-h-[80vh];
+  }
+  .drawer:is([data-side='left'], [data-side='right']) > * {
+    @apply max-w-sm;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .drawer,
+    .drawer::backdrop,
+    .drawer > * {
+      transition: none;
     }
   }
 }

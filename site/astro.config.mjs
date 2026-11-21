@@ -16,6 +16,9 @@ const includeInSitemap = (page) => {
 
 export default defineConfig({
   site: process.env.SITE_URL || 'https://basecoatui.com',
+  server: {
+    host: '127.0.0.1',
+  },
   vite: {
     build: {
       assetsInlineLimit: 0,
@@ -25,6 +28,13 @@ export default defineConfig({
     },
   },
   integrations: [
+    {
+      name: 'watch-docs-menu',
+      hooks: {
+        // ReallySimpleDocs collects the MDX page modules at startup.
+        'astro:config:setup': ({ addWatchFile }) => addWatchFile(new URL('./src/docs/docs.json', import.meta.url)),
+      },
+    },
     reallySimpleDocs({
       docsDir: './src/docs',
       routeBase: '/',

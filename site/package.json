@@ -7,18 +7,29 @@
     "preview": "astro preview",
     "workers:dev": "npm run build && wrangler dev",
     "workers:deploy": "npm run build && wrangler deploy",
-    "workers:preview": "npm run build && wrangler versions upload"
+    "workers:preview": "npm run build && wrangler versions upload",
+    "postinstall": "patch-package --error-on-fail"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
+    "@fontsource-variable/geist": "^5.3.0",
+    "@fontsource-variable/geist-mono": "^5.3.0",
     "basecoat-css": "file:..",
     "htmx.org": "^2.0.10",
     "lucide-static": "^1.17.0",
     "nunjucks": "^3.2.4",
-    "reallysimpledocs": "^1.0.14"
+    "reallysimpledocs": "1.0.14",
+    "shiki": "4.3.0",
+    "simple-datatables": "10.3.0"
+  },
+  "overrides": {
+    "reallysimpledocs": {
+      "@tailwindcss/vite": "4.3.1"
+    }
   },
   "devDependencies": {
     "astro": "^6.4.6",
+    "patch-package": "8.0.1",
     "wrangler": "^4.50.0"
   }
 }

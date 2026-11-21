@@ -1,0 +1,52 @@
+# Aspect Ratio
+
+Display content at a fixed width-to-height ratio using Tailwind utilities.
+
+<Preview class="w-full flex justify-center">
+<div class="aspect-video w-full max-w-sm overflow-hidden rounded-lg bg-muted">
+  <img src="https://avatar.vercel.sh/shadcn1" alt="Abstract geometric artwork" class="h-full w-full object-cover grayscale dark:brightness-20" />
+</div>
+</Preview>
+
+## Usage
+
+Use `aspect-video` for 16:9, `aspect-square` for 1:1, or `aspect-[width/height]` for another ratio. No Basecoat-specific class or JavaScript is needed.
+
+```html
+<div class="aspect-video w-full max-w-sm overflow-hidden rounded-lg bg-muted">
+  <img src="/photo.jpg" alt="Mountain landscape" class="h-full w-full object-cover" />
+</div>
+```
+
+The wrapper sets the ratio; `object-cover` crops the image to fill it. Use `object-contain` to show the whole image instead. Unlike upstream, this is a CSS utility pattern rather than a wrapper component.
+
+## Examples
+
+### Square
+
+<Preview class="w-full flex justify-center">
+<div class="aspect-square w-full max-w-[12rem] overflow-hidden rounded-lg bg-muted">
+  <img src="https://avatar.vercel.sh/shadcn1" alt="Abstract geometric artwork" class="h-full w-full object-cover grayscale dark:brightness-20" />
+</div>
+</Preview>
+
+### Portrait
+
+<Preview class="w-full flex justify-center">
+<div class="aspect-[9/16] w-full max-w-[10rem] overflow-hidden rounded-lg bg-muted">
+  <img src="https://avatar.vercel.sh/shadcn1" alt="Abstract geometric artwork" class="h-full w-full object-cover grayscale dark:brightness-20" />
+</div>
+</Preview>
+
+### RTL
+
+Use `dir="rtl"` for right-to-left content. The image ratio stays the same.
+
+<Preview class="w-full flex justify-center">
+<figure class="w-full max-w-sm" dir="rtl" lang="ar">
+  <div class="aspect-video overflow-hidden rounded-lg bg-muted">
+    <img src="https://avatar.vercel.sh/shadcn1" alt="تصميم هندسي تجريدي" class="h-full w-full object-cover grayscale dark:brightness-20" />
+  </div>
+  <figcaption class="mt-2 text-center text-sm text-muted-foreground">تصميم هندسي تجريدي</figcaption>
+</figure>
+</Preview>

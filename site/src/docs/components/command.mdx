@@ -54,11 +54,12 @@ Import Tailwind and one full Basecoat style bundle.
 @import "basecoat-css/vega.css";
 ```
 
-Or import only the base CSS, Command component CSS, and one style pack.
+For individual imports, include the base CSS, the components you use, and one style pack.
 
 ```css
 @import "tailwindcss";
-@import "basecoat-css/base.css";
+@import "basecoat-css/base/base.css";
+@import "basecoat-css/components/button.css";
 @import "basecoat-css/components/command.css";
 @import "basecoat-css/styles/vega.css";
 ```

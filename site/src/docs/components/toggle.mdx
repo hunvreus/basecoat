@@ -1,0 +1,100 @@
+# Toggle
+
+A checkbox styled as a toggle button.
+
+<Preview>
+<label class="btn has-checked:[&_svg]:fill-current" data-variant="outline" data-size="sm">
+  <input type="checkbox" name="toggle" value="bookmark" />
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2Z" /></svg>
+  Bookmark
+</label>
+</Preview>
+
+## Usage
+
+Use a Basecoat style bundle. No JavaScript is required. See [Installation](/installation).
+
+```html
+<label class="btn" data-variant="ghost">
+  <input type="checkbox" name="toggle" value="italic" />
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 4h-9M14 20H5M15 4 9 20" /></svg>
+  Italic
+</label>
+```
+
+Put a checkbox directly inside a `.btn` label. Use `data-variant="ghost"` or `data-variant="outline"` and the existing Button `data-size` options. Use `checked` to start selected and `disabled` to prevent changes. The input keeps native checkbox semantics, keyboard activation, form submission, and reset behavior. Read its `checked` property or listen for the native `change` event.
+
+Unlike upstream’s pressed button, this control is announced as a checkbox. In forced-colors mode, an inset outline identifies checked controls.
+
+## Examples
+
+### Outline
+
+<Preview>
+<div class="flex flex-wrap gap-2">
+  <label class="btn" data-variant="outline">
+    <input type="checkbox" name="toggle" value="italic" />
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 4h-9M14 20H5M15 4 9 20" /></svg>
+    Italic
+  </label>
+  <label class="btn" data-variant="outline">
+    <input type="checkbox" name="toggle" value="bold" />
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 12h9a4 4 0 0 1 0 8H6V4h8a4 4 0 0 1 0 8" /></svg>
+    Bold
+  </label>
+</div>
+</Preview>
+
+### With Text
+
+<Preview>
+<label class="btn" data-variant="ghost">
+  <input type="checkbox" name="toggle" value="italic" />
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 4h-9M14 20H5M15 4 9 20" /></svg>
+  Italic
+</label>
+</Preview>
+
+### Size
+
+<Preview>
+<div class="flex flex-wrap gap-2">
+  <label class="btn" data-variant="outline" data-size="sm">
+    <input type="checkbox" name="toggle" value="small" />
+    Small
+  </label>
+  <label class="btn" data-variant="outline" data-size="default">
+    <input type="checkbox" name="toggle" value="default" />
+    Default
+  </label>
+  <label class="btn" data-variant="outline" data-size="lg">
+    <input type="checkbox" name="toggle" value="large" />
+    Large
+  </label>
+</div>
+</Preview>
+
+### Disabled
+
+<Preview>
+<div class="flex flex-wrap gap-2">
+  <label class="btn" data-variant="ghost">
+    <input type="checkbox" name="toggle" value="disabled" disabled />
+    Disabled
+  </label>
+  <label class="btn" data-variant="outline">
+    <input type="checkbox" name="toggle" value="disabled" disabled />
+    Disabled
+  </label>
+</div>
+</Preview>
+
+### RTL
+
+<Preview>
+<label class="btn has-checked:[&_svg]:fill-current" data-variant="outline" data-size="sm" dir="rtl" lang="ar">
+  <input type="checkbox" name="toggle" value="bookmark" />
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2Z" /></svg>
+  إشارة مرجعية
+</label>
+</Preview>

@@ -47,4 +47,10 @@
   .item p {
     @apply text-muted-foreground line-clamp-2 text-start font-normal [&>a]:underline [&>a]:underline-offset-4 [&>a:hover]:text-primary;
   }
+  @media (forced-colors: active) {
+    a.item:focus-visible {
+      outline: 2px solid Highlight;
+      outline-offset: 2px;
+    }
+  }
 }

@@ -1,0 +1,711 @@
+# Trace
+
+Show the steps in an agent’s turn, with optional status, timing, and expandable output.
+
+<Preview class="w-full">
+<ol role="list" aria-label="Conversation" class="mx-auto grid w-full max-w-sm gap-4 py-6 text-sm">
+  <li class="message" data-align="end">
+    <div>
+      <span class="sr-only">You</span>
+      <div class="bubble" data-variant="muted">
+        <p>Why does pnpm install fail in CI?</p>
+      </div>
+    </div>
+  </li>
+  <li class="message">
+    <div>
+      <span class="sr-only">Assistant</span>
+      <ol role="list" aria-label="Activity" class="trace">
+        <li>
+          <details>
+            <summary class="trace-line">
+              <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="m9 12 2 2 4-4" /></svg>
+              <span>Thought for 5s</span>
+            </summary>
+            <div>
+              <p>Compare the manifest and lockfile from the last commit to explain the CI install failure.</p>
+            </div>
+          </details>
+        </li>
+        <li>
+          <details>
+            <summary class="trace-line">
+              <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19h8" /><path d="m4 17 6-6-6-6" /></svg>
+              <span>{'Ran pnpm --version'}</span>
+            </summary>
+            <div>
+              <div class="code-block" data-size="sm">
+                <pre tabindex="0" class="scrollbar" aria-label="Command output"><code>10.18.0</code></pre>
+              </div>
+            </div>
+          </details>
+        </li>
+        <li>
+          <details>
+            <summary class="trace-line">
+              <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19h8" /><path d="m4 17 6-6-6-6" /></svg>
+              <span>{'Ran git diff --stat HEAD~1'}</span>
+            </summary>
+            <div>
+              <div class="code-block" data-size="sm">
+                <pre tabindex="0" class="scrollbar" aria-label="Command output"><code>package.json | 2 +-</code></pre>
+              </div>
+            </div>
+          </details>
+        </li>
+        <li>
+          <details open>
+            <summary class="trace-line text-destructive hover:text-destructive">
+              <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19h8" /><path d="m4 17 6-6-6-6" /></svg>
+              <span>{'Failed to run pnpm install --frozen-lockfile'}</span>
+            </summary>
+            <div>
+              <div class="code-block" data-size="sm">
+                <pre tabindex="0" class="scrollbar" aria-label="Command output"><code>ERR_PNPM_OUTDATED_LOCKFILE: pnpm-lock.yaml is out of sync with package.json.</code></pre>
+              </div>
+            </div>
+          </details>
+        </li>
+        <li>
+          <details>
+            <summary class="trace-line">
+              <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" /><path d="M2 12h20" /></svg>
+              <span>Used 2 sources</span>
+            </summary>
+            <div>
+              <ol role="list" aria-label="Activity" class="trace">
+                <li>
+                  <a class="trace-line" href="https://pnpm.io/cli/install#--frozen-lockfile">
+                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" /><path d="M2 12h20" /></svg>
+                    <span>pnpm install</span>
+                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10" /><path d="M7 17 17 7" /></svg>
+                  </a>
+                </li>
+                <li>
+                  <a class="trace-line" href="https://pnpm.io/continuous-integration">
+                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" /><path d="M2 12h20" /></svg>
+                    <span>Continuous Integration</span>
+                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10" /><path d="M7 17 17 7" /></svg>
+                  </a>
+                </li>
+              </ol>
+            </div>
+          </details>
+        </li>
+      </ol>
+      <p>The last commit changed a dependency without updating the lockfile. Run pnpm install locally and commit the updated lockfile.</p>
+    </div>
+  </li>
+</ol>
+</Preview>
+
+## Usage
+
+Use a `trace-line` on a paragraph for a static step, a link for navigation, or a `<summary>` for a step with details. Place the title in a span and optional metadata in `<small>`. Group steps in chronological order with an `<ol class="trace">`.
+
+```html
+<ol class="trace" role="list" aria-label="Build activity">
+  <li>
+    <details>
+      <summary class="trace-line">
+        <span>{'Ran node --version'}</span>
+        <small>1s</small>
+      </summary>
+      <div><code>v24.18.0</code></div>
+    </details>
+  </li>
+</ol>
+```
+
+Trace needs only a [Basecoat style bundle](/installation). Use [Message](/components/message) for the reply and [Marker](/components/marker) for notes between turns. These examples render a transcript directly in HTML. Your application supplies updates if the response streams.
+
+## Examples
+
+### Trace line
+
+Use plain text for a step with no action or output.
+
+<Preview class="w-full">
+<ol role="list" aria-label="Activity" class="trace mx-auto max-w-sm">
+  <li>
+    <p class="trace-line">
+      <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6a9 9 0 0 0-9 9V3" /><circle cx="18" cy="6" r="3" /><circle cx="6" cy="18" r="3" /></svg>
+      <span>Created branch fix/frozen-lockfile</span>
+    </p>
+  </li>
+</ol>
+</Preview>
+
+### Status
+
+Describe the state in words. Add color, a spinner, or the shared shimmer utility as a visual cue.
+
+<Preview class="w-full">
+<ol role="list" aria-label="Activity" class="trace mx-auto max-w-sm">
+  <li>
+    <p class="trace-line">
+      <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="m9 12 2 2 4-4" /></svg>
+      <span>Ran pnpm install</span>
+    </p>
+  </li>
+  <li>
+    <p class="trace-line text-destructive hover:text-destructive">
+      <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><line x1="12" x2="12" y1="8" y2="12" /><line x1="12" x2="12.01" y1="16" y2="16" /></svg>
+      <span>Failed to run pnpm lint</span>
+    </p>
+  </li>
+  <li>
+    <p class="trace-line">
+      <svg class="motion-safe:animate-spin" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56" /></svg>
+      <span class="shimmer">Running pnpm build</span>
+    </p>
+  </li>
+  <li>
+    <p class="trace-line opacity-60">
+      <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /></svg>
+      <span>Pending: run pnpm test</span>
+    </p>
+  </li>
+</ol>
+</Preview>
+
+### Description
+
+A short count or duration stays visible beside a long title.
+
+<Preview class="w-full">
+<ol role="list" aria-label="Activity" class="trace mx-auto max-w-sm">
+  <li>
+    <p class="trace-line">
+      <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.659 22H18a2 2 0 0 0 2-2V8a2.4 2.4 0 0 0-.706-1.706l-3.588-3.588A2.4 2.4 0 0 0 14 2H6a2 2 0 0 0-2 2v9.34" /><path d="M14 2v5a1 1 0 0 0 1 1h5" /><path d="M10.378 12.622a1 1 0 0 1 3 3.003L8.36 20.637a2 2 0 0 1-.854.506l-2.867.837a.5.5 0 0 1-.62-.62l.836-2.869a2 2 0 0 1 .506-.853z" /></svg>
+      <span>Edited components/settings/notification-preferences-form.tsx</span>
+      <small>+48 −12</small>
+    </p>
+  </li>
+  <li>
+    <p class="trace-line">
+      <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19h8" /><path d="m4 17 6-6-6-6" /></svg>
+      <span>Ran pnpm test</span>
+      <small>14s</small>
+    </p>
+  </li>
+  <li>
+    <p class="trace-line">
+      <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21 21-4.34-4.34" /><circle cx="11" cy="11" r="8" /></svg>
+      <span>Searched for useChat</span>
+      <small>8 results</small>
+    </p>
+  </li>
+</ol>
+</Preview>
+
+### Collapsible
+
+Use a native disclosure to reveal command output. Trace applies [Transition Details](/utils/transition-details) to its disclosures and rotates the chevron as each step opens.
+
+<Preview class="w-full">
+<ol role="list" aria-label="Activity" class="trace mx-auto max-w-sm">
+  <li>
+    <details>
+      <summary class="trace-line">
+        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19h8" /><path d="m4 17 6-6-6-6" /></svg>
+        <span>{'Ran node --version'}</span>
+      </summary>
+      <div>
+        <div class="code-block" data-size="sm">
+          <pre tabindex="0" class="scrollbar" aria-label="Command output"><code>v24.18.0</code></pre>
+        </div>
+      </div>
+    </details>
+  </li>
+</ol>
+</Preview>
+
+### Open state
+
+Add `open` to expand a step initially. Application code can read or set the native `details.open` property and listen for `toggle`.
+
+<Preview class="w-full">
+<ol role="list" aria-label="Activity" class="trace mx-auto max-w-sm">
+  <li>
+    <details open>
+      <summary class="trace-line">
+        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19h8" /><path d="m4 17 6-6-6-6" /></svg>
+        <span>{'Ran node --version'}</span>
+      </summary>
+      <div>
+        <div class="code-block" data-size="sm">
+          <pre tabindex="0" class="scrollbar" aria-label="Command output"><code>v24.18.0</code></pre>
+        </div>
+      </div>
+    </details>
+  </li>
+  <li>
+    <details>
+      <summary class="trace-line">
+        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19h8" /><path d="m4 17 6-6-6-6" /></svg>
+        <span>{'Ran pnpm --version'}</span>
+      </summary>
+      <div>
+        <div class="code-block" data-size="sm">
+          <pre tabindex="0" class="scrollbar" aria-label="Command output"><code>10.18.0</code></pre>
+        </div>
+      </div>
+    </details>
+  </li>
+</ol>
+</Preview>
+
+### Link
+
+<Preview class="w-full">
+<ol role="list" aria-label="Activity" class="trace mx-auto max-w-sm">
+  <li>
+    <a class="trace-line" href="https://github.com/shadcn-ui/ui/blob/main/apps/v4/lib/docs.ts">
+      <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" /><path d="M14 2v5a1 1 0 0 0 1 1h5" /><path d="M10 9H8" /><path d="M16 13H8" /><path d="M16 17H8" /></svg>
+      <span>Read apps/v4/lib/docs.ts</span>
+      <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10" /><path d="M7 17 17 7" /></svg>
+    </a>
+  </li>
+  <li>
+    <a class="trace-line" href="https://docs.astro.build/en/install-and-setup/">
+      <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" /><path d="M2 12h20" /></svg>
+      <span>Install Astro | docs.astro.build</span>
+      <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10" /><path d="M7 17 17 7" /></svg>
+    </a>
+  </li>
+</ol>
+</Preview>
+
+### Dialog
+
+Open a [Dialog](/components/dialog) when the details need more room.
+
+<Preview class="w-full">
+<ol role="list" aria-label="Activity" class="trace mx-auto max-w-sm">
+  <li>
+    <button class="trace-line" type="button" onclick="document.getElementById('trace-dialog').showModal()">
+      <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" /><path d="M2 12h20" /></svg>
+      <span>Searched the web for cache keys</span>
+      <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6" /></svg>
+    </button>
+  </li>
+</ol>
+<dialog id="trace-dialog" class="dialog" aria-labelledby="trace-dialog-title">
+  <div>
+    <header>
+      <h2 id="trace-dialog-title">Searched the web for cache keys</h2>
+      <p>Three results were used in the response.</p>
+    </header>
+    <section>
+      <ol role="list" aria-label="Activity" class="trace">
+        <li>
+          <a class="trace-line" href="https://nextjs.org/docs/app/guides/caching">
+            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" /><path d="M2 12h20" /></svg>
+            <span>Caching build outputs</span>
+            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10" /><path d="M7 17 17 7" /></svg>
+          </a>
+        </li>
+        <li>
+          <a class="trace-line" href="https://nextjs.org/docs/app/api-reference/components/image">
+            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" /><path d="M2 12h20" /></svg>
+            <span>Image optimization reference</span>
+            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10" /><path d="M7 17 17 7" /></svg>
+          </a>
+        </li>
+        <li>
+          <a class="trace-line" href="https://vercel.com/docs/deploy-hooks">
+            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" /><path d="M2 12h20" /></svg>
+            <span>Deploy hooks and cache keys</span>
+            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10" /><path d="M7 17 17 7" /></svg>
+          </a>
+        </li>
+      </ol>
+    </section>
+    <footer>
+      <button type="button" class="btn" data-variant="outline" onclick="this.closest('dialog').close()">Close</button>
+    </footer>
+  </div>
+</dialog>
+</Preview>
+
+### Sheet
+
+Use the [Sheet setup](/components/sheet/#usage) to open the file list alongside the conversation.
+
+<Preview class="w-full">
+<ol role="list" aria-label="Activity" class="trace mx-auto max-w-sm">
+  <li>
+    <button class="trace-line" type="button" onclick="document.getElementById('trace-sheet').showModal()">
+      <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.7 20H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3.9a2 2 0 0 1 1.69.9l.81 1.2a2 2 0 0 0 1.67.9H20a2 2 0 0 1 2 2v4.1" /><path d="m21 21-1.9-1.9" /><circle cx="17" cy="17" r="3" /></svg>
+      <span>Explored 4 files</span>
+      <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6" /></svg>
+    </button>
+  </li>
+</ol>
+<dialog id="trace-sheet" class="sheet" aria-labelledby="trace-sheet-title">
+  <article>
+    <header>
+      <h2 id="trace-sheet-title">Explored 4 files</h2>
+      <p>Files read while preparing the response.</p>
+    </header>
+    <section class="px-4">
+      <ol role="list" aria-label="Activity" class="trace">
+        <li>
+          <p class="trace-line">
+            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" /><path d="M14 2v5a1 1 0 0 0 1 1h5" /><path d="M10 9H8" /><path d="M16 13H8" /><path d="M16 17H8" /></svg>
+            <span>package.json</span>
+          </p>
+        </li>
+        <li>
+          <p class="trace-line">
+            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" /><path d="M14 2v5a1 1 0 0 0 1 1h5" /><path d="M10 9H8" /><path d="M16 13H8" /><path d="M16 17H8" /></svg>
+            <span>pnpm-lock.yaml</span>
+          </p>
+        </li>
+        <li>
+          <p class="trace-line">
+            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" /><path d="M14 2v5a1 1 0 0 0 1 1h5" /><path d="M10 9H8" /><path d="M16 13H8" /><path d="M16 17H8" /></svg>
+            <span>pnpm-workspace.yaml</span>
+          </p>
+        </li>
+        <li>
+          <p class="trace-line">
+            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" /><path d="M14 2v5a1 1 0 0 0 1 1h5" /><path d="M10 9H8" /><path d="M16 13H8" /><path d="M16 17H8" /></svg>
+            <span>README.md</span>
+          </p>
+        </li>
+      </ol>
+    </section>
+    <footer>
+      <button type="button" class="btn" data-variant="outline" onclick="this.closest('dialog').close()">Close</button>
+    </footer>
+  </article>
+</dialog>
+</Preview>
+
+### Group
+
+<Preview class="w-full">
+<ol role="list" aria-label="Activity" class="trace mx-auto max-w-sm">
+  <li>
+    <p class="trace-line">
+      <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21 21-4.34-4.34" /><circle cx="11" cy="11" r="8" /></svg>
+      <span>Searched for minimumReleaseAge</span>
+    </p>
+  </li>
+  <li>
+    <p class="trace-line">
+      <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" /><path d="M14 2v5a1 1 0 0 0 1 1h5" /><path d="M10 9H8" /><path d="M16 13H8" /><path d="M16 17H8" /></svg>
+      <span>Read pnpm-workspace.yaml</span>
+    </p>
+  </li>
+  <li>
+    <p class="trace-line">
+      <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19h8" /><path d="m4 17 6-6-6-6" /></svg>
+      <span>Ran pnpm install</span>
+    </p>
+  </li>
+</ol>
+</Preview>
+
+### Sources
+
+Keep source links individually focusable inside the disclosure.
+
+<Preview class="w-full">
+<ol role="list" aria-label="Activity" class="trace mx-auto max-w-sm">
+  <li>
+    <details open>
+      <summary class="trace-line">
+        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" /><path d="M2 12h20" /></svg>
+        <span>Used 3 sources</span>
+      </summary>
+      <div>
+        <ol role="list" aria-label="Activity" class="trace">
+          <li>
+            <a class="trace-line" href="https://docs.astro.build/en/install-and-setup/">
+              <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" /><path d="M2 12h20" /></svg>
+              <span>Install Astro</span>
+              <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10" /><path d="M7 17 17 7" /></svg>
+            </a>
+          </li>
+          <li>
+            <a class="trace-line" href="https://www.npmjs.com/package/create-astro">
+              <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" /><path d="M2 12h20" /></svg>
+              <span>create-astro</span>
+              <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10" /><path d="M7 17 17 7" /></svg>
+            </a>
+          </li>
+          <li>
+            <a class="trace-line" href="https://pnpm.io/settings#minimumreleaseage">
+              <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" /><path d="M2 12h20" /></svg>
+              <span>Settings: minimumReleaseAge</span>
+              <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10" /><path d="M7 17 17 7" /></svg>
+            </a>
+          </li>
+        </ol>
+      </div>
+    </details>
+  </li>
+</ol>
+</Preview>
+
+### Chain of thought
+
+Nest related steps under a short activity summary.
+
+<Preview class="w-full">
+<ol role="list" aria-label="Activity" class="trace mx-auto max-w-sm">
+  <li>
+    <details open>
+      <summary class="trace-line">
+        <span>Looking into the slow deploy</span>
+      </summary>
+      <div>
+        <ol role="list" aria-label="Activity" class="trace">
+          <li>
+            <details>
+              <summary class="trace-line">
+                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21 21-4.34-4.34" /><circle cx="11" cy="11" r="8" /></svg>
+                <span>Searched for the checkout build log</span>
+              </summary>
+              <div>
+                <p>Found logs for the last twelve builds.</p>
+              </div>
+            </details>
+          </li>
+          <li>
+            <p class="trace-line">
+              <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" /><path d="M14 2v5a1 1 0 0 0 1 1h5" /><path d="M10 9H8" /><path d="M16 13H8" /><path d="M16 17H8" /></svg>
+              <span>Read the last twelve deploys</span>
+            </p>
+          </li>
+          <li>
+            <details>
+              <summary class="trace-line">
+                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21 21-4.34-4.34" /><circle cx="11" cy="11" r="8" /></svg>
+                <span class="shimmer">Searching for the cache key</span>
+              </summary>
+              <div>
+                <p>Reading the restore step in the build log.</p>
+              </div>
+            </details>
+          </li>
+        </ol>
+      </div>
+    </details>
+  </li>
+</ol>
+</Preview>
+
+### Commit
+
+Expand a commit to see its changed files and line counts.
+
+<Preview class="w-full">
+<ol role="list" aria-label="Activity" class="trace mx-auto max-w-sm">
+  <li>
+    <details open>
+      <summary class="trace-line">
+        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3" /><line x1="3" x2="9" y1="12" y2="12" /><line x1="15" x2="21" y1="12" y2="12" /></svg>
+        <span>Committed a1b2c3: Fix the login redirect</span>
+      </summary>
+      <div>
+        <ol role="list" aria-label="Activity" class="trace">
+          <li>
+            <details>
+              <summary class="trace-line">
+                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.659 22H18a2 2 0 0 0 2-2V8a2.4 2.4 0 0 0-.706-1.706l-3.588-3.588A2.4 2.4 0 0 0 14 2H6a2 2 0 0 0-2 2v9.34" /><path d="M14 2v5a1 1 0 0 0 1 1h5" /><path d="M10.378 12.622a1 1 0 0 1 3 3.003L8.36 20.637a2 2 0 0 1-.854.506l-2.867.837a.5.5 0 0 1-.62-.62l.836-2.869a2 2 0 0 1 .506-.853z" /></svg>
+                <span>src/routes/login.ts</span>
+                <small>+1 −1</small>
+              </summary>
+              <div>
+                <div class="code-block" data-size="sm">
+                  <pre tabindex="0" class="scrollbar" aria-label="Command output"><code>- return redirect("/")&#10;+ return redirect(next)</code></pre>
+                </div>
+              </div>
+            </details>
+          </li>
+          <li>
+            <p class="trace-line">
+              <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" /><path d="M14 2v5a1 1 0 0 0 1 1h5" /><path d="M9 15h6" /><path d="M12 18v-6" /></svg>
+              <span>tests/login.ts</span>
+              <small>+8</small>
+            </p>
+          </li>
+        </ol>
+      </div>
+    </details>
+  </li>
+</ol>
+</Preview>
+
+### Whole turn
+
+Keep successful and failed steps together under the turn summary.
+
+<Preview class="w-full">
+<ol role="list" aria-label="Activity" class="trace mx-auto max-w-sm">
+  <li>
+    <details open>
+      <summary class="trace-line text-destructive hover:text-destructive">
+        <span>Worked for 2m 4s, 1 command failed</span>
+      </summary>
+      <div>
+        <ol role="list" aria-label="Activity" class="trace">
+          <li>
+            <details>
+              <summary class="trace-line">
+                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 18V5" /><path d="M15 13a4.17 4.17 0 0 1-3-4 4.17 4.17 0 0 1-3 4" /><path d="M17.598 6.5A3 3 0 1 0 12 5a3 3 0 1 0-5.598 1.5" /><path d="M17.997 5.125a4 4 0 0 1 2.526 5.77" /><path d="M18 18a4 4 0 0 0 2-7.464" /><path d="M19.967 17.483A4 4 0 1 1 12 18a4 4 0 1 1-7.967-.517" /><path d="M6 18a4 4 0 0 1-2-7.464" /><path d="M6.003 5.125a4 4 0 0 0-2.526 5.77" /></svg>
+                <span>Thought</span>
+                <small>12s</small>
+              </summary>
+              <div>
+                <p>Check the installed package managers before starting the build.</p>
+              </div>
+            </details>
+          </li>
+          <li>
+            <details open>
+              <summary class="trace-line text-destructive hover:text-destructive">
+                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19h8" /><path d="m4 17 6-6-6-6" /></svg>
+                <span>Ran 2 commands, 1 failed</span>
+              </summary>
+              <div>
+                <ol role="list" aria-label="Activity" class="trace">
+                  <li>
+                    <details>
+                      <summary class="trace-line">
+                        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19h8" /><path d="m4 17 6-6-6-6" /></svg>
+                        <span>{'Ran node --version'}</span>
+                      </summary>
+                      <div>
+                        <div class="code-block" data-size="sm">
+                          <pre tabindex="0" class="scrollbar" aria-label="Command output"><code>v24.18.0</code></pre>
+                        </div>
+                      </div>
+                    </details>
+                  </li>
+                  <li>
+                    <details>
+                      <summary class="trace-line text-destructive hover:text-destructive">
+                        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19h8" /><path d="m4 17 6-6-6-6" /></svg>
+                        <span>{'Failed to run pnpm --version'}</span>
+                      </summary>
+                      <div>
+                        <div class="code-block" data-size="sm">
+                          <pre tabindex="0" class="scrollbar" aria-label="Command output"><code>pnpm: command not found</code></pre>
+                        </div>
+                      </div>
+                    </details>
+                  </li>
+                </ol>
+              </div>
+            </details>
+          </li>
+          <li>
+            <p class="trace-line">
+              <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" /><path d="M14 2v5a1 1 0 0 0 1 1h5" /><path d="M10 9H8" /><path d="M16 13H8" /><path d="M16 17H8" /></svg>
+              <span>Read apps/v4/lib/docs.ts</span>
+            </p>
+          </li>
+        </ol>
+      </div>
+    </details>
+  </li>
+</ol>
+</Preview>
+
+### Reasoning
+
+Render a short progress summary above the reply.
+
+<Preview class="w-full">
+<ol role="list" aria-label="Conversation" class="mx-auto grid w-full max-w-sm gap-4 py-6 text-sm">
+  <li class="message" data-align="end">
+    <div>
+      <span class="sr-only">You</span>
+      <div class="bubble" data-variant="muted">
+        <p>Why is the checkout deploy so slow?</p>
+      </div>
+    </div>
+  </li>
+  <li class="message">
+    <div>
+      <span class="sr-only">Assistant</span>
+      <ol role="list" aria-label="Activity" class="trace">
+        <li>
+          <details>
+            <summary class="trace-line">
+              <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 18V5" /><path d="M15 13a4.17 4.17 0 0 1-3-4 4.17 4.17 0 0 1-3 4" /><path d="M17.598 6.5A3 3 0 1 0 12 5a3 3 0 1 0-5.598 1.5" /><path d="M17.997 5.125a4 4 0 0 1 2.526 5.77" /><path d="M18 18a4 4 0 0 0 2-7.464" /><path d="M19.967 17.483A4 4 0 1 1 12 18a4 4 0 1 1-7.967-.517" /><path d="M6 18a4 4 0 0 1-2-7.464" /><path d="M6.003 5.125a4 4 0 0 0-2.526 5.77" /></svg>
+              <span>Thought</span>
+            </summary>
+            <div>
+              <p>Compared the cache restore and install timings in recent builds.</p>
+            </div>
+          </details>
+        </li>
+      </ol>
+      <p>The dependency cache is missing on each build. Check which files contribute to the cache key.</p>
+    </div>
+  </li>
+</ol>
+</Preview>
+
+### Tool
+
+A finished tool call can expose its output. A denied tool call is a text row.
+
+<Preview class="w-full">
+<ol role="list" aria-label="Conversation" class="mx-auto grid w-full max-w-sm gap-4 py-6 text-sm">
+  <li class="message" data-align="end">
+    <div>
+      <span class="sr-only">You</span>
+      <div class="bubble" data-variant="muted">
+        <p>Which package managers are installed?</p>
+      </div>
+    </div>
+  </li>
+  <li class="message">
+    <div>
+      <span class="sr-only">Assistant</span>
+      <ol role="list" aria-label="Activity" class="trace">
+        <li>
+          <details>
+            <summary class="trace-line">
+              <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19h8" /><path d="m4 17 6-6-6-6" /></svg>
+              <span>{'Ran node --version'}</span>
+            </summary>
+            <div>
+              <div class="code-block" data-size="sm">
+                <pre tabindex="0" class="scrollbar" aria-label="Command output"><code>v24.18.0</code></pre>
+              </div>
+            </div>
+          </details>
+        </li>
+        <li>
+          <details>
+            <summary class="trace-line">
+              <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19h8" /><path d="m4 17 6-6-6-6" /></svg>
+              <span>{'Ran npm --version'}</span>
+            </summary>
+            <div>
+              <div class="code-block" data-size="sm">
+                <pre tabindex="0" class="scrollbar" aria-label="Command output"><code>11.6.2</code></pre>
+              </div>
+            </div>
+          </details>
+        </li>
+        <li>
+          <p class="trace-line">
+            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><line x1="12" x2="12" y1="8" y2="12" /><line x1="12" x2="12.01" y1="16" y2="16" /></svg>
+            <span>Denied corepack enable</span>
+          </p>
+        </li>
+      </ol>
+      <p>Node and npm are installed. Corepack was not enabled.</p>
+    </div>
+  </li>
+</ol>
+</Preview>

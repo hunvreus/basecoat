@@ -1,5 +1,13 @@
+@import "../base/transition-details.css";
+
 /* Sidebar */
 @layer components {
+  .sidebar > nav li > details {
+    @apply transition-details;
+    &::details-content { @apply opacity-0; }
+    &[open]::details-content { @apply opacity-100; }
+  }
+
   .sidebar {
     &:not([data-sidebar-initialized]) {
       @apply max-md:hidden;
@@ -88,7 +96,7 @@
               }
               > summary {
                 &::after {
-                  @apply ms-auto block size-3.5 bg-current content-[''] transition-transform ease-linear;
+                  @apply ms-auto block size-3.5 bg-current content-[''] transition-transform ease-linear motion-reduce:transition-none;
                   @apply mask-[image:var(--chevron-down-icon)] mask-size-[1rem] mask-no-repeat mask-center;
                 }
               }

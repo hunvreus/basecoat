@@ -1,0 +1,286 @@
+# Input OTP
+
+A single native input presented as a group of one-time-code slots.
+
+<Preview>
+<div class="input-otp" id="otp-demo">
+  <input class="input" type="text" name="code" aria-label="Verification code" inputmode="numeric" autocomplete="one-time-code" spellcheck="false" maxlength="6" value="123456" dir="ltr" />
+  <div aria-hidden="true">
+    <div>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+</div>
+</Preview>
+
+## Usage
+
+<Steps>
+  <Step title="Load the styles and scripts">
+
+Load a full Basecoat style bundle, or import `base/base.css`, `components/input.css`, `components/input-otp.css`, and one style pack after Tailwind. Include the Basecoat runtime and `input-otp.js`, or use `all.js`.
+
+  </Step>
+  <Step title="Add the input and slots">
+
+Keep one real text input with a label, `name`, and `maxlength`. The visual slots are hidden from assistive technology. Their count must match `maxlength`; group them in `<div>` elements and use an optional decorative SVG between groups.
+
+```html
+<div class="input-otp" id="otp-example">
+  <input class="input" type="text" name="code" aria-label="Verification code" inputmode="numeric" autocomplete="one-time-code" spellcheck="false" maxlength="6" value="" dir="ltr" />
+  <div aria-hidden="true">
+    <div>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+</div>
+```
+
+  </Step>
+</Steps>
+
+Without JavaScript, the ordinary input remains visible and usable. With JavaScript, it remains the single keyboard target and submitted form value. Typing replaces the selected character and advances to the next slot. To replace a filled code with a pasted one, select the whole field first.
+
+`inputmode="numeric"` requests a numeric keyboard. Add `data-filter` to enforce the input’s `pattern` while typing and pasting. Choose a pattern that accepts partial codes, such as `[0-9]+`, and use `minlength` if the form requires a complete code. Use `type="text"` to preserve leading zeroes. Actual SMS autofill depends on the browser, device, and message format.
+
+### JavaScript API
+
+Native `input`, `change`, and form `reset` events remain available. After setting `.value` from your application, call `document.getElementById("otp-example").refresh()` to update the slots. No separate value store or custom completion event is needed.
+
+## Examples
+
+### Pattern
+
+This example accepts digits and rejects a paste containing letters.
+
+<Preview>
+<div class="field w-fit">
+  <label class="label" for="otp-digits">Digits Only</label>
+  <div class="input-otp" id="otp-pattern">
+    <input class="input" type="text" name="code" id="otp-digits" data-filter pattern="[0-9]+" inputmode="numeric" autocomplete="one-time-code" spellcheck="false" maxlength="6" value="" dir="ltr" />
+    <div aria-hidden="true">
+      <div>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </div>
+</div>
+</Preview>
+
+### Separator
+
+<Preview>
+<div class="input-otp" id="otp-separator">
+  <input class="input" type="text" name="code" aria-label="Verification code" inputmode="numeric" autocomplete="one-time-code" spellcheck="false" maxlength="6" value="" dir="ltr" />
+  <div aria-hidden="true">
+    <div>
+      <span></span>
+      <span></span>
+    </div>
+    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14" /></svg>
+    <div>
+      <span></span>
+      <span></span>
+    </div>
+    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14" /></svg>
+    <div>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+</div>
+</Preview>
+
+### Disabled
+
+<Preview>
+<div class="input-otp" id="otp-disabled">
+  <input class="input" type="text" name="code" aria-label="Verification code" inputmode="numeric" autocomplete="one-time-code" spellcheck="false" maxlength="6" value="123456" dir="ltr" disabled />
+  <div aria-hidden="true">
+    <div>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14" /></svg>
+    <div>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+</div>
+</Preview>
+
+### Current value
+
+Read the current code from the native input event.
+
+<Preview>
+<div class="grid justify-items-center gap-2">
+  <div class="input-otp" id="otp-current">
+    <input class="input" type="text" name="code" aria-label="Verification code" inputmode="numeric" autocomplete="one-time-code" spellcheck="false" maxlength="6" value="" dir="ltr" oninput="document.getElementById('otp-value').textContent = this.value ? 'You entered: ' + this.value : 'Enter your one-time password.'" />
+    <div aria-hidden="true">
+      <div>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </div>
+  <output id="otp-value" class="text-center text-sm">Enter your one-time password.</output>
+</div>
+</Preview>
+
+### Invalid
+
+Put `aria-invalid="true"` on the real input and associate the error using `aria-describedby`.
+
+<Preview>
+<div class="grid gap-3">
+  <div class="input-otp" id="otp-invalid">
+    <input class="input" type="text" name="code" aria-label="Verification code" inputmode="numeric" autocomplete="one-time-code" spellcheck="false" maxlength="6" value="000000" dir="ltr" aria-invalid="true" aria-describedby="otp-error" />
+    <div aria-hidden="true">
+      <div>
+        <span></span>
+        <span></span>
+      </div>
+      <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14" /></svg>
+      <div>
+        <span></span>
+        <span></span>
+      </div>
+      <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14" /></svg>
+      <div>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </div>
+  <p id="otp-error" class="text-sm text-destructive">The code is incorrect. Please try again.</p>
+</div>
+</Preview>
+
+### Four digits
+
+<Preview>
+<div class="input-otp" id="otp-four">
+  <input class="input" type="text" name="code" aria-label="Four-digit PIN" inputmode="numeric" autocomplete="one-time-code" spellcheck="false" data-filter pattern="[0-9]+" maxlength="4" value="" dir="ltr" />
+  <div aria-hidden="true">
+    <div>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+</div>
+</Preview>
+
+### Alphanumeric
+
+Allow letters and digits when typing or pasting.
+
+<Preview>
+<div class="input-otp" id="otp-alpha">
+  <input class="input" type="text" name="code" aria-label="Alphanumeric verification code" autocomplete="one-time-code" spellcheck="false" data-filter pattern="[A-Za-z0-9]+" maxlength="6" value="" dir="ltr" />
+  <div aria-hidden="true">
+    <div>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14" /></svg>
+    <div>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+</div>
+</Preview>
+
+### Form
+
+Verify uses native form validation. Resending a code and recovering an account require application endpoints. The example reports these actions locally.
+
+<Preview>
+<form hx-boost="false" class="card w-full max-w-md" onsubmit="event.preventDefault(); document.getElementById('otp-form-result').textContent = 'Submitted code: ' + new FormData(this).get('code')">
+  <header>
+    <h2>Verify your login</h2>
+    <p>Enter the verification code we sent to your email address: <strong>m@example.com</strong>.</p>
+  </header>
+  <section class="grid gap-4">
+    <div class="flex items-center justify-between">
+      <label class="label" for="otp-form-input">Verification code</label>
+      <button type="button" class="btn" data-variant="outline" data-size="xs" onclick="document.getElementById('otp-form-result').textContent = 'Demo only. Connect your resend endpoint here.'">
+        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M21 3v5h-5M21 12a9 9 0 0 1-15 6.7L3 16"/><path d="M8 16H3v5"/></svg>
+        Resend Code
+      </button>
+    </div>
+    <div class="input-otp [&_span]:h-12 [&_span]:w-9 sm:[&_span]:w-11 [&_span]:text-xl" id="otp-form">
+      <input class="input" type="text" name="code" id="otp-form-input" inputmode="numeric" autocomplete="one-time-code" spellcheck="false" maxlength="6" value="" dir="ltr" required />
+      <div aria-hidden="true">
+        <div>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14" /></svg>
+        <div>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </div>
+    <a href="#otp-help" class="text-sm text-muted-foreground underline underline-offset-4">I no longer have access to this email address.</a>
+  </section>
+  <footer class="flex-col items-stretch gap-2">
+    <button type="submit" class="btn w-full">Verify</button>
+    <p id="otp-help" class="text-sm text-muted-foreground">Having trouble signing in? <a href="mailto:support@example.com" class="underline underline-offset-4">Contact support</a></p>
+    <output id="otp-form-result" class="text-sm text-muted-foreground empty:hidden"></output>
+  </footer>
+</form>
+</Preview>
+
+### RTL
+
+The form and slots follow the page direction.
+
+<Preview>
+<div dir="rtl" lang="ar" class="grid gap-3">
+  <label class="label" for="otp-rtl-input">رمز التحقق</label>
+  <div class="input-otp" id="otp-rtl">
+    <input class="input" type="text" name="code" id="otp-rtl-input" inputmode="numeric" autocomplete="one-time-code" spellcheck="false" maxlength="6" value="123456" dir="rtl" />
+    <div aria-hidden="true">
+      <div>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </div>
+</div>
+</Preview>

@@ -1,0 +1,133 @@
+---
+import './payments.css';
+import paymentStyles from './payments.css?raw';
+import { Preview } from 'reallysimpledocs/components';
+import Check from 'lucide-static/icons/check.svg?raw';
+import More from 'lucide-static/icons/ellipsis.svg?raw';
+import Sort from 'lucide-static/icons/arrow-up-down.svg?raw';
+import Chevron from 'lucide-static/icons/chevron-down.svg?raw';
+const { rtl = false } = Astro.props;
+const id = rtl ? 'payments-rtl' : 'payments-demo';
+const t = (en, ar) => rtl ? ar : en;
+const statusLabels = { success: t('success', 'ناجح'), processing: t('processing', 'قيد المعالجة'), failed: t('failed', 'فشل') };
+const payments = [
+  ['m5gr84i9', 'success', 'ken99@example.com', '316.00'],
+  ['3u1reuv4', 'success', 'Abe45@example.com', '242.00'],
+  ['derv1ws0', 'processing', 'Monserrat44@example.com', '837.00'],
+  ['5kma53ae', 'success', 'Silas22@example.com', '874.00'],
+  ['bhqecj4p', 'failed', 'carmella@example.com', '721.00'],
+];
+const icon = (svg) => svg.replace(/<!--[\s\S]*?-->/g, "").trim().replace(/\s*\n\s*/g, " ").replace("<svg ", '<svg aria-hidden="true" ');
+const columns = [[1, t('Status', 'الحالة')], [2, t('Email', 'البريد الإلكتروني')], [3, t('Amount', 'المبلغ')]];
+const rows = payments.map(([key, status, email, amount]) => `        <tr data-payment-id="${key}">
+          <td>
+            <input type="checkbox" class="input" value="${key}" aria-label="${t(`Select ${email}`, `تحديد ${email}`)}" />
+          </td>
+          <td class="capitalize">${statusLabels[status]}</td>
+          <td><bdi>${email}</bdi></td>
+          <td class="text-end font-medium"><bdi>$${amount}</bdi></td>
+          <td>
+            <div class="dropdown-menu">
+              <button type="button" class="btn" data-variant="ghost" data-size="icon-xs" aria-label="${t(`Actions for ${email}`, `إجراءات ${email}`)}" aria-haspopup="menu" aria-expanded="false" aria-controls="${id}-${key}-menu">
+                ${icon(More)}
+              </button>
+              <div data-popover data-side="inline-start" data-align="end" aria-hidden="true" class="w-44">
+                <div role="menu" id="${id}-${key}-menu" aria-label="${t('Payment actions', 'إجراءات الدفع')}">
+                  <div role="group" aria-label="${t('Actions', 'الإجراءات')}">
+                    <div role="heading" aria-level="3">${t('Actions', 'الإجراءات')}</div>
+                    <button type="button" role="menuitem" data-copy-payment>${t('Copy payment ID', 'نسخ معرف الدفع')}</button>
+                  </div>
+                  <hr />
+                  <div role="group">
+                    <button type="button" role="menuitem" data-customer="${email}">${t('View customer', 'عرض العميل')}</button>
+                    <button type="button" role="menuitem" data-payment-details>${t('View payment details', 'عرض تفاصيل الدفع')}</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>`).join('\n');
+const html = `<div id="${id}" data-payments-example class="w-full space-y-4"${rtl ? ' dir="rtl" lang="ar"' : ''}>
+  <div class="flex items-center justify-between gap-4" data-table-controls inert>
+    <input type="search" class="input max-w-sm" placeholder="${t('Filter emails...', 'تصفية البريد الإلكتروني...')}" aria-label="${t('Filter emails', 'تصفية البريد الإلكتروني')}" aria-controls="${id}-table" />
+    <div class="dropdown-menu">
+      <button type="button" class="btn" data-variant="outline" aria-haspopup="menu" aria-expanded="false" aria-controls="${id}-columns">
+        ${t('Columns', 'الأعمدة')}
+        ${icon(Chevron)}
+      </button>
+      <div data-popover data-align="end" aria-hidden="true" class="w-44">
+        <div role="menu" id="${id}-columns" aria-label="${t('Visible columns', 'الأعمدة المرئية')}">
+${columns.map(([index, label]) => `          <button type="button" role="menuitemcheckbox" aria-checked="true" data-column="${index}">
+            <span data-indicator>${icon(Check)}</span>
+            ${label}
+          </button>`).join('\n')}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="table-container rounded-md border">
+    <table id="${id}-table" class="table" aria-label="${t('Payments', 'المدفوعات')}">
+      <caption class="sr-only">${t('Payments', 'المدفوعات')}</caption>
+      <thead>
+        <tr>
+          <th>
+            <input type="checkbox" class="input" aria-label="${t('Select visible rows', 'تحديد الصفوف المرئية')}" />
+          </th>
+          <th>${t('Status', 'الحالة')}</th>
+          <th>
+            <button type="button" class="btn" data-variant="ghost" data-size="sm" data-sort="2">
+              ${t('Email', 'البريد الإلكتروني')}
+              ${icon(Sort)}
+            </button>
+          </th>
+          <th class="text-end">${t('Amount', 'المبلغ')}</th>
+          <th><span class="sr-only">${t('Actions', 'الإجراءات')}</span></th>
+        </tr>
+      </thead>
+      <tbody>
+${rows}
+      </tbody>
+    </table>
+  </div>
+  <div class="flex flex-wrap items-center justify-between gap-3 text-sm" data-table-controls inert>
+    <span class="text-muted-foreground" data-selection-count aria-live="polite">${t('0 of 5 row(s) selected.', 'تم تحديد 0 من 5 صفوف.')}</span>
+    <div class="flex items-center gap-2">
+      <span class="text-muted-foreground" data-page-count aria-live="polite">${t('Page 1 of 2', 'الصفحة 1 من 2')}</span>
+      <button type="button" class="btn" data-variant="outline" data-size="sm" data-previous>${t('Previous', 'السابق')}</button>
+      <button type="button" class="btn" data-variant="outline" data-size="sm" data-next>${t('Next', 'التالي')}</button>
+    </div>
+  </div>
+  <output class="sr-only"></output>
+</div>`;
+---
+<Preview code={`${html}\n<style>\n${paymentStyles.trimEnd()}\n</style>`} class="w-full"><Fragment set:html={html} /></Preview>
+<script>
+  import { DataTable } from 'simple-datatables';
+  import { mountPayments } from '../scripts/data-table-example.js';
+  const instances = new Map();
+  const init = () => {
+    for (const [root, destroy] of instances) {
+      if (!root.isConnected) { destroy(); instances.delete(root); }
+    }
+    document.querySelectorAll('[data-payments-example]').forEach(root => {
+      if (!instances.has(root)) instances.set(root, mountPayments(root, DataTable));
+    });
+  };
+  const cleanup = (event) => {
+    for (const [root, destroy] of instances) {
+      if (event.detail.elt === root || event.detail.elt.contains(root)) {
+        instances.delete(root);
+        destroy();
+      }
+    }
+  };
+  init();
+  // Cache original table markup, not a paginated slice or library wrappers.
+  document.addEventListener('htmx:beforeHistorySave', () => {
+    for (const destroy of instances.values()) destroy();
+    instances.clear();
+  });
+  document.addEventListener('htmx:afterSettle', init);
+  document.addEventListener('htmx:historyRestore', init);
+  document.addEventListener('htmx:beforeCleanupElement', cleanup);
+</script>

@@ -1,0 +1,35 @@
+# Transition Details
+
+Animate the height of a native disclosure when it opens or closes. The browser handles pointer and keyboard interaction.
+
+<Preview class="w-full max-w-sm">
+<details class="transition-details w-full rounded-lg border p-4">
+  <summary>Build output</summary>
+  <p class="pt-3 text-sm text-muted-foreground">Compiled 24 modules. All tests passed.</p>
+</details>
+</Preview>
+
+## Usage
+
+Add `transition-details` to the `<details>` itself. The summary stays visible throughout the transition.
+
+```html
+<details class="transition-details">
+  <summary>Build output</summary>
+  <p>Compiled 24 modules. All tests passed.</p>
+</details>
+```
+
+To use the same behavior from a Tailwind stylesheet after importing Basecoat:
+
+```css
+.build-output {
+  @apply transition-details;
+}
+```
+
+## Where Basecoat uses it
+
+[Accordion](/components/accordion) items and [Sidebar](/components/sidebar) submenus also fade the panel. [Trace](/components/trace) animates the panel height and turns its chevron. All three apply the utility internally.
+
+Ordinary disclosures, including [Collapsible](/components/collapsible), open instantly by default. Reduced motion disables the transition. Browsers without support for native disclosure height animation still open and close the content.
