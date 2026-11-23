@@ -80,6 +80,7 @@
 - Do not add API Reference sections for native/CSS-only components unless there is a real Basecoat API.
 - Structure component docs as: title and preview, `## Usage`, optional `### HTML structure` for stable markup requirements, optional `### JavaScript API` for components with Basecoat JS methods/events/options, then `## Examples`.
 - Keep `Usage` focused on the minimal working snippet and important Basecoat/upstream differences; put variants, states, RTL, and richer patterns under `Examples`.
+- Call out material limitations and behavioral differences; omit minor upstream options that do not affect core use.
 - Keep snippets minimal and aligned with current behavior.
 - In HTML snippets, keep text-only elements on one line, such as `<p>Text</p>`; use multiline formatting when the element contains child elements or when line length would hurt readability.
 - In HTML examples, keep icons as single-line `<svg ...>...</svg>` elements, keep simple text-only or inline-formatting elements on one line, and avoid blank separator lines between adjacent markup parts.

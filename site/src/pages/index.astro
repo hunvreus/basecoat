@@ -1,4 +1,5 @@
 ---
+import { defaultStyle } from "../style.js";
 import { CommandDialog } from "reallysimpledocs/components";
 import basecoatJsUrl from "basecoat-css/all.min?url";
 import StyleHead from "../components/StyleHead.astro";
@@ -187,8 +188,8 @@ const sidebarSections = [
             <span data-align="end" aria-hidden="true"><kbd class="kbd">⌘K</kbd></span>
           </div>
           <select id="style-variant-select" class="select hidden h-8 w-28 shrink-0 text-sm leading-none sm:block" aria-label="Style pack">
-            <option value="vega">Vega</option>
-            <option value="nova">Nova</option>
+            <option value="vega" selected={defaultStyle === "vega"}>Vega</option>
+            <option value="nova" selected={defaultStyle === "nova"}>Nova</option>
             <option value="maia">Maia</option>
             <option value="lyra">Lyra</option>
             <option value="mira">Mira</option>
@@ -613,7 +614,7 @@ const sidebarSections = [
       >.
     </footer>
 
-    <script is:inline define:vars={{ styleUrls }}>
+    <script is:inline define:vars={{ styleUrls, defaultStyle }}>
       (() => {
         const styleSelect = document.getElementById("style-variant-select");
         const styleLinkId = "docs-style-variant";
@@ -625,7 +626,7 @@ const sidebarSections = [
           document.getElementById(styleGateId)?.remove();
         };
         const applyStyle = (style) => {
-          const nextStyle = Object.prototype.hasOwnProperty.call(styleUrls, style) ? style : "vega";
+          const nextStyle = Object.prototype.hasOwnProperty.call(styleUrls, style) ? style : defaultStyle;
           const href = styleUrls[nextStyle]?.startsWith("/src/docs/assets/styles/")
             ? `${styleUrls[nextStyle]}?direct`
             : styleUrls[nextStyle];
@@ -672,16 +673,16 @@ const sidebarSections = [
         };
         const getStoredStyle = () => {
           try {
-            return localStorage.getItem("styleVariant") || "vega";
+            return localStorage.getItem("styleVariant") || defaultStyle;
           } catch (_) {
-            return "vega";
+            return defaultStyle;
           }
         };
         const initialStyle = getStoredStyle();
         if (styleSelect) styleSelect.value = initialStyle;
         applyStyle(initialStyle);
         styleSelect?.addEventListener("change", () => {
-          const nextStyle = styleSelect.value || "vega";
+          const nextStyle = styleSelect.value || defaultStyle;
           applyStyle(nextStyle);
           try {
             localStorage.setItem("styleVariant", nextStyle);

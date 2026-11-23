@@ -30,6 +30,10 @@
 
 ## Usage
 
+<Callout title="Drawer behavior" icon="info">
+  Drawer uses a native modal dialog. Swipe-to-close, snap points, and drag handles are not supported.
+</Callout>
+
 <Steps>
   <Step title="Include CSS">
 
@@ -73,7 +77,7 @@ Using CDN or bundler imports? See the [Installation page](/installation).
   </Step>
   <Step title="Add your drawer HTML">
 
-Basecoat maps shadcn/ui's Vaul Drawer to a native `<dialog>` element. This keeps modality, focus handling, and inert page content in the browser platform. The Drawer script adds safe backdrop-click close and lets the exit animation finish before calling the native close. Drag gestures, snap points, and the drag handle are intentionally not included.
+Drawer uses a native `<dialog>` element. The Drawer script handles backdrop clicks and lets the exit animation finish before closing.
 
 ```html
 <button type="button" class="btn" data-variant="outline" onclick="document.getElementById('demo-drawer').showModal()">Open Drawer</button>
@@ -107,10 +111,6 @@ Basecoat maps shadcn/ui's Vaul Drawer to a native `<dialog>` element. This keeps
 </Steps>
 
 ### HTML structure
-
-<Callout title="No drag handle" icon="info">
-  Basecoat does not implement Vaul's drag-to-close gesture, snap points, or drag handle. Drawers close with outside click, Escape, or explicit close controls.
-</Callout>
 
 <dl>
   <dt><code>&lt;button type="button" onclick="drawer.showModal()"&gt;</code> <span class="badge" data-variant="secondary">Optional</span></dt>

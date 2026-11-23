@@ -19,7 +19,7 @@
     "htmx.org": "^2.0.11",
     "lucide-static": "^1.77.0",
     "nunjucks": "^3.2.4",
-    "reallysimpledocs": "1.1.0",
+    "reallysimpledocs": "1.4.3",
     "shiki": "4.6.0",
     "simple-datatables": "10.3.0"
   },

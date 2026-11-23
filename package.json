@@ -1,6 +1,6 @@
 {
   "name": "basecoat-css",
-  "version": "1.2.1",
+  "version": "1.3.0",
   "description": "Tailwind CSS for Basecoat components",
   "author": {
     "name": "hunvreus",
@@ -144,6 +144,7 @@
   "devDependencies": {
     "@tailwindcss/cli": "^4.3.5",
     "esbuild": "0.28.2",
+    "linkedom": "^0.18.15",
     "prettier": "^3.10.1",
     "tailwindcss": "^4.3.5",
     "terser": "^5.51.4"

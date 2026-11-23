@@ -109,23 +109,39 @@ Use Tailwind CSS 4.3 or later to compile Basecoat’s source stylesheets. The pr
   </Step>
   <Step title="Install Basecoat">
 
-<CodeGroup>
-```bash title="npm"
+<Tabs variant="line">
+<Tab title="npm">
+
+```bash
 npm install basecoat-css
 ```
 
-```bash title="pnpm"
+</Tab>
+
+<Tab title="pnpm">
+
+```bash
 pnpm add basecoat-css
 ```
 
-```bash title="bun"
+</Tab>
+
+<Tab title="bun">
+
+```bash
 bun add basecoat-css
 ```
 
-```bash title="yarn"
+</Tab>
+
+<Tab title="yarn">
+
+```bash
 yarn add basecoat-css
 ```
-</CodeGroup>
+
+</Tab>
+</Tabs>
 
 If you are not using a bundler, copy or serve the files you need from `node_modules/basecoat-css/dist`.
 
@@ -206,15 +222,23 @@ Basecoat ships optional Nunjucks and Jinja templates with `basecoat-css`.
 
 If you previously used `basecoat-cli`, install `basecoat-css` instead and copy the template files from the package.
 
-<CodeGroup>
-```bash title="Nunjucks"
+<Tabs variant="line">
+<Tab title="Nunjucks">
+
+```bash
 cp -R node_modules/basecoat-css/templates/nunjucks ./templates/basecoat
 ```
 
-```bash title="Jinja"
+</Tab>
+
+<Tab title="Jinja">
+
+```bash
 cp -R node_modules/basecoat-css/templates/jinja ./templates/basecoat
 ```
-</CodeGroup>
+
+</Tab>
+</Tabs>
 
 See [Templates](/templates) for the available macros and arguments.
 

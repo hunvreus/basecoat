@@ -3,12 +3,13 @@ import { Preview } from 'reallysimpledocs/components';
 import { codeToHtml } from 'shiki';
 import Copy from 'lucide-static/icons/copy.svg?raw';
 import Check from 'lucide-static/icons/check.svg?raw';
+import ChevronDown from 'lucide-static/icons/chevron-down.svg?raw';
 import Wrap from 'lucide-static/icons/wrap-text.svg?raw';
 import Download from 'lucide-static/icons/download.svg?raw';
 import Terminal from 'lucide-static/icons/terminal.svg?raw';
 import FileCode from 'lucide-static/icons/file-code.svg?raw';
 
-const { code, title, lang, numbered = false, lineClasses = {}, sizes = [undefined], compareWrap = false, variant, description, floating = false, wrap = false, maxHeight = false, rtl = false, wrapControl = false, titleIcon, class: width = 'max-w-md', filename, copy = true } = Astro.props;
+const { code, title, lang, numbered = false, lineClasses = {}, sizes = [undefined], compareWrap = false, variant, description, floating = false, wrap = false, maxHeight = false, rtl = false, wrapControl = false, titleIcon, class: width = 'max-w-md', filename, copy = true, showMore, contentId } = Astro.props;
 const escape = (value) => String(value).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;');
 let content = escape(code);
 if (lang) {
@@ -45,11 +46,18 @@ const iconSvg = { file: FileCode, terminal: Terminal }[titleIcon];
 const header = title ? `  <header>
     <span>${iconSvg ? icon(iconSvg) : ''}${escape(title)}</span>
 ${controls ? indent(controls, 4) + '\n' : ''}  </header>\n` : floating && controls ? indent(controls, 2) + '\n' : '';
+const showMoreFooter = showMore ? `  <footer class="justify-center">
+    <button type="button" class="btn" data-variant="ghost" data-size="xs" aria-expanded="false" aria-controls="${escape(contentId)}" onclick="const pre = document.getElementById(this.getAttribute('aria-controls')); const expanded = this.getAttribute('aria-expanded') === 'true'; pre.classList.toggle('max-h-64', expanded); pre.classList.toggle('max-h-96', !expanded && ${showMore === 'scroll'}); pre.classList.toggle('overflow-y-hidden', expanded); this.setAttribute('aria-expanded', String(!expanded)); this.querySelector('span').textContent = expanded ? 'Show more' : 'Show less'">
+      ${icon(ChevronDown).replace('class="lucide', 'class="transition-transform in-aria-expanded:rotate-180 lucide')}
+      <span>Show more</span>
+    </button>
+  </footer>
+` : '';
 // Format the surrounding HTML, but preserve source whitespace inside <pre> exactly.
 function renderBlock(size, wrapped) {
   return `<div class="code-block"${size ? ` data-size="${size}"` : ''}${variant ? ` data-variant="${variant}"` : ''}>
-${header}  <pre class="scrollbar${maxHeight ? ' max-h-48' : ''}" tabindex="0" aria-label="${escape(title || (compareWrap ? (wrapped ? 'Wrapped error message' : 'Scrollable error message') : 'Code'))}"${numbered ? ' data-line-numbers' : ''}${wrapped ? ' data-wrap' : ''}><code>${content}</code></pre>
-</div>`;
+${header}  <pre class="scrollbar${maxHeight ? ' max-h-48' : ''}${showMore ? ' max-h-64 overflow-y-hidden' : ''}"${showMore ? ` id="${escape(contentId)}" style="--_fade-axis:y;--_fade-direction:to bottom"` : ''} tabindex="0" aria-label="${escape(title || (compareWrap ? (wrapped ? 'Wrapped error message' : 'Scrollable error message') : 'Code'))}"${numbered ? ' data-line-numbers' : ''}${wrapped ? ' data-wrap' : ''}><code>${content}</code></pre>
+${showMoreFooter}</div>`;
 }
 const blocks = compareWrap
   ? [renderBlock(undefined, false), renderBlock(undefined, true)]

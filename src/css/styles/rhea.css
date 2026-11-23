@@ -101,6 +101,10 @@
     > .select > button {
       @apply border-border focus-visible:border-ring;
     }
+
+    > .input-group {
+      @apply border-border has-[:focus-visible]:border-ring;
+    }
   }
 
   .button-group:not([data-orientation='vertical']) {
@@ -309,7 +313,7 @@
 
   /* Badge */
   .badge {
-    @apply h-5 gap-1 rounded-2xl border border-transparent px-2 py-0.5 text-xs font-medium transition-all [&>svg]:size-3!;
+    @apply h-5 gap-1 rounded-2xl border border-transparent px-2 py-0.5 text-xs font-medium transition-all has-[[data-icon='inline-start']]:ps-1.5 has-[[data-icon='inline-end']]:pe-1.5 [&>svg]:size-3!;
   }
 
   .badge:not([data-variant]),
@@ -528,7 +532,7 @@
 
   .select:not(select) [role='option'].active,
   .select:not(select) [role='option']:focus-visible {
-    @apply bg-muted text-foreground [&_svg]:text-foreground;
+    @apply bg-accent text-accent-foreground [&_svg]:text-accent-foreground;
   }
 
   .select:not(select) [role='group'] {
@@ -694,7 +698,7 @@
   }
 
   .dropdown-menu :is([role='menuitem'], [role='menuitemcheckbox'], [role='menuitemradio']).active {
-    @apply bg-muted text-foreground;
+    @apply bg-accent text-accent-foreground;
   }
 
   .dropdown-menu [data-variant='destructive'] {

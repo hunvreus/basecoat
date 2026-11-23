@@ -2,6 +2,25 @@
 
 ## [Unreleased]
 
+## [1.3.0] - 2026-11-23
+
+### Added
+
+- Added Show More examples to the Code Block documentation.
+
+### Changed
+
+- Select and Dropdown Menu support typing to find an item and expose the highlighted item to assistive technology.
+- Updated the documentation site to ReallySimpleDocs 1.4.3.
+- The documentation site defaults to the Nova style pack.
+- Inline links in Alert titles and descriptions now use the same solid underline and hover color as shadcn/ui.
+
+### Fixed
+
+- Select and Dropdown Menu active items use the upstream accent colors in all style packs.
+- Tooltips appear on keyboard focus, and Badge icon spacing matches upstream.
+- Input Groups beside outline buttons in Button Groups have the correct border in Luma and Rhea.
+
 ## [1.2.1] - 2026-11-21
 
 ### Fixed

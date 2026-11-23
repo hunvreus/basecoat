@@ -1,6 +1,5 @@
 @import "tailwindcss" source(none);
 @source "../../../**/*.{astro,html,js,md,mdx}";
-@source "../../../pages/**/*.{astro,html,js}";
 @reference "tailwindcss";
 @reference "../../../../../src/css/base/base.css";
 @import "../../../../../src/css/basecoat-nova.css";

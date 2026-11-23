@@ -1,0 +1,77 @@
+diff --git a/node_modules/reallysimpledocs/src/astro/mdx-components.js b/node_modules/reallysimpledocs/src/astro/mdx-components.js
+index 8653983..1b18229 100644
+--- a/node_modules/reallysimpledocs/src/astro/mdx-components.js
++++ b/node_modules/reallysimpledocs/src/astro/mdx-components.js
+@@ -11,13 +11,27 @@ export function remarkDocComponents({ docsDir } = {}) {
+       if (node?.type === "blockquote") return alertToMdx(node);
+       if (node?.type === "code") return codeToMdx(node, parent, index);
+       if (node?.type !== "mdxJsxFlowElement") return null;
+-      if (node.name === "Preview") addPreviewSource(node, file);
++      if (node.name === "Preview") {
++        addPreviewSource(node, file);
++        unwrapPreviewMarkdown(node);
++      }
+       if (node.name === "Tabs") addTabsMetadata(node);
+       return null;
+     });
+   };
+ }
+ 
++function unwrapPreviewMarkdown(node) {
++  if (!Array.isArray(node?.children)) return;
++  const preserveDirectParagraphs = node.name === "Step";
++  if (!preserveDirectParagraphs) {
++    node.children = node.children.flatMap((child) => child.type === "paragraph" ? child.children || [] : [child]);
++  }
++  for (const child of node.children) {
++    if (child.type === "mdxJsxFlowElement" || child.type === "mdxJsxTextElement") unwrapPreviewMarkdown(child);
++  }
++}
++
+ function addPreviewSource(node, file) {
+   if (hasAttr(node, "code")) return;
+ 
+diff --git a/node_modules/reallysimpledocs/src/runtime/components/DocsLayout.astro b/node_modules/reallysimpledocs/src/runtime/components/DocsLayout.astro
+index 2bbb444..4bc02ee 100644
+--- a/node_modules/reallysimpledocs/src/runtime/components/DocsLayout.astro
++++ b/node_modules/reallysimpledocs/src/runtime/components/DocsLayout.astro
+@@ -85,7 +85,7 @@ const actionItems = [
+   <CommandDialog />
+   <Sidebar menu={sidebar} />
+ 
+-  <main id="content">
++  <main id="content" hx-history-elt>
+     <header
+       class="sticky inset-x-0 top-0 isolate z-30 flex shrink-0 items-center gap-2 border-b bg-background"
+     >
+@@ -132,7 +132,7 @@ const actionItems = [
+       </div>
+     </header>
+ 
+-    <div class="flex gap-10 p-4 md:p-6 xl:p-12">
++    <div class="grid min-w-0 grid-cols-1 gap-10 p-4 md:p-6 xl:grid-cols-[minmax(0,1fr)_14rem] xl:p-12">
+       <article class="min-w-0 flex-1 wrap-break-word">
+         <div class="mx-auto w-full max-w-2xl flex-1 space-y-10">
+           <header class="space-y-2">
+diff --git a/node_modules/reallysimpledocs/src/runtime/components/mdx/Preview.astro b/node_modules/reallysimpledocs/src/runtime/components/mdx/Preview.astro
+index c809212..4359603 100644
+--- a/node_modules/reallysimpledocs/src/runtime/components/mdx/Preview.astro
++++ b/node_modules/reallysimpledocs/src/runtime/components/mdx/Preview.astro
+@@ -2,13 +2,13 @@
+ import Tabs from "./Tabs.astro";
+ import Code from "./Code.astro";
+ 
+-const { code, lang = "html", title = "Preview", class: className = "" } = Astro.props;
++const { code, lang = "html", title = "Preview", class: className = "w-fit", typeset = false } = Astro.props;
+ if (typeof code !== "string") throw new Error("Preview requires a code string for its source tab.");
+ ---
+ 
+-<Tabs variant="line" tabs={[{ label: title, slot: "preview" }, { label: "Code", slot: "code" }]}>
+-  <div data-not-typeset slot="preview" class:list={["rounded-lg border p-4", className]}>
+-    <slot />
++<Tabs class="my-6 min-w-0" variant="line" tabs={[{ label: title, slot: "preview" }, { label: "Code", slot: "code" }]}>
++  <div data-not-typeset={typeset ? undefined : true} slot="preview" class="flex min-h-64 min-w-0 items-center justify-center rounded-lg border p-6">
++    <div class:list={["min-w-0 max-w-full", className]}><slot /></div>
+   </div>
+   <Code slot="code" code={code} lang={lang} />
+ </Tabs>

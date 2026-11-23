@@ -13,7 +13,7 @@
   }
 
   .alert > :is(h2, h3, h4, h5, h6, strong, [data-title], section) :where(a[href]:not(.btn)) {
-    @apply underline decoration-dotted decoration-current/50 underline-offset-3 hover:text-foreground hover:decoration-current focus-visible:decoration-current;
+    @apply underline underline-offset-3 hover:text-foreground;
   }
 
   .alert > section {

@@ -1,5 +1,6 @@
 (() => {
   const states = new WeakMap();
+  let nextOptionId = 0;
 
   const getElements = (root) => {
     const trigger = root.querySelector(':scope > button');
@@ -86,11 +87,13 @@
     if (state.activeIndex > -1) {
       const activeOption = state.options[state.activeIndex];
       activeOption.classList.add('active');
-      if (activeOption.id) {
-        state.trigger.setAttribute('aria-activedescendant', activeOption.id);
-      } else {
-        state.trigger.removeAttribute('aria-activedescendant');
+      if (!activeOption.id) {
+        let id;
+        do { id = `basecoat-select-option-${++nextOptionId}`; }
+        while (document.getElementById(id));
+        activeOption.id = id;
       }
+      state.trigger.setAttribute('aria-activedescendant', activeOption.id);
     } else {
       state.trigger.removeAttribute('aria-activedescendant');
     }
@@ -160,6 +163,7 @@
     if (focusOnTrigger) state.trigger.focus();
     state.popover.setAttribute('aria-hidden', 'true');
     state.trigger.setAttribute('aria-expanded', 'false');
+    state.search = '';
     setActiveOption(state, -1);
   };
 
@@ -277,6 +281,27 @@
       return;
     }
 
+    if (event.key.length === 1 && event.key !== ' ' && !event.ctrlKey && !event.metaKey && !event.altKey && !event.isComposing) {
+      event.preventDefault();
+      const key = event.key.toLocaleLowerCase();
+      const now = Date.now();
+      state.search = now - (state.searchAt || 0) > 700 ? key : (state.search || '') + key;
+      state.searchAt = now;
+      const repeated = [...state.search].every(char => char === key);
+      const query = repeated ? key : state.search;
+      const current = state.visibleOptions.indexOf(option);
+      const start = repeated ? current + 1 : Math.max(current, 0);
+      for (let offset = 0; offset < state.visibleOptions.length; offset++) {
+        const match = state.visibleOptions[(start + offset) % state.visibleOptions.length];
+        if (getLabel(match).toLocaleLowerCase().startsWith(query)) {
+          setActiveOption(state, state.options.indexOf(match));
+          scrollOptionIntoListbox(state, match);
+          break;
+        }
+      }
+      return;
+    }
+
     if (!['ArrowDown', 'ArrowUp', 'Enter', ' ', 'Home', 'End', 'Escape'].includes(event.key)) return;
     event.preventDefault();
 
@@ -323,6 +348,8 @@
       delete root.refresh;
       return;
     }
+
+    state.trigger.setAttribute('role', 'combobox');
 
     root.open = () => {
       document.dispatchEvent(new CustomEvent('basecoat:popover', { detail: { source: root } }));

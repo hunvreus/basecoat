@@ -1,4 +1,5 @@
 import { defineConfig } from 'astro/config';
+import { defaultStyle } from './src/style.js';
 import { readFileSync } from 'node:fs';
 import sitemap from '@astrojs/sitemap';
 import reallySimpleDocs from 'reallysimpledocs/astro';
@@ -39,7 +40,7 @@ export default defineConfig({
     reallySimpleDocs({
       docsDir: './src/docs',
       routeBase: '/',
-      style: 'vega',
+      style: defaultStyle,
       css: false,
       bodyAttrs: {
         class: 'antialiased',

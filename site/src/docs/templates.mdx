@@ -34,15 +34,23 @@ Some macro files include internal recursive helpers such as `render_select_items
 
     Copy the template folder for your template engine from `basecoat-css`. Templates are meant to be app-owned, so you can edit them after copying.
 
-    <CodeGroup>
-    ```bash title="Nunjucks"
+    <Tabs variant="line">
+    <Tab title="Nunjucks">
+
+    ```bash
     cp -R node_modules/basecoat-css/templates/nunjucks ./templates/basecoat
     ```
 
-    ```bash title="Jinja"
+    </Tab>
+
+    <Tab title="Jinja">
+
+    ```bash
     cp -R node_modules/basecoat-css/templates/jinja ./templates/basecoat
     ```
-    </CodeGroup>
+
+    </Tab>
+    </Tabs>
 
     Copy only the files you use if you do not want the full template folder.
 
@@ -53,8 +61,10 @@ Some macro files include internal recursive helpers such as `render_select_items
 
     Import a macro from the copied template file, then call it with the props for that component.
 
-    <CodeGroup>
-    ```jinja title="Nunjucks"
+    <Tabs variant="line">
+    <Tab title="Nunjucks">
+
+    ```jinja
     {% from "basecoat/select.njk" import select %}
     {{ select(
       name="fruit",
@@ -66,7 +76,11 @@ Some macro files include internal recursive helpers such as `render_select_items
     ) }}
     ```
 
-    ```jinja title="Jinja"
+    </Tab>
+
+    <Tab title="Jinja">
+
+    ```jinja
     {% from "basecoat/select.html.jinja" import select %}
     {{ select(
       name="fruit",
@@ -77,7 +91,9 @@ Some macro files include internal recursive helpers such as `render_select_items
       ]
     ) }}
     ```
-    </CodeGroup>
+
+    </Tab>
+    </Tabs>
   </Step>
 </Steps>
 

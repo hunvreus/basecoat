@@ -1,4 +1,5 @@
 ---
+import { defaultStyle } from "../style.js";
 import vegaUrl from "../docs/assets/styles/style-vega.css?url";
 import novaUrl from "../docs/assets/styles/style-nova.css?url";
 import maiaUrl from "../docs/assets/styles/style-maia.css?url";
@@ -22,8 +23,8 @@ const styleUrls = {
 
 <nav class="hidden items-center gap-2 sm:flex">
   <select id="style-variant-select" class="select h-8 w-28 text-sm leading-none" aria-label="Style pack">
-    <option value="vega">Vega</option>
-    <option value="nova">Nova</option>
+    <option value="vega" selected={defaultStyle === "vega"}>Vega</option>
+    <option value="nova" selected={defaultStyle === "nova"}>Nova</option>
     <option value="maia">Maia</option>
     <option value="lyra">Lyra</option>
     <option value="mira">Mira</option>
@@ -33,7 +34,7 @@ const styleUrls = {
   </select>
 </nav>
 
-<script is:inline define:vars={{ styleUrls }}>
+<script is:inline define:vars={{ styleUrls, defaultStyle }}>
   (() => {
     const styleSelect = document.getElementById("style-variant-select");
     const styleLinkId = "docs-style-variant";
@@ -51,7 +52,7 @@ const styleUrls = {
     };
 
     const applyStyle = (style) => {
-      const nextStyle = Object.prototype.hasOwnProperty.call(styleUrls, style) ? style : "vega";
+      const nextStyle = Object.prototype.hasOwnProperty.call(styleUrls, style) ? style : defaultStyle;
       const href = getStyleHref(nextStyle);
       const link = getStyleLink();
 
@@ -98,9 +99,9 @@ const styleUrls = {
 
     const getStoredStyle = () => {
       try {
-        return localStorage.getItem("styleVariant") || "vega";
+        return localStorage.getItem("styleVariant") || defaultStyle;
       } catch (_) {
-        return "vega";
+        return defaultStyle;
       }
     };
 
@@ -109,7 +110,7 @@ const styleUrls = {
     applyStyle(initialStyle);
 
     styleSelect?.addEventListener("change", () => {
-      const nextStyle = styleSelect.value || "vega";
+      const nextStyle = styleSelect.value || defaultStyle;
       applyStyle(nextStyle);
       try {
         localStorage.setItem("styleVariant", nextStyle);

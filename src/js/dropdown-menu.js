@@ -1,5 +1,6 @@
 (() => {
   const states = new WeakMap();
+  let nextItemId = 0;
 
   const isDisabled = (item) =>
     item.hasAttribute('disabled') || item.getAttribute('aria-disabled') === 'true';
@@ -21,9 +22,15 @@
     if (state.activeIndex > -1 && state.items[state.activeIndex]) {
       const activeItem = state.items[state.activeIndex];
       activeItem.classList.add('active');
-      if (activeItem.id) state.trigger.setAttribute('aria-activedescendant', activeItem.id);
+      if (!activeItem.id) {
+        let id;
+        do { id = `basecoat-menu-item-${++nextItemId}`; }
+        while (document.getElementById(id));
+        activeItem.id = id;
+      }
+      state.menu.setAttribute('aria-activedescendant', activeItem.id);
     } else {
-      state.trigger.removeAttribute('aria-activedescendant');
+      state.menu.removeAttribute('aria-activedescendant');
     }
   };
 
@@ -49,7 +56,7 @@
   const closePopover = (state, focusOnTrigger = true) => {
     if (state.trigger.getAttribute('aria-expanded') === 'false') return;
     state.trigger.setAttribute('aria-expanded', 'false');
-    state.trigger.removeAttribute('aria-activedescendant');
+    state.search = '';
     state.popover.setAttribute('aria-hidden', 'true');
     if (focusOnTrigger) state.trigger.focus();
     setActiveItem(state, -1);
@@ -60,8 +67,14 @@
     root.refresh();
     state.trigger.setAttribute('aria-expanded', 'true');
     state.popover.setAttribute('aria-hidden', 'false');
+    const focusedOnOpen = document.activeElement;
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      if (state.trigger.getAttribute('aria-expanded') === 'true' && document.activeElement === focusedOnOpen) {
+        state.menu.focus({ preventScroll: true });
+      }
+    }));
 
-    if (state.items.length > 0 && initialSelection) {
+    if (state.items.length > 0) {
       setActiveItem(state, initialSelection === 'last' ? state.items.length - 1 : 0);
     }
   };
@@ -80,6 +93,8 @@
       return;
     }
 
+    if (!state.menu.hasAttribute('tabindex')) state.menu.setAttribute('tabindex', '-1');
+
     root.open = (initialSelection = false) => openPopover(root, state, initialSelection);
     root.close = (focusOnTrigger = true) => closePopover(state, focusOnTrigger);
     root.toggle = () => state.trigger.getAttribute('aria-expanded') === 'true' ? root.close() : root.open(false);
@@ -91,6 +106,12 @@
 
       if (event.key === 'Escape') {
         if (isExpanded) root.close();
+        return;
+      }
+
+      if (isExpanded && event.key === 'Tab') {
+        state.trigger.focus({ preventScroll: true });
+        root.close(false);
         return;
       }
 
@@ -109,6 +130,30 @@
       }
 
       if (state.items.length === 0) return;
+
+      if (event.key.length === 1 && event.key !== ' ' && !event.ctrlKey && !event.metaKey && !event.altKey && !event.isComposing) {
+        event.preventDefault();
+        const key = event.key.toLocaleLowerCase();
+        const now = Date.now();
+        state.search = now - (state.searchAt || 0) > 700 ? key : (state.search || '') + key;
+        state.searchAt = now;
+        const repeated = [...state.search].every(char => char === key);
+        const query = repeated ? key : state.search;
+        const start = repeated ? state.activeIndex + 1 : Math.max(state.activeIndex, 0);
+        for (let offset = 0; offset < state.items.length; offset++) {
+          const index = (start + offset) % state.items.length;
+          const item = state.items[index];
+          if ((item.getAttribute('aria-label') || item.textContent.trim()).toLocaleLowerCase().startsWith(query)) {
+            setActiveItem(state, index);
+            const itemRect = item.getBoundingClientRect();
+            const popoverRect = state.popover.getBoundingClientRect();
+            if (itemRect.top < popoverRect.top) state.popover.scrollTop -= popoverRect.top - itemRect.top;
+            else if (itemRect.bottom > popoverRect.bottom) state.popover.scrollTop += itemRect.bottom - popoverRect.bottom;
+            break;
+          }
+        }
+        return;
+      }
 
       let nextIndex = state.activeIndex;
       if (event.key === 'ArrowDown') {

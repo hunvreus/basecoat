@@ -1,4 +1,5 @@
 ---
+import { defaultStyle } from "../style.js";
 import vegaUrl from "../docs/assets/styles/style-vega.css?url";
 import novaUrl from "../docs/assets/styles/style-nova.css?url";
 import maiaUrl from "../docs/assets/styles/style-maia.css?url";
@@ -93,7 +94,7 @@ const styleUrls = {
   }
 </style>
 
-<script is:inline define:vars={{ styleUrls }}>
+<script is:inline define:vars={{ styleUrls, defaultStyle }}>
   (() => {
     const styleGateId = "docs-style-gate";
     const styleLinkId = "docs-style-variant";
@@ -103,9 +104,9 @@ const styleUrls = {
     };
     const getStoredStyle = () => {
       try {
-        return localStorage.getItem("styleVariant") || "vega";
+        return localStorage.getItem("styleVariant") || defaultStyle;
       } catch (_) {
-        return "vega";
+        return defaultStyle;
       }
     };
     const getStyleHref = (style) => {
@@ -114,7 +115,7 @@ const styleUrls = {
     };
 
     const style = getStoredStyle();
-    const nextStyle = Object.prototype.hasOwnProperty.call(styleUrls, style) ? style : "vega";
+    const nextStyle = Object.prototype.hasOwnProperty.call(styleUrls, style) ? style : defaultStyle;
     const href = getStyleHref(nextStyle);
 
     document.documentElement.dataset.styleVariant = nextStyle;

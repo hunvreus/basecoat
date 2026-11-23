@@ -1,4 +1,5 @@
 import CodeBlockExample from '../../components/CodeBlockExample.astro';
+import { showMoreCode } from '../../components/show-more-code.js';
 
 # Code Block
 
@@ -99,6 +100,18 @@ Render the patch as text, including its `+` and `-` prefixes, and use utilities 
 Use ordinary height utilities to constrain a block. The native scroll area remains keyboard-accessible.
 
 <CodeBlockExample title="Logs" maxHeight code={Array.from({ length: 40 }, (_, i) => `[${String(i + 1).padStart(2, '0')}] GET /api/chat 200 in ${12 + (i * 7) % 40}ms`).join('\n')} />
+
+### Show more
+
+Use a footer button to expand a long block.
+
+<CodeBlockExample title="components/chat.tsx" lang="tsx" numbered showMore="full" contentId="show-more-code" code={showMoreCode} />
+
+#### Max height
+
+Keep an expanded block scrollable by increasing its height limit.
+
+<CodeBlockExample title="components/chat.tsx" lang="tsx" numbered showMore="scroll" contentId="show-more-scroll-code" code={showMoreCode} />
 
 ### Size
 
