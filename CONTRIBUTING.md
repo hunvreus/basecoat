@@ -31,7 +31,7 @@ Workers Builds settings:
 
 ## Releasing
 
-The site at basecoatui.com deploys from the `release` branch, not `main`, so the docs always match the version on npm. Nobody commits to `release` directly.
+The site at basecoatui.com deploys from the `release` branch, not `main`. The workflow only deploys commits whose package version is already published on npm. Nobody commits to `release` directly.
 
 To cut a release:
 
@@ -50,7 +50,7 @@ Do not run `npm publish` by hand. Versions reach npm only through this workflow 
 
 You can also run the Release workflow manually from the Actions tab, with a tag and a mode. A manual run never publishes to npm.
 
-- `deploy` (default) redeploys or rolls back the site: it moves `release` to the tag, only if that version is already on npm. It doesn't post to Discord.
+- `deploy` (default) deploys a docs-only fix, redeploys, or rolls back the site. Push a tag for the commit on `main` and select it in the workflow; the commit's package version must already be on npm. It moves `release` to that tag and doesn't post to Discord.
 - `announce` posts the tag's GitHub release to Discord again, for example after a failed post. It doesn't deploy.
 - `deploy and announce` does both, and announces only if the deploy succeeded.
 

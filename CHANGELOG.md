@@ -5,6 +5,7 @@
 ### Fixed
 
 - Prevented the home page title from changing line count while its font loads.
+- Restored spaces around the links in the home page footer.
 
 ## [1.3.0] - 2026-11-23
 
