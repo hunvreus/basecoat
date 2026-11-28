@@ -88,6 +88,8 @@
         else openTimer = setTimeout(() => show(trigger, true), 50);
       }, { signal });
       trigger.addEventListener('click', () => {
+        if (trigger.disabled || trigger.getAttribute('aria-disabled') === 'true') return;
+        trigger.focus({ preventScroll: true });
         if (active === trigger && hoverOpened) { hoverOpened = false; return; }
         if (active === trigger) close(); else show(trigger);
       }, { signal });

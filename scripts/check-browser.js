@@ -54,7 +54,7 @@ async function navigation(page) {
 }
 
 async function nestedEscape(page) {
-  await load(page, `<dialog><nav class="navigation-menu"><ul><li><button aria-controls="panel">Menu</button></li></ul>
+  await load(page, `<dialog><input id="outside-nav"><nav class="navigation-menu"><ul><li><button aria-controls="panel">Menu</button></li></ul>
     <div data-popover><section id="panel"><div class="select"><button aria-expanded="false"><span>Pick</span></button>
     <div data-popover aria-hidden="true"><div role="listbox"><div role="option" data-value="a">A</div></div></div>
     <input type="hidden"></div></section></div></nav></dialog>`, 'navigation-menu', 'select');
@@ -73,6 +73,12 @@ async function nestedEscape(page) {
   assert.equal(await page.locator('dialog').evaluate(el => el.open), true);
   await page.keyboard.press('Escape');
   await page.waitForFunction(() => !document.querySelector('dialog').open);
+  await page.locator('dialog').evaluate(el => el.showModal());
+  await page.locator('#outside-nav').focus();
+  await menu.click();
+  await page.keyboard.press('Escape');
+  assert.equal(await expanded(menu), 'false');
+  assert.equal(await page.locator('dialog').evaluate(el => el.open), true);
 }
 
 async function hoverCard(page) {
@@ -144,3 +150,6 @@ for (const engine of [chromium, firefox, webkit]) {
     if (!endpoint) await browser.close();
   }
 }
+
+// Disconnect the borrowed CDP transport when the checks finish. Its browser belongs to the caller.
+if (process.env.BASECOAT_CHROMIUM_CDP) process.exit(0);
