@@ -53,6 +53,33 @@ Without JavaScript, the ordinary input remains visible and usable. With JavaScri
 
 `inputmode="numeric"` requests a numeric keyboard. Add `data-filter` to enforce the input’s `pattern` while typing and pasting. Choose a pattern that accepts partial codes, such as `[0-9]+`, and use `minlength` if the form requires a complete code. Use `type="text"` to preserve leading zeroes. Actual SMS autofill depends on the browser, device, and message format.
 
+### HTML structure
+
+<dl>
+  <dt><code>&lt;div class="input-otp"&gt;</code></dt>
+  <dd>
+    Input OTP root.
+    <dl>
+      <dt><code>&lt;input type="text" name="&#123; NAME &#125;" maxlength="&#123; LENGTH &#125;"&gt;</code></dt>
+      <dd>The real form control and keyboard target. Give it an accessible label.</dd>
+      <dt><code>&lt;div aria-hidden="true"&gt;</code></dt>
+      <dd>
+        Wrapper for the decorative visual slots.
+        <dl>
+          <dt><code>&lt;div&gt;</code></dt>
+          <dd>
+            A group of slots.
+            <dl>
+              <dt><code>&lt;span&gt;</code></dt>
+              <dd>One visual slot. The total number of spans across groups must match the input's <code>maxlength</code>.</dd>
+            </dl>
+          </dd>
+        </dl>
+      </dd>
+    </dl>
+  </dd>
+</dl>
+
 ### JavaScript API
 
 Native `input`, `change`, and form `reset` events remain available. After setting `.value` from your application, call `document.getElementById("otp-example").refresh()` to update the slots. No separate value store or custom completion event is needed.

@@ -1,0 +1,63 @@
+# Hover Card
+
+Preview the content available behind a link.
+
+<Preview>
+<div class="hover-card">
+  <a href="https://github.com/hunvreus/basecoat" class="btn" data-variant="link" data-delay="10" data-close-delay="100">Hover Here</a>
+  <div data-popover aria-hidden="true" class="flex w-64 flex-col gap-0.5">
+    <div class="font-semibold">Basecoat</div>
+    <div>shadcn/ui components for any web stack, built with Tailwind CSS.</div>
+    <div class="mt-1 text-xs text-muted-foreground">Open source · MIT License</div>
+  </div>
+</div>
+</Preview>
+
+## Usage
+
+Load the full Basecoat CSS and JavaScript bundle, or use the runtime, `hover-card.js`, Popover CSS, Hover Card CSS, and a style pack.
+
+```html
+<div class="hover-card">
+  <a href="/profile">Profile</a>
+  <div data-popover aria-hidden="true">A preview of this profile.</div>
+</div>
+```
+
+The preview is supplementary. Keep essential information at the linked destination. It opens on mouse hover or keyboard focus and can be dismissed with Escape. Links remain usable on touch devices.
+
+Use `data-delay` and `data-close-delay` on the trigger to change the delay in milliseconds. The defaults are 600 and 300. Set `data-side` and `data-align` on the panel to position it, as with Popover.
+
+### HTML structure
+
+<dl>
+  <dt><code>&lt;div class="hover-card"&gt;</code></dt>
+  <dd>
+    Wrapper for the trigger and preview.
+    <dl>
+      <dt><code>&lt;a href="&#123; URL &#125;"&gt;</code> or <code>&lt;button type="button"&gt;</code></dt>
+      <dd>Trigger. Use a link when it leads to the full content. Optional <code>data-delay</code> and <code>data-close-delay</code> set delays in milliseconds.</dd>
+      <dt><code>&lt;div data-popover aria-hidden="true"&gt;</code></dt>
+      <dd>Supplementary preview. JavaScript updates <code>aria-hidden</code> when the card opens and closes.</dd>
+    </dl>
+  </dd>
+</dl>
+
+## Examples
+
+### Sides
+
+<Preview>
+<div class="flex flex-wrap justify-center gap-2">
+  <div class="hover-card"><button type="button" class="btn" data-variant="outline" data-delay="100" data-close-delay="100">Left</button><div data-popover data-side="left" aria-hidden="true"><div class="font-medium">Hover Card</div><p>This hover card appears on the left side of the trigger.</p></div></div>
+  <div class="hover-card"><button type="button" class="btn" data-variant="outline" data-delay="100" data-close-delay="100">Top</button><div data-popover data-side="top" aria-hidden="true"><div class="font-medium">Hover Card</div><p>This hover card appears on the top side of the trigger.</p></div></div>
+  <div class="hover-card"><button type="button" class="btn" data-variant="outline" data-delay="100" data-close-delay="100">Bottom</button><div data-popover data-side="bottom" aria-hidden="true"><div class="font-medium">Hover Card</div><p>This hover card appears on the bottom side of the trigger.</p></div></div>
+  <div class="hover-card"><button type="button" class="btn" data-variant="outline" data-delay="100" data-close-delay="100">Right</button><div data-popover data-side="right" aria-hidden="true"><div class="font-medium">Hover Card</div><p>This hover card appears on the right side of the trigger.</p></div></div>
+</div>
+</Preview>
+
+### RTL
+
+<Preview>
+<div dir="rtl" class="hover-card"><button type="button" class="btn" data-variant="outline" data-delay="100" data-close-delay="100">معاينة</button><div data-popover data-side="inline-end" aria-hidden="true">معلومات إضافية.</div></div>
+</Preview>

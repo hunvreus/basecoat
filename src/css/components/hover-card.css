@@ -1,0 +1,12 @@
+@layer components {
+  .hover-card { @apply relative inline-flex; }
+  .hover-card > [data-popover]:not([data-align]):is(:not([data-side]), [data-side='top'], [data-side='bottom']) {
+    @apply start-1/2 -translate-x-1/2 rtl:translate-x-1/2;
+  }
+  .hover-card > [data-popover]:not([data-align]):is([data-side='left'], [data-side='right'], [data-side='inline-start'], [data-side='inline-end']) {
+    @apply top-1/2 -translate-y-1/2;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hover-card > [data-popover] { transition: none; }
+  }
+}

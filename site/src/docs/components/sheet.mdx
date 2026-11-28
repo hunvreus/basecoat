@@ -98,6 +98,29 @@ Use `class="sheet"` on a native `<dialog>`. Sheet has its own component CSS and 
   </Step>
 </Steps>
 
+### HTML structure
+
+<dl>
+  <dt><code>&lt;dialog class="sheet" id="&#123; SHEET_ID &#125;"&gt;</code></dt>
+  <dd>
+    Native dialog. Associate its heading with <code>aria-labelledby</code>; use <code>data-side</code> to choose an edge.
+    <dl>
+      <dt><code>&lt;article&gt;</code></dt>
+      <dd>
+        Direct-child content surface. Another suitable container may be used.
+        <dl>
+          <dt><code>&lt;header&gt;</code> <span class="badge" data-variant="secondary">Optional</span></dt>
+          <dd>Heading and description.</dd>
+          <dt><code>&lt;section&gt;</code> <span class="badge" data-variant="secondary">Optional</span></dt>
+          <dd>Scrollable body.</dd>
+          <dt><code>&lt;footer&gt;</code> <span class="badge" data-variant="secondary">Optional</span></dt>
+          <dd>Actions. Include a control that closes the dialog.</dd>
+        </dl>
+      </dd>
+    </dl>
+  </dd>
+</dl>
+
 ## Examples
 
 ### Side

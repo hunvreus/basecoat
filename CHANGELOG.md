@@ -4,6 +4,7 @@
 
 ### Added
 
+- Added Hover Card and single-level Navigation Menu components.
 - Added a copyable prompt and an installable Basecoat skill for building interfaces from the component docs.
 - Added `basecoat.deferMutations()` to delay automatic initialization and cleanup until DOM updates settle. Thanks to [@sgruendel](https://github.com/hunvreus/basecoat/pull/223).
 
@@ -13,6 +14,7 @@
 
 ### Fixed
 
+- Restored foreground color for nested definition-list terms in Typeset.
 - Restored component preview markup and versioned CDN examples in the Markdown docs and `llms-full.txt`.
 - Reduced Chrome style recalculation during DOM updates. Thanks to [@memleakd](https://github.com/hunvreus/basecoat/pull/236) for profiling the slowdown and supplying the benchmark.
 - Fixed Combobox opening on focus and remaining open after focus left.

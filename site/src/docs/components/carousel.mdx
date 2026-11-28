@@ -90,6 +90,27 @@ Arrow keys work when the list or a previous/next button has focus, respecting or
 
 Slides intentionally keep native list semantics instead of upstream’s ARIA slide groups. `role="list"` preserves those semantics in browsers that otherwise omit unstyled lists from the accessibility tree. Real buttons share Basecoat Button styles across themes; their shape follows the style pack: fully round in Vega, Nova, Maia, Mira, and Luma; `rounded-2xl` in Rhea; and the ordinary Button shape in Lyra and Sera. The script enhances native scrolling rather than using CSS-generated scroll buttons and maintaining a second fallback control system.
 
+### HTML structure
+
+<dl>
+  <dt><code>&lt;div class="carousel" role="region" aria-roledescription="carousel" aria-label="&#123; LABEL &#125;"&gt;</code></dt>
+  <dd>
+    Carousel root. Use <code>data-orientation="vertical"</code> for a vertical carousel.
+    <dl>
+      <dt><code>&lt;ul tabindex="0" aria-label="Slides"&gt;</code></dt>
+      <dd>
+        Direct-child scrollable list. Add <code>role="list"</code> to preserve list semantics where needed.
+        <dl>
+          <dt><code>&lt;li&gt;</code></dt>
+          <dd>One slide containing its content.</dd>
+        </dl>
+      </dd>
+      <dt><code>&lt;button type="button" hidden&gt;</code> <span class="badge" data-variant="secondary">Optional</span></dt>
+      <dd>Two direct-child controls: Previous followed by Next. The script reveals and updates them.</dd>
+    </dl>
+  </dd>
+</dl>
+
 ## Examples
 
 ### Sizes

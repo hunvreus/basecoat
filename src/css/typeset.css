@@ -220,6 +220,7 @@
       margin-block-end: 0;
     }
     &:where(dt) {
+      color: var(--color-foreground, CanvasText);
       font-weight: 500;
       margin-block-start: 1em;
     }

@@ -82,6 +82,31 @@ With a [Basecoat style bundle](/installation) loaded, put each message in its ow
 
 Include the sender as text, visually hidden if necessary. Use a footer for timestamps, delivery status, or actions. Message supplies layout only. Your application owns delivery and retry behavior.
 
+### HTML structure
+
+<dl>
+  <dt><code>&lt;li class="message"&gt;</code></dt>
+  <dd>
+    One message in a conversation list. Use <code>data-align="end"</code> for outgoing messages.
+    <dl>
+      <dt><code>&lt;span class="avatar"&gt;</code> <span class="badge" data-variant="secondary">Optional</span></dt>
+      <dd>Direct-child avatar identifying the sender visually.</dd>
+      <dt><code>&lt;div&gt;</code></dt>
+      <dd>
+        Final child, wrapping the message content.
+        <dl>
+          <dt><code>&lt;header&gt;</code> <span class="badge" data-variant="secondary">Optional</span></dt>
+          <dd>Sender information.</dd>
+          <dt><code>&lt;div class="bubble"&gt;</code></dt>
+          <dd>The message content; ordinary text or another suitable element can be used instead.</dd>
+          <dt><code>&lt;footer&gt;</code> <span class="badge" data-variant="secondary">Optional</span></dt>
+          <dd>Metadata such as a timestamp or actions.</dd>
+        </dl>
+      </dd>
+    </dl>
+  </dd>
+</dl>
+
 ## Examples
 
 ### Avatar

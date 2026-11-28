@@ -1,0 +1,33 @@
+@layer components {
+  .navigation-menu { @apply relative inline-flex; }
+  .navigation-menu > ul { @apply flex list-none items-center; }
+  .navigation-menu > ul > li > :is(button, a) { @apply inline-flex h-9 items-center justify-center; }
+  .navigation-menu > ul > li > button > svg:last-child { @apply pointer-events-none shrink-0 transition-transform motion-reduce:transition-none; }
+  .navigation-menu > ul > li > button[aria-expanded='true'] > svg:last-child { @apply rotate-180; }
+  .navigation-menu > [data-popover] {
+    @apply overflow-hidden max-w-[calc(100vw-2rem)] transition-[left,width,height,opacity,scale,translate];
+    min-width: 0;
+  }
+  .navigation-menu > [data-popover]:not([data-side]) { @apply mt-2; }
+  .navigation-menu > [data-popover] > section {
+    @apply absolute start-0 top-0 opacity-0 invisible transition-[opacity,transform,visibility];
+    max-width: calc(100vw - 2rem);
+  }
+  .navigation-menu > [data-popover] > section[aria-hidden='false'] { @apply visible opacity-100; }
+  .navigation-menu > [data-popover] > section[data-motion='enter-start'] { transform: translateX(-20%); }
+  .navigation-menu > [data-popover] > section[data-motion='enter-end'] { transform: translateX(20%); }
+  .navigation-menu > [data-popover] > section[data-motion='exit-start'] { transform: translateX(-20%); }
+  .navigation-menu > [data-popover] > section[data-motion='exit-end'] { transform: translateX(20%); }
+  .navigation-menu > [data-popover] > section[data-motion='active'] { transform: translateX(0); }
+  .navigation-menu > [data-popover] > section:dir(rtl)[data-motion='enter-start'],
+  .navigation-menu > [data-popover] > section:dir(rtl)[data-motion='exit-start'] { transform: translateX(20%); }
+  .navigation-menu > [data-popover] > section:dir(rtl)[data-motion='enter-end'],
+  .navigation-menu > [data-popover] > section:dir(rtl)[data-motion='exit-end'] { transform: translateX(-20%); }
+  .navigation-menu:has(> [data-popover][aria-hidden='false'])::after {
+    content: '';
+    @apply absolute inset-x-0 top-full z-50 h-2;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .navigation-menu > [data-popover], .navigation-menu > [data-popover] > section { transition: none; }
+  }
+}

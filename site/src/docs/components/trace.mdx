@@ -119,6 +119,33 @@ Use a `trace-line` on a paragraph for a static step, a link for navigation, or a
 
 Trace needs only a [Basecoat style bundle](/installation). Use [Message](/components/message) for the reply and [Marker](/components/marker) for notes between turns. These examples render a transcript directly in HTML. Your application supplies updates if the response streams.
 
+### HTML structure
+
+<dl>
+  <dt><code>&lt;ol class="trace" role="list" aria-label="&#123; LABEL &#125;"&gt;</code></dt>
+  <dd>
+    Ordered list of activity steps.
+    <dl>
+      <dt><code>&lt;li&gt;</code></dt>
+      <dd>
+        One step.
+        <dl>
+          <dt><code>&lt;p class="trace-line"&gt;</code></dt>
+          <dd>
+            Static step. Use a link for navigation, or a <code>&lt;summary class="trace-line"&gt;</code> inside <code>&lt;details&gt;</code> for expandable output.
+            <dl>
+              <dt><code>&lt;span&gt;</code></dt>
+              <dd>Step text. A decorative SVG can precede it.</dd>
+              <dt><code>&lt;small&gt;</code> <span class="badge" data-variant="secondary">Optional</span></dt>
+              <dd>Metadata such as duration.</dd>
+            </dl>
+          </dd>
+        </dl>
+      </dd>
+    </dl>
+  </dd>
+</dl>
+
 ## Examples
 
 ### Trace line

@@ -65,6 +65,23 @@ The conversation examples use an ordered list with one `<li>` per message. Sende
 
 These examples use upstream's blue theme through local CSS variables. Omit those variables to use your application's theme. Avatars, sender names, timestamps, and message-level controls belong outside the bubble.
 
+### HTML structure
+
+<dl>
+  <dt><code>&lt;div class="bubble"&gt;</code></dt>
+  <dd>
+    Message bubble. Use <code>data-align="end"</code> for an outgoing bubble.
+    <dl>
+      <dt><code>&lt;p&gt;</code> or another element</dt>
+      <dd>The first child holds the message content.</dd>
+      <dt><code>&lt;div&gt;</code> <span class="badge" data-variant="secondary">Optional</span></dt>
+      <dd>A following child holds reactions. Give reactions an accessible description when they convey information.</dd>
+    </dl>
+  </dd>
+  <dt><code>&lt;div class="bubble-group"&gt;</code> <span class="badge" data-variant="secondary">Optional</span></dt>
+  <dd>Groups closely spaced bubbles from the same sender.</dd>
+</dl>
+
 ## Examples
 
 ### Variants

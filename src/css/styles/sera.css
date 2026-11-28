@@ -1770,4 +1770,19 @@
     }
   }
 
+  /* Hover Card */
+  .hover-card > [data-popover] { @apply ring-foreground/10 bg-popover text-popover-foreground w-72 p-4 text-sm shadow-md ring-1 duration-100; }
+
+  /* Navigation Menu */
+  .navigation-menu > ul > li > :is(button, a) { @apply hover:bg-muted focus:bg-muted focus-visible:ring-ring/30 rounded-none px-4.5 py-2.5 text-sm font-medium transition-all focus-visible:ring-2 focus-visible:outline-1 disabled:opacity-50; }
+  .navigation-menu > ul > li > button[aria-expanded='true'],
+  .navigation-menu > ul > li > a[aria-current='page'] { @apply bg-muted/50; }
+  .navigation-menu > ul > li > button > svg:last-child { @apply relative top-px ms-1 size-3 transition-transform duration-300; }
+  .navigation-menu > [data-popover] { @apply bg-popover text-popover-foreground ring-foreground/10 rounded-none shadow-md ring-1 duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]; }
+  .navigation-menu > ul > li > button[aria-expanded='true']:is(:hover, :focus),
+  .navigation-menu > [data-popover] a[aria-current='page']:is(:hover, :focus) { @apply bg-muted; }
+  .navigation-menu > [data-popover] a[aria-current='page'] { @apply bg-muted/50; }
+  .navigation-menu > [data-popover] > section { @apply p-2.5 pe-3 duration-300; }
+  .navigation-menu > [data-popover] a { @apply focus-visible:ring-ring/30 hover:bg-muted focus:bg-muted flex items-center gap-1.5 rounded-none p-3 text-sm transition-all outline-none focus-visible:ring-2 focus-visible:outline-1 [&_svg:not([class*='size-'])]:size-3.5; }
+
 }

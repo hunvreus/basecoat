@@ -1,0 +1,82 @@
+# Navigation Menu
+
+A collection of links for navigating websites.
+
+<Preview class="flex min-h-80 items-center justify-center">
+<nav class="navigation-menu" aria-label="Main navigation">
+  <ul>
+    <li><button type="button" aria-controls="navigation-getting-started" aria-expanded="false">Getting started <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6" /></svg></button></li>
+    <li class="hidden md:flex"><button type="button" aria-controls="navigation-components" aria-expanded="false">Components <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6" /></svg></button></li>
+    <li><button type="button" aria-controls="navigation-icons" aria-expanded="false">With Icon <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6" /></svg></button></li>
+    <li><a href="/introduction/">Docs</a></li>
+  </ul>
+  <div data-popover aria-hidden="true">
+    <section id="navigation-getting-started" aria-hidden="true"><ul class="w-96"><li><a href="/introduction/"><span class="flex flex-col gap-1 text-sm"><span class="font-medium leading-none">Introduction</span><span class="line-clamp-2 text-muted-foreground">Re-usable components built with Tailwind CSS.</span></span></a></li><li><a href="/installation/"><span class="flex flex-col gap-1 text-sm"><span class="font-medium leading-none">Installation</span><span class="line-clamp-2 text-muted-foreground">How to install dependencies and structure your app.</span></span></a></li><li><a href="/typeset/"><span class="flex flex-col gap-1 text-sm"><span class="font-medium leading-none">Typography</span><span class="line-clamp-2 text-muted-foreground">Styles for headings, paragraphs, lists...etc</span></span></a></li></ul></section>
+    <section id="navigation-components" aria-hidden="true"><ul class="grid w-[400px] gap-2 md:w-[500px] md:grid-cols-2 lg:w-[600px]"><li><a href="/components/alert-dialog/"><span class="flex flex-col gap-1 text-sm"><span class="font-medium leading-none">Alert Dialog</span><span class="line-clamp-2 text-muted-foreground">A modal dialog that interrupts the user with important content and expects a response.</span></span></a></li><li><a href="/components/hover-card/"><span class="flex flex-col gap-1 text-sm"><span class="font-medium leading-none">Hover Card</span><span class="line-clamp-2 text-muted-foreground">For sighted users to preview content available behind a link.</span></span></a></li><li><a href="/components/progress/"><span class="flex flex-col gap-1 text-sm"><span class="font-medium leading-none">Progress</span><span class="line-clamp-2 text-muted-foreground">Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.</span></span></a></li><li><a href="/components/scroll-area/"><span class="flex flex-col gap-1 text-sm"><span class="font-medium leading-none">Scroll-area</span><span class="line-clamp-2 text-muted-foreground">Visually or semantically separates content.</span></span></a></li><li><a href="/components/tabs/"><span class="flex flex-col gap-1 text-sm"><span class="font-medium leading-none">Tabs</span><span class="line-clamp-2 text-muted-foreground">A set of layered sections of content—known as tab panels—that are displayed one at a time.</span></span></a></li><li><a href="/components/tooltip/"><span class="flex flex-col gap-1 text-sm"><span class="font-medium leading-none">Tooltip</span><span class="line-clamp-2 text-muted-foreground">A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.</span></span></a></li></ul></section>
+    <section id="navigation-icons" aria-hidden="true"><ul class="w-[200px]"><li><a href="#"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" /><path d="M12 8v4m0 4h.01" /></svg>Backlog</a></li><li><a href="#"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" stroke-dasharray="3 3" /></svg>To Do</a></li><li><a href="#"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" /><path d="m8 12 3 3 5-6" /></svg>Done</a></li></ul></section>
+  </div>
+</nav>
+</Preview>
+
+## Usage
+
+Load the full Basecoat CSS and JavaScript bundle, or load the runtime and `navigation-menu.js` separately. A custom CSS build needs Popover CSS, Navigation Menu CSS, and a style pack.
+
+```html
+<nav class="navigation-menu" aria-label="Main navigation">
+  <ul>
+    <li><button type="button" aria-expanded="false" aria-controls="nav-docs">Documentation</button></li>
+    <li><a href="/about">About</a></li>
+  </ul>
+  <div data-popover aria-hidden="true">
+    <section id="nav-docs" aria-hidden="true">
+      <ul><li><a href="/introduction">Introduction</a></li></ul>
+    </section>
+  </div>
+</nav>
+```
+
+Dropdowns open on hover or click. Use Left and Right to move between top-level items. Enter, Space, or Down opens a panel and focuses its first link; arrow keys move between panel links. Escape closes the panel and returns focus to its trigger. Each button's `aria-controls` identifies a section inside the shared panel. One level of dropdown links is supported. A trigger’s trailing SVG is treated as a decorative chevron and rotates when its panel opens.
+
+### HTML structure
+
+<dl>
+  <dt><code>&lt;nav class="navigation-menu" aria-label="Main navigation"&gt;</code></dt>
+  <dd>
+    Navigation landmark. Use an accessible label to distinguish it from other navigation landmarks.
+    <dl>
+      <dt><code>&lt;ul&gt;</code></dt>
+      <dd>
+        Direct-child list of top-level items.
+        <dl>
+          <dt><code>&lt;li&gt;</code></dt>
+          <dd>
+            Contains one dropdown trigger or navigation link.
+            <dl>
+              <dt><code>&lt;button type="button" aria-controls="&#123; PANEL_ID &#125;" aria-expanded="false"&gt;</code></dt>
+              <dd>Dropdown trigger. Its <code>aria-controls</code> matches the corresponding section ID. A trailing decorative SVG rotates when open.</dd>
+              <dt><code>&lt;a href="&#123; URL &#125;"&gt;</code></dt>
+              <dd>A top-level link without a dropdown.</dd>
+            </dl>
+          </dd>
+        </dl>
+      </dd>
+      <dt><code>&lt;div data-popover aria-hidden="true"&gt;</code></dt>
+      <dd>
+        Shared panel container. JavaScript updates its visibility.
+        <dl>
+          <dt><code>&lt;section id="&#123; PANEL_ID &#125;" aria-hidden="true"&gt;</code></dt>
+          <dd>Content for one trigger. The ID must match that trigger's <code>aria-controls</code>. Put its navigation links inside the section.</dd>
+        </dl>
+      </dd>
+    </dl>
+  </dd>
+</dl>
+
+## Examples
+
+### RTL
+
+<Preview>
+<nav dir="rtl" class="navigation-menu" aria-label="التنقل"><ul><li><button type="button" aria-expanded="false" aria-controls="nav-rtl-docs">المستندات <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6" /></svg></button></li><li><a href="/customization/">التخصيص</a></li></ul><div data-popover aria-hidden="true"><section id="nav-rtl-docs" aria-hidden="true"><ul class="w-64"><li><a href="/introduction/">مقدمة</a></li><li><a href="/installation/">التثبيت</a></li></ul></section></div></nav>
+</Preview>
