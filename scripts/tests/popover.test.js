@@ -16,6 +16,7 @@ test('Popover autofocus runs on open and leaves subsequent focus changes alone',
   content.querySelector = () => input;
   const root = Object.assign(new EventTarget(), {
     dataset: {},
+    closest: () => null,
     querySelector: selector => selector === ':scope > button' ? trigger : content,
     contains: element => [root, trigger, content, input].includes(element),
   });

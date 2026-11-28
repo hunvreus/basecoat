@@ -62,7 +62,7 @@
     setActiveItem(state, -1);
   };
 
-  const openPopover = (root, state, initialSelection = false) => {
+  const openPopover = (root, state, initialSelection) => {
     document.dispatchEvent(new CustomEvent('basecoat:popover', { detail: { source: root } }));
     root.refresh();
     state.trigger.setAttribute('aria-expanded', 'true');
@@ -74,7 +74,7 @@
       }
     }));
 
-    if (state.items.length > 0) {
+    if (initialSelection && state.items.length > 0) {
       setActiveItem(state, initialSelection === 'last' ? state.items.length - 1 : 0);
     }
   };
@@ -95,17 +95,25 @@
 
     if (!state.menu.hasAttribute('tabindex')) state.menu.setAttribute('tabindex', '-1');
 
-    root.open = (initialSelection = false) => openPopover(root, state, initialSelection);
+    root.open = (initialSelection) => openPopover(root, state, initialSelection === 'last' ? 'last' : 'first');
     root.close = (focusOnTrigger = true) => closePopover(state, focusOnTrigger);
-    root.toggle = () => state.trigger.getAttribute('aria-expanded') === 'true' ? root.close() : root.open(false);
+    root.toggle = () => state.trigger.getAttribute('aria-expanded') === 'true' ? root.close() : root.open();
 
-    const handleTriggerClick = root.toggle;
+    const handleTriggerClick = (event) => {
+      if (state.trigger.getAttribute('aria-expanded') === 'true') root.close();
+      else openPopover(root, state, event.detail === 0 ? 'first' : false);
+    };
 
     const handleKeydown = (event) => {
       const isExpanded = state.trigger.getAttribute('aria-expanded') === 'true';
 
       if (event.key === 'Escape') {
-        if (isExpanded) root.close();
+        if (!isExpanded || event.defaultPrevented) return;
+        const dialog = event.target.closest('dialog[open]');
+        if (dialog && root.contains(dialog) && dialog.matches(':modal')) return;
+        event.preventDefault();
+        event.stopPropagation();
+        root.close();
         return;
       }
 
@@ -118,7 +126,7 @@
       if (!isExpanded) {
         if (['Enter', ' '].includes(event.key)) {
           event.preventDefault();
-          root.open(false);
+          root.open();
         } else if (event.key === 'ArrowDown') {
           event.preventDefault();
           root.open('first');

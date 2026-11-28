@@ -9,7 +9,9 @@
   }
 
   .select:not(select) > button > span {
-    @apply flex flex-1 truncate text-start;
+    @apply flex-1 truncate text-start;
+
+    &:has(> *) { @apply flex; }
   }
 
   .select:not(select) > button > svg {

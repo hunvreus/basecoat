@@ -43,6 +43,11 @@
 
     const handleKeydown = (event) => {
       if (event.key === 'Escape') {
+        if (event.defaultPrevented || trigger.getAttribute('aria-expanded') !== 'true') return;
+        const dialog = event.target.closest('dialog[open]');
+        if (dialog && popoverComponent.contains(dialog) && dialog.matches(':modal')) return;
+        event.preventDefault();
+        event.stopPropagation();
         closePopover();
       } else if (event.key === 'Tab' && trigger.getAttribute('aria-expanded') === 'true') {
         // Check focus after the browser has moved it to the next control.

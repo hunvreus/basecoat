@@ -262,11 +262,7 @@
     state.input.setAttribute('aria-expanded', 'false');
     state.trigger?.setAttribute('aria-expanded', 'false');
     setActiveOption(state, -1);
-    if (focusInput) {
-      state.skipOpenOnFocus = true;
-      state.input.focus();
-      requestAnimationFrame(() => { state.skipOpenOnFocus = false; });
-    }
+    if (focusInput) (state.popover.contains(state.input) ? state.trigger : state.input)?.focus();
   };
 
   const openPopover = (state) => {
@@ -433,7 +429,7 @@
   const initCombobox = (root) => {
     if (root.dataset.comboboxInitialized) return;
 
-    const state = { root, activeIndex: -1, allOptions: [], options: [], visibleOptions: [], selected: new Map(), format: 'value', manualFilter: false, skipOpenOnFocus: false };
+    const state = { root, activeIndex: -1, allOptions: [], options: [], visibleOptions: [], selected: new Map(), format: 'value', manualFilter: false };
     states.set(root, state);
     root.refresh = () => refreshCombobox(root);
 
@@ -464,9 +460,11 @@
       root.selectNone = () => setSelected(root, []);
     }
 
-    const handleInputFocus = () => {
-      if (state.skipOpenOnFocus) return;
-      openPopover(state);
+    const handleFocusOut = (event) => {
+      if (!root.contains(event.relatedTarget)) root.close(false);
+    };
+    const keepInputFocus = (event) => {
+      if (event.button === 0 && event.target.closest('[role="option"]')) event.preventDefault();
     };
     const handleInputClick = () => openPopover(state);
     const handleInput = () => {
@@ -510,7 +508,8 @@
       if (!root.contains(event.detail.source)) root.close(false);
     };
 
-    state.input.addEventListener('focus', handleInputFocus);
+    root.addEventListener('focusout', handleFocusOut);
+    state.listbox.addEventListener('mousedown', keepInputFocus);
     state.input.addEventListener('click', handleInputClick);
     state.input.addEventListener('input', handleInput);
     state.input.addEventListener('keydown', handleInputKeydown);
@@ -522,7 +521,8 @@
     document.addEventListener('basecoat:popover', handleDocumentPopover);
 
     root._destroy = () => {
-      state.input.removeEventListener('focus', handleInputFocus);
+      root.removeEventListener('focusout', handleFocusOut);
+      state.listbox.removeEventListener('mousedown', keepInputFocus);
       state.input.removeEventListener('click', handleInputClick);
       state.input.removeEventListener('input', handleInput);
       state.input.removeEventListener('keydown', handleInputKeydown);
