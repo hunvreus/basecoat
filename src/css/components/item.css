@@ -21,7 +21,11 @@
   }
 
   .item > figure:has(> img) {
-    @apply overflow-hidden [&_img]:size-full [&_img]:object-cover;
+    @apply overflow-hidden;
+  }
+
+  .item > figure > img {
+    @apply size-full object-cover;
   }
 
   .item > section {

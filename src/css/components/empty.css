@@ -13,7 +13,11 @@
   }
 
   .empty figure:has(img) {
-    @apply overflow-hidden [&_img]:size-full [&_img]:object-cover;
+    @apply overflow-hidden;
+  }
+
+  .empty figure img {
+    @apply size-full object-cover;
   }
 
   .empty > :is(section, footer) {

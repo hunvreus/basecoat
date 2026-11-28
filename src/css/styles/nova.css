@@ -1137,7 +1137,11 @@
   }
 
   .empty figure:has(> svg:only-child) {
-    @apply bg-muted text-foreground flex size-8 shrink-0 items-center justify-center rounded-lg [&_svg:not([class*='size-'])]:size-4;
+    @apply bg-muted text-foreground flex size-8 shrink-0 items-center justify-center rounded-lg;
+  }
+
+  .empty figure > svg:only-child:not([class*='size-']) {
+    @apply size-4;
   }
 
   .empty :is(h2, h3, h4) {
@@ -1230,8 +1234,8 @@
     @apply translate-y-0.5 self-start;
   }
 
-  .item > figure:has(> svg:only-child) {
-    @apply [&_svg:not([class*='size-'])]:size-4;
+  .item > figure > svg:only-child:not([class*='size-']) {
+    @apply size-4;
   }
 
   .item > figure:has(> img) {

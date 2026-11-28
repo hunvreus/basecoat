@@ -79,7 +79,11 @@
     }
 
     > * > header > figure:has(img) {
-      @apply overflow-hidden [&_img]:size-full [&_img]:object-cover;
+      @apply overflow-hidden;
+    }
+
+    > * > header > figure img {
+      @apply size-full object-cover;
     }
 
     > * > header > figure ~ :is(h2, p),
