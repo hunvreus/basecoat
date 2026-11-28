@@ -107,6 +107,7 @@
     root.addEventListener('mousedown', event => { pressingInside = event.button === 0; }, { signal });
     const endPress = () => { pressingInside = false; };
     document.addEventListener('mouseup', endPress, { capture: true, signal });
+    root.addEventListener('dragstart', endPress, { signal });
     window.addEventListener('blur', endPress, { signal });
     root.addEventListener('focusout', event => {
       if (pressingInside && !event.relatedTarget) return;
