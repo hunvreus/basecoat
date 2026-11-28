@@ -2,8 +2,21 @@
 
 ## [Unreleased]
 
+### Added
+
+- Added `basecoat.deferMutations()` to delay automatic initialization and cleanup until DOM updates settle. Thanks to [@sgruendel](https://github.com/hunvreus/basecoat/pull/223).
+
+### Changed
+
+- The observer now cleans up detached components before initializing additions in the same batch. Elements added and removed within one batch skip initialization.
+
 ### Fixed
 
+- Reduced Chrome style recalculation during DOM updates. Thanks to [@memleakd](https://github.com/hunvreus/basecoat/pull/236) for profiling the slowdown and supplying the benchmark.
+- Fixed Combobox opening on focus and remaining open after focus left.
+- Kept the first Dropdown Menu item unhighlighted when opened by pointer. Keyboard opening still highlights an item.
+- Restored ellipsis for long text-only Select labels.
+- Fixed Escape dismissing both a nested popup and its parent popover or modal dialog.
 - Prevented the home page title from changing line count while its font loads.
 - Restored spaces around the links in the home page footer.
 
