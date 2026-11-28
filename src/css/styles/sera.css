@@ -1,3 +1,5 @@
+@import "../base/otp-invalid.css";
+
 /* Accordion */
 @layer components {
   .accordion > details {
@@ -1038,11 +1040,13 @@
     @apply px-0 py-1 text-base md:text-sm;
   }
 
-  .input-group:not([data-orientation='vertical']):has(> :is([data-align='start'], [data-align='inline-start'])) > :is(input, select, [data-control]) {
+  .input-group:not([data-orientation='vertical']) > :is([data-align='start'], [data-align='inline-start']) ~ :is(input, select, [data-control]),
+  .input-group:not([data-orientation='vertical']) > :is(input, select, [data-control]):has(~ :is([data-align='start'], [data-align='inline-start'])) {
     @apply ps-2;
   }
 
-  .input-group:not([data-orientation='vertical']):has(> :is([data-align='end'], [data-align='inline-end'])) > :is(input, select, [data-control]) {
+  .input-group:not([data-orientation='vertical']) > :is([data-align='end'], [data-align='inline-end']) ~ :is(input, select, [data-control]),
+  .input-group:not([data-orientation='vertical']) > :is(input, select, [data-control]):has(~ :is([data-align='end'], [data-align='inline-end'])) {
     @apply pe-2;
   }
 
@@ -1090,11 +1094,13 @@
     @apply px-0 pb-3;
   }
 
-  .input-group[data-orientation='vertical']:has(> input) > :is(header[data-align='start'], [data-align='block-start']) {
+  .input-group[data-orientation='vertical'] > input ~ :is(header[data-align='start'], [data-align='block-start']),
+  .input-group[data-orientation='vertical'] > :is(header[data-align='start'], [data-align='block-start']):has(~ input) {
     @apply pt-3.5;
   }
 
-  .input-group[data-orientation='vertical']:has(> input) > :is(footer[data-align='end'], [data-align='block-end']) {
+  .input-group[data-orientation='vertical'] > input ~ :is(footer[data-align='end'], [data-align='block-end']),
+  .input-group[data-orientation='vertical'] > :is(footer[data-align='end'], [data-align='block-end']):has(~ input) {
     @apply pb-3.5;
   }
 
@@ -1758,6 +1764,10 @@
   .input-otp > div > div > span { @apply border-transparent border-b-input bg-transparent data-[active]:border-b-ring size-10 border text-sm transition-[color,border-color] outline-none first:rounded-none last:rounded-none; }
   .input-otp > div > svg { @apply size-3.5 shrink-0; }
   .input-otp > div > div > span[data-caret]::after { @apply h-4 w-px bg-foreground; }
-  .input-otp:has(> input[aria-invalid='true']) > div > div > span { @apply border-b-destructive dark:border-b-destructive/50; }
+  .input-otp {
+    @variant basecoat-otp-invalid {
+      > div > div > span { @apply border-b-destructive dark:border-b-destructive/50; }
+    }
+  }
 
 }

@@ -22,17 +22,23 @@
     @apply w-full;
   }
 
-  .input-group:is([data-orientation='vertical'], :has(> [data-align='block-start']), :has(> [data-align='block-end'])) > :is(input, select, [data-control]) {
+  .input-group[data-orientation='vertical'] > :is(input, select, [data-control]),
+  .input-group > :is([data-align='block-start'], [data-align='block-end']) ~ :is(input, select, [data-control]),
+  .input-group > :is(input, select, [data-control]):has(~ :is([data-align='block-start'], [data-align='block-end'])) {
     @apply h-auto flex-none;
   }
 
-  .input-group[data-orientation='vertical']:has(> footer[data-align='end']) > :is(input, select, [data-control]),
-  .input-group:has(> [data-align='block-end']) > :is(input, select, [data-control]) {
+  .input-group[data-orientation='vertical'] > footer[data-align='end'] ~ :is(input, select, [data-control]),
+  .input-group[data-orientation='vertical'] > :is(input, select, [data-control]):has(~ footer[data-align='end']),
+  .input-group > [data-align='block-end'] ~ :is(input, select, [data-control]),
+  .input-group > :is(input, select, [data-control]):has(~ [data-align='block-end']) {
     @apply pt-3;
   }
 
-  .input-group[data-orientation='vertical']:has(> header[data-align='start']) > :is(input, select, [data-control]),
-  .input-group:has(> [data-align='block-start']) > :is(input, select, [data-control]) {
+  .input-group[data-orientation='vertical'] > header[data-align='start'] ~ :is(input, select, [data-control]),
+  .input-group[data-orientation='vertical'] > :is(input, select, [data-control]):has(~ header[data-align='start']),
+  .input-group > [data-align='block-start'] ~ :is(input, select, [data-control]),
+  .input-group > :is(input, select, [data-control]):has(~ [data-align='block-start']) {
     @apply pb-3;
   }
 

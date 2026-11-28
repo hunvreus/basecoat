@@ -1,0 +1,9 @@
+/* Check the state on the OTP root once, regardless of the order of its input and slots. */
+@custom-variant basecoat-otp-invalid {
+  @supports at-rule(@container) {
+    @container style(--_otp-invalid: 1) { @slot; }
+  }
+  @supports not at-rule(@container) {
+    &:has(> input[aria-invalid='true']) { @slot; }
+  }
+}

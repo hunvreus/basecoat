@@ -147,7 +147,13 @@
     @apply bg-muted text-foreground;
   }
 
-  .command:has(> header input:not(:placeholder-shown)) [role='separator'] {
-    @apply hidden;
+  .command:has(> header input:not(:placeholder-shown)) {
+    --_command-filtering: 1;
+  }
+  @container style(--_command-filtering: 1) {
+    .command [role='separator'] { @apply hidden; }
+  }
+  @supports not at-rule(@container) {
+    .command:has(> header input:not(:placeholder-shown)) [role='separator'] { @apply hidden; }
   }
 }

@@ -17,7 +17,17 @@
   :is(a, button, summary).trace-line {
     @apply cursor-pointer;
   }
-  details:has(> summary.trace-line) { @apply transition-details; }
+  /* Query the disclosure itself so its pseudo-element does not invalidate unrelated DOM. */
+  @supports at-rule(@container) {
+    details { --_trace-disclosure: 0; }
+    details:has(> summary.trace-line) { --_trace-disclosure: 1; }
+    @container style(--_trace-disclosure: 1) {
+      details { @apply transition-details; }
+    }
+  }
+  @supports not at-rule(@container) {
+    details:has(> summary.trace-line) { @apply transition-details; }
+  }
   summary.trace-line::-webkit-details-marker { display: none; }
   summary.trace-line::after {
     content: '';

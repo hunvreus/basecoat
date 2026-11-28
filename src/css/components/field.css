@@ -13,11 +13,34 @@
     @apply flex w-full flex-col data-invalid:text-destructive data-[invalid=true]:text-destructive [&>*]:w-full [&>.sr-only]:w-auto;
 
     &[data-orientation='horizontal'] {
-      @apply flex-row items-center [&>*]:w-auto [&>label]:flex-auto has-[>section]:items-start has-[>section]:[&>section]:flex-1 has-[>section]:[&>[type=checkbox],[type=radio]]:mt-px [&_p]:text-balance;
+      @apply flex-row items-center [&>*]:w-auto [&>label]:flex-auto has-[>section]:items-start [&_p]:text-balance;
     }
 
     &[data-orientation='responsive'] {
-      @apply flex-col @md/field-group:flex-row @md/field-group:items-center @md/field-group:[&>*]:w-auto @md/field-group:has-[>section]:items-start @md/field-group:[&>label]:flex-auto @md/field-group:has-[>section]:[&>[type=checkbox],[type=radio]]:mt-px;
+      @apply flex-col @md/field-group:flex-row @md/field-group:items-center @md/field-group:[&>*]:w-auto @md/field-group:has-[>section]:items-start @md/field-group:[&>label]:flex-auto;
+    }
+
+    /* A checkbox belongs to its immediate field. Radios may be nested within a section. */
+    --_field-checkbox-offset: initial;
+    &[data-orientation='horizontal']:has(> section) {
+      --_field-checkbox-offset: 1px;
+      --_field-radio-offset: 1px;
+    }
+    &[data-orientation='responsive']:has(> section) {
+      @apply @md/field-group:[--_field-checkbox-offset:1px] @md/field-group:[--_field-radio-offset:1px];
+    }
+
+    @supports (margin-top: revert-rule) {
+      > [type='checkbox'] { margin-top: var(--_field-checkbox-offset, revert-rule); }
+      [type='radio'] { margin-top: var(--_field-radio-offset, revert-rule); }
+    }
+    @supports not (margin-top: revert-rule) {
+      &[data-orientation='horizontal']:has(> section) {
+        > [type='checkbox'], [type='radio'] { @apply mt-px; }
+      }
+      &[data-orientation='responsive']:has(> section) {
+        > [type='checkbox'], [type='radio'] { @apply @md/field-group:mt-px; }
+      }
     }
 
     section {

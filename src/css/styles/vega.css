@@ -1,3 +1,5 @@
+@import "../base/otp-invalid.css";
+
 /* Accordion */
 @layer components {
   .accordion > details {
@@ -1021,11 +1023,13 @@
     @apply px-2.5 py-1 text-base md:text-sm;
   }
 
-  .input-group:not([data-orientation='vertical']):has(> :is([data-align='start'], [data-align='inline-start'])) > :is(input, select, [data-control]) {
+  .input-group:not([data-orientation='vertical']) > :is([data-align='start'], [data-align='inline-start']) ~ :is(input, select, [data-control]),
+  .input-group:not([data-orientation='vertical']) > :is(input, select, [data-control]):has(~ :is([data-align='start'], [data-align='inline-start'])) {
     @apply ps-1.5;
   }
 
-  .input-group:not([data-orientation='vertical']):has(> :is([data-align='end'], [data-align='inline-end'])) > :is(input, select, [data-control]) {
+  .input-group:not([data-orientation='vertical']) > :is([data-align='end'], [data-align='inline-end']) ~ :is(input, select, [data-control]),
+  .input-group:not([data-orientation='vertical']) > :is(input, select, [data-control]):has(~ :is([data-align='end'], [data-align='inline-end'])) {
     @apply pe-1.5;
   }
 
@@ -1089,11 +1093,13 @@
     @apply px-2.5 pb-2;
   }
 
-  .input-group[data-orientation='vertical']:has(> input) > :is(header[data-align='start'], [data-align='block-start']) {
+  .input-group[data-orientation='vertical'] > input ~ :is(header[data-align='start'], [data-align='block-start']),
+  .input-group[data-orientation='vertical'] > :is(header[data-align='start'], [data-align='block-start']):has(~ input) {
     @apply pt-2;
   }
 
-  .input-group[data-orientation='vertical']:has(> input) > :is(footer[data-align='end'], [data-align='block-end']) {
+  .input-group[data-orientation='vertical'] > input ~ :is(footer[data-align='end'], [data-align='block-end']),
+  .input-group[data-orientation='vertical'] > :is(footer[data-align='end'], [data-align='block-end']):has(~ input) {
     @apply pb-2;
   }
 
@@ -1750,8 +1756,12 @@
   .input-otp > div > div > span { @apply dark:bg-input/30 border-input data-[active]:border-ring data-[active]:ring-ring/50 size-9 border-y border-e text-sm shadow-xs transition-all outline-none first:rounded-s-md first:border-s last:rounded-e-md data-[active]:ring-3; }
   .input-otp > div > svg { @apply size-4 shrink-0; }
   .input-otp > div > div > span[data-caret]::after { @apply h-4 w-px bg-foreground; }
-  .input-otp:has(> input[aria-invalid='true']) > div > div > span { @apply border-destructive; }
-  .input-otp:has(> input[aria-invalid='true']) > div > div { @apply ring-3 ring-destructive/20 dark:ring-destructive/40; }
-  .input-otp:has(> input[aria-invalid='true']) > div > div > span[data-active] { @apply border-destructive ring-destructive/20 dark:ring-destructive/40; }
+  .input-otp {
+    @variant basecoat-otp-invalid {
+      > div > div > span { @apply border-destructive; }
+      > div > div { @apply ring-3 ring-destructive/20 dark:ring-destructive/40; }
+      > div > div > span[data-active] { @apply border-destructive ring-destructive/20 dark:ring-destructive/40; }
+    }
+  }
 
 }

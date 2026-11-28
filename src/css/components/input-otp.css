@@ -5,8 +5,10 @@
 }
 @layer components {
   .input-otp {
+    --_otp-invalid: 0;
     @apply relative inline-flex max-w-full items-center has-disabled:opacity-50;
   }
+  .input-otp:has(> input[aria-invalid='true']) { --_otp-invalid: 1; }
   .input-otp > div { display: none; }
   .input-otp[data-input-otp-initialized] > input {
     @apply absolute inset-0 z-20 h-full w-full cursor-text opacity-0;
