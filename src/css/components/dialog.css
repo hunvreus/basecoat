@@ -79,10 +79,15 @@
     }
 
     > * > header > figure:has(img) {
-      @apply overflow-hidden [&_img]:size-full [&_img]:object-cover;
+      @apply overflow-hidden;
     }
 
-    > * > header:has(> figure) > :is(h2, p) {
+    > * > header > figure img {
+      @apply size-full object-cover;
+    }
+
+    > * > header > figure ~ :is(h2, p),
+    > * > header > :is(h2, p):has(~ figure) {
       @apply sm:col-start-2;
     }
 
@@ -100,8 +105,10 @@
       @apply sm:grid-rows-[auto_auto_1fr];
     }
 
-    &:is([data-size='sm']) > * > header:has(> figure) > :is(h2, p),
-    > [data-size='sm'] > header:has(> figure) > :is(h2, p) {
+    &:is([data-size='sm']) > * > header > figure ~ :is(h2, p),
+    &:is([data-size='sm']) > * > header > :is(h2, p):has(~ figure),
+    > [data-size='sm'] > header > figure ~ :is(h2, p),
+    > [data-size='sm'] > header > :is(h2, p):has(~ figure) {
       @apply sm:col-start-auto;
     }
 

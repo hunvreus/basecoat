@@ -239,7 +239,8 @@
   }
 
 
-  .alert:has(> svg) > :is(h2, h3, h4, h5, h6, strong, [data-title]) {
+  .alert > svg ~ :is(h2, h3, h4, h5, h6, strong, [data-title]),
+  .alert > :is(h2, h3, h4, h5, h6, strong, [data-title]):has(~ svg) {
     @apply col-start-2;
   }
   .alert > section {
@@ -287,11 +288,11 @@
     @apply bg-muted text-muted-foreground size-8 rounded-full text-xs [&>svg]:size-4;
   }
 
-  .avatar-group:has(> .avatar[data-size='sm']) > [data-count] {
+  .avatar-group > .avatar[data-size='sm'] ~ [data-count] {
     @apply size-6 [&>svg]:size-3;
   }
 
-  .avatar-group:has(> .avatar[data-size='lg']) > [data-count] {
+  .avatar-group > .avatar[data-size='lg'] ~ [data-count] {
     @apply size-10 [&>svg]:size-5;
   }
 
@@ -1007,11 +1008,13 @@
     @apply px-2.5 py-1 text-xs;
   }
 
-  .input-group:not([data-orientation='vertical']):has(> :is([data-align='start'], [data-align='inline-start'])) > :is(input, select, [data-control]) {
+  .input-group:not([data-orientation='vertical']) > :is([data-align='start'], [data-align='inline-start']) ~ :is(input, select, [data-control]),
+  .input-group:not([data-orientation='vertical']) > :is(input, select, [data-control]):has(~ :is([data-align='start'], [data-align='inline-start'])) {
     @apply ps-1.5;
   }
 
-  .input-group:not([data-orientation='vertical']):has(> :is([data-align='end'], [data-align='inline-end'])) > :is(input, select, [data-control]) {
+  .input-group:not([data-orientation='vertical']) > :is([data-align='end'], [data-align='inline-end']) ~ :is(input, select, [data-control]),
+  .input-group:not([data-orientation='vertical']) > :is(input, select, [data-control]):has(~ :is([data-align='end'], [data-align='inline-end'])) {
     @apply pe-1.5;
   }
 
@@ -1075,11 +1078,13 @@
     @apply px-2.5 pb-2;
   }
 
-  .input-group[data-orientation='vertical']:has(> input) > :is(header[data-align='start'], [data-align='block-start']) {
+  .input-group[data-orientation='vertical'] > input ~ :is(header[data-align='start'], [data-align='block-start']),
+  .input-group[data-orientation='vertical'] > :is(header[data-align='start'], [data-align='block-start']):has(~ input) {
     @apply pt-2;
   }
 
-  .input-group[data-orientation='vertical']:has(> input) > :is(footer[data-align='end'], [data-align='block-end']) {
+  .input-group[data-orientation='vertical'] > input ~ :is(footer[data-align='end'], [data-align='block-end']),
+  .input-group[data-orientation='vertical'] > :is(footer[data-align='end'], [data-align='block-end']):has(~ input) {
     @apply pb-2;
   }
 
@@ -1119,7 +1124,11 @@
   }
 
   .empty figure:has(> svg:only-child) {
-    @apply bg-muted text-foreground flex size-8 shrink-0 items-center justify-center rounded-none [&_svg:not([class*='size-'])]:size-4;
+    @apply bg-muted text-foreground flex size-8 shrink-0 items-center justify-center rounded-none;
+  }
+
+  .empty figure > svg:only-child:not([class*='size-']) {
+    @apply size-4;
   }
 
   .empty :is(h2, h3, h4) {
@@ -1142,7 +1151,7 @@
     @apply px-2.5 text-xs font-medium text-muted-foreground;
   }
   .message:has(.bubble[data-variant='ghost']) > div:last-child > :is(header, footer) { @apply px-0; }
-  .message:has(> div:last-child > footer) > .avatar { @apply -translate-y-8; }
+  .message > .avatar:has(~ div:last-child > footer) { @apply -translate-y-8; }
 
   /* Trace */
   .trace { @apply gap-2; }
@@ -1207,12 +1216,13 @@
     @apply gap-2;
   }
 
-  .item:has(p) > figure {
+  .item > p ~ figure,
+  .item > figure:has(p, ~ p, ~ * p) {
     @apply translate-y-0.5 self-start;
   }
 
-  .item > figure:has(> svg:only-child) {
-    @apply [&_svg:not([class*='size-'])]:size-4;
+  .item > figure > svg:only-child:not([class*='size-']) {
+    @apply size-4;
   }
 
   .item > figure:has(> img) {
@@ -1736,9 +1746,9 @@
   .code-block[data-size='sm'] > div { @apply top-1.5 end-1.5; }
   .code-block > div > button { @apply bg-background ring-1 ring-foreground/10; }
   .code-block > pre { @apply leading-relaxed; padding: var(--_code-padding); }
-  .code-block:has(> header) > pre { @apply pt-2; }
-  .code-block:has(> footer) > pre { @apply pb-2; }
-  .code-block[data-size='sm']:has(> header) > pre { @apply pt-1.5; }
+  .code-block > header ~ pre, .code-block > pre:has(~ header) { @apply pt-2; }
+  .code-block > footer ~ pre, .code-block > pre:has(~ footer) { @apply pb-2; }
+  .code-block[data-size='sm'] > header ~ pre, .code-block[data-size='sm'] > pre:has(~ header) { @apply pt-1.5; }
   .code-block > pre > code > span { margin-inline: calc(-1 * var(--_code-padding)); padding-inline: var(--_code-padding); }
   .code-block > pre > code > span::before { @apply text-end text-muted-foreground; }
 
@@ -1748,8 +1758,8 @@
   .input-otp > div > div > span { @apply dark:bg-input/30 border-input data-[active]:border-ring data-[active]:ring-ring/50 size-8 border-y border-e text-xs transition-all outline-none first:rounded-none first:border-s last:rounded-none data-[active]:ring-1; }
   .input-otp > div > svg { @apply size-4 shrink-0; }
   .input-otp > div > div > span[data-caret]::after { @apply h-4 w-px bg-foreground; }
-  .input-otp:has(> input[aria-invalid='true']) > div > div > span { @apply border-destructive; }
-  .input-otp:has(> input[aria-invalid='true']) > div > div { @apply ring-1 ring-destructive/20 dark:ring-destructive/40; }
-  .input-otp:has(> input[aria-invalid='true']) > div > div > span[data-active] { @apply border-destructive ring-destructive/20 dark:ring-destructive/40; }
+  .input-otp > input[aria-invalid='true'] ~ div > div > span { @apply border-destructive; }
+  .input-otp > input[aria-invalid='true'] ~ div > div { @apply ring-1 ring-destructive/20 dark:ring-destructive/40; }
+  .input-otp > input[aria-invalid='true'] ~ div > div > span[data-active] { @apply border-destructive ring-destructive/20 dark:ring-destructive/40; }
 
 }

@@ -17,7 +17,7 @@
   :is(a, button, summary).trace-line {
     @apply cursor-pointer;
   }
-  details:has(> summary.trace-line) { @apply transition-details; }
+  .trace > li > details { @apply transition-details; }
   summary.trace-line::-webkit-details-marker { display: none; }
   summary.trace-line::after {
     content: '';
