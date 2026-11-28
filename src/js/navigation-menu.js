@@ -15,6 +15,7 @@
     let openTimer;
     let closeTimer;
     let hoverOpened = false;
+    let pressingInside = false;
     const clearTimers = () => { clearTimeout(openTimer); clearTimeout(closeTimer); };
     const available = el => !el.disabled && el.getAttribute('aria-disabled') !== 'true' &&
       el.getClientRects().length > 0 && getComputedStyle(el).visibility === 'visible' && !el.closest('[inert]');
@@ -102,9 +103,17 @@
     root.addEventListener('pointerleave', event => { if (event.pointerType === 'mouse') scheduleClose(); }, { signal });
     window.addEventListener('resize', position, { signal });
     root.addEventListener('pointerenter', event => { if (event.pointerType === 'mouse') clearTimeout(closeTimer); }, { signal });
-    root.addEventListener('focusout', () => requestAnimationFrame(() => {
-      if (!root.contains(document.activeElement) && (!hoverOpened || !root.matches(':hover'))) close();
-    }), { signal });
+    // WebKit clears focus while pressing a link. Let its click finish before hiding the panel.
+    root.addEventListener('mousedown', event => { pressingInside = event.button === 0; }, { signal });
+    const endPress = () => { pressingInside = false; };
+    document.addEventListener('mouseup', endPress, { capture: true, signal });
+    window.addEventListener('blur', endPress, { signal });
+    root.addEventListener('focusout', event => {
+      if (pressingInside && !event.relatedTarget) return;
+      requestAnimationFrame(() => {
+        if (!root.contains(document.activeElement) && (!hoverOpened || !root.matches(':hover'))) close();
+      });
+    }, { signal });
     root.addEventListener('keydown', event => {
       if (event.defaultPrevented) return;
       if (event.key === 'Escape' && active) {

@@ -70,6 +70,10 @@ async function navigation(page) {
     assert.equal(await page.evaluate(() => document.activeElement.textContent), 'Last');
     assert.equal(await expanded(first), 'false');
   }
+  await first.click();
+  await page.locator('#first a').click({ delay: 150 });
+  await page.waitForFunction(() => location.hash === '#one');
+  assert.equal(await expanded(first), 'false');
 }
 
 async function nestedEscape(page) {
