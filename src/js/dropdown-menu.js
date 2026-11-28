@@ -179,7 +179,8 @@
         nextIndex = state.items.length - 1;
       } else if (['Enter', ' '].includes(event.key)) {
         event.preventDefault();
-        state.items[state.activeIndex]?.click();
+        if (state.activeIndex < 0) return;
+        state.items[state.activeIndex].click();
         root.close();
         return;
       } else {

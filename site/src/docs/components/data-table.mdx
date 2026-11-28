@@ -1,5 +1,4 @@
 import DataTableExample from '../../components/DataTableExample.astro';
-import paymentsModule from '../../scripts/data-table-example.js?url';
 
 # Data Table
 
@@ -30,7 +29,7 @@ Copy the table and its controls from the **Code** tab into your page body. Put t
   </Step>
   <Step title="Connect the controls">
 
-<a href={paymentsModule} download="payments.js" hx-boost="false">Download payments.js</a> and save it beside your HTML file. This is the script the preview uses to connect the controls to the table and keep rows selected across pages. Add this at the end of the page body:
+<a href="/examples/payments.js" download="payments.js" hx-boost="false">Download payments.js</a> and save it beside your HTML file. This is the script the preview uses to connect the controls to the table and keep rows selected across pages. Add this at the end of the page body:
 
 ```html
 <script type="module">

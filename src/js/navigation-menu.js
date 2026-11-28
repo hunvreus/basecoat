@@ -16,7 +16,10 @@
     let closeTimer;
     let hoverOpened = false;
     const clearTimers = () => { clearTimeout(openTimer); clearTimeout(closeTimer); };
-    const focusable = panel => Array.from(panel.querySelectorAll('a[href], button:not(:disabled)')).filter(el => el.getAttribute('aria-disabled') !== 'true');
+    const available = el => !el.disabled && el.getAttribute('aria-disabled') !== 'true' &&
+      el.checkVisibility({ visibilityProperty: true }) && !el.closest('[inert]');
+    const topItems = () => Array.from(list.querySelectorAll(':scope > li > :is(button, a[href])')).filter(available);
+    const focusable = panel => Array.from(panel.querySelectorAll('a[href], button')).filter(available);
     const position = () => {
       if (!active) return;
       const panel = panels.get(active);
@@ -98,10 +101,18 @@
     window.addEventListener('resize', position, { signal });
     root.addEventListener('pointerenter', event => { if (event.pointerType === 'mouse') clearTimeout(closeTimer); }, { signal });
     root.addEventListener('focusout', () => requestAnimationFrame(() => {
-      if (!root.contains(document.activeElement) && !root.matches(':hover')) close();
+      if (!root.contains(document.activeElement) && (!hoverOpened || !root.matches(':hover'))) close();
     }), { signal });
     root.addEventListener('keydown', event => {
-      if (event.key === 'Escape' && active) { event.preventDefault(); close(true); return; }
+      if (event.defaultPrevented) return;
+      if (event.key === 'Escape' && active) {
+        const dialog = event.target.closest('dialog[open]');
+        if (dialog && root.contains(dialog) && dialog.matches(':modal')) return;
+        event.preventDefault();
+        event.stopPropagation();
+        close(true);
+        return;
+      }
       if (active && panels.get(active).contains(event.target) && ['ArrowDown', 'ArrowRight', 'ArrowUp', 'ArrowLeft'].includes(event.key)) {
         const links = focusable(panels.get(active));
         const index = links.indexOf(event.target);
@@ -125,12 +136,12 @@
           return;
         }
         if (!event.shiftKey && event.target === links.at(-1)) {
-          const topItems = Array.from(list.querySelectorAll(':scope > li > :is(button, a)')).filter(el => !el.disabled && el.getAttribute('aria-disabled') !== 'true');
-          const next = topItems[topItems.indexOf(active) + 1];
+          const items = topItems();
+          const next = items[items.indexOf(active) + 1];
           if (next) { event.preventDefault(); close(); next.focus(); }
         }
       }
-      const items = Array.from(list.querySelectorAll(':scope > li > :is(button, a)')).filter(el => !el.disabled && el.getAttribute('aria-disabled') !== 'true');
+      const items = topItems();
       const index = items.indexOf(event.target);
       if (index < 0) return;
       const rtl = getComputedStyle(root).direction === 'rtl';
@@ -144,7 +155,7 @@
         show(event.target);
         const trigger = event.target;
         requestAnimationFrame(() => requestAnimationFrame(() => {
-          if (active === trigger) focusable(panels.get(trigger))[0]?.focus();
+          if (active === trigger && document.activeElement === trigger) focusable(panels.get(trigger))[0]?.focus();
         }));
         return;
       } else return;
@@ -154,7 +165,7 @@
     }, { signal });
     viewport.addEventListener('click', event => { if (event.target.closest('a')) close(); }, { signal });
     document.addEventListener('click', event => { if (!root.contains(event.target)) close(); }, { signal });
-    document.addEventListener('keydown', event => { if (event.key === 'Escape' && active && !root.contains(event.target)) close(); }, { signal });
+    document.addEventListener('keydown', event => { if (event.key === 'Escape' && !event.defaultPrevented && active && !root.contains(event.target)) close(); }, { signal });
     document.addEventListener('basecoat:popover', event => { if (!root.contains(event.detail?.source)) close(); }, { signal });
     viewport.setAttribute('aria-hidden', 'true');
     root.dataset.navigationMenuInitialized = 'true';

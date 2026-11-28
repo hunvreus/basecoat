@@ -10,6 +10,7 @@ test('hovering a top-level link closes an open menu and cancels pending opens', 
     const attrs = new Map();
     return Object.assign(new EventTarget(), {
       dataset: {}, style: {},
+      checkVisibility: () => true, closest: () => null,
       getAttribute: name => attrs.get(name),
       setAttribute: (name, value) => attrs.set(name, value),
       getBoundingClientRect: () => ({ left: 0, right: 100 }),
@@ -21,10 +22,12 @@ test('hovering a top-level link closes an open menu and cancels pending opens', 
   panel.parentElement = viewport;
   panel.offsetWidth = 100;
   panel.offsetHeight = 100;
-  const list = { querySelectorAll: selector => selector.includes('button[aria-controls]') ? [trigger] : selector.includes(':is(button, a)') ? [trigger, link] : [link] };
+  const list = { querySelectorAll: selector => selector.includes('button[aria-controls]') ? [trigger] : selector.includes(':is(button, a[href])') ? [trigger, link] : [link] };
   let focused = null;
-  const item = { getAttribute: () => null, focus: () => { focused = item; } };
-  const second = { getAttribute: () => null, focus: () => { focused = second; } };
+  const item = element();
+  item.focus = () => { focused = item; };
+  const second = element();
+  second.focus = () => { focused = second; };
   panel.querySelectorAll = () => [item, second];
   panel.contains = node => node === item || node === second;
   trigger.getBoundingClientRect = () => ({ left: 950, right: 1000 });
@@ -32,7 +35,7 @@ test('hovering a top-level link closes an open menu and cancels pending opens', 
     querySelector: selector => selector === ':scope > ul' ? list : viewport,
     contains: node => [root, list, trigger, link, viewport, panel].includes(node),
   });
-  const document = Object.assign(new EventTarget(), { getElementById: () => panel, documentElement: { clientWidth: 1024 } });
+  const document = Object.assign(new EventTarget(), { activeElement: trigger, getElementById: () => panel, documentElement: { clientWidth: 1024 } });
   let pending;
   const frames = [];
   const window = Object.assign(new EventTarget(), { basecoat: { register: (_name, _selector, init) => init(root) } });

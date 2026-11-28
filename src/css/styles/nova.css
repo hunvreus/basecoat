@@ -1,5 +1,3 @@
-@import "../base/otp-invalid.css";
-
 /* Accordion */
 @layer components {
   .accordion > details {

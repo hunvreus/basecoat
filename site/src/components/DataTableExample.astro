@@ -99,8 +99,11 @@ ${rows}
   </div>
   <output class="sr-only"></output>
 </div>`;
+const source = `${html}\n<style>\n${paymentStyles.trimEnd()}\n</style>`;
 ---
-<Preview code={`${html}\n<style>\n${paymentStyles.trimEnd()}\n</style>`} class="w-full"><Fragment set:html={html} /></Preview>
+{Astro.locals.markdownExamples ? <template data-md-example="DataTableExample" data-source={encodeURIComponent(source)}></template> : (
+<Preview code={source} class="w-full"><Fragment set:html={html} /></Preview>
+)}
 <script>
   import { DataTable } from 'simple-datatables';
   import { mountPayments } from '../scripts/data-table-example.js';

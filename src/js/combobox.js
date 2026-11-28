@@ -464,7 +464,13 @@
       if (!root.contains(event.relatedTarget)) root.close(false);
     };
     const keepInputFocus = (event) => {
-      if (event.button === 0 && event.target.closest('[role="option"]')) event.preventDefault();
+      if (event.button !== 0 || document.activeElement !== state.input || event.target === state.input) return;
+      const button = event.target.closest('button');
+      const managedButton = button && (button === state.trigger || button === state.clearButton ||
+        button.classList.contains('combobox-chip-remove'));
+      const popupBackground = state.popover.contains(event.target) &&
+        !event.target.closest('a[href], button, input, textarea, select, [contenteditable="true"]');
+      if (managedButton || popupBackground || event.target.closest('[role="option"]')) event.preventDefault();
     };
     const handleInputClick = () => openPopover(state);
     const handleInput = () => {
@@ -480,7 +486,7 @@
     };
     const handleTriggerClick = () => {
       if (state.popover.getAttribute('aria-hidden') === 'false') {
-        root.close(false);
+        root.close(state.popover.contains(document.activeElement));
       } else {
         openPopover(state);
       }
@@ -509,7 +515,7 @@
     };
 
     root.addEventListener('focusout', handleFocusOut);
-    state.listbox.addEventListener('mousedown', keepInputFocus);
+    root.addEventListener('mousedown', keepInputFocus);
     state.input.addEventListener('click', handleInputClick);
     state.input.addEventListener('input', handleInput);
     state.input.addEventListener('keydown', handleInputKeydown);
@@ -522,7 +528,7 @@
 
     root._destroy = () => {
       root.removeEventListener('focusout', handleFocusOut);
-      state.listbox.removeEventListener('mousedown', keepInputFocus);
+      root.removeEventListener('mousedown', keepInputFocus);
       state.input.removeEventListener('click', handleInputClick);
       state.input.removeEventListener('input', handleInput);
       state.input.removeEventListener('keydown', handleInputKeydown);

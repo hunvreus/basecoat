@@ -1,5 +1,3 @@
-@import "../base/otp-invalid.css";
-
 /* Accordion */
 @layer components {
   .accordion > details {
@@ -1766,7 +1764,7 @@
   .input-otp > div > div > span[data-caret]::after { @apply h-4 w-px bg-foreground; }
   .input-otp {
     @variant basecoat-otp-invalid {
-      > div > div > span { @apply border-b-destructive dark:border-b-destructive/50; }
+      > div > div > span, > div > div > span[data-active] { @apply border-b-destructive dark:border-b-destructive/50; }
     }
   }
 

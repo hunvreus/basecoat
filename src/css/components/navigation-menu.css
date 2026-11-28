@@ -5,12 +5,12 @@
   .navigation-menu > ul > li > button > svg:last-child { @apply pointer-events-none shrink-0 transition-transform motion-reduce:transition-none; }
   .navigation-menu > ul > li > button[aria-expanded='true'] > svg:last-child { @apply rotate-180; }
   .navigation-menu > [data-popover] {
-    @apply overflow-hidden max-w-[calc(100vw-2rem)] transition-[left,width,height,opacity,scale,translate];
+    @apply overflow-hidden max-w-[calc(100vw-2rem)] transition-[width,height,opacity,scale,translate,visibility];
     min-width: 0;
   }
   .navigation-menu > [data-popover]:not([data-side]) { @apply mt-2; }
   .navigation-menu > [data-popover] > section {
-    @apply absolute start-0 top-0 opacity-0 invisible transition-[opacity,transform,visibility];
+    @apply absolute start-0 top-0 w-max opacity-0 invisible transition-[opacity,transform,visibility];
     max-width: calc(100vw - 2rem);
   }
   .navigation-menu > [data-popover] > section[aria-hidden='false'] { @apply visible opacity-100; }

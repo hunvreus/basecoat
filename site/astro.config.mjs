@@ -59,6 +59,11 @@ export default defineConfig({
       },
       site: {
         title: 'Basecoat',
+        markdownExamples: {
+          'components/code-block': ['CodeBlockExample'],
+          'components/data-table': ['DataTableExample'],
+          'components/chart': ['ChartExamples'],
+        },
         markdownVariables: { basecoatVersion: packageJson.version },
         llmsIntro: `> Basecoat provides shadcn/ui-style components in semantic HTML, Tailwind CSS, and vanilla JavaScript.
 

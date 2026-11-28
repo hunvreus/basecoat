@@ -168,6 +168,16 @@ function checkSite() {
   }
   const { version } = JSON.parse(fs.readFileSync(path.join(root, 'package.json'), 'utf8'));
   const stylesheet = `https://cdn.jsdelivr.net/npm/basecoat-css@${version}/dist/basecoat.cdn.min.css`;
+  const table = fs.readFileSync(path.join(dist, 'components/data-table.md'), 'utf8');
+  const download = table.match(/<a href="([^"]+)" download="payments.js"/)?.[1];
+  if (!download || !fs.existsSync(path.join(dist, download)) || !table.includes('data-payments-example')) {
+    errors.push('The Data Table Markdown must include the example markup and a downloadable script');
+  }
+  for (const file of ['components/data-table.md', 'components/code-block.md', 'components/chart.md', 'llms-full.txt']) {
+    if (/<(?:DataTableExample|CodeBlockExample|ChartExamples)\b/.test(fs.readFileSync(path.join(dist, file), 'utf8'))) {
+      errors.push(`${file} contains an unrendered example component`);
+    }
+  }
   for (const file of ['installation.md', 'components/combobox.md', 'llms-full.txt']) {
     if (!fs.existsSync(path.join(dist, file))) {
       errors.push(`Missing ${file}`);

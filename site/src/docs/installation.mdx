@@ -277,6 +277,8 @@ See [Templates](/templates) for the available macros and arguments.
 | `basecoat-css/command` | Command controller. |
 | `basecoat-css/drawer` | Drawer and Sheet controller. |
 | `basecoat-css/dropdown-menu` | Dropdown Menu controller. |
+| `basecoat-css/hover-card` | Hover Card controller. |
+| `basecoat-css/navigation-menu` | Navigation Menu controller. |
 | `basecoat-css/input-otp` | Input OTP visual slots and editing. |
 | `basecoat-css/popover` | Popover controller. |
 | `basecoat-css/range` | Slider/range controller. |
@@ -296,6 +298,8 @@ These components need JavaScript for behavior:
 - [Command](/components/command)
 - [Drawer](/components/drawer)
 - [Dropdown Menu](/components/dropdown-menu)
+- [Hover Card](/components/hover-card)
+- [Navigation Menu](/components/navigation-menu)
 - [Input OTP](/components/input-otp) (visual slots)
 - [Popover](/components/popover)
 - [Select](/components/select)
@@ -334,7 +338,7 @@ try {
 - When the last lease is released, Basecoat destroys components that are still detached and initializes added components that are still in the document.
 - Page-load initialization, `init()`, `initAll()` and `refresh()` are not deferred.
 
-Unlike `stop()`, deferral keeps the removals Basecoat needs for cleanup. If `stop()` is called while a lease is held, the release still cleans up detached components but does not initialize added ones. Call `initAll()` after `start()` to initialize them.
+Unlike `stop()`, deferral keeps the removals Basecoat needs for cleanup. If the observer is stopped when the last lease is released, Basecoat cleans up detached components and discards queued additions. Call `start()` and `initAll()` to initialize them later. Restarting the observer before release also processes queued additions at release.
 
 ## Using Basecoat with AI
 

@@ -64,6 +64,10 @@ test('Dropdown Menu typeahead identifies the active item on the focused menu', (
   trigger.focus();
   trigger.dispatchEvent(Object.assign(new document.defaultView.Event('click'), { detail: 1 }));
   assert.equal(menu.getAttribute('aria-activedescendant'), null);
+  for (const key of ['Enter', ' ']) {
+    press(menu, key);
+    assert.equal(trigger.getAttribute('aria-expanded'), 'true');
+  }
   press(menu, 'ArrowDown');
   assert.equal(active(document, menu), 'Apple');
   press(menu, 'Escape');

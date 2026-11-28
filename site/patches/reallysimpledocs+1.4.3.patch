@@ -76,10 +76,52 @@ index c809212..4359603 100644
    <Code slot="code" code={code} lang={lang} />
  </Tabs>
 diff --git a/node_modules/reallysimpledocs/src/runtime/lib/docs.js b/node_modules/reallysimpledocs/src/runtime/lib/docs.js
-index f2fce7c..fd5cab4 100644
+index f2fce7c..25e8ebf 100644
 --- a/node_modules/reallysimpledocs/src/runtime/lib/docs.js
 +++ b/node_modules/reallysimpledocs/src/runtime/lib/docs.js
-@@ -258,7 +258,7 @@ export function getSearchDocs(config) {
+@@ -91,8 +91,23 @@ export function getDocMarkdown(config, page) {
+   return fs.readFileSync(filePath, "utf8");
+ }
+ 
+-export function getMarkdownExport(config, page) {
+-  return `${getNormalizedDocMarkdown(config, page).trim()}\n`;
++export async function getMarkdownExport(config, page, includeTitle = true) {
++  const names = config.site?.markdownExamples?.[page.slug] || [];
++  const examples = new Map();
++  if (names.length) {
++    const { experimental_AstroContainer } = await import("astro/container");
++    const { getMdxPage } = await import("virtual:reallysimpledocs/mdx-pages");
++    const components = await import("../../components/index.js");
++    const mdx = await getMdxPage(page.slug);
++    const container = await experimental_AstroContainer.create();
++    container.addServerRenderer({ renderer: (await import("@astrojs/mdx/server.js")).default });
++    const html = await container.renderToString(mdx.Content, { props: { components }, locals: { markdownExamples: true } });
++    for (const name of names) examples.set(name, []);
++    for (const match of html.matchAll(/<template data-md-example="([^"]+)" data-source="([^"]*)"><\/template>/g)) {
++      examples.get(match[1])?.push(decodeURIComponent(match[2]));
++    }
++  }
++  return `${getNormalizedDocMarkdown(config, page, { includeTitle, examples }).trim()}\n`;
+ }
+ 
+ export async function renderDoc(config, page) {
+@@ -246,11 +261,11 @@ export function buildMenus(config, currentSlug) {
+   return { sidebar, command };
+ }
+ 
+-export function getLlmDocs(config) {
+-  return getPages(config).map((page) => ({
++export async function getLlmDocs(config) {
++  return Promise.all(getPages(config).map(async (page) => ({
+     ...page,
+-    content: getNormalizedDocMarkdown(config, page, { includeTitle: false }).trim(),
+-  }));
++    content: (await getMarkdownExport(config, page, false)).trim(),
++  })));
+ }
+ 
+ export function getSearchDocs(config) {
+@@ -258,7 +273,7 @@ export function getSearchDocs(config) {
    const trails = getPageTrails(config, pages);
  
    return pages.map((page) => {
@@ -88,37 +130,50 @@ index f2fce7c..fd5cab4 100644
      const { prose, code } = splitFencedMarkdown(markdown);
      const trail = trails.get(page.slug) || [page.title];
  
-@@ -317,10 +317,12 @@ function splitFencedMarkdown(markdown) {
+@@ -317,10 +332,12 @@ function splitFencedMarkdown(markdown) {
    return { prose, code: code.join("\n\n") };
  }
  
 -function getNormalizedDocMarkdown(config, page, { includeTitle = true } = {}) {
-+function getNormalizedDocMarkdown(config, page, { includeTitle = true, includePreviewSource = true } = {}) {
++function getNormalizedDocMarkdown(config, page, { includeTitle = true, includePreviewSource = true, examples } = {}) {
    const source = getDocMarkdown(config, page);
    const parsed = parseDocMarkdown(source, page.title);
 -  const body = normalizeDocMarkdown(renderNunjucksCompat(parsed.body), collectMdxExports(source));
 +  const body = normalizeDocMarkdown(renderNunjucksCompat(parsed.body), collectMdxExports(source), {
-+    variables: config.site?.markdownVariables, includePreviewSource,
++    variables: config.site?.markdownVariables, includePreviewSource, examples,
 +  });
    return includeTitle ? `# ${parsed.title}\n\n${body}` : body;
  }
  
 diff --git a/node_modules/reallysimpledocs/src/runtime/lib/markdown-export.js b/node_modules/reallysimpledocs/src/runtime/lib/markdown-export.js
-index 7614a3d..6fe879d 100644
+index 7614a3d..2278a66 100644
 --- a/node_modules/reallysimpledocs/src/runtime/lib/markdown-export.js
 +++ b/node_modules/reallysimpledocs/src/runtime/lib/markdown-export.js
 @@ -1,4 +1,4 @@
 -export function normalizeDocMarkdown(markdown, context = new Map()) {
-+export function normalizeDocMarkdown(markdown, context = new Map(), { variables = {}, includePreviewSource = true } = {}) {
++export function normalizeDocMarkdown(markdown, context = new Map(), { variables = {}, includePreviewSource = true, examples = new Map() } = {}) {
    // Protect examples before serializing components that can span fenced blocks.
    const fences = [];
    const source = String(markdown || "").replace(
-@@ -9,9 +9,11 @@ export function normalizeDocMarkdown(markdown, context = new Map()) {
+@@ -9,9 +9,24 @@ export function normalizeDocMarkdown(markdown, context = new Map()) {
        return token;
      },
    );
 -  let out = normalizeMdxComponents(stripMdxModuleSyntax(source), context);
-+  const resolved = stripMdxModuleSyntax(source).replace(/\$\{([a-zA-Z_$][\w$]*)\}/g,
++  let withExamples = source;
++  for (const [name, snippets] of examples) {
++    let index = 0;
++    withExamples = replacePairedComponent(withExamples, name, () => {
++      if (index === snippets.length) throw new Error(`Missing rendered ${name} example`);
++      const code = snippets[index++];
++      if (!code) return "";
++      const token = `\u0000RSD_FENCE_${fences.length}\u0000`;
++      fences.push(fencedCode("html", code));
++      return token;
++    });
++    if (index !== snippets.length) throw new Error(`Unmatched rendered ${name} example`);
++  }
++  const resolved = stripMdxModuleSyntax(withExamples).replace(/\$\{([a-zA-Z_$][\w$]*)\}/g,
 +    (expression, name) => Object.hasOwn(variables, name) ? variables[name] : expression);
 +  let out = normalizeMdxComponents(resolved.replace(/(<a\s+href=)\{`([^`"$\n]+)`\}/g, '$1"$2"'), context, includePreviewSource);
    fences.forEach((block, index) => {
@@ -127,7 +182,7 @@ index 7614a3d..6fe879d 100644
    });
    return out.replace(/[ \t]+\n/g, "\n").replace(/\n{3,}/g, "\n\n").trim();
  }
-@@ -33,13 +35,13 @@ const serializers = {
+@@ -33,13 +48,13 @@ const serializers = {
    Card: serializeCard,
  };
  
@@ -143,7 +198,7 @@ index 7614a3d..6fe879d 100644
      return token;
    });
  
-@@ -47,10 +49,9 @@ export function normalizeMdxComponents(content, context = new Map()) {
+@@ -47,10 +62,9 @@ export function normalizeMdxComponents(content, context = new Map()) {
      out = replacePairedComponent(out, name, (attrs, children) => serializers[name](attrs, children, context));
    }
  
@@ -155,7 +210,7 @@ index 7614a3d..6fe879d 100644
    });
  
    return out;
-@@ -68,6 +69,12 @@ function replacePairedComponent(content, name, serialize) {
+@@ -68,6 +82,12 @@ function replacePairedComponent(content, name, serialize) {
        break;
      }
  
@@ -168,7 +223,7 @@ index 7614a3d..6fe879d 100644
      const close = findMatchingCloseTag(source, open);
      if (!close) {
        output += source.slice(cursor);
-@@ -91,9 +98,12 @@ function serializeTab(attrs, children, context) {
+@@ -91,9 +111,12 @@ function serializeTab(attrs, children, context) {
    return `\n\n${title ? `**${title}**\n\n` : ""}${normalizeMdxComponents(children, context).trim()}\n\n`;
  }
  
@@ -184,6 +239,44 @@ index 7614a3d..6fe879d 100644
    return `\n\n${fencedCode(lang, source)}\n\n`;
  }
  
+@@ -244,6 +267,7 @@ function readTag(source, start) {
+   if (!name) return null;
+ 
+   let quote = "";
++  let braces = 0;
+   while (cursor < source.length) {
+     const char = source[cursor];
+     if (quote) {
+@@ -260,7 +284,9 @@ function readTag(source, start) {
+       cursor += 1;
+       continue;
+     }
+-    if (char === ">") {
++    if (char === "{") braces++;
++    if (char === "}") braces--;
++    if (char === ">" && braces === 0) {
+       const sourceTag = source.slice(start, cursor + 1);
+       const beforeEnd = sourceTag.trimEnd();
+       return {
+diff --git a/node_modules/reallysimpledocs/src/runtime/pages/llms-full.txt.ts b/node_modules/reallysimpledocs/src/runtime/pages/llms-full.txt.ts
+index 5f43aaf..c2bb319 100644
+--- a/node_modules/reallysimpledocs/src/runtime/pages/llms-full.txt.ts
++++ b/node_modules/reallysimpledocs/src/runtime/pages/llms-full.txt.ts
+@@ -2,12 +2,12 @@ import config from "virtual:reallysimpledocs/config";
+ import { getLlmDocs } from "../lib/docs.js";
+ import { getSite } from "../lib/site.js";
+ 
+-export function GET({ site }) {
++export async function GET({ site }) {
+   const siteData = getSite(config);
+   const siteUrl = site?.toString().replace(/\/$/, "") || siteData.url || "";
+   const lines = [];
+ 
+-  getLlmDocs(config).forEach((doc) => {
++  (await getLlmDocs(config)).forEach((doc) => {
+     lines.push(`# ${doc.title}`, `Source: ${siteUrl}${doc.path}`, "");
+     lines.push(doc.content, "", "---", "");
+   });
 diff --git a/node_modules/reallysimpledocs/src/runtime/pages/llms.txt.ts b/node_modules/reallysimpledocs/src/runtime/pages/llms.txt.ts
 index 056af3d..e796835 100644
 --- a/node_modules/reallysimpledocs/src/runtime/pages/llms.txt.ts
@@ -208,3 +301,18 @@ index 056af3d..e796835 100644
  
    (manifest.menu || []).forEach((group) => {
      if (group?.type !== "group") return;
+diff --git a/node_modules/reallysimpledocs/src/runtime/pages/markdown.ts b/node_modules/reallysimpledocs/src/runtime/pages/markdown.ts
+index 8b670e3..8a5c7dd 100644
+--- a/node_modules/reallysimpledocs/src/runtime/pages/markdown.ts
++++ b/node_modules/reallysimpledocs/src/runtime/pages/markdown.ts
+@@ -8,8 +8,8 @@ export function getStaticPaths() {
+   }));
+ }
+ 
+-export function GET({ props }) {
+-  return new Response(getMarkdownExport(config, props.page), {
++export async function GET({ props }) {
++  return new Response(await getMarkdownExport(config, props.page), {
+     headers: {
+       "content-type": "text/markdown; charset=utf-8",
+     },

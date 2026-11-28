@@ -28,8 +28,9 @@
       }
     };
     const scheduleClose = () => {
+      if (pointerInside || focusInside) return;
       clearTimeout(timer);
-      if (!pointerInside && !focusInside) timer = setTimeout(close, delay('data-close-delay', 300));
+      timer = setTimeout(close, delay('data-close-delay', 300));
     };
     root.addEventListener('pointerenter', event => {
       if (event.pointerType !== 'mouse') return;
@@ -42,15 +43,38 @@
       pointerInside = false;
       scheduleClose();
     }, { signal });
-    trigger.addEventListener('focus', () => {
-      if (!trigger.matches(':focus-visible')) return;
-      focusInside = true;
-      dismissed = false;
-      scheduleOpen();
+    root.addEventListener('focusin', event => {
+      if (panel.contains(event.target)) {
+        focusInside = true;
+        clearTimeout(timer);
+      } else if (event.target === trigger && trigger.matches(':focus-visible') && !root.contains(event.relatedTarget)) {
+        focusInside = true;
+        dismissed = false;
+        scheduleOpen();
+      }
     }, { signal });
-    trigger.addEventListener('blur', () => { focusInside = false; scheduleClose(); }, { signal });
+    root.addEventListener('focusout', event => {
+      if (root.contains(event.relatedTarget)) return;
+      focusInside = false;
+      scheduleClose();
+    }, { signal });
+    root.addEventListener('keydown', event => {
+      if (event.key !== 'Escape' || event.defaultPrevented) return;
+      const dialog = event.target.closest('dialog[open]');
+      if (dialog && root.contains(dialog) && dialog.matches(':modal')) return;
+      if (panel.getAttribute('aria-hidden') === 'false') {
+        event.preventDefault();
+        event.stopPropagation();
+        if (panel.contains(document.activeElement)) trigger.focus({ preventScroll: true });
+      }
+      dismissed = true;
+      close();
+    }, { signal });
     document.addEventListener('keydown', event => {
-      if (event.key === 'Escape' && (pointerInside || focusInside)) { dismissed = true; close(); }
+      if (event.key === 'Escape' && !event.defaultPrevented && pointerInside && !root.contains(event.target)) {
+        dismissed = true;
+        close();
+      }
     }, { signal });
     document.addEventListener('basecoat:popover', event => {
       if (!root.contains(event.detail?.source)) { dismissed = true; close(); }

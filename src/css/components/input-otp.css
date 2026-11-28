@@ -1,3 +1,5 @@
+@import "../base/otp-invalid.css";
+
 /* Input OTP: the input remains the only form control and keyboard target. */
 @keyframes otp-caret {
   0%, 70%, 100% { opacity: 1; }

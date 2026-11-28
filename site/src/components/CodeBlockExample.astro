@@ -68,6 +68,8 @@ const html = [
 ].filter(Boolean).join('\n');
 const preview = rtl ? `<div dir="rtl" class="grid gap-3 text-sm">\n${html}\n</div>` : html;
 ---
+{Astro.locals.markdownExamples ? <template data-md-example="CodeBlockExample" data-source={encodeURIComponent(preview)}></template> : (
 <Preview code={preview} class="w-full">
   <div class:list={['mx-auto grid w-full min-w-0 gap-4', width]}><Fragment set:html={preview} /></div>
 </Preview>
+)}

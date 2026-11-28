@@ -116,6 +116,8 @@ npm run build
 npm run docs:build
 ```
 
+Run `npx playwright install` once, then `npm run build && npm run check:browser` to check component interactions in Chromium, Firefox, and WebKit. To compare style recalculation between builds, run [the DOM update benchmark](scripts/benchmarks/dom-updates.js) on the Data Table docs page.
+
 ## License
 
 [MIT](LICENSE.md)
