@@ -13,11 +13,11 @@
     @apply flex w-full flex-col data-invalid:text-destructive data-[invalid=true]:text-destructive [&>*]:w-full [&>.sr-only]:w-auto;
 
     &[data-orientation='horizontal'] {
-      @apply flex-row items-center [&>*]:w-auto [&>label]:flex-auto has-[>section]:items-start has-[>section]:[&>section]:flex-1 has-[>section]:[&>[type=checkbox],[type=radio]]:mt-px [&_p]:text-balance;
+      @apply flex-row items-center [&>*]:w-auto [&>label]:flex-auto has-[>section]:items-start [&>section]:flex-1 [&>section~:is([type=checkbox],[type=radio])]:mt-px [&>:is([type=checkbox],[type=radio]):has(~section)]:mt-px [&_p]:text-balance;
     }
 
     &[data-orientation='responsive'] {
-      @apply flex-col @md/field-group:flex-row @md/field-group:items-center @md/field-group:[&>*]:w-auto @md/field-group:has-[>section]:items-start @md/field-group:[&>label]:flex-auto @md/field-group:has-[>section]:[&>[type=checkbox],[type=radio]]:mt-px;
+      @apply flex-col @md/field-group:flex-row @md/field-group:items-center @md/field-group:[&>*]:w-auto @md/field-group:has-[>section]:items-start @md/field-group:[&>label]:flex-auto @md/field-group:[&>section~:is([type=checkbox],[type=radio])]:mt-px @md/field-group:[&>:is([type=checkbox],[type=radio]):has(~section)]:mt-px;
     }
 
     section {

@@ -127,7 +127,8 @@
     @apply opacity-100;
   }
 
-  .command [role='menuitem']:has([data-shortcut]) [data-indicator] {
+  .command [role='menuitem'] > [data-shortcut] ~ [data-indicator],
+  .command [role='menuitem'] > [data-indicator]:has(~ [data-shortcut]) {
     @apply hidden;
   }
 
@@ -147,7 +148,7 @@
     @apply bg-muted text-foreground;
   }
 
-  .command:has(> header input:not(:placeholder-shown)) [role='separator'] {
+  .command > header:has(input:not(:placeholder-shown)) ~ * [role='separator'] {
     @apply hidden;
   }
 }

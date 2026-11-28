@@ -18,7 +18,8 @@
     @apply pointer-events-none absolute shrink-0;
   }
 
-  .combobox:has(> .combobox-chips) > .combobox-trigger-icon {
+  .combobox > .combobox-chips ~ .combobox-trigger-icon,
+  .combobox > .combobox-trigger-icon:has(~ .combobox-chips) {
     @apply hidden;
   }
 
@@ -30,7 +31,7 @@
     @apply hidden;
   }
 
-  .combobox .input-group:has([data-clear]:not([hidden])) button[aria-haspopup='listbox'] {
+  .combobox .input-group [data-clear]:not([hidden]) ~ button[aria-haspopup='listbox'] {
     @apply hidden;
   }
 
