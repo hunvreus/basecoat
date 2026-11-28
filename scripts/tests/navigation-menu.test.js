@@ -10,7 +10,7 @@ test('hovering a top-level link closes an open menu and cancels pending opens', 
     const attrs = new Map();
     return Object.assign(new EventTarget(), {
       dataset: {}, style: {},
-      checkVisibility: () => true, closest: () => null,
+      getClientRects: () => [{ width: 100 }], closest: () => null,
       getAttribute: name => attrs.get(name),
       setAttribute: (name, value) => attrs.set(name, value),
       getBoundingClientRect: () => ({ left: 0, right: 100 }),
@@ -42,7 +42,7 @@ test('hovering a top-level link closes an open menu and cancels pending opens', 
   vm.runInNewContext(source, {
     window,
     document, CustomEvent, AbortController,
-    getComputedStyle: () => ({ direction: 'ltr' }),
+    getComputedStyle: () => ({ direction: 'ltr', visibility: 'visible' }),
     requestAnimationFrame: callback => frames.push(callback),
     setTimeout: callback => (pending = callback),
     clearTimeout: callback => { if (pending === callback) pending = null; },

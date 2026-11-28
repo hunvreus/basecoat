@@ -32,6 +32,25 @@ async function combobox(page) {
   assert.equal(await expanded(input), 'false');
 }
 
+async function multipleSelection(page) {
+  await load(page, `<div class="combobox"><input role="combobox" aria-expanded="false">
+    <div data-popover aria-hidden="true"><div role="listbox" aria-multiselectable="true">
+    <div role="option" data-value="a">Apple</div><div role="option" data-value="b">Berry</div>
+    </div></div><input type="hidden" value='["a"]'></div>`, 'combobox');
+  const input = page.getByRole('combobox');
+  await input.click();
+  await page.getByRole('button', { name: 'Remove Apple' }).focus();
+  await page.getByRole('option', { name: 'Berry' }).click();
+  assert.deepEqual(JSON.parse(await page.locator('input[type=hidden]').inputValue()), ['a', 'b']);
+  assert.equal(await expanded(input), 'true');
+  assert.equal(await input.evaluate(el => el === document.activeElement), true);
+  const chip = page.getByRole('button', { name: 'Remove Berry' });
+  await chip.focus();
+  await page.keyboard.press('Enter');
+  assert.deepEqual(JSON.parse(await page.locator('input[type=hidden]').inputValue()), ['a']);
+  assert.equal(await expanded(input), 'true');
+}
+
 async function navigation(page) {
   await load(page, `<nav class="navigation-menu"><ul><li><button aria-controls="first">First</button></li>
     <li hidden><button aria-controls="hidden-panel">Hidden</button></li><li><a href="#end">Last</a></li></ul>
@@ -141,7 +160,7 @@ for (const engine of [chromium, firefox, webkit]) {
   const context = await browser.newContext({ reducedMotion: 'reduce' });
   try {
     const page = await context.newPage();
-    for (const check of [combobox, navigation, nestedEscape, hoverCard, otp, conditionalStyles]) {
+    for (const check of [combobox, multipleSelection, navigation, nestedEscape, hoverCard, otp, conditionalStyles]) {
       await check(page);
       console.log(`${engine.name()}: ${check.name} passed`);
     }

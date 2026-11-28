@@ -17,7 +17,7 @@
     let hoverOpened = false;
     const clearTimers = () => { clearTimeout(openTimer); clearTimeout(closeTimer); };
     const available = el => !el.disabled && el.getAttribute('aria-disabled') !== 'true' &&
-      el.checkVisibility({ visibilityProperty: true }) && !el.closest('[inert]');
+      el.getClientRects().length > 0 && getComputedStyle(el).visibility === 'visible' && !el.closest('[inert]');
     const topItems = () => Array.from(list.querySelectorAll(':scope > li > :is(button, a[href])')).filter(available);
     const focusable = panel => Array.from(panel.querySelectorAll('a[href], button')).filter(available);
     const position = () => {

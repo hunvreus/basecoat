@@ -191,8 +191,8 @@
       remove.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>';
       remove.addEventListener('click', (event) => {
         event.stopPropagation();
-        root.deselect(entry.value);
         state.input.focus();
+        root.deselect(entry.value);
       });
 
       chip.appendChild(label);
@@ -365,11 +365,11 @@
 
   const clearValue = (root) => {
     const state = states.get(root);
+    if (state.popover.getAttribute('aria-hidden') === 'false') state.input.focus();
     setSelected(root, [], true);
     state.input.value = '';
     filterOptions(state);
     syncClearButton(state);
-    if (state.popover.getAttribute('aria-hidden') === 'false') state.input.focus();
   };
 
   const handleKeydown = (event, root) => {
@@ -464,7 +464,7 @@
       if (!root.contains(event.relatedTarget)) root.close(false);
     };
     const keepInputFocus = (event) => {
-      if (event.button !== 0 || document.activeElement !== state.input || event.target === state.input) return;
+      if (event.button !== 0 || !root.contains(document.activeElement) || event.target === state.input) return;
       const button = event.target.closest('button');
       const managedButton = button && (button === state.trigger || button === state.clearButton ||
         button.classList.contains('combobox-chip-remove'));
@@ -504,8 +504,8 @@
     const handleListboxClick = (event) => {
       const option = event.target.closest('[role="option"]');
       if (!option || !state.options.includes(option)) return;
+      if (state.isMultiple) state.input.focus({ preventScroll: true });
       state.isMultiple ? root.toggle(getValue(option)) : root.select(getValue(option));
-      if (state.isMultiple && !state.closeOnSelect) state.input.focus();
     };
     const handleDocumentClick = (event) => {
       if (!root.contains(event.target)) root.close(false);
