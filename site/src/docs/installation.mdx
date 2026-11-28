@@ -175,7 +175,7 @@ Or import a named style bundle.
 ```
 
 <Callout title="Using the Tailwind CLI without npm?" icon="info">
-  Download a single-file bundle, for example <a href={`https://cdn.jsdelivr.net/npm/basecoat-css@${basecoatVersion}/dist/basecoat-maia.bundle.css`}>{`basecoat-maia.bundle.css`}</a>. Save it next to your CSS and import it after Tailwind: `@import "tailwindcss"; @import "./basecoat-maia.bundle.css";`. Use `basecoat.bundle.css` for the default Vega style.
+  Download a single-file bundle, for example <a href={`https://cdn.jsdelivr.net/npm/basecoat-css@${basecoatVersion}/dist/basecoat-maia.bundle.css`}>basecoat-maia.bundle.css</a>. Save it next to your CSS and import it after Tailwind: `@import "tailwindcss"; @import "./basecoat-maia.bundle.css";`. Use `basecoat.bundle.css` for the default Vega style.
 </Callout>
 
 <Callout type="warning" title="Stylesheet order matters" icon="triangle-alert">
@@ -335,6 +335,23 @@ try {
 - Page-load initialization, `init()`, `initAll()` and `refresh()` are not deferred.
 
 Unlike `stop()`, deferral keeps the removals Basecoat needs for cleanup. If `stop()` is called while a lease is held, the release still cleans up detached components but does not initialize added ones. Call `initAll()` after `start()` to initialize them.
+
+## Using Basecoat with AI
+
+Give your agent the [Markdown index](/llms.txt) to look up individual components, or the [full reference](/llms-full.txt) for tools that accept a single file. Replace `[feature]` in this prompt with what you want to build.
+
+```text
+Build [feature] using Basecoat in this project's existing stack.
+Check the installed basecoat-css version, style pack, and JavaScript setup.
+Read https://basecoatui.com/llms.txt and fetch the Markdown pages for the components you need.
+Start from their HTML examples and preserve the documented structure and ARIA attributes.
+```
+
+To reuse these instructions in a supported coding agent, install the [Basecoat skill](https://github.com/hunvreus/basecoat/tree/main/skills/basecoat) from your project directory.
+
+```sh
+npx skills add hunvreus/basecoat --skill basecoat
+```
 
 ## Compatibility
 

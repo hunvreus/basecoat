@@ -75,3 +75,136 @@ index c809212..4359603 100644
    </div>
    <Code slot="code" code={code} lang={lang} />
  </Tabs>
+diff --git a/node_modules/reallysimpledocs/src/runtime/lib/docs.js b/node_modules/reallysimpledocs/src/runtime/lib/docs.js
+index f2fce7c..fd5cab4 100644
+--- a/node_modules/reallysimpledocs/src/runtime/lib/docs.js
++++ b/node_modules/reallysimpledocs/src/runtime/lib/docs.js
+@@ -258,7 +258,7 @@ export function getSearchDocs(config) {
+   const trails = getPageTrails(config, pages);
+ 
+   return pages.map((page) => {
+-    const markdown = getNormalizedDocMarkdown(config, page, { includeTitle: false });
++    const markdown = getNormalizedDocMarkdown(config, page, { includeTitle: false, includePreviewSource: false });
+     const { prose, code } = splitFencedMarkdown(markdown);
+     const trail = trails.get(page.slug) || [page.title];
+ 
+@@ -317,10 +317,12 @@ function splitFencedMarkdown(markdown) {
+   return { prose, code: code.join("\n\n") };
+ }
+ 
+-function getNormalizedDocMarkdown(config, page, { includeTitle = true } = {}) {
++function getNormalizedDocMarkdown(config, page, { includeTitle = true, includePreviewSource = true } = {}) {
+   const source = getDocMarkdown(config, page);
+   const parsed = parseDocMarkdown(source, page.title);
+-  const body = normalizeDocMarkdown(renderNunjucksCompat(parsed.body), collectMdxExports(source));
++  const body = normalizeDocMarkdown(renderNunjucksCompat(parsed.body), collectMdxExports(source), {
++    variables: config.site?.markdownVariables, includePreviewSource,
++  });
+   return includeTitle ? `# ${parsed.title}\n\n${body}` : body;
+ }
+ 
+diff --git a/node_modules/reallysimpledocs/src/runtime/lib/markdown-export.js b/node_modules/reallysimpledocs/src/runtime/lib/markdown-export.js
+index 7614a3d..6fe879d 100644
+--- a/node_modules/reallysimpledocs/src/runtime/lib/markdown-export.js
++++ b/node_modules/reallysimpledocs/src/runtime/lib/markdown-export.js
+@@ -1,4 +1,4 @@
+-export function normalizeDocMarkdown(markdown, context = new Map()) {
++export function normalizeDocMarkdown(markdown, context = new Map(), { variables = {}, includePreviewSource = true } = {}) {
+   // Protect examples before serializing components that can span fenced blocks.
+   const fences = [];
+   const source = String(markdown || "").replace(
+@@ -9,9 +9,11 @@ export function normalizeDocMarkdown(markdown, context = new Map()) {
+       return token;
+     },
+   );
+-  let out = normalizeMdxComponents(stripMdxModuleSyntax(source), context);
++  const resolved = stripMdxModuleSyntax(source).replace(/\$\{([a-zA-Z_$][\w$]*)\}/g,
++    (expression, name) => Object.hasOwn(variables, name) ? variables[name] : expression);
++  let out = normalizeMdxComponents(resolved.replace(/(<a\s+href=)\{`([^`"$\n]+)`\}/g, '$1"$2"'), context, includePreviewSource);
+   fences.forEach((block, index) => {
+-    out = out.replaceAll(`\u0000RSD_FENCE_${index}\u0000`, block);
++    out = out.replaceAll(`\u0000RSD_FENCE_${index}\u0000`, () => block);
+   });
+   return out.replace(/[ \t]+\n/g, "\n").replace(/\n{3,}/g, "\n\n").trim();
+ }
+@@ -33,13 +35,13 @@ const serializers = {
+   Card: serializeCard,
+ };
+ 
+-export function normalizeMdxComponents(content, context = new Map()) {
++export function normalizeMdxComponents(content, context = new Map(), includePreviewSource = true) {
+   let out = String(content || "");
+   const previewBlocks = [];
+ 
+   out = replacePairedComponent(out, "Preview", (attrs, children) => {
+     const token = `\u0000RSD_PREVIEW_${previewBlocks.length}\u0000`;
+-    previewBlocks.push(serializers.Preview(attrs, children, context));
++    previewBlocks.push(serializers.Preview(attrs, includePreviewSource ? children : "", context));
+     return token;
+   });
+ 
+@@ -47,10 +49,9 @@ export function normalizeMdxComponents(content, context = new Map()) {
+     out = replacePairedComponent(out, name, (attrs, children) => serializers[name](attrs, children, context));
+   }
+ 
+-  out = out.replace(/<Code\b([^>]*)\/>/g, (_, attrs) => serializeCode(attrs, getCodeAttr(attrs, context), context));
+   out = out.replace(/<Card\b([^>]*)\/>/g, (_, attrs) => serializeCard(attrs));
+   previewBlocks.forEach((block, index) => {
+-    out = out.replaceAll(`\u0000RSD_PREVIEW_${index}\u0000`, block);
++    out = out.replaceAll(`\u0000RSD_PREVIEW_${index}\u0000`, () => block);
+   });
+ 
+   return out;
+@@ -68,6 +69,12 @@ function replacePairedComponent(content, name, serialize) {
+       break;
+     }
+ 
++    if (open.selfClosing) {
++      output += source.slice(cursor, open.start) + serialize(open.attrs, "");
++      cursor = open.end;
++      continue;
++    }
++
+     const close = findMatchingCloseTag(source, open);
+     if (!close) {
+       output += source.slice(cursor);
+@@ -91,9 +98,12 @@ function serializeTab(attrs, children, context) {
+   return `\n\n${title ? `**${title}**\n\n` : ""}${normalizeMdxComponents(children, context).trim()}\n\n`;
+ }
+ 
+-function serializePreview(attrs, _children, context = new Map()) {
+-  const lang = getStringAttr(attrs, "lang") || "mdx";
+-  const source = stripCommonIndent(getCodeAttr(attrs, context)).trim();
++function serializePreview(attrs, children, context = new Map()) {
++  const lang = getStringAttr(attrs, "lang") || "html";
++  // MDX previews can wrap inline script bodies and text nodes in string literals.
++  const html = children.replace(/(<script\b[^>]*>)\{`([\s\S]*?)`\}(<\/script>)/gi, "$1$2$3")
++    .replace(/>\{'([^'\\<>&]*)'\}</g, ">$1<");
++  const source = stripCommonIndent(getCodeAttr(attrs, context) || html).trim();
+   return `\n\n${fencedCode(lang, source)}\n\n`;
+ }
+ 
+diff --git a/node_modules/reallysimpledocs/src/runtime/pages/llms.txt.ts b/node_modules/reallysimpledocs/src/runtime/pages/llms.txt.ts
+index 056af3d..e796835 100644
+--- a/node_modules/reallysimpledocs/src/runtime/pages/llms.txt.ts
++++ b/node_modules/reallysimpledocs/src/runtime/pages/llms.txt.ts
+@@ -1,14 +1,16 @@
+ import config from "virtual:reallysimpledocs/config";
+-import { flattenMenuSlugs, getLlmDocs, getManifest } from "../lib/docs.js";
++import { flattenMenuSlugs, getPages, getManifest } from "../lib/docs.js";
+ import { getSite } from "../lib/site.js";
+ 
+ export function GET({ site }) {
+   const manifest = getManifest(config);
+-  const docs = getLlmDocs(config);
++  const docs = getPages(config);
+   const bySlug = new Map(docs.map((doc) => [doc.slug, doc]));
+   const siteData = getSite(config);
+   const siteUrl = site?.toString().replace(/\/$/, "") || siteData.url || "";
+-  const lines = [`# ${siteData.title}`, "", "## Docs", ""];
++  const lines = [`# ${siteData.title}`, ""];
++  if (siteData.llmsIntro) lines.push(siteData.llmsIntro, "");
++  lines.push("## Docs", "");
+ 
+   (manifest.menu || []).forEach((group) => {
+     if (group?.type !== "group") return;

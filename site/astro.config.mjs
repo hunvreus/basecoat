@@ -6,6 +6,8 @@ import reallySimpleDocs from 'reallysimpledocs/astro';
 
 const packageJson = JSON.parse(readFileSync(new URL('../package.json', import.meta.url), 'utf8'));
 
+const siteUrl = process.env.SITE_URL || 'https://basecoatui.com';
+
 const includeInSitemap = (page) => {
   const { pathname } = new URL(page);
 
@@ -16,7 +18,7 @@ const includeInSitemap = (page) => {
 };
 
 export default defineConfig({
-  site: process.env.SITE_URL || 'https://basecoatui.com',
+  site: siteUrl,
   server: {
     host: '127.0.0.1',
   },
@@ -57,9 +59,13 @@ export default defineConfig({
       },
       site: {
         title: 'Basecoat',
+        markdownVariables: { basecoatVersion: packageJson.version },
+        llmsIntro: `> Basecoat provides shadcn/ui-style components in semantic HTML, Tailwind CSS, and vanilla JavaScript.
+
+Start with the [agent setup and prompt](${new URL('/installation.md#using-basecoat-with-ai', siteUrl)}), then fetch the component pages you need. The [full Markdown reference](${new URL('/llms-full.txt', siteUrl)}) contains all pages.`,
         subtitle: `v${packageJson.version}`,
         description: 'A components library built with Tailwind CSS that works with any web stack.',
-        url: process.env.SITE_URL || 'https://basecoatui.com',
+        url: siteUrl,
         keywords: ['components', 'component library', 'component system', 'UI', 'UI kit', 'shadcn', 'shadcn/ui', 'Tailwind CSS', 'Tailwind', 'CSS', 'HTML', 'Jinja', 'Nunjucks', 'JS', 'JavaScript', 'vanilla JS', 'vanilla JavaScript'],
         author: {
           name: 'Ronan Berder',

@@ -21,6 +21,8 @@ Basecoat is a Tailwind CSS, vanilla HTML/CSS/JavaScript implementation of the sh
 - Installation: [basecoatui.com/installation](https://basecoatui.com/installation)
 - Customization: [basecoatui.com/customization](https://basecoatui.com/customization)
 
+[Using Basecoat with AI](https://basecoatui.com/installation/#using-basecoat-with-ai) includes a copyable prompt, the Markdown reference, and setup for the [Basecoat skill](skills/basecoat/SKILL.md).
+
 ## Install
 
 ```bash

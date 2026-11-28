@@ -152,10 +152,37 @@ function checkSite() {
   }
   const llms = path.join(dist, 'llms.txt');
   if (!fs.existsSync(llms)) return;
-  const links = [...fs.readFileSync(llms, 'utf8').matchAll(/^- \[[^\]]*\]\(([^)]+)\)/gm)].map((m) => m[1]);
+  const index = fs.readFileSync(llms, 'utf8');
+  const links = [...index.matchAll(/^- \[[^\]]*\]\(([^)]+)\)/gm)].map((m) => m[1]);
   if (links.length === 0) errors.push('site/dist/llms.txt has no links');
   for (const link of links) {
-    if (!link.endsWith('.md')) errors.push(`site/dist/llms.txt links to ${link}, not a .md export`);
+    const file = path.join(dist, new URL(link).pathname);
+    if (!file.endsWith('.md') || !fs.existsSync(file)) {
+      errors.push(`llms.txt links to a missing Markdown export: ${link}`);
+      continue;
+    }
+    const markdown = fs.readFileSync(file, 'utf8');
+    if (/^ *```(?:html|mdx) *\n\s*``` *$/m.test(markdown)) {
+      errors.push(`${link} contains an empty example`);
+    }
+  }
+  const { version } = JSON.parse(fs.readFileSync(path.join(root, 'package.json'), 'utf8'));
+  const stylesheet = `https://cdn.jsdelivr.net/npm/basecoat-css@${version}/dist/basecoat.cdn.min.css`;
+  for (const file of ['installation.md', 'components/combobox.md', 'llms-full.txt']) {
+    if (!fs.existsSync(path.join(dist, file))) {
+      errors.push(`Missing ${file}`);
+      continue;
+    }
+    const markdown = fs.readFileSync(path.join(dist, file), 'utf8');
+    const examples = [...markdown.matchAll(/^ *```html *\n([\s\S]*?)\n *``` *$/gm)].map(match => match[1]);
+    if (file !== 'components/combobox.md' && !examples.some(html => html.includes(`href="${stylesheet}"`))) {
+      errors.push(`${file} is missing the versioned CDN stylesheet example`);
+    }
+    if (file !== 'installation.md' && !examples.some(html =>
+      html.includes('aria-multiselectable="true"') && html.includes('class="combobox') && html.includes('role="option"')
+    )) {
+      errors.push(`${file} is missing the multiple-selection Combobox example`);
+    }
   }
 }
 
