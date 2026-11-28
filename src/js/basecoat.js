@@ -1,6 +1,13 @@
 (() => {
   const componentRegistry = {};
   let observer = null;
+  // Mutation deferral: observer records are queued here and processed against the
+  // live DOM, immediately when no lease is held, or when the last lease is released.
+  let activeLeases = 0;
+  let processing = false;
+  const queuedAdded = new Set();
+  const queuedRemoved = new Set();
+  const initializedInBatch = new Map();
 
   const registerComponent = (name, selectorOrOptions, initFunction) => {
     const options = typeof selectorOrOptions === 'object'
@@ -55,14 +62,6 @@
     delete element.dataset.basecoatComponent;
   };
 
-  const destroyRemovedComponents = (node) => {
-    if (node.nodeType !== Node.ELEMENT_NODE) return;
-    if (node.isConnected) return;
-
-    if (node.dataset?.basecoatComponent) destroyComponent(node);
-    node.querySelectorAll('[data-basecoat-component]').forEach(destroyComponent);
-  };
-
   const uniqueElements = (elements) => Array.from(new Set(elements));
 
   const getComponentElements = (componentName, selector, force = false) => {
@@ -84,13 +83,94 @@
     });
   };
 
+  // Keep a partially scanned root queued so release can rescan its final DOM.
   const initNewComponents = (node) => {
-    if (node.nodeType !== Node.ELEMENT_NODE) return;
+    for (const [name, { selector }] of Object.entries(componentRegistry)) {
+      if (!initializedInBatch.has(name)) initializedInBatch.set(name, new WeakSet());
+      const seen = initializedInBatch.get(name);
+      const initialize = (element) => {
+        if (element.isConnected && !seen.has(element) && element.matches(selector)) {
+          seen.add(element);
+          initComponent(element, name);
+        }
+      };
 
-    Object.entries(componentRegistry).forEach(([name, { selector }]) => {
-      if (node.matches(selector)) initComponent(node, name);
-      node.querySelectorAll(selector).forEach(element => initComponent(element, name));
+      initialize(node);
+      if (activeLeases || !observer) return false;
+      for (const element of node.querySelectorAll(selector)) {
+        initialize(element);
+        if (activeLeases || !observer) return false;
+      }
+    }
+    return true;
+  };
+
+  // Capture removed component roots when the record is seen: a removed subtree can
+  // change before the queue is processed, but its initialized instances still need cleanup.
+  const queueMutations = (mutations) => {
+    mutations.forEach((mutation) => {
+      mutation.addedNodes.forEach((node) => {
+        if (node.nodeType === Node.ELEMENT_NODE) queuedAdded.add(node);
+      });
+      mutation.removedNodes.forEach((node) => {
+        if (node.nodeType !== Node.ELEMENT_NODE || node.isConnected) return;
+        if (node.dataset?.basecoatComponent) queuedRemoved.add(node);
+        node.querySelectorAll('[data-basecoat-component]').forEach(element => queuedRemoved.add(element));
+      });
     });
+  };
+
+  // Reconcile queued work with the current DOM: destroy instances that are still
+  // detached, then initialize added nodes that are still connected. Stops, leaving the
+  // rest queued, if a lifecycle callback acquires a deferral lease.
+  const processQueue = () => {
+    if (processing || activeLeases) return;
+    processing = true;
+
+    try {
+      do {
+        for (const element of queuedRemoved) {
+          if (activeLeases) return;
+          queuedRemoved.delete(element);
+          if (!element.isConnected) {
+            initializedInBatch.get(element.dataset.basecoatComponent)?.delete(element);
+            destroyComponent(element);
+          }
+        }
+
+        if (!observer) {
+          queuedAdded.clear();
+          return;
+        }
+        for (const node of queuedAdded) {
+          if (activeLeases) return;
+          try {
+            if (node.isConnected && !initNewComponents(node)) break;
+          } catch (error) {
+            console.error('Failed to initialize Basecoat components:', error);
+          }
+          queuedAdded.delete(node);
+        }
+      } while (!activeLeases && (queuedRemoved.size || queuedAdded.size));
+    } finally {
+      if (!queuedAdded.size) initializedInBatch.clear();
+      processing = false;
+    }
+  };
+
+  const deferMutations = () => {
+    let held = true;
+    activeLeases++;
+
+    return () => {
+      if (!held) return;
+      held = false;
+      activeLeases--;
+      if (!activeLeases) {
+        if (observer) queueMutations(observer.takeRecords());
+        processQueue();
+      }
+    };
   };
 
   const refreshComponent = (element) => {
@@ -111,10 +191,8 @@
     if (observer) return;
 
     observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        mutation.addedNodes.forEach(initNewComponents);
-        mutation.removedNodes.forEach(destroyRemovedComponents);
-      });
+      queueMutations(mutations);
+      processQueue();
     });
 
     observer.observe(document.body, { childList: true, subtree: true });
@@ -122,6 +200,8 @@
 
   const stopObserver = () => {
     if (!observer) return;
+    // Keep records captured during deferral so the final release can clean them up.
+    if (activeLeases > 0) queueMutations(observer.takeRecords());
     observer.disconnect();
     observer = null;
   };
@@ -161,6 +241,7 @@
     refresh: refreshComponent,
     start: startObserver,
     stop: stopObserver,
+    deferMutations,
     theme: {
       get: getTheme,
       set: setTheme,
