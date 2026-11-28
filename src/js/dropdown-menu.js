@@ -67,6 +67,7 @@
     root.refresh();
     state.trigger.setAttribute('aria-expanded', 'true');
     state.popover.setAttribute('aria-hidden', 'false');
+    if (!root.contains(document.activeElement)) state.trigger.focus({ preventScroll: true });
     const focusedOnOpen = document.activeElement;
     requestAnimationFrame(() => requestAnimationFrame(() => {
       if (state.trigger.getAttribute('aria-expanded') === 'true' && document.activeElement === focusedOnOpen) {

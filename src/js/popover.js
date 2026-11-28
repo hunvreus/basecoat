@@ -29,7 +29,9 @@
 
       trigger.setAttribute('aria-expanded', 'true');
       content.setAttribute('aria-hidden', 'false');
-      content.querySelector('[autofocus]')?.focus();
+      const autofocus = content.querySelector('[autofocus]');
+      if (autofocus) autofocus.focus();
+      else if (!popoverComponent.contains(document.activeElement)) trigger.focus({ preventScroll: true });
     };
 
     const handleTriggerClick = () => {
