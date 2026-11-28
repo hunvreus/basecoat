@@ -15,10 +15,57 @@
     return Math.max(0, ...durations.map((duration, index) => duration + (delays[index] || delays[0] || 0)));
   };
 
+  const trackKeyboard = (drawer) => {
+    const viewport = window.visualViewport;
+    if (!viewport || !drawer.matches('.drawer')) return;
+
+    const clear = () => {
+      drawer.style.removeProperty('--_drawer-bottom');
+      drawer.style.removeProperty('--_drawer-viewport-height');
+    };
+
+    const update = () => {
+      // Pinch zoom also shrinks the visual viewport. Leave that to the browser.
+      if (viewport.scale !== 1 || window.innerHeight - viewport.height < 1) {
+        clear();
+        return;
+      }
+      const inset = Math.max(0, window.innerHeight - viewport.height - viewport.offsetTop);
+      drawer.style.setProperty('--_drawer-bottom', `${inset}px`);
+      drawer.style.setProperty('--_drawer-viewport-height', `${viewport.height}px`);
+    };
+
+    const start = (target) => {
+      if (!drawer.open || (drawer.hasAttribute('data-side') && drawer.dataset.side !== 'bottom')) return;
+      if (!target || !(target.matches('input, textarea') || target.isContentEditable) || target.closest('dialog') !== drawer) return;
+      viewport.addEventListener('resize', update);
+      viewport.addEventListener('scroll', update);
+      update();
+    };
+
+    const stop = () => {
+      viewport.removeEventListener('resize', update);
+      viewport.removeEventListener('scroll', update);
+      clear();
+    };
+
+    const onFocus = (event) => start(event.target);
+    const onClose = () => { if (!drawer.open) stop(); };
+    drawer.addEventListener('focusin', onFocus);
+    drawer.addEventListener('close', onClose);
+    start(document.activeElement);
+    return () => {
+      stop();
+      drawer.removeEventListener('focusin', onFocus);
+      drawer.removeEventListener('close', onClose);
+    };
+  };
+
   const initDrawer = (drawer) => {
     if (drawer.dataset.drawerInitialized) return;
 
     const nativeClose = drawer.close.bind(drawer);
+    const stopTrackingKeyboard = trackKeyboard(drawer);
     let pointerStartedOnBackdrop = false;
     let closeTimer = null;
     let closeReturnValue = '';
@@ -68,6 +115,7 @@
     drawer.addEventListener('pointerup', handlePointerUp);
 
     drawer._destroy = () => {
+      stopTrackingKeyboard?.();
       // Finish an in-flight close before reinitialization cancels its animation.
       if (closeTimer !== null) finishClose(closeReturnValue);
       drawer.removeAttribute('data-closing');

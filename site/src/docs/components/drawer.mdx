@@ -112,6 +112,8 @@ Drawer uses a native `<dialog>` element. The Drawer script handles backdrop clic
 
 ### HTML structure
 
+When the on-screen keyboard opens while editing a bottom drawer, Basecoat uses the visible viewport to position the panel and size its scrollable body.
+
 <dl>
   <dt><code>&lt;button type="button" onclick="drawer.showModal()"&gt;</code> <span class="badge" data-variant="secondary">Optional</span></dt>
   <dd>Trigger button. Basecoat intentionally uses the native <code>HTMLDialogElement.showModal()</code> method.</dd>

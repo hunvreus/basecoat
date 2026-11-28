@@ -126,6 +126,43 @@ async function hoverCard(page) {
   assert.equal(await expanded(outer), 'false');
 }
 
+async function drawerKeyboard(page) {
+  await load(page, '<dialog class="drawer"><article><section><textarea aria-label="Note"></textarea></section><footer><button>Save</button></footer></article></dialog>', 'drawer');
+  const dialog = page.locator('dialog');
+  const panel = dialog.locator('article');
+  await dialog.evaluate(el => {
+    // Model a keyboard that shrinks and then pans the visible part of the page.
+    Object.defineProperties(visualViewport, {
+      height: { value: 300, configurable: true },
+      offsetTop: { value: 0, writable: true },
+      scale: { value: 1, writable: true },
+    });
+    el.showModal();
+  });
+  const panelBottom = () => panel.evaluate(el => Math.round(el.getBoundingClientRect().bottom));
+  assert.equal(await panelBottom(), 300);
+  assert.equal(await panel.evaluate(el => getComputedStyle(el).maxHeight), '240px');
+  await page.evaluate(() => {
+    visualViewport.offsetTop = 40;
+    visualViewport.dispatchEvent(new Event('scroll'));
+  });
+  assert.equal(await panelBottom(), 340);
+  await page.evaluate(() => {
+    visualViewport.scale = 2;
+    visualViewport.dispatchEvent(new Event('resize'));
+  });
+  assert.equal(await panelBottom(), await page.evaluate(() => innerHeight));
+  await dialog.evaluate(el => new Promise(resolve => {
+    el.addEventListener('close', resolve, { once: true });
+    el.close();
+  }));
+  await page.evaluate(() => {
+    visualViewport.scale = 1;
+    visualViewport.dispatchEvent(new Event('resize'));
+  });
+  assert.equal(await dialog.evaluate(el => el.style.getPropertyValue('--_drawer-bottom')), '');
+}
+
 async function otp(page) {
   await load(page, `<div class="input-otp" data-input-otp-initialized><div><div><span data-active>1</span><span>2</span></div></div>
     <input aria-invalid="true"></div>`);
@@ -164,7 +201,7 @@ for (const engine of [chromium, firefox, webkit]) {
   const context = await browser.newContext({ reducedMotion: 'reduce' });
   try {
     const page = await context.newPage();
-    for (const check of [combobox, multipleSelection, navigation, nestedEscape, hoverCard, otp, conditionalStyles]) {
+    for (const check of [combobox, multipleSelection, navigation, nestedEscape, hoverCard, drawerKeyboard, otp, conditionalStyles]) {
       await check(page);
       console.log(`${engine.name()}: ${check.name} passed`);
     }

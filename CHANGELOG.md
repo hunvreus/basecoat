@@ -14,6 +14,8 @@
 
 ### Fixed
 
+- Kept bottom drawer fields and footer actions visible above the on-screen keyboard. Thanks to [@memleakd](https://github.com/hunvreus/basecoat/issues/233).
+
 - Restored foreground color for nested definition-list terms in Typeset.
 - Restored component preview markup and versioned CDN examples in the Markdown docs and `llms-full.txt`.
 - Reduced Chrome style recalculation during DOM updates. Thanks to [@memleakd](https://github.com/hunvreus/basecoat/pull/236) for profiling the slowdown and supplying the benchmark.

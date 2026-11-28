@@ -25,7 +25,8 @@
 
     &:not([data-side]) > *,
     &[data-side='bottom'] > * {
-      @apply inset-x-0 bottom-0 translate-y-(--_drawer-travel);
+      @apply inset-x-0 translate-y-(--_drawer-travel);
+      bottom: var(--_drawer-bottom, 0px);
     }
 
     &[data-side='top'] > * {
@@ -105,7 +106,8 @@
 
   .drawer:not([data-side]) > *,
   .drawer[data-side='bottom'] > * {
-    @apply mt-24 max-h-[80vh];
+    @apply mt-24;
+    max-height: calc(var(--_drawer-viewport-height, 100vh) * 0.8);
   }
   .drawer[data-side='top'] > * {
     @apply mb-24 max-h-[80vh];
